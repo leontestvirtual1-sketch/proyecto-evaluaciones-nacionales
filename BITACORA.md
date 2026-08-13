@@ -4,6 +4,37 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
 
 ---
 
+### [2026-08-13] Despliegue Oficial en Producción en Vercel
+- **Problema / Requerimiento**: Realizar el despliegue del proyecto en producción en Vercel (Ítem 3), conectando la base de datos Supabase Cloud y las configuraciones de seguridad HTTP y enrutamiento SPA.
+- **Archivos y Solución Técnica**:
+  - [vercel.json](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/vercel.json): [NUEVO] Configuración para SPA con Vite, reescrituras de rutas limpias (`rewrites`), cabeceras HTTP de seguridad (`nosniff`, `DENY`, `strict-origin-when-cross-origin`) y caché inmutable de assets estáticos.
+  - [.vercelignore](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.vercelignore): [NUEVO] Exclusión de `.agents`, `supabase`, `.gemini`, logs y archivos de desarrollo para un bundle optimizado.
+  - Variables de entorno en producción: Inyectadas `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_NOMBRE_ESTABLECIMIENTO` y `VITE_ESTABLECIMIENTO_RBD`.
+- **Verificación / Despliegue**:
+  - Proyecto en Vercel: `sysget-paes/sysget-saber`
+  - URL de producción oficial: **`https://sysget-saber.vercel.app`**
+  - Despliegue verificado y activo: `status: ok`, `readyState: READY`.
+
+---
+
+### [2026-08-13] Landing Page Institucional + RBAC Completo con Aislamiento Docente por Asignatura
+- **Problema / Requerimiento**: Implementar Landing Page que destaque Sysget y Sysget Saber, y aplicar RBAC estricto: el admin tiene control total (único con acceso a Configuración), cada profesor opera aislado en su asignatura (Matemática o Lenguaje), y los alumnos solo ven su portal de rendición.
+- **Archivos y Solución Técnica**:
+  - [src/pages/LandingPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LandingPage.tsx): [NUEVO] Landing institucional glassmorphism oscura con Hero, KPIs, pilares pedagógicos y selector de acceso por rol/asignatura directamente desde la portada.
+  - [src/App.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): Integrada `LandingPage` con estado `showLanding`. RBAC extendido a `admin` (acceso completo incluyendo Configuración). Ruta `configuracion` bloqueada para rol `profesor` (redirige a Dashboard). Props `currentUser` pasadas a `EvaluacionesPage` y `BancoPreguntasPage`.
+  - [src/components/Navbar.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Navbar.tsx): Botón "Inicio" para volver a la Landing y selector rápido de rol/asignatura (Admin, Matemática, Lenguaje, Alumno).
+  - [src/components/Sidebar.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx): Navegación diferenciada por rol con badges de asignatura. Ítem Configuración oculto para `profesor` y `alumno`.
+  - [src/components/ProfesorDashboard.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx): Banner de bienvenida adaptativo según rol (admin muestra "Panel General UTP", docente muestra su asignatura específica).
+  - [src/pages/EvaluacionesPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/EvaluacionesPage.tsx): Prop `currentUser` para pre-filtrar evaluaciones según asignatura del docente.
+  - [src/pages/BancoPreguntasPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/BancoPreguntasPage.tsx): Prop `currentUser` para pre-filtrar banco de preguntas según asignatura docente.
+  - [src/types/index.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts): `UserRole` extendido con `'admin'`. `UserProfile` con campos `asignaturaId`, `asignaturaNombre` y `cargo`.
+  - [src/data/mockData.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): Usuarios demo: `currentUserAdmin`, `currentUserProfesor` (Matemática), `currentUserProfesorLenguaje`, `currentUserAlumno`.
+  - [src/context/AuthContext.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): `switchRole` ampliado para soportar todos los roles demo con asignatura.
+- **Verificación / Despliegue**: `npm run build` ejecutado exitosamente — 0 errores TypeScript, 1644 módulos transformados en 7.31s. Build de producción listo en `/dist`.
+
+---
+
+
 ### [2026-08-12] Revisión General del Proyecto y Auditoría Inicial
 - **Problema / Requerimiento**: Realizar una revisión completa de la estructura del proyecto "Sysget Saber" (Plataforma de Evaluaciones Nacionales / SIMCE Chile) y establecer el registro oficial de bitácora.
 - **Archivos y Solución Técnica**:

@@ -35,25 +35,40 @@ interface NavItem {
   badge?: string;
 }
 
-const NAV_ITEMS_PROFESOR: NavItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
-  { id: 'evaluaciones', label: 'Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
-  { id: 'cursos', label: 'Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
-  { id: 'alumnos', label: 'Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
-  { id: 'profesores', label: 'Profesores', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+const NAV_ITEMS_ADMIN: NavItem[] = [
+  { id: 'dashboard', label: 'Dashboard General', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
+  { id: 'evaluaciones', label: 'Todas las Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
+  { id: 'cursos', label: 'Gestión de Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
+  { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
+  { id: 'profesores', label: 'Equipo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
   { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
-  { id: 'configuracion', label: 'Configuración', icon: <Settings className="w-4.5 h-4.5" /> },
+  { id: 'configuracion', label: 'Configuración Global', icon: <Settings className="w-4.5 h-4.5" /> },
+];
+
+const NAV_ITEMS_PROFESOR: NavItem[] = [
+  { id: 'dashboard', label: 'Mi Dashboard', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
+  { id: 'evaluaciones', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
+  { id: 'cursos', label: 'Mis Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
+  { id: 'alumnos', label: 'Mis Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
+  { id: 'banco-preguntas', label: 'Banco de mi Materia', icon: <Library className="w-4.5 h-4.5" /> },
 ];
 
 const NAV_ITEMS_ALUMNO: NavItem[] = [
   { id: 'dashboard', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
-  { id: 'configuracion', label: 'Mi Perfil', icon: <Settings className="w-4.5 h-4.5" /> },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
   const { user, logout } = useAuth();
-  const isProfesor = user?.rol === 'profesor';
-  const items = isProfesor ? NAV_ITEMS_PROFESOR : NAV_ITEMS_ALUMNO;
+  
+  let items: NavItem[];
+  if (user?.rol === 'admin') {
+    items = NAV_ITEMS_ADMIN;
+  } else if (user?.rol === 'profesor') {
+    items = NAV_ITEMS_PROFESOR;
+  } else {
+    items = NAV_ITEMS_ALUMNO;
+  }
+
 
   return (
     <aside className="hidden lg:flex flex-col w-64 min-h-screen bg-slate-900 border-r border-slate-800 py-6 px-4 fixed left-0 top-0 z-30">
@@ -82,12 +97,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
           <div className="min-w-0">
             <p className="text-xs font-bold text-white truncate">{user?.nombre} {user?.apellido}</p>
             <p className="text-[11px] text-slate-400 truncate">{user?.email}</p>
-            <span className="inline-block mt-0.5 px-1.5 py-0.5 bg-indigo-500/20 text-indigo-400 text-[10px] font-semibold rounded-md capitalize">
-              {user?.rol}
-            </span>
+            <div className="flex items-center gap-1 mt-0.5 flex-wrap">
+              <span className={`inline-block px-1.5 py-0.5 text-[10px] font-bold rounded-md capitalize ${
+                user?.rol === 'admin'
+                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                  : user?.rol === 'profesor'
+                  ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                  : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+              }`}>
+                {user?.rol === 'admin' ? '👑 Admin UTP' : user?.rol === 'profesor' ? 'Docente' : 'Alumno'}
+              </span>
+              {user?.asignaturaNombre && (
+                <span className="inline-block px-1.5 py-0.5 bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[10px] font-bold rounded-md truncate max-w-[120px]">
+                  {user.asignaturaNombre}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
+
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 px-1">

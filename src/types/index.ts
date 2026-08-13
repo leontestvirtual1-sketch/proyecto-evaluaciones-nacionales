@@ -1,4 +1,4 @@
-export type UserRole = 'profesor' | 'alumno';
+export type UserRole = 'admin' | 'profesor' | 'alumno';
 
 export interface UserProfile {
   id: string;
@@ -8,7 +8,11 @@ export interface UserProfile {
   email: string;
   rol: UserRole;
   establecimiento: string;
+  asignaturaId?: string;       // Asignatura principal para aislamiento de ambiente (ej. 'asig-1' = Matemática)
+  asignaturaNombre?: string;   // Nombre descriptivo (ej. 'Matemática')
+  cargo?: string;              // Cargo opcional (ej. 'Jefe de UTP', 'Docente de Aula')
 }
+
 
 export interface Asignatura {
   id: string;

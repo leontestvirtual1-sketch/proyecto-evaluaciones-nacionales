@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { UserProfile, UserRole } from '../types';
-import { currentUserProfesor, currentUserAlumno } from '../data/mockData';
+import {
+  currentUserAdmin,
+  currentUserProfesor,
+  currentUserProfesorLenguaje,
+  currentUserAlumno
+} from '../data/mockData';
 import { supabase } from '../lib/supabaseClient';
 import { APP_CONFIG } from '../config/appConfig';
 
@@ -12,7 +17,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<{ error: string | null }>;
   register: (data: RegisterData) => Promise<{ error: string | null }>;
   logout: () => void;
-  switchRole: (role: UserRole) => void;
+  switchRole: (role: UserRole, extra?: 'matematica' | 'lenguaje') => void;
 }
 
 export interface RegisterData {
@@ -23,15 +28,20 @@ export interface RegisterData {
   password: string;
   rol: UserRole;
   establecimiento: string;
+  asignaturaId?: string;
+  asignaturaNombre?: string;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Demo fallback users when working without live DB connection
+// Demo fallback users for testing
 const DEMO_USERS: Record<string, UserProfile> = {
+  'admin@sysget.cl': currentUserAdmin,
   'maria@demo.cl': currentUserProfesor,
+  'carlos@demo.cl': currentUserProfesorLenguaje,
   'pedro@demo.cl': currentUserAlumno,
 };
+
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -195,10 +205,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   }, []);
 
-  const switchRole = useCallback((role: UserRole) => {
-    if (role === 'profesor') setUser(currentUserProfesor);
-    else setUser(currentUserAlumno);
+  const switchRole = useCallback((role: UserRole, extra?: 'matematica' | 'lenguaje') => {
+    if (role === 'admin') {
+      setUser(currentUserAdmin);
+    } else if (role === 'profesor') {
+      if (extra === 'lenguaje') {
+        setUser(currentUserProfesorLenguaje);
+      } else {
+        setUser(currentUserProfesor);
+      }
+    } else {
+      setUser(currentUserAlumno);
+    }
   }, []);
+
 
   return (
     <AuthContext.Provider value={{

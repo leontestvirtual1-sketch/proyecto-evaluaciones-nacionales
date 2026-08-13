@@ -1,0 +1,9 @@
+.agents
+.gemini
+supabase
+.git
+.gitignore
+*.md
+!README.md
+.env*
+!*.env.example

@@ -25,11 +25,14 @@ import {
   Award
 } from 'lucide-react';
 
+import { UserProfile } from '../types';
+
 interface BancoPreguntasPageProps {
   preguntas: Pregunta[];
   asignaturas: Asignatura[];
   ejes: EjeTematico[];
   habilidades: Habilidad[];
+  currentUser?: UserProfile;
   onAddPregunta: (p: Pregunta) => void;
   onUpdatePregunta: (p: Pregunta) => void;
   onDeletePregunta: (id: string) => void;
@@ -40,14 +43,19 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   asignaturas,
   ejes,
   habilidades,
+  currentUser,
   onAddPregunta,
   onUpdatePregunta,
   onDeletePregunta,
 }) => {
+  const isDocente = currentUser?.rol === 'profesor' && currentUser?.asignaturaId;
+  const initialAsig = isDocente ? currentUser.asignaturaId! : '';
+
   const [search, setSearch] = useState('');
-  const [asignaturaFilter, setAsignaturaFilter] = useState('');
+  const [asignaturaFilter, setAsignaturaFilter] = useState(initialAsig);
   const [ejeFilter, setEjeFilter] = useState('');
   const [habilidadFilter, setHabilidadFilter] = useState('');
+
   const [dificultadFilter, setDificultadFilter] = useState('');
   const [tipoFilter, setTipoFilter] = useState('');
 

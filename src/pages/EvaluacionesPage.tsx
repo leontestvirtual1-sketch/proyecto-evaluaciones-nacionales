@@ -20,9 +20,12 @@ import {
   ArrowRight
 } from 'lucide-react';
 
+import { UserProfile } from '../types';
+
 interface EvaluacionesPageProps {
   pruebas: Prueba[];
   asignaturas: Asignatura[];
+  currentUser?: UserProfile;
   onOpenGenerator: () => void;
   onSelectPruebaReporte: (pruebaId: string) => void;
   onUpdatePruebaEstado: (pruebaId: string, nuevoEstado: 'borrador' | 'activa' | 'finalizada') => void;
@@ -31,15 +34,20 @@ interface EvaluacionesPageProps {
 export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   pruebas,
   asignaturas,
+  currentUser,
   onOpenGenerator,
   onSelectPruebaReporte,
   onUpdatePruebaEstado
 }) => {
+  const isDocente = currentUser?.rol === 'profesor' && currentUser?.asignaturaId;
+  const initialAsignatura = isDocente ? currentUser.asignaturaId! : 'todos';
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedAsignatura, setSelectedAsignatura] = useState<string>('todos');
+  const [selectedAsignatura, setSelectedAsignatura] = useState<string>(initialAsignatura);
   const [selectedEstado, setSelectedEstado] = useState<string>('todos');
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
 
   const showToast = (msg: string) => {
     setToastMessage(msg);

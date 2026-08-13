@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProfile } from '../types';
+import { UserProfile, UserRole } from '../types';
 import {
   GraduationCap,
   BookOpen,
@@ -7,12 +7,15 @@ import {
   Moon,
   Sun,
   School,
-  Sparkles
+  Sparkles,
+  Home,
+  ShieldAlert
 } from 'lucide-react';
 
 interface NavbarProps {
   user: UserProfile;
-  onRoleChange: (role: 'profesor' | 'alumno') => void;
+  onRoleChange: (role: UserRole, extra?: 'matematica' | 'lenguaje') => void;
+  onGoToLanding?: () => void;
   darkMode: boolean;
   onToggleDarkMode: () => void;
 }
@@ -20,6 +23,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   user,
   onRoleChange,
+  onGoToLanding,
   darkMode,
   onToggleDarkMode
 }) => {
@@ -42,42 +46,79 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">
-                Plataforma Docente de Evaluaciones, Tabulación & Planes de Reforzamiento
+                Evaluaciones Nacionales, Aislamiento por Especialidad & Analítica SIMCE
               </p>
             </div>
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {/* Go to Landing button */}
+            {onGoToLanding && (
+              <button
+                onClick={onGoToLanding}
+                className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-all"
+                title="Ver Landing Page de Sysget Saber"
+              >
+                <Home className="w-3.5 h-3.5 text-indigo-500" />
+                <span>Landing</span>
+              </button>
+            )}
+
             {/* School badge */}
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700">
-              <School className="w-3.5 h-3.5 text-indigo-500" />
-              <span>{user.establecimiento}</span>
+            <div className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 truncate max-w-[200px]">
+              <School className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+              <span className="truncate">{user.establecimiento}</span>
             </div>
 
-            {/* Role Switcher */}
-            <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700">
+            {/* Fast Role Switcher */}
+            <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700 text-xs font-semibold">
               <button
-                onClick={() => onRoleChange('profesor')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  user.rol === 'profesor'
-                    ? 'bg-indigo-600 text-white shadow-sm'
+                onClick={() => onRoleChange('admin')}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
+                  user.rol === 'admin'
+                    ? 'bg-amber-600 text-white shadow-sm font-bold'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
+                title="Ingresar como Administrador General / UTP"
               >
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Profesor</span>
+                <span>👑 Admin</span>
               </button>
+
+              <button
+                onClick={() => onRoleChange('profesor', 'matematica')}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
+                  user.rol === 'profesor' && user.asignaturaId === 'asig-1'
+                    ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+                title="Entorno aislado: Docente de Matemática"
+              >
+                <span>📐 Matemática</span>
+              </button>
+
+              <button
+                onClick={() => onRoleChange('profesor', 'lenguaje')}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
+                  user.rol === 'profesor' && user.asignaturaId === 'asig-2'
+                    ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+                title="Entorno aislado: Docente de Lenguaje"
+              >
+                <span>📖 Lenguaje</span>
+              </button>
+
               <button
                 onClick={() => onRoleChange('alumno')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
                   user.rol === 'alumno'
-                    ? 'bg-indigo-600 text-white shadow-sm'
+                    ? 'bg-emerald-600 text-white shadow-sm font-bold'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
+                title="Portal Alumno: Solo Mis Evaluaciones"
               >
-                <UserCheck className="w-3.5 h-3.5" />
-                <span>Alumno</span>
+                <span>🎓 Alumno</span>
               </button>
             </div>
 
@@ -87,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               title="Cambiar tema"
             >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {darkMode ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
             </button>
           </div>
         </div>
@@ -95,3 +136,4 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+

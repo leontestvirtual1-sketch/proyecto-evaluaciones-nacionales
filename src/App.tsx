@@ -16,6 +16,7 @@ import { EvaluacionesPage } from './pages/EvaluacionesPage';
 import { ConfiguracionPage } from './pages/ConfiguracionPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { LandingPage } from './pages/LandingPage';
 import {
   asignaturasMock,
   ejesTematicosMock,
@@ -34,6 +35,7 @@ function MainAppContent() {
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
   const [activePage, setActivePage] = useState<PageId>('dashboard');
   const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [showLanding, setShowLanding] = useState<boolean>(true);
 
   // App Data State
   const [bancoPreguntas, setBancoPreguntas] = useState<Pregunta[]>(preguntasMock);
@@ -61,6 +63,19 @@ function MainAppContent() {
     return reporteCursoMock;
   };
 
+
+  // Show Landing page before authentication
+  if (showLanding) {
+    return (
+      <LandingPage
+        onEnterApp={() => setShowLanding(false)}
+        onSelectRoleDemo={(role, extra) => {
+          switchRole(role, extra);
+          setShowLanding(false);
+        }}
+      />
+    );
+  }
 
   // If user is not authenticated, show Login or Register page
   if (!isAuthenticated || !user) {
@@ -140,7 +155,8 @@ function MainAppContent() {
 
   // Render active content area
   const renderMainContent = () => {
-    if (user.rol === 'profesor') {
+    // Admin and Profesor share the same staff view
+    if (user.rol === 'admin' || user.rol === 'profesor') {
       if (selectedReportPruebaId) {
         return (
           <ReporteTabuladoView
@@ -164,6 +180,7 @@ function MainAppContent() {
               asignaturas={asignaturasMock}
               ejes={ejesTematicosMock}
               habilidades={habilidadesMock}
+              currentUser={user}
               onAddPregunta={handleAddPregunta}
               onUpdatePregunta={handleUpdatePregunta}
               onDeletePregunta={handleDeletePregunta}
@@ -174,12 +191,26 @@ function MainAppContent() {
             <EvaluacionesPage
               pruebas={pruebas}
               asignaturas={asignaturasMock}
+              currentUser={user}
               onOpenGenerator={() => setIsGeneratorOpen(true)}
               onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
               onUpdatePruebaEstado={handleUpdatePruebaEstado}
             />
           );
         case 'configuracion':
+          // RBAC: solo admin puede acceder a Configuración
+          if (user.rol !== 'admin') {
+            return (
+              <ProfesorDashboard
+                profesor={user}
+                pruebas={pruebas}
+                reporteActivo={reporteCursoMock}
+                onOpenGenerator={() => setIsGeneratorOpen(true)}
+                onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
+                onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
+              />
+            );
+          }
           return (
             <ConfiguracionPage
               user={user}
@@ -256,6 +287,7 @@ function MainAppContent() {
             setActivePruebaForRunner(null);
             switchRole(role);
           }}
+          onGoToLanding={() => setShowLanding(true)}
           darkMode={darkMode}
           onToggleDarkMode={handleToggleDarkMode}
         />

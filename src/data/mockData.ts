@@ -11,6 +11,17 @@ import {
   ReporteTabuladoCurso
 } from '../types';
 
+export const currentUserAdmin: UserProfile = {
+  id: '00000000-0000-0000-0000-000000000000',
+  rut: '10.234.567-8',
+  nombre: 'Administrador',
+  apellido: 'General',
+  email: 'admin@sysget.cl',
+  rol: 'admin',
+  establecimiento: APP_CONFIG.nombreEstablecimiento,
+  cargo: 'Jefe de UTP / Administrador'
+};
+
 export const currentUserProfesor: UserProfile = {
   id: '00000000-0000-0000-0000-000000000001',
   rut: '12.345.678-9',
@@ -18,7 +29,23 @@ export const currentUserProfesor: UserProfile = {
   apellido: 'González',
   email: 'maria.gonzalez@escuelademo.cl',
   rol: 'profesor',
-  establecimiento: APP_CONFIG.nombreEstablecimiento
+  establecimiento: APP_CONFIG.nombreEstablecimiento,
+  asignaturaId: 'asig-1',
+  asignaturaNombre: 'Matemática',
+  cargo: 'Docente de Matemática'
+};
+
+export const currentUserProfesorLenguaje: UserProfile = {
+  id: '00000000-0000-0000-0000-000000000003',
+  rut: '14.567.890-1',
+  nombre: 'Carlos',
+  apellido: 'Morales',
+  email: 'carlos.morales@escuelademo.cl',
+  rol: 'profesor',
+  establecimiento: APP_CONFIG.nombreEstablecimiento,
+  asignaturaId: 'asig-2',
+  asignaturaNombre: 'Lenguaje y Comunicación',
+  cargo: 'Docente de Lenguaje'
 };
 
 export const currentUserAlumno: UserProfile = {
@@ -30,6 +57,7 @@ export const currentUserAlumno: UserProfile = {
   rol: 'alumno',
   establecimiento: APP_CONFIG.nombreEstablecimiento
 };
+
 
 export const asignaturasMock: Asignatura[] = [
   { id: 'asig-1', codigo: 'MAT', nombre: 'Matemática' },

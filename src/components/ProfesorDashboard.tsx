@@ -48,14 +48,22 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-              <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-400" /> Portal Docente
+              <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-400" />
+              {profesor.rol === 'admin'
+                ? '👑 Panel General UTP & Dirección'
+                : `Ambiente Docente • ${profesor.asignaturaNombre || 'Especialidad'}`}
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              Bienvenida, Profesora {profesor.nombre} {profesor.apellido}
+              {profesor.rol === 'admin'
+                ? `Bienvenido, ${profesor.nombre} (${profesor.cargo || 'Administrador'})`
+                : `Bienvenido/a, ${profesor.nombre} ${profesor.apellido}`}
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-              Crea evaluaciones en <strong>Sysget Saber</strong>, compártelas con tus cursos y accede a reportes tabulados con planes de reforzamiento pedagógico autogenerados.
+              {profesor.rol === 'admin'
+                ? 'Supervisión integral de rendimiento SIMCE, bancos curriculares y gestión de departamentos en Sysget Saber.'
+                : `Gestión pedagógica de evaluaciones y análisis de logro curricular para la asignatura de ${profesor.asignaturaNombre || 'su departamento'}.`}
             </p>
+
           </div>
 
           <button
