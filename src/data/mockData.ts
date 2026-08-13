@@ -576,3 +576,125 @@ export const reporteCursoMock: ReporteTabuladoCurso = {
   ],
   rendiciones: rendicionesMock
 };
+
+export const rendicionesLenguajeMock: RendicionPrueba[] = [
+  {
+    id: 'rend-len-1',
+    pruebaId: 'prueba-102',
+    alumnoId: '00000000-0000-0000-0000-000000000002',
+    alumnoNombre: 'Pedro Soto',
+    alumnoRut: '22.876.543-0',
+    fechaRendicion: '2026-08-05 11:00',
+    puntajeObtenido: 4,
+    puntajeMaximo: 5,
+    porcentajeLogro: 80,
+    puntajeEscalaNacional: 295,
+    respuestas: [
+      { preguntaId: 'preg-10', respuestaDada: 'B', esCorrecta: true, tiempoSegundos: 50 },
+      { preguntaId: 'preg-11', respuestaDada: 'C', esCorrecta: true, tiempoSegundos: 40 }
+    ],
+    estado: 'enviada'
+  },
+  {
+    id: 'rend-len-2',
+    pruebaId: 'prueba-102',
+    alumnoId: '00000000-0000-0000-0000-000000000003',
+    alumnoNombre: 'Ana López',
+    alumnoRut: '23.111.111-1',
+    fechaRendicion: '2026-08-05 11:05',
+    puntajeObtenido: 3,
+    puntajeMaximo: 5,
+    porcentajeLogro: 60,
+    puntajeEscalaNacional: 250,
+    respuestas: [
+      { preguntaId: 'preg-10', respuestaDada: 'A', esCorrecta: false, tiempoSegundos: 75 },
+      { preguntaId: 'preg-11', respuestaDada: 'C', esCorrecta: true, tiempoSegundos: 45 }
+    ],
+    estado: 'enviada'
+  },
+  {
+    id: 'rend-len-3',
+    pruebaId: 'prueba-102',
+    alumnoId: '00000000-0000-0000-0000-000000000004',
+    alumnoNombre: 'Carlos Martínez',
+    alumnoRut: '22.222.222-2',
+    fechaRendicion: '2026-08-05 11:10',
+    puntajeObtenido: 2,
+    puntajeMaximo: 5,
+    porcentajeLogro: 40,
+    puntajeEscalaNacional: 210,
+    respuestas: [
+      { preguntaId: 'preg-10', respuestaDada: 'D', esCorrecta: false, tiempoSegundos: 90 },
+      { preguntaId: 'preg-11', respuestaDada: 'B', esCorrecta: false, tiempoSegundos: 60 }
+    ],
+    estado: 'enviada'
+  },
+  {
+    id: 'rend-len-4',
+    pruebaId: 'prueba-102',
+    alumnoId: '00000000-0000-0000-0000-000000000005',
+    alumnoNombre: 'Sofía Valenzuela',
+    alumnoRut: '23.444.555-9',
+    fechaRendicion: '2026-08-05 11:12',
+    puntajeObtenido: 5,
+    puntajeMaximo: 5,
+    porcentajeLogro: 100,
+    puntajeEscalaNacional: 335,
+    respuestas: [
+      { preguntaId: 'preg-10', respuestaDada: 'B', esCorrecta: true, tiempoSegundos: 42 },
+      { preguntaId: 'preg-11', respuestaDada: 'C', esCorrecta: true, tiempoSegundos: 35 }
+    ],
+    estado: 'enviada'
+  }
+];
+
+export const reporteLenguajeMock: ReporteTabuladoCurso = {
+  pruebaId: 'prueba-102',
+  pruebaTitulo: 'Ensayo Formativo N° 1 - Comprensión Lectora',
+  cursoNombre: '8° Básico A',
+  totalAlumnosRendidos: 4,
+  totalAlumnosMatriculados: 28,
+  promedioPorcentajeLogro: 70,
+  promedioEscalaNacional: 272,
+  desgloseEjes: [
+    { ejeId: 'eje-len-1', codigo: 'LEN-LEC-8', nombre: 'Comprensión Lectora (Textos Literarios)', preguntasTotal: 3, respuestasCorrectas: 3, porcentajeLogro: 85, estado: 'optimo' },
+    { ejeId: 'eje-len-2', codigo: 'LEN-INF-8', nombre: 'Textos No Literarios e Informativos', preguntasTotal: 2, respuestasCorrectas: 1, porcentajeLogro: 52, estado: 'alerta' }
+  ],
+  desgloseHabilidades: [
+    { habilidadId: 'hab-len-1', codigo: 'LEN-LOC', nombre: 'Localizar Información', preguntasTotal: 2, respuestasCorrectas: 2, porcentajeLogro: 90 },
+    { habilidadId: 'hab-len-2', codigo: 'LEN-INT', nombre: 'Interpretar y Relacionar', preguntasTotal: 2, respuestasCorrectas: 1, porcentajeLogro: 68 },
+    { habilidadId: 'hab-len-3', codigo: 'LEN-REF', nombre: 'Reflexionar e Inferir', preguntasTotal: 1, respuestasCorrectas: 0, porcentajeLogro: 45 }
+  ],
+  preguntasMasFalladas: [
+    {
+      pregunta: preguntasMock[9],
+      porcentajeError: 50,
+      alternativaMasVotada: 'A (Tenía miedo de perder su embarcación - Inferencia no sustentada)',
+      totalRespuestas: 4
+    },
+    {
+      pregunta: preguntasMock[10],
+      porcentajeError: 25,
+      alternativaMasVotada: 'B (Entretener al lector mediante una historia fantástica)',
+      totalRespuestas: 4
+    }
+  ],
+  planAccionReforzamiento: [
+    {
+      id: 'plan-len-1',
+      titulo: 'Taller de Inferencia Implícita y Claves Contextuales en Textos Narrativos e Informativos',
+      eje: 'Textos No Literarios e Informativos (LEN-INF-8)',
+      habilidad: 'Reflexionar e Inferir (LEN-REF)',
+      nivelAlerta: 'alta',
+      diagnostico: 'El 50% de los estudiantes confunde las deducciones e inferencias lógicas sustentadas en el texto con suposiciones personales o interpretaciones subjetivas sin evidencia textual. La opción A (temor del pescador) fue elegida por inferir emociones no mencionadas explícita ni implícitamente.',
+      sugerenciaPedagogica: 'Modelar en la pizarra la diferencia entre "marcas textuales" (pistas que deja el autor) y "suposiciones personales". Practicar la técnica de rastreo de evidencia textual antes de marcar una alternativa.',
+      ejerciciosRecomendados: [
+        'Guía de Lectura Crítica N° 1: Identificación de pistas contextuales e inferencias válidas.',
+        'Taller grupal: Análisis de propósito implícito en microcuentos y crónicas.',
+        'Ficha de autocontrol: "¿Qué dice el texto?" vs "¿Qué supongo yo?".'
+      ]
+    }
+  ],
+  rendiciones: rendicionesLenguajeMock
+};
+

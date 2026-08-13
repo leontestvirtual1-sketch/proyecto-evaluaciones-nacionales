@@ -23,9 +23,10 @@ import {
   cursosMock,
   pruebasMock,
   rendicionesMock,
-  reporteCursoMock
+  reporteCursoMock,
+  reporteLenguajeMock
 } from './data/mockData';
-import { Prueba, RendicionPrueba, Pregunta } from './types';
+import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso } from './types';
 
 function MainAppContent() {
   const { user, isAuthenticated, switchRole } = useAuth();
@@ -37,12 +38,28 @@ function MainAppContent() {
   const [bancoPreguntas, setBancoPreguntas] = useState<Pregunta[]>(preguntasMock);
   const [pruebas, setPruebas] = useState<Prueba[]>(pruebasMock);
   const [rendiciones, setRendiciones] = useState<RendicionPrueba[]>(rendicionesMock);
-  const [reporteActual, setReporteActual] = useState(reporteCursoMock);
 
   // View States
   const [selectedReportPruebaId, setSelectedReportPruebaId] = useState<string | null>(null);
   const [activePruebaForRunner, setActivePruebaForRunner] = useState<Prueba | null>(null);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState<boolean>(false);
+
+  const getReporteForPrueba = (pruebaId: string): ReporteTabuladoCurso => {
+    const prueba = pruebas.find(p => p.id === pruebaId);
+    if (pruebaId === 'prueba-102' || (prueba && (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')))) {
+      return reporteLenguajeMock;
+    }
+    if (prueba) {
+      return {
+        ...reporteCursoMock,
+        pruebaId: prueba.id,
+        pruebaTitulo: prueba.titulo,
+        cursoNombre: prueba.cursoNombre,
+      };
+    }
+    return reporteCursoMock;
+  };
+
 
   // If user is not authenticated, show Login or Register page
   if (!isAuthenticated || !user) {
@@ -92,7 +109,7 @@ function MainAppContent() {
       if (selectedReportPruebaId) {
         return (
           <ReporteTabuladoView
-            reporte={reporteActual}
+            reporte={getReporteForPrueba(selectedReportPruebaId)}
             onBack={() => setSelectedReportPruebaId(null)}
           />
         );
@@ -141,7 +158,7 @@ function MainAppContent() {
             <ProfesorDashboard
               profesor={user}
               pruebas={pruebas}
-              reporteActivo={reporteActual}
+              reporteActivo={reporteCursoMock}
               onOpenGenerator={() => setIsGeneratorOpen(true)}
               onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
               onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
