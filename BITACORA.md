@@ -64,3 +64,14 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - [.env.local](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.env.local): [MODIFICADO] Asignadas las credenciales de Supabase Cloud (`VITE_SUPABASE_URL=https://khtdzgfqjggycrcbrytw.supabase.co` y su correspondiente `VITE_SUPABASE_ANON_KEY`), manteniendo variables `NEXT_PUBLIC_*` y `SUPABASE_SERVICE_ROLE_KEY` sin exponerlas a Git (protegido por `.gitignore`).
   - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea.
 - **Verificación / Despliegue**: Build de producción exitoso con `tsc && vite build` (código 0, 1643 módulos transformados sin errores). Protegido contra filtraciones en el repositorio.
+
+---
+
+### [2026-08-13] Migración y Aprovisionamiento del Esquema en Supabase Cloud
+- **Problema / Requerimiento**: Ejecutar el script DDL inicial en el SQL Editor de Supabase Cloud para aprovisionar las tablas del sistema, relaciones, llaves foráneas y políticas de seguridad RLS.
+- **Archivos y Solución Técnica**:
+  - [supabase/migrations/001_initial_schema.sql](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/001_initial_schema.sql): Migración ejecutada con éxito en PostgreSQL remoto.
+  - Creadas las 9 tablas del modelo de datos: `perfiles`, `cursos`, `matriculas`, `asignaturas`, `ejes_tematicos`, `habilidades`, `preguntas`, `pruebas` y `rendiciones`.
+  - Habilitadas las políticas de Row Level Security (RLS) en todas las tablas del esquema `public`.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Registro oficial actualizado.
+- **Verificación / Despliegue**: Tablas confirmadas y visibles en el Table Editor de Supabase Cloud en el proyecto `khtdzgfqjggycrcbrytw`.
