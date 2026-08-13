@@ -7,6 +7,7 @@ import { ReporteTabuladoView } from './components/ReporteTabuladoView';
 import { EvaluacionGeneratorModal } from './components/EvaluacionGeneratorModal';
 import { AlumnoPortal } from './components/AlumnoPortal';
 import { AlumnoEvaluationView } from './components/AlumnoEvaluationView';
+import { AlumnoPerfilView } from './components/AlumnoPerfilView';
 import { ProfesoresPage } from './pages/ProfesoresPage';
 import { AlumnosPage } from './pages/AlumnosPage';
 import { BancoPreguntasPage } from './pages/BancoPreguntasPage';
@@ -209,6 +210,17 @@ function MainAppContent() {
             alumno={user}
             onFinish={handleFinishRendicion}
             onCancel={() => setActivePruebaForRunner(null)}
+          />
+        );
+      }
+
+      if (activePage === 'configuracion') {
+        return (
+          <AlumnoPerfilView
+            alumno={user}
+            historialRendiciones={rendiciones.filter(r => r.alumnoId === user.id)}
+            darkMode={darkMode}
+            onToggleDarkMode={handleToggleDarkMode}
           />
         );
       }
