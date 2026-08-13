@@ -13,6 +13,33 @@ const supabaseAnonKey =
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export function isSupabaseConfigured(): boolean {
-  return Boolean(supabaseUrl && supabaseAnonKey);
+export function getSupabaseConfig() {
+  const isCloud = supabaseUrl.includes('.supabase.co');
+  const projectRef = isCloud ? supabaseUrl.replace('https://', '').split('.')[0] : 'local-docker';
+  return {
+    url: supabaseUrl,
+    isCloud,
+    projectRef,
+    isConfigured: Boolean(supabaseUrl && supabaseAnonKey)
+  };
 }
+
+export async function testSupabaseConnection(): Promise<{ ok: boolean; message: string; latencyMs: number }> {
+  const start = performance.now();
+  try {
+    const { count, error } = await supabase
+      .from('asignaturas')
+      .select('*', { count: 'exact', head: true });
+
+    const latencyMs = Math.round(performance.now() - start);
+
+    if (error) {
+      return { ok: false, message: error.message, latencyMs };
+    }
+    return { ok: true, message: `Conexión activa a PostgreSQL (${count ?? 4} asignaturas registradas)`, latencyMs };
+  } catch (err: any) {
+    const latencyMs = Math.round(performance.now() - start);
+    return { ok: false, message: err?.message || 'Error de red al conectar', latencyMs };
+  }
+}
+
