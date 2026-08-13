@@ -45,3 +45,13 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - [.agents/skills/obsidian-vault-organizer/SKILL.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/skills/obsidian-vault-organizer/SKILL.md): [NUEVO] Skill con directrices de diagnóstico, sistemas de organización (PARA, Zettelkasten simplificado, Híbrido), convenciones de nombrado/etiquetado, fases de planificación antes de ejecución y uso seguro de herramientas MCP (`move-note`, `rename-tag`, `create-directory`, etc.).
   - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según el formato de `task-summary-format`.
 - **Verificación / Despliegue**: Archivo SKILL.md creado y verificado con frontmatter YAML válido para su detección por el sistema de agentes.
+
+---
+
+### [2026-08-13] Creación del Skill de Seguridad en Aplicaciones Web
+- **Problema / Requerimiento**: Agregar un skill y regla obligatoria de seguridad para aplicaciones web y APIs que cubra protección de secretos (.env), validación Zod/XSS/SQLi, autenticación RBAC/IDOR, CORS, cabeceras Helmet, rate limiting, logs seguros, cookies HttpOnly y auditoría de dependencias.
+- **Archivos y Solución Técnica**:
+  - [.agents/skills/web-app-security/SKILL.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/skills/web-app-security/SKILL.md): [NUEVO] Skill integral con 10 pilares de seguridad defensiva, mitigación de vulnerabilidades OWASP Top 10 y checklist de verificación.
+  - [.agents/AGENTS.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/AGENTS.md): [MODIFICADO] Añadida regla local para requerir el cumplimiento del skill `web-app-security` en el desarrollo de APIs, backend, base de datos y autenticación.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según el formato de `task-summary-format`.
+- **Verificación / Despliegue**: Archivos SKILL.md y AGENTS.md validados y registrados en el control de versiones local.
