@@ -35,6 +35,7 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - Configurado el usuario Git local con el email `leontestvirtual1@gmail.com`.
   - Realizado el primer commit (`Initial commit: Sysget Saber - Proyecto Evaluaciones Nacionales`) con 44 archivos.
   - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea.
-- **Verificación / Despliegue**: Repositorio local `main` creado correctamente en local. Listo para vincular y subir (`push`) al repositorio en GitHub.
+- **Verificación / Despliegue**: Repositorio local `main` vinculado al remoto `https://github.com/leontestvirtual1-sketch/proyecto-evaluaciones-nacionales.git` y subida inicial (`push`) de código ejecutada.
+
 
 
