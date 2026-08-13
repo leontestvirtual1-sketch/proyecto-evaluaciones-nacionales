@@ -37,9 +37,19 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
   const currentAsignatura = asignaturas.find(a => a.id === asignaturaId);
   const currentCurso = cursos.find(c => c.id === cursoId);
 
-  // Filter available questions by subject
-  const preguntasDisponibles = bancoPreguntas.filter(p => p.asignaturaId === asignaturaId || !p.asignaturaId);
-  const preguntasSeleccionadas = preguntasDisponibles.slice(0, numPreguntas);
+  // Filter available questions strictly by subject
+  const preguntasDisponibles = bancoPreguntas.filter(p => p.asignaturaId === asignaturaId);
+
+  const preguntasSeleccionadas: Pregunta[] = [];
+  if (preguntasDisponibles.length > 0) {
+    for (let i = 0; i < numPreguntas; i++) {
+      const base = preguntasDisponibles[i % preguntasDisponibles.length];
+      preguntasSeleccionadas.push({
+        ...base,
+        id: base.id
+      });
+    }
+  }
 
   const handleGenerate = () => {
     const codigoUnico = `EVAL-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -48,7 +58,7 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
       titulo,
       descripcion,
       asignaturaId,
-      asignaturaNombre: currentAsignatura?.nombre || 'Matemática',
+      asignaturaNombre: currentAsignatura?.nombre || 'Lenguaje y Comunicación',
       nivel,
       profesorId: '00000000-0000-0000-0000-000000000001',
       cursoId,
@@ -56,8 +66,8 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
       codigoPublico: codigoUnico,
       duracionMinutos,
       creadoEn: new Date().toISOString().split('T')[0],
-      preguntasIds: preguntasSeleccionadas.map(p => p.id),
-      totalPreguntas: preguntasSeleccionadas.length,
+      preguntasIds: preguntasSeleccionadas.map((p, idx) => `${p.id}-gen-${idx}`),
+      totalPreguntas: numPreguntas,
       estado: 'activa'
     };
 

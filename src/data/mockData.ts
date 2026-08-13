@@ -358,6 +358,101 @@ export const preguntasMock: Pregunta[] = [
     respuestaCorrecta: null,
     puntaje: 3,
     fuente: 'Elaboración Docente'
+  },
+  // 16. Lectura - Idea Principal
+  {
+    id: 'preg-16',
+    asignaturaId: 'asig-2',
+    ejeTematicoId: 'eje-len-1',
+    habilidadId: 'hab-len-2',
+    tipo: 'seleccion_multiple',
+    nivel: '8° básico',
+    dificultad: 'media',
+    enunciado: '¿Cuál es el tema central o idea principal de un artículo que analiza la migración de las aves durante el otoño hacia zonas más cálidas?',
+    alternativas: [
+      { letra: 'A', texto: 'La velocidad de vuelo de las aves rapaces en cautiverio.', es_correcta: false },
+      { letra: 'B', texto: 'Las causas climáticas y biológicas de la migración estacional de las aves.', es_correcta: true },
+      { letra: 'C', texto: 'El tipo de alimentación de los mamíferos durante el invierno.', es_correcta: false },
+      { letra: 'D', texto: 'La construcción de nidos en zonas de alta cordillera.', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'Liberada Oficial SIMCE'
+  },
+  // 17. Lectura - Vocabulario Contextual
+  {
+    id: 'preg-17',
+    asignaturaId: 'asig-2',
+    ejeTematicoId: 'eje-len-2',
+    habilidadId: 'hab-len-1',
+    tipo: 'seleccion_multiple',
+    nivel: '8° básico',
+    dificultad: 'media',
+    enunciado: 'En la frase: "La científica mostró un compromiso INQUEBRANTABLE con la protección de los glaciares", ¿qué término reemplaza mejor a la palabra resaltada?',
+    alternativas: [
+      { letra: 'A', texto: 'Fragil', es_correcta: false },
+      { letra: 'B', texto: 'Firme', es_correcta: true },
+      { letra: 'C', texto: 'Temporal', es_correcta: false },
+      { letra: 'D', texto: 'Dudoso', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'Banco Institucional'
+  },
+  // 18. Lectura - Textos Argumentativos
+  {
+    id: 'preg-18',
+    asignaturaId: 'asig-2',
+    ejeTematicoId: 'eje-len-2',
+    habilidadId: 'hab-len-3',
+    tipo: 'seleccion_multiple',
+    nivel: '8° básico',
+    dificultad: 'alta',
+    enunciado: '¿Cuál es la función de un argumento dentro de una carta al director publicada en un periódico nacional?',
+    alternativas: [
+      { letra: 'A', texto: 'Respaldar con razones fundadas la postura o tesis sostenida por el autor.', es_correcta: true },
+      { letra: 'B', texto: 'Narrar cronológicamente una secuencia de acontecimientos ficticios.', es_correcta: false },
+      { letra: 'C', texto: 'Definir el significado de palabras técnicas o científicas poco comunes.', es_correcta: false },
+      { letra: 'D', texto: 'Enumerar los datos biográficos de una personalidad histórica.', es_correcta: false }
+    ],
+    respuestaCorrecta: 'A',
+    puntaje: 1,
+    fuente: 'Liberada Oficial PAES'
+  },
+  // 19. Lectura - Inferencia Global
+  {
+    id: 'preg-19',
+    asignaturaId: 'asig-2',
+    ejeTematicoId: 'eje-len-1',
+    habilidadId: 'hab-len-3',
+    tipo: 'seleccion_multiple',
+    nivel: '8° básico',
+    dificultad: 'media',
+    enunciado: 'Si un relato describe el rostro preocupado de una madre mirando constantemente el reloj mientras espera la llegada del tren nocturno, ¿qué actitud se infiere de la protagonista?',
+    alternativas: [
+      { letra: 'A', texto: 'Indiferencia absoluta ante la llegada del tren.', es_correcta: false },
+      { letra: 'B', texto: 'Ansiedad e impaciencia por el arribo de su ser querido.', es_correcta: true },
+      { letra: 'C', texto: 'Alegría desbordante y festiva.', es_correcta: false },
+      { letra: 'D', texto: 'Enojo con la compañía de ferrocarriles.', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'Liberada Oficial SIMCE'
+  },
+  // 20. Lectura - Desarrollo Comprensión
+  {
+    id: 'preg-20',
+    asignaturaId: 'asig-2',
+    ejeTematicoId: 'eje-len-2',
+    habilidadId: 'hab-len-3',
+    tipo: 'desarrollo',
+    nivel: '8° básico',
+    dificultad: 'alta',
+    enunciado: 'Redacte una breve postura argumentativa (mínimo 3 líneas) señalando la importancia del uso responsable de las redes sociales en jóvenes escolares.',
+    alternativas: [],
+    respuestaCorrecta: null,
+    puntaje: 2,
+    fuente: 'Elaboración Docente'
   }
 ];
 

@@ -103,6 +103,40 @@ function MainAppContent() {
     setPruebas(prev => prev.map(p => p.id === pruebaId ? { ...p, estado: nuevoEstado } : p));
   };
 
+  const getPreguntasForRunner = (prueba: Prueba, banco: Pregunta[]): Pregunta[] => {
+    // Filter questions by subject ID
+    let matched = banco.filter(p => p.asignaturaId === prueba.asignaturaId);
+
+    // Fallback match by subject name if ID didn't match
+    if (matched.length === 0) {
+      if (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')) {
+        matched = banco.filter(p => p.asignaturaId === 'asig-2');
+      } else if (prueba.asignaturaNombre.toLowerCase().includes('ciencia')) {
+        matched = banco.filter(p => p.asignaturaId === 'asig-3');
+      } else {
+        matched = banco.filter(p => p.asignaturaId === 'asig-1');
+      }
+    }
+
+    if (matched.length === 0) {
+      matched = banco;
+    }
+
+    // Ensure we return exactly totalPreguntas count with questions of that subject
+    const targetCount = prueba.totalPreguntas || matched.length || 5;
+    const result: Pregunta[] = [];
+
+    for (let i = 0; i < targetCount; i++) {
+      const basePreg = matched[i % matched.length];
+      result.push({
+        ...basePreg,
+        id: `${basePreg.id}-idx-${i}`
+      });
+    }
+
+    return result;
+  };
+
   // Render active content area
   const renderMainContent = () => {
     if (user.rol === 'profesor') {
@@ -171,7 +205,7 @@ function MainAppContent() {
         return (
           <AlumnoEvaluationView
             prueba={activePruebaForRunner}
-            preguntas={bancoPreguntas}
+            preguntas={getPreguntasForRunner(activePruebaForRunner, bancoPreguntas)}
             alumno={user}
             onFinish={handleFinishRendicion}
             onCancel={() => setActivePruebaForRunner(null)}
