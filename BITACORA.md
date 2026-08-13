@@ -25,3 +25,16 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - [src/App.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO] Routing del switch: `evaluaciones` → `EvaluacionesPage`, `configuracion` → `ConfiguracionPage`, `dashboard` → `ProfesorDashboard`. Handler `handleUpdatePruebaEstado` agregado.
 - **Verificación / Despliegue**: Build de producción exitoso — `vite build`, exit code 0, 1642 módulos transformados, sin errores TypeScript.
 
+---
+
+### [2026-08-13] Inicialización de Repositorio Git Local y Preparación para GitHub
+- **Problema / Requerimiento**: Inicializar el repositorio Git local y guiar la conexión con GitHub usando la cuenta `leontestvirtual1@gmail.com`.
+- **Archivos y Solución Técnica**:
+  - Configurado `git config safe.directory` para solucionar permisos de carpeta en Windows.
+  - Inicializado el repositorio Git local en la rama principal `main`.
+  - Configurado el usuario Git local con el email `leontestvirtual1@gmail.com`.
+  - Realizado el primer commit (`Initial commit: Sysget Saber - Proyecto Evaluaciones Nacionales`) con 44 archivos.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea.
+- **Verificación / Despliegue**: Repositorio local `main` creado correctamente en local. Listo para vincular y subir (`push`) al repositorio en GitHub.
+
+
