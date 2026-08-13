@@ -75,3 +75,12 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - Habilitadas las políticas de Row Level Security (RLS) en todas las tablas del esquema `public`.
   - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Registro oficial actualizado.
 - **Verificación / Despliegue**: Tablas confirmadas y visibles en el Table Editor de Supabase Cloud en el proyecto `khtdzgfqjggycrcbrytw`.
+
+---
+
+### [2026-08-13] Generación de Seed SQL y Ejecución del Servidor de Desarrollo
+- **Problema / Requerimiento**: Preparar un script SQL de datos iniciales (*Seed*) con usuarios demo, cursos, preguntas SIMCE y evaluaciones, e iniciar el entorno de desarrollo local.
+- **Archivos y Solución Técnica**:
+  - [supabase/migrations/002_seed_demo_data.sql](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/002_seed_demo_data.sql): [NUEVO] Script SQL con usuarios demo (`maria@demo.cl` / `pedro@demo.cl`), perfiles para *Escuela Premilitar Heroes De La Concepción*, 3 cursos (8° Básico A/B y 2° Medio A), preguntas SIMCE, pruebas activas con código de acceso y rendición de muestra con 100% de logro.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según `task-summary-format`.
+- **Verificación / Despliegue**: Servidor de desarrollo Vite iniciado activamente en `http://localhost:3000/`. Script SQL preparado para ejecución en Supabase Cloud.
