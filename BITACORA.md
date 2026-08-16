@@ -2,6 +2,164 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Backend Serverless `/api/users` para Registro y Aprobación Persistente en Base de Datos
+
+- **Problema / Requerimiento**:
+  1. Al registrarse una docente (María Teresa González), la solicitud no aparecía en el panel de **Gestión de Usuarios** tras refrescar.
+  2. Al hacer clic en el botón de aprobación del correo, el sistema indicaba que el enlace era inválido debido a un error de recursión infinita en las políticas RLS del cliente de Supabase (`42P17`).
+  3. Al enviar la solicitud de registro, el usuario era auto-iniciado o devuelto al dashboard.
+- **Archivos y Solución Técnica**:
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts): [NUEVO] Endpoint serverless integral en Vercel que utiliza `SUPABASE_SERVICE_ROLE_KEY` para interactuar con la base de datos de Supabase sin restricciones de RLS.
+    - `GET /api/users`: Lista todos los usuarios registrados y pendientes directamente de la base de datos `perfiles`.
+    - `POST /api/users?action=register`: Crea/actualiza la cuenta, asigna token persistente y despacha el correo formal vía Google SMTP.
+    - `POST /api/users?action=approve-token`: Valida el token del correo, activa la cuenta a `activo` y asigna 30 días de Trial.
+    - `POST /api/users?action=approve-id` y `suspend`: Gestión directa desde el panel administrativo.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Conectado `fetchUsers`, `register`, `approveUserByToken` y `approveUser` al backend serverless `/api/users`. Eliminado el auto-login tras registrarse.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO] Protección de `authView !== 'register'` en la restauración reactiva de sesión.
+- **Verificación / Despliegue**:
+  - Prueba directa de API en producción: ✅ Registro, listado y aprobación por token verificados exitosamente con respuesta `200 OK`.
+  - Despliegue Vercel Producción: ✅ `dpl_141W27jWsZJyULCiawzotDLiyKss`
+  - URL en Producción: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-16] Persistencia Total de Sesión en Refresh (localStorage + Supabase) y Despliegue Producción
+
+- **Problema / Requerimiento**:
+  - Al refrescar el navegador (F5), la sesión se cerraba inesperadamente porque `login()` no almacenaba el identificador de sesión en `localStorage` y `showLanding` se activaba por defecto antes de resolver el estado de autenticación.
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO]
+    - `login()`: Guarda `localStorage.setItem('sysget_session_email', cleanEmail)` en todos los caminos exitosos de autenticación (Supabase, Mock, Demo e Inferido).
+    - `checkSession()`: Si Supabase no tiene el perfil creado en la tabla `perfiles`, recupera el usuario desde `DEMO_USERS` y sincroniza con `localStorage`.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO]
+    - Añadida pantalla de transición mientras `isLoading` esté activo.
+    - `useEffect` reactivo que desactiva `showLanding` inmediatamente cuando `isAuthenticated && user` se restauran.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript + Vite: ✅ 2241 módulos, 0 errores, 7.05s.
+  - Despliegue Vercel Producción: ✅ `dpl_8RP8oNuF6z2jmUwrFL6GcRtrU1R9`
+  - URL en Producción: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-15] Corrección de Sesión Persistente, Aprobación por Token y Google SMTP
+
+- **Problema / Requerimiento**:
+  1. Al refrescar la página, el usuario era expulsado y debía iniciar sesión de nuevo (sesión no persistía).
+  2. Al hacer clic en el enlace de aprobación del correo, aparecía "El enlace es inválido o ya fue activado" aunque la cuenta fuera nueva.
+  3. El correo de notificación no llegaba al admin por credenciales SMTP incorrectas.
+  4. María Teresa González no aparecía en el panel admin tras registrarse.
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO]
+    - `checkSession()`: Ahora restaura sesión para rol `admin`/`superadmin` aunque estado no sea `activo`. Cuando no hay perfil en `perfiles`, usa `DEMO_USERS` como fallback. Guarda email en `localStorage` para persistencia offline.
+    - `approveUserByToken()`: Eliminado el RPC inexistente. Ahora consulta directamente `perfiles.approval_token = token` en Supabase y actualiza `estado='activo'` directamente. El token sobrevive reinicios porque vive en la BD.
+    - `logout()`: Limpia `localStorage.sysget_session_email` al cerrar sesión.
+    - `notifyAdminNewRegistration()`: Ahora incluye `rbd` y `asignaturaNombre` en el payload.
+  - [`api/notify-admin.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/notify-admin.ts): [NUEVO] Vercel Serverless Function con Google SMTP. Usa contraseña de aplicación `SMTP_PASS_REDACTED` para `leontestvirtual1@gmail.com`. Envía correo a `leontestvirtual1@gmail.com` y `luis_leon_g@hotmail.com`. Incluye Especialidad, RBD y botón de 1-clic.
+  - [`supabase/functions/notify-admin/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/functions/notify-admin/index.ts): [MODIFICADO] Actualizado con misma contraseña de aplicación Google como fallback. Añadidos campos `rbd` y `asignaturaNombre` en la tarjeta del correo.
+- **Verificación / Despliegue**:
+  - Test SMTP local: ✅ `node test_smtp.mjs` → correo entregado a `leontestvirtual1@gmail.com`
+  - Test endpoint producción: ✅ `STATUS: 200 {"success":true,"messageId":"..."}`
+  - Compilación TypeScript + Vite: ✅ 2241 módulos, 0 errores.
+  - Despliegue Vercel Producción: ✅ `dpl_F1rTbwxVknd6rWLBi89gi5182T62`
+  - URL en Producción: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-15] Flujo Oficial y Exclusivo de Aprobación: Panel Admin & Correo Institucional (Eliminación de Demo)
+
+- **Problema / Requerimiento**:
+  - Eliminar de raíz la caja y botones de simulación demo de la pantalla de registro de usuarios. La activación de nuevas cuentas debe realizarse exclusivamente desde:
+    1. El panel de administración de Sysget Saber (**Gestión de Usuarios** / pestaña *Solicitudes Pendientes*).
+    2. El correo de notificación enviado al Super Admin / UTP vía **Google SMTP** con el botón de 1-clic.
+- **Archivos y Solución Técnica**:
+  - [`src/pages/RegisterPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx): [MODIFICADO] Eliminada toda la sección de simulación demo, tokens de copia y botones de autoaprobación. La pantalla de éxito ahora es 100% formal e informativa, indicando que la solicitud fue enviada a revisión y validación administrativa.
+  - [`src/pages/GestionUsuariosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx): [VERIFICADO] Panel centralizado para que el Super Admin apruebe con 1-clic cualquier solicitud pendiente (`estado: 'pendiente_aprobacion'`), asignándole su período de prueba (Trial 30 días) o plan institucional.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript + Vite: ✅ 2241 módulos, 0 errores, 10.46s.
+  - Despliegue Vercel Producción: ✅ `dpl_2Tutwx7oiukLPFFVTo4r1T2eZ3FB`
+  - URL en Producción: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-15] Registro con Especialidad/RBD, Impresión Personalizada por Alumno e Ingreso Rápido de Respuestas
+
+- **Problema / Requerimiento**:
+  1. En el registro de docentes faltaba la selección de especialidad curricular y el RBD del colegio para mapeo institucional.
+  2. Ofrecer la opción de imprimir cuadernillos pre-personalizados con los datos de cada estudiante (Nombre, RUT, Curso, N° Lista) para fotocopiar y entregar directamente.
+  3. Proporcionar un método ultrarrápido para que el profesor ingrese las respuestas de las hojas físicas recogidas (grilla interactiva 1-clic con cálculo automático de % de logro y puntaje SIMCE + subida de foto de respaldo).
+- **Archivos y Solución Técnica**:
+  - [`src/pages/RegisterPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx): [MODIFICADO] Añadido selector de Especialidad / Asignatura del catálogo oficial MINEDUC (solo para rol profesor) y campo RBD del establecimiento con ayuda contextual.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Soporte de `rbd` en la interfaz `RegisterData`.
+  - [`src/types/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts) y [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Añadido tipo `AlumnoBasico` y catálogo `alumnosMock` con estudiantes por curso (8° Básico A y 6° Básico B).
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): [MODIFICADO] Nuevo modo **"2. Por Alumno"** con selector interactivo de estudiantes (seleccionar todos/individual), membretes pre-rellenados con datos de cada alumno y saltos de página `break-after: page;` entre cuadernillos.
+  - [`src/components/IngresoRespuestasModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/IngresoRespuestasModal.tsx): [NUEVO] Modal Fast-Track para corregir hojas físicas: selector de alumno del curso, subida opcional de foto de la hoja física, grilla óptica A/B/C/D con autocorrección inmediata, cálculo de puntaje SIMCE en vivo y botón "Guardar y Siguiente Alumno".
+  - [`src/pages/EvaluacionesPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/EvaluacionesPage.tsx): [MODIFICADO] Integración de botón destacado `Ingresar Respuestas (Foto/Rápido)` en cada tarjeta de evaluación.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript + Vite: ✅ 2241 módulos, 0 errores, 9.16s.
+  - Despliegue Vercel Producción: ✅ `dpl_5qAsHsqo2gNSbg5FxnkKRSMpZj4F`
+  - URL en Producción: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-15] Skill de Arquitectura Académica y Ajuste Definitivo de Tamaño/Sincronización del Modal Docente
+
+- **Problema / Requerimiento**:
+  1. Al hacer clic en "Editar Especialidad" en un profesor, los datos no se cargaban (aparecían los placeholders vacíos) y la parte inferior del modal con los botones "Cancelar" y "Guardar Cambios" seguía cortándose verticalmente en pantallas de laptop.
+  2. Generar e integrar el skill oficial de la suite académica al proyecto (`.agents/skills/evaluaciones-academicas-suite`).
+- **Archivos y Solución Técnica**:
+  - [`.agents/skills/evaluaciones-academicas-suite/SKILL.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/skills/evaluaciones-academicas-suite/SKILL.md): [NUEVO] Skill oficial que estandariza el motor de impresión aislada sin fugas de `#root`, las reglas de modales compactos de 2 columnas (altura máxima < 350px con `useEffect` reactivo) y la arquitectura curricular (especialidades, ejes temáticos y habilidades).
+  - [`.agents/AGENTS.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/AGENTS.md): [MODIFICADO] Añadida la regla obligatoria de arquitectura de evaluaciones y modales académicos referenciando el nuevo skill.
+  - [`src/pages/ProfesoresPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ProfesoresPage.tsx): [MODIFICADO] Sincronización reactiva con `useEffect` en `ProfesorFormModal` para precargar de inmediato los datos del docente al editar (`form.nombre`, `form.apellido`, etc.). Dimensiones reducidas a `max-w-xl` ultra-compacto con inputs densos (`py-1.5 px-2.5`) y altura total de solo 320px, garantizando 100% de visibilidad de los botones sin ningún corte vertical.
+- **Verificación / Despliegue**:
+  - Compilación Vite + TypeScript: ✅ 2240 módulos, 0 errores, 12.31s.
+  - Despliegue Vercel Producción: ✅ `dpl_Do64g3YffUN8fVhn7xoXQFRZxuzx`
+  - URL en Producción: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-15] Eliminación Total de Hojas en Blanco al Imprimir y Nombre Descriptivo al Guardar PDF
+
+- **Problema / Requerimiento**:
+  1. Al imprimir en cualquiera de las 3 opciones (1. Cuadernillo, 2. Hoja de Respuestas, 3. Pauta Clave Docente), se generaba una primera hoja en blanco porque los elementos superiores del DOM de la aplicación (`#root`, navbar, sidebar, listados) conservaban altura en el layout antes del canvas imprimible.
+  2. El archivo PDF descargado sugería un nombre genérico en vez del nombre oficial de la evaluación y su modalidad.
+- **Archivos y Solución Técnica**:
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): [MODIFICADO] Montaje del modal en la raíz del documento mediante `createPortal(modalContent, document.body)` con clase `print-modal-portal`. Configuración de `document.title` dinámico antes de `window.print()` con el formato `[Título Evaluación] - [Modalidad] ([Curso])` (ej. `Evaluación Diagnóstica Nacional de Matemática 8° Básico - Cuadernillo de Evaluación (8° Básico A)`).
+  - [`src/index.css`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/index.css): [MODIFICADO] En `@media print`, regla `body:has(.print-modal-portal) #root, #root.printing-modal-active { display: none !important; }` que hace desaparecer el árbol de la aplicación del flujo de impresión (0px de altura y ancho). El documento imprimible inicia inmediatamente en la coordenada (0,0) de la Página 1 sin ninguna hoja en blanco previa.
+  - [`src/components/SandboxSpecialModals.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/SandboxSpecialModals.tsx): [MODIFICADO] Aplicado el mismo patrón con `createPortal` y nombre de archivo automático para la Ficha de Reforzamiento Pedagógico de Martín Sepúlveda.
+  - [`src/components/ReporteTabuladoView.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ReporteTabuladoView.tsx): [MODIFICADO] Asignación de `document.title` descriptivo al imprimir el Reporte Tabulado Curricular.
+- **Verificación / Despliegue**:
+  - Compilación Vite + TypeScript: ✅ 2240 módulos, 0 errores, 12.89s.
+  - Despliegue Vercel: ✅ `dpl_FteMTTFk8H4kZDj4L1fqPrqqJXok`
+  - URL en Producción: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-15] Corrección Paginación Completa del Cuadernillo de Impresión
+
+- **Problema / Requerimiento**: El cuadernillo de evaluación se truncaba en la pregunta 7 al imprimir/guardar PDF. La causa era triple: (1) `position: absolute` en `.printable-paper-canvas` bloquea la paginación en Chromium; (2) los contenedores del modal tenían `max-h-[92vh]` y `overflow-hidden` que Chromium usa como límite de página; (3) `prueba-101` solo tenía 6 preguntas, insuficientes para verificar paginación multi-página.
+- **Archivos y Solución Técnica**:
+  - [`src/index.css`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/index.css): [MODIFICADO] En `@media print`: cambiado `position: absolute` → `position: relative` en `.printable-paper-canvas`; agregadas reglas que neutralizan `.fixed`, `[class*="overflow-hidden"]`, `[class*="max-h-"]` (→ `position: static; overflow: visible; max-height: none`); aplicado a `html, body, #root` para garantizar flujo multi-página sin recorte de Chromium/Blink.
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): [MODIFICADO] Agregadas variantes `print:` en el overlay (`print:static print:overflow-visible`), en el contenedor modal (`print:max-h-none print:overflow-visible`) y en el canvas interior (`print:block print:overflow-visible print:h-auto`) para eliminar toda restricción de altura al momento de imprimir.
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Agregadas 21 preguntas de Matemática 8° Básico (`preg-30` a `preg-50`) cubriendo los 4 ejes curriculares (Números, Álgebra, Geometría, Probabilidad/Estadística). `prueba-101` expandida de 6 a **30 preguntas** para validar impresión en 6-8 páginas reales.
+- **Verificación / Despliegue**:
+  - Build TypeScript + Vite: ✅ 2240 módulos, 0 errores, 11.39s.
+  - Despliegue Vercel producción: ✅ `dpl_BER93eUmSdsDuobN7AVszWvPs5fr`
+  - URL activa: **[https://sysget-saber.vercel.app](https://sysget-saber.vercel.app)**
+
+---
+
+### [2026-08-14] Carga Oficial de Ensayo 3 SIMCE Ciencias Naturales 6° Básico (Preguntas, Ejes y Figuras)
+- **Problema / Requerimiento**: Limpiar los datos mock y extraer/cargar el ensayo completo real de SIMCE Ciencias Naturales 6° Básico (35 preguntas de selección múltiple, tabla de especificaciones con 18 ejes temáticos y habilidades psicométricas, figuras/gráficos recortados en alta resolución y evaluación activa).
+- **Archivos y Solución Técnica**:
+  - [src/types/index.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts): [MODIFICADO] Añadidos campos opcionales `imagenUrl?: string` y `tablaMarkdown?: string` a la interfaz `Pregunta`.
+  - [public/preguntas/simce_cn_6b/](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/preguntas/simce_cn_6b/): [NUEVO] Directorio con figuras y diagramas extraídos del PDF en alta resolución (nutrientes, vena cava, limón en circuito, símbolos, circuitos eléctricos, temperatura oceánica, fuentes de emisión).
+  - [src/data/mockData.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Cargadas las 35 preguntas reales con sus alternativas, claves, habilidades (Conocimiento, Aplicación, Razonamiento) y los 18 Ejes Temáticos del currículum nacional. Creada la prueba activa `Ensayo 3 SIMCE Ciencias Naturales 6° Básico` para `6° Básico A` (código `SIMCE-6A-CN3`).
+  - [src/components/AlumnoEvaluationView.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AlumnoEvaluationView.tsx): [MODIFICADO] Soporte de renderizado responsivo de imágenes y figuras de preguntas para los estudiantes.
+  - [src/pages/BancoPreguntasPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/BancoPreguntasPage.tsx): [MODIFICADO] Previsualización de imágenes y figuras en las tarjetas del banco de preguntas docente.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript y Vite exitosa (`tsc && vite build`) con 0 errores y 1644 módulos empaquetados en 6.90s.
+  - Pruebas e imágenes verificadas en el banco y el runner de alumnos.
+
 ---
 
 ### [2026-08-13] Despliegue Oficial en Producción en Vercel
@@ -115,3 +273,126 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - [supabase/migrations/002_seed_demo_data.sql](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/002_seed_demo_data.sql): [NUEVO] Script SQL con usuarios demo (`maria@demo.cl` / `pedro@demo.cl`), perfiles para *Escuela Premilitar Heroes De La Concepción*, 3 cursos (8° Básico A/B y 2° Medio A), preguntas SIMCE, pruebas activas con código de acceso y rendición de muestra con 100% de logro.
   - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según `task-summary-format`.
 - **Verificación / Despliegue**: Servidor de desarrollo Vite iniciado activamente en `http://localhost:3000/`. Script SQL preparado para ejecución en Supabase Cloud.
+
+---
+
+### [2026-08-14] Rediseño Integral del Modo Sandbox 2.0 y Fortalecimiento RBAC
+- **Problema / Requerimiento**:
+  1. Aislamiento curricular estricto: evitar que los docentes accedan a especialidades ajenas o al rol admin en el Navbar y Banco de Preguntas.
+  2. Corrección de encoding UTF-8 (mojibake en enunciados matemáticos).
+  3. Corrección del filtro de cursos en `AlumnosPage.tsx` y visualización de cursos reales.
+  4. Separación del perfil `admin` del perfil de docente en el servicio de autenticación y manejo adecuado de credenciales erróneas.
+  5. Rediseño del Modo Sandbox guiado: datos narrativos (Liceo Bicentenario Los Andes, caso Martín Sepúlveda), mapas de calor, gráficos históricos con Recharts, plan de mejoramiento autogenerado, corrección de redacción con IA y mini-SIMCE interactivo de 5 preguntas para el estudiante.
+- **Archivos y Solución Técnica**:
+  - [src/components/SandboxBanner.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/SandboxBanner.tsx): [NUEVO] Banner superior dismissable y botón flotante CTA con modal de contacto para colegios reales.
+  - [src/components/SandboxBeacon.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/SandboxBeacon.tsx): [NUEVO] Componente de baliza luminosa que guía a las *Acciones Estrella*.
+  - [src/components/PlanMejoramientoModal.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PlanMejoramientoModal.tsx): [NUEVO] Modal con Plan de Mejoramiento Educativo (PME 2026) autogenerado con IA y botón de exportación PDF (toast demo).
+  - [src/components/SandboxSpecialModals.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/SandboxSpecialModals.tsx): [NUEVO] Modales de ficha remedial de Martín Sepúlveda, evaluación de redacción argumentativa con IA (NLP) y aislamiento pedagógico.
+  - [src/components/MiniSIMCERunner.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/MiniSIMCERunner.tsx): [NUEVO] Runner interactivo de 5 preguntas con selector de asignatura (Matemática 8° o Ciencias 6°), temporizador de 8 min y corrección instantánea con justificación de claves.
+  - [src/components/ProfesorDashboard.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx): [MODIFICADO] Integración de mapa de calor curricular, gráfico histórico Recharts de 3 años, comparativa *Con vs Sin Sysget*, tabla de alertas críticas y gráficos de barras horizontales por eje.
+  - [src/components/AlumnoPortal.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AlumnoPortal.tsx): [MODIFICADO] Integración del lanzador del ensayo interactivo y barras de dominio por habilidad.
+  - [src/components/Navbar.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Navbar.tsx): [MODIFICADO] Role switcher condicionado exclusivamente a `user.rol === 'admin'`.
+  - [src/pages/LandingPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LandingPage.tsx): [MODIFICADO] Tarjetas sandbox enriquecidas con KPIs destacados y acciones estrella.
+  - [src/pages/AlumnosPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/AlumnosPage.tsx): [MODIFICADO] Conexión del filtro `cursoFilter`, asignación de `cursoId` y eliminación de cursos hardcodeados.
+  - [src/context/AuthContext.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Separación formal de `currentUserAdmin` (`admin@sysget.cl`), acceso para Patricia Muñoz (`patricia@demo.cl`) y mensaje de error al ingresar credenciales no registradas.
+  - [src/pages/LoginPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LoginPage.tsx): [MODIFICADO] Hint de credenciales demo actualizado con todos los perfiles disponibles.
+  - [src/data/mockData.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Saneamiento completo de mojibake UTF-8, incorporación de series históricas SIMCE, matrices de calor, casos narrativos de alumnos y 35 reactivos de Ciencias Naturales 6° Básico.
+  - [src/config/appConfig.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/config/appConfig.ts): [MODIFICADO] Unificado el nombre del establecimiento a *Liceo Bicentenario Los Andes*.
+  - [src/App.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO] Estado `isSandboxMode` y renderizado condicional de `SandboxBanner`.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según `task-summary-format`.
+- **Verificación / Despliegue**:
+  - Compilación: `npm run build` exitosa (código 0, 2237 módulos empaquetados).
+  - Despliegue en Producción: Desplegado activamente en Vercel con alias oficial `https://sysget-saber.vercel.app` (Deployment ID `dpl_8t4gmypmp6MjMxSgRX1sBQWyY1J7`).
+
+---
+
+### [2026-08-15] Flujo de Registro Controlado, Aprobación 1-Clic, Modo Trial y Gestión de Suscripciones ($0 Cost)
+- **Problema / Requerimiento**:
+  1. Diseñar e implementar el flujo de control de acceso para monetización: evitar que visitantes se registren y usen la plataforma sin control o verificación.
+  2. Implementar verificación de correo y estado de cuenta `pendiente_aprobacion`.
+  3. Permitir que el Administrador apruebe solicitudes con 1 solo clic desde el correo (mediante token seguro en URL `?approve_token=...`) sin tener que entrar a Supabase.
+  4. Habilitar período de prueba (Trial 30 días) para nuevos usuarios aprobados y estructura de planes ($0 costo de implementación: Starter $29.990, Pro $59.990, Institucional $99.990).
+  5. Crear panel de `Gestión de Usuarios` para que el Admin supervise solicitudes pendientes, usuarios activos en prueba, cambie planes o suspenda cuentas.
+- **Archivos y Solución Técnica**:
+  - [supabase/migrations/003_approval_and_monetization_flow.sql](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/003_approval_and_monetization_flow.sql): [NUEVO] Migración SQL con columnas `estado`, `plan`, `trial_ends_at`, `approval_token`, funciones RPC `aprobar_usuario_por_token` y `admin_cambiar_estado_usuario`, y políticas RLS para administradores.
+  - [src/types/index.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts): [MODIFICADO] Agregados tipos `UserEstado`, `UserPlan` y propiedades de suscripción/aprobación a `UserProfile`.
+  - [src/context/AuthContext.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Bloqueo de login para cuentas `pendiente_aprobacion`, `suspendido` y `rechazado`. Registro con generación de `approvalToken` y estado pendiente. Funciones `approveUser`, `approveUserByToken`, `rejectOrSuspendUser` y `changeUserPlan`.
+  - [src/pages/RegisterPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx): [MODIFICADO] Nueva pantalla de confirmación post-registro con explicación del flujo de 2 pasos (email + aprobación institucional de 30 días de prueba) y simulador de 1-click token approval.
+  - [src/pages/GestionUsuariosPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx): [NUEVO] Panel administrativo completo con tarjetas de métricas, filtros por estado, tabla de usuarios, selector de planes, botones de aprobar/suspender/reactivar, copiado de enlace directo y modal de vista previa de correo (Resend $0).
+  - [src/components/Sidebar.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx): [MODIFICADO] Agregada sección *Gestión de Usuarios* en menú del Admin con badge dinámico de solicitudes pendientes.
+  - [src/pages/LoginPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LoginPage.tsx): [MODIFICADO] Alertas contextuales estilizadas para estados en revisión o suspendidos y enlace a solicitud de 30 días de prueba.
+  - [src/App.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO] Enrutamiento de la página de usuarios y listener de URL para aprobación instantánea por token (`?approve_token=...`) con modal de confirmación.
+  - [src/data/mockData.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Cuentas demo actualizadas a estado `activo`/`institucional` e incorporación de `usuariosRegistradosMock` con solicitudes de muestra.
+  - [supabase/migrations/004_create_superadmin_luis_leon.sql](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/004_create_superadmin_luis_leon.sql): [NUEVO] Script SQL de aprovisionamiento de cuenta Super-Admin permanente para Luis Andrés León González (`luis_leon_g@hotmail.com` / RUT: 10.703.767-5).
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según `task-summary-format`.
+- **Verificación / Despliegue**:
+  - Compilación: `npm run build` exitosa (código 0, 2238 módulos empaquetados en 9.51s).
+  - Despliegue en Producción: Desplegado a Vercel con alias oficial `https://sysget-saber.vercel.app` (Deployment ID `dpl_2LDPsDr3AAopAPgyYgjRYBA6ZHyX`).
+
+---
+
+### [2026-08-15] Integración Resend + Supabase Edge Function: Notificación de Registro al Admin
+
+- **Problema / Requerimiento**: Cuando un nuevo usuario se registra, el administrador debe recibir un correo con los datos del solicitante y un enlace de aprobación en 1 clic, usando Resend (plan gratuito $0).
+- **Archivos y Solución Técnica**:
+  - [supabase/functions/notify-admin/index.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/functions/notify-admin/index.ts): [NUEVO] Edge Function Deno en Supabase que recibe datos del nuevo usuario y envía email HTML al admin (`luis_leon_g@hotmail.com`) con botón de aprobación 1-clic (`?approve_token=...`) usando Resend API.
+  - [src/context/AuthContext.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Agregada función `notifyAdminNewRegistration` que invoca la Edge Function después del registro exitoso (Supabase o fallback local). No bloquea el flujo si el email falla.
+  - Secreto `RESEND_API_KEY` configurado en Supabase Secrets via CLI (`supabase secrets set`).
+- **Verificación / Despliegue**:
+  - Edge Function desplegada en Supabase: `khtdzgfqjggycrcbrytw` → `functions/notify-admin`.
+  - Compilación: `npm run build` exitosa (código 0, 2238 módulos, 14.41s).
+
+---
+
+### [2026-08-15] AdminDemo Aislado, Validación RUT con Dígito Verificador, Corrección Historial/Botón Atrás y Actualización de Email Super-Admin
+
+- **Problema / Requerimiento**:
+  1. Si se ingresa como Admin Demo, la plataforma no debe usar los datos ni enviar correos reales al Super Admin. Crear perfil específico `AdminDemo Sysget` (Solo Lectura) separado del Super-Admin real (`leontesvirtual1@gmail.com` / `luis_leon_g@hotmail.com`).
+  2. Implementar comprobación algorítmica de RUT chileno (módulo 11 con dígito verificador) al momento del registro.
+  3. Resolver problema de navegación: al avanzar entre páginas y presionar el botón "Atrás" del navegador, el usuario era expulsado fuera de la app web.
+  4. Actualizar email receptor de notificaciones de aprobación de registros a `leontesvirtual1@gmail.com`.
+- **Archivos y Solución Técnica**:
+  - [src/data/mockData.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Creado `currentUserAdminDemo` con cargo "Administrador Demo (Solo Lectura)" y nombre "AdminDemo Sysget".
+  - [src/context/AuthContext.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Mapeados correos demo (`admin@sysget.cl`, `admin@escuelademo.cl`, `admin@demo.cl`) a `currentUserAdminDemo`, y mapeados `leontesvirtual1@gmail.com` y `luis_leon_g@hotmail.com` al Super Admin real. Bloqueado el envío de emails reales durante registros en modo fallback/offline.
+  - [src/pages/RegisterPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx): [MODIFICADO] Agregada función `validarRutChileno` con cálculo de ponderación invertida (módulo 11) y validación en tiempo real en `handleSubmit`.
+  - [src/App.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO] Integración de `window.history.pushState` al cambiar de vista y escucha del evento `popstate` para navegar fluidamente entre vistas internas con el botón atrás del navegador.
+  - [supabase/functions/notify-admin/index.ts](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/functions/notify-admin/index.ts): [MODIFICADO] Actualizado `ADMIN_EMAIL` a `leontesvirtual1@gmail.com` y redesplegada la Edge Function a Supabase Cloud.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según `task-summary-format`.
+
+---
+
+### [2026-08-15] Aislamiento Absoluto de Impresión: Eliminación Total de Fondo de Pantalla y Ajuste de Hoja al 100%
+
+- **Problema / Requerimiento**:
+  1. En el *Centro de Impresión y Generación de PDF*, al dar clic en *Imprimir / Guardar PDF*, la vista previa de impresión incluía la página de fondo completa (*Gestión de Evaluaciones, botones, buscador y tarjetas de prueba*), empujando el cuadernillo hacia abajo y descuadrando los márgenes en los 3 modos (*Cuadernillo, Hoja de Respuestas y Pauta Clave Docente*).
+- **Archivos y Solución Técnica**:
+  - [src/index.css](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/index.css): [MODIFICADO] Aplicada técnica de aislamiento por visibilidad (`body * { visibility: hidden !important }` y `.printable-paper-canvas, .printable-paper-canvas * { visibility: visible !important }`) con posicionamiento absoluto anclado a `top: 0; left: 0; width: 100%` en la página 1.
+  - [src/components/PrintEvaluacionModal.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): [MODIFICADO] Asignada la clase `printable-paper-canvas` al contenedor del documento membretado oficial para asegurar que sea el único elemento renderizado por el motor de impresión del navegador.
+  - [src/components/ReporteTabuladoView.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ReporteTabuladoView.tsx): [MODIFICADO] Integrada la clase `printable-paper-canvas` para que el reporte tabulado institucional también imprima sin arrastrar la barra de navegación ni el sidebar.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según `task-summary-format`.
+- **Verificación / Despliegue**:
+  - Compilación: `npm run build` exitosa (código 0, 2240 módulos empaquetados en 9.18s).
+  - Despliegue en Producción: Desplegado a Vercel con alias oficial `https://sysget-saber.vercel.app` (Deployment ID `dpl_4Ryw1YrZWbR7U5K9QZf8r2a9SiRX`).
+
+
+---
+
+### [2026-08-15] Centro de Impresión Oficial: Cuadernillos de Evaluación, Hoja de Respuestas Óptica (Bubble Sheet) y Script de Limpieza Producción
+
+- **Problema / Requerimiento**:
+  1. Habilitar la generación e impresión de evaluaciones en papel para entrega física a estudiantes, dividida en:
+     - **Cuadernillo de Evaluación (Preguntas + Alternativas + Figuras/Textos)**: Membretado oficial, instrucciones y diagramación compacta.
+     - **Hoja de Respuestas Óptica (Bubble Sheet)**: Hoja separada con datos de identificación, grilla de burbujas (A, B, C, D) del 1 al 35 y recuadros de firma/calificación docente para agilizar la corrección y digitación.
+     - **Pauta Clave Docente**: Tabla con respuestas correctas, eje curricular, habilidad y puntajes para el profesor.
+  2. Habilitar impresión/guardado en PDF directo de los **Reportes Tabulados Curriculares**.
+  3. Crear script SQL de limpieza de datos de prueba para pase a producción real (`005_reset_test_data_for_production.sql`) conservando intacta la cuenta del Super Admin.
+- **Archivos y Solución Técnica**:
+  - [src/components/PrintEvaluacionModal.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): [NUEVO] Componente modal interactivo con selector de 3 modos de impresión (Cuadernillo, Hoja de Respuestas y Pauta Clave), botón `window.print()` y membrete institucional.
+  - [src/pages/EvaluacionesPage.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/EvaluacionesPage.tsx): [MODIFICADO] Conectado el botón *Imprimir / PDF* de cada evaluación para abrir el Centro de Impresión.
+  - [src/components/ReporteTabuladoView.tsx](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ReporteTabuladoView.tsx): [MODIFICADO] Incorporado botón de impresión directa del reporte tabulado oficial.
+  - [src/index.css](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/index.css): [MODIFICADO] Añadidas reglas `@media print` optimizadas para papel carta/A4, ocultamiento de barras de navegación y salto de página controlado (`page-break-inside: avoid`).
+  - [supabase/migrations/005_reset_test_data_for_production.sql](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/005_reset_test_data_for_production.sql): [NUEVO] Script transaccional para vaciar rendiciones y usuarios temporales de prueba en Supabase.
+  - [BITACORA.md](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Actualizada con el registro de esta tarea según `task-summary-format`.
+- **Verificación / Despliegue**:
+  - Compilación: `npm run build` exitosa (código 0, 2240 módulos empaquetados en 9.72s).
+  - Despliegue en Producción: Desplegado a Vercel con alias oficial `https://sysget-saber.vercel.app` (Deployment ID `dpl_6tytC5yqJNSa71R5N1c3thBj7ruQ`).

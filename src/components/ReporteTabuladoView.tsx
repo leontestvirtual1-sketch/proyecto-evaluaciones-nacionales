@@ -12,8 +12,10 @@ import {
   Search,
   Sparkles,
   HelpCircle,
-  AlertCircle
+  AlertCircle,
+  Printer
 } from 'lucide-react';
+
 
 interface ReporteTabuladoViewProps {
   reporte: ReporteTabuladoCurso;
@@ -33,8 +35,9 @@ export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = ({
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="printable-paper-canvas space-y-6 animate-fade-in print:p-4 print:bg-white print:text-black">
       {/* Top Banner & Header */}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-6 border-l-4 border-l-indigo-600">
         <div>
           <button
@@ -54,8 +57,8 @@ export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = ({
           </div>
         </div>
 
-        {/* Global Score Badges */}
-        <div className="flex items-center gap-3">
+        {/* Global Score Badges and Print Button */}
+        <div className="flex items-center gap-3 flex-wrap">
           <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl text-center">
             <span className="block text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
               Escala Nacional (100-350)
@@ -72,8 +75,22 @@ export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = ({
               {reporte.promedioPorcentajeLogro}%
             </span>
           </div>
+          <button
+            onClick={() => {
+              const originalTitle = document.title;
+              document.title = `Reporte Tabulado Curricular - ${reporte.pruebaTitulo} (${reporte.cursoNombre})`;
+              window.print();
+              setTimeout(() => { document.title = originalTitle; }, 1000);
+            }}
+            className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition-all hover:scale-105 active:scale-95 print:hidden"
+            title="Imprimir informe oficial o guardar en PDF"
+          >
+            <Printer className="w-4 h-4" />
+            <span>Imprimir Reporte PDF</span>
+          </button>
         </div>
       </div>
+
 
       {/* Tabs Navigation */}
       <div className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto gap-2">
@@ -252,7 +269,7 @@ export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = ({
                 >
                   <div className="flex items-center justify-between text-xs font-bold">
                     <span className="text-slate-900 dark:text-white">
-                      Pregunta N° {idx + 1}: {item.pregunta.enunciado}
+                      Pregunta N° {idx + 1}: {item.pregunta?.enunciado || 'Pregunta de evaluación'}
                     </span>
                     <span className="px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-600 border border-rose-500/20 font-extrabold">
                       {item.porcentajeError}% Falló

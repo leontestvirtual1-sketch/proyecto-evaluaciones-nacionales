@@ -10,7 +10,9 @@ import {
   Settings,
   LogOut,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  ShieldCheck,
+  UserCheck
 } from 'lucide-react';
 
 export type PageId =
@@ -20,6 +22,7 @@ export type PageId =
   | 'alumnos'
   | 'profesores'
   | 'banco-preguntas'
+  | 'usuarios'
   | 'configuracion';
 
 interface SidebarProps {
@@ -35,31 +38,39 @@ interface NavItem {
   badge?: string;
 }
 
-const NAV_ITEMS_ADMIN: NavItem[] = [
-  { id: 'dashboard', label: 'Dashboard General', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
-  { id: 'evaluaciones', label: 'Todas las Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
-  { id: 'cursos', label: 'Gestión de Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
-  { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
-  { id: 'profesores', label: 'Equipo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
-  { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
-  { id: 'configuracion', label: 'Configuración Global', icon: <Settings className="w-4.5 h-4.5" /> },
-];
-
-const NAV_ITEMS_PROFESOR: NavItem[] = [
-  { id: 'dashboard', label: 'Mi Dashboard', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
-  { id: 'evaluaciones', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
-  { id: 'cursos', label: 'Mis Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
-  { id: 'alumnos', label: 'Mis Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
-  { id: 'banco-preguntas', label: 'Banco de mi Materia', icon: <Library className="w-4.5 h-4.5" /> },
-];
-
-const NAV_ITEMS_ALUMNO: NavItem[] = [
-  { id: 'dashboard', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
-];
-
 export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
-  const { user, logout } = useAuth();
+  const { user, usuarios, logout } = useAuth();
   
+  const pendientesCount = usuarios.filter(u => u.estado === 'pendiente_aprobacion').length;
+
+  const NAV_ITEMS_ADMIN: NavItem[] = [
+    { id: 'dashboard', label: 'Dashboard General', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Todas las Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'cursos', label: 'Gestión de Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
+    { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
+    { id: 'profesores', label: 'Equipo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+    { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
+    {
+      id: 'usuarios',
+      label: 'Gestión de Usuarios',
+      icon: <UserCheck className="w-4.5 h-4.5" />,
+      badge: pendientesCount > 0 ? `${pendientesCount} pend.` : undefined
+    },
+    { id: 'configuracion', label: 'Configuración Global', icon: <Settings className="w-4.5 h-4.5" /> },
+  ];
+
+  const NAV_ITEMS_PROFESOR: NavItem[] = [
+    { id: 'dashboard', label: 'Mi Dashboard', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'cursos', label: 'Mis Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
+    { id: 'alumnos', label: 'Mis Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
+    { id: 'banco-preguntas', label: 'Banco de mi Materia', icon: <Library className="w-4.5 h-4.5" /> },
+  ];
+
+  const NAV_ITEMS_ALUMNO: NavItem[] = [
+    { id: 'dashboard', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
+  ];
+
   let items: NavItem[];
   if (user?.rol === 'admin') {
     items = NAV_ITEMS_ADMIN;
@@ -68,6 +79,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
   } else {
     items = NAV_ITEMS_ALUMNO;
   }
+
 
 
   return (

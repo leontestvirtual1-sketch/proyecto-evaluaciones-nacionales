@@ -45,3 +45,118 @@
 .glass-nav {
   @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80;
 }
+
+/* ═════════════════════════════════════════════════════════════
+/* ═════════════════════════════════════════════════════════════
+   ISOLATED PRINT STYLES (ZERO BLANK PAGES, MULTI-PAGE FLOW)
+   ═════════════════════════════════════════════════════════════ */
+@media print {
+  @page {
+    margin: 10mm 12mm;
+    size: letter portrait;
+  }
+
+  /* 1. When portal modal is printing, completely hide #root so it takes ZERO layout height */
+  body:has(.print-modal-portal) #root,
+  #root.printing-modal-active {
+    display: none !important;
+  }
+
+  /* 2. Reset html and body to clean printable canvas */
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  /* 3. Hide all non-printable controls inside portal */
+  .print-control-bar,
+  .print-modal-portal .print-control-bar,
+  .print-hidden-element {
+    display: none !important;
+  }
+
+  /* 4. Portal container flows naturally in standard document flow */
+  .print-modal-portal {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    overflow: visible !important;
+    inset: auto !important;
+  }
+
+  .print-modal-inner {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+  }
+
+  .print-canvas-wrapper {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  /* 5. Canvas takes entire printable page area starting on Page 1 */
+  .printable-paper-canvas {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  /* 6. Avoid splitting questions in middle of alternatives */
+  .page-break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 7. Force crisp solid black text and borders */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+
+

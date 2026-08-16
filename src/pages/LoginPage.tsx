@@ -8,7 +8,7 @@ interface LoginPageProps {
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
   const { login, isLoading } = useAuth();
-  const [email, setEmail] = useState('maria@demo.cl');
+  const [email, setEmail] = useState('admin@sysget.cl');
   const [password, setPassword] = useState('demo1234');
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
@@ -56,12 +56,33 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
           </div>
 
           {/* Demo hint */}
-          <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-xs text-indigo-300 flex items-start gap-2">
-            <Sparkles className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
-            <span>
-              <strong>Demo:</strong> Usa <code className="bg-slate-800 px-1 rounded">maria@demo.cl</code> (Profesor) o{' '}
-              <code className="bg-slate-800 px-1 rounded">pedro@demo.cl</code> (Alumno) con cualquier contraseña.
-            </span>
+          <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-xs text-indigo-300 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-indigo-400">
+              <Sparkles className="w-4 h-4 flex-shrink-0" />
+              Cuentas de demostración (cualquier contraseña)
+            </div>
+            <div className="grid grid-cols-1 gap-1 pl-1">
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">👑 Admin/UTP</span>
+                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">admin@sysget.cl</code>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">📐 Prof. Matemática</span>
+                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">maria@demo.cl</code>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">🔬 Prof. Ciencias</span>
+                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">patricia@demo.cl</code>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">📖 Prof. Lenguaje</span>
+                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">carlos@demo.cl</code>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">🎓 Alumno</span>
+                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">pedro@demo.cl</code>
+              </div>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -106,10 +127,21 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
               </div>
             </div>
 
-            {/* Error */}
+            {/* Error / Status message */}
             {error && (
-              <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-xs text-rose-300">
-                {error}
+              <div className={`p-3.5 rounded-xl text-xs border ${
+                error.includes('pendiente')
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                  : error.includes('suspendida')
+                  ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                  : 'bg-rose-500/10 border-rose-500/20 text-rose-300'
+              }`}>
+                <div className="font-semibold mb-0.5">
+                  {error.includes('pendiente') ? '⏳ Cuenta en Revisión' : error.includes('suspendida') ? '🚫 Cuenta Suspendida' : '⚠️ Error al Iniciar Sesión'}
+                </div>
+                <div className="text-[11px] leading-relaxed text-slate-300">
+                  {error}
+                </div>
               </div>
             )}
 
@@ -130,17 +162,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
             </button>
           </form>
 
-          <div className="text-center text-xs text-slate-500">
-            ¿No tienes cuenta?{' '}
-            <button
-              onClick={onGoToRegister}
-              className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
-            >
-              Regístrate aquí
-            </button>
+          <div className="text-center text-xs text-slate-400 space-y-2 pt-2 border-t border-slate-800">
+            <div>
+              ¿No tienes cuenta?{' '}
+              <button
+                onClick={onGoToRegister}
+                className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors underline underline-offset-2"
+              >
+                Solicita 30 días de prueba gratis
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
+

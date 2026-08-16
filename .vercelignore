@@ -7,3 +7,5 @@ supabase
 !README.md
 .env*
 !*.env.example
+evaluaciones_fuente
+*.pdf

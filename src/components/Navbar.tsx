@@ -1,5 +1,5 @@
-import React from 'react';
 import { UserProfile, UserRole } from '../types';
+import { establecimientosCatalog } from '../data/mockData';
 import {
   GraduationCap,
   BookOpen,
@@ -9,13 +9,15 @@ import {
   School,
   Sparkles,
   Home,
-  ShieldAlert
+  ShieldAlert,
+  LogOut
 } from 'lucide-react';
 
 interface NavbarProps {
   user: UserProfile;
-  onRoleChange: (role: UserRole, extra?: 'matematica' | 'lenguaje') => void;
+  onRoleChange: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar') => void;
   onGoToLanding?: () => void;
+  onLogout?: () => void;
   darkMode: boolean;
   onToggleDarkMode: () => void;
 }
@@ -24,9 +26,14 @@ export const Navbar: React.FC<NavbarProps> = ({
   user,
   onRoleChange,
   onGoToLanding,
+  onLogout,
   darkMode,
   onToggleDarkMode
 }) => {
+  const schoolLogo = user.logoUrl || establecimientosCatalog.find(
+    e => (user.rbd && e.rbd === user.rbd) || e.nombre.toLowerCase().includes(user.establecimiento.toLowerCase())
+  )?.logoUrl;
+
   return (
     <header className="sticky top-0 z-40 glass-nav border-b border-slate-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,62 +72,80 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             )}
 
-            {/* School badge */}
-            <div className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 truncate max-w-[200px]">
-              <School className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+            {/* School badge with dynamic logo */}
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 text-xs font-semibold border border-slate-200 dark:border-slate-700 truncate max-w-[260px]">
+              {schoolLogo ? (
+                <img src={schoolLogo} alt="Logo" className="w-5 h-5 object-contain rounded shrink-0" />
+              ) : (
+                <School className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+              )}
               <span className="truncate">{user.establecimiento}</span>
             </div>
 
-            {/* Fast Role Switcher */}
-            <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700 text-xs font-semibold">
-              <button
-                onClick={() => onRoleChange('admin')}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
-                  user.rol === 'admin'
-                    ? 'bg-amber-600 text-white shadow-sm font-bold'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                title="Ingresar como Administrador General / UTP"
-              >
-                <span>👑 Admin</span>
-              </button>
+            {/* Fast Role Switcher ONLY for Admin / Demo Supervisor */}
+            {user.rol === 'admin' ? (
+              <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700 text-xs font-semibold">
+                <button
+                  onClick={() => onRoleChange('admin')}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-600 text-white shadow-sm font-bold"
+                  title="Administrador General / UTP"
+                >
+                  <span>👑 Admin UTP</span>
+                </button>
 
-              <button
-                onClick={() => onRoleChange('profesor', 'matematica')}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
-                  user.rol === 'profesor' && user.asignaturaId === 'asig-1'
-                    ? 'bg-indigo-600 text-white shadow-sm font-bold'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                title="Entorno aislado: Docente de Matemática"
-              >
-                <span>📐 Matemática</span>
-              </button>
+                <button
+                  onClick={() => onRoleChange('profesor', 'premilitar')}
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium"
+                  title="Ver vista como Docente de Escuela Premilitar Héroes de la Concepción"
+                >
+                  <span>🦅 Premilitar</span>
+                </button>
 
-              <button
-                onClick={() => onRoleChange('profesor', 'lenguaje')}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
-                  user.rol === 'profesor' && user.asignaturaId === 'asig-2'
-                    ? 'bg-indigo-600 text-white shadow-sm font-bold'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                title="Entorno aislado: Docente de Lenguaje"
-              >
-                <span>📖 Lenguaje</span>
-              </button>
+                <button
+                  onClick={() => onRoleChange('profesor', 'matematica')}
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  title="Ver vista como Docente de Matemática"
+                >
+                  <span>📐 Mat</span>
+                </button>
 
-              <button
-                onClick={() => onRoleChange('alumno')}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
-                  user.rol === 'alumno'
-                    ? 'bg-emerald-600 text-white shadow-sm font-bold'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                title="Portal Alumno: Solo Mis Evaluaciones"
-              >
-                <span>🎓 Alumno</span>
-              </button>
-            </div>
+                <button
+                  onClick={() => onRoleChange('profesor', 'ciencias')}
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  title="Ver vista como Docente de Ciencias Naturales"
+                >
+                  <span>🔬 C. Nat</span>
+                </button>
+
+                <button
+                  onClick={() => onRoleChange('profesor', 'lenguaje')}
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  title="Ver vista como Docente de Lenguaje"
+                >
+                  <span>📖 Leng</span>
+                </button>
+
+                <button
+                  onClick={() => onRoleChange('alumno')}
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  title="Ver vista como Alumno"
+                >
+                  <span>🎓 Alumno</span>
+                </button>
+              </div>
+            ) : user.rol === 'profesor' ? (
+              /* Teacher Isolated Identity Badge - No access to other teachers or admin */
+              <div className="flex items-center gap-2 bg-indigo-500/10 dark:bg-indigo-950/60 px-3 py-1.5 rounded-xl border border-indigo-500/30 text-xs font-bold text-indigo-700 dark:text-indigo-300 shadow-sm">
+                <span>{user.asignaturaId === 'asig-1' ? '📐' : user.asignaturaId === 'asig-3' ? '🔬' : '📖'}</span>
+                <span>Docente: <strong>{user.nombre} {user.apellido}</strong> ({user.asignaturaNombre || 'Especialidad'})</span>
+              </div>
+            ) : (
+              /* Student Badge */
+              <div className="flex items-center gap-2 bg-emerald-500/10 dark:bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30 text-xs font-bold text-emerald-700 dark:text-emerald-300 shadow-sm">
+                <span>🎓</span>
+                <span>Estudiante: <strong>{user.nombre} {user.apellido}</strong></span>
+              </div>
+            )}
 
             {/* Dark mode toggle */}
             <button
@@ -130,10 +155,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               {darkMode ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
             </button>
+
+            {/* Logout / Salir button */}
+            {onLogout && (
+              <button
+                onClick={onLogout}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-slate-500 hover:text-rose-500 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-xs font-semibold border border-transparent hover:border-rose-500/20 transition-all"
+                title="Cerrar sesión / Salir al Login"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">Salir</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
     </header>
   );
 };
+
 

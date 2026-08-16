@@ -21,12 +21,15 @@ import { UserProfile } from '../types';
 import { cursosMock } from '../data/mockData';
 import { parseAlumnosCSV, csvAlumnosToProfiles } from '../utils/csvParser';
 
-const alumnosIniciales: UserProfile[] = [
-  { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo' },
-  { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo' },
-  { id: 'alum-3', rut: '22.222.222-2', nombre: 'Carlos', apellido: 'Martínez', email: 'carlos@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo' },
-  { id: 'alum-4', rut: '23.444.555-9', nombre: 'Sofía', apellido: 'Valenzuela', email: 'sofia@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo' },
-  { id: 'alum-5', rut: '24.555.666-K', nombre: 'Diego', apellido: 'Fuentes', email: 'diego@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo' },
+// Extendemos localmente con cursoId para el filtro (sin modificar el tipo global)
+type AlumnoConCurso = UserProfile & { cursoId?: string };
+
+const alumnosIniciales: AlumnoConCurso[] = [
+  { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo', cursoId: 'curso-1' },
+  { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo', cursoId: 'curso-1' },
+  { id: 'alum-3', rut: '22.222.222-2', nombre: 'Carlos', apellido: 'Martínez', email: 'carlos@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo', cursoId: 'curso-2' },
+  { id: 'alum-4', rut: '23.444.555-9', nombre: 'Sofía', apellido: 'Valenzuela', email: 'sofia@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo', cursoId: 'curso-2' },
+  { id: 'alum-5', rut: '24.555.666-K', nombre: 'Diego', apellido: 'Fuentes', email: 'diego@demo.cl', rol: 'alumno', establecimiento: 'Escuela Bicentenario Demo', cursoId: 'curso-1' },
 ];
 
 // ─── Manual form modal ───────────────────────────────────────
@@ -292,7 +295,7 @@ const AlumnoCargaMasivaModal: React.FC<CSVModalProps> = ({ isOpen, onClose, onIm
 
 // ─── Main AlumnosPage ─────────────────────────────────────────
 export const AlumnosPage: React.FC = () => {
-  const [alumnos, setAlumnos] = useState<UserProfile[]>(alumnosIniciales);
+  const [alumnos, setAlumnos] = useState<AlumnoConCurso[]>(alumnosIniciales);
   const [search, setSearch] = useState('');
   const [cursoFilter, setCursoFilter] = useState('');
   const [formModalOpen, setFormModalOpen] = useState(false);
@@ -303,11 +306,13 @@ export const AlumnosPage: React.FC = () => {
 
   const codigoInvitacion = 'DEMO2026';
 
-  const filtered = alumnos.filter(a =>
-    `${a.nombre} ${a.apellido} ${a.rut} ${a.email}`.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = alumnos.filter(a => {
+    const matchesSearch = `${a.nombre} ${a.apellido} ${a.rut} ${a.email}`.toLowerCase().includes(search.toLowerCase());
+    const matchesCurso = cursoFilter === '' || a.cursoId === cursoFilter;
+    return matchesSearch && matchesCurso;
+  });
 
-  const handleSaveAlumno = (a: UserProfile) => {
+  const handleSaveAlumno = (a: AlumnoConCurso) => {
     setAlumnos(prev => {
       const exists = prev.find(p => p.id === a.id);
       return exists ? prev.map(p => p.id === a.id ? a : p) : [a, ...prev];
@@ -315,7 +320,7 @@ export const AlumnosPage: React.FC = () => {
     setEditingAlumno(null);
   };
 
-  const handleImportCSV = (nuevos: UserProfile[]) => {
+  const handleImportCSV = (nuevos: AlumnoConCurso[]) => {
     setAlumnos(prev => [...nuevos, ...prev]);
   };
 
@@ -448,7 +453,7 @@ export const AlumnosPage: React.FC = () => {
                     </a>
                   </td>
                   <td className="py-3.5 px-5 hidden lg:table-cell text-slate-600 dark:text-slate-400">
-                    8° Básico A
+                    {cursosMock.find(c => c.id === al.cursoId)?.nombre ?? <span className="text-slate-300 dark:text-slate-600 italic">Sin curso</span>}
                   </td>
                   <td className="py-3.5 px-5">
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { UserProfile } from '../types';
+import { UserProfile, Asignatura } from '../types';
+import { asignaturasMock } from '../data/mockData';
 import { getSupabaseConfig, testSupabaseConnection } from '../lib/supabaseClient';
 import {
   Settings,
@@ -21,22 +22,43 @@ import {
   Award,
   RefreshCw,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  BookOpen,
+  PlusCircle,
+  Trash2,
+  Layers,
+  GraduationCap
 } from 'lucide-react';
-
 
 interface ConfiguracionPageProps {
   user: UserProfile;
   darkMode: boolean;
   onToggleDarkMode: () => void;
+  asignaturas?: Asignatura[];
+  onUpdateAsignaturas?: (newAsigs: Asignatura[]) => void;
 }
+
+const asignaturasSugeridasMINEDUC = [
+  { codigo: 'HIST', nombre: 'Historia, Geografía y Ciencias Sociales', icono: '🏛️' },
+  { codigo: 'ING', nombre: 'Idioma Extranjero: Inglés', icono: '🇬🇧' },
+  { codigo: 'EF', nombre: 'Educación Física y Salud', icono: '🏃' },
+  { codigo: 'ART', nombre: 'Artes Visuales', icono: '🎨' },
+  { codigo: 'MUS', nombre: 'Música', icono: '🎵' },
+  { codigo: 'TEC', nombre: 'Tecnología', icono: '💻' },
+  { codigo: 'FILO', nombre: 'Filosofía', icono: '🧠' },
+  { codigo: 'FIS', nombre: 'Física', icono: '⚡' },
+  { codigo: 'QUIM', nombre: 'Química', icono: '🧪' },
+  { codigo: 'BIO', nombre: 'Biología', icono: '🧬' }
+];
 
 export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
   user,
   darkMode,
-  onToggleDarkMode
+  onToggleDarkMode,
+  asignaturas = asignaturasMock,
+  onUpdateAsignaturas
 }) => {
-  const [activeTab, setActiveTab] = useState<'establecimiento' | 'evaluaciones' | 'cloud' | 'perfil'>('establecimiento');
+  const [activeTab, setActiveTab] = useState<'establecimiento' | 'asignaturas' | 'evaluaciones' | 'cloud' | 'perfil'>('establecimiento');
 
   // Form States
   const [establecimiento, setEstablecimiento] = useState(user.establecimiento || 'Liceo Bicentenario de Excelencia');
@@ -44,6 +66,13 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
   const [comuna, setComuna] = useState('Santiago');
   const [region, setRegion] = useState('Región Metropolitana');
   const [dependencia, setDependencia] = useState('Subvencionado');
+
+  // Asignaturas State
+  const [localAsignaturas, setLocalAsignaturas] = useState<Asignatura[]>(asignaturas);
+  const [newCodigo, setNewCodigo] = useState('');
+  const [newNombre, setNewNombre] = useState('');
+  const [newIcono, setNewIcono] = useState('📚');
+  const [isAddingAsig, setIsAddingAsig] = useState(false);
 
   // Evaluation params
   const [escalaDefault, setEscalaDefault] = useState<'simce' | 'notas'>('simce');
@@ -58,6 +87,7 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
   const [rut, setRut] = useState(user.rut);
 
   const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
+  const [feedbackMessage, setFeedbackMessage] = useState<string>('¡Configuración guardada exitosamente en el sistema!');
 
   // Cloud Supabase Live State
   const supabaseCfg = getSupabaseConfig();
@@ -87,12 +117,58 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
     }
   }, [activeTab]);
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleAddAsignatura = () => {
+    if (!newCodigo.trim() || !newNombre.trim()) return;
+    const newAsig: Asignatura = {
+      id: `asig-${Date.now()}`,
+      codigo: newCodigo.trim().toUpperCase(),
+      nombre: newNombre.trim()
+    };
+    const updated = [...localAsignaturas, newAsig];
+    setLocalAsignaturas(updated);
+    onUpdateAsignaturas?.(updated);
+    setNewCodigo('');
+    setNewNombre('');
+    setIsAddingAsig(false);
+    setFeedbackMessage(`Especialidad "${newAsig.nombre}" agregada al catálogo global.`);
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 3000);
   };
 
+  const handleAddSugerida = (sug: { codigo: string; nombre: string; icono: string }) => {
+    const exists = localAsignaturas.some(a => a.codigo === sug.codigo || a.nombre.toLowerCase() === sug.nombre.toLowerCase());
+    if (exists) return;
+    const newAsig: Asignatura = {
+      id: `asig-${sug.codigo.toLowerCase()}-${Date.now()}`,
+      codigo: sug.codigo,
+      nombre: sug.nombre
+    };
+    const updated = [...localAsignaturas, newAsig];
+    setLocalAsignaturas(updated);
+    onUpdateAsignaturas?.(updated);
+    setFeedbackMessage(`Especialidad "${newAsig.nombre}" incorporada.`);
+    setSavedSuccess(true);
+    setTimeout(() => setSavedSuccess(false), 3000);
+  };
+
+  const handleDeleteAsignatura = (id: string) => {
+    if (localAsignaturas.length <= 1) return;
+    const target = localAsignaturas.find(a => a.id === id);
+    const updated = localAsignaturas.filter(a => a.id !== id);
+    setLocalAsignaturas(updated);
+    onUpdateAsignaturas?.(updated);
+    setFeedbackMessage(`Especialidad "${target?.nombre}" eliminada.`);
+    setSavedSuccess(true);
+    setTimeout(() => setSavedSuccess(false), 3000);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    onUpdateAsignaturas?.(localAsignaturas);
+    setFeedbackMessage('¡Configuración guardada exitosamente en el sistema!');
+    setSavedSuccess(true);
+    setTimeout(() => setSavedSuccess(false), 3000);
+  };
 
   return (
     <div className="space-y-8 animate-fade-in pb-12 max-w-5xl mx-auto">
@@ -106,7 +182,7 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
             Configuración del Sistema
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-            Gestiona la información institucional de tu colegio, parámetros por defecto de las evaluaciones nacional SIMCE y la integración Cloud con Supabase y Vercel.
+            Gestiona la información institucional de tu colegio, catálogo de especialidades docentes y parámetros por defecto de las evaluaciones nacionales.
           </p>
         </div>
       </div>
@@ -115,7 +191,7 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
       {savedSuccess && (
         <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 px-4 py-3 rounded-xl flex items-center gap-3 text-xs font-bold shadow-lg animate-bounce-short">
           <Check className="w-4 h-4 text-emerald-500" />
-          <span>¡Configuración guardada exitosamente en el sistema!</span>
+          <span>{feedbackMessage}</span>
         </div>
       )}
 
@@ -133,6 +209,21 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
           >
             <Building2 className="w-4 h-4" />
             <span>Establecimiento</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('asignaturas')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+              activeTab === 'asignaturas'
+                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span className="flex-1 text-left">Especialidades & Asignaturas</span>
+            <span className="px-2 py-0.5 text-[10px] bg-indigo-500/20 text-indigo-300 rounded-full font-mono font-bold">
+              {localAsignaturas.length}
+            </span>
           </button>
 
           <button
@@ -248,7 +339,176 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
               </div>
             )}
 
-            {/* TAB 2: REGLAS EVALUATIVAS */}
+            {/* TAB 2: ESPECIALIDADES & ASIGNATURAS */}
+            {activeTab === 'asignaturas' && (
+              <div className="space-y-6 animate-fade-in text-left">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
+                  <div>
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-indigo-500" />
+                      Catálogo de Especialidades & Asignaturas Curriculares
+                    </h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                      Define las especialidades docentes del colegio. Quedan disponibles de inmediato para registrar profesores y crear evaluaciones.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsAddingAsig(!isAddingAsig)}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition-all self-start sm:self-auto"
+                  >
+                    <PlusCircle className="w-4 h-4" />
+                    <span>{isAddingAsig ? 'Cerrar Formulario' : 'Nueva Especialidad'}</span>
+                  </button>
+                </div>
+
+                {/* Form to add custom Subject */}
+                {isAddingAsig && (
+                  <div className="p-4 bg-indigo-50/70 dark:bg-slate-900/90 border border-indigo-200 dark:border-indigo-500/30 rounded-2xl space-y-3 animate-fade-in shadow-inner">
+                    <div className="flex items-center gap-2 text-xs font-bold text-indigo-700 dark:text-indigo-300">
+                      <PlusCircle className="w-4 h-4 text-indigo-500" />
+                      <span>Registrar Nueva Especialidad / Asignatura</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                          Código Sigla (ej. HIST)
+                        </label>
+                        <input
+                          type="text"
+                          value={newCodigo}
+                          onChange={e => setNewCodigo(e.target.value.toUpperCase())}
+                          placeholder="HIST"
+                          maxLength={6}
+                          className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl font-mono uppercase font-bold outline-none focus:ring-2 focus:ring-indigo-500/20"
+                        />
+                      </div>
+
+                      <div className="space-y-1 sm:col-span-2">
+                        <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                          Nombre Oficial de la Asignatura
+                        </label>
+                        <input
+                          type="text"
+                          value={newNombre}
+                          onChange={e => setNewNombre(e.target.value)}
+                          placeholder="Ej. Historia, Geografía y Ciencias Sociales"
+                          className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-end gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => { setIsAddingAsig(false); setNewCodigo(''); setNewNombre(''); }}
+                        className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleAddAsignatura}
+                        disabled={!newCodigo.trim() || !newNombre.trim()}
+                        className="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-md transition-all"
+                      >
+                        Incorporar al Catálogo
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Grid of Current Active Subjects */}
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+                    Especialidades Activas en el Sistema ({localAsignaturas.length})
+                  </span>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {localAsignaturas.map(asig => {
+                      const isDefault = ['asig-1', 'asig-2', 'asig-3'].includes(asig.id);
+                      let iconEmoji = '📚';
+                      let colorClass = 'border-indigo-500/30 bg-indigo-500/5 text-indigo-700 dark:text-indigo-300';
+                      if (asig.codigo === 'MAT') { iconEmoji = '📐'; colorClass = 'border-sky-500/30 bg-sky-500/5 text-sky-700 dark:text-sky-300'; }
+                      else if (asig.codigo === 'LEN') { iconEmoji = '📖'; colorClass = 'border-violet-500/30 bg-violet-500/5 text-violet-700 dark:text-violet-300'; }
+                      else if (asig.codigo === 'CN') { iconEmoji = '🔬'; colorClass = 'border-cyan-500/30 bg-cyan-500/5 text-cyan-700 dark:text-cyan-300'; }
+                      else if (asig.codigo === 'HIST') { iconEmoji = '🏛️'; colorClass = 'border-amber-500/30 bg-amber-500/5 text-amber-700 dark:text-amber-300'; }
+                      else if (asig.codigo === 'ING') { iconEmoji = '🇬🇧'; colorClass = 'border-emerald-500/30 bg-emerald-500/5 text-emerald-700 dark:text-emerald-300'; }
+
+                      return (
+                        <div
+                          key={asig.id}
+                          className={`p-3.5 rounded-2xl border ${colorClass} flex items-center justify-between gap-3 transition-all hover:scale-[1.01]`}
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <span className="text-xl flex-shrink-0">{iconEmoji}</span>
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-mono font-black text-xs px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10">
+                                  {asig.codigo}
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-semibold">
+                                  {isDefault ? 'Oficial SIMCE' : 'Personalizada'}
+                                </span>
+                              </div>
+                              <p className="font-bold text-xs text-slate-900 dark:text-white truncate mt-0.5">
+                                {asig.nombre}
+                              </p>
+                            </div>
+                          </div>
+
+                          {!isDefault && localAsignaturas.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteAsignatura(asig.id)}
+                              className="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-colors flex-shrink-0"
+                              title="Eliminar especialidad"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Quick Add MINEDUC Suggestions */}
+                <div className="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2.5">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500" />
+                    <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                      Incorporar Asignaturas Sugeridas del MINEDUC en 1-Clic
+                    </h4>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Haz clic sobre cualquier asignatura para habilitarla en el catálogo institucional:
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {asignaturasSugeridasMINEDUC.map(sug => {
+                      const alreadyAdded = localAsignaturas.some(a => a.codigo === sug.codigo || a.nombre.toLowerCase() === sug.nombre.toLowerCase());
+                      if (alreadyAdded) return null;
+
+                      return (
+                        <button
+                          key={sug.codigo}
+                          type="button"
+                          onClick={() => handleAddSugerida(sug)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 shadow-sm transition-all hover:scale-105 active:scale-95"
+                        >
+                          <span>{sug.icono}</span>
+                          <span>+ {sug.nombre} ({sug.codigo})</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: REGLAS EVALUATIVAS */}
             {activeTab === 'evaluaciones' && (
               <div className="space-y-6 animate-fade-in">
                 <div>
@@ -501,8 +761,46 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
                   </div>
                 </div>
 
+                {/* Password Change Card */}
+                <div className="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-xl">
+                        <Key className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-white">Seguridad & Contraseña de Acceso</h4>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400">Actualiza tu clave personal para ingresar a Sysget Saber</p>
+                      </div>
+                    </div>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                      Protegido por Supabase Auth
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Nueva Contraseña</label>
+                      <input
+                        type="password"
+                        placeholder="Mínimo 6 caracteres"
+                        className="w-full px-3.5 py-2.5 text-xs bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Confirmar Nueva Contraseña</label>
+                      <input
+                        type="password"
+                        placeholder="Repite la nueva contraseña"
+                        className="w-full px-3.5 py-2.5 text-xs bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 {/* Dark mode switcher */}
-                <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {darkMode ? <Moon className="w-5 h-5 text-indigo-400" /> : <Sun className="w-5 h-5 text-amber-500" />}
                     <div>

@@ -1,4 +1,15 @@
 export type UserRole = 'admin' | 'profesor' | 'alumno';
+export type UserEstado = 'pendiente_aprobacion' | 'activo' | 'suspendido' | 'rechazado';
+export type UserPlan = 'trial' | 'free' | 'pro' | 'institucional';
+
+export interface EstablecimientoInfo {
+  rbd: string;
+  nombre: string;
+  comuna: string;
+  dependencia: string;
+  logoUrl: string;
+  lema?: string;
+}
 
 export interface UserProfile {
   id: string;
@@ -8,9 +19,17 @@ export interface UserProfile {
   email: string;
   rol: UserRole;
   establecimiento: string;
+  rbd?: string;                // Código RBD oficial del establecimiento
+  logoUrl?: string;            // Ruta al logo o insignia del colegio
   asignaturaId?: string;       // Asignatura principal para aislamiento de ambiente (ej. 'asig-1' = Matemática)
   asignaturaNombre?: string;   // Nombre descriptivo (ej. 'Matemática')
   cargo?: string;              // Cargo opcional (ej. 'Jefe de UTP', 'Docente de Aula')
+  estado?: UserEstado;         // Estado de aprobación
+  plan?: UserPlan;             // Plan de suscripción
+  trialEndsAt?: string;        // Fecha de fin del período de prueba (30 días)
+  diasRestantesTrial?: number; // Días restantes de prueba calculados
+  fechaRegistro?: string;      // Fecha en que se registró la cuenta
+  approvalToken?: string;      // Token de aprobación directa de 1-clic desde correo
 }
 
 
@@ -18,6 +37,16 @@ export interface Asignatura {
   id: string;
   codigo: string;
   nombre: string;
+}
+
+export interface AlumnoBasico {
+  id: string;
+  rut: string;
+  nombre: string;
+  apellido: string;
+  cursoId: string;
+  cursoNombre: string;
+  numeroDeLista?: number;
 }
 
 export interface EjeTematico {
@@ -52,6 +81,8 @@ export interface Pregunta {
   nivel: string;
   dificultad: DificultadPregunta;
   enunciado: string;
+  imagenUrl?: string;
+  tablaMarkdown?: string;
   alternativas: Alternativa[];
   respuestaCorrecta: string | null;
   puntaje: number;
@@ -158,4 +189,29 @@ export interface ReporteTabuladoCurso {
   preguntasMasFalladas: PreguntaFallada[];
   planAccionReforzamiento: ItemPlanReforzamiento[];
   rendiciones: RendicionPrueba[];
+}
+
+export interface SeguimientoDocente {
+  profesorId: string;
+  profesorNombre: string;
+  profesorEmail: string;
+  avatarColor: string;
+  iniciales: string;
+  asignaturaId: string;
+  asignaturaNombre: string;
+  cursosAsignados: string[];
+  totalEvaluacionesCreadas: number;
+  totalEvaluacionesActivas: number;
+  totalAlumnosEvaluados: number;
+  totalAlumnosMatriculados: number;
+  coberturaCurricularPorcentaje: number;
+  promedioLogroAlumnos: number;
+  puntajeSimceEstimado: number;
+  estadoAvancePME: 'en_meta' | 'en_progreso' | 'requiere_apoyo';
+  ejeMayorFortaleza: string;
+  ejeMayorDebilidad: string;
+  ultimaEvaluacionFecha: string;
+  ultimaEvaluacionTitulo: string;
+  ultimaEvaluacionId: string;
+  planesRemedialesGenerados: number;
 }

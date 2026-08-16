@@ -203,9 +203,19 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
               Pregunta N° {currentIdx + 1}
             </span>
-            <h4 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white leading-relaxed">
+            <h4 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line">
               {preguntaActual.enunciado}
             </h4>
+
+            {preguntaActual.imagenUrl && (
+              <div className="p-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm my-3">
+                <img
+                  src={preguntaActual.imagenUrl}
+                  alt={`Figura Pregunta N° ${currentIdx + 1}`}
+                  className="max-h-80 w-auto object-contain rounded-xl"
+                />
+              </div>
+            )}
           </div>
 
           {/* Alternatives or Textarea */}

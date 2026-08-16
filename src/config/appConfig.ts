@@ -9,7 +9,7 @@ export const APP_CONFIG = {
   // Nombre del Colegio / Escuela (Leído desde .env.local o fallback por defecto)
   nombreEstablecimiento:
     (import.meta.env && import.meta.env.VITE_NOMBRE_ESTABLECIMIENTO) ||
-    'Escuela Bicentenario Demo',
+    'Liceo Bicentenario Los Andes',
 
   // Código RBD del Colegio (Registro Bases de Datos Mineduc)
   rbd: (import.meta.env && import.meta.env.VITE_ESTABLECIMIENTO_RBD) || '12345-6',

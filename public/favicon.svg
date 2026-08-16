@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#4338ca" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#facc15" />
+      <stop offset="100%" stop-color="#eab308" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Rounded App Icon Background -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <rect x="8" y="8" width="496" height="496" rx="120" stroke="url(#accentGrad)" stroke-width="4" stroke-opacity="0.4" fill="none" />
+
+  <!-- Graduation Cap (Birrete Académico) -->
+  <g filter="url(#shadow)" transform="translate(0, 10)">
+    <!-- Cap Diamond / Top -->
+    <path d="M256 128L432 208L256 288L80 208L256 128Z" fill="#ffffff" />
+    <path d="M256 142L412 208L256 274L100 208L256 142Z" fill="url(#accentGrad)" opacity="0.3" />
+    
+    <!-- Skull Cap Base -->
+    <path d="M144 240V336C144 372 194 400 256 400C318 400 368 372 368 336V240L256 290L144 240Z" fill="#ffffff" opacity="0.95" />
+    <path d="M160 254V330C160 354 202 380 256 380C310 380 352 354 352 330V254L256 298L160 254Z" fill="url(#bgGrad)" />
+
+    <!-- Tassel (Borla de graduación con estrella dorada) -->
+    <path d="M400 216V312C400 328 388 340 376 348" stroke="url(#goldGrad)" stroke-width="12" stroke-linecap="round" fill="none" />
+    <circle cx="372" cy="356" r="14" fill="url(#goldGrad)" />
+    
+    <!-- Gold Star / Sparkle of Excellence -->
+    <path d="M256 170L262 188L280 194L262 200L256 218L250 200L232 194L250 188L256 170Z" fill="url(#goldGrad)" />
+  </g>
+</svg>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ShieldCheck } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Sidebar, PageId } from './components/Sidebar';
@@ -14,6 +15,7 @@ import { BancoPreguntasPage } from './pages/BancoPreguntasPage';
 import { CursosPage } from './pages/CursosPage';
 import { EvaluacionesPage } from './pages/EvaluacionesPage';
 import { ConfiguracionPage } from './pages/ConfiguracionPage';
+import { GestionUsuariosPage } from './pages/GestionUsuariosPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { LandingPage } from './pages/LandingPage';
@@ -26,18 +28,71 @@ import {
   pruebasMock,
   rendicionesMock,
   reporteCursoMock,
+  reporteCienciasMock,
   reporteLenguajeMock
 } from './data/mockData';
-import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso } from './types';
+import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } from './types';
+
+import { SandboxBanner } from './components/SandboxBanner';
 
 function MainAppContent() {
-  const { user, isAuthenticated, switchRole } = useAuth();
+  const { user, isAuthenticated, isLoading, switchRole, approveUserByToken, logout } = useAuth();
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
   const [activePage, setActivePage] = useState<PageId>('dashboard');
   const [darkMode, setDarkMode] = useState<boolean>(true);
   const [showLanding, setShowLanding] = useState<boolean>(true);
+  const [isSandboxMode, setIsSandboxMode] = useState<boolean>(false);
+  const [tokenApprovalNotice, setTokenApprovalNotice] = useState<string | null>(null);
+
+  // Si el usuario ya estaba autenticado (sesión restaurada), saltar la Landing directamente (salvo si está en registro)
+  React.useEffect(() => {
+    if (!isLoading && isAuthenticated && user && authView !== 'register') {
+      setShowLanding(false);
+    }
+  }, [isLoading, isAuthenticated, user, authView]);
+
+  // Escuchar parámetros de aprobación directa por token (1-click approval desde email del admin)
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('approve_token');
+    if (token) {
+      approveUserByToken(token).then((res) => {
+        if (res.success) {
+          setTokenApprovalNotice(res.message);
+        } else {
+          setTokenApprovalNotice(res.message);
+        }
+        // Limpiar URL sin recargar
+        window.history.replaceState({}, document.title, window.location.pathname);
+      });
+    }
+  }, [approveUserByToken]);
+
+  // Fix: botón atrás del navegador navega dentro de la app en vez de salir
+  React.useEffect(() => {
+    // Push estado inicial en el historial
+    window.history.pushState({ page: 'dashboard' }, '', window.location.pathname);
+
+    const handlePopState = (e: PopStateEvent) => {
+      if (e.state?.page) {
+        // Navegar a la página guardada en el historial
+        setActivePage(e.state.page);
+        setSelectedReportPruebaId(null);
+      } else {
+        // Si no hay estado, volver al dashboard en vez de salir
+        setActivePage('dashboard');
+        setSelectedReportPruebaId(null);
+        window.history.pushState({ page: 'dashboard' }, '', window.location.pathname);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
 
   // App Data State
+  const [asignaturas, setAsignaturas] = useState<Asignatura[]>(asignaturasMock);
   const [bancoPreguntas, setBancoPreguntas] = useState<Pregunta[]>(preguntasMock);
   const [pruebas, setPruebas] = useState<Prueba[]>(pruebasMock);
   const [rendiciones, setRendiciones] = useState<RendicionPrueba[]>(rendicionesMock);
@@ -52,6 +107,9 @@ function MainAppContent() {
     if (pruebaId === 'prueba-102' || (prueba && (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')))) {
       return reporteLenguajeMock;
     }
+    if (pruebaId === 'prueba-cn6b-101' || (prueba && prueba.asignaturaNombre.toLowerCase().includes('ciencia'))) {
+      return { ...reporteCienciasMock, pruebaId: prueba?.id || pruebaId, pruebaTitulo: prueba?.titulo || reporteCienciasMock.pruebaTitulo, cursoNombre: prueba?.cursoNombre || reporteCienciasMock.cursoNombre };
+    }
     if (prueba) {
       return {
         ...reporteCursoMock,
@@ -64,18 +122,37 @@ function MainAppContent() {
   };
 
 
+  // Mientras Supabase verifica la sesión, no renderizar nada (evita flash de Landing)
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-slate-400 text-sm">Restaurando sesión...</p>
+        </div>
+      </div>
+    );
+  }
+
   // Show Landing page before authentication
   if (showLanding) {
     return (
       <LandingPage
-        onEnterApp={() => setShowLanding(false)}
+        onEnterApp={async () => {
+          setIsSandboxMode(false);
+          await logout();
+          setAuthView('login');
+          setShowLanding(false);
+        }}
         onSelectRoleDemo={(role, extra) => {
+          setIsSandboxMode(true);
           switchRole(role, extra);
           setShowLanding(false);
         }}
       />
     );
   }
+
 
   // If user is not authenticated, show Login or Register page
   if (!isAuthenticated || !user) {
@@ -168,7 +245,31 @@ function MainAppContent() {
 
       switch (activePage) {
         case 'profesores':
-          return <ProfesoresPage />;
+          // RBAC: solo admin puede acceder a Gestión de Profesores
+          if (user.rol !== 'admin') {
+            const dashboardPruebas = user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
+            const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
+            return (
+              <ProfesorDashboard
+                profesor={user}
+                pruebas={dashboardPruebas}
+                reporteActivo={dashboardReporte}
+                onOpenGenerator={() => setIsGeneratorOpen(true)}
+                onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
+                onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
+              />
+            );
+          }
+          return (
+            <ProfesoresPage
+              asignaturas={asignaturas}
+              onNavigateToConfig={() => {
+                setSelectedReportPruebaId(null);
+                setActivePruebaForRunner(null);
+                setActivePage('configuracion');
+              }}
+            />
+          );
         case 'alumnos':
           return <AlumnosPage />;
         case 'cursos':
@@ -177,7 +278,7 @@ function MainAppContent() {
           return (
             <BancoPreguntasPage
               preguntas={bancoPreguntas}
-              asignaturas={asignaturasMock}
+              asignaturas={asignaturas}
               ejes={ejesTematicosMock}
               habilidades={habilidadesMock}
               currentUser={user}
@@ -190,15 +291,15 @@ function MainAppContent() {
           return (
             <EvaluacionesPage
               pruebas={pruebas}
-              asignaturas={asignaturasMock}
+              asignaturas={asignaturas}
+              bancoPreguntas={bancoPreguntas}
               currentUser={user}
               onOpenGenerator={() => setIsGeneratorOpen(true)}
               onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
               onUpdatePruebaEstado={handleUpdatePruebaEstado}
             />
           );
-        case 'configuracion':
-          // RBAC: solo admin puede acceder a Configuración
+        case 'usuarios':
           if (user.rol !== 'admin') {
             return (
               <ProfesorDashboard
@@ -211,25 +312,48 @@ function MainAppContent() {
               />
             );
           }
+          return <GestionUsuariosPage />;
+        case 'configuracion':
+          // RBAC: solo admin puede acceder a Configuración
+          if (user.rol !== 'admin') {
+            const dashboardPruebas = user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
+            const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
+            return (
+              <ProfesorDashboard
+                profesor={user}
+                pruebas={dashboardPruebas}
+                reporteActivo={dashboardReporte}
+                onOpenGenerator={() => setIsGeneratorOpen(true)}
+                onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
+                onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
+              />
+            );
+          }
           return (
             <ConfiguracionPage
               user={user}
               darkMode={darkMode}
               onToggleDarkMode={handleToggleDarkMode}
+              asignaturas={asignaturas}
+              onUpdateAsignaturas={setAsignaturas}
             />
           );
+
         case 'dashboard':
-        default:
+        default: {
+          const dashboardPruebas = user.rol === 'profesor' && user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
+          const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
           return (
             <ProfesorDashboard
               profesor={user}
-              pruebas={pruebas}
-              reporteActivo={reporteCursoMock}
+              pruebas={dashboardPruebas}
+              reporteActivo={dashboardReporte}
               onOpenGenerator={() => setIsGeneratorOpen(true)}
               onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
               onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
             />
           );
+        }
       }
     } else {
       // Student View
@@ -274,23 +398,40 @@ function MainAppContent() {
         activePage={activePage}
         onNavigate={(page) => {
           setSelectedReportPruebaId(null);
+          setActivePruebaForRunner(null);
           setActivePage(page);
+          // Registrar en historial del navegador para que el botón atrás funcione dentro de la app
+          window.history.pushState({ page }, '', window.location.pathname);
         }}
       />
 
       {/* Main Container */}
       <div className="flex-1 lg:pl-64 flex flex-col min-w-0">
+        <SandboxBanner isDemo={isSandboxMode} />
         <Navbar
           user={user}
-          onRoleChange={(role) => {
+          onRoleChange={(role, extra) => {
             setSelectedReportPruebaId(null);
             setActivePruebaForRunner(null);
-            switchRole(role);
+            setActivePage('dashboard');
+            switchRole(role, extra);
           }}
-          onGoToLanding={() => setShowLanding(true)}
+          onGoToLanding={() => {
+            if (isSandboxMode) {
+              logout();
+            }
+            setShowLanding(true);
+          }}
+          onLogout={async () => {
+            setIsSandboxMode(false);
+            await logout();
+            setAuthView('login');
+            setShowLanding(false);
+          }}
           darkMode={darkMode}
           onToggleDarkMode={handleToggleDarkMode}
         />
+
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {renderMainContent()}
@@ -302,6 +443,27 @@ function MainAppContent() {
           <p className="text-[11px] text-slate-400 mt-1">Diseñado con React, Vite, Tailwind CSS y Supabase</p>
         </footer>
       </div>
+
+      {/* Modal de Aprobación por Token (1-click email approval) */}
+      {tokenApprovalNotice && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl animate-fade-in text-center">
+            <div className="w-12 h-12 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-bold text-white">Resultado de Aprobación Directa</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {tokenApprovalNotice}
+            </p>
+            <button
+              onClick={() => setTokenApprovalNotice(null)}
+              className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all"
+            >
+              Entendido / Cerrar
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Generator Modal */}
       <EvaluacionGeneratorModal
@@ -317,6 +479,7 @@ function MainAppContent() {
     </div>
   );
 }
+
 
 export function App() {
   return (

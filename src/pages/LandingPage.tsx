@@ -21,7 +21,7 @@ import { UserRole } from '../types';
 
 interface LandingPageProps {
   onEnterApp: () => void;
-  onSelectRoleDemo: (role: UserRole, extra?: 'matematica' | 'lenguaje') => void;
+  onSelectRoleDemo: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje') => void;
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({
@@ -61,8 +61,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               onClick={onEnterApp}
               className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all shadow-lg shadow-indigo-600/30 flex items-center gap-2 border border-indigo-400/30"
             >
-              <span>Ingresar a la Plataforma</span>
-              <ArrowRight className="w-4 h-4" />
+              <Lock className="w-3.5 h-3.5" />
+              <span>Acceso Institucional (Login)</span>
             </button>
           </div>
         </div>
@@ -90,74 +90,121 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* CTA Box / Demo Roles */}
           <div className="pt-6">
             <div className="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 backdrop-blur-xl shadow-2xl max-w-3xl mx-auto space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
                   <Zap className="w-4 h-4 text-amber-400" />
-                  <span>Explorar Demostración Interactiva por Rol:</span>
+                  <span>🧪 Modo Sandbox — Demostración Guiada por Especialidad:</span>
                 </div>
-                <span className="text-[11px] text-slate-500">Acceso inmediato sin registro</span>
+                <span className="text-[11px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">
+                  Sesión aislada de prueba
+                </span>
               </div>
 
               {/* Roles Buttons Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
                 {/* 1. Admin */}
                 <button
                   onClick={() => onSelectRoleDemo('admin')}
-                  className="p-3.5 rounded-2xl bg-gradient-to-b from-indigo-950/60 to-slate-900 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-md shadow-indigo-950/50"
+                  className="p-3.5 rounded-2xl bg-gradient-to-b from-indigo-950/70 via-slate-900 to-slate-950 border border-indigo-500/40 hover:border-indigo-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-lg shadow-indigo-950/50 flex flex-col justify-between"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-300">
-                      👑
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-9 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-300 text-base">
+                        👑
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                    <div className="text-xs font-black text-white group-hover:text-indigo-300">Admin / UTP</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5 font-medium">Control Global Colegio</div>
                   </div>
-                  <div className="text-xs font-bold text-white group-hover:text-indigo-300">Administrador / UTP</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Control global, colegios y configuración</div>
+                  <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1">
+                    <div className="text-[10px] text-emerald-400 font-bold">⭐ Mapa de calor & PME</div>
+                    <div className="text-[9px] text-slate-500">261 pts SIMCE proyectados</div>
+                  </div>
                 </button>
 
                 {/* 2. Profe Matematica */}
                 <button
                   onClick={() => onSelectRoleDemo('profesor', 'matematica')}
-                  className="p-3.5 rounded-2xl bg-gradient-to-b from-sky-950/60 to-slate-900 border border-sky-500/30 hover:border-sky-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-md shadow-sky-950/50"
+                  className="p-3.5 rounded-2xl bg-gradient-to-b from-sky-950/70 via-slate-900 to-slate-950 border border-sky-500/40 hover:border-sky-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-lg shadow-sky-950/50 flex flex-col justify-between"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-sky-600/30 border border-sky-500/40 flex items-center justify-center text-sky-300">
-                      📐
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-9 h-9 rounded-xl bg-sky-600/30 border border-sky-500/40 flex items-center justify-center text-sky-300 text-base">
+                        📐
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                    <div className="text-xs font-black text-white group-hover:text-sky-300">Profe Matemática</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5 font-medium">8° Básico (María G.)</div>
                   </div>
-                  <div className="text-xs font-bold text-white group-hover:text-sky-300">Profe Matemática</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Ambiente exclusivo de Matemática</div>
+                  <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1">
+                    <div className="text-[10px] text-amber-400 font-bold">⭐ Plan Alumno Martín S.</div>
+                    <div className="text-[9px] text-slate-500">Brecha en Álgebra y Pitágoras</div>
+                  </div>
                 </button>
 
-                {/* 3. Profe Lenguaje */}
+                {/* 3. Profe Ciencias */}
+                <button
+                  onClick={() => onSelectRoleDemo('profesor', 'ciencias')}
+                  className="p-3.5 rounded-2xl bg-gradient-to-b from-cyan-950/70 via-slate-900 to-slate-950 border border-cyan-500/40 hover:border-cyan-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-lg shadow-cyan-950/50 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-9 h-9 rounded-xl bg-cyan-600/30 border border-cyan-500/40 flex items-center justify-center text-cyan-300 text-base">
+                        🔬
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all" />
+                    </div>
+                    <div className="text-xs font-black text-white group-hover:text-cyan-300">Profe Ciencias</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5 font-medium">Ciencias 6°B (Patricia M.)</div>
+                  </div>
+                  <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1">
+                    <div className="text-[10px] text-cyan-400 font-bold">⭐ Aislamiento Curricular</div>
+                    <div className="text-[9px] text-slate-500">35 preguntas & 8 ejes OA</div>
+                  </div>
+                </button>
+
+                {/* 4. Profe Lenguaje */}
                 <button
                   onClick={() => onSelectRoleDemo('profesor', 'lenguaje')}
-                  className="p-3.5 rounded-2xl bg-gradient-to-b from-violet-950/60 to-slate-900 border border-violet-500/30 hover:border-violet-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-md shadow-violet-950/50"
+                  className="p-3.5 rounded-2xl bg-gradient-to-b from-violet-950/70 via-slate-900 to-slate-950 border border-violet-500/40 hover:border-violet-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-lg shadow-violet-950/50 flex flex-col justify-between"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-violet-600/30 border border-violet-500/40 flex items-center justify-center text-violet-300">
-                      📖
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-9 h-9 rounded-xl bg-violet-600/30 border border-violet-500/40 flex items-center justify-center text-violet-300 text-base">
+                        📖
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                    <div className="text-xs font-black text-white group-hover:text-violet-300">Profe Lenguaje</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5 font-medium">Lenguaje 8°A (Carlos M.)</div>
                   </div>
-                  <div className="text-xs font-bold text-white group-hover:text-violet-300">Profe Lenguaje</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Ambiente exclusivo de Lectura</div>
+                  <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1">
+                    <div className="text-[10px] text-purple-400 font-bold">⭐ Corrección IA Redacción</div>
+                    <div className="text-[9px] text-slate-500">Rúbrica textual automatizada</div>
+                  </div>
                 </button>
 
-                {/* 4. Alumno */}
+                {/* 5. Alumno */}
                 <button
                   onClick={() => onSelectRoleDemo('alumno')}
-                  className="p-3.5 rounded-2xl bg-gradient-to-b from-emerald-950/60 to-slate-900 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-md shadow-emerald-950/50"
+                  className="p-3.5 rounded-2xl bg-gradient-to-b from-emerald-950/70 via-slate-900 to-slate-950 border border-emerald-500/40 hover:border-emerald-400 text-left transition-all group hover:scale-[1.02] active:scale-95 shadow-lg shadow-emerald-950/50 flex flex-col justify-between"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-600/30 border border-emerald-500/40 flex items-center justify-center text-emerald-300">
-                      🎓
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-600/30 border border-emerald-500/40 flex items-center justify-center text-emerald-300 text-base">
+                        🎓
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+                    <div className="text-xs font-black text-white group-hover:text-emerald-300">Portal Alumno</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5 font-medium">Pedro Soto (8°A)</div>
                   </div>
-                  <div className="text-xs font-bold text-white group-hover:text-emerald-300">Portal Alumno</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Solo rendición de mis ensayos</div>
+                  <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1">
+                    <div className="text-[10px] text-emerald-400 font-bold">⭐ Ensayo Interactivo</div>
+                    <div className="text-[9px] text-slate-500">5 preguntas + Feedback</div>
+                  </div>
                 </button>
               </div>
             </div>
