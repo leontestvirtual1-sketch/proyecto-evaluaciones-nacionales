@@ -2,6 +2,21 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Membrete Institucional con Logos en Cuadernillos de Impresión y Selector Multicolegio
+
+- **Problema / Requerimiento**:
+  1. Los cuadernillos de evaluación no incluían el logo oficial del establecimiento en el membrete, lo que restaba identidad institucional al material impreso.
+  2. No existía forma de seleccionar entre distintos colegios al generar el PDF, limitando el uso a un único establecimiento hard-codeado.
+- **Archivos y Solución Técnica**:
+  - [`public/logos/colegio-san-agustin.jpg`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/logos/colegio-san-agustin.jpg), [`public/logos/escuela-premilitar.png`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/logos/escuela-premilitar.png), [`public/logos/liceo-bicentenario.jpg`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/logos/liceo-bicentenario.jpg): [NUEVO] Logos reales de 3 establecimientos del catálogo multicolegio.
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Añadido `establecimientosCatalog` con nombre, RBD y `logoUrl` de cada establecimiento.
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): [MODIFICADO] Selector de establecimiento (multicolegio) en el modal de impresión. El membrete del cuadernillo muestra el logo del colegio seleccionado junto al nombre y RBD institucional.
+- **Verificación / Despliegue**:
+  - Commit: ✅ `e7ea48f` — `feat: membrete institucional con logos en cuadernillos e impresion y selector multicolegio`
+  - Push a origin/main: ✅ Código sincronizado
+
+---
+
 ### [2026-08-16] Backend Serverless `/api/users` para Registro y Aprobación Persistente en Base de Datos
 
 - **Problema / Requerimiento**:
