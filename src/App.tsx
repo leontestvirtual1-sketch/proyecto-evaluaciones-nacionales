@@ -200,10 +200,20 @@ function MainAppContent() {
   };
 
   const getPreguntasForRunner = (prueba: Prueba, banco: Pregunta[]): Pregunta[] => {
-    // Filter questions by subject ID
+    // 1. Si la prueba especifica preguntasIds exactas, retornarlas en su orden
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+      const byId = new Map(banco.map(p => [p.id, p]));
+      const exactQuestions = prueba.preguntasIds
+        .map(id => byId.get(id))
+        .filter((p): p is Pregunta => Boolean(p));
+      if (exactQuestions.length > 0) {
+        return exactQuestions;
+      }
+    }
+
+    // 2. Fallback por asignatura
     let matched = banco.filter(p => p.asignaturaId === prueba.asignaturaId);
 
-    // Fallback match by subject name if ID didn't match
     if (matched.length === 0) {
       if (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')) {
         matched = banco.filter(p => p.asignaturaId === 'asig-2');
@@ -218,7 +228,6 @@ function MainAppContent() {
       matched = banco;
     }
 
-    // Ensure we return exactly totalPreguntas count with questions of that subject
     const targetCount = prueba.totalPreguntas || matched.length || 5;
     const result: Pregunta[] = [];
 

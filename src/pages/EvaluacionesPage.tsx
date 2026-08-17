@@ -41,10 +41,17 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
 }) => {
   if (!isOpen || !prueba) return null;
 
-  // Match questions by IDs or subject
-  const preguntasDeLaPrueba = preguntas.filter(p =>
-    prueba.preguntasIds?.includes(p.id) || p.asignaturaId === prueba.asignaturaId
-  );
+  // Match questions strictly by prueba.preguntasIds if defined, preserving order
+  const preguntasDeLaPrueba = React.useMemo(() => {
+    if (!prueba) return [];
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+      const byId = new Map(preguntas.map(p => [p.id, p]));
+      const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
+      if (list.length > 0) return list;
+    }
+    // Fallback only if no preguntasIds
+    return preguntas.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
+  }, [prueba, preguntas]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto">

@@ -2,6 +2,25 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-17] Corrección de Filtrado Estricto de Ítems por Evaluación (Aislamiento de 30 Preguntas vs Banco Completo)
+
+- **Problema / Requerimiento**:
+  Al presionar **"Ver Ítems"**, **"Imprimir / PDF"** o **"Ingresar Respuestas"** en cualquiera de las evaluaciones (Agosto 2026 o Junio 2026), se desplegaban 65 preguntas en lugar de exactamente las 30 preguntas de la evaluación seleccionada. Esto ocurría porque la condición de filtrado utilizaba un operador disyuntivo (`|| p.asignaturaId === prueba.asignaturaId`), lo que provocaba que se agregaran todas las preguntas de Lenguaje existentes en el banco global.
+- **Archivos y Solución Técnica**:
+  - [`src/pages/EvaluacionesPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/EvaluacionesPage.tsx):
+    - [MODIFICADO] `PruebaFacsimilModal`: `preguntasDeLaPrueba` ahora mapea de manera estricta y ordenada las preguntas definidas en `prueba.preguntasIds` (`exactQuestions`), garantizando que solo se muestren exactamente las 30 preguntas de la prueba en "Ver Ítems".
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx):
+    - [MODIFICADO] `PrintEvaluacionModal`: Corregido el selector de preguntas para respetar estrictamente `prueba.preguntasIds`, evitando que los cuadernillos impresos, pautas y hojas de respuesta generen 65 preguntas en vez de 30.
+  - [`src/components/IngresoRespuestasModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/IngresoRespuestasModal.tsx):
+    - [MODIFICADO] `IngresoRespuestasModal`: Corregido el mapeo de preguntas para respetar `prueba.preguntasIds`.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
+    - [MODIFICADO] `getPreguntasForRunner`: Prioriza el orden y coincidencia estricta de `prueba.preguntasIds`.
+- **Verificación / Despliegue**:
+  - Verificación: Ensayo Agosto 2026 muestra exactamente 30 preguntas (`preg-len2m-01` a `preg-len2m-30`). Ensayo Junio 2026 muestra exactamente 30 preguntas (`preg-len2m-jun-01` a `preg-len2m-jun-30`). Banco global mantiene todas las preguntas organizadas.
+  - Compilación TypeScript: ✅ 0 errores (`npx tsc --noEmit`).
+
+---
+
 ### [2026-08-17] Integración Ensayo SIMCE Lenguaje 2° Medio — Junio 2026 (30 preguntas, 4 lecturas)
 
 - **Problema / Requerimiento**:

@@ -74,15 +74,21 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
 
   if (!isOpen || !prueba) return null;
 
-  // Filter and prepare questions for this evaluation
-  const preguntasDeLaPrueba = preguntas.filter(
-    p => prueba.preguntasIds?.includes(p.id) || p.asignaturaId === prueba.asignaturaId
-  );
+  // Filter and prepare questions for this evaluation strictly by preguntasIds
+  const preguntasDeLaPrueba = React.useMemo(() => {
+    if (!prueba) return [];
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+      const byId = new Map(preguntas.map(p => [p.id, p]));
+      const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
+      if (list.length > 0) return list;
+    }
+    return preguntas.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
+  }, [prueba, preguntas]);
 
   // If none matched, fallback to all provided questions up to totalPreguntas
   const itemsToPrint: Pregunta[] = preguntasDeLaPrueba.length > 0
     ? preguntasDeLaPrueba
-    : preguntas.slice(0, prueba.totalPreguntas || 20);
+    : preguntas.slice(0, prueba.totalPreguntas || 30);
 
   const selectedStudentsToPrint = listaAlumnos.filter(a => selectedStudentIds.includes(a.id));
 

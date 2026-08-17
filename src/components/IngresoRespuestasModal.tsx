@@ -45,11 +45,17 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
   const [fotoEvidencia, setFotoEvidencia] = useState<string | null>(null);
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
 
-  // Filter questions of this test
-  const preguntasDeLaPrueba = preguntas.filter(
-    p => prueba?.preguntasIds?.includes(p.id) || p.asignaturaId === prueba?.asignaturaId
-  );
-  const itemsToEvaluate = preguntasDeLaPrueba.length > 0 ? preguntasDeLaPrueba : preguntas.slice(0, prueba?.totalPreguntas || 20);
+  // Filter questions of this test strictly by preguntasIds
+  const preguntasDeLaPrueba = React.useMemo(() => {
+    if (!prueba) return [];
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+      const byId = new Map(preguntas.map(p => [p.id, p]));
+      const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
+      if (list.length > 0) return list;
+    }
+    return preguntas.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
+  }, [prueba, preguntas]);
+  const itemsToEvaluate = preguntasDeLaPrueba.length > 0 ? preguntasDeLaPrueba : preguntas.slice(0, prueba?.totalPreguntas || 30);
 
   const alumnoActual = listaAlumnos.find(a => a.id === selectedAlumnoId) || listaAlumnos[0];
 
