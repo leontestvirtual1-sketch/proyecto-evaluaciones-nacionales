@@ -2,6 +2,40 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-17] Hardening de Seguridad en Login de Administrador y Consistencia de Selector de Especialidades en Navbar
+
+- **Problema / Requerimiento**:
+  1. **Bypass de Contraseña en Login de Administrador**: Al ingresar como Administrador en producción, el sistema aceptaba cualquier contraseña debido a que un error de autenticación en Supabase no abortaba el proceso, sino que continuaba a los pasos de fallback donde existía una discrepancia tipográfica (`leontesvirtual1@gmail.com` vs `leontestvirtual1@gmail.com`) y contraseñas por defecto permisivas.
+  2. **Inconsistencia en Selector de Especialidades Superior (Navbar)**: Al seleccionar Matemática, Ciencias o Lenguaje, el Navbar cambiaba a perfiles genéricos `@escuelademo.cl`, y al pulsar `👑 Admin UTP`, la función `switchRole` asignaba el perfil de demostración `currentUserAdminDemo` en lugar de restaurar a **Luis Andrés León González** (`currentUserAdmin`).
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] `login()` ahora valida de manera estricta las respuestas de error de Supabase. Si Supabase rechaza las credenciales o si el fallback local no coincide exactamente con las contraseñas oficiales autorizadas (`Saber_2026!`, `Premil_2026!`) o `sysget_custom_passwords`, la autenticación se deniega inmediatamente sin bypass.
+    - [MODIFICADO] Homologados los correos del Administrador (`leontestvirtual1@gmail.com`, `leontesvirtual1@gmail.com`, `luis_leon_g@hotmail.com`) y el docente oficial `luis.leon@premil.cl`.
+    - [MODIFICADO] `switchRole` actualizado para que `role === 'admin'` restaure siempre a **Luis Andrés León González** (`currentUserAdmin`), y las especialidades docentes consulten primero los profesores registrados en la institución (`sysget_profesores_list`).
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
+    - [MODIFICADO] Perfiles docentes unificados bajo la identidad institucional oficial y profesional (`@sysget.cl`), eliminando referencias descolgadas a `escuelademo.cl`.
+  - [`src/components/Navbar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Navbar.tsx):
+    - [MODIFICADO] Selector de roles/especialidades actualizado con resaltado activo dinámico (`Admin UTP`, `Premilitar`, `Mat`, `C. Nat`, `Leng`, `Alumno`) y soporte fluido para que el Administrador alterne entre vistas sin perder su sesión.
+- **Verificación / Despliegue**:
+  - Compilación: ✅ 2242 módulos, 0 errores TypeScript + Vite (`dist/index.html` generado exitosamente).
+
+- **Problema / Requerimiento**:
+  - `luis.leon@premil.cl` aceptaba **cualquier contraseña** porque el paso 2 del login (`usuariosRegistradosMock`) hacía bypass completo de la validación. El paso 3 (con validación) nunca se alcanzaba.
+  - La solución permanente es crear ambas cuentas reales directamente en **Supabase Auth** con contraseñas cifradas bcrypt — así la autenticación la maneja Supabase directamente sin depender del fallback local.
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] Paso 2 ahora valida contraseña contra `DEMO_USER_PASSWORDS` y `sysget_custom_passwords` antes de autenticar. Si el email tiene contraseña registrada y no coincide → error. Si no tiene contraseña registrada → rechaza por seguridad.
+    - `DEMO_USER_PASSWORDS` actualizado a contraseñas de producción: `Saber_2026!` (admin), `Premil_2026!` (María Teresa).
+  - [`supabase/migrations/006_create_production_users.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/006_create_production_users.sql): [NUEVO] Script SQL para ejecutar en el Dashboard de Supabase. Crea ambas cuentas con `crypt('contraseña', gen_salt('bf'))` e inserta sus perfiles en `public.perfiles`. Una vez ejecutado, Supabase maneja el 100% de la autenticación.
+- **Contraseñas de Producción** (ejecutar script SQL para activar):
+  - `leontesvirtual1@gmail.com` → **`Saber_2026!`**
+  - `luis.leon@premil.cl` → **`Premil_2026!`**
+- **Verificación / Despliegue**:
+  - Compilación: ✅ 0 errores TypeScript + Vite (12.07s).
+  - Git Commit: `fix(auth): validar contrasena en paso 2 fallback, migration SQL usuarios produccion Supabase`
+
+---
+
 ### [2026-08-16] Hardening Definitivo: Login Limpio, Persistencia LocalStorage y RBAC Estricta
 
 - **Problema / Requerimiento**:

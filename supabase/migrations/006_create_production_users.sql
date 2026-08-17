@@ -13,6 +13,7 @@
 -- Limpieza por email (seguro, sin UUIDs)
 DELETE FROM public.perfiles
 WHERE email IN (
+  'leontestvirtual1@gmail.com',
   'leontesvirtual1@gmail.com',
   'luis.leon@premil.cl',
   'luis.leon@promil.cl'
@@ -23,12 +24,13 @@ DO
 DECLARE
   v_admin_id   UUID;
   v_docente_id UUID;
+  v_admin_email TEXT;
 BEGIN
-  SELECT id INTO v_admin_id   FROM auth.users WHERE email = 'leontesvirtual1@gmail.com' LIMIT 1;
+  SELECT id, email INTO v_admin_id, v_admin_email FROM auth.users WHERE email IN ('leontestvirtual1@gmail.com', 'leontesvirtual1@gmail.com') LIMIT 1;
   SELECT id INTO v_docente_id FROM auth.users WHERE email = 'luis.leon@premil.cl'       LIMIT 1;
 
   IF v_admin_id IS NULL THEN
-    RAISE EXCEPTION 'No se encontro el usuario leontesvirtual1@gmail.com. Crealo primero en Authentication > Users.';
+    RAISE EXCEPTION 'No se encontro el usuario admin (leontestvirtual1@gmail.com o leontesvirtual1@gmail.com). Crealo primero en Authentication > Users.';
   END IF;
   IF v_docente_id IS NULL THEN
     RAISE EXCEPTION 'No se encontro el usuario luis.leon@premil.cl. Crealo primero en Authentication > Users.';
@@ -40,8 +42,8 @@ BEGIN
     establecimiento, cargo, estado, plan, activo
   ) VALUES (
     v_admin_id,
-    '17.123.456-7', 'Luis Andres', 'Leon Gonzalez',
-    'leontesvirtual1@gmail.com', 'admin',
+    '10.703.767-5', 'Luis Andres', 'Leon Gonzalez',
+    v_admin_email, 'admin',
     'Sysget Saber', 'Super Administrador',
     'activo', 'premium', true
   );
@@ -72,5 +74,5 @@ SELECT
   u.email_confirmed_at IS NOT NULL AS email_confirmado
 FROM auth.users u
 JOIN public.perfiles p ON p.id = u.id
-WHERE u.email IN ('leontesvirtual1@gmail.com', 'luis.leon@premil.cl')
+WHERE u.email IN ('leontestvirtual1@gmail.com', 'leontesvirtual1@gmail.com', 'luis.leon@premil.cl')
 ORDER BY p.rol DESC;
