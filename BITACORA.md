@@ -2,6 +2,20 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Corrección de Feedback Visual de Error en Formulario de Login
+
+- **Problema / Requerimiento**:
+  - Al ingresar un correo o contraseña incorrectos, la pantalla parpadeaba, se reseteaban los campos y no se mostraba el mensaje de error visual al usuario.
+  - **Causa Raíz**: `login()` en `AuthContext.tsx` activaba el estado global `isLoading=true`, lo que provocaba que `App.tsx` desmontara el componente `LoginPage` para mostrar la pantalla global *"Restaurando sesión..."*. Al retornar el error, `LoginPage` se volvía a montar en blanco, perdiendo el estado del mensaje de error.
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] `isLoading` se reservó estrictamente para la verificación inicial de sesión (`checkSession`). `login()` y `register()` ya no alteran `isLoading` global.
+  - [`src/pages/LoginPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LoginPage.tsx): [MODIFICADO] Se implementó el estado local `isSubmitting` para el spinner del botón. El componente nunca se desmonta y la tarjeta de error (⚠️ *"Credenciales no reconocidas. Verifica tu correo y contraseña..."*) se renderiza inmediatamente de forma clara y persistente.
+- **Verificación / Despliegue**:
+  - Compilación: ✅ 2242 módulos transformados sin errores en TypeScript + Vite (9.41s).
+  - Git Commit: `5a41f7a`
+
+---
+
 ### [2026-08-16] Hardening Definitivo de Seguridad en Login, Aislamiento Total de Materia y Equipo Docente Real
 
 - **Problema / Requerimiento**:
