@@ -1,4 +1,4 @@
-import { Pregunta, EjeTematico, Prueba } from '../types';
+import { Pregunta, Prueba } from '../types';
 
 // Ejes temáticos reutilizados desde len2mQuestionsMock (mismos IDs para banco compartido)
 // eje-len-2m-1: Lectura de Textos Literarios
