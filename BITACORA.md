@@ -2,6 +2,22 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Validación Estricta de Contraseña en Cuentas Autorizadas
+
+- **Problema / Requerimiento**:
+  - Al ingresar `luis.leon@premil.cl` con cualquier contraseña incorrecta (ej: `asdf`), el sistema permitía el ingreso porque el fallback demo solo validaba el correo pero no comprobaba la contraseña.
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO]
+    - Definido mapa `DEMO_USER_PASSWORDS` con las contraseñas oficiales autorizadas por cuenta (`123456`, `premil2026` para `luis.leon@premil.cl`; `Saber_2026!` para el Super Admin).
+    - En el método `login()`, si la contraseña ingresada no coincide con las contraseñas autorizadas, se rechaza de inmediato con el error:
+      > *"Contraseña incorrecta para este usuario. Por favor verifica tus credenciales."*
+  - [`src/pages/LoginPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LoginPage.tsx): [MODIFICADO] Actualizada la tarjeta de cuentas autorizadas indicando la clave oficial `123456` y el correo directo de la Escuela Premilitar.
+- **Verificación / Despliegue**:
+  - Compilación: ✅ 2242 módulos transformados sin errores en TypeScript + Vite (11.49s).
+  - Git Commit: `79b9478`
+
+---
+
 ### [2026-08-16] Corrección de Feedback Visual de Error en Formulario de Login
 
 - **Problema / Requerimiento**:
