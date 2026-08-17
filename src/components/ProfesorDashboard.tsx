@@ -55,6 +55,7 @@ interface ProfesorDashboardProps {
   profesor: UserProfile;
   pruebas: Prueba[];
   reporteActivo: ReporteTabuladoCurso;
+  isSandboxMode?: boolean;
   onOpenGenerator: () => void;
   onSelectPruebaReporte: (pruebaId: string) => void;
   onNavigateToEvaluaciones?: () => void;
@@ -64,6 +65,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   profesor,
   pruebas,
   reporteActivo,
+  isSandboxMode = false,
   onOpenGenerator,
   onSelectPruebaReporte,
   onNavigateToEvaluaciones
@@ -107,7 +109,14 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                   ? '👑 Panel General UTP & Dirección — Control Global'
                   : `Ambiente Docente • ${profesor.asignaturaNombre || 'Especialidad'}`}
               </span>
-              <SandboxBeacon label="Demo Activa" durationMs={8000} />
+              {isSandboxMode ? (
+                <SandboxBeacon label="Demo Activa" durationMs={8000} />
+              ) : (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
+                  Producción Oficial
+                </span>
+              )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               {isAdmin
@@ -116,7 +125,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
               {isAdmin
-                ? 'Supervisión integral de rendimiento SIMCE, mapa de calor por departamento y planes de mejoramiento automatizados.'
+                ? 'Supervisión integral de rendimiento SIMCE, mapa de calor por departamento y seguimiento de avances curriculares por colegio.'
                 : `Gestión pedagógica de evaluaciones y análisis de logro curricular para la asignatura de ${profesor.asignaturaNombre || 'su departamento'}.`}
             </p>
           </div>

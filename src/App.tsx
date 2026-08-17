@@ -254,6 +254,7 @@ function MainAppContent() {
                 profesor={user}
                 pruebas={dashboardPruebas}
                 reporteActivo={dashboardReporte}
+                isSandboxMode={isSandboxMode}
                 onOpenGenerator={() => setIsGeneratorOpen(true)}
                 onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
                 onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
@@ -308,6 +309,7 @@ function MainAppContent() {
                 profesor={user}
                 pruebas={dashboardPruebas}
                 reporteActivo={dashboardReporte}
+                isSandboxMode={isSandboxMode}
                 onOpenGenerator={() => setIsGeneratorOpen(true)}
                 onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
                 onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
@@ -325,6 +327,7 @@ function MainAppContent() {
                 profesor={user}
                 pruebas={dashboardPruebas}
                 reporteActivo={dashboardReporte}
+                isSandboxMode={isSandboxMode}
                 onOpenGenerator={() => setIsGeneratorOpen(true)}
                 onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
                 onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
@@ -350,6 +353,7 @@ function MainAppContent() {
               profesor={user}
               pruebas={dashboardPruebas}
               reporteActivo={dashboardReporte}
+              isSandboxMode={isSandboxMode}
               onOpenGenerator={() => setIsGeneratorOpen(true)}
               onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
               onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}

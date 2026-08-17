@@ -175,10 +175,10 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
       return [
         {
           id: 'cur-2m',
-          nombre: '2° Medio A',
+          nombre: '2° Medio',
           nivel: 'II Medio',
           anio: 2026,
-          codigoInvitacion: '2MA2026',
+          codigoInvitacion: 'LEN2M2026',
           totalAlumnos: 0,
           establecimiento: colegioNombre
         }

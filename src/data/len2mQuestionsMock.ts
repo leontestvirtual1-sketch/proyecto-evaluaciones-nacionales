@@ -10,7 +10,7 @@ export const ejesTematicosLenguaje2MMock: EjeTematico[] = [
 
 export const cursoLenguaje2MMock: Curso = {
   id: 'curso-2m',
-  nombre: '2° Medio A',
+  nombre: '2° Medio',
   nivel: '2° medio',
   profesorId: '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18',
   establecimiento: 'Escuela Premilitar Héroes de la Concepción',
@@ -18,18 +18,7 @@ export const cursoLenguaje2MMock: Curso = {
   codigoInvitacion: 'LEN2M2026'
 };
 
-export const alumnosLenguaje2MMock: AlumnoBasico[] = [
-  { id: 'alu-201', rut: '20.101.001-1', nombre: 'Agustín', apellido: 'Alarcón Silva', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 1 },
-  { id: 'alu-202', rut: '20.102.002-2', nombre: 'Bárbara', apellido: 'Bustos Carrasco', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 2 },
-  { id: 'alu-203', rut: '20.103.003-3', nombre: 'Cristóbal', apellido: 'Cisternas Palma', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 3 },
-  { id: 'alu-204', rut: '20.104.004-4', nombre: 'Dominique', apellido: 'Duarte Morales', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 4 },
-  { id: 'alu-205', rut: '20.105.005-5', nombre: 'Esteban', apellido: 'Encalada Vega', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 5 },
-  { id: 'alu-206', rut: '20.106.006-6', nombre: 'Francisca', apellido: 'Flores Garrido', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 6 },
-  { id: 'alu-207', rut: '20.107.007-7', nombre: 'Gonzalo', apellido: 'Gutiérrez Pinto', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 7 },
-  { id: 'alu-208', rut: '20.108.008-8', nombre: 'Helena', apellido: 'Henríquez Toro', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 8 },
-  { id: 'alu-209', rut: '20.109.009-9', nombre: 'Ignacio', apellido: 'Iturra Zamorano', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 9 },
-  { id: 'alu-210', rut: '20.110.010-K', nombre: 'Josefa', apellido: 'Jara Sepúlveda', cursoId: 'curso-2m', cursoNombre: '2° Medio A', numeroDeLista: 10 }
-];
+export const alumnosLenguaje2MMock: AlumnoBasico[] = [];
 
 export const pruebaLenguaje2MMock: Prueba = {
   id: 'prueba-len2m-101',
@@ -40,7 +29,7 @@ export const pruebaLenguaje2MMock: Prueba = {
   nivel: '2° medio',
   profesorId: '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18',
   cursoId: 'curso-2m',
-  cursoNombre: '2° Medio A',
+  cursoNombre: '2° Medio',
   codigoPublico: 'SIMCE-2M-LEN-AGO',
   duracionMinutos: 90,
   creadoEn: '2026-08-16',
