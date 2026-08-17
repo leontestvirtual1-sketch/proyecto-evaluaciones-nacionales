@@ -138,6 +138,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  /** Carga todos los usuarios registrados reales desde Supabase para el Admin */
+  const loadUsuariosReales = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('perfiles')
+        .select('*');
+      if (!error && data && data.length > 0) {
+        const realUsers: UserProfile[] = data.map((p: Record<string, unknown>) => ({
+          id: p.id as string,
+          rut: (p.rut as string) || '',
+          nombre: (p.nombre as string) || '',
+          apellido: (p.apellido as string) || '',
+          email: (p.email as string) || '',
+          rol: ((p.rol as string) || 'profesor') as UserRole,
+          establecimiento: (p.establecimiento as string) || '',
+          rbd: (p.rbd as string) || undefined,
+          asignaturaId: (p.asignatura_id as string) || undefined,
+          asignaturaNombre: (p.asignatura_nombre as string) || undefined,
+          cargo: (p.cargo as string) || undefined,
+          estado: ((p.estado as string) || 'activo') as UserEstado,
+          plan: ((p.plan as string) || 'trial') as UserPlan,
+          logoUrl: (p.logo_url as string) || undefined,
+        }));
+        setUsuarios(realUsers);
+      }
+    } catch {
+      // mantener estado actual si no conecta
+    }
+  }, []);
+
   // Check initial Supabase Session — persiste sesión entre refrescos
   useEffect(() => {
     async function checkSession() {
@@ -211,7 +241,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     checkSession();
     loadDocentesReales();
-  }, [loadDocentesReales]);
+    loadUsuariosReales();
+  }, [loadDocentesReales, loadUsuariosReales]);
 
   const login = useCallback(async (email: string, password: string) => {
     const cleanEmail = email.toLowerCase().trim();

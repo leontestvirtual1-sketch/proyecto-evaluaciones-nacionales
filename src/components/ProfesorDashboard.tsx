@@ -78,6 +78,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const [aislamientoOpen, setAislamientoOpen] = useState(false);
 
   const isAdmin = profesor.rol === 'admin';
+  const isProductionAdmin = isAdmin && !isSandboxMode && (profesor.email === 'leontestvirtual1@gmail.com' || profesor.email !== 'admin@sysget.cl');
   const isLenguaje = profesor.asignaturaId === 'asig-2' || (profesor.asignaturaNombre || '').toLowerCase().includes('lenguaje');
   const isCiencias = profesor.asignaturaId === 'asig-3' || (profesor.asignaturaNombre || '').toLowerCase().includes('ciencia');
   const isMatematica = !isAdmin && !isLenguaje && !isCiencias;
@@ -105,11 +106,13 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
                 <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-400" />
-                {isAdmin
+                {isProductionAdmin
                   ? '👑 Panel General UTP & Dirección — Control Global'
+                  : isAdmin
+                  ? '👑 Panel General UTP & Dirección — Control Global Demo'
                   : `Ambiente Docente • ${profesor.asignaturaNombre || 'Especialidad'}`}
               </span>
-              {isSandboxMode ? (
+              {isSandboxMode || profesor.email === 'admin@sysget.cl' ? (
                 <SandboxBeacon label="Demo Activa" durationMs={8000} />
               ) : (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -119,19 +122,31 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
               )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              {isAdmin
+              {isProductionAdmin
+                ? `Bienvenido, ${profesor.nombre} (Super Administrador / Fundador)`
+                : isAdmin
                 ? `Bienvenido, ${profesor.nombre} (${profesor.cargo || 'Jefe de UTP'})`
                 : `Bienvenido/a, ${profesor.nombre} ${profesor.apellido}`}
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              {isAdmin
+              {isProductionAdmin
+                ? 'Supervisión integral de establecimientos asociados, estado de nóminas y banco de evaluaciones activas en producción.'
+                : isAdmin
                 ? 'Supervisión integral de rendimiento SIMCE, mapa de calor por departamento y seguimiento de avances curriculares por colegio.'
                 : `Gestión pedagógica de evaluaciones y análisis de logro curricular para la asignatura de ${profesor.asignaturaNombre || 'su departamento'}.`}
             </p>
           </div>
 
           <div className="flex items-center gap-3 flex-wrap">
-            {isAdmin ? (
+            {isProductionAdmin ? (
+              <button
+                onClick={() => onNavigateToEvaluaciones && onNavigateToEvaluaciones()}
+                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold px-5 py-3 rounded-2xl shadow-xl shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] border border-indigo-400/30 relative"
+              >
+                <BookOpen className="w-5 h-5 text-indigo-200" />
+                <span>Ver Evaluaciones en Producción</span>
+              </button>
+            ) : isAdmin ? (
               <button
                 onClick={() => setPlanMejoramientoOpen(true)}
                 className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold px-5 py-3 rounded-2xl shadow-xl shadow-emerald-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] border border-emerald-400/30 relative"
@@ -155,185 +170,403 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
       {/* KPI Stat Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
-          title={isAdmin ? 'Promedio SIMCE Proyectado' : 'Logro Promedio Global'}
-          value={isAdmin ? '261 pts' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioPorcentajeLogro}%`)}
-          subtitle={isAdmin ? 'Meta 2026: 265 pts (+15 pts)' : (reporteActivo.totalAlumnosRendidos === 0 ? `Curso ${reporteActivo.cursoNombre} (Sin rendiciones)` : `Curso ${reporteActivo.cursoNombre}`)}
-          icon={<Award className="w-5 h-5" />}
-          trend={{ text: isAdmin ? '+12 pts vs 2024' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Esperando aplicación' : 'Alerta en Argumentación'), type: reporteActivo.totalAlumnosRendidos === 0 ? 'neutral' : 'positive' }}
+          title={isProductionAdmin ? 'Establecimientos Registrados' : isAdmin ? 'Promedio SIMCE Proyectado' : 'Logro Promedio Global'}
+          value={isProductionAdmin ? '1 Colegio' : isAdmin ? '261 pts' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioPorcentajeLogro}%`)}
+          subtitle={isProductionAdmin ? 'Escuela Premilitar Héroes de la Conc.' : isAdmin ? 'Meta 2026: 265 pts (+15 pts)' : (reporteActivo.totalAlumnosRendidos === 0 ? `Curso ${reporteActivo.cursoNombre} (Sin rendiciones)` : `Curso ${reporteActivo.cursoNombre}`)}
+          icon={<School className="w-5 h-5" />}
+          trend={{ text: isProductionAdmin ? 'RBD: 31030 Activo' : isAdmin ? '+12 pts vs 2024' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Esperando aplicación' : 'Alerta en Argumentación'), type: 'positive' }}
           iconBgColor="bg-amber-500/10 text-amber-600 dark:text-amber-400"
         />
 
         <StatCard
-          title={isAdmin ? 'Brechas Críticas Detectadas' : 'Escala Nacional Promedio'}
-          value={isAdmin ? '4 Casos Severos' : (reporteActivo.totalAlumnosRendidos === 0 ? 'SIMCE 2026' : `${reporteActivo.promedioEscalaNacional} pts`)}
-          subtitle={isAdmin ? '100% con plan autogenerado' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
-          icon={<BarChart2 className="w-5 h-5" />}
-          trend={{ text: isAdmin ? '8°B foco prioritario' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : '+15 pts vs anterior'), type: 'warning' }}
+          title={isProductionAdmin ? 'Evaluaciones Cargadas' : isAdmin ? 'Brechas Críticas Detectadas' : 'Escala Nacional Promedio'}
+          value={isProductionAdmin ? `${pruebas.length} Evaluación` : isAdmin ? '4 Casos Severos' : (reporteActivo.totalAlumnosRendidos === 0 ? 'SIMCE 2026' : `${reporteActivo.promedioEscalaNacional} pts`)}
+          subtitle={isProductionAdmin ? 'Lengua y Literatura 2° Medio' : isAdmin ? '100% con plan autogenerado' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
+          icon={<BookOpen className="w-5 h-5" />}
+          trend={{ text: isProductionAdmin ? '35 preguntas liberadas' : isAdmin ? '8°B foco prioritario' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : '+15 pts vs anterior'), type: 'positive' }}
           iconBgColor="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
         />
 
         <StatCard
-          title={isAdmin ? 'Cursos Diagnosticados' : 'Evaluaciones Activas'}
-          value={isAdmin ? '4 Cursos (6° a 8°)' : `${pruebas.length}`}
-          subtitle={isAdmin ? '116 alumnos evaluados' : 'Ensayo(s) preparado(s)'}
-          icon={<BookOpen className="w-5 h-5" />}
+          title={isProductionAdmin ? 'Alumnos Matriculados' : isAdmin ? 'Cursos Diagnosticados' : 'Evaluaciones Activas'}
+          value={isProductionAdmin ? '0 Alumnos' : isAdmin ? '4 Cursos (6° a 8°)' : `${pruebas.length}`}
+          subtitle={isProductionAdmin ? 'En proceso de inicio de poblamiento' : isAdmin ? '116 alumnos evaluados' : 'Ensayo(s) preparado(s)'}
+          icon={<Users className="w-5 h-5" />}
           iconBgColor="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
         />
 
         <StatCard
-          title={isAdmin ? 'Planes Remediales Activos' : 'Alumnos Rendidos'}
-          value={isAdmin ? '18 Planes' : `${reporteActivo.totalAlumnosRendidos} / ${reporteActivo.totalAlumnosMatriculados}`}
-          subtitle={isAdmin ? 'Matemática y Ciencias' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Inicio de ciclo de evaluación' : 'Avance de entrega')}
-          icon={<Users className="w-5 h-5" />}
+          title={isProductionAdmin ? 'Rendiciones Aplicadas' : isAdmin ? 'Planes Remediales Activos' : 'Alumnos Rendidos'}
+          value={isProductionAdmin ? '0 Rendiciones' : isAdmin ? '18 Planes' : `${reporteActivo.totalAlumnosRendidos} / ${reporteActivo.totalAlumnosMatriculados}`}
+          subtitle={isProductionAdmin ? 'Listo para aplicación e ingreso' : isAdmin ? 'Matemática y Ciencias' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Inicio de ciclo de evaluación' : 'Avance de entrega')}
+          icon={<Award className="w-5 h-5" />}
           iconBgColor="bg-sky-500/10 text-sky-600 dark:text-sky-400"
         />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          1. ADMIN / UTP SPECIAL SECTION
+          1. ADMIN / UTP SPECIAL SECTION (PRODUCCION VS DEMO)
          ───────────────────────────────────────────────────────────── */}
       {isAdmin && (
-        <div className="space-y-8">
-          {/* Comparison Tab "Sin Sysget vs Con Sysget" */}
-          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-              <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-indigo-400" />
-                  Impacto Directivo: ¿Qué cambia en tu Colegio?
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Compara la gestión tradicional de evaluaciones vs la automatización de Sysget Saber.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-2xl border border-slate-800 self-start sm:self-center">
-                <button
-                  onClick={() => setAdminTab('con_sysget')}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    adminTab === 'con_sysget'
-                      ? 'bg-indigo-600 text-white shadow-md'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  ✨ Con Sysget Saber
-                </button>
-                <button
-                  onClick={() => setAdminTab('sin_sysget')}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    adminTab === 'sin_sysget'
-                      ? 'bg-rose-600 text-white shadow-md'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  ❌ Sin Sysget Saber
-                </button>
-              </div>
-            </div>
-
-            {adminTab === 'con_sysget' ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in text-xs">
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
-                  <div className="font-bold text-emerald-300 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4" /> Diagnóstico Inmediato (0 Horas)
-                  </div>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">
-                    Las pruebas se corrigen al instante. El equipo directivo visualiza brechas por habilidad y eje curricular el mismo día de rendición.
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 space-y-2">
-                  <div className="font-bold text-indigo-300 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4" /> Planes Remediales con IA
-                  </div>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">
-                    Generación automática de actividades paso a paso por alumno (ej: Martín S. en Álgebra) listas para imprimir o enviar.
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-sky-500/10 border border-sky-500/30 space-y-2">
-                  <div className="font-bold text-sky-300 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4" /> Aislamiento por Materia
-                  </div>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">
-                    Cada profesor opera únicamente en su disciplina, manteniendo orden y confidencialidad pedagógica en toda la institución.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in text-xs">
-                <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
-                  <div className="font-bold text-rose-400 flex items-center gap-1.5">
-                    <XCircle className="w-4 h-4" /> Semanas de Corrección Manual
-                  </div>
-                  <p className="text-slate-400 text-[11px] leading-relaxed">
-                    Revisión de hojas de respuesta en papel o planillas Excel dispersas. La retroalimentación llega cuando el contenido ya pasó.
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
-                  <div className="font-bold text-rose-400 flex items-center gap-1.5">
-                    <XCircle className="w-4 h-4" /> Sin Planes Diferenciados
-                  </div>
-                  <p className="text-slate-400 text-[11px] leading-relaxed">
-                    Se conoce solo la "nota promedio" pero no la causa cognitiva (ej. distractor de Pitágoras vs despeje algebraico).
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
-                  <div className="font-bold text-rose-400 flex items-center gap-1.5">
-                    <XCircle className="w-4 h-4" /> Datos Desconectados
-                  </div>
-                  <p className="text-slate-400 text-[11px] leading-relaxed">
-                    UTP no puede comparar tendencias históricas ni generar el Plan de Mejoramiento (PME) con sustento estadístico claro.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Grid: Historical LineChart + Heatmap Matrix */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Historical Chart */}
-            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
-              <div className="flex items-center justify-between">
+        isProductionAdmin ? (
+          <div className="space-y-8 animate-fade-in">
+            {/* 1. Estado de Establecimientos y Docentes en Producción */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
                 <div>
-                  <h3 className="text-base font-bold text-white flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-indigo-400" />
-                    Evolución Histórica SIMCE (Últimos 3 Años)
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2.5">
+                    <School className="w-5 h-5 text-indigo-400" />
+                    Establecimientos Activos en Producción
                   </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    Tendencia de puntajes y proyección 2026 para el colegio
+                  <p className="text-xs text-slate-400 mt-1">
+                    Visualización del estado de configuración, nóminas y evaluaciones por colegio.
                   </p>
                 </div>
-                <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md border border-emerald-500/20">
-                  +29 pts Global
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 self-start sm:self-center">
+                  1 Establecimiento Asociado
                 </span>
               </div>
 
-              <div className="h-64 w-full pt-2">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={simceHistoricoMock} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                    <XAxis dataKey="anio" stroke="#94a3b8" fontSize={11} />
-                    <YAxis domain={[220, 280]} stroke="#94a3b8" fontSize={11} />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', fontSize: '11px' }}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Ficha Escuela Premilitar */}
+                <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4">
+                  <div className="flex items-start gap-4">
+                    <img
+                      src="/logos/escuela-premilitar.png"
+                      alt="Escuela Premilitar"
+                      className="w-12 h-12 object-contain rounded-xl bg-slate-900 p-1 border border-slate-700 shrink-0"
                     />
-                    <Line type="monotone" dataKey="matematica" stroke="#818cf8" strokeWidth={3} name="Matemática" dot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="lenguaje" stroke="#34d399" strokeWidth={3} name="Lenguaje" dot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="ciencias" stroke="#38bdf8" strokeWidth={3} name="Ciencias" dot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-sm font-black text-white truncate">
+                          Escuela Premilitar Héroes de la Concepción
+                        </h4>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          RBD: 31030
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-400 mt-0.5">La Granja, Región Metropolitana • Particular Subvencionado</p>
+                      <div className="text-[11px] text-slate-300 mt-2 flex items-center gap-2">
+                        <span>👤 Docente: <strong>María Teresa González</strong></span>
+                        <span>•</span>
+                        <span>📖 <strong>Lengua y Literatura</strong> (2° Medio)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-xs">
+                    <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                      <div className="text-slate-400 text-[10px] uppercase font-bold">Cursos</div>
+                      <div className="text-sm font-black text-white mt-0.5">1 (2° Medio)</div>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                      <div className="text-slate-400 text-[10px] uppercase font-bold">Evaluaciones</div>
+                      <div className="text-sm font-black text-indigo-400 mt-0.5">1 Activa</div>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                      <div className="text-slate-400 text-[10px] uppercase font-bold">Nómina Alumnos</div>
+                      <div className="text-sm font-black text-amber-400 mt-0.5">0 (En proceso)</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Módulo de Inicio de Poblamiento */}
+                <div className="p-5 rounded-2xl bg-indigo-950/20 border border-indigo-500/30 space-y-4 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-amber-400" />
+                      <h4 className="text-sm font-bold text-white">Ciclo de Poblamiento en Curso</h4>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      El sistema se encuentra en fase inicial de carga. A medida que subas las nóminas de estudiantes (CSV), los resultados históricos de SIMCE (MINEDUC) y las rendiciones, este panel generará las analíticas de desempeño institucional.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                    <button
+                      onClick={() => onNavigateToEvaluaciones && onNavigateToEvaluaciones()}
+                      className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/20"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>Ver Evaluaciones</span>
+                    </button>
+                    <div className="px-3.5 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Esperando Carga de Nómina</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Heatmap Matrix */}
+            {/* 2. Resumen de la Evaluación Oficial Cargada */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-5">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-indigo-400" />
+                    Evaluaciones Oficiales en Producción
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Instrumentos de evaluación estandarizada cargados en la base de datos.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {pruebas.map((p: any) => (
+                  <div key={p.id} className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[11px] font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                          {p.codigoPublico || 'SIMCE-LEN-2M'}
+                        </span>
+                        <span className="text-xs font-bold text-white">{p.titulo}</span>
+                      </div>
+                      <p className="text-xs text-slate-400">
+                        Curso: <strong>{p.cursoNombre}</strong> • Asignatura: <strong>{p.asignaturaNombre}</strong> • {p.totalPreguntas || 35} preguntas oficiales • {p.duracionMinutos || 90} minutos
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => onNavigateToEvaluaciones && onNavigateToEvaluaciones()}
+                        className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-all border border-slate-700"
+                      >
+                        Centro de Impresión / PDF
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* Comparison Tab "Sin Sysget vs Con Sysget" */}
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-indigo-400" />
+                    Impacto Directivo: ¿Qué cambia en tu Colegio?
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Compara la gestión tradicional de evaluaciones vs la automatización de Sysget Saber.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-2xl border border-slate-800 self-start sm:self-center">
+                  <button
+                    onClick={() => setAdminTab('con_sysget')}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      adminTab === 'con_sysget'
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    ✨ Con Sysget Saber
+                  </button>
+                  <button
+                    onClick={() => setAdminTab('sin_sysget')}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      adminTab === 'sin_sysget'
+                        ? 'bg-rose-600 text-white shadow-md'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    ❌ Sin Sysget Saber
+                  </button>
+                </div>
+              </div>
+
+              {adminTab === 'con_sysget' ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in text-xs">
+                  <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+                    <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4" /> Diagnóstico Inmediato (0 Horas)
+                    </div>
+                    <p className="text-slate-300 text-[11px] leading-relaxed">
+                      Las pruebas se corrigen al instante. El equipo directivo visualiza brechas por habilidad y eje curricular el mismo día de rendición.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 space-y-2">
+                    <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4" /> Planes Remediales con IA
+                    </div>
+                    <p className="text-slate-300 text-[11px] leading-relaxed">
+                      Generación automática de actividades paso a paso por alumno (ej: Martín S. en Álgebra) listas para imprimir o enviar.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-sky-500/10 border border-sky-500/30 space-y-2">
+                    <div className="font-bold text-sky-300 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4" /> Aislamiento por Materia
+                    </div>
+                    <p className="text-slate-300 text-[11px] leading-relaxed">
+                      Cada profesor opera únicamente en su disciplina, manteniendo orden y confidencialidad pedagógica en toda la institución.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in text-xs">
+                  <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
+                    <div className="font-bold text-rose-400 flex items-center gap-1.5">
+                      <XCircle className="w-4 h-4" /> Semanas de Corrección Manual
+                    </div>
+                    <p className="text-slate-400 text-[11px] leading-relaxed">
+                      Revisión de hojas de respuesta en papel o planillas Excel dispersas. La retroalimentación llega cuando el contenido ya pasó.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
+                    <div className="font-bold text-rose-400 flex items-center gap-1.5">
+                      <XCircle className="w-4 h-4" /> Sin Planes Diferenciados
+                    </div>
+                    <p className="text-slate-400 text-[11px] leading-relaxed">
+                      Se conoce solo la "nota promedio" pero no la causa cognitiva (ej. distractor de Pitágoras vs despeje algebraico).
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
+                    <div className="font-bold text-rose-400 flex items-center gap-1.5">
+                      <XCircle className="w-4 h-4" /> Datos Desconectados
+                    </div>
+                    <p className="text-slate-400 text-[11px] leading-relaxed">
+                      UTP no puede comparar tendencias históricas ni generar el Plan de Mejoramiento (PME) con sustento estadístico claro.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Grid: Historical LineChart + Heatmap Matrix */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Historical Chart */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base font-bold text-white flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-indigo-400" />
+                      Evolución Histórica SIMCE (Últimos 3 Años)
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Tendencia de puntajes y proyección 2026 para el colegio
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md border border-emerald-500/20">
+                    +29 pts Global
+                  </span>
+                </div>
+
+                <div className="h-64 w-full pt-2">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={simceHistoricoMock} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                      <XAxis dataKey="anio" stroke="#94a3b8" fontSize={11} />
+                      <YAxis domain={[220, 280]} stroke="#94a3b8" fontSize={11} />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', fontSize: '11px' }}
+                      />
+                      <Line type="monotone" dataKey="matematica" stroke="#818cf8" strokeWidth={3} name="Matemática" dot={{ r: 4 }} />
+                      <Line type="monotone" dataKey="lenguaje" stroke="#34d399" strokeWidth={3} name="Lenguaje" dot={{ r: 4 }} />
+                      <Line type="monotone" dataKey="ciencias" stroke="#38bdf8" strokeWidth={3} name="Ciencias" dot={{ r: 4 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Heatmap Matrix */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base font-bold text-white flex items-center gap-2">
+                      <Flame className="w-5 h-5 text-amber-400" />
+                      Mapa de Calor Curricular por Curso
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Detección rápida de brechas por nivel y materia
+                    </p>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs text-left">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
+                        <th className="py-2.5 px-3">Curso</th>
+                        <th className="py-2.5 px-3 text-center">Matemática</th>
+                        <th className="py-2.5 px-3 text-center">Lenguaje</th>
+                        <th className="py-2.5 px-3 text-center">Ciencias</th>
+                        <th className="py-2.5 px-3 text-right">Alumnos en Riesgo</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60">
+                      {mapaCalorCursosMock.map((c: any) => (
+                        <tr key={c.cursoId} className="hover:bg-slate-800/40 transition-colors">
+                          <td className="py-3 px-3">
+                            <div className="font-bold text-white">{c.cursoNombre}</div>
+                            <div className="text-[10px] text-slate-500">{c.profesorJefe}</div>
+                          </td>
+                          <td className="py-3 px-3 text-center">
+                            <span
+                              className={`inline-block px-2.5 py-1 rounded-lg font-bold ${
+                                c.matematicaLogro < 50
+                                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                                  : c.matematicaLogro < 65
+                                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                                  : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                              }`}
+                            >
+                              {c.matematicaLogro}%
+                            </span>
+                          </td>
+                          <td className="py-3 px-3 text-center">
+                            <span
+                              className={`inline-block px-2.5 py-1 rounded-lg font-bold ${
+                                c.lenguajeLogro < 50
+                                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                                  : c.lenguajeLogro < 65
+                                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                                  : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                              }`}
+                            >
+                              {c.lenguajeLogro}%
+                            </span>
+                          </td>
+                          <td className="py-3 px-3 text-center">
+                            <span
+                              className={`inline-block px-2.5 py-1 rounded-lg font-bold ${
+                                c.cienciasLogro < 50
+                                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                                  : c.cienciasLogro < 65
+                                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                                  : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                              }`}
+                            >
+                              {c.cienciasLogro}%
+                            </span>
+                          </td>
+                          <td className="py-3 px-3 text-right">
+                            <span className="font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-md">
+                              {c.alumnosEnRiesgo} alumnos
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            {/* Top Critical Student Alerts Table */}
             <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-base font-bold text-white flex items-center gap-2">
-                    <Flame className="w-5 h-5 text-amber-400" />
-                    Mapa de Calor Curricular por Curso
+                    <AlertTriangle className="w-5 h-5 text-rose-400" />
+                    Alumnos con Brechas Críticas Detectadas por la Analítica
                   </h3>
                   <p className="text-xs text-slate-400 mt-0.5">
-                    Detección rápida de brechas por nivel y materia
+                    Estudiantes con desempeño menor a 40% en ejes estructurales SIMCE.
                   </p>
                 </div>
               </div>
@@ -342,62 +575,27 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                 <table className="w-full text-xs text-left">
                   <thead>
                     <tr className="border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
+                      <th className="py-2.5 px-3">Estudiante</th>
                       <th className="py-2.5 px-3">Curso</th>
-                      <th className="py-2.5 px-3 text-center">Matemática</th>
-                      <th className="py-2.5 px-3 text-center">Lenguaje</th>
-                      <th className="py-2.5 px-3 text-center">Ciencias</th>
-                      <th className="py-2.5 px-3 text-right">Alumnos en Riesgo</th>
+                      <th className="py-2.5 px-3">Eje Curricular Afectado</th>
+                      <th className="py-2.5 px-3 text-center">Logro</th>
+                      <th className="py-2.5 px-3 text-right">Acción Pedagógica</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60">
-                    {mapaCalorCursosMock.map((c) => (
-                      <tr key={c.cursoId} className="hover:bg-slate-800/40 transition-colors">
-                        <td className="py-3 px-3">
-                          <div className="font-bold text-white">{c.cursoNombre}</div>
-                          <div className="text-[10px] text-slate-500">{c.profesorJefe}</div>
-                        </td>
+                    {alumnosAlertasCriticasMock.map((a: any) => (
+                      <tr key={a.alumnoId} className="hover:bg-slate-800/40 transition-colors">
+                        <td className="py-3 px-3 font-bold text-white">{a.alumnoNombre}</td>
+                        <td className="py-3 px-3 text-slate-400">{a.cursoNombre}</td>
+                        <td className="py-3 px-3 text-slate-300">{a.ejeNombre}</td>
                         <td className="py-3 px-3 text-center">
-                          <span
-                            className={`inline-block px-2.5 py-1 rounded-lg font-bold ${
-                              c.matematicaLogro < 50
-                                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                                : c.matematicaLogro < 65
-                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                                : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                            }`}
-                          >
-                            {c.matematicaLogro}%
-                          </span>
-                        </td>
-                        <td className="py-3 px-3 text-center">
-                          <span
-                            className={`inline-block px-2.5 py-1 rounded-lg font-bold ${
-                              c.lenguajeLogro < 50
-                                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                                : c.lenguajeLogro < 65
-                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                                : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                            }`}
-                          >
-                            {c.lenguajeLogro}%
-                          </span>
-                        </td>
-                        <td className="py-3 px-3 text-center">
-                          <span
-                            className={`inline-block px-2.5 py-1 rounded-lg font-bold ${
-                              c.cienciasLogro < 50
-                                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                                : c.cienciasLogro < 65
-                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                                : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                            }`}
-                          >
-                            {c.cienciasLogro}%
+                          <span className="font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
+                            {a.porcentajeLogro}%
                           </span>
                         </td>
                         <td className="py-3 px-3 text-right">
-                          <span className="font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-md">
-                            {c.alumnosEnRiesgo} alumnos
+                          <span className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold cursor-pointer">
+                            Ver Plan de Refuerzo →
                           </span>
                         </td>
                       </tr>
@@ -406,70 +604,11 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                 </table>
               </div>
             </div>
+
+            {/* UTP Teacher Progress and Curricular Coverage Tracking */}
+            <SeguimientoDocenteCard onSelectPruebaReporte={onSelectPruebaReporte} />
           </div>
-
-          {/* Top Critical Student Alerts Table */}
-          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-rose-400" />
-                  Alumnos con Brechas Críticas Detectadas por la Analítica
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Estudiantes con desempeño menor a 40% en ejes estructurales SIMCE.
-                </p>
-              </div>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs text-left">
-                <thead>
-                  <tr className="border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
-                    <th className="py-2.5 px-3">Estudiante</th>
-                    <th className="py-2.5 px-3">Curso</th>
-                    <th className="py-2.5 px-3">Eje Curricular Afectado</th>
-                    <th className="py-2.5 px-3 text-center">Logro</th>
-                    <th className="py-2.5 px-3 text-right">Acción Pedagógica</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-800/60">
-                  {alumnosAlertasCriticasMock.map((a) => (
-                    <tr key={a.id} className="hover:bg-slate-800/40 transition-colors">
-                      <td className="py-3 px-3 font-bold text-white">{a.nombre}</td>
-                      <td className="py-3 px-3 text-slate-300">{a.curso}</td>
-                      <td className="py-3 px-3">
-                        <div className="text-rose-300 font-semibold">{a.ejeCritico}</div>
-                        <div className="text-[10px] text-slate-400 line-clamp-1">{a.diagnosticoBreve}</div>
-                      </td>
-                      <td className="py-3 px-3 text-center">
-                        <span className="px-2 py-0.5 rounded-full text-[11px] font-black bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                          {a.porcentajeLogro}%
-                        </span>
-                      </td>
-                      <td className="py-3 px-3 text-right">
-                        {a.id === 'al-martin-s' ? (
-                          <button
-                            onClick={() => setPlanMartinOpen(true)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all"
-                          >
-                            <Brain className="w-3.5 h-3.5" />
-                            <span>Ver Plan de Reforzamiento</span>
-                          </button>
-                        ) : (
-                          <span className="text-slate-500 text-[11px]">Plan en curso</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* UTP Teacher Progress and Curricular Coverage Tracking */}
-          <SeguimientoDocenteCard onSelectPruebaReporte={onSelectPruebaReporte} />
-        </div>
+        )
       )}
 
 

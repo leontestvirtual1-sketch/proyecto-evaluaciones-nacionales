@@ -41,9 +41,7 @@ export const currentUserAdmin: UserProfile = {
   apellido: 'León González',
   email: 'leontestvirtual1@gmail.com',
   rol: 'admin',
-  establecimiento: 'Sysget Saber — Plataforma Oficial',
-  rbd: '31030',
-  logoUrl: '/logos/escuela-premilitar.png',
+  establecimiento: 'Sysget Saber',
   cargo: 'Super Administrador / Fundador',
   estado: 'activo',
   plan: 'institucional'
