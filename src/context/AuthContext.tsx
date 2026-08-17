@@ -68,11 +68,11 @@ const DEMO_USERS: Record<string, UserProfile> = {
   'admin@sysget.cl':           currentUserAdminDemo,
 };
 
-/** Contraseñas autorizadas por correo */
+/** Contraseñas autorizadas por correo (fallback local cuando Supabase no está disponible) */
 const DEMO_USER_PASSWORDS: Record<string, string[]> = {
-  'leontesvirtual1@gmail.com': ['Saber_2026!', '123456'],
-  'luis_leon_g@hotmail.com':   ['Saber_2026!', '123456'],
-  'luis.leon@premil.cl':       ['123456', 'premil2026', 'demo1234'],
+  'leontesvirtual1@gmail.com': ['Saber_2026!'],
+  'luis_leon_g@hotmail.com':   ['Saber_2026!'],
+  'luis.leon@premil.cl':       ['Premil_2026!'],
   'admin@sysget.cl':           ['demo1234', '123456', 'admin123'],
 };
 
@@ -242,7 +242,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.warn('Supabase login failed, using local mock auth');
     }
 
-    // 2. Revisar lista de usuarios mock registrados dinámicamente
+    // 2. Revisar lista de usuarios registrados dinámicamente (requiere validación de contraseña)
     const foundMock = usuarios.find(u => u.email.toLowerCase() === cleanEmail);
     if (foundMock) {
       if (foundMock.estado === 'pendiente_aprobacion') {
@@ -260,6 +260,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           error: 'Tu solicitud de acceso no fue aprobada.'
         };
       }
+      // ⛔ SEGURIDAD: Validar contraseña si el email tiene una contraseña registrada
+      const allowedForMock = DEMO_USER_PASSWORDS[cleanEmail];
+      let customPassForMock: string | null = null;
+      try {
+        const cp = JSON.parse(localStorage.getItem('sysget_custom_passwords') || '{}');
+        if (cp[cleanEmail]) customPassForMock = cp[cleanEmail];
+      } catch (e) {}
+
+      if (allowedForMock || customPassForMock) {
+        const cleanPass = password.trim();
+        const validPasswords = customPassForMock
+          ? [customPassForMock, ...(allowedForMock || [])]
+          : (allowedForMock || []);
+        if (!validPasswords.includes(cleanPass)) {
+          return { error: 'Contraseña incorrecta. Por favor verifica tus credenciales.' };
+        }
+      } else {
+        // Si no hay contraseña registrada, rechazar por seguridad
+        return { error: 'Esta cuenta no tiene credenciales configuradas. Contacta al administrador.' };
+      }
+
       setUser(foundMock);
       localStorage.setItem('sysget_session_email', cleanEmail);
       return { error: null };
