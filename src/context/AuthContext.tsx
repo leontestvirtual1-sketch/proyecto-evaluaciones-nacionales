@@ -113,17 +113,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
             // Restaurar sesión solo si la cuenta está activa o es admin
             if (estado === 'activo' || profile.rol === 'admin' || profile.rol === 'superadmin') {
+              const isPremil = email.toLowerCase() === 'luis.leon@premil.cl';
               const restoredUser: UserProfile = {
                 id: profile.id,
-                rut: profile.rut || '12.345.678-9',
-                nombre: profile.nombre || email.split('@')[0] || 'Usuario',
-                apellido: profile.apellido || '',
+                rut: profile.rut || '18.359.422-2',
+                nombre: profile.nombre || 'María Teresa',
+                apellido: profile.apellido || 'González',
                 email: email,
                 rol: (profile.rol as UserRole) || 'profesor',
-                establecimiento: profile.establecimiento || APP_CONFIG.nombreEstablecimiento,
-                asignaturaId: profile.asignatura_id,
-                asignaturaNombre: profile.asignatura_nombre,
-                cargo: profile.cargo,
+                establecimiento: profile.establecimiento || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : APP_CONFIG.nombreEstablecimiento),
+                rbd: profile.rbd || (isPremil ? '31030' : undefined),
+                asignaturaId: profile.asignatura_id || (isPremil ? 'asig-2' : undefined),
+                asignaturaNombre: profile.asignatura_nombre || (isPremil ? 'Lenguaje y Comunicación' : undefined),
+                cargo: profile.cargo || (isPremil ? 'Docente de Lenguaje y Comunicación' : undefined),
                 estado: estado,
                 plan: (profile.plan as UserPlan) || 'trial',
                 diasRestantesTrial: profile.dias_restantes_trial ?? 30
@@ -209,17 +211,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             };
           }
 
+          const isPremil = cleanEmail === 'luis.leon@premil.cl';
           const loggedUser: UserProfile = {
             id: profile.id,
-            rut: profile.rut || '12.345.678-9',
-            nombre: profile.nombre || data.user.email?.split('@')[0] || 'Usuario',
-            apellido: profile.apellido || '',
+            rut: profile.rut || '18.359.422-2',
+            nombre: profile.nombre || 'María Teresa',
+            apellido: profile.apellido || 'González',
             email: data.user.email || cleanEmail,
             rol: (profile.rol as UserRole) || 'profesor',
-            establecimiento: profile.establecimiento || APP_CONFIG.nombreEstablecimiento,
-            asignaturaId: profile.asignatura_id,
-            asignaturaNombre: profile.asignatura_nombre,
-            cargo: profile.cargo,
+            establecimiento: profile.establecimiento || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : APP_CONFIG.nombreEstablecimiento),
+            rbd: profile.rbd || (isPremil ? '31030' : undefined),
+            asignaturaId: profile.asignatura_id || (isPremil ? 'asig-2' : undefined),
+            asignaturaNombre: profile.asignatura_nombre || (isPremil ? 'Lenguaje y Comunicación' : undefined),
+            cargo: profile.cargo || (isPremil ? 'Docente de Lenguaje y Comunicación' : undefined),
             estado: estado,
             plan: (profile.plan as UserPlan) || 'trial',
             diasRestantesTrial: 30
