@@ -12,5 +12,8 @@ Al crear o refactorizar pantallas, componentes o interfaces de usuario web, apli
 ## Seguridad en Aplicaciones Web y APIs
 Al desarrollar, modificar o auditar endpoints, autenticación, acceso a base de datos, formularios, manejo de secretos o APIs, seguir estrictamente los estándares del skill `web-app-security`.
 
+## Directivas Oficiales de Arquitectura y Aislamiento
+Seguir estrictamente las directivas definidas en `DIRECTIVAS.md` (Aislamiento de Ambientes Demo vs Producción, Estados Vacíos Legítimos, Supabase First, RBAC Estricto, Motor de Impresión PDF sin saltos erróneos y Trazabilidad en Bitácora).
+
 ## Arquitectura de Evaluaciones y Modales Académicos
 Al crear o refactorizar evaluaciones, pautas, hojas de respuesta, motores de impresión/PDF, catálogo curricular o modales compactos de gestión académica, seguir estrictamente los estándares del skill `evaluaciones-academicas-suite`.

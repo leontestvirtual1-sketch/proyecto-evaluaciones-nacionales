@@ -17,6 +17,8 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
     - [MODIFICADO] Renderizado visual de días restantes con badges semánticos por criticidad: rojo (≤ 5 días), amarillo (≤ 15 días) e índigo (> 15 días).
   - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
     - [MODIFICADO] Exportado `demoProfesoresMock` (María González, Carlos Morales, Patricia Muñoz) y agregada `pruebaDemoLenguaje8BMock` a `pruebasMock` para uso exclusivo del docente demo de Lenguaje.
+  - [`DIRECTIVAS.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/DIRECTIVAS.md) y [`.agents/AGENTS.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/AGENTS.md):
+    - [NUEVO] Documento maestro con las 6 Directivas Oficiales de Arquitectura y Aislamiento del proyecto para garantizar blindaje técnico y prevenir regresiones futuras.
   - [`src/pages/ProfesoresPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ProfesoresPage.tsx):
     - [MODIFICADO] Claves de `localStorage` aisladas por ambiente (`sysget_demo_profesores_list` vs `sysget_prod_profesores_list`).
   - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
