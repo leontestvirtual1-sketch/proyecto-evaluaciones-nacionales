@@ -1,18 +1,34 @@
 -- ============================================================
 -- Sysget Saber - Creacion de Usuarios Oficiales de Produccion
--- Migracion 006: Cuentas reales con contrasenas cifradas bcrypt
+-- Migracion 006 v2: Usa DELETE + INSERT para evitar conflicto
+-- en auth.users (ON CONFLICT (email) no funciona en Supabase)
 --
 -- INSTRUCCIONES:
 --   1. Ir a: https://supabase.com/dashboard/project/khtdzgfqjggycrcbrytw/sql/new
---   2. Pegar este script completo y ejecutar (F5 o Run)
---   3. Verificar en Authentication > Users que aparecen ambos correos
+--   2. Pegar este script completo y ejecutar (Run)
+--   3. Verificar en Authentication > Users ambos correos
 --
--- CONTRASENAS (guardar en lugar seguro):
+-- CONTRASENAS de produccion:
 --   leontesvirtual1@gmail.com  =>  Saber_2026!
 --   luis.leon@premil.cl        =>  Premil_2026!
 -- ============================================================
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- -----------------------------------------------------------
+-- LIMPIEZA PREVIA (evita conflictos de clave duplicada)
+-- -----------------------------------------------------------
+DELETE FROM public.perfiles
+WHERE id IN (
+  'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a99',
+  '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18'
+);
+
+DELETE FROM auth.users
+WHERE email IN (
+  'leontesvirtual1@gmail.com',
+  'luis.leon@premil.cl'
+);
 
 -- -----------------------------------------------------------
 -- 1. SUPER ADMINISTRADOR - Luis Andres Leon Gonzalez
@@ -23,7 +39,9 @@ INSERT INTO auth.users (
   instance_id, id, aud, role, email,
   encrypted_password, email_confirmed_at,
   raw_app_meta_data, raw_user_meta_data,
-  created_at, updated_at
+  created_at, updated_at,
+  confirmation_token, recovery_token,
+  email_change_token_new, email_change
 ) VALUES (
   '00000000-0000-0000-0000-000000000000',
   'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a99',
@@ -33,10 +51,8 @@ INSERT INTO auth.users (
   NOW(),
   '{"provider":"email","providers":["email"]}',
   '{"nombre":"Luis Andres","apellido":"Leon Gonzalez","rol":"admin"}',
-  NOW(), NOW()
-) ON CONFLICT (email) DO UPDATE SET
-  encrypted_password = crypt('Saber_2026!', gen_salt('bf')),
-  updated_at = NOW();
+  NOW(), NOW(), '', '', '', ''
+);
 
 INSERT INTO public.perfiles (
   id, rut, nombre, apellido, email, rol,
@@ -47,8 +63,7 @@ INSERT INTO public.perfiles (
   'leontesvirtual1@gmail.com', 'admin',
   'Sysget Saber', 'Super Administrador',
   'activo', 'premium', NOW(), NOW()
-) ON CONFLICT (id) DO UPDATE SET
-  estado = 'activo', rol = 'admin', updated_at = NOW();
+);
 
 -- -----------------------------------------------------------
 -- 2. DOCENTE OFICIAL - Maria Teresa Gonzalez
@@ -60,7 +75,9 @@ INSERT INTO auth.users (
   instance_id, id, aud, role, email,
   encrypted_password, email_confirmed_at,
   raw_app_meta_data, raw_user_meta_data,
-  created_at, updated_at
+  created_at, updated_at,
+  confirmation_token, recovery_token,
+  email_change_token_new, email_change
 ) VALUES (
   '00000000-0000-0000-0000-000000000000',
   '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18',
@@ -70,10 +87,8 @@ INSERT INTO auth.users (
   NOW(),
   '{"provider":"email","providers":["email"]}',
   '{"nombre":"Maria Teresa","apellido":"Gonzalez","rol":"profesor","rbd":"31030"}',
-  NOW(), NOW()
-) ON CONFLICT (email) DO UPDATE SET
-  encrypted_password = crypt('Premil_2026!', gen_salt('bf')),
-  updated_at = NOW();
+  NOW(), NOW(), '', '', '', ''
+);
 
 INSERT INTO public.perfiles (
   id, rut, nombre, apellido, email, rol,
@@ -87,8 +102,7 @@ INSERT INTO public.perfiles (
   '31030', 'asig-2', 'Lenguaje y Comunicacion',
   'Docente de Lenguaje y Comunicacion',
   'activo', 'trial', NOW(), NOW()
-) ON CONFLICT (id) DO UPDATE SET
-  estado = 'activo', rol = 'profesor', updated_at = NOW();
+);
 
 -- -----------------------------------------------------------
 -- Verificacion final
