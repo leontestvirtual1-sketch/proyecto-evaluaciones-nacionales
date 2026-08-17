@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Prueba, Pregunta, AlumnoBasico } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
-import { alumnosMock, establecimientosCatalog } from '../data/mockData';
+import { establecimientosCatalog } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 
 interface PrintEvaluacionModalProps {
@@ -33,7 +33,7 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   isOpen,
   prueba,
   preguntas,
-  alumnos = alumnosMock,
+  alumnos = [],
   onClose
 }) => {
   const { user } = useAuth();
@@ -247,10 +247,10 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
              ═════════════════════════════════════════════════════════════ */}
           {(printMode === 'cuadernillo' || printMode === 'personalizado') && (
             <div className="space-y-12 print:space-y-0">
-              {(printMode === 'personalizado' ? selectedStudentsToPrint : [null]).map((alumno, aluIdx) => (
+              {(printMode === 'personalizado' ? selectedStudentsToPrint : [null]).map((alumno, aluIdx, arr) => (
                 <div
                   key={alumno ? alumno.id : 'generico'}
-                  className="printable-paper-canvas max-w-4xl mx-auto bg-white text-black p-8 sm:p-12 rounded-2xl shadow-xl border border-slate-200 print:shadow-none print:border-0 print:p-0 print:m-0 print:max-w-none print:block print:overflow-visible print:h-auto break-after-page page-break-after-always"
+                  className={`printable-paper-canvas max-w-4xl mx-auto bg-white text-black p-8 sm:p-12 rounded-2xl shadow-xl border border-slate-200 print:shadow-none print:border-0 print:p-0 print:m-0 print:max-w-none print:block print:overflow-visible print:h-auto${aluIdx < arr.length - 1 ? ' break-after-page page-break-after-always' : ''}`}
                 >
                   {/* Membrete Oficial con Logo Institucional */}
                   <div className="border-b-2 border-black pb-4 mb-6 text-left">
