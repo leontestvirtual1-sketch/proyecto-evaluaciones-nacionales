@@ -177,8 +177,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
-    setIsLoading(true);
-
     const cleanEmail = email.toLowerCase().trim();
 
     try {
@@ -202,7 +200,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // Verificar estado de aprobación
           if (estado === 'pendiente_aprobacion') {
             await supabase.auth.signOut();
-            setIsLoading(false);
             return {
               error: 'Tu cuenta está pendiente de activación por el Administrador de Sysget Saber. Te enviaremos un correo electrónico cuando tu acceso de prueba (Trial 30 días) esté activo.'
             };
@@ -210,7 +207,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
           if (estado === 'suspendido') {
             await supabase.auth.signOut();
-            setIsLoading(false);
             return {
               error: 'Esta cuenta ha sido suspendida temporalmente. Contacta a soporte@sysget.cl para regularizar tu plan.'
             };
@@ -218,7 +214,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
           if (estado === 'rechazado') {
             await supabase.auth.signOut();
-            setIsLoading(false);
             return {
               error: 'Tu solicitud de acceso no fue aprobada por el administrador.'
             };
@@ -242,7 +237,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(loggedUser);
           // ✅ Guardar email en localStorage para persistencia en refresh
           localStorage.setItem('sysget_session_email', cleanEmail);
-          setIsLoading(false);
           return { error: null };
         } else {
           // Supabase autenticado pero sin perfil en tabla perfiles
@@ -251,7 +245,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (demoFallback) {
             setUser({ ...demoFallback, id: data.user.id, email: cleanEmail });
             localStorage.setItem('sysget_session_email', cleanEmail);
-            setIsLoading(false);
             return { error: null };
           }
         }
@@ -264,26 +257,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const foundMock = usuarios.find(u => u.email.toLowerCase() === cleanEmail);
     if (foundMock) {
       if (foundMock.estado === 'pendiente_aprobacion') {
-        setIsLoading(false);
         return {
           error: 'Tu cuenta está pendiente de activación por el Administrador de Sysget Saber. Te enviaremos un correo electrónico cuando tu acceso de prueba (Trial 30 días) esté activo.'
         };
       }
       if (foundMock.estado === 'suspendido') {
-        setIsLoading(false);
         return {
           error: 'Esta cuenta ha sido suspendida temporalmente. Contacta a soporte@sysget.cl para regularizar tu plan.'
         };
       }
       if (foundMock.estado === 'rechazado') {
-        setIsLoading(false);
         return {
           error: 'Tu solicitud de acceso no fue aprobada.'
         };
       }
       setUser(foundMock);
       localStorage.setItem('sysget_session_email', cleanEmail);
-      setIsLoading(false);
       return { error: null };
     }
 
@@ -292,22 +281,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (demoUser) {
       setUser(demoUser);
       localStorage.setItem('sysget_session_email', cleanEmail);
-      setIsLoading(false);
       return { error: null };
     }
 
-    // 4. Inferir por pistas
+    // 4. Inferir por pistas (retorna null por seguridad)
     const inferredUser = inferUserFromEmail(cleanEmail);
     if (inferredUser) {
       setUser({ ...inferredUser, email: cleanEmail });
       localStorage.setItem('sysget_session_email', cleanEmail);
-      setIsLoading(false);
       return { error: null };
     }
 
     // 5. Credenciales no reconocidas → retornar error
-    setIsLoading(false);
-    return { error: 'Credenciales no reconocidas. Verifica tu usuario y contraseña o regístrate para solicitar acceso.' };
+    return { error: 'Credenciales no reconocidas. Verifica tu correo y contraseña o solicita tu cuenta de prueba.' };
   }, [usuarios]);
 
   /** Llama a la Edge Function que notifica al admin por Resend */
@@ -378,8 +364,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [fetchUsers]);
 
   const register = useCallback(async (data: RegisterData): Promise<RegisterResult> => {
-    setIsLoading(true);
-
     try {
       const res = await fetch('/api/users?action=register', {
         method: 'POST',
@@ -389,14 +373,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const resData = await res.json();
       if (!res.ok || resData.error) {
-        setIsLoading(false);
         return { error: resData.error || 'Error al procesar el registro' };
       }
 
       await fetchUsers();
       setUser(null);
       localStorage.removeItem('sysget_session_email');
-      setIsLoading(false);
 
       return {
         error: null,
@@ -405,7 +387,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         approvalToken: resData.approvalToken
       };
     } catch (err: any) {
-      setIsLoading(false);
       return { error: err.message || 'Error de conexión con el servidor' };
     }
   }, [fetchUsers]);

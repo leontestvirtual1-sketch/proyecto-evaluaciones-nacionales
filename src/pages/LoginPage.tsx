@@ -7,21 +7,31 @@ interface LoginPageProps {
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
-  const { login, isLoading } = useAuth();
-  const [email, setEmail] = useState('admin@sysget.cl');
-  const [password, setPassword] = useState('demo1234');
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!email || !password) {
-      setError('Completa todos los campos.');
+    if (!email.trim() || !password.trim()) {
+      setError('Por favor completa todos los campos (correo y contraseña).');
       return;
     }
-    const { error: loginError } = await login(email, password);
-    if (loginError) setError(loginError);
+    setIsSubmitting(true);
+    try {
+      const res = await login(email, password);
+      if (res?.error) {
+        setError(res.error);
+      }
+    } catch (err: any) {
+      setError(err?.message || 'Error al conectar con el servidor.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -148,10 +158,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
             {/* Submit */}
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isSubmitting}
               className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition-all active:scale-[0.98]"
             >
-              {isLoading ? (
+              {isSubmitting ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
