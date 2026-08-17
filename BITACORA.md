@@ -2,6 +2,27 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Aislamiento Estricto Docente, Persistencia de Cursos/Alumnos en LocalStorage y Hardening de Login
+
+- **Problema / Requerimiento**:
+  1. Al borrar cursos (como 8° Básico A y B), estos reaparecían tras refrescar la página (`F5`) porque no existía persistencia por usuario.
+  2. El subtítulo de cursos indicaba erróneamente *"alumnos matriculados en Liceo Bicentenario Los Andes"* con 35 alumnos ficticios para un docente que debe iniciar de cero en la Escuela Premilitar.
+  3. El dashboard docente mostraba gráficos y logros del 84% sin que los alumnos hubiesen rendido aún la evaluación.
+  4. El generador de evaluaciones permitía a un docente de Lenguaje seleccionar Matemática y Ciencias.
+  5. En el login, correos desconocidos no registrados logueaban automáticamente por un fallback permisivo.
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Eliminado fallback permisivo en `inferUserFromEmail`. Cualquier correo desconocido o no registrado es rechazado de inmediato con error de autenticación.
+  - [`src/pages/CursosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/CursosPage.tsx): [MODIFICADO] Integración de `currentUser` y persistencia en `localStorage` (`sysget_cursos_${userId}`). Establecimiento dinámico (**Escuela Premilitar Héroes de la Concepción**) y curso inicial limpio **2° Medio A** (`cur-2m`).
+  - [`src/pages/AlumnosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/AlumnosPage.tsx): [MODIFICADO] Integración de `currentUser` y persistencia en `localStorage` (`sysget_alumnos_${userId}`). Padrón inicial en 0 estudiantes para permitir carga manual o mediante CSV.
+  - [`src/components/EvaluacionGeneratorModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/EvaluacionGeneratorModal.tsx): [MODIFICADO] Bloqueo de selector de asignatura cuando el docente tiene una única especialidad asignada (`currentUser.asignaturaId`).
+  - [`src/components/ProfesorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx) y [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Estado inicial limpio con 0 alumnos rendidos, marcando estado *"Pendiente de rendición"* en KPIs en lugar de métricas ficticias.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO] Pasaje de `currentUser` a `CursosPage`, `AlumnosPage` y filtrado RBAC en generador de evaluaciones.
+- **Verificación / Despliegue**:
+  - Commit: ✅ `1b1e8dc` — `feat: aislamiento estricto docente, persistencia localStorage de cursos/alumnos, estado inicial limpio y correccion seguridad login`
+  - Push a origin/main: ✅ Sincronizado en Vercel.
+
+---
+
 ### [2026-08-16] Integración Oficial de Ensayo SIMCE Lengua y Literatura 2° Medio (Agosto 2026) — Perfil María Teresa González
 
 - **Problema / Requerimiento**:
