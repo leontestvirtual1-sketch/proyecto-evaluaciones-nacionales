@@ -256,11 +256,28 @@ export const GestionUsuariosPage: React.FC = () => {
                           <option value="pro">Pro ($59.990/m)</option>
                           <option value="institucional">Institucional ($99.990/m)</option>
                         </select>
-                        {u.plan === 'trial' && u.diasRestantesTrial !== undefined && (
-                          <span className="text-[10px] bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 px-1.5 py-0.5 rounded">
-                            {u.diasRestantesTrial}d restantes
-                          </span>
-                        )}
+                        {u.plan === 'trial' && (() => {
+                          let dias = u.diasRestantesTrial;
+                          if ((dias === undefined || dias === 30) && u.fechaRegistro) {
+                            const regDate = new Date(u.fechaRegistro);
+                            if (!isNaN(regDate.getTime())) {
+                              const diffDays = Math.floor((Date.now() - regDate.getTime()) / (1000 * 60 * 60 * 24));
+                              dias = Math.max(0, 30 - diffDays);
+                            }
+                          }
+                          const diasFinal = dias !== undefined ? dias : 30;
+                          return (
+                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${
+                              diasFinal <= 5 
+                                ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' 
+                                : diasFinal <= 15
+                                  ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                                  : 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
+                            }`}>
+                              {diasFinal}d restantes
+                            </span>
+                          );
+                        })()}
                       </div>
                     </td>
 

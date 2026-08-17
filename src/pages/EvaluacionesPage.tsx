@@ -538,13 +538,13 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
 
       {/* Printable Test Booklet & Answer Sheet Modal */}
       {(() => {
-        const isProductionDocente = currentUser?.email === 'luis.leon@premil.cl';
+        const isProduction = currentUser?.email === 'luis.leon@premil.cl' || currentUser?.email === 'leontestvirtual1@gmail.com' || (currentUser?.rol === 'admin' && currentUser?.email !== 'admin@sysget.cl' && currentUser?.email !== 'admin@escuelademo.cl');
         let printAlumnos = [];
-        if (!isProductionDocente) {
+        if (!isProduction) {
           printAlumnos = alumnosMock;
         } else {
           try {
-            const stored = JSON.parse(localStorage.getItem('sysget_alumnos_list') || '[]');
+            const stored = JSON.parse(localStorage.getItem('sysget_prod_alumnos_list') || localStorage.getItem('sysget_alumnos_list') || '[]');
             if (Array.isArray(stored)) {
               printAlumnos = stored;
             }

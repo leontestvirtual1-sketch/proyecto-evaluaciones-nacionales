@@ -145,22 +145,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('perfiles')
         .select('*');
       if (!error && data && data.length > 0) {
-        const realUsers: UserProfile[] = data.map((p: Record<string, unknown>) => ({
-          id: p.id as string,
-          rut: (p.rut as string) || '',
-          nombre: (p.nombre as string) || '',
-          apellido: (p.apellido as string) || '',
-          email: (p.email as string) || '',
-          rol: ((p.rol as string) || 'profesor') as UserRole,
-          establecimiento: (p.establecimiento as string) || '',
-          rbd: (p.rbd as string) || undefined,
-          asignaturaId: (p.asignatura_id as string) || undefined,
-          asignaturaNombre: (p.asignatura_nombre as string) || undefined,
-          cargo: (p.cargo as string) || undefined,
-          estado: ((p.estado as string) || 'activo') as UserEstado,
-          plan: ((p.plan as string) || 'trial') as UserPlan,
-          logoUrl: (p.logo_url as string) || undefined,
-        }));
+        const realUsers: UserProfile[] = data.map((p: Record<string, unknown>) => {
+          const createdAt = (p.created_at || p.creado_en || p.fecha_registro) as string | undefined;
+          let diasRestantes = 30;
+          if (createdAt) {
+            const createdDate = new Date(createdAt);
+            if (!isNaN(createdDate.getTime())) {
+              const diffDays = Math.floor((Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
+              diasRestantes = Math.max(0, 30 - diffDays);
+            }
+          }
+          const fechaRegStr = createdAt 
+            ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
+            : undefined;
+
+          return {
+            id: p.id as string,
+            rut: (p.rut as string) || '',
+            nombre: (p.nombre as string) || '',
+            apellido: (p.apellido as string) || '',
+            email: (p.email as string) || '',
+            rol: ((p.rol as string) || 'profesor') as UserRole,
+            establecimiento: (p.establecimiento as string) || '',
+            rbd: (p.rbd as string) || undefined,
+            asignaturaId: (p.asignatura_id as string) || undefined,
+            asignaturaNombre: (p.asignatura_nombre as string) || undefined,
+            cargo: (p.cargo as string) || undefined,
+            estado: ((p.estado as string) || 'activo') as UserEstado,
+            plan: ((p.plan as string) || 'trial') as UserPlan,
+            logoUrl: (p.logo_url as string) || undefined,
+            fechaRegistro: fechaRegStr,
+            diasRestantesTrial: diasRestantes,
+          };
+        });
         setUsuarios(realUsers);
       }
     } catch {
