@@ -2,6 +2,22 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Integración Oficial de Ensayo SIMCE Lengua y Literatura 2° Medio (Agosto 2026) — Perfil María Teresa González
+
+- **Problema / Requerimiento**:
+  1. Extraer y procesar desde el archivo Word oficial (`Ensayo+SIMCE+Lenguaje+2° Medio.docx`) las 30 preguntas curriculares de Lengua y Literatura para 2° Medio con referencia temporal **Agosto 2026**.
+  2. Clasificar cada pregunta con sus **Ejes Temáticos** y **Habilidades Cognitivas MINEDUC**, formulando pautas con alternativas correctas, explicaciones pedagógicas y rúbricas de desarrollo de 2 puntos para las preguntas abiertas.
+  3. Vincular la evaluación al perfil docente de **María Teresa González** (Escuela Premilitar Héroes de la Concepción, RBD 31030) con código de acceso público `SIMCE-2M-LEN-AGO`, curso `2° Medio A`, alumnos mock y soporte de impresión de cuadernillo PDF con diagrama botánico (`image1.jpeg`).
+- **Archivos y Solución Técnica**:
+  - [`src/data/len2mQuestionsMock.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/len2mQuestionsMock.ts): [NUEVO] Módulo tipado que alberga las 30 preguntas (`preg-len2m-01` a `preg-len2m-30`), los 4 ejes curriculares de 2° Medio (`LEN-LIT-2M`, `LEN-NOLIT-2M`, `LEN-ARG-2M`, `LEN-ESC-2M`), el curso `2° Medio A` (`curso-2m`), la evaluación `prueba-len2m-101` y el padrón de 10 estudiantes.
+  - [`public/preguntas/simce_len_2m/image1.jpeg`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/preguntas/simce_len_2m/image1.jpeg): [NUEVO] Diagrama botánico extraído del Word para la Lectura 4 (Tejocote / *Crataegus mexicana*).
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] Integración de ejes, curso, alumnos, preguntas y tarjeta de seguimiento docente de María Teresa González.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript + Vite: ✅ 2242 módulos, 0 errores, 30.21s.
+  - Disponibilidad: Inmediata para rendición online, cuadernillo imprimible por curso/alumno y corrección rápida.
+
+---
+
 ### [2026-08-16] Membrete Institucional con Logos en Cuadernillos de Impresión y Selector Multicolegio
 
 - **Problema / Requerimiento**:

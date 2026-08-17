@@ -15,6 +15,14 @@ import {
   EstablecimientoInfo
 } from '../types';
 
+import {
+  ejesTematicosLenguaje2MMock,
+  cursoLenguaje2MMock,
+  alumnosLenguaje2MMock,
+  pruebaLenguaje2MMock,
+  preguntasLenguaje2MMock
+} from './len2mQuestionsMock';
+
 export const establecimientosCatalog: EstablecimientoInfo[] = [
   {
     rbd: '31030',
@@ -222,6 +230,7 @@ export const usuariosRegistradosMock: UserProfile[] = [
 ];
 
 export const alumnosMock: AlumnoBasico[] = [
+  ...alumnosLenguaje2MMock,
   // 8° Básico A (curso-1)
   { id: 'alu-001', rut: '21.001.001-1', nombre: 'Camila', apellido: 'Araya Pérez', cursoId: 'curso-1', cursoNombre: '8° Básico A', numeroDeLista: 1 },
   { id: 'alu-002', rut: '21.002.002-2', nombre: 'Diego', apellido: 'Bravo Soto', cursoId: 'curso-1', cursoNombre: '8° Básico A', numeroDeLista: 2 },
@@ -252,6 +261,30 @@ export const alumnosMock: AlumnoBasico[] = [
 ];
 
 export const seguimientoDocentesMock: SeguimientoDocente[] = [
+  {
+    profesorId: currentUserProfesorPremilitar.id,
+    profesorNombre: 'María Teresa González',
+    profesorEmail: 'luis.leon@promil.cl',
+    avatarColor: 'from-emerald-600 to-teal-700',
+    iniciales: 'MT',
+    asignaturaId: 'asig-2',
+    asignaturaNombre: 'Lenguaje y Comunicación',
+    cursosAsignados: ['2° Medio A'],
+    totalEvaluacionesCreadas: 3,
+    totalEvaluacionesActivas: 2,
+    totalAlumnosEvaluados: 30,
+    totalAlumnosMatriculados: 32,
+    coberturaCurricularPorcentaje: 92,
+    promedioLogroAlumnos: 73.5,
+    puntajeSimceEstimado: 278,
+    estadoAvancePME: 'en_meta',
+    ejeMayorFortaleza: 'Lectura de Textos No Literarios (84% logro)',
+    ejeMayorDebilidad: 'Escritura y Fundamentación Textual (58% logro)',
+    ultimaEvaluacionFecha: '2026-08-16',
+    ultimaEvaluacionTitulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
+    ultimaEvaluacionId: 'prueba-len2m-101',
+    planesRemedialesGenerados: 2
+  },
 
   {
     profesorId: currentUserProfesor.id,
@@ -366,6 +399,8 @@ export const asignaturasMock: Asignatura[] = [
 
 export const ejesTematicosMock: EjeTematico[] = [
 
+  ...ejesTematicosLenguaje2MMock,
+
   { id: 'eje-mat-1', codigo: 'MAT-NUM-8', nombre: 'Números y Operaciones', asignaturaId: 'asig-1' },
 
   { id: 'eje-mat-2', codigo: 'MAT-ALG-8', nombre: 'Álgebra y Funciones', asignaturaId: 'asig-1' },
@@ -447,6 +482,8 @@ export const habilidadesMock: Habilidad[] = [
 
 
 export const preguntasMock: Pregunta[] = [
+
+  ...preguntasLenguaje2MMock,
 
   // === 1. MATEMÁTICA Y LENGUAJE 8° BÁSICO ===
 
@@ -2785,6 +2822,8 @@ export const preguntasMock: Pregunta[] = [
 
 export const cursosMock: Curso[] = [
 
+  cursoLenguaje2MMock,
+
   {
 
     id: 'curso-1',
@@ -2862,6 +2901,8 @@ export const cursosMock: Curso[] = [
 
 
 export const pruebasMock: Prueba[] = [
+
+  pruebaLenguaje2MMock,
 
   {
 
