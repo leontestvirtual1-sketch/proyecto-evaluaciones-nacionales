@@ -2,7 +2,31 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
-### [2026-08-17] Aislamiento Estricto de Ambientes (Demo vs Producción), Conteo Dinámico de Trial y Limpieza de Alumnos en Impresión
+### [2026-08-17] Integración Ensayo SIMCE Lenguaje 2° Medio — Junio 2026 (30 preguntas, 4 lecturas)
+
+- **Problema / Requerimiento**:
+  Incorporar el segundo ensayo oficial SIMCE de Lenguaje para 2° Medio (Junio 2026) proveniente del documento Word `Ensayo+SIMCE+Lenguaje+2° Medio+Junio 2026.docx`. El ensayo contiene imágenes embebidas y debe estar visible en el ambiente de Producción (Escuela Premilitar) sin afectar el ambiente Demo.
+- **Archivos y Solución Técnica**:
+  - [`src/data/len2mJunioQuestionsMock.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/len2mJunioQuestionsMock.ts):
+    - [NUEVO] Módulo completo con `pruebaLenguaje2MJunioMock` (id: `prueba-len2m-jun-101`, código: `SIMCE-2M-LEN-JUN`, 30 preguntas, estado: `activa`) y `preguntasLenguaje2MJunioMock` con:
+      - **Lectura 1** (Preg. 1–8): Texto expositivo "Los chimpancés también tienen 'policías'" (Universidad de Zurich, Claudia Rudolf von Rohr / Carel van Schaik).
+      - **Lectura 2** (Preg. 9–14): Reportaje "Cinco mitos laborales que la ciencia desmiente" (Falkenstein, Dov Even, revista AJIM).
+      - **Lectura 3** (Preg. 15–20): Ficha descriptiva botánica de la Papaya (*Carica Papaya*) con imagen embebida.
+      - **Lectura 4** (Preg. 21–30): Ensayo argumentativo "Los celos y la psicología individual".
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
+    - [MODIFICADO] Importa `pruebaLenguaje2MJunioMock` y `preguntasLenguaje2MJunioMock`; spread de preguntas incluido en `preguntasMock`; `pruebaLenguaje2MJunioMock` agregada a `pruebasMock`.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
+    - [MODIFICADO] `getDashboardData()` — rama Producción ahora incluye `'prueba-len2m-jun-101'` además de `'prueba-len2m-101'`. Rama Demo excluye explícitamente ambas IDs de Premilitar.
+  - `public/preguntas/simce_len_2m_jun/image1.png` + `image2.jpg`:
+    - [NUEVO] Imágenes extraídas del DOCX (472×292 px y 195×259 px). `image1.png` usada en pregunta 20.
+- **Verificación / Despliegue**:
+  - Extracción de texto: Python `python-docx` — 39 bloques únicos, 30 preguntas detectadas y estructuradas.
+  - Compilación TypeScript: ✅ 0 errores (`npx tsc --noEmit`).
+  - Git Commit: `b82a566` — 5 archivos, 754 inserciones.
+
+---
+
+
 
 - **Problema / Requerimiento**:
   1. **Fuga de Alumnos Demo en Modal de Impresión para Admin**: Al abrir "Imprimir / PDF" en la evaluación de 2° Medio desde la cuenta de Super Admin de Producción (`leontestvirtual1@gmail.com`), la pestaña "2. Por Alumno" mostraba `(25)` alumnos ficticios provenientes de `alumnosMock` en lugar de una lista vacía `(0)` en proceso de matrícula.
