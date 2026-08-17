@@ -20,7 +20,7 @@ import {
   X
 } from 'lucide-react';
 import { UserProfile, Asignatura } from '../types';
-import { asignaturasMock, cursosMock, currentUserProfesorPremilitar } from '../data/mockData';
+import { asignaturasMock, cursosMock, currentUserProfesorPremilitar, demoProfesoresMock } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 
 const STORAGE_KEY_PROFESORES = 'sysget_profesores_list';
@@ -420,9 +420,13 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   asignaturas = asignaturasMock,
   onNavigateToConfig
 }) => {
-  // Inicializar desde localStorage para que las eliminaciones y adiciones persistan al refrescar
+  const { user, docentesReales } = useAuth();
+  const isDemo = user?.email === 'admin@sysget.cl' || user?.email === 'admin@escuelademo.cl' || user?.email?.includes('@sysget.cl');
+  const storageKey = isDemo ? 'sysget_demo_profesores_list' : 'sysget_prod_profesores_list';
+
+  // Inicializar según ambiente activo
   const [profesores, setProfesores] = useState<UserProfile[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY_PROFESORES);
+    const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -431,9 +435,25 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
         console.error('Error cargando profesores desde localStorage:', err);
       }
     }
-    // Lista inicial limpia oficial: únicamente María Teresa González
-    return [currentUserProfesorPremilitar];
+    return isDemo ? demoProfesoresMock : (docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar]);
   });
+
+  // Reaccionar ante cambio de ambiente
+  useEffect(() => {
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setProfesores(parsed);
+          return;
+        }
+      } catch (err) {
+        console.error('Error cargando profesores:', err);
+      }
+    }
+    setProfesores(isDemo ? demoProfesoresMock : (docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar]));
+  }, [isDemo, storageKey, docentesReales]);
 
   const [search, setSearch] = useState('');
   const [filterAsignatura, setFilterAsignatura] = useState<string>('');
@@ -459,7 +479,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
     setProfesores(prev => {
       const exists = prev.find(p => p.id === prof.id);
       const updated = exists ? prev.map(p => p.id === prof.id ? prof : p) : [prof, ...prev];
-      localStorage.setItem(STORAGE_KEY_PROFESORES, JSON.stringify(updated));
+      localStorage.setItem(storageKey, JSON.stringify(updated));
       return updated;
     });
     setEditingProfesor(null);
@@ -470,7 +490,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
     const p = profesores.find(item => item.id === id);
     setProfesores(prev => {
       const updated = prev.filter(item => item.id !== id);
-      localStorage.setItem(STORAGE_KEY_PROFESORES, JSON.stringify(updated));
+      localStorage.setItem(storageKey, JSON.stringify(updated));
       return updated;
     });
     setActiveMenuId(null);

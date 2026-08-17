@@ -138,6 +138,12 @@ export const currentUserAlumno: UserProfile = {
   plan: 'institucional'
 };
 
+export const demoProfesoresMock: UserProfile[] = [
+  currentUserProfesor,         // María González — Matemática (Liceo Bicentenario Los Andes)
+  currentUserProfesorLenguaje, // Carlos Morales — Lenguaje y Comunicación (Liceo Bicentenario Los Andes)
+  currentUserProfesorCiencias  // Patricia Muñoz — Ciencias Naturales (Liceo Bicentenario Los Andes)
+];
+
 export const usuariosRegistradosMock: UserProfile[] = [
   currentUserAdmin,
   currentUserProfesorPremilitar // María Teresa González — Lenguaje (Escuela Premilitar)
@@ -2808,11 +2814,25 @@ export const pruebasMock: Prueba[] = [
                    'preg-46', 'preg-47', 'preg-48', 'preg-49', 'preg-50'],
 
     totalPreguntas: 30,
-
     estado: 'activa'
-
+  },
+  {
+    id: 'prueba-demo-leng-8b',
+    titulo: 'Evaluación Diagnóstica Lenguaje y Comunicación 8° Básico (Demo)',
+    descripcion: 'Evaluación formativa demo de comprensión lectora, textos argumentativos y dramáticos.',
+    asignaturaId: 'asig-2',
+    asignaturaNombre: 'Lenguaje y Comunicación',
+    nivel: '8° básico',
+    profesorId: currentUserProfesorLenguaje.id,
+    cursoId: 'curso-2',
+    cursoNombre: '8° Básico B',
+    codigoPublico: 'EVAL-8B-LENG',
+    duracionMinutos: 45,
+    creadoEn: '2026-08-10',
+    preguntasIds: ['preg-1', 'preg-2', 'preg-3'],
+    totalPreguntas: 3,
+    estado: 'activa'
   }
-
 ];
 
 

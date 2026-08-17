@@ -31,7 +31,8 @@ import {
   reporteCienciasMock,
   reporteLenguajeMock,
   reporteLenguajeDemoMock,
-  reportePremilitarRealMock
+  reportePremilitarRealMock,
+  currentUserProfesorPremilitar
 } from './data/mockData';
 import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } from './types';
 
@@ -238,15 +239,21 @@ function MainAppContent() {
     if (user.rol === 'profesor' || user.rol === 'admin') {
       const getDashboardData = () => {
         const isPremil = user.email === 'luis.leon@premil.cl';
-        if (isPremil) {
+        const isProdAdmin = user.email === 'leontestvirtual1@gmail.com' || (user.rol === 'admin' && !isSandboxMode && user.email !== 'admin@sysget.cl' && user.email !== 'admin@escuelademo.cl');
+
+        // Producción: únicamente la prueba oficial de la Escuela Premilitar
+        if (isPremil || isProdAdmin) {
           return {
-            dashboardPruebas: pruebas.filter(p => p.id === 'prueba-102' || p.asignaturaId === 'asig-2'),
+            dashboardPruebas: pruebas.filter(p => p.id === 'prueba-len2m-101' || p.profesorId === currentUserProfesorPremilitar.id),
             dashboardReporte: reportePremilitarRealMock
           };
         }
+
+        // Demo: únicamente pruebas demo (8° Básico y 6° Básico del Liceo Bicentenario), nunca la de 2° Medio de Premilitar
+        const demoPruebas = pruebas.filter(p => p.id !== 'prueba-len2m-101' && p.profesorId !== currentUserProfesorPremilitar.id);
         const dashboardPruebas = user.rol === 'profesor' && user.asignaturaId 
-          ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) 
-          : pruebas;
+          ? demoPruebas.filter(p => p.asignaturaId === user.asignaturaId) 
+          : demoPruebas;
         const dashboardReporte = user.asignaturaId === 'asig-3' 
           ? reporteCienciasMock 
           : (user.asignaturaId === 'asig-2' ? reporteLenguajeDemoMock : reporteCursoMock);
