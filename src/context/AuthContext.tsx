@@ -580,12 +580,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           } else if (extra === 'ciencias') {
             localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-3') || null;
           } else if (extra === 'lenguaje') {
-            localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-2') || null;
+            localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-2' && p.email !== 'luis.leon@premil.cl') || null;
           }
         }
       } catch (e) {}
 
-      if (extra === 'matematica') {
+      if (extra === 'premilitar') {
+        // María Teresa González — SOLO accesible desde admin de producción
+        setUser(currentUserProfesorPremilitar);
+      } else if (extra === 'matematica') {
         setUser(localProf || currentUserProfesor);
       } else if (extra === 'ciencias') {
         setUser(localProf || currentUserProfesorCiencias);

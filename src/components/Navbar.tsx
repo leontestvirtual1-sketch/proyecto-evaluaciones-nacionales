@@ -85,6 +85,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Fast Role Switcher ONLY for Admin / Demo Supervisor session */}
             {user.rol === 'admin' || ['leontestvirtual1@gmail.com', 'leontesvirtual1@gmail.com', 'admin@sysget.cl'].includes(localStorage.getItem('sysget_session_email')?.toLowerCase() || '') ? (
               <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700 text-xs font-semibold">
+                {/* Variable para determinar si es admin de producción (no demo) */}
+                {(() => {
+                  const sessionEmail = localStorage.getItem('sysget_session_email')?.toLowerCase() || '';
+                  const isProductionAdmin = sessionEmail === 'leontestvirtual1@gmail.com' || sessionEmail === 'leontesvirtual1@gmail.com';
+                  return (
+                    <>
                 <button
                   onClick={() => onRoleChange('admin')}
                   className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
@@ -96,6 +102,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <span>👑 Admin UTP</span>
                 </button>
+
+                {/* Botón Premil: SOLO visible para admin de producción */}
+                {isProductionAdmin && (
+                  <button
+                    onClick={() => onRoleChange('profesor', 'premilitar')}
+                    className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
+                      user.rol === 'profesor' && user.email === 'luis.leon@premil.cl'
+                        ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
+                    }`}
+                    title="Ver vista como Docente Lenguaje — Escuela Premilitar Héroes de la Concepción (María Teresa González)"
+                  >
+                    <span>🦅 Premil</span>
+                  </button>
+                )}
 
                 <button
                   onClick={() => onRoleChange('profesor', 'matematica')}
@@ -144,6 +165,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <span>🎓 Alumno</span>
                 </button>
+                    </>
+                  );
+                })()}
               </div>
             ) : user.rol === 'profesor' ? (
               /* Teacher Isolated Identity Badge - No access to other teachers or admin */
