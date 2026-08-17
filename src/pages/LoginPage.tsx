@@ -63,24 +63,24 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
             </div>
             <div className="grid grid-cols-1 gap-1 pl-1">
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">👑 Admin/UTP</span>
-                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">admin@sysget.cl</code>
+                <span className="text-slate-400">📖 Prof. Lenguaje (2° Medio)</span>
+                <code onClick={() => setEmail('maria.teresa@demo.cl')} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-indigo-300 font-mono text-[11px]">maria.teresa@demo.cl</code>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">👑 Admin / UTP</span>
+                <code onClick={() => setEmail('admin@sysget.cl')} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-slate-200 font-mono text-[11px]">admin@sysget.cl</code>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">📐 Prof. Matemática</span>
-                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">maria@demo.cl</code>
+                <code onClick={() => setEmail('matematica@demo.cl')} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-slate-200 font-mono text-[11px]">matematica@demo.cl</code>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">🔬 Prof. Ciencias</span>
-                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">patricia@demo.cl</code>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-slate-400">📖 Prof. Lenguaje</span>
-                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">carlos@demo.cl</code>
+                <code onClick={() => setEmail('ciencias@demo.cl')} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-slate-200 font-mono text-[11px]">ciencias@demo.cl</code>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">🎓 Alumno</span>
-                <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200">pedro@demo.cl</code>
+                <code onClick={() => setEmail('pedro@demo.cl')} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-slate-200 font-mono text-[11px]">pedro@demo.cl</code>
               </div>
             </div>
           </div>

@@ -66,14 +66,21 @@ const DEMO_USERS: Record<string, UserProfile> = {
   'admin@sysget.cl':           currentUserAdminDemo,
   'admin@escuelademo.cl':      currentUserAdminDemo,
   'admin@demo.cl':             currentUserAdminDemo,
-  // Profesores demo
+  // Docente Lenguaje y Comunicación (María Teresa González — Escuela Premilitar)
+  'maria.teresa@demo.cl':      currentUserProfesorPremilitar,
+  'mariateresa@demo.cl':       currentUserProfesorPremilitar,
   'luis.leon@promil.cl':       currentUserProfesorPremilitar,
-  'maria@demo.cl':             currentUserProfesor,
-  'maria.gonzalez@escuelademo.cl': currentUserProfesor,
+  'maria@demo.cl':             currentUserProfesorPremilitar,
+  'maria.gonzalez@escuelademo.cl': currentUserProfesorPremilitar,
+  'lenguaje@demo.cl':          currentUserProfesorPremilitar,
+  'carlos@demo.cl':            currentUserProfesorPremilitar,
+  'carlos.morales@escuelademo.cl': currentUserProfesorPremilitar,
+  // Profesores otras especialidades
   'patricia@demo.cl':          currentUserProfesorCiencias,
   'patricia.munoz@escuelademo.cl': currentUserProfesorCiencias,
-  'carlos@demo.cl':            currentUserProfesorLenguaje,
-  'carlos.morales@escuelademo.cl': currentUserProfesorLenguaje,
+  'ciencias@demo.cl':          currentUserProfesorCiencias,
+  'matematica@demo.cl':        currentUserProfesor,
+  'mat@demo.cl':               currentUserProfesor,
   // Alumno demo
   'pedro@demo.cl':             currentUserAlumno,
   'pedro.soto@escuelademo.cl': currentUserAlumno,
@@ -84,10 +91,10 @@ const DEMO_USERS: Record<string, UserProfile> = {
 function inferUserFromEmail(email: string): UserProfile | null {
   const e = email.toLowerCase();
   if (e.includes('admin') || e.includes('utp') || e.includes('director')) return currentUserAdmin;
+  if (e.includes('teresa') || e.includes('promil') || e.includes('lenguaje') || e.includes('len') || e.includes('carlos') || e.includes('maria')) return currentUserProfesorPremilitar;
   if (e.includes('ciencia') || e.includes('cn') || e.includes('patricia')) return currentUserProfesorCiencias;
-  if (e.includes('lenguaje') || e.includes('len') || e.includes('carlos')) return currentUserProfesorLenguaje;
-  if (e.includes('mat') || e.includes('maria') || e.includes('gonzalez')) return currentUserProfesor;
-  return null; // credenciales desconocidas → error de login
+  if (e.includes('mat')) return currentUserProfesor;
+  return currentUserProfesorPremilitar; // Por defecto perfil docente Lenguaje
 }
 
 

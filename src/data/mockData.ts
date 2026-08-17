@@ -1050,85 +1050,7 @@ export const preguntasMock: Pregunta[] = [
       { letra: 'D', texto: 'x = 5', es_correcta: false }
     ], respuestaCorrecta: 'C', puntaje: 1, fuente: 'Liberada Oficial PAES' },
 
-  // 10. Lectura - Inferencia Local
-
-  {
-
-    id: 'preg-10',
-
-    asignaturaId: 'asig-2',
-
-    ejeTematicoId: 'eje-len-1',
-
-    habilidadId: 'hab-len-3',
-
-    tipo: 'seleccion_multiple',
-
-    nivel: '8° Básico',
-
-    dificultad: 'media',
-
-    enunciado: 'Lea el texto: "El viejo pescador observó las nubes oscuras en el horizonte y recogió sus redes rápidamente antes de que el viento cambiara de rumbo". ¿Qué se puede inferir del comportamiento del pescador?',
-
-    alternativas: [
-
-      { letra: 'A', texto: 'Tenía miedo de perder su embarcación.', es_correcta: false },
-
-      { letra: 'B', texto: 'Anticipaba la llegada inminente de una tormenta.', es_correcta: true },
-
-      { letra: 'C', texto: 'Ya había completado su cuota de pesca del día.', es_correcta: false },
-
-      { letra: 'D', texto: 'Deseaba vender el pescado antes del atardecer.', es_correcta: false }
-
-    ],
-
-    respuestaCorrecta: 'B',
-
-    puntaje: 1,
-
-    fuente: 'Liberada Oficial'
-
-  },
-
-  // 11. Lectura - Propósito Comunicativo
-
-  {
-
-    id: 'preg-11',
-
-    asignaturaId: 'asig-2',
-
-    ejeTematicoId: 'eje-len-2',
-
-    habilidadId: 'hab-len-2',
-
-    tipo: 'seleccion_multiple',
-
-    nivel: '8° Básico',
-
-    dificultad: 'baja',
-
-    enunciado: '¿Cuál es la función principal de una noticia publicada en un periódico o portal de noticias digital?',
-
-    alternativas: [
-
-      { letra: 'A', texto: 'Expresar los sentimientos íntimos del autor.', es_correcta: false },
-
-      { letra: 'B', texto: 'Entretener al lector mediante una historia fantástica.', es_correcta: false },
-
-      { letra: 'C', texto: 'Informar de manera objetiva sobre un hecho reciente de interés público.', es_correcta: true },
-
-      { letra: 'D', texto: 'Convencer al lector de comprar un producto determinado.', es_correcta: false }
-
-    ],
-
-    respuestaCorrecta: 'C',
-
-    puntaje: 1,
-
-    fuente: 'Banco Institucional'
-
-  },
+  
 
   // 12. Ciencias Naturales - Biología
 
@@ -2972,40 +2894,6 @@ export const pruebasMock: Prueba[] = [
     totalPreguntas: 30,
 
     estado: 'activa'
-
-  },
-
-  {
-
-    id: 'prueba-102',
-
-    titulo: 'Ensayo Formativo N° 1 - Comprensión Lectora',
-
-    descripcion: 'Evaluación formativa de inferencia y localización de información en textos narrativos.',
-
-    asignaturaId: 'asig-2',
-
-    asignaturaNombre: 'Lenguaje y Comunicación',
-
-    nivel: '8° básico',
-
-    profesorId: currentUserProfesorLenguaje.id,
-
-    cursoId: 'curso-1',
-
-    cursoNombre: '8° Básico A',
-
-    codigoPublico: 'EVAL-8A-LEN',
-
-    duracionMinutos: 30,
-
-    creadoEn: '2026-08-01',
-
-    preguntasIds: ['preg-10', 'preg-11', 'preg-16', 'preg-17', 'preg-18'],
-
-    totalPreguntas: 5,
-
-    estado: 'finalizada'
 
   }
 
@@ -5365,53 +5253,55 @@ export const reporteCienciasMock: ReporteTabuladoCurso = {
 };
 
 export const reporteLenguajeMock: ReporteTabuladoCurso = {
-  pruebaId: 'prueba-102',
-  pruebaTitulo: 'Ensayo Formativo N° 1 - Comprensión Lectora',
-  cursoNombre: '8° Básico A',
-  totalAlumnosRendidos: 4,
-  totalAlumnosMatriculados: 28,
-  promedioPorcentajeLogro: 70,
-  promedioEscalaNacional: 272,
+  pruebaId: 'prueba-len2m-101',
+  pruebaTitulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
+  cursoNombre: '2° Medio A',
+  totalAlumnosRendidos: 10,
+  totalAlumnosMatriculados: 10,
+  promedioPorcentajeLogro: 73.5,
+  promedioEscalaNacional: 278,
   desgloseEjes: [
-    { ejeId: 'eje-len-1', codigo: 'LEN-LEC-8', nombre: 'Comprensión Lectora (Textos Literarios)', preguntasTotal: 3, respuestasCorrectas: 3, porcentajeLogro: 85, estado: 'optimo' },
-    { ejeId: 'eje-len-2', codigo: 'LEN-INF-8', nombre: 'Textos No Literarios e Informativos', preguntasTotal: 2, respuestasCorrectas: 1, porcentajeLogro: 52, estado: 'alerta' }
+    { ejeId: 'eje-len-2m-1', codigo: 'LEN-LIT-2M', nombre: 'Lectura de Textos Literarios (Narrativa y Epistolar)', preguntasTotal: 3, respuestasCorrectas: 8, porcentajeLogro: 80, estado: 'optimo' },
+    { ejeId: 'eje-len-2m-2', codigo: 'LEN-NOLIT-2M', nombre: 'Lectura de Textos No Literarios (Expositivos y Científicos)', preguntasTotal: 18, respuestasCorrectas: 15, porcentajeLogro: 84, estado: 'optimo' },
+    { ejeId: 'eje-len-2m-3', codigo: 'LEN-ARG-2M', nombre: 'Lectura Crítica de Textos Argumentativos y Medios Masivos', preguntasTotal: 7, respuestasCorrectas: 5, porcentajeLogro: 71, estado: 'alerta' },
+    { ejeId: 'eje-len-2m-4', codigo: 'LEN-ESC-2M', nombre: 'Escritura y Fundamentación Textual (Desarrollo y Rúbricas)', preguntasTotal: 2, respuestasCorrectas: 1, porcentajeLogro: 58, estado: 'alerta' }
   ],
   desgloseHabilidades: [
-    { habilidadId: 'hab-len-1', codigo: 'LEN-LOC', nombre: 'Localizar Información', preguntasTotal: 2, respuestasCorrectas: 2, porcentajeLogro: 90 },
-    { habilidadId: 'hab-len-2', codigo: 'LEN-INT', nombre: 'Interpretar y Relacionar', preguntasTotal: 2, respuestasCorrectas: 1, porcentajeLogro: 68 },
-    { habilidadId: 'hab-len-3', codigo: 'LEN-REF', nombre: 'Reflexionar e Inferir', preguntasTotal: 1, respuestasCorrectas: 0, porcentajeLogro: 45 }
+    { habilidadId: 'hab-len-1', codigo: 'LEN-LOC', nombre: 'Localizar Información', preguntasTotal: 6, respuestasCorrectas: 9, porcentajeLogro: 90 },
+    { habilidadId: 'hab-len-2', codigo: 'LEN-INT', nombre: 'Interpretar y Relacionar', preguntasTotal: 14, respuestasCorrectas: 11, porcentajeLogro: 78 },
+    { habilidadId: 'hab-len-3', codigo: 'LEN-REF', nombre: 'Reflexionar e Inferir', preguntasTotal: 10, respuestasCorrectas: 6, porcentajeLogro: 62 }
   ],
   preguntasMasFalladas: [
     {
-      pregunta: preguntasMock[9],
-      porcentajeError: 50,
-      alternativaMasVotada: 'A (Tenía miedo de perder su embarcación - Inferencia no sustentada)',
-      totalRespuestas: 4
+      pregunta: preguntasLenguaje2MMock[10],
+      porcentajeError: 40,
+      alternativaMasVotada: 'D (Sustituirá por completo a la justicia institucional - Extrapolación no fundamentada)',
+      totalRespuestas: 10
     },
     {
-      pregunta: preguntasMock[10],
-      porcentajeError: 25,
-      alternativaMasVotada: 'B (Entretener al lector mediante una historia fantástica)',
-      totalRespuestas: 4
+      pregunta: preguntasLenguaje2MMock[28],
+      porcentajeError: 30,
+      alternativaMasVotada: 'Respuesta parcial (Solo cita 1 ejemplo del texto sin contrastar la postura)',
+      totalRespuestas: 10
     }
   ],
   planAccionReforzamiento: [
     {
-      id: 'plan-len-1',
-      titulo: 'Taller de Inferencia Implícita y Claves Contextuales en Textos Narrativos e Informativos',
-      eje: 'Textos No Literarios e Informativos (LEN-INF-8)',
+      id: 'plan-len-2m-1',
+      titulo: 'Taller de Argumentación y Postura Crítica en Medios Masivos y Redes',
+      eje: 'Lectura Crítica de Textos Argumentativos (LEN-ARG-2M)',
       habilidad: 'Reflexionar e Inferir (LEN-REF)',
-      nivelAlerta: 'alta',
-      diagnostico: 'El 50% de los estudiantes confunde las deducciones e inferencias lógicas sustentadas en el texto con suposiciones personales o interpretaciones subjetivas sin evidencia textual. La opción A (temor del pescador) fue elegida por inferir emociones no mencionadas explícita ni implícitamente.',
-      sugerenciaPedagogica: 'Modelar en la pizarra la diferencia entre "marcas textuales" (pistas que deja el autor) y "suposiciones personales". Practicar la técnica de rastreo de evidencia textual antes de marcar una alternativa.',
+      nivelAlerta: 'media',
+      diagnostico: 'El 40% de los estudiantes confunde la crítica a la falta de prudencia en redes con una defensa absoluta o rechazo total de los medios digitales.',
+      sugerenciaPedagogica: 'Trabajar matrices de doble entrada para evaluar argumentos a favor y en contra en columnas de opinión.',
       ejerciciosRecomendados: [
-        'Guía de Lectura Crítica N° 1: Identificación de pistas contextuales e inferencias válidas.',
-        'Taller grupal: Análisis de propósito implícito en microcuentos y crónicas.',
-        'Ficha de autocontrol: "¿Qué dice el texto?" vs "¿Qué supongo yo?".'
+        'Guía de análisis crítico: Identificación de tesis, argumentos y contraargumentos.',
+        'Debate guiado: Beneficios vs riesgos del escarnio público en internet.',
+        'Ficha de lectura comparativa: Texto de opinión vs noticia informativa.'
       ]
     }
   ],
-  rendiciones: rendicionesLenguajeMock
+  rendiciones: []
 };
 
 // ─── SANDBOX DEMO SPECIALIZED DATA ──────────────────────────────
