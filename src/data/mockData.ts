@@ -166,6 +166,7 @@ export const currentUserAlumno: UserProfile = {
 
 export const usuariosRegistradosMock: UserProfile[] = [
   currentUserAdmin,
+  currentUserProfesorPremilitar, // María Teresa González — Lenguaje (Escuela Premilitar)
   currentUserProfesor,
   currentUserProfesorCiencias,
   currentUserProfesorLenguaje,
@@ -2824,8 +2825,10 @@ export const cursosMock: Curso[] = [
 
 export const pruebasMock: Prueba[] = [
 
+  // ✅ Ensayo SIMCE Lenguaje 2° Medio — María Teresa González (Escuela Premilitar)
   pruebaLenguaje2MMock,
 
+  // ⚠️ Las siguientes pruebas son de demo para otras especialidades (no visibles al docente de Lenguaje)
   {
 
     id: 'prueba-cn6b-101',

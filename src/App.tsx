@@ -301,11 +301,13 @@ function MainAppContent() {
           );
         case 'usuarios':
           if (user.rol !== 'admin') {
+            const dashboardPruebas = user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
+            const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
             return (
               <ProfesorDashboard
                 profesor={user}
-                pruebas={pruebas}
-                reporteActivo={reporteCursoMock}
+                pruebas={dashboardPruebas}
+                reporteActivo={dashboardReporte}
                 onOpenGenerator={() => setIsGeneratorOpen(true)}
                 onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
                 onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}

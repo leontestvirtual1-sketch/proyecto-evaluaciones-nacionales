@@ -20,26 +20,8 @@ import {
   X
 } from 'lucide-react';
 import { UserProfile, Asignatura } from '../types';
-import { asignaturasMock, cursosMock, currentUserProfesor, currentUserProfesorCiencias, currentUserProfesorLenguaje } from '../data/mockData';
-
-// Initial profesores list with real subject specialties
-const profesoresIniciales: UserProfile[] = [
-  currentUserProfesor, // María González - Matemática
-  currentUserProfesorCiencias, // Patricia Muñoz - Ciencias Naturales
-  currentUserProfesorLenguaje, // Carlos Morales - Lenguaje
-  {
-    id: 'prof-004',
-    rut: '15.678.901-2',
-    nombre: 'Rodrigo',
-    apellido: 'Fuentes',
-    email: 'rodrigo.fuentes@escuelademo.cl',
-    rol: 'profesor',
-    establecimiento: 'Escuela Bicentenario Demo',
-    asignaturaId: 'asig-1',
-    asignaturaNombre: 'Matemática',
-    cargo: 'Docente de Matemática 7° y 8° Básico'
-  },
-];
+import { asignaturasMock, cursosMock } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 
 interface PasswordModalProps {
   isOpen: boolean;
@@ -435,7 +417,18 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   asignaturas = asignaturasMock,
   onNavigateToConfig
 }) => {
-  const [profesores, setProfesores] = useState<UserProfile[]>(profesoresIniciales);
+  const { usuarios } = useAuth();
+
+  // Inicializar con los usuarios reales del contexto (solo profesores y admins)
+  const [profesores, setProfesores] = useState<UserProfile[]>(() =>
+    usuarios.filter(u => u.rol === 'profesor' || u.rol === 'admin')
+  );
+
+  // Sincronizar con el contexto cuando los usuarios reales cambien
+  useEffect(() => {
+    const docentesReales = usuarios.filter(u => u.rol === 'profesor' || u.rol === 'admin');
+    setProfesores(docentesReales);
+  }, [usuarios]);
   const [search, setSearch] = useState('');
   const [filterAsignatura, setFilterAsignatura] = useState<string>('');
   const [modalOpen, setModalOpen] = useState(false);

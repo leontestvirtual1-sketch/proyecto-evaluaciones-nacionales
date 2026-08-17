@@ -70,32 +70,30 @@ const DEMO_USERS: Record<string, UserProfile> = {
   'maria.teresa@demo.cl':      currentUserProfesorPremilitar,
   'mariateresa@demo.cl':       currentUserProfesorPremilitar,
   'luis.leon@promil.cl':       currentUserProfesorPremilitar,
+  'luis.leon@premil.cl':       currentUserProfesorPremilitar, // alias adicional
   'maria@demo.cl':             currentUserProfesorPremilitar,
-  'maria.gonzalez@escuelademo.cl': currentUserProfesorPremilitar,
   'lenguaje@demo.cl':          currentUserProfesorPremilitar,
-  'carlos@demo.cl':            currentUserProfesorPremilitar,
-  'carlos.morales@escuelademo.cl': currentUserProfesorPremilitar,
   // Profesores otras especialidades
   'patricia@demo.cl':          currentUserProfesorCiencias,
   'patricia.munoz@escuelademo.cl': currentUserProfesorCiencias,
   'ciencias@demo.cl':          currentUserProfesorCiencias,
   'matematica@demo.cl':        currentUserProfesor,
   'mat@demo.cl':               currentUserProfesor,
+  'maria.gonzalez@escuelademo.cl': currentUserProfesor,
+  'carlos.morales@escuelademo.cl': currentUserProfesorLenguaje,
   // Alumno demo
   'pedro@demo.cl':             currentUserAlumno,
   'pedro.soto@escuelademo.cl': currentUserAlumno,
 };
 
 
-/** Detecta el perfil más apropiado a partir del email cuando no está en DEMO_USERS */
-function inferUserFromEmail(email: string): UserProfile | null {
-  const e = email.toLowerCase().trim();
-  // Solo inferir si contiene palabras clave explícitas de roles demo conocidos
-  if (e.includes('admin@') || e.includes('utp@') || e.includes('director@')) return currentUserAdmin;
-  if (e === 'maria.teresa@demo.cl' || e === 'luis.leon@promil.cl' || e === 'mariateresa@demo.cl') return currentUserProfesorPremilitar;
-  if (e === 'patricia@demo.cl' || e === 'ciencias@demo.cl') return currentUserProfesorCiencias;
-  if (e === 'matematica@demo.cl' || e === 'mat@demo.cl') return currentUserProfesor;
-  // Correo desconocido → Rechazar acceso (error de credenciales)
+/**
+ * ⛔ SEGURIDAD: Esta función NO debe inferir usuarios por patrones genéricos.
+ * Solo retorna null (bloqueo total). El acceso solo se permite a emails
+ * explícitamente listados en DEMO_USERS o registrados en la base de datos.
+ */
+function inferUserFromEmail(_email: string): UserProfile | null {
+  // Rechazo absoluto — no hay inferencia por patrones de dominio ni roles
   return null;
 }
 
