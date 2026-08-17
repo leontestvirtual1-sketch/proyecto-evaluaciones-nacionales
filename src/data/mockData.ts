@@ -23,6 +23,11 @@ import {
   preguntasLenguaje2MMock
 } from './len2mQuestionsMock';
 
+import {
+  pruebaLenguaje2MJunioMock,
+  preguntasLenguaje2MJunioMock
+} from './len2mJunioQuestionsMock';
+
 export const establecimientosCatalog: EstablecimientoInfo[] = [
   {
     rbd: '31030',
@@ -404,6 +409,9 @@ export const habilidadesMock: Habilidad[] = [
 export const preguntasMock: Pregunta[] = [
 
   ...preguntasLenguaje2MMock,
+
+  // ✅ Ensayo SIMCE Lenguaje 2° Medio — Junio 2026 (Escuela Premilitar)
+  ...preguntasLenguaje2MJunioMock,
 
   // === 1. MATEMÁTICA Y LENGUAJE 8° BÁSICO ===
 
@@ -2746,6 +2754,9 @@ export const pruebasMock: Prueba[] = [
 
   // ✅ Ensayo SIMCE Lenguaje 2° Medio — María Teresa González (Escuela Premilitar)
   pruebaLenguaje2MMock,
+
+  // ✅ Ensayo SIMCE Lenguaje 2° Medio — Junio 2026 (Escuela Premilitar)
+  pruebaLenguaje2MJunioMock,
 
   // ⚠️ Las siguientes pruebas son de demo para otras especialidades (no visibles al docente de Lenguaje)
   {
