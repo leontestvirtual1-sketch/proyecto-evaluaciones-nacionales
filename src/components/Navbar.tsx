@@ -92,31 +92,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                       ? 'bg-amber-600 text-white shadow-sm font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
-                  title="Administrador General / UTP — Luis Andrés León González"
+                  title="Administrador General / UTP"
                 >
                   <span>👑 Admin UTP</span>
                 </button>
 
                 <button
-                  onClick={() => onRoleChange('profesor', 'premilitar')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                    user.rol === 'profesor' && user.email === 'luis.leon@premil.cl'
-                      ? 'bg-indigo-600 text-white shadow-sm font-bold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
-                  }`}
-                  title="Ver vista como Docente de Escuela Premilitar Héroes de la Concepción (María Teresa González)"
-                >
-                  <span>🦅 Premilitar</span>
-                </button>
-
-                <button
                   onClick={() => onRoleChange('profesor', 'matematica')}
                   className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                    user.rol === 'profesor' && user.asignaturaId === 'asig-1' && user.email !== 'luis.leon@premil.cl'
+                    user.rol === 'profesor' && user.asignaturaId === 'asig-1'
                       ? 'bg-indigo-600 text-white shadow-sm font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
-                  title="Ver vista como Docente de Matemática"
+                  title="Ver vista como Docente de Matemática (María González)"
                 >
                   <span>📐 Mat</span>
                 </button>
@@ -128,7 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       ? 'bg-indigo-600 text-white shadow-sm font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
-                  title="Ver vista como Docente de Ciencias Naturales"
+                  title="Ver vista como Docente de Ciencias Naturales (Patricia Muñoz)"
                 >
                   <span>🔬 C. Nat</span>
                 </button>
@@ -136,11 +124,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   onClick={() => onRoleChange('profesor', 'lenguaje')}
                   className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                    user.rol === 'profesor' && user.asignaturaId === 'asig-2' && user.email !== 'luis.leon@premil.cl'
+                    user.rol === 'profesor' && user.asignaturaId === 'asig-2'
                       ? 'bg-indigo-600 text-white shadow-sm font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
-                  title="Ver vista como Docente de Lenguaje"
+                  title="Ver vista como Docente de Lenguaje (Carlos Morales)"
                 >
                   <span>📖 Leng</span>
                 </button>
@@ -152,7 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       ? 'bg-emerald-600 text-white shadow-sm font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
-                  title="Ver vista como Alumno"
+                  title="Ver vista como Alumno (Pedro Soto)"
                 >
                   <span>🎓 Alumno</span>
                 </button>

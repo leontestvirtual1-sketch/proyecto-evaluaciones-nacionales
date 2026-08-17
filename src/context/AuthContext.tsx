@@ -564,17 +564,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const switchRole = useCallback((role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar') => {
     if (role === 'admin') {
-      // Restaurar el Super Administrador Oficial Luis Andrés León González
-      setUser(currentUserAdmin);
+      const savedEmail = localStorage.getItem('sysget_session_email')?.toLowerCase();
+      if (savedEmail === 'admin@sysget.cl' || savedEmail === 'admin@escuelademo.cl') {
+        setUser(currentUserAdminDemo);
+      } else {
+        setUser(currentUserAdmin);
+      }
     } else if (role === 'profesor') {
-      // Buscar si existe un docente configurado en la institución para esa especialidad
       let localProf: UserProfile | null = null;
       try {
         const stored = JSON.parse(localStorage.getItem('sysget_profesores_list') || '[]');
         if (Array.isArray(stored)) {
-          if (extra === 'premilitar') {
-            localProf = stored.find((p: UserProfile) => p.email === 'luis.leon@premil.cl' || p.asignaturaId === 'asig-2') || null;
-          } else if (extra === 'matematica') {
+          if (extra === 'matematica') {
             localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-1') || null;
           } else if (extra === 'ciencias') {
             localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-3') || null;
@@ -584,9 +585,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       } catch (e) {}
 
-      if (extra === 'premilitar') {
-        setUser(currentUserProfesorPremilitar);
-      } else if (extra === 'matematica') {
+      if (extra === 'matematica') {
         setUser(localProf || currentUserProfesor);
       } else if (extra === 'ciencias') {
         setUser(localProf || currentUserProfesorCiencias);
