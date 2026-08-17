@@ -202,40 +202,49 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
         {/* Student Selector Bar in Personalizado Mode */}
         {printMode === 'personalizado' && (
           <div className="px-4 py-3 bg-indigo-50/70 dark:bg-slate-950 border-b border-indigo-200/60 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 print:hidden">
-            <div className="flex items-center gap-2 text-xs">
-              <span className="font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5">
-                <Users className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                Alumnos a imprimir ({selectedStudentsToPrint.length} de {listaAlumnos.length}):
-              </span>
-              <button
-                type="button"
-                onClick={handleSelectAllStudents}
-                className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
-              >
-                {selectedStudentIds.length === listaAlumnos.length ? 'Desmarcar Todos' : 'Marcar Todos'}
-              </button>
-            </div>
-
-            <div className="flex flex-wrap gap-1.5 max-h-20 overflow-y-auto">
-              {listaAlumnos.map((alu, idx) => {
-                const isSelected = selectedStudentIds.includes(alu.id);
-                return (
+            {listaAlumnos.length === 0 ? (
+              <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-2 py-1">
+                <Users className="w-4 h-4 text-indigo-500 shrink-0" />
+                <span>No hay estudiantes matriculados en este curso aún. Selecciona la pestaña <strong>"1. Cuadernillo Genérico"</strong> para imprimir una copia con línea en blanco para el nombre.</span>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5">
+                    <Users className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                    Alumnos a imprimir ({selectedStudentsToPrint.length} de {listaAlumnos.length}):
+                  </span>
                   <button
-                    key={alu.id}
                     type="button"
-                    onClick={() => toggleSelectStudent(alu.id)}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all flex items-center gap-1 ${
-                      isSelected
-                        ? 'bg-indigo-600 text-white shadow-sm'
-                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-800'
-                    }`}
+                    onClick={handleSelectAllStudents}
+                    className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
                   >
-                    <span>{alu.numeroDeLista || idx + 1}. {alu.nombre} {alu.apellido.split(' ')[0]}</span>
-                    {isSelected && <span className="text-[9px]">✓</span>}
+                    {selectedStudentIds.length === listaAlumnos.length ? 'Desmarcar Todos' : 'Marcar Todos'}
                   </button>
-                );
-              })}
-            </div>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 max-h-20 overflow-y-auto">
+                  {listaAlumnos.map((alu, idx) => {
+                    const isSelected = selectedStudentIds.includes(alu.id);
+                    return (
+                      <button
+                        key={alu.id}
+                        type="button"
+                        onClick={() => toggleSelectStudent(alu.id)}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all flex items-center gap-1 ${
+                          isSelected
+                            ? 'bg-indigo-600 text-white shadow-sm'
+                            : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-800'
+                        }`}
+                      >
+                        <span>{alu.numeroDeLista || idx + 1}. {alu.nombre} {alu.apellido.split(' ')[0]}</span>
+                        {isSelected && <span className="text-[9px]">✓</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
+            )}
           </div>
         )}
 
