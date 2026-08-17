@@ -23,6 +23,7 @@ import {
 import { UserProfile, RendicionPrueba } from '../types';
 import { PrintEvaluacionModal } from '../components/PrintEvaluacionModal';
 import { IngresoRespuestasModal } from '../components/IngresoRespuestasModal';
+import { alumnosMock } from '../data/mockData';
 
 
 interface PruebaFacsimilModalProps {
@@ -536,12 +537,30 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
       />
 
       {/* Printable Test Booklet & Answer Sheet Modal */}
-      <PrintEvaluacionModal
-        isOpen={printModalOpen}
-        prueba={selectedPruebaForPrint}
-        preguntas={bancoPreguntas}
-        onClose={() => { setPrintModalOpen(false); setSelectedPruebaForPrint(null); }}
-      />
+      {(() => {
+        const isProductionDocente = currentUser?.email === 'luis.leon@premil.cl';
+        let printAlumnos = [];
+        if (!isProductionDocente) {
+          printAlumnos = alumnosMock;
+        } else {
+          try {
+            const stored = JSON.parse(localStorage.getItem('sysget_alumnos_list') || '[]');
+            if (Array.isArray(stored)) {
+              printAlumnos = stored;
+            }
+          } catch (e) {}
+        }
+
+        return (
+          <PrintEvaluacionModal
+            isOpen={printModalOpen}
+            prueba={selectedPruebaForPrint}
+            preguntas={bancoPreguntas}
+            alumnos={printAlumnos}
+            onClose={() => { setPrintModalOpen(false); setSelectedPruebaForPrint(null); }}
+          />
+        );
+      })()}
 
       {/* Quick Answer Sheet Input Modal (Photo & Fast-Track) */}
       <IngresoRespuestasModal

@@ -29,7 +29,9 @@ import {
   rendicionesMock,
   reporteCursoMock,
   reporteCienciasMock,
-  reporteLenguajeMock
+  reporteLenguajeMock,
+  reporteLenguajeDemoMock,
+  reportePremilitarRealMock
 } from './data/mockData';
 import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } from './types';
 
@@ -233,7 +235,27 @@ function MainAppContent() {
   // Render active content area
   const renderMainContent = () => {
     // Admin and Profesor share the same staff view
-    if (user.rol === 'admin' || user.rol === 'profesor') {
+    if (user.rol === 'profesor' || user.rol === 'admin') {
+      const getDashboardData = () => {
+        const isPremil = user.email === 'luis.leon@premil.cl';
+        if (isPremil) {
+          return {
+            dashboardPruebas: pruebas.filter(p => p.id === 'prueba-102' || p.asignaturaId === 'asig-2'),
+            dashboardReporte: reportePremilitarRealMock
+          };
+        }
+        const dashboardPruebas = user.rol === 'profesor' && user.asignaturaId 
+          ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) 
+          : pruebas;
+        const dashboardReporte = user.asignaturaId === 'asig-3' 
+          ? reporteCienciasMock 
+          : (user.asignaturaId === 'asig-2' ? reporteLenguajeDemoMock : reporteCursoMock);
+        return { dashboardPruebas, dashboardReporte };
+      };
+
+      const { dashboardPruebas, dashboardReporte } = getDashboardData();
+
+      // If viewing test report details
       if (selectedReportPruebaId) {
         return (
           <ReporteTabuladoView
@@ -247,8 +269,6 @@ function MainAppContent() {
         case 'profesores':
           // RBAC: solo admin puede acceder a Gestión de Profesores
           if (user.rol !== 'admin') {
-            const dashboardPruebas = user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
-            const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
             return (
               <ProfesorDashboard
                 profesor={user}
@@ -291,7 +311,7 @@ function MainAppContent() {
         case 'evaluaciones':
           return (
             <EvaluacionesPage
-              pruebas={pruebas}
+              pruebas={dashboardPruebas}
               asignaturas={asignaturas}
               bancoPreguntas={bancoPreguntas}
               currentUser={user}
@@ -302,8 +322,6 @@ function MainAppContent() {
           );
         case 'usuarios':
           if (user.rol !== 'admin') {
-            const dashboardPruebas = user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
-            const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
             return (
               <ProfesorDashboard
                 profesor={user}
@@ -320,8 +338,6 @@ function MainAppContent() {
         case 'configuracion':
           // RBAC: solo admin puede acceder a Configuración
           if (user.rol !== 'admin') {
-            const dashboardPruebas = user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
-            const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
             return (
               <ProfesorDashboard
                 profesor={user}
@@ -346,8 +362,6 @@ function MainAppContent() {
 
         case 'dashboard':
         default: {
-          const dashboardPruebas = user.rol === 'profesor' && user.asignaturaId ? pruebas.filter(p => p.asignaturaId === user.asignaturaId) : pruebas;
-          const dashboardReporte = user.asignaturaId === 'asig-3' ? reporteCienciasMock : (user.asignaturaId === 'asig-2' ? reporteLenguajeMock : reporteCursoMock);
           return (
             <ProfesorDashboard
               profesor={user}

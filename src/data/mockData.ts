@@ -5194,8 +5194,53 @@ export const reporteCienciasMock: ReporteTabuladoCurso = {
   rendiciones: rendicionesMock
 };
 
-export const reporteLenguajeMock: ReporteTabuladoCurso = {
-  pruebaId: 'prueba-len2m-101',
+export const reporteLenguajeDemoMock: ReporteTabuladoCurso = {
+  pruebaId: 'prueba-len-demo-101',
+  pruebaTitulo: 'Ensayo SIMCE Lenguaje y Comunicación 8° Básico — Demo',
+  cursoNombre: '8° Básico A',
+  totalAlumnosRendidos: 4,
+  totalAlumnosMatriculados: 28,
+  promedioPorcentajeLogro: 68,
+  promedioEscalaNacional: 258,
+  desgloseEjes: [
+    { ejeId: 'eje-len-1', codigo: 'LEN-LOC', nombre: 'Localizar Información Explícita', preguntasTotal: 10, respuestasCorrectas: 32, porcentajeLogro: 80, estado: 'optimo' },
+    { ejeId: 'eje-len-2', codigo: 'LEN-INT', nombre: 'Interpretar y Relacionar Textos', preguntasTotal: 12, respuestasCorrectas: 31, porcentajeLogro: 65, estado: 'alerta' },
+    { ejeId: 'eje-len-3', codigo: 'LEN-REF', nombre: 'Reflexionar y Evaluar Sentido Global', preguntasTotal: 8, respuestasCorrectas: 18, porcentajeLogro: 56, estado: 'alerta' },
+    { ejeId: 'eje-len-4', codigo: 'LEN-ARG', nombre: 'Lectura Crítica y Argumentación', preguntasTotal: 5, respuestasCorrectas: 10, porcentajeLogro: 50, estado: 'alerta' }
+  ],
+  desgloseHabilidades: [
+    { habilidadId: 'hab-len-1', codigo: 'LEN-LOC', nombre: 'Localizar Información', preguntasTotal: 10, respuestasCorrectas: 32, porcentajeLogro: 80 },
+    { habilidadId: 'hab-len-2', codigo: 'LEN-INT', nombre: 'Interpretar y Relacionar', preguntasTotal: 15, respuestasCorrectas: 38, porcentajeLogro: 63 },
+    { habilidadId: 'hab-len-3', codigo: 'LEN-REF', nombre: 'Reflexionar e Inferir', preguntasTotal: 10, respuestasCorrectas: 21, porcentajeLogro: 52 }
+  ],
+  preguntasMasFalladas: [
+    {
+      pregunta: preguntasMock[0] || {} as Pregunta,
+      porcentajeError: 60,
+      alternativaMasVotada: 'C (Confusión de propósito comunicativo en texto argumentativo)',
+      totalRespuestas: 4
+    }
+  ],
+  planAccionReforzamiento: [
+    {
+      id: 'plan-len-demo-1',
+      titulo: 'Reforzamiento de Comprensión Lectora e Inferencia Textual',
+      eje: 'Reflexionar y Evaluar (LEN-REF)',
+      habilidad: 'Reflexionar e Inferir',
+      nivelAlerta: 'alta',
+      diagnostico: 'Dificultad recurrente en identificar la tesis central y argumentos de respaldo en editoriales y columnas de opinión.',
+      sugerenciaPedagogica: 'Implementar rutina de pensamiento "Veo, Pienso, Me Pregunto" en textos expositivos y debates guiados.',
+      ejerciciosRecomendados: [
+        'Guía N° 4: Distinción entre hecho y opinión en medios masivos de comunicación.',
+        'Taller de lectura: Identificación de conectores argumentativos y contraargumentos.'
+      ]
+    }
+  ],
+  rendiciones: rendicionesMock
+};
+
+export const reportePremilitarRealMock: ReporteTabuladoCurso = {
+  pruebaId: 'prueba-102',
   pruebaTitulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
   cursoNombre: '2° Medio',
   totalAlumnosRendidos: 0,
@@ -5217,6 +5262,8 @@ export const reporteLenguajeMock: ReporteTabuladoCurso = {
   planAccionReforzamiento: [],
   rendiciones: []
 };
+
+export const reporteLenguajeMock = reporteLenguajeDemoMock;
 
 // ─── SANDBOX DEMO SPECIALIZED DATA ──────────────────────────────
 
