@@ -145,13 +145,24 @@
     overflow: visible !important;
   }
 
-  /* 6. Avoid splitting questions in middle of alternatives */
+  /* 6. Avoid splitting alternatives and short boxes awkwardly */
   .page-break-inside-avoid {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
 
-  /* 7. Force crisp solid black text and borders */
+  .page-break-inside-auto {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* 7. Standard Letter print margins to optimize space and avoid orphaned items */
+  @page {
+    size: letter portrait;
+    margin: 10mm 12mm 10mm 12mm;
+  }
+
+  /* 8. Force crisp solid black text and borders */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;

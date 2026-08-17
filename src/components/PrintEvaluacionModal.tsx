@@ -250,62 +250,62 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
               {(printMode === 'personalizado' ? selectedStudentsToPrint : [null]).map((alumno, aluIdx, arr) => (
                 <div
                   key={alumno ? alumno.id : 'generico'}
-                  className={`printable-paper-canvas max-w-4xl mx-auto bg-white text-black p-8 sm:p-12 rounded-2xl shadow-xl border border-slate-200 print:shadow-none print:border-0 print:p-0 print:m-0 print:max-w-none print:block print:overflow-visible print:h-auto${aluIdx < arr.length - 1 ? ' break-after-page page-break-after-always' : ''}`}
+                  className={`printable-paper-canvas max-w-4xl mx-auto bg-white text-black p-6 sm:p-10 rounded-2xl shadow-xl border border-slate-200 print:shadow-none print:border-0 print:p-0 print:m-0 print:max-w-none print:block print:overflow-visible print:h-auto${aluIdx < arr.length - 1 ? ' break-after-page page-break-after-always' : ''}`}
                 >
                   {/* Membrete Oficial con Logo Institucional */}
-                  <div className="border-b-2 border-black pb-4 mb-6 text-left">
-                    <div className="flex items-start justify-between gap-4">
+                  <div className="border-b-2 border-black pb-3 mb-3 text-left">
+                    <div className="flex items-start justify-between gap-3">
                       {/* Logo + Información del Colegio */}
-                      <div className="flex items-center gap-3.5">
+                      <div className="flex items-center gap-3">
                         {establecimientoActual.logoUrl && (
                           <img
                             src={establecimientoActual.logoUrl}
                             alt="Logo Institucional"
-                            className="w-16 h-16 object-contain print:w-14 print:h-14 shrink-0 rounded-md"
+                            className="w-14 h-14 object-contain print:w-12 print:h-12 shrink-0 rounded-md"
                           />
                         )}
                         <div className="space-y-0.5">
-                          <div className="text-[12px] uppercase tracking-wider font-black text-slate-800">
+                          <div className="text-[11px] uppercase tracking-wider font-black text-slate-800">
                             {establecimientoActual.nombre}
                           </div>
                           {establecimientoActual.rbd && (
-                            <div className="text-[10px] font-bold text-slate-600">
+                            <div className="text-[9px] font-bold text-slate-600">
                               RBD: {establecimientoActual.rbd} {establecimientoActual.lema ? `• "${establecimientoActual.lema}"` : ''}
                             </div>
                           )}
-                          <h1 className="text-lg sm:text-xl font-black text-black tracking-tight uppercase mt-0.5">
+                          <h1 className="text-base sm:text-lg font-black text-black tracking-tight uppercase">
                             {prueba.titulo}
                           </h1>
-                          <div className="text-xs font-semibold text-slate-800">
+                          <div className="text-[11px] font-semibold text-slate-800">
                             Asignatura: <strong>{prueba.asignaturaNombre}</strong> • Nivel: <strong>{prueba.nivel}</strong> • Curso: <strong>{prueba.cursoNombre}</strong>
                           </div>
                         </div>
                       </div>
 
-                      <div className="text-right text-[10px] text-slate-600 space-y-0.5 border border-black p-2 rounded shrink-0">
-                        <div>Código Prueba: <strong className="font-mono">{prueba.codigoPublico}</strong></div>
-                        <div>Tiempo Límite: <strong>{prueba.duracionMinutos} min</strong></div>
-                        <div>Total Ítems: <strong>{itemsToPrint.length} preguntas</strong></div>
+                      <div className="text-right text-[9px] text-slate-700 space-y-0.5 border border-black p-1.5 rounded shrink-0">
+                        <div>Código: <strong className="font-mono">{prueba.codigoPublico}</strong></div>
+                        <div>Tiempo: <strong>{prueba.duracionMinutos} min</strong></div>
+                        <div>Ítems: <strong>{itemsToPrint.length} preguntas</strong></div>
                       </div>
                     </div>
 
                     {/* Student Identification Box */}
-                    <div className="mt-4 pt-3 border-t border-dashed border-slate-400 grid grid-cols-12 gap-3 text-xs">
-                      <div className="col-span-12 sm:col-span-6 border-b border-black pb-1">
+                    <div className="mt-2.5 pt-2 border-t border-dashed border-slate-400 grid grid-cols-12 gap-2 text-[11px]">
+                      <div className="col-span-12 sm:col-span-6 border-b border-black pb-0.5">
                         <span className="font-bold text-slate-700">Estudiante: </span>
-                        <strong className="text-black uppercase text-xs">
+                        <strong className="text-black uppercase">
                           {alumno ? `${alumno.nombre} ${alumno.apellido}` : '____________________________________'}
                         </strong>
                       </div>
-                      <div className="col-span-6 sm:col-span-3 border-b border-black pb-1">
+                      <div className="col-span-6 sm:col-span-3 border-b border-black pb-0.5">
                         <span className="font-bold text-slate-700">RUT: </span>
-                        <strong className="text-black font-mono text-xs">
+                        <strong className="text-black font-mono">
                           {alumno ? alumno.rut : '_______________'}
                         </strong>
                       </div>
-                      <div className="col-span-6 sm:col-span-3 border-b border-black pb-1">
+                      <div className="col-span-6 sm:col-span-3 border-b border-black pb-0.5">
                         <span className="font-bold text-slate-700">{alumno ? 'N° Lista / Curso:' : 'Fecha:'} </span>
-                        <strong className="text-black text-xs">
+                        <strong className="text-black">
                           {alumno ? `N° ${alumno.numeroDeLista || aluIdx + 1} (${alumno.cursoNombre})` : '___/___/2026'}
                         </strong>
                       </div>
@@ -313,57 +313,109 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                   </div>
 
                   {/* Instrucciones Generales */}
-                  <div className="bg-slate-50 border border-slate-300 p-3 rounded text-[11px] leading-relaxed text-left mb-6">
+                  <div className="bg-slate-50 border border-slate-300 p-2 rounded text-[10px] leading-tight text-left mb-3">
                     <strong>INSTRUCCIONES GENERALES:</strong>
-                    <ul className="list-disc list-inside mt-1 space-y-0.5 text-slate-800">
-                      <li>Lee atentamente cada enunciado antes de responder.</li>
+                    <ul className="list-disc list-inside mt-0.5 space-y-0.5 text-slate-800">
+                      <li>Lee atentamente cada texto y enunciado antes de contestar.</li>
                       <li>Dispones de {prueba.duracionMinutos} minutos para completar la evaluación.</li>
-                      <li>Cada pregunta tiene 4 alternativas (A, B, C, D) y solo una de ellas es la correcta.</li>
-                      <li>Traspasa tus respuestas a la <strong>Hoja de Respuestas</strong> rellenando completamente el círculo con lápiz grafito.</li>
+                      <li>En preguntas de alternativas, marca una sola opción rellenando el círculo en tu Hoja de Respuestas.</li>
+                      <li>En preguntas de desarrollo, fundamenta tu respuesta con claridad y letra legible en los renglones provistos.</li>
                     </ul>
                   </div>
 
-                  {/* Question List */}
-                  <div className="space-y-6 pt-2 text-left">
-                    {itemsToPrint.map((preg, idx) => (
-                      <div key={preg.id || idx} className="page-break-inside-avoid space-y-2 pb-4 border-b border-slate-200 last:border-0">
-                        {/* Question Number & Enunciado */}
-                        <div className="flex items-start gap-2">
-                          <span className="font-black text-sm bg-black text-white px-2 py-0.5 rounded flex-shrink-0">
-                            {idx + 1}
-                          </span>
-                          <div className="text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed whitespace-pre-line">
-                            {preg.enunciado}
+                  {/* Question List — Continuous Print Flow */}
+                  <div className="space-y-4 pt-1 text-left">
+                    {itemsToPrint.map((preg, idx) => {
+                      // Helper to render markdown headings and bold cleanly
+                      const renderEnunciadoContent = (text: string) => {
+                        const lines = text.split('\n');
+                        return (
+                          <div className="space-y-1 text-xs text-slate-900 leading-snug">
+                            {lines.map((line, lIdx) => {
+                              const trimmed = line.trim();
+                              if (!trimmed) return null;
+                              if (trimmed.startsWith('## ') || trimmed.startsWith('# ')) {
+                                return (
+                                  <div key={lIdx} className="font-bold text-xs sm:text-sm text-black pt-1 pb-0.5 border-b border-slate-300">
+                                    {trimmed.replace(/^#+\s*/, '')}
+                                  </div>
+                                );
+                              }
+                              if (trimmed.startsWith('### ')) {
+                                return (
+                                  <div key={lIdx} className="font-bold text-xs text-slate-900 pt-0.5">
+                                    {trimmed.replace(/^###\s*/, '')}
+                                  </div>
+                                );
+                              }
+                              const parts = trimmed.split(/(\*\*.*?\*\*)/g);
+                              return (
+                                <p key={lIdx} className="leading-relaxed">
+                                  {parts.map((part, pIdx) => {
+                                    if (part.startsWith('**') && part.endsWith('**')) {
+                                      return <strong key={pIdx} className="font-bold text-black">{part.slice(2, -2)}</strong>;
+                                    }
+                                    return part;
+                                  })}
+                                </p>
+                              );
+                            })}
                           </div>
-                        </div>
+                        );
+                      };
 
-                        {/* Figure / Image if exists */}
-                        {preg.imagenUrl && (
-                          <div className="my-2 flex justify-center">
-                            <img
-                              src={preg.imagenUrl}
-                              alt={`Figura pregunta ${idx + 1}`}
-                              className="max-h-56 max-w-full object-contain border border-slate-300 rounded p-1 bg-white"
-                            />
-                          </div>
-                        )}
-
-                        {/* Alternativas (A, B, C, D) */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-7 pt-1">
-                          {preg.alternativas.map((alt) => (
-                            <div
-                              key={alt.letra}
-                              className="text-xs flex items-start gap-2 p-1.5 rounded border border-slate-200 bg-slate-50/50"
-                            >
-                              <span className="w-5 h-5 rounded-full border border-black font-bold flex items-center justify-center text-[10px] flex-shrink-0 bg-white">
-                                {alt.letra}
-                              </span>
-                              <span className="text-slate-800 pt-0.5 leading-tight">{alt.texto}</span>
+                      return (
+                        <div key={preg.id || idx} className="page-break-inside-auto space-y-2 pb-3 border-b border-slate-200 last:border-0">
+                          {/* Question Number & Enunciado */}
+                          <div className="flex items-start gap-2">
+                            <span className="font-black text-xs bg-black text-white px-1.5 py-0.5 rounded flex-shrink-0">
+                              {idx + 1}
+                            </span>
+                            <div className="flex-1">
+                              {renderEnunciadoContent(preg.enunciado)}
                             </div>
-                          ))}
+                          </div>
+
+                          {/* Figure / Image if exists */}
+                          {preg.imagenUrl && (
+                            <div className="my-1.5 flex justify-center page-break-inside-avoid">
+                              <img
+                                src={preg.imagenUrl}
+                                alt={`Figura pregunta ${idx + 1}`}
+                                className="max-h-48 max-w-full object-contain border border-slate-300 rounded p-1 bg-white"
+                              />
+                            </div>
+                          )}
+
+                          {/* Alternativas (A, B, C, D) — Protected from splitting awkwardly */}
+                          {preg.alternativas && preg.alternativas.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pl-6 pt-1 page-break-inside-avoid">
+                              {preg.alternativas.map((alt) => (
+                                <div
+                                  key={alt.letra}
+                                  className="text-xs flex items-start gap-2 p-1 rounded border border-slate-200 bg-slate-50/50"
+                                >
+                                  <span className="w-4 h-4 rounded-full border border-black font-bold flex items-center justify-center text-[9px] flex-shrink-0 bg-white">
+                                    {alt.letra}
+                                  </span>
+                                  <span className="text-slate-900 leading-tight">{alt.texto}</span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            /* Preguntas de Desarrollo / Rúbrica: Espacio pautado compacto para responder */
+                            <div className="pl-6 pt-1 space-y-2 page-break-inside-avoid">
+                              <div className="text-[10px] text-slate-500 font-semibold italic">Espacio para respuesta del estudiante:</div>
+                              <div className="border border-slate-300 rounded-lg p-2 bg-slate-50/30 space-y-3">
+                                <div className="border-b border-dotted border-slate-400 h-4"></div>
+                                <div className="border-b border-dotted border-slate-400 h-4"></div>
+                                <div className="border-b border-dotted border-slate-400 h-4"></div>
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ))}
