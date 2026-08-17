@@ -25,7 +25,7 @@ pendingRegistrationsMap.set('tok-maria-18359422', {
   rut: '18.359.422-2',
   nombre: 'María Teresa',
   apellido: 'González',
-  email: 'luis.leon@promil.cl',
+  email: 'luis.leon@premil.cl',
   rol: 'profesor',
   establecimiento: 'Escuela Premilitar Héroes de la Concepción',
   rbd: '31030',
@@ -269,7 +269,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
           await transporter.sendMail({
             from: `"Sysget Saber" <${SMTP_USER}>`,
-            to: `${ADMIN_EMAIL}, luis_leon_g@hotmail.com`,
+            to: ADMIN_EMAIL,
             subject: `🔔 Nueva solicitud de acceso: ${fullName} (${establecimiento || 'Establecimiento'})`,
             html: htmlBody,
           });

@@ -62,7 +62,6 @@ const DEMO_USERS: Record<string, UserProfile> = {
   // Super Administrador Oficial
   'leontestvirtual1@gmail.com': currentUserAdmin,
   'leontesvirtual1@gmail.com':  currentUserAdmin,
-  'luis_leon_g@hotmail.com':    currentUserAdmin,
   // Docente Oficial — María Teresa González (Escuela Premilitar Héroes de la Concepción)
   'luis.leon@premil.cl':        currentUserProfesorPremilitar,
   // Admin Demo para evaluación
@@ -73,7 +72,6 @@ const DEMO_USERS: Record<string, UserProfile> = {
 const DEMO_USER_PASSWORDS: Record<string, string[]> = {
   'leontestvirtual1@gmail.com': ['Saber_2026!'],
   'leontesvirtual1@gmail.com':  ['Saber_2026!'],
-  'luis_leon_g@hotmail.com':    ['Saber_2026!'],
   'luis.leon@premil.cl':        ['Premil_2026!'],
   'admin@sysget.cl':            ['Saber_2026!', 'admin123', 'demo1234'],
 };
@@ -409,18 +407,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await fetch('/api/users');
       if (res.ok) {
         const data = await res.json();
-        if (data.users && Array.isArray(data.users)) {
-          setUsuarios(prev => {
-            const apiEmails = new Set(data.users.map((u: UserProfile) => u.email.toLowerCase()));
-            return [
-              ...data.users,
-              ...prev.filter(u => !apiEmails.has(u.email.toLowerCase()))
-            ];
-          });
+        if (data.users && Array.isArray(data.users) && data.users.length > 0) {
+          setUsuarios(data.users);
+        } else {
+          setUsuarios(usuariosRegistradosMock);
         }
       }
     } catch (e) {
-      console.warn('Error fetching /api/users:', e);
+      console.warn('Error fetching /api/users, using registered accounts fallback:', e);
+      setUsuarios(usuariosRegistradosMock);
     }
   }, []);
 

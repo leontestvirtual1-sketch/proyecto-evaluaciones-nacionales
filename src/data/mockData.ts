@@ -63,7 +63,7 @@ export const currentUserAdmin: UserProfile = {
   rut: '10.703.767-5',
   nombre: 'Luis Andrés',
   apellido: 'León González',
-  email: 'luis_leon_g@hotmail.com',
+  email: 'leontestvirtual1@gmail.com',
   rol: 'admin',
   establecimiento: 'Liceo Bicentenario Los Andes',
   rbd: '10200',
@@ -166,64 +166,7 @@ export const currentUserAlumno: UserProfile = {
 
 export const usuariosRegistradosMock: UserProfile[] = [
   currentUserAdmin,
-  currentUserProfesorPremilitar, // María Teresa González — Lenguaje (Escuela Premilitar)
-  {
-    id: 'user-req-001',
-    rut: '15.678.901-2',
-    nombre: 'Rodrigo',
-    apellido: 'Valenzuela',
-    email: 'rodrigo.valenzuela@colegiosanagustin.cl',
-    rol: 'profesor',
-    establecimiento: 'Colegio San Agustín (Providencia)',
-    asignaturaNombre: 'Matemática y Física',
-    estado: 'pendiente_aprobacion',
-    plan: 'trial',
-    fechaRegistro: '2026-08-15 09:30',
-    approvalToken: 'tok-sanagustin-8849',
-    diasRestantesTrial: 30
-  },
-  {
-    id: 'user-req-002',
-    rut: '16.789.012-3',
-    nombre: 'Loreto',
-    apellido: 'Cárdenas',
-    email: 'loreto.cardenas@liceocarmela.cl',
-    rol: 'admin',
-    establecimiento: 'Liceo Carmela Carvajal',
-    cargo: 'Jefa de UTP',
-    estado: 'pendiente_aprobacion',
-    plan: 'trial',
-    fechaRegistro: '2026-08-15 08:15',
-    approvalToken: 'tok-carmela-5521',
-    diasRestantesTrial: 30
-  },
-  {
-    id: 'user-req-003',
-    rut: '17.890.123-4',
-    nombre: 'Felipe',
-    apellido: 'Morales',
-    email: 'felipe.morales@institutoandino.cl',
-    rol: 'profesor',
-    establecimiento: 'Instituto Andino Los Andes',
-    asignaturaNombre: 'Ciencias Naturales',
-    estado: 'activo',
-    plan: 'trial',
-    fechaRegistro: '2026-08-09 14:20',
-    diasRestantesTrial: 24
-  },
-  {
-    id: 'user-req-004',
-    rut: '18.901.234-5',
-    nombre: 'Javier',
-    apellido: 'Carrasco',
-    email: 'javier.carrasco@escuelanorte.cl',
-    rol: 'profesor',
-    establecimiento: 'Escuela Rural Norte',
-    estado: 'suspendido',
-    plan: 'free',
-    fechaRegistro: '2026-07-20 10:00',
-    diasRestantesTrial: 0
-  }
+  currentUserProfesorPremilitar // María Teresa González — Lenguaje (Escuela Premilitar)
 ];
 
 export const alumnosMock: AlumnoBasico[] = [

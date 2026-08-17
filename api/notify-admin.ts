@@ -157,7 +157,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const info = await transporter.sendMail({
       from: `"Sysget Saber" <${SMTP_USER}>`,
-      to: `${ADMIN_EMAIL}, luis_leon_g@hotmail.com`,
+      to: ADMIN_EMAIL,
       subject: `🔔 Nueva solicitud de acceso: ${fullName} (${establecimiento || 'Establecimiento'})`,
       html: htmlBody,
     });

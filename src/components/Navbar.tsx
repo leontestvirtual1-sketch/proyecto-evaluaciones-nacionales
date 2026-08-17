@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* Fast Role Switcher ONLY for Admin / Demo Supervisor session */}
-            {user.rol === 'admin' || ['leontestvirtual1@gmail.com', 'leontesvirtual1@gmail.com', 'luis_leon_g@hotmail.com', 'admin@sysget.cl'].includes(localStorage.getItem('sysget_session_email')?.toLowerCase() || '') ? (
+            {user.rol === 'admin' || ['leontestvirtual1@gmail.com', 'leontesvirtual1@gmail.com', 'admin@sysget.cl'].includes(localStorage.getItem('sysget_session_email')?.toLowerCase() || '') ? (
               <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700 text-xs font-semibold">
                 <button
                   onClick={() => onRoleChange('admin')}
