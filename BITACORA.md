@@ -2,7 +2,30 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
-### [2026-08-17] Hardening de Seguridad en Login de Administrador, Purga de Cuenta Hotmail y Sincronización Limpia de Usuarios
+### [2026-08-17] Aislamiento Estricto de Ambientes (Demo vs Producción), Conteo Dinámico de Trial y Limpieza de Alumnos en Impresión
+
+- **Problema / Requerimiento**:
+  1. **Fuga de Alumnos Demo en Modal de Impresión para Admin**: Al abrir "Imprimir / PDF" en la evaluación de 2° Medio desde la cuenta de Super Admin de Producción (`leontestvirtual1@gmail.com`), la pestaña "2. Por Alumno" mostraba `(25)` alumnos ficticios provenientes de `alumnosMock` en lugar de una lista vacía `(0)` en proceso de matrícula.
+  2. **Días de Trial Estáticos (30d) en Gestión de Usuarios**: En el panel de "Gestión de Usuarios y Aprobaciones", todas las cuentas en período de prueba mostraban siempre `30d restantes` de forma fija, sin descontar los días transcurridos desde la fecha de registro en Supabase (`created_at` / `fechaRegistro`).
+  3. **Mezcla Residual de Docentes y Evaluaciones entre Demo y Producción**: En el ambiente Demo (`admin@sysget.cl`), "Equipo Docente" mostraba a María Teresa González (docente de Premilitar), y en la cuenta de Carlos Morales (`carlos.morales@sysget.cl`) aparecía el ensayo de 2° Medio de la Escuela Premilitar en lugar de su evaluación diagnóstica de 8° Básico.
+- **Archivos y Solución Técnica**:
+  - [`src/pages/EvaluacionesPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/EvaluacionesPage.tsx):
+    - [MODIFICADO] `isProduction` ampliado para abarcar tanto a `luis.leon@premil.cl` como a `leontestvirtual1@gmail.com` y cualquier rol `admin` de producción. En consecuencia, `printAlumnos` se inicializa estrictamente vacío (`[]`) en producción hasta que se cargue la nómina oficial.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] `loadUsuariosReales()` ahora calcula dinámicamente `diasRestantesTrial` en base a la diferencia en milisegundos entre `Date.now()` y `created_at` de la base de datos Supabase: `Math.max(0, 30 - diffDays)`.
+  - [`src/pages/GestionUsuariosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx):
+    - [MODIFICADO] Renderizado visual de días restantes con badges semánticos por criticidad: rojo (≤ 5 días), amarillo (≤ 15 días) e índigo (> 15 días).
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
+    - [MODIFICADO] Exportado `demoProfesoresMock` (María González, Carlos Morales, Patricia Muñoz) y agregada `pruebaDemoLenguaje8BMock` a `pruebasMock` para uso exclusivo del docente demo de Lenguaje.
+  - [`src/pages/ProfesoresPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ProfesoresPage.tsx):
+    - [MODIFICADO] Claves de `localStorage` aisladas por ambiente (`sysget_demo_profesores_list` vs `sysget_prod_profesores_list`).
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
+    - [MODIFICADO] `getDashboardData()` bifurcado de manera estricta: Producción ve exclusivamente `pruebaLenguaje2MMock` (2° Medio Premilitar), mientras Demo ve exclusivamente las pruebas demo de 6° y 8° Básico.
+- **Verificación / Despliegue**:
+  - Compilación: ✅ 0 errores TypeScript + Vite (16.45s).
+  - Git Commits: `32e4057`, `5cfdc17`.
+
+---
 
 - **Problema / Requerimiento**:
   1. **Bypass de Contraseña en Login de Administrador**: Al ingresar como Administrador en producción, el sistema aceptaba cualquier contraseña debido a que un error de autenticación en Supabase no abortaba el proceso, sino que continuaba a los pasos de fallback donde existía una discrepancia tipográfica (`leontesvirtual1@gmail.com` vs `leontestvirtual1@gmail.com`) y contraseñas por defecto permisivas.
