@@ -28,6 +28,11 @@ import {
   preguntasLenguaje2MJunioMock
 } from './len2mJunioQuestionsMock';
 
+import {
+  pruebaLenguaje2MAbrilMock,
+  preguntasLenguaje2MAbrilMock
+} from './len2mAbrilQuestionsMock';
+
 export const establecimientosCatalog: EstablecimientoInfo[] = [
   {
     rbd: '31030',
@@ -412,6 +417,9 @@ export const preguntasMock: Pregunta[] = [
 
   // ✅ Ensayo SIMCE Lenguaje 2° Medio — Junio 2026 (Escuela Premilitar)
   ...preguntasLenguaje2MJunioMock,
+
+  // ✅ Ensayo SIMCE Lenguaje 2° Medio — Abril 2026 (Escuela Premilitar)
+  ...preguntasLenguaje2MAbrilMock,
 
   // === 1. MATEMÁTICA Y LENGUAJE 8° BÁSICO ===
 
@@ -2757,6 +2765,9 @@ export const pruebasMock: Prueba[] = [
 
   // ✅ Ensayo SIMCE Lenguaje 2° Medio — Junio 2026 (Escuela Premilitar)
   pruebaLenguaje2MJunioMock,
+
+  // ✅ Ensayo SIMCE Lenguaje 2° Medio — Abril 2026 (Escuela Premilitar)
+  pruebaLenguaje2MAbrilMock,
 
   // ⚠️ Las siguientes pruebas son de demo para otras especialidades (no visibles al docente de Lenguaje)
   {

@@ -250,12 +250,13 @@ function MainAppContent() {
         const isPremil = user.email === 'luis.leon@premil.cl';
         const isProdAdmin = user.email === 'leontestvirtual1@gmail.com' || (user.rol === 'admin' && !isSandboxMode && user.email !== 'admin@sysget.cl' && user.email !== 'admin@escuelademo.cl');
 
-        // Producción: las dos pruebas oficiales de la Escuela Premilitar (Agosto y Junio 2026)
+        // Producción: las pruebas oficiales de la Escuela Premilitar (Agosto, Junio y Abril 2026)
         if (isPremil || isProdAdmin) {
           return {
             dashboardPruebas: pruebas.filter(p =>
               p.id === 'prueba-len2m-101' ||
               p.id === 'prueba-len2m-jun-101' ||
+              p.id === 'prueba-len2m-abr-101' ||
               p.profesorId === currentUserProfesorPremilitar.id
             ),
             dashboardReporte: reportePremilitarRealMock
@@ -263,10 +264,11 @@ function MainAppContent() {
         }
 
         // Demo: únicamente pruebas demo (8° Básico y 6° Básico del Liceo Bicentenario)
-        // Nunca incluye ninguna prueba de la Escuela Premilitar (Agosto ni Junio)
+        // Nunca incluye ninguna prueba de la Escuela Premilitar (Agosto, Junio ni Abril)
         const demoPruebas = pruebas.filter(p =>
           p.id !== 'prueba-len2m-101' &&
           p.id !== 'prueba-len2m-jun-101' &&
+          p.id !== 'prueba-len2m-abr-101' &&
           p.profesorId !== currentUserProfesorPremilitar.id
         );
         const dashboardPruebas = user.rol === 'profesor' && user.asignaturaId 

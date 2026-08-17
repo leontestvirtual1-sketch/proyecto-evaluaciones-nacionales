@@ -2,6 +2,31 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-17] Integración Ensayo SIMCE Lenguaje 2° Medio — Abril 2026 (30 preguntas, 6 lecturas)
+
+- **Problema / Requerimiento**:
+  Incorporar la evaluación oficial SIMCE de Lenguaje para 2° Medio correspondiente a Abril 2026 desde el archivo `Ensayo+SIMCE+Lenguaje+2° Medio+Abril 2026.docx`. La evaluación debe quedar integrada en el ambiente de Producción (Escuela Premilitar) y aislada del ambiente Demo, con sus 30 preguntas exclusivas vinculadas por `preguntasIds`.
+- **Archivos y Solución Técnica**:
+  - [`src/data/len2mAbrilQuestionsMock.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/len2mAbrilQuestionsMock.ts):
+    - [NUEVO] Módulo completo con `pruebaLenguaje2MAbrilMock` (id: `prueba-len2m-abr-101`, código: `SIMCE-2M-LEN-ABR`, 30 preguntas, 90 minutos) y `preguntasLenguaje2MAbrilMock` estructurado con 6 lecturas:
+      - **Lectura 1** (Preg. 1–3): Texto expositivo "La Gran Muralla China" (arquitectura defensiva y función militar).
+      - **Lectura 2** (Preg. 4–9): Biografía histórica "María Tudor: Un Reinado Sangriento" (Bloody Mary, Enrique VIII, Jane Grey).
+      - **Lectura 3** (Preg. 10–13): Artículo de divulgación "Introducción a la Antropología" (antropología física vs cultural, Heródoto, Nuevo Mundo).
+      - **Lectura 4** (Preg. 14–19): Divulgación nutricional "¿Es la pizza un desayuno más saludable que el cereal?" (balance de macronutrientes, USDA, saciedad).
+      - **Lectura 5** (Preg. 20–24): Cuento literario "Ladrón de sábado" de Gabriel García Márquez (Hugo, Ana, Pauli y giro narrativo).
+      - **Lectura 6** (Preg. 25–30): Columna de opinión "Rogelio Fernández Güell: Gladiador de la Pluma" (denotación, connotación, combatiente cívico).
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
+    - [MODIFICADO] Importado `pruebaLenguaje2MAbrilMock` y `preguntasLenguaje2MAbrilMock`; integrado al spread de `preguntasMock` y a la lista oficial `pruebasMock`.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
+    - [MODIFICADO] En `getDashboardData()`, rama Producción incluye `prueba-len2m-abr-101` junto con Agosto y Junio; rama Demo la excluye estrictamente.
+  - `public/preguntas/simce_len_2m_abr/image1.jpg`:
+    - [NUEVO] Imagen extraída de la cabecera del documento fuente.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript: ✅ 0 errores (`npx tsc --noEmit`).
+  - Mapeo estricto: Las 30 preguntas (`preg-len2m-abr-01` a `preg-len2m-abr-30`) se muestran de forma independiente en "Ver Ítems" y en "Imprimir / PDF".
+
+---
+
 ### [2026-08-17] Corrección de Filtrado Estricto de Ítems por Evaluación (Aislamiento de 30 Preguntas vs Banco Completo)
 
 - **Problema / Requerimiento**:
