@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Hardening Definitivo de Seguridad en Login, Aislamiento Total de Materia y Equipo Docente Real
+
+- **Problema / Requerimiento**:
+  1. En el Login, correos como `luis.leon@gmail.com` o `luis.leon@yahoo.ar` con cualquier contraseña ingresaban debido a que `inferUserFromEmail` mantenía comprobaciones permisivas.
+  2. En el Dashboard del docente de Lenguaje continuaban apareciendo evaluaciones o referencias de otras especialidades (Ciencias Naturales 6° Básico y Matemática 8° Básico).
+  3. En la sección "Gestión del Equipo Docente" (`ProfesoresPage.tsx`), se mostraban datos de profesores demo hardcodeados (`profesoresIniciales`) en vez de la lista real del `AuthContext` (donde reside María Teresa González).
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO]
+    - `inferUserFromEmail`: Transformada en función segura que devuelve `null` de forma estricta. Ningún correo no listado explícitamente en `DEMO_USERS` o en la base de datos puede acceder al sistema.
+    - Agregado alias `luis.leon@premil.cl` para el perfil de María Teresa González.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO]
+    - Caso `usuarios` del router protegido para que el docente solo reciba sus pruebas (`dashboardPruebas`) y su reporte (`dashboardReporte`) filtrados por `asignaturaId`.
+  - [`src/pages/ProfesoresPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ProfesoresPage.tsx): [MODIFICADO]
+    - Eliminado el arreglo estático `profesoresIniciales`. Ahora se suscribe a `usuarios` del `AuthContext` filtrando solo profesores y admins registrados.
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO]
+    - `usuariosRegistradosMock`: Incorporado `currentUserProfesorPremilitar` (María Teresa González — Lenguaje) al equipo docente.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript + Vite: ✅ 2242 módulos transformados sin errores en 9.93s (`dist/index.html`, `dist/assets/*`).
+  - Git Commit: `dbef80d` — `fix(rbac): aislamiento estricto docente - login seguro, dashboard limpio, equipo docente real`
+
+---
+
 ### [2026-08-16] Aislamiento Estricto Docente, Persistencia de Cursos/Alumnos en LocalStorage y Hardening de Login
 
 - **Problema / Requerimiento**:
