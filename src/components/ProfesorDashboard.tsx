@@ -147,26 +147,26 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
           title={isAdmin ? 'Promedio SIMCE Proyectado' : 'Logro Promedio Global'}
-          value={isAdmin ? '261 pts' : `${reporteActivo.promedioPorcentajeLogro}%`}
-          subtitle={isAdmin ? 'Meta 2026: 265 pts (+15 pts)' : `Curso ${reporteActivo.cursoNombre}`}
+          value={isAdmin ? '261 pts' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioPorcentajeLogro}%`)}
+          subtitle={isAdmin ? 'Meta 2026: 265 pts (+15 pts)' : (reporteActivo.totalAlumnosRendidos === 0 ? `Curso ${reporteActivo.cursoNombre} (Sin rendiciones)` : `Curso ${reporteActivo.cursoNombre}`)}
           icon={<Award className="w-5 h-5" />}
-          trend={{ text: isAdmin ? '+12 pts vs 2024' : 'Alerta en Geometría', type: 'positive' }}
+          trend={{ text: isAdmin ? '+12 pts vs 2024' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Esperando aplicación' : 'Alerta en Argumentación'), type: reporteActivo.totalAlumnosRendidos === 0 ? 'neutral' : 'positive' }}
           iconBgColor="bg-amber-500/10 text-amber-600 dark:text-amber-400"
         />
 
         <StatCard
           title={isAdmin ? 'Brechas Críticas Detectadas' : 'Escala Nacional Promedio'}
-          value={isAdmin ? '4 Casos Severos' : `${reporteActivo.promedioEscalaNacional} pts`}
-          subtitle={isAdmin ? '100% con plan autogenerado' : 'Rango 100 - 350 pts'}
+          value={isAdmin ? '4 Casos Severos' : (reporteActivo.totalAlumnosRendidos === 0 ? 'SIMCE 2026' : `${reporteActivo.promedioEscalaNacional} pts`)}
+          subtitle={isAdmin ? '100% con plan autogenerado' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
           icon={<BarChart2 className="w-5 h-5" />}
-          trend={{ text: isAdmin ? '8°B foco prioritario' : '+15 pts vs anterior', type: 'warning' }}
+          trend={{ text: isAdmin ? '8°B foco prioritario' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : '+15 pts vs anterior'), type: 'warning' }}
           iconBgColor="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
         />
 
         <StatCard
           title={isAdmin ? 'Cursos Diagnosticados' : 'Evaluaciones Activas'}
           value={isAdmin ? '4 Cursos (6° a 8°)' : `${pruebas.length}`}
-          subtitle={isAdmin ? '116 alumnos evaluados' : 'Ensayos creados'}
+          subtitle={isAdmin ? '116 alumnos evaluados' : 'Ensayo(s) preparado(s)'}
           icon={<BookOpen className="w-5 h-5" />}
           iconBgColor="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
         />
@@ -174,7 +174,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
         <StatCard
           title={isAdmin ? 'Planes Remediales Activos' : 'Alumnos Rendidos'}
           value={isAdmin ? '18 Planes' : `${reporteActivo.totalAlumnosRendidos} / ${reporteActivo.totalAlumnosMatriculados}`}
-          subtitle={isAdmin ? 'Matemática y Ciencias' : 'Avance de entrega 14%'}
+          subtitle={isAdmin ? 'Matemática y Ciencias' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Inicio de ciclo de evaluación' : 'Avance de entrega')}
           icon={<Users className="w-5 h-5" />}
           iconBgColor="bg-sky-500/10 text-sky-600 dark:text-sky-400"
         />

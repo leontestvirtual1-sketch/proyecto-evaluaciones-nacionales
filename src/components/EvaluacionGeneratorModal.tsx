@@ -32,13 +32,26 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
   const [duracionMinutos, setDuracionMinutos] = useState<number>(45);
   const [numPreguntas, setNumPreguntas] = useState<number>(5);
 
+  React.useEffect(() => {
+    if (asignaturas.length > 0 && (!asignaturaId || !asignaturas.find(a => a.id === asignaturaId))) {
+      setAsignaturaId(asignaturas[0].id);
+    }
+  }, [asignaturas, isOpen]);
+
+  React.useEffect(() => {
+    if (cursos.length > 0 && (!cursoId || !cursos.find(c => c.id === cursoId))) {
+      setCursoId(cursos[0].id);
+      setNivel(cursos[0].nivel || 'II Medio');
+    }
+  }, [cursos, isOpen]);
+
   if (!isOpen) return null;
 
-  const currentAsignatura = asignaturas.find(a => a.id === asignaturaId);
-  const currentCurso = cursos.find(c => c.id === cursoId);
+  const currentAsignatura = asignaturas.find(a => a.id === asignaturaId) || asignaturas[0];
+  const currentCurso = cursos.find(c => c.id === cursoId) || cursos[0];
 
   // Filter available questions strictly by subject
-  const preguntasDisponibles = bancoPreguntas.filter(p => p.asignaturaId === asignaturaId);
+  const preguntasDisponibles = bancoPreguntas.filter(p => p.asignaturaId === (currentAsignatura?.id || asignaturaId));
 
   const preguntasSeleccionadas: Pregunta[] = [];
   if (preguntasDisponibles.length > 0) {
@@ -57,12 +70,12 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
       id: `prueba-${Date.now()}`,
       titulo,
       descripcion,
-      asignaturaId,
+      asignaturaId: currentAsignatura?.id || asignaturaId,
       asignaturaNombre: currentAsignatura?.nombre || 'Lenguaje y Comunicación',
-      nivel,
+      nivel: currentCurso?.nivel || nivel,
       profesorId: '00000000-0000-0000-0000-000000000001',
-      cursoId,
-      cursoNombre: currentCurso?.nombre || '8° Básico A',
+      cursoId: currentCurso?.id || cursoId,
+      cursoNombre: currentCurso?.nombre || '2° Medio A',
       codigoPublico: codigoUnico,
       duracionMinutos,
       creadoEn: new Date().toISOString().split('T')[0],
@@ -113,20 +126,21 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
                   type="text"
                   value={titulo}
                   onChange={(e) => setTitulo(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
-                  placeholder="Ej: Ensayo de Cobertura Curricular Matemática"
+                  className="w-full px-3.5 py-2.5 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-slate-900 dark:text-white"
+                  placeholder="Ej: Ensayo de Cobertura Curricular Lengua y Literatura"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    Asignatura
+                    Asignatura {asignaturas.length === 1 && <span className="text-emerald-500 lowercase font-normal">(Especialidad Asignada)</span>}
                   </label>
                   <select
                     value={asignaturaId}
                     onChange={(e) => setAsignaturaId(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                    disabled={asignaturas.length <= 1}
+                    className="w-full px-3.5 py-2.5 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all disabled:opacity-80 disabled:bg-slate-100 dark:disabled:bg-slate-900 text-slate-900 dark:text-white"
                   >
                     {asignaturas.map(a => (
                       <option key={a.id} value={a.id}>{a.nombre}</option>
@@ -141,7 +155,7 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
                   <select
                     value={cursoId}
                     onChange={(e) => setCursoId(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                    className="w-full px-3.5 py-2.5 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-slate-900 dark:text-white"
                   >
                     {cursos.map(c => (
                       <option key={c.id} value={c.id}>{c.nombre} ({c.nivel})</option>

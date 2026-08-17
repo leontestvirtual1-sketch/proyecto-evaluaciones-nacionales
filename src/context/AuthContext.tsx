@@ -89,12 +89,14 @@ const DEMO_USERS: Record<string, UserProfile> = {
 
 /** Detecta el perfil más apropiado a partir del email cuando no está en DEMO_USERS */
 function inferUserFromEmail(email: string): UserProfile | null {
-  const e = email.toLowerCase();
-  if (e.includes('admin') || e.includes('utp') || e.includes('director')) return currentUserAdmin;
-  if (e.includes('teresa') || e.includes('promil') || e.includes('lenguaje') || e.includes('len') || e.includes('carlos') || e.includes('maria')) return currentUserProfesorPremilitar;
-  if (e.includes('ciencia') || e.includes('cn') || e.includes('patricia')) return currentUserProfesorCiencias;
-  if (e.includes('mat')) return currentUserProfesor;
-  return currentUserProfesorPremilitar; // Por defecto perfil docente Lenguaje
+  const e = email.toLowerCase().trim();
+  // Solo inferir si contiene palabras clave explícitas de roles demo conocidos
+  if (e.includes('admin@') || e.includes('utp@') || e.includes('director@')) return currentUserAdmin;
+  if (e === 'maria.teresa@demo.cl' || e === 'luis.leon@promil.cl' || e === 'mariateresa@demo.cl') return currentUserProfesorPremilitar;
+  if (e === 'patricia@demo.cl' || e === 'ciencias@demo.cl') return currentUserProfesorCiencias;
+  if (e === 'matematica@demo.cl' || e === 'mat@demo.cl') return currentUserProfesor;
+  // Correo desconocido → Rechazar acceso (error de credenciales)
+  return null;
 }
 
 

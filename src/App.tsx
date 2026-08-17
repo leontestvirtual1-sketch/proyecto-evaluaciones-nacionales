@@ -271,9 +271,9 @@ function MainAppContent() {
             />
           );
         case 'alumnos':
-          return <AlumnosPage />;
+          return <AlumnosPage currentUser={user} />;
         case 'cursos':
-          return <CursosPage />;
+          return <CursosPage currentUser={user} />;
         case 'banco-preguntas':
           return (
             <BancoPreguntasPage
@@ -465,15 +465,15 @@ function MainAppContent() {
         </div>
       )}
 
-      {/* Generator Modal */}
+      {/* Generator Modal con aislamiento estricto por especialidad docente */}
       <EvaluacionGeneratorModal
         isOpen={isGeneratorOpen}
         onClose={() => setIsGeneratorOpen(false)}
-        asignaturas={asignaturasMock}
-        ejes={ejesTematicosMock}
-        habilidades={habilidadesMock}
-        cursos={cursosMock}
-        bancoPreguntas={bancoPreguntas}
+        asignaturas={user?.rol === 'profesor' && user?.asignaturaId ? asignaturasMock.filter(a => a.id === user.asignaturaId) : asignaturasMock}
+        ejes={user?.rol === 'profesor' && user?.asignaturaId ? ejesTematicosMock.filter(e => e.asignaturaId === user.asignaturaId) : ejesTematicosMock}
+        habilidades={user?.rol === 'profesor' && user?.asignaturaId ? habilidadesMock.filter(h => h.asignaturaId === user.asignaturaId) : habilidadesMock}
+        cursos={user?.rol === 'profesor' ? cursosMock.filter(c => c.profesorId === user.id || !c.profesorId || c.id === 'curso-2m') : cursosMock}
+        bancoPreguntas={user?.rol === 'profesor' && user?.asignaturaId ? bancoPreguntas.filter(p => p.asignaturaId === user.asignaturaId) : bancoPreguntas}
         onCreatePrueba={handleCreatePrueba}
       />
     </div>
