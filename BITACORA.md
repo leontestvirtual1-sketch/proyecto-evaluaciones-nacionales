@@ -2,6 +2,23 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Hardening Definitivo: Login Limpio, Persistencia LocalStorage y RBAC Estricta
+
+- **Problema / Requerimiento**:
+  1. **Login expuesto**: La pantalla de inicio de sesión mostraba una caja "Cuentas Autorizadas" con todos los emails y la clave en texto plano — completamente inaceptable en producción.
+  2. **Persistencia rota en Gestión Docente**: Las eliminaciones de docentes y los cambios de contraseña que hacía el Administrador desde "Equipo Docente" se perdían al refrescar la página (F5).
+  3. **Equipo Docente con datos demo**: Aparecían docentes de especialidades demo (Ciencias, Matemática, etc.) junto a María Teresa González, que es la única docente oficial por ahora.
+- **Archivos y Solución Técnica**:
+  - [`src/pages/LoginPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LoginPage.tsx): [MODIFICADO] **Eliminada completamente** la caja "Cuentas Autorizadas" con links clicables a correos y contraseña expuesta. La pantalla de login ahora es limpia y profesional.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Lista `DEMO_USERS` reducida a las 3 cuentas oficiales (`leontesvirtual1@gmail.com`, `luis.leon@premil.cl`, `admin@sysget.cl`). El login ahora consulta `sysget_custom_passwords` en `localStorage` para respetar las contraseñas modificadas por el Admin. También consulta `sysget_profesores_list` para autenticar docentes agregados dinámicamente.
+  - [`src/pages/ProfesoresPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ProfesoresPage.tsx): [MODIFICADO] Estado inicial cargado desde `localStorage` (`sysget_profesores_list`). Las eliminaciones y agregados de docentes se persisten en `localStorage`. Los cambios de contraseña se guardan en `sysget_custom_passwords`. La lista inicial oficial arranca solo con **María Teresa González**.
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] `usuariosRegistradosMock` limpiado — eliminados docentes demo ficticios (Ciencias, Matemática, Alumno). Solo queda el Admin y María Teresa González como docentes oficiales.
+- **Verificación / Despliegue**:
+  - Compilación: ✅ 2242 módulos, 0 errores TypeScript + Vite (9.22s).
+  - Git Commit: `f94c152`
+
+---
+
 ### [2026-08-16] Separación Total de Ambientes: Sandbox Demo (Landing) vs Producción Limpia
 
 - **Problema / Requerimiento**:
