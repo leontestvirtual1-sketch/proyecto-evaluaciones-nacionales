@@ -82,106 +82,109 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="truncate">{user.establecimiento}</span>
             </div>
 
-            {/* Fast Role Switcher ONLY for Admin / Demo Supervisor session */}
-            {user.rol === 'admin' || ['leontestvirtual1@gmail.com', 'leontesvirtual1@gmail.com', 'admin@sysget.cl'].includes(localStorage.getItem('sysget_session_email')?.toLowerCase() || '') ? (
-              <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700 text-xs font-semibold">
-                {/* Variable para determinar si es admin de producción (no demo) */}
-                {(() => {
-                  const sessionEmail = localStorage.getItem('sysget_session_email')?.toLowerCase() || '';
-                  const isProductionAdmin = sessionEmail === 'leontestvirtual1@gmail.com' || sessionEmail === 'leontesvirtual1@gmail.com';
+            {/* Fast Role Switcher ONLY for Demo Supervisor session OR Return button for Production Admin */}
+            {(() => {
+              const sessionEmail = localStorage.getItem('sysget_session_email')?.toLowerCase() || '';
+              const isProductionAdmin = sessionEmail === 'leontestvirtual1@gmail.com' || sessionEmail === 'leontesvirtual1@gmail.com' || user.email === 'leontestvirtual1@gmail.com';
+              const isDemoAdmin = sessionEmail === 'admin@sysget.cl' || user.email === 'admin@sysget.cl';
+
+              if (isProductionAdmin) {
+                // Para Admin de Producción: solo mostrar botón volver si está supervisando a un docente
+                if (user.rol === 'profesor') {
                   return (
-                    <>
-                <button
-                  onClick={() => onRoleChange('admin')}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
-                    user.rol === 'admin'
-                      ? 'bg-amber-600 text-white shadow-sm font-bold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                  title="Administrador General / UTP"
-                >
-                  <span>👑 Admin UTP</span>
-                </button>
-
-                {/* Botón Premil: SOLO visible para admin de producción */}
-                {isProductionAdmin && (
-                  <button
-                    onClick={() => onRoleChange('profesor', 'premilitar')}
-                    className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                      user.rol === 'profesor' && user.email === 'luis.leon@premil.cl'
-                        ? 'bg-indigo-600 text-white shadow-sm font-bold'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'
-                    }`}
-                    title="Ver vista como Docente Lenguaje — Escuela Premilitar Héroes de la Concepción (María Teresa González)"
-                  >
-                    <span>🦅 Premil</span>
-                  </button>
-                )}
-
-                <button
-                  onClick={() => onRoleChange('profesor', 'matematica')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                    user.rol === 'profesor' && user.asignaturaId === 'asig-1'
-                      ? 'bg-indigo-600 text-white shadow-sm font-bold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                  title="Ver vista como Docente de Matemática (María González)"
-                >
-                  <span>📐 Mat</span>
-                </button>
-
-                <button
-                  onClick={() => onRoleChange('profesor', 'ciencias')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                    user.rol === 'profesor' && user.asignaturaId === 'asig-3'
-                      ? 'bg-indigo-600 text-white shadow-sm font-bold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                  title="Ver vista como Docente de Ciencias Naturales (Patricia Muñoz)"
-                >
-                  <span>🔬 C. Nat</span>
-                </button>
-
-                <button
-                  onClick={() => onRoleChange('profesor', 'lenguaje')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                    user.rol === 'profesor' && user.asignaturaId === 'asig-2'
-                      ? 'bg-indigo-600 text-white shadow-sm font-bold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                  title="Ver vista como Docente de Lenguaje (Carlos Morales)"
-                >
-                  <span>📖 Leng</span>
-                </button>
-
-                <button
-                  onClick={() => onRoleChange('alumno')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
-                    user.rol === 'alumno'
-                      ? 'bg-emerald-600 text-white shadow-sm font-bold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                  title="Ver vista como Alumno (Pedro Soto)"
-                >
-                  <span>🎓 Alumno</span>
-                </button>
-                    </>
+                    <button
+                      onClick={() => onRoleChange('admin')}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-600/30 transition-all"
+                      title="Volver a la vista del Administrador de Producción"
+                    >
+                      <span>👑 Volver a Admin UTP</span>
+                    </button>
                   );
-                })()}
-              </div>
-            ) : user.rol === 'profesor' ? (
-              /* Teacher Isolated Identity Badge - No access to other teachers or admin */
-              <div className="flex items-center gap-2 bg-indigo-500/10 dark:bg-indigo-950/60 px-3 py-1.5 rounded-xl border border-indigo-500/30 text-xs font-bold text-indigo-700 dark:text-indigo-300 shadow-sm">
-                <span>{user.asignaturaId === 'asig-1' ? '📐' : user.asignaturaId === 'asig-3' ? '🔬' : '📖'}</span>
-                <span>Docente: <strong>{user.nombre} {user.apellido}</strong> ({user.asignaturaNombre || 'Especialidad'})</span>
-              </div>
-            ) : (
-              /* Student Badge */
-              <div className="flex items-center gap-2 bg-emerald-500/10 dark:bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30 text-xs font-bold text-emerald-700 dark:text-emerald-300 shadow-sm">
-                <span>🎓</span>
-                <span>Estudiante: <strong>{user.nombre} {user.apellido}</strong></span>
-              </div>
-            )}
+                }
+                return (
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-xs font-bold">
+                    <span>👑 Super Admin UTP</span>
+                  </div>
+                );
+              }
+
+              if (isDemoAdmin || user.rol === 'admin') {
+                return (
+                  <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-xl border border-slate-300/50 dark:border-slate-700 text-xs font-semibold">
+                    <button
+                      onClick={() => onRoleChange('admin')}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
+                        user.rol === 'admin'
+                          ? 'bg-amber-600 text-white shadow-sm font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="Administrador General / UTP Demo"
+                    >
+                      <span>👑 Admin UTP</span>
+                    </button>
+
+                    <button
+                      onClick={() => onRoleChange('profesor', 'matematica')}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
+                        user.rol === 'profesor' && user.asignaturaId === 'asig-1'
+                          ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="Ver vista como Docente de Matemática (María González)"
+                    >
+                      <span>📐 Mat</span>
+                    </button>
+
+                    <button
+                      onClick={() => onRoleChange('profesor', 'ciencias')}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
+                        user.rol === 'profesor' && user.asignaturaId === 'asig-3'
+                          ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="Ver vista como Docente de Ciencias Naturales (Patricia Muñoz)"
+                    >
+                      <span>🔬 C. Nat</span>
+                    </button>
+
+                    <button
+                      onClick={() => onRoleChange('profesor', 'lenguaje')}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
+                        user.rol === 'profesor' && user.asignaturaId === 'asig-2'
+                          ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="Ver vista como Docente de Lenguaje (Carlos Morales)"
+                    >
+                      <span>📖 Leng</span>
+                    </button>
+
+                    <button
+                      onClick={() => onRoleChange('alumno')}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
+                        user.rol === 'alumno'
+                          ? 'bg-emerald-600 text-white shadow-sm font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="Ver vista como Alumno (Pedro Soto)"
+                    >
+                      <span>🎓 Alumno</span>
+                    </button>
+                  </div>
+                );
+              }
+
+              if (user.rol === 'alumno') {
+                return (
+                  <div className="flex items-center gap-2 bg-emerald-500/10 dark:bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30 text-xs font-bold text-emerald-700 dark:text-emerald-300 shadow-sm">
+                    <span>🎓</span>
+                    <span>Estudiante: <strong>{user.nombre} {user.apellido}</strong></span>
+                  </div>
+                );
+              }
+
+              return null;
+            })()}
 
             {/* Dark mode toggle */}
             <button

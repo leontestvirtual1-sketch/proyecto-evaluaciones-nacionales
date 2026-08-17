@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { establecimientosCatalog, currentUserProfesorPremilitar } from '../data/mockData';
+import { UserProfile } from '../types';
 import {
   LayoutDashboard,
   BookOpen,
@@ -10,9 +12,12 @@ import {
   Settings,
   LogOut,
   ChevronRight,
+  ChevronDown,
   Sparkles,
-  ShieldCheck,
-  UserCheck
+  UserCheck,
+  School,
+  Building2,
+  User
 } from 'lucide-react';
 
 export type PageId =
@@ -39,9 +44,13 @@ interface NavItem {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
-  const { user, usuarios, logout } = useAuth();
+  const { user, usuarios, docentesReales, adminBaseProfile, logout, switchRole, switchToDocente } = useAuth();
+  const [expandedRbd, setExpandedRbd] = useState<string | null>('31030');
   
   const pendientesCount = usuarios.filter(u => u.estado === 'pendiente_aprobacion').length;
+
+  const isProductionAdmin = user?.email === 'leontestvirtual1@gmail.com' || adminBaseProfile?.email === 'leontestvirtual1@gmail.com' || (user?.rol === 'admin' && user?.email !== 'admin@sysget.cl');
+  const isSupervisingDocente = user?.rol === 'profesor' && adminBaseProfile?.email === 'leontestvirtual1@gmail.com';
 
   const NAV_ITEMS_ADMIN: NavItem[] = [
     { id: 'dashboard', label: 'Dashboard General', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
@@ -80,12 +89,40 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
     items = NAV_ITEMS_ALUMNO;
   }
 
+  // Agrupación dinámica de colegios y sus docentes para el Super Admin
+  const colegiosMap = new Map<string, { rbd: string; nombre: string; logoUrl?: string; docentes: UserProfile[] }>();
+  
+  establecimientosCatalog.forEach(e => {
+    colegiosMap.set(e.rbd || e.nombre, {
+      rbd: e.rbd || '31030',
+      nombre: e.nombre,
+      logoUrl: e.logoUrl,
+      docentes: []
+    });
+  });
 
+  const listaDocentes = docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar];
+  listaDocentes.forEach(d => {
+    const key = d.rbd || d.establecimiento;
+    if (colegiosMap.has(key)) {
+      const existing = colegiosMap.get(key)!;
+      if (!existing.docentes.some(doc => doc.id === d.id || doc.email === d.email)) {
+        existing.docentes.push(d);
+      }
+    } else {
+      colegiosMap.set(key, {
+        rbd: d.rbd || '31030',
+        nombre: d.establecimiento,
+        logoUrl: d.logoUrl,
+        docentes: [d]
+      });
+    }
+  });
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 min-h-screen bg-slate-900 border-r border-slate-800 py-6 px-4 fixed left-0 top-0 z-30">
+    <aside className="hidden lg:flex flex-col w-64 min-h-screen bg-slate-900 border-r border-slate-800 py-5 px-3.5 fixed left-0 top-0 z-30">
       {/* Logo */}
-      <div className="px-2 mb-8">
+      <div className="px-2 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="p-2 bg-indigo-600 rounded-xl shadow-md">
             <GraduationCap className="w-5 h-5 text-white" />
@@ -101,7 +138,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
       </div>
 
       {/* User Profile Card */}
-      <div className="px-2 mb-6">
+      <div className="px-1 mb-5">
         <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700/60 flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-md">
             {user?.nombre?.[0]}{user?.apellido?.[0]}
@@ -129,14 +166,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
         </div>
       </div>
 
-
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 px-1">
+      <nav className="space-y-1 px-1">
         {items.map(item => (
           <button
             key={item.id}
             onClick={() => !('badge' in item && item.badge === 'Pronto') && onNavigate(item.id)}
-            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all group ${
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all group ${
               activePage === item.id
                 ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                 : item.badge === 'Pronto'
@@ -157,18 +193,97 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
         ))}
       </nav>
 
-      {/* Establecimiento badge */}
-      <div className="px-2 mt-4 mb-2">
-        <div className="px-3 py-2 bg-slate-800/60 rounded-xl border border-slate-700/40 text-[11px] text-slate-400 truncate">
-          🏫 {user?.establecimiento}
+      {/* ÁRBOL DINÁMICO DE ESTABLECIMIENTOS Y DOCENTES — Exclusivo para Super Admin Producción */}
+      {isProductionAdmin && (
+        <div className="px-1 mt-4 pt-3 border-t border-slate-800 flex-1 flex flex-col min-h-0">
+          {isSupervisingDocente && (
+            <button
+              onClick={() => switchRole('admin')}
+              className="w-full mb-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all shadow-sm"
+            >
+              <span>👑 Volver a Vista Admin</span>
+            </button>
+          )}
+
+          <div className="flex items-center justify-between px-2 mb-2 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+            <span className="flex items-center gap-1">
+              <School className="w-3 h-3 text-indigo-400" />
+              Establecimientos ({colegiosMap.size})
+            </span>
+            <button
+              onClick={() => onNavigate('profesores')}
+              className="text-[10px] text-indigo-400 hover:underline lowercase font-normal"
+              title="Gestionar Profesores y Colegios"
+            >
+              + nuevo
+            </button>
+          </div>
+
+          <div className="space-y-1.5 overflow-y-auto flex-1 pr-1">
+            {Array.from(colegiosMap.values()).map(col => {
+              const isExpanded = expandedRbd === col.rbd;
+              return (
+                <div key={col.rbd} className="rounded-xl bg-slate-800/50 border border-slate-700/50 overflow-hidden">
+                  <button
+                    onClick={() => setExpandedRbd(isExpanded ? null : col.rbd)}
+                    className="w-full flex items-center justify-between p-2 text-left hover:bg-slate-800 transition-colors"
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      {col.logoUrl ? (
+                        <img src={col.logoUrl} alt="" className="w-4 h-4 object-contain rounded shrink-0" />
+                      ) : (
+                        <Building2 className="w-4 h-4 text-slate-400 shrink-0" />
+                      )}
+                      <span className="text-[11px] font-bold text-slate-200 truncate">{col.nombre}</span>
+                    </div>
+                    <ChevronDown className={`w-3 h-3 text-slate-400 shrink-0 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {isExpanded && (
+                    <div className="bg-slate-950/50 p-1.5 space-y-1 border-t border-slate-800/70">
+                      {col.docentes.length === 0 ? (
+                        <div className="text-[10px] text-slate-500 px-2 py-1 italic">
+                          Sin docentes asignados aún.
+                        </div>
+                      ) : (
+                        col.docentes.map(doc => {
+                          const isCurrent = user?.id === doc.id || user?.email === doc.email;
+                          return (
+                            <button
+                              key={doc.id}
+                              onClick={() => switchToDocente(doc.id)}
+                              className={`w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] transition-all text-left ${
+                                isCurrent
+                                  ? 'bg-indigo-600 text-white font-bold shadow-sm'
+                                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                              }`}
+                              title={`Supervisar a ${doc.nombre} ${doc.apellido} (${doc.asignaturaNombre || 'Docente'})`}
+                            >
+                              <div className="flex items-center gap-1.5 truncate">
+                                <User className="w-3 h-3 text-indigo-400 shrink-0" />
+                                <span className="truncate">{doc.nombre} {doc.apellido}</span>
+                              </div>
+                              <span className="text-[9px] px-1 py-0.5 rounded bg-slate-800 text-slate-400 truncate max-w-[65px]">
+                                {doc.asignaturaNombre?.split(' ')[0] || 'Docente'}
+                              </span>
+                            </button>
+                          );
+                        })
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Logout */}
-      <div className="px-2">
+      <div className="px-1 mt-auto pt-3 border-t border-slate-800/80">
         <button
           onClick={logout}
-          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-all"
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-all"
         >
           <LogOut className="w-4 h-4" />
           <span>Cerrar Sesión</span>

@@ -29,6 +29,7 @@ export interface TokenApprovalResult {
 interface AuthContextType {
   user: UserProfile | null;
   usuarios: UserProfile[];
+  docentesReales: UserProfile[];
   isAuthenticated: boolean;
   isLoading: boolean;
   isOnlineSupabase: boolean;
@@ -36,10 +37,13 @@ interface AuthContextType {
   register: (data: RegisterData) => Promise<RegisterResult>;
   logout: () => void;
   switchRole: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar') => void;
+  switchToDocente: (docenteId: string) => void;
   approveUser: (userId: string, nuevoPlan?: UserPlan) => Promise<{ error: string | null }>;
   approveUserByToken: (token: string) => Promise<TokenApprovalResult>;
   rejectOrSuspendUser: (userId: string, nuevoEstado: 'suspendido' | 'rechazado') => Promise<{ error: string | null }>;
   changeUserPlan: (userId: string, nuevoPlan: UserPlan) => Promise<{ error: string | null }>;
+  // ID del admin real que inició sesión (para poder volver desde vista de docente)
+  adminBaseProfile: UserProfile | null;
 }
 
 export interface RegisterData {
@@ -90,8 +94,49 @@ function inferUserFromEmail(_email: string): UserProfile | null {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [usuarios, setUsuarios] = useState<UserProfile[]>(usuariosRegistradosMock);
+  // Docentes reales cargados desde Supabase (solo para Admin de Producción)
+  const [docentesReales, setDocentesReales] = useState<UserProfile[]>([]);
+  // Perfil base del admin (para volver desde supervisión de docente)
+  const [adminBaseProfile, setAdminBaseProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOnlineSupabase, setIsOnlineSupabase] = useState(false);
+
+  const PRODUCTION_ADMIN_EMAIL = 'leontestvirtual1@gmail.com';
+
+  /** Carga los docentes reales desde Supabase para el Admin de Producción */
+  const loadDocentesReales = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('perfiles')
+        .select('*')
+        .eq('rol', 'profesor')
+        .eq('estado', 'activo');
+      if (!error && data && data.length > 0) {
+        const docentes: UserProfile[] = data.map((p: Record<string, unknown>) => ({
+          id: p.id as string,
+          rut: (p.rut as string) || '',
+          nombre: (p.nombre as string) || '',
+          apellido: (p.apellido as string) || '',
+          email: (p.email as string) || '',
+          rol: 'profesor' as UserRole,
+          establecimiento: (p.establecimiento as string) || '',
+          rbd: (p.rbd as string) || undefined,
+          asignaturaId: (p.asignatura_id as string) || undefined,
+          asignaturaNombre: (p.asignatura_nombre as string) || undefined,
+          cargo: (p.cargo as string) || undefined,
+          estado: ((p.estado as string) || 'activo') as UserEstado,
+          plan: ((p.plan as string) || 'trial') as UserPlan,
+          logoUrl: (p.logo_url as string) || undefined,
+        }));
+        setDocentesReales(docentes);
+      } else {
+        // Fallback: usar los docentes ya registrados en el mock local
+        setDocentesReales([currentUserProfesorPremilitar]);
+      }
+    } catch {
+      setDocentesReales([currentUserProfesorPremilitar]);
+    }
+  }, []);
 
   // Check initial Supabase Session — persiste sesión entre refrescos
   useEffect(() => {
@@ -165,7 +210,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     checkSession();
-  }, []);
+    loadDocentesReales();
+  }, [loadDocentesReales]);
 
   const login = useCallback(async (email: string, password: string) => {
     const cleanEmail = email.toLowerCase().trim();
@@ -606,11 +652,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  /** Cambia la vista al perfil de un docente real (supervisión por Admin Producción) */
+  const switchToDocente = useCallback((docenteId: string) => {
+    const docente = docentesReales.find(d => d.id === docenteId);
+    if (docente) {
+      // Guardar perfil base del admin para poder volver
+      setUser(prev => {
+        if (prev?.rol === 'admin') setAdminBaseProfile(prev);
+        return docente;
+      });
+    }
+  }, [docentesReales]);
+
 
   return (
     <AuthContext.Provider value={{
       user,
       usuarios,
+      docentesReales,
+      adminBaseProfile,
       isAuthenticated: !!user,
       isLoading,
       isOnlineSupabase,
@@ -618,6 +678,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       register,
       logout,
       switchRole,
+      switchToDocente,
       approveUser,
       approveUserByToken,
       rejectOrSuspendUser,

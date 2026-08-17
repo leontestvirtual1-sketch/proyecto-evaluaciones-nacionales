@@ -31,30 +31,6 @@ export const establecimientosCatalog: EstablecimientoInfo[] = [
     dependencia: 'Particular Subvencionado',
     logoUrl: '/logos/escuela-premilitar.png',
     lema: 'Ad Altiora, Et Meliora, Semper'
-  },
-  {
-    rbd: '10200',
-    nombre: 'Liceo Bicentenario Los Andes',
-    comuna: 'Los Andes, Región de Valparaíso',
-    dependencia: 'Municipal / SLEP',
-    logoUrl: '/logos/liceo-bicentenario.jpg',
-    lema: 'Excelencia y Compromiso con el Futuro'
-  },
-  {
-    rbd: '10450',
-    nombre: 'Colegio San Agustín',
-    comuna: 'Providencia, Región Metropolitana',
-    dependencia: 'Particular Pagado',
-    logoUrl: '/logos/colegio-san-agustin.jpg',
-    lema: 'Veritas, Caritas, Excellentia'
-  },
-  {
-    rbd: '16750',
-    nombre: 'Liceo Carmela Carvajal',
-    comuna: 'Santiago, Región Metropolitana',
-    dependencia: 'Municipal / SLEP',
-    logoUrl: '/logos/liceo-bicentenario.jpg',
-    lema: 'Tradición y Formación Integral'
   }
 ];
 
@@ -65,9 +41,9 @@ export const currentUserAdmin: UserProfile = {
   apellido: 'León González',
   email: 'leontestvirtual1@gmail.com',
   rol: 'admin',
-  establecimiento: 'Liceo Bicentenario Los Andes',
-  rbd: '10200',
-  logoUrl: '/logos/liceo-bicentenario.jpg',
+  establecimiento: 'Sysget Saber — Plataforma Oficial',
+  rbd: '31030',
+  logoUrl: '/logos/escuela-premilitar.png',
   cargo: 'Super Administrador / Fundador',
   estado: 'activo',
   plan: 'institucional'
