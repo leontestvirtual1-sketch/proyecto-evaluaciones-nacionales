@@ -1,27 +1,36 @@
 -- ============================================================
--- Sysget Saber - Migracion 006 v3: Usuarios Oficiales
+-- Sysget Saber - Migracion 006 v4: Usuarios Oficiales
 --
 -- PREREQUISITO: Ejecutar 007_ampliar_perfiles.sql PRIMERO
---
--- CONTRASENAS de produccion:
---   leontesvirtual1@gmail.com  =>  Saber_2026!
---   luis.leon@premil.cl        =>  Premil_2026!
+-- CONTRASENAS: leontesvirtual1@gmail.com => Saber_2026!
+--              luis.leon@premil.cl       => Premil_2026!
 -- ============================================================
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- -----------------------------------------------------------
--- LIMPIEZA PREVIA (evita duplicados)
+-- LIMPIEZA PREVIA: borra por ID Y por email (cubre typos previos)
 -- -----------------------------------------------------------
 DELETE FROM public.perfiles
 WHERE id IN (
   'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a99',
   '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18'
-);
-DELETE FROM auth.users
-WHERE email IN (
+)
+OR email IN (
   'leontesvirtual1@gmail.com',
-  'luis.leon@premil.cl'
+  'luis.leon@premil.cl',
+  'luis.leon@promil.cl'
+);
+
+DELETE FROM auth.users
+WHERE id IN (
+  'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a99',
+  '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18'
+)
+OR email IN (
+  'leontesvirtual1@gmail.com',
+  'luis.leon@premil.cl',
+  'luis.leon@promil.cl'
 );
 
 -- -----------------------------------------------------------
