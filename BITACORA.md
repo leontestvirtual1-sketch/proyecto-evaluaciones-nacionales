@@ -2,6 +2,24 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-16] Separación Total de Ambientes: Sandbox Demo (Landing) vs Producción Limpia
+
+- **Problema / Requerimiento**:
+  - Los datos narrativos enriquecidos (Liceo Bicentenario, caso Martín Sepúlveda, comparativas) deben preservarse en el **Modo Demo / Sandbox** para sacarle partido comercial y funcional a la Landing Page.
+  - Al iniciar sesión con un usuario o docente real en **Producción**, el ambiente debe estar limpio:
+    - **María Teresa González (Docente Lenguaje - Escuela Premilitar)**: Solo su evaluación oficial (*Ensayo SIMCE Lengua y Literatura 2° Medio*), su curso **`2° Medio`** (genérico, sin la "A"), padrón en 0 estudiantes para carga manual o por CSV y 0 rendiciones previas.
+    - **Super Admin (Luis Andrés León González)**: Panel de supervisión en producción con la capacidad de monitorear en tiempo real los colegios y docentes reales registrados (como la Escuela Premilitar) e ir visualizando los avances y resultados a medida que se vayan poblando las rendiciones.
+- **Archivos y Solución Técnica**:
+  - [`src/data/len2mQuestionsMock.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/len2mQuestionsMock.ts): [MODIFICADO] Actualizado el nombre del curso oficial de `2° Medio A` a **`2° Medio`** en `cursoLenguaje2MMock` y `pruebaLenguaje2MMock`.
+  - [`src/pages/CursosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/CursosPage.tsx): [MODIFICADO] Curso inicial por defecto unificado a **`2° Medio`** con código de invitación `LEN2M2026` y 0 alumnos iniciales.
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): [MODIFICADO] `seguimientoDocentesMock` actualizado para María Teresa González con curso `2° Medio`, 1 evaluación activa, 0 alumnos rendidos y estado inicial limpio.
+  - [`src/components/ProfesorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx) y [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO] Pasaje de `isSandboxMode`. Cuando el usuario ingresa en producción (`isSandboxMode=false`), se deshabilitan balizas demo y se muestra la insignia oficial *"🟢 Producción Oficial"*, orientando el panel al seguimiento de colegios y docentes reales.
+- **Verificación / Despliegue**:
+  - Compilación: ✅ 2242 módulos transformados sin errores en TypeScript + Vite (9.48s).
+  - Git Commit: `7f93f09`
+
+---
+
 ### [2026-08-16] Validación Estricta de Contraseña en Cuentas Autorizadas
 
 - **Problema / Requerimiento**:
