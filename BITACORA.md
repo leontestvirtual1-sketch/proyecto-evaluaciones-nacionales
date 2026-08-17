@@ -2,22 +2,27 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
-### [2026-08-17] Hardening de Seguridad en Login de Administrador y Consistencia de Selector de Especialidades en Navbar
+### [2026-08-17] Hardening de Seguridad en Login de Administrador, Purga de Cuenta Hotmail y Sincronización Limpia de Usuarios
 
 - **Problema / Requerimiento**:
   1. **Bypass de Contraseña en Login de Administrador**: Al ingresar como Administrador en producción, el sistema aceptaba cualquier contraseña debido a que un error de autenticación en Supabase no abortaba el proceso, sino que continuaba a los pasos de fallback donde existía una discrepancia tipográfica (`leontesvirtual1@gmail.com` vs `leontestvirtual1@gmail.com`) y contraseñas por defecto permisivas.
   2. **Inconsistencia en Selector de Especialidades Superior (Navbar)**: Al seleccionar Matemática, Ciencias o Lenguaje, el Navbar cambiaba a perfiles genéricos `@escuelademo.cl`, y al pulsar `👑 Admin UTP`, la función `switchRole` asignaba el perfil de demostración `currentUserAdminDemo` en lugar de restaurar a **Luis Andrés León González** (`currentUserAdmin`).
+  3. **Cuenta Hotmail Obsoleta y Usuarios Mock Residuales**: En el panel de "Gestión de Usuarios", el Administrador aún observaba solicitudes demo ficticias (`Rodrigo Valenzuela`, `Loreto Cárdenas`, etc.) y el correo del Super Admin en `currentUserAdmin` seguía referenciando `luis_leon_g@hotmail.com` (cuenta eliminada de Supabase).
 - **Archivos y Solución Técnica**:
   - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
     - [MODIFICADO] `login()` ahora valida de manera estricta las respuestas de error de Supabase. Si Supabase rechaza las credenciales o si el fallback local no coincide exactamente con las contraseñas oficiales autorizadas (`Saber_2026!`, `Premil_2026!`) o `sysget_custom_passwords`, la autenticación se deniega inmediatamente sin bypass.
-    - [MODIFICADO] Homologados los correos del Administrador (`leontestvirtual1@gmail.com`, `leontesvirtual1@gmail.com`, `luis_leon_g@hotmail.com`) y el docente oficial `luis.leon@premil.cl`.
+    - [MODIFICADO] Eliminada toda referencia a `luis_leon_g@hotmail.com` de `DEMO_USERS` y `DEMO_USER_PASSWORDS`.
+    - [MODIFICADO] `fetchUsers()` ahora asigna directamente `data.users` desde Supabase sin mezclar con registros mock residuales.
     - [MODIFICADO] `switchRole` actualizado para que `role === 'admin'` restaure siempre a **Luis Andrés León González** (`currentUserAdmin`), y las especialidades docentes consulten primero los profesores registrados en la institución (`sysget_profesores_list`).
   - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
-    - [MODIFICADO] Perfiles docentes unificados bajo la identidad institucional oficial y profesional (`@sysget.cl`), eliminando referencias descolgadas a `escuelademo.cl`.
+    - [MODIFICADO] `currentUserAdmin.email` actualizado a `leontestvirtual1@gmail.com`.
+    - [MODIFICADO] `usuariosRegistradosMock` purgado completamente de cuentas demo (Rodrigo, Loreto, Felipe, Javier), dejando solo las cuentas oficiales del Super Admin y María Teresa González.
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts) y [`api/notify-admin.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/notify-admin.ts):
+    - [MODIFICADO] Notificaciones por email dirigidas estrictamente a `leontestvirtual1@gmail.com`. Corregido typo de correo premil.
   - [`src/components/Navbar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Navbar.tsx):
-    - [MODIFICADO] Selector de roles/especialidades actualizado con resaltado activo dinámico (`Admin UTP`, `Premilitar`, `Mat`, `C. Nat`, `Leng`, `Alumno`) y soporte fluido para que el Administrador alterne entre vistas sin perder su sesión.
+    - [MODIFICADO] Selector de roles/especialidades actualizado con resaltado activo dinámico y soporte fluido para alternar entre vistas.
 - **Verificación / Despliegue**:
-  - Compilación: ✅ 2242 módulos, 0 errores TypeScript + Vite (`dist/index.html` generado exitosamente).
+  - Compilación: ✅ 2242 módulos, 0 errores TypeScript + Vite (`dist/index.html` generado exitosamente en 12.48s).
 
 - **Problema / Requerimiento**:
   - `luis.leon@premil.cl` aceptaba **cualquier contraseña** porque el paso 2 del login (`usuariosRegistradosMock`) hacía bypass completo de la validación. El paso 3 (con validación) nunca se alcanzaba.
