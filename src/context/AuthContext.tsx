@@ -86,6 +86,29 @@ const DEMO_USERS: Record<string, UserProfile> = {
   'pedro.soto@escuelademo.cl': currentUserAlumno,
 };
 
+/** Contraseñas autorizadas por correo */
+const DEMO_USER_PASSWORDS: Record<string, string[]> = {
+  'leontesvirtual1@gmail.com': ['Saber_2026!', '123456', 'demo1234'],
+  'luis_leon_g@hotmail.com':   ['Saber_2026!', '123456', 'demo1234'],
+  'admin@sysget.cl':           ['demo123', 'demo1234', '123456', 'admin123'],
+  'admin@escuelademo.cl':      ['demo123', 'demo1234', '123456', 'admin123'],
+  'admin@demo.cl':             ['demo123', 'demo1234', '123456', 'admin123'],
+  'luis.leon@premil.cl':       ['123456', 'premil2026', 'demo1234', 'maria123'],
+  'luis.leon@promil.cl':       ['123456', 'premil2026', 'demo1234', 'maria123'],
+  'maria.teresa@demo.cl':      ['123456', 'premil2026', 'demo1234', 'maria123'],
+  'mariateresa@demo.cl':       ['123456', 'premil2026', 'demo1234', 'maria123'],
+  'maria@demo.cl':             ['123456', 'demo1234', 'maria123'],
+  'lenguaje@demo.cl':          ['123456', 'demo1234'],
+  'patricia@demo.cl':          ['123456', 'demo1234', 'demo123'],
+  'patricia.munoz@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
+  'ciencias@demo.cl':          ['123456', 'demo1234', 'demo123'],
+  'matematica@demo.cl':        ['123456', 'demo1234', 'demo123'],
+  'mat@demo.cl':               ['123456', 'demo1234', 'demo123'],
+  'maria.gonzalez@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
+  'carlos.morales@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
+  'pedro@demo.cl':             ['123456', 'demo1234', 'demo123'],
+  'pedro.soto@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
+};
 
 /**
  * ⛔ SEGURIDAD: Esta función NO debe inferir usuarios por patrones genéricos.
@@ -276,9 +299,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { error: null };
     }
 
-    // 3. Demo fallback login
+    // 3. Demo fallback login con validación estricta de contraseña
     const demoUser = DEMO_USERS[cleanEmail];
     if (demoUser) {
+      const allowedPasswords = DEMO_USER_PASSWORDS[cleanEmail] || ['123456', 'demo1234'];
+      const cleanPass = password.trim();
+
+      if (!allowedPasswords.includes(cleanPass)) {
+        return {
+          error: 'Contraseña incorrecta para este usuario. Por favor verifica tus credenciales.'
+        };
+      }
+
       setUser(demoUser);
       localStorage.setItem('sysget_session_email', cleanEmail);
       return { error: null };

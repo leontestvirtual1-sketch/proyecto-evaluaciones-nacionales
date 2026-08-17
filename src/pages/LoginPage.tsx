@@ -67,18 +67,27 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
 
           {/* Demo hint */}
           <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-xs text-indigo-300 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-indigo-400">
-              <Sparkles className="w-4 h-4 flex-shrink-0" />
-              Cuentas de demostración (cualquier contraseña)
+            <div className="flex items-center justify-between font-bold text-indigo-400">
+              <span className="flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 flex-shrink-0" />
+                Cuentas Autorizadas
+              </span>
+              <span className="text-[11px] font-mono text-indigo-300/80 bg-indigo-500/20 px-2 py-0.5 rounded-md">
+                Clave: <strong>123456</strong>
+              </span>
             </div>
             <div className="grid grid-cols-1 gap-1 pl-1">
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">📖 Prof. Lenguaje (2° Medio)</span>
-                <code onClick={() => setEmail('maria.teresa@demo.cl')} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-indigo-300 font-mono text-[11px]">maria.teresa@demo.cl</code>
+                <span className="text-slate-400">📖 Prof. Lenguaje (Premilitar)</span>
+                <code onClick={() => { setEmail('luis.leon@premil.cl'); setPassword('123456'); }} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-indigo-300 font-mono text-[11px]">luis.leon@premil.cl</code>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">👑 Admin / UTP</span>
-                <code onClick={() => setEmail('admin@sysget.cl')} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-slate-200 font-mono text-[11px]">admin@sysget.cl</code>
+                <span className="text-slate-400">👑 Super Admin</span>
+                <code onClick={() => { setEmail('leontesvirtual1@gmail.com'); setPassword('Saber_2026!'); }} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-amber-300 font-mono text-[11px]">leontesvirtual1@gmail.com</code>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">🏫 Admin Demo UTP</span>
+                <code onClick={() => { setEmail('admin@sysget.cl'); setPassword('123456'); }} className="bg-slate-800 hover:bg-slate-700 cursor-pointer px-1.5 py-0.5 rounded text-slate-200 font-mono text-[11px]">admin@sysget.cl</code>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">📐 Prof. Matemática</span>
