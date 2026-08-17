@@ -20,8 +20,11 @@ import {
   X
 } from 'lucide-react';
 import { UserProfile, Asignatura } from '../types';
-import { asignaturasMock, cursosMock } from '../data/mockData';
+import { asignaturasMock, cursosMock, currentUserProfesorPremilitar } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
+
+const STORAGE_KEY_PROFESORES = 'sysget_profesores_list';
+const STORAGE_KEY_PASSWORDS = 'sysget_custom_passwords';
 
 interface PasswordModalProps {
   isOpen: boolean;
@@ -417,18 +420,21 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   asignaturas = asignaturasMock,
   onNavigateToConfig
 }) => {
-  const { usuarios } = useAuth();
+  // Inicializar desde localStorage para que las eliminaciones y adiciones persistan al refrescar
+  const [profesores, setProfesores] = useState<UserProfile[]>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY_PROFESORES);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (err) {
+        console.error('Error cargando profesores desde localStorage:', err);
+      }
+    }
+    // Lista inicial limpia oficial: únicamente María Teresa González
+    return [currentUserProfesorPremilitar];
+  });
 
-  // Inicializar con los usuarios reales del contexto (solo profesores y admins)
-  const [profesores, setProfesores] = useState<UserProfile[]>(() =>
-    usuarios.filter(u => u.rol === 'profesor' || u.rol === 'admin')
-  );
-
-  // Sincronizar con el contexto cuando los usuarios reales cambien
-  useEffect(() => {
-    const docentesReales = usuarios.filter(u => u.rol === 'profesor' || u.rol === 'admin');
-    setProfesores(docentesReales);
-  }, [usuarios]);
   const [search, setSearch] = useState('');
   const [filterAsignatura, setFilterAsignatura] = useState<string>('');
   const [modalOpen, setModalOpen] = useState(false);
@@ -452,8 +458,9 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   const handleSave = (prof: UserProfile) => {
     setProfesores(prev => {
       const exists = prev.find(p => p.id === prof.id);
-      if (exists) return prev.map(p => p.id === prof.id ? prof : p);
-      return [prof, ...prev];
+      const updated = exists ? prev.map(p => p.id === prof.id ? prof : p) : [prof, ...prev];
+      localStorage.setItem(STORAGE_KEY_PROFESORES, JSON.stringify(updated));
+      return updated;
     });
     setEditingProfesor(null);
     showToast(`Docente ${prof.nombre} ${prof.apellido} guardado correctamente.`);
@@ -461,14 +468,27 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
 
   const handleDelete = (id: string) => {
     const p = profesores.find(item => item.id === id);
-    setProfesores(prev => prev.filter(item => item.id !== id));
+    setProfesores(prev => {
+      const updated = prev.filter(item => item.id !== id);
+      localStorage.setItem(STORAGE_KEY_PROFESORES, JSON.stringify(updated));
+      return updated;
+    });
     setActiveMenuId(null);
     if (p) showToast(`Docente ${p.nombre} ${p.apellido} eliminado.`);
   };
 
-  const handlePasswordResetSuccess = (profId: string, _newPass: string) => {
+  const handlePasswordResetSuccess = (profId: string, newPass: string) => {
     const prof = profesores.find(p => p.id === profId);
-    showToast(`Contraseña de ${prof?.nombre} ${prof?.apellido} actualizada exitosamente.`);
+    if (prof) {
+      try {
+        const passwordsMap = JSON.parse(localStorage.getItem(STORAGE_KEY_PASSWORDS) || '{}');
+        passwordsMap[prof.email.toLowerCase().trim()] = newPass;
+        localStorage.setItem(STORAGE_KEY_PASSWORDS, JSON.stringify(passwordsMap));
+        showToast(`Contraseña de ${prof.nombre} ${prof.apellido} actualizada exitosamente.`);
+      } catch (err) {
+        console.error('Error guardando contraseña en localStorage:', err);
+      }
+    }
   };
 
   return (

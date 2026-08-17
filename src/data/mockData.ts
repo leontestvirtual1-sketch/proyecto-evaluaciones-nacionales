@@ -78,7 +78,7 @@ export const currentUserProfesorPremilitar: UserProfile = {
   rut: '18.359.422-2',
   nombre: 'María Teresa',
   apellido: 'González',
-  email: 'luis.leon@promil.cl',
+  email: 'luis.leon@premil.cl',
   rol: 'profesor',
   establecimiento: 'Escuela Premilitar Héroes de la Concepción',
   rbd: '31030',
@@ -167,10 +167,6 @@ export const currentUserAlumno: UserProfile = {
 export const usuariosRegistradosMock: UserProfile[] = [
   currentUserAdmin,
   currentUserProfesorPremilitar, // María Teresa González — Lenguaje (Escuela Premilitar)
-  currentUserProfesor,
-  currentUserProfesorCiencias,
-  currentUserProfesorLenguaje,
-  currentUserAlumno,
   {
     id: 'user-req-001',
     rut: '15.678.901-2',

@@ -57,57 +57,23 @@ export interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Demo fallback users for testing
+// Usuarios autorizados oficiales del sistema
 const DEMO_USERS: Record<string, UserProfile> = {
-  // Super Admin real (login con Supabase o fallback)
+  // Super Administrador Oficial
   'leontesvirtual1@gmail.com': currentUserAdmin,
   'luis_leon_g@hotmail.com':   currentUserAdmin,
-  // Admin Demo — separado del Super Admin real
+  // Docente Oficial — María Teresa González (Escuela Premilitar Héroes de la Concepción)
+  'luis.leon@premil.cl':       currentUserProfesorPremilitar,
+  // Admin Demo para evaluación
   'admin@sysget.cl':           currentUserAdminDemo,
-  'admin@escuelademo.cl':      currentUserAdminDemo,
-  'admin@demo.cl':             currentUserAdminDemo,
-  // Docente Lenguaje y Comunicación (María Teresa González — Escuela Premilitar)
-  'maria.teresa@demo.cl':      currentUserProfesorPremilitar,
-  'mariateresa@demo.cl':       currentUserProfesorPremilitar,
-  'luis.leon@promil.cl':       currentUserProfesorPremilitar,
-  'luis.leon@premil.cl':       currentUserProfesorPremilitar, // alias adicional
-  'maria@demo.cl':             currentUserProfesorPremilitar,
-  'lenguaje@demo.cl':          currentUserProfesorPremilitar,
-  // Profesores otras especialidades
-  'patricia@demo.cl':          currentUserProfesorCiencias,
-  'patricia.munoz@escuelademo.cl': currentUserProfesorCiencias,
-  'ciencias@demo.cl':          currentUserProfesorCiencias,
-  'matematica@demo.cl':        currentUserProfesor,
-  'mat@demo.cl':               currentUserProfesor,
-  'maria.gonzalez@escuelademo.cl': currentUserProfesor,
-  'carlos.morales@escuelademo.cl': currentUserProfesorLenguaje,
-  // Alumno demo
-  'pedro@demo.cl':             currentUserAlumno,
-  'pedro.soto@escuelademo.cl': currentUserAlumno,
 };
 
 /** Contraseñas autorizadas por correo */
 const DEMO_USER_PASSWORDS: Record<string, string[]> = {
-  'leontesvirtual1@gmail.com': ['Saber_2026!', '123456', 'demo1234'],
-  'luis_leon_g@hotmail.com':   ['Saber_2026!', '123456', 'demo1234'],
-  'admin@sysget.cl':           ['demo123', 'demo1234', '123456', 'admin123'],
-  'admin@escuelademo.cl':      ['demo123', 'demo1234', '123456', 'admin123'],
-  'admin@demo.cl':             ['demo123', 'demo1234', '123456', 'admin123'],
-  'luis.leon@premil.cl':       ['123456', 'premil2026', 'demo1234', 'maria123'],
-  'luis.leon@promil.cl':       ['123456', 'premil2026', 'demo1234', 'maria123'],
-  'maria.teresa@demo.cl':      ['123456', 'premil2026', 'demo1234', 'maria123'],
-  'mariateresa@demo.cl':       ['123456', 'premil2026', 'demo1234', 'maria123'],
-  'maria@demo.cl':             ['123456', 'demo1234', 'maria123'],
-  'lenguaje@demo.cl':          ['123456', 'demo1234'],
-  'patricia@demo.cl':          ['123456', 'demo1234', 'demo123'],
-  'patricia.munoz@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
-  'ciencias@demo.cl':          ['123456', 'demo1234', 'demo123'],
-  'matematica@demo.cl':        ['123456', 'demo1234', 'demo123'],
-  'mat@demo.cl':               ['123456', 'demo1234', 'demo123'],
-  'maria.gonzalez@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
-  'carlos.morales@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
-  'pedro@demo.cl':             ['123456', 'demo1234', 'demo123'],
-  'pedro.soto@escuelademo.cl': ['123456', 'demo1234', 'demo123'],
+  'leontesvirtual1@gmail.com': ['Saber_2026!', '123456'],
+  'luis_leon_g@hotmail.com':   ['Saber_2026!', '123456'],
+  'luis.leon@premil.cl':       ['123456', 'premil2026', 'demo1234'],
+  'admin@sysget.cl':           ['demo1234', '123456', 'admin123'],
 };
 
 /**
@@ -299,11 +265,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { error: null };
     }
 
-    // 3. Demo fallback login con validación estricta de contraseña
-    const demoUser = DEMO_USERS[cleanEmail];
-    if (demoUser) {
-      const allowedPasswords = DEMO_USER_PASSWORDS[cleanEmail] || ['123456', 'demo1234'];
+    // 3. Login con cuentas autorizadas y soporte de contraseñas personalizadas
+    // Leer contraseñas personalizadas asignadas por el Administrador
+    let customPasswordForUser: string | null = null;
+    try {
+      const customPasswords = JSON.parse(localStorage.getItem('sysget_custom_passwords') || '{}');
+      if (customPasswords[cleanEmail]) {
+        customPasswordForUser = customPasswords[cleanEmail];
+      }
+    } catch (e) {}
+
+    // Buscar si es un docente creado dinámicamente por el Administrador en ProfesoresPage
+    let dynamicProfesor: UserProfile | null = null;
+    try {
+      const localProfesores = JSON.parse(localStorage.getItem('sysget_profesores_list') || '[]');
+      if (Array.isArray(localProfesores)) {
+        dynamicProfesor = localProfesores.find((p: UserProfile) => p.email.toLowerCase().trim() === cleanEmail) || null;
+      }
+    } catch (e) {}
+
+    const targetUser = dynamicProfesor || DEMO_USERS[cleanEmail];
+
+    if (targetUser) {
       const cleanPass = password.trim();
+      const defaultAllowed = DEMO_USER_PASSWORDS[cleanEmail] || ['123456', 'demo1234'];
+      const allowedPasswords = customPasswordForUser ? [customPasswordForUser, ...defaultAllowed] : defaultAllowed;
 
       if (!allowedPasswords.includes(cleanPass)) {
         return {
@@ -311,7 +297,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
       }
 
-      setUser(demoUser);
+      setUser(targetUser);
       localStorage.setItem('sysget_session_email', cleanEmail);
       return { error: null };
     }
