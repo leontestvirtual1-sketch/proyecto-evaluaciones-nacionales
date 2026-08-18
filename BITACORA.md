@@ -2,6 +2,24 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-17] Organización y Aislamiento por Curso / Nivel en el Banco de Preguntas
+
+- **Problema / Requerimiento**:
+  El Banco de Preguntas agrupaba globalmente todas las preguntas de la materia sin discriminar por curso, lo que causaba que al ver el banco de Lenguaje aparecieran 95 preguntas mezclando 2° Medio (90 preguntas) con 8° Básico (5 preguntas). El usuario solicitó que el banco de preguntas tenga una condición obligatoria de elegir curso/nivel y desplegar exclusivamente las preguntas de ese curso sin mezclar niveles.
+- **Archivos y Solución Técnica**:
+  - [`src/pages/BancoPreguntasPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/BancoPreguntasPage.tsx):
+    - [MODIFICADO] Incorporado selector visual de pestañas/pills de **Curso / Nivel Escolar** (`2° Medio`, `8° Básico`, `6° Básico`, `Todos los Cursos`) con badges que muestran el conteo exacto de ítems por nivel.
+    - [MODIFICADO] Por defecto, en Producción o para la docente de 2° Medio, se inicia seleccionado `2° Medio`, desplegando exactamente sus **90 preguntas** (88 selección múltiple + 2 desarrollo + 90 oficiales) sin mezclar ítems de otros niveles.
+    - [MODIFICADO] Los KPIs del resumen (`Total Curso`, `Selección Múltiple`, `Desarrollo Escrito`, `Oficiales / Liberadas`) se recalculan dinámicamente y con precisión en función del curso seleccionado.
+    - [MODIFICADO] Las tarjetas de cada pregunta incluyen un badge visual distintivo con icono de graduación (`🎓 2° Medio`).
+  - [`src/components/PreguntaFormModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PreguntaFormModal.tsx):
+    - [MODIFICADO] Soporta `initialNivel` y opciones estandarizadas (`2° Medio`, `8° Básico`, `6° Básico`, etc.) para que las nuevas preguntas se guarden asociadas directamente al nivel escolar correspondiente.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript: ✅ 0 errores (`npx tsc --noEmit`).
+  - Verificación de conteos: Al seleccionar **2° Medio**, los KPIs muestran **Total: 90**, **Selección Múltiple: 88**, **Desarrollo: 2**, **Oficiales: 90**. Al seleccionar **8° Básico**, muestra **Total: 5**. Al seleccionar **Todos los Cursos**, muestra el universo completo de **95**.
+
+---
+
 ### [2026-08-17] Integración Ensayo SIMCE Lenguaje 2° Medio — Abril 2026 (30 preguntas, 6 lecturas)
 
 - **Problema / Requerimiento**:

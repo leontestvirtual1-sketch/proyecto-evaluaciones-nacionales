@@ -7,6 +7,7 @@ interface PreguntaFormModalProps {
   onClose: () => void;
   onSave: (pregunta: Pregunta) => void;
   editPregunta?: Pregunta | null;
+  initialNivel?: string;
   asignaturas: Asignatura[];
   ejes: EjeTematico[];
   habilidades: Habilidad[];
@@ -17,6 +18,7 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
   onClose,
   onSave,
   editPregunta,
+  initialNivel,
   asignaturas,
   ejes,
   habilidades,
@@ -34,7 +36,7 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
     editPregunta?.tipo || 'seleccion_multiple'
   );
   const [nivel, setNivel] = useState<string>(
-    editPregunta?.nivel || '8° básico'
+    editPregunta?.nivel || initialNivel || '2° Medio'
   );
   const [dificultad, setDificultad] = useState<DificultadPregunta>(
     editPregunta?.dificultad || 'media'
@@ -174,10 +176,11 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
                 onChange={e => setNivel(e.target.value)}
                 className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               >
-                <option value="4° básico">4° Básico</option>
-                <option value="8° básico">8° Básico</option>
-                <option value="II medio">II Medio</option>
-                <option value="IV medio">IV Medio / PAES</option>
+                <option value="2° Medio">2° Medio (SIMCE)</option>
+                <option value="8° básico">8° Básico (SIMCE)</option>
+                <option value="6° básico">6° Básico (SIMCE)</option>
+                <option value="4° básico">4° Básico (SIMCE)</option>
+                <option value="4° medio">4° Medio / PAES</option>
               </select>
             </div>
 

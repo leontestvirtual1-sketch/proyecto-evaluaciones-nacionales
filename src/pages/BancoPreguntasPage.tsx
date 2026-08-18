@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Pregunta,
   Asignatura,
   EjeTematico,
   Habilidad,
   TipoPregunta,
-  DificultadPregunta
+  DificultadPregunta,
+  UserProfile
 } from '../types';
 import { PreguntaFormModal } from '../components/PreguntaFormModal';
 import {
@@ -20,13 +21,10 @@ import {
   Edit2,
   Trash2,
   Copy,
-  ChevronDown,
-  ChevronUp,
+  GraduationCap,
   Award,
   Lock
 } from 'lucide-react';
-
-import { UserProfile } from '../types';
 
 interface BancoPreguntasPageProps {
   preguntas: Pregunta[];
@@ -38,6 +36,18 @@ interface BancoPreguntasPageProps {
   onUpdatePregunta: (p: Pregunta) => void;
   onDeletePregunta: (id: string) => void;
 }
+
+// Normalizador de niveles para evitar desajustes por mayúsculas/tildes
+export const normalizeNivel = (lvl?: string): string => {
+  if (!lvl) return '';
+  const clean = lvl.toLowerCase().trim();
+  if (clean.includes('2') || clean.includes('ii medio') || clean.includes('segundo')) return '2° medio';
+  if (clean.includes('8') || clean.includes('octavo')) return '8° básico';
+  if (clean.includes('6') || clean.includes('sexto')) return '6° básico';
+  if (clean.includes('4') && clean.includes('básico')) return '4° básico';
+  if (clean.includes('4') && (clean.includes('medio') || clean.includes('paes'))) return '4° medio';
+  return clean;
+};
 
 export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   preguntas,
@@ -52,10 +62,21 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   const isDocente = currentUser?.rol === 'profesor' && currentUser?.asignaturaId;
   const docenteAsigId = currentUser?.asignaturaId || '';
 
-  // Restrict available subjects and axes if teacher
+  // Determinar si es usuario de producción
+  const isProduction =
+    currentUser?.email === 'luis.leon@premil.cl' ||
+    currentUser?.email === 'leontestvirtual1@gmail.com' ||
+    (currentUser?.rol === 'admin' && currentUser?.email !== 'admin@sysget.cl' && currentUser?.email !== 'admin@escuelademo.cl');
+
+  // Restringir asignaturas para docente
   const availableAsignaturas = isDocente
     ? asignaturas.filter(a => a.id === docenteAsigId)
     : asignaturas;
+
+  // Estado del Filtro de Curso / Nivel (Por defecto 2° Medio para Producción o docente de Lenguaje 2M)
+  const [nivelFilter, setNivelFilter] = useState<string>(
+    isProduction || isDocente ? '2° medio' : '2° medio'
+  );
 
   const [search, setSearch] = useState('');
   const [asignaturaFilter, setAsignaturaFilter] = useState(isDocente ? docenteAsigId : '');
@@ -66,9 +87,26 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // Active subject context for axes filtering
+  // Lista de niveles disponibles en el banco con conteos
+  const nivelesDisponibles = useMemo(() => {
+    const counts: Record<string, number> = {};
+    preguntas.forEach(p => {
+      const norm = normalizeNivel(p.nivel) || 'Sin nivel';
+      counts[norm] = (counts[norm] || 0) + 1;
+    });
+
+    const standardLevels = [
+      { key: '2° medio', label: '2° Medio', icon: '🎓', sublabel: 'SIMCE 2° Medio' },
+      { key: '8° básico', label: '8° Básico', icon: '📚', sublabel: 'SIMCE 8° Básico' },
+      { key: '6° básico', label: '6° Básico', icon: '🔬', sublabel: 'SIMCE 6° Básico' },
+      { key: '4° medio', label: '4° Medio / PAES', icon: '🏛️', sublabel: 'PAES Regular' },
+    ];
+
+    return standardLevels.filter(lvl => (counts[lvl.key] || 0) > 0 || lvl.key === '2° medio');
+  }, [preguntas]);
+
+  // Contexto activo para filtrar ejes y habilidades
   const activeSubjectId = isDocente ? docenteAsigId : (asignaturaFilter || '');
   const availableEjes = activeSubjectId
     ? ejes.filter(e => e.asignaturaId === activeSubjectId)
@@ -78,24 +116,35 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     ? habilidades.filter(h => h.asignaturaId === activeSubjectId)
     : habilidades;
 
-  // Questions pool strictly isolated for teacher
-  const basePreguntas = isDocente
-    ? preguntas.filter(p => p.asignaturaId === docenteAsigId)
-    : preguntas;
+  // Base de preguntas estrictamente filtradas por ASIGNATURA y por CURSO / NIVEL
+  const basePreguntas = useMemo(() => {
+    return preguntas.filter(p => {
+      const matchAsig = isDocente
+        ? p.asignaturaId === docenteAsigId
+        : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
 
-  // Filtered Questions
-  const filtered = basePreguntas.filter(p => {
-    const matchSearch =
-      p.enunciado.toLowerCase().includes(search.toLowerCase()) ||
-      p.fuente.toLowerCase().includes(search.toLowerCase());
-    const matchAsig = isDocente ? p.asignaturaId === docenteAsigId : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
-    const matchEje = !ejeFilter || p.ejeTematicoId === ejeFilter;
-    const matchHab = !habilidadFilter || p.habilidadId === habilidadFilter;
-    const matchDif = !dificultadFilter || p.dificultad === dificultadFilter;
-    const matchTipo = !tipoFilter || p.tipo === tipoFilter;
+      const matchNivel = !nivelFilter || normalizeNivel(p.nivel) === normalizeNivel(nivelFilter);
 
-    return matchSearch && matchAsig && matchEje && matchHab && matchDif && matchTipo;
-  });
+      return matchAsig && matchNivel;
+    });
+  }, [preguntas, isDocente, docenteAsigId, asignaturaFilter, nivelFilter]);
+
+  // Preguntas filtradas por los criterios secundarios (búsqueda, eje, habilidad, dificultad, tipo)
+  const filtered = useMemo(() => {
+    return basePreguntas.filter(p => {
+      const matchSearch =
+        !search.trim() ||
+        p.enunciado.toLowerCase().includes(search.toLowerCase()) ||
+        p.fuente.toLowerCase().includes(search.toLowerCase());
+
+      const matchEje = !ejeFilter || p.ejeTematicoId === ejeFilter;
+      const matchHab = !habilidadFilter || p.habilidadId === habilidadFilter;
+      const matchDif = !dificultadFilter || p.dificultad === dificultadFilter;
+      const matchTipo = !tipoFilter || p.tipo === tipoFilter;
+
+      return matchSearch && matchEje && matchHab && matchDif && matchTipo;
+    });
+  }, [basePreguntas, search, ejeFilter, habilidadFilter, dificultadFilter, tipoFilter]);
 
   const handleDuplicate = (p: Pregunta) => {
     const duplicada: Pregunta = {
@@ -107,8 +156,16 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     onAddPregunta(duplicada);
   };
 
+  // KPIs dinámicos calculados estrictamente para el Curso / Nivel seleccionado
+  const totalPreguntasNivel = basePreguntas.length;
   const totalSeleccionMultiple = basePreguntas.filter(p => p.tipo === 'seleccion_multiple').length;
   const totalDesarrollo = basePreguntas.filter(p => p.tipo === 'desarrollo').length;
+  const totalOficiales = basePreguntas.filter(
+    p =>
+      p.fuente.toLowerCase().includes('oficial') ||
+      p.fuente.toLowerCase().includes('liberada') ||
+      p.fuente.toLowerCase().includes('simce')
+  ).length;
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -121,8 +178,8 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             {isDocente
-              ? `Taxonomía curricular y banco de ítems exclusivo para la asignatura de ${currentUser?.asignaturaNombre}`
-              : 'Gestión global de ítems calibrados por Asignatura, Eje Temático y Habilidad Cognitiva'}
+              ? `Taxonomía curricular y banco de ítems organizados por Curso y Nivel Escolar`
+              : 'Gestión organizada de ítems calibrados por Curso, Asignatura, Eje Temático y Habilidad Cognitiva'}
           </p>
         </div>
 
@@ -135,11 +192,79 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         </button>
       </div>
 
-      {/* Summary KPI Strip */}
+      {/* Selector Principal de Curso / Nivel Escolar */}
+      <div className="glass-card p-4 space-y-3 border-indigo-500/20 bg-gradient-to-r from-indigo-500/5 via-transparent to-transparent">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2 text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
+            <GraduationCap className="w-4 h-4 text-indigo-500" />
+            <span>Seleccionar Curso / Nivel para el Banco:</span>
+          </div>
+          <span className="text-[11px] text-slate-400 font-medium">
+            Mostrando preguntas exclusivas para el nivel seleccionado (sin mezclar cursos)
+          </span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          {nivelesDisponibles.map(lvl => {
+            const isSelected = normalizeNivel(nivelFilter) === normalizeNivel(lvl.key);
+            const countForLvl = preguntas.filter(p => {
+              const matchAsig = isDocente ? p.asignaturaId === docenteAsigId : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
+              return matchAsig && normalizeNivel(p.nivel) === normalizeNivel(lvl.key);
+            }).length;
+
+            return (
+              <button
+                key={lvl.key}
+                onClick={() => {
+                  setNivelFilter(lvl.key);
+                  setEjeFilter('');
+                  setHabilidadFilter('');
+                }}
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all border ${
+                  isSelected
+                    ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20 scale-[1.02]'
+                    : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-indigo-500/40 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <span>{lvl.icon}</span>
+                <span>{lvl.label}</span>
+                <span className={`px-1.5 py-0.2 rounded-md text-[10px] font-black ${
+                  isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400'
+                }`}>
+                  {countForLvl}
+                </span>
+              </button>
+            );
+          })}
+
+          <button
+            onClick={() => {
+              setNivelFilter('');
+              setEjeFilter('');
+              setHabilidadFilter('');
+            }}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all border ${
+              !nivelFilter
+                ? 'bg-slate-800 text-white border-slate-700 shadow-sm'
+                : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400'
+            }`}
+          >
+            <span>🌐</span>
+            <span>Todos los Cursos</span>
+            <span className="px-1.5 py-0.2 rounded-md text-[10px] font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              {isDocente ? preguntas.filter(p => p.asignaturaId === docenteAsigId).length : preguntas.length}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Summary KPI Strip Calculado Estrictamente para el Nivel Seleccionado */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="glass-card p-4 space-y-1">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Total Preguntas Materia</span>
-          <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{basePreguntas.length}</p>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            {nivelFilter ? `Total ${nivelFilter}` : 'Total Materia'}
+          </span>
+          <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{totalPreguntasNivel}</p>
         </div>
         <div className="glass-card p-4 space-y-1">
           <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-500">Selección Múltiple</span>
@@ -152,7 +277,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         <div className="glass-card p-4 space-y-1">
           <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-500">Oficiales / Liberadas</span>
           <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
-            {basePreguntas.filter(p => p.fuente.toLowerCase().includes('oficial') || p.fuente.toLowerCase().includes('liberada') || p.fuente.toLowerCase().includes('simce')).length}
+            {totalOficiales}
           </p>
         </div>
       </div>
@@ -162,7 +287,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-indigo-500" />
-            <span>Filtros de Búsqueda y Taxonomía Curricular</span>
+            <span>Filtros Específicos para {nivelFilter ? nivelFilter.toUpperCase() : 'TODOS LOS CURSOS'}</span>
           </div>
 
           {isDocente && (
@@ -179,7 +304,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Buscar en el enunciado o fuente..."
+              placeholder="Buscar en enunciado o fuente..."
               className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20"
             />
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
@@ -247,16 +372,15 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           <div className="glass-card p-12 text-center">
             <HelpCircle className="w-10 h-10 text-slate-300 dark:text-slate-700 mx-auto mb-2" />
             <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
-              No se encontraron preguntas en esta materia con los filtros seleccionados
+              No se encontraron preguntas para {nivelFilter ? `el curso ${nivelFilter}` : 'los criterios seleccionados'}
             </p>
-            <p className="text-xs text-slate-400 mt-1">Crea una nueva pregunta o ajusta los criterios de búsqueda</p>
+            <p className="text-xs text-slate-400 mt-1">Crea una nueva pregunta o selecciona otro curso en las pestañas superiores</p>
           </div>
         ) : (
           filtered.map(pregunta => {
             const eje = ejes.find(e => e.id === pregunta.ejeTematicoId);
             const hab = habilidades.find(h => h.id === pregunta.habilidadId);
             const asig = asignaturas.find(a => a.id === pregunta.asignaturaId);
-            const isExpanded = expandedId === pregunta.id;
 
             const difColor =
               pregunta.dificultad === 'baja'
@@ -276,6 +400,13 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                       {asig?.nombre || 'General'}
                     </span>
+
+                    {/* Badge de Curso / Nivel */}
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-600/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30">
+                      <GraduationCap className="w-3.5 h-3.5 text-indigo-500" />
+                      {pregunta.nivel}
+                    </span>
+
                     {eje && (
                       <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                         {eje.nombre}
@@ -289,8 +420,8 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                     <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase border ${difColor}`}>
                       {pregunta.dificultad}
                     </span>
-                    <span className="text-[11px] text-slate-400">
-                      {pregunta.nivel} • {pregunta.puntaje} pt(s)
+                    <span className="text-[11px] text-slate-400 font-semibold">
+                      {pregunta.puntaje} pt(s)
                     </span>
                   </div>
 
@@ -389,6 +520,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           setEditingPregunta(null);
         }}
         editPregunta={editingPregunta}
+        initialNivel={nivelFilter || '2° medio'}
         asignaturas={availableAsignaturas}
         ejes={availableEjes}
         habilidades={availableHabilidades}
