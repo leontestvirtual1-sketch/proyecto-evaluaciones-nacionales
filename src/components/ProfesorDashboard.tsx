@@ -30,6 +30,7 @@ import {
   alumnosAlertasCriticasMock
 } from '../data/mockData';
 import { SandboxBeacon } from './SandboxBeacon';
+import { SimceHistoricoPremilSection } from './SimceHistoricoPremilSection';
 import { PlanMejoramientoModal } from './PlanMejoramientoModal';
 import {
   PlanMartinModal,
@@ -299,7 +300,10 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
               </div>
             </div>
 
-            {/* 2. Resumen de la Evaluación Oficial Cargada */}
+            {/* 2. Línea Base Oficial SIMCE — Agencia de Calidad */}
+            <SimceHistoricoPremilSection />
+
+            {/* 3. Resumen de la Evaluación Oficial Cargada */}
             <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-5">
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
