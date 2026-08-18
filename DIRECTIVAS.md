@@ -70,6 +70,37 @@ Este documento establece las reglas y estándares mandatorios para el desarrollo
 > **Principio**: *Ninguna tarea se considera terminada sin trazabilidad en la bitácora técnica.*
 
 Al concluir cualquier ajuste o módulo:
-1. **Compilación Obligatoria**: `npm run build` con 0 errores TypeScript/Vite antes de realizar commit.
+1. **Compilación Obligatoria**: `npx tsc --noEmit` con 0 errores TypeScript antes de realizar commit.
 2. **Actualización de `BITACORA.md`**: Detallar problema/requerimiento, archivos modificados y verificación.
-3. **Registro en Obsidian**: Actualizar la nota de avance correspondiente en el vault de documentación técnica.
+3. **Registro en Obsidian**: Actualizar `Bitacora-AAAA-MM-DD.md` y `Ficha-Principal-Evaluaciones.md` en el vault.
+
+---
+
+## 7. 🎓 Directiva de Aislamiento del Banco de Preguntas por Curso / Nivel Escolar
+> **Principio**: *Las preguntas de distintos niveles escolares nunca deben mezclarse en la visualización ni en el cómputo de métricas.*
+> *Establecida: 2026-08-17*
+
+* **Selector Obligatorio de Nivel**: El Banco de Preguntas debe siempre mostrar un selector visual de Curso/Nivel (p.ej. `2° Medio`, `8° Básico`, `6° Básico`, `Todos los Cursos`) antes de desplegar los ítems.
+* **Filtrado Estricto**: Al seleccionar un nivel, solo se muestran preguntas cuyo campo `nivelEscolar` coincida exactamente con ese nivel. Nunca se aplican operadores `||` sobre `asignaturaId` como condición alternativa de fallback.
+* **KPIs Dinámicos por Nivel**: Los contadores de resumen (`Total`, `Selección Múltiple`, `Desarrollo Escrito`, `Oficiales / Liberadas`) se recalculan exclusivamente sobre el subconjunto de preguntas del nivel activo.
+* **Nivel por Defecto en Producción**: En el entorno de Producción, el selector se inicializa en el nivel del curso asignado a la docente activa (p. ej. `2° Medio` para María Teresa González en la Escuela Premilitar).
+* **Badge Visual Obligatorio**: Cada tarjeta de pregunta en el banco debe mostrar un badge de nivel escolar (`🎓 2° Medio`, `📚 8° Básico`, etc.) para identificación inmediata.
+* **Creación de Nuevas Preguntas**: El formulario de creación (`PreguntaFormModal`) debe pre-rellenar el campo `nivelEscolar` con el nivel activo del selector, evitando clasificaciones incorrectas.
+
+---
+
+## 8. 📊 Directiva de Datos Históricos Oficiales SIMCE (Agencia de Calidad)
+> **Principio**: *Los datos de la Agencia de Calidad de la Educación constituyen la Línea Base Oficial del sistema y deben integrarse en el panel de administración de Producción exclusivamente, nunca en el ambiente Demo.*
+> *Establecida: 2026-08-17*
+
+* **Fuente de Verdad Externa**: Los puntajes SIMCE históricos, distribución de niveles de aprendizaje y brechas por género provienen directamente de la Agencia de Calidad. No se inventan ni interpolan datos.
+* **Archivos de Datos Tipados**: Cada establecimiento con datos reales debe tener su propio archivo `src/data/simceHistorico<Establecimiento>Data.ts` con interfaces TypeScript explícitas y sin exportar hacia ambientes Demo.
+* **Componente Exclusivo de Producción**: El componente visual de la Línea Base SIMCE (p. ej. `SimceHistoricoPremilSection`) se renderiza **solo** dentro del bloque `isProductionAdmin` del `ProfesorDashboard`. Está prohibido importarlo en paneles Demo o Sandbox.
+* **Gráficos Requeridos**: Todo módulo de Línea Base SIMCE debe incluir al menos:
+  1. **Tendencia GSE**: Puntaje del colegio vs promedio nacional del mismo grupo socioeconómico con línea de meta.
+  2. **Niveles de Aprendizaje**: Distribución porcentual Insuficiente / Elemental / Adecuado (barras apiladas).
+  3. **Brecha por Género**: Puntaje Mujeres vs Hombres con alerta pedagógica automática si la brecha ≥ 10 pts.
+* **Alerta de Estancamiento**: Si un grupo (mujeres u hombres) registra variación ≤ 1 pt entre los últimos 2 años, el componente debe emitir visualmente una alerta pedagógica de estancamiento.
+* **Nota de Restricción Estadística**: Los años con datos marcados con asterisco (*) por tamaño de muestra insuficiente deben ser señalados en el tooltip y/o leyenda del gráfico.
+* **Meta 2026 Visible**: La línea de referencia de meta (240 pts para GSE Medio Bajo) debe ser siempre visible en el gráfico de Tendencia GSE como línea de referencia punteada en color ámbar.
+
