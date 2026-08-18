@@ -11,8 +11,45 @@
 | **Estilos & UI** | Tailwind CSS + Lucide Icons | Diseño responsive, componentes modales compactos, modo oscuro dinámico y micro-animaciones. |
 | **Visualización & Gráficos** | Recharts | Renderizado SVG reactivo para mapas de calor, líneas de tendencia GSE y barras apiladas. |
 | **Backend & Base de Datos** | Supabase (PostgreSQL + Auth + RLS) | Persistencia relacional, autenticación segura y políticas de aislamiento a nivel de fila (Multi-tenant). |
-| **Módulo Serverless & Correo** | Vercel Serverless Functions + Google SMTP | Envío transaccional vía Nodemailer (smtp.gmail.com:465 SSL) con  de costo fijo. |
-| **Hosting & CI/CD** | Vercel | Despliegue continuo automatizado desde rama main en GitHub. |
+| **Hosting & CI/CD** | Vercel | Despliegue continuo automatizado desde rama `main` en GitHub. |
+
+---
+
+## 🏛️ Infografía de Arquitectura y Aislamiento Dual de Ambientes
+
+![Arquitectura Sysget Saber](public/docs/arquitectura_sysget_saber.jpg)
+
+```mermaid
+graph TB
+    subgraph Frontend ["Frontend (React 18 + Vite + Tailwind)"]
+        Landing["Landing Page / Sandbox Switcher"]
+        DashProd["Dashboard Producción (Línea Base SIMCE)"]
+        DashDemo["Dashboard Demo (Liceo Bicentenario)"]
+        Banco["Banco de Preguntas por Nivel"]
+        PrintEng["Motor de Impresión PDF (OMR 1 Pág)"]
+    end
+
+    subgraph Backend ["Backend Cloud & Database"]
+        Supabase[("Supabase PostgreSQL (RLS)")]
+        Serverless["Vercel Serverless Functions (/api/users)"]
+        SMTP["Google SMTP (smtp.gmail.com:465)"]
+    end
+
+    subgraph Ambientes ["Aislamiento Estricto de Ambientes"]
+        ProdEnv["Producción: Escuela Premilitar (RBD 31030)"]
+        DemoEnv["Sandbox Demo: Liceo Bicentenario (261 pts)"]
+    end
+
+    Landing -->|switchRole('admin', 'prod')| DashProd
+    Landing -->|switchRole('admin', 'demo')| DashDemo
+    DashProd --> ProdEnv
+    DashDemo --> DemoEnv
+    DashProd --> Banco
+    Banco --> PrintEng
+    DashProd --> Supabase
+    Serverless --> Supabase
+    Serverless --> SMTP
+```
 
 ---
 

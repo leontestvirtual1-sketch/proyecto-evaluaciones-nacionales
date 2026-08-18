@@ -15,6 +15,20 @@
 
 ---
 
+## 🔄 Infografía del Ciclo de Evaluación SIMCE 2026
+
+![Ciclo de Evaluación SIMCE 2026](public/docs/ciclo_evaluacion_simce.jpg)
+
+```mermaid
+flowchart LR
+    A["1. Banco Curricular<br/>(90 preguntas 2° Medio)"] --> B["2. Centro de Impresión PDF<br/>(Cuadernillo + OMR 1 pág)"]
+    B --> C["3. Aplicación en Sala / Online<br/>(Papel o Runner Digital)"]
+    C --> D["4. Corrección & OMR Instantáneo<br/>(100 a 350 pts SIMCE)"]
+    D --> E["5. Planes Remediales & PME<br/>(Reforzamiento Focalizado)"]
+```
+
+---
+
 ## 👥 2. Matriz de Roles y Perfiles de Acceso
 
 | Perfil | Rol en Sistema | Entorno | Alcance y Facultades |
