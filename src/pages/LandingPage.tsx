@@ -220,8 +220,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="text-xs font-semibold text-slate-400">Alineado a Estándares Mineduc / SIMCE</div>
           </div>
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-violet-400">+45.000</div>
-            <div className="text-xs font-semibold text-slate-400">Preguntas y Ensayos Calibrados</div>
+            <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-violet-400">SIMCE 2026</div>
+            <div className="text-xs font-semibold text-slate-400">Ensayos y Banco Oficial Calibrado</div>
           </div>
           <div className="space-y-1">
             <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">0 Fricción</div>

@@ -2,6 +2,26 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-17] Blindaje de Aislamiento Sandbox: Tarjeta Admin/UTP hacia Admin Demo y Corrección de Métricas en Landing
+
+- **Problema / Requerimiento**:
+  1. Al presionar la tarjeta "Admin / UTP" en el Modo Sandbox de la Landing Page, el sistema derivaba erróneamente al perfil del Administrador de Producción (`leontestvirtual1@gmail.com`) en lugar del Administrador Demo (`admin@escuelademo.cl` / Liceo Bicentenario).
+  2. En el banner de estadísticas de la Landing Page aparecía una cifra genérica de marketing (`+45.000`), requiriendo aclaración y alineación con los estándares oficiales del proyecto.
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] `switchRole` ampliado para aceptar `'demo' | 'prod'`. En cualquier flujo de Sandbox o switch a demo, asigna categóricamente `currentUserAdminDemo` (`admin@escuelademo.cl`, datos simulados del Liceo Bicentenario con 261 pts proyectados). Solo asigna `currentUserAdmin` ante sesión activa verificada de producción o switch explícito con parámetro `'prod'`.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
+    - [MODIFICADO] `onSelectRoleDemo` pasa explícitamente `'demo'` para el rol admin, garantizando aislamiento estricto y total independencia de ambientes.
+  - [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx):
+    - [MODIFICADO] Al volver de la supervisión docente de producción al perfil de administrador, se invoca `switchRole('admin', 'prod')`.
+  - [`src/pages/LandingPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LandingPage.tsx):
+    - [MODIFICADO] Reemplazado el valor estático `+45.000` por el distintivo oficial `SIMCE 2026` — `Ensayos y Banco Oficial Calibrado`.
+- **Verificación / Despliegue**:
+  - Compilación TypeScript: ✅ 0 errores (`npx tsc --noEmit`).
+  - Navegación Sandbox: Al pulsar "Admin / UTP" en Sandbox, se ingresa inmediatamente al perfil Demo con mapa de calor y datos simulados de 261 pts, sin tocar los datos limpios de la Escuela Premilitar en Producción.
+
+---
+
 ### [2026-08-17] Organización y Aislamiento por Curso / Nivel en el Banco de Preguntas
 
 - **Problema / Requerimiento**:

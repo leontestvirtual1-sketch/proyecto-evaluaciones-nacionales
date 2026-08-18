@@ -198,7 +198,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
         <div className="px-1 mt-4 pt-3 border-t border-slate-800 flex-1 flex flex-col min-h-0">
           {isSupervisingDocente && (
             <button
-              onClick={() => switchRole('admin')}
+              onClick={() => switchRole('admin', 'prod')}
               className="w-full mb-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all shadow-sm"
             >
               <span>👑 Volver a Vista Admin</span>

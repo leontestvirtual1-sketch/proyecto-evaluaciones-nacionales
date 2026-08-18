@@ -36,7 +36,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<{ error: string | null }>;
   register: (data: RegisterData) => Promise<RegisterResult>;
   logout: () => void;
-  switchRole: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar') => void;
+  switchRole: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar' | 'demo' | 'prod') => void;
   switchToDocente: (docenteId: string) => void;
   approveUser: (userId: string, nuevoPlan?: UserPlan) => Promise<{ error: string | null }>;
   approveUserByToken: (token: string) => Promise<TokenApprovalResult>;
@@ -660,13 +660,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   }, []);
 
-  const switchRole = useCallback((role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar') => {
+  const switchRole = useCallback((role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar' | 'demo' | 'prod') => {
     if (role === 'admin') {
       const savedEmail = localStorage.getItem('sysget_session_email')?.toLowerCase();
-      if (savedEmail === 'admin@sysget.cl' || savedEmail === 'admin@escuelademo.cl') {
-        setUser(currentUserAdminDemo);
+      if (extra === 'prod' || (!extra && (savedEmail === 'leontestvirtual1@gmail.com' || savedEmail === 'leontesvirtual1@gmail.com'))) {
+        setUser(adminBaseProfile || currentUserAdmin);
       } else {
-        setUser(currentUserAdmin);
+        // En cualquier flujo de demostración, sandbox o switch a demo, asignar siempre el admin de prueba
+        setUser(currentUserAdminDemo);
       }
     } else if (role === 'profesor') {
       let localProf: UserProfile | null = null;

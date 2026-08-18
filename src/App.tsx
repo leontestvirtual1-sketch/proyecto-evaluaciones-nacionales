@@ -149,7 +149,7 @@ function MainAppContent() {
         }}
         onSelectRoleDemo={(role, extra) => {
           setIsSandboxMode(true);
-          switchRole(role, extra);
+          switchRole(role, extra || (role === 'admin' ? 'demo' : undefined));
           setShowLanding(false);
         }}
       />
