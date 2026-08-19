@@ -181,7 +181,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
 
         <StatCard
           title={isProductionAdmin ? 'Evaluaciones Cargadas' : isAdmin ? 'Brechas Críticas Detectadas' : 'Escala Nacional Promedio'}
-          value={isProductionAdmin ? `${pruebas.length} Evaluación` : isAdmin ? '4 Casos Severos' : (reporteActivo.totalAlumnosRendidos === 0 ? 'SIMCE 2026' : `${reporteActivo.promedioEscalaNacional} pts`)}
+          value={isProductionAdmin ? `${pruebas.length} Evaluación${pruebas.length !== 1 ? 'es' : ''}` : isAdmin ? '4 Casos Severos' : (reporteActivo.totalAlumnosRendidos === 0 ? 'SIMCE 2026' : `${reporteActivo.promedioEscalaNacional} pts`)}
           subtitle={isProductionAdmin ? 'Lengua y Literatura 2° Medio' : isAdmin ? '100% con plan autogenerado' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
           icon={<BookOpen className="w-5 h-5" />}
           trend={{ text: isProductionAdmin ? '35 preguntas liberadas' : isAdmin ? '8°B foco prioritario' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : '+15 pts vs anterior'), type: 'positive' }}
@@ -262,7 +262,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                     </div>
                     <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                       <div className="text-slate-400 text-[10px] uppercase font-bold">Evaluaciones</div>
-                      <div className="text-sm font-black text-indigo-400 mt-0.5">1 Activa</div>
+                      <div className="text-sm font-black text-indigo-400 mt-0.5">{pruebas.length} Activa{pruebas.length !== 1 ? 's' : ''}</div>
                     </div>
                     <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                       <div className="text-slate-400 text-[10px] uppercase font-bold">Nómina Alumnos</div>
