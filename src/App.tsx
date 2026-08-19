@@ -443,6 +443,7 @@ function MainAppContent() {
       {/* Sidebar Navigation */}
       <Sidebar
         activePage={activePage}
+        isSandboxMode={isSandboxMode}
         onNavigate={(page) => {
           setSelectedReportPruebaId(null);
           setActivePruebaForRunner(null);

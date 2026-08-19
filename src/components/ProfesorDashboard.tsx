@@ -79,7 +79,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const [aislamientoOpen, setAislamientoOpen] = useState(false);
 
   const isAdmin = profesor.rol === 'admin';
-  const isProductionAdmin = isAdmin && !isSandboxMode && (profesor.email === 'leontestvirtual1@gmail.com' || profesor.email !== 'admin@sysget.cl');
+  const isProductionAdmin = isAdmin && !isSandboxMode && (profesor.email === 'leontestvirtual1@gmail.com' || profesor.email === 'leontesvirtual1@gmail.com');
   const isLenguaje = profesor.asignaturaId === 'asig-2' || (profesor.asignaturaNombre || '').toLowerCase().includes('lenguaje');
   const isCiencias = profesor.asignaturaId === 'asig-3' || (profesor.asignaturaNombre || '').toLowerCase().includes('ciencia');
   const isMatematica = !isAdmin && !isLenguaje && !isCiencias;

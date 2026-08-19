@@ -34,6 +34,7 @@ interface SidebarProps {
   activePage: PageId;
   onNavigate: (page: PageId) => void;
   collapsed?: boolean;
+  isSandboxMode?: boolean;
 }
 
 interface NavItem {
@@ -43,13 +44,13 @@ interface NavItem {
   badge?: string;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSandboxMode = false }) => {
   const { user, usuarios, docentesReales, adminBaseProfile, logout, switchRole, switchToDocente } = useAuth();
   const [expandedRbd, setExpandedRbd] = useState<string | null>('31030');
   
   const pendientesCount = usuarios.filter(u => u.estado === 'pendiente_aprobacion').length;
 
-  const isProductionAdmin = user?.email === 'leontestvirtual1@gmail.com' || adminBaseProfile?.email === 'leontestvirtual1@gmail.com' || (user?.rol === 'admin' && user?.email !== 'admin@sysget.cl');
+  const isProductionAdmin = !isSandboxMode && (user?.email === 'leontestvirtual1@gmail.com' || user?.email === 'leontesvirtual1@gmail.com' || adminBaseProfile?.email === 'leontestvirtual1@gmail.com');
   const isSupervisingDocente = user?.rol === 'profesor' && adminBaseProfile?.email === 'leontestvirtual1@gmail.com';
 
   const NAV_ITEMS_ADMIN: NavItem[] = [
