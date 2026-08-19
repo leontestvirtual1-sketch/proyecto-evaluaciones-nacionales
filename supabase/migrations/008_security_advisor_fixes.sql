@@ -1,14 +1,15 @@
 -- ============================================================
--- Migración 008: Solución Completa a Advertencias del Security Advisor
+-- Migración 008: Solución Final y Limpia a Advertencias de Seguridad
 -- Proyecto: Sysget Saber
 -- ============================================================
 
--- 1. CORREGIR "Function Search Path Mutable" en public.set_updated_at()
--- Se define explícitamente search_path = public y se restringen permisos
+-- 1. FIX public.set_updated_at():
+-- Como es un TRIGGER simple que solo asigna NEW.updated_at = NOW(),
+-- NO necesita 'SECURITY DEFINER'. Debe ser 'SECURITY INVOKER' y tener 'search_path = public'.
 CREATE OR REPLACE FUNCTION public.set_updated_at()
 RETURNS TRIGGER 
 LANGUAGE plpgsql
-SECURITY DEFINER
+SECURITY INVOKER
 SET search_path = public
 AS $$
 BEGIN
@@ -17,13 +18,12 @@ BEGIN
 END;
 $$;
 
-REVOKE EXECUTE ON FUNCTION public.set_updated_at() FROM anon, public;
-GRANT EXECUTE ON FUNCTION public.set_updated_at() TO authenticated, service_role;
+-- Revocar cualquier acceso directo RPC vía API REST (nadie debe llamarlo por URL /rpc/)
+REVOKE ALL ON FUNCTION public.set_updated_at() FROM PUBLIC, anon, authenticated;
 
 
--- 2. CORREGIR "Public / Signed-in Users Can Execute SECURITY DEFINER Function" 
--- en public.rls_auto_enable()
--- (Revoca ejecución a roles públicos/anónimos y autenticados para que no sea invocable vía REST API)
+-- 2. FIX public.rls_auto_enable():
+-- Revocar acceso directo por API REST a anon y authenticated
 DO $$
 BEGIN
   IF EXISTS (
@@ -31,9 +31,7 @@ BEGIN
     JOIN pg_namespace n ON p.pronamespace = n.oid 
     WHERE n.nspname = 'public' AND p.proname = 'rls_auto_enable'
   ) THEN
-    -- Revocar permiso de ejecución anónimo y de usuarios normales
     REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM PUBLIC, anon, authenticated;
-    -- Asignar solo a service_role (backend administrativo)
     GRANT EXECUTE ON FUNCTION public.rls_auto_enable() TO service_role;
   END IF;
 END $$;
