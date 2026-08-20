@@ -2,6 +2,25 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-20] Aislamiento Estricto de Usuarios Demo vs Producción y Selector de Entorno para Super Admin
+
+- **Problema / Requerimiento**:
+  1. En la consola de Gestión de Usuarios se estaban cruzando las cuentas: los 3 profesores demo (`carlos@demo.cl`, `patricia@demo.cl`, `maria@demo.cl`) y el alumno demo (`pedro@demo.cl`) aparecían mezclados en la consola del Super Admin de Producción, mientras que los usuarios reales de producción (ej. Susana Angélica Pizarro Valenzuela con `nentitasusana@hotmail.com` del Colegio Mi Casa) aparecían erróneamente en el Modo Demostración.
+  2. En el menú lateral (Sidebar) del Super Admin de Producción, los docentes demo no deben contaminar la nómina de establecimientos reales.
+
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] `loadDocentesReales` actualizado para filtrar y excluir de manera estricta cualquier cuenta `@demo.cl`, `@escuelademo.cl` o perteneciente al *Liceo Bicentenario Demo*, dejando exclusivamente a los docentes de colegios reales de producción (`Escuela Premilitar Héroes de la Concepción`, `Colegio Mi Casa`, etc.).
+  - [`src/pages/GestionUsuariosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx):
+    - [MODIFICADO] Implementado clasificador estricto `isUserDemo(u)` que discrimina correos y establecimientos demo.
+    - [MODIFICADO] En **Modo Demo (Sandbox)**, la lista `baseUsersList` muestra **única y exclusivamente** las cuentas demo de prueba (María González, Patricia Muñoz, Carlos Morales y Pedro Soto). Se prohíbe terminantemente la presencia de Susana Angélica Pizarro o de cualquier cuenta de producción.
+    - [MODIFICADO] En **Modo Producción**, el Super Admin (`leontestvirtual1@gmail.com`) ve por defecto la lista limpia de **Cuentas de Producción Real** (Luis Andrés León, María Teresa González, Susana Angélica Pizarro Valenzuela) y dispone de un selector por pestañas con badges (`🏢 Cuentas de Producción Real` vs `🎭 Cuentas Demo de Prueba`) para alternar con 1 clic sin contaminación visual.
+
+- **Verificación / Despliegue**:
+  - Consola en Modo Demo: ✅ Verificado (solo cuentas `@demo.cl` del Liceo Bicentenario Demo, Susana y María Teresa completamente invisibles en Demo).
+  - Consola en Modo Producción: ✅ Verificado (Susana Angélica Pizarro Valenzuela, María Teresa González y Luis Andrés León en Producción Real).
+  - Despliegue: ✅ Compilación limpia con Vite y subida exitosa a GitHub / Vercel (`commit a218cf0`).
+
 ### [2026-08-20] Corrección de Flujo de Registro de Usuarios/Institución, Persistencia en Supabase y Separación de Nombres y Apellidos
 
 - **Problema / Requerimiento**:
