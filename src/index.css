@@ -83,16 +83,18 @@
     position: static !important;
   }
 
+  /*
+   * AISLAMIENTO DE IMPRESIÓN:
+   * createPortal renderiza .print-modal-portal como hijo DIRECTO de <body>,
+   * NO dentro de #root. Por eso es seguro ocultar #root aquí —
+   * el portal (y su contenido) sigue visible al imprimirse.
+   */
   #root {
-    background: #ffffff !important;
-    color: #000000 !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    position: static !important;
+    display: none !important;
   }
 
-  /* Contenedor del modal de impresión fluye naturalmente en el documento */
+  /* El portal fluye naturalmente en el documento sin overlay */
+
   .print-modal-portal {
     position: static !important;
     display: block !important;

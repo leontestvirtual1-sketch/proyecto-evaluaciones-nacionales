@@ -45,7 +45,19 @@ function MainAppContent({ isSandboxMode, setIsSandboxMode }: { isSandboxMode: bo
   // ── DATA LAYER: consume from AcademicDataContext (single source of truth) ──
   const academicData = useAcademicData();
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
-  const [activePage, setActivePage] = useState<PageId>('dashboard');
+  // Restaurar la página activa desde localStorage (persiste al refrescar)
+  const [activePage, setActivePage] = useState<PageId>(() => {
+    try {
+      const saved = localStorage.getItem('sysget_active_page') as PageId | null;
+      const validPages: PageId[] = [
+        'dashboard', 'evaluaciones', 'alumnos', 'profesores', 'cursos',
+        'banco-preguntas', 'usuarios', 'configuracion'
+      ];
+      return saved && validPages.includes(saved) ? saved : 'dashboard';
+    } catch {
+      return 'dashboard';
+    }
+  });
   const [darkMode, setDarkMode] = useState<boolean>(true);
   const [showLanding, setShowLanding] = useState<boolean>(true);
   const [tokenApprovalNotice, setTokenApprovalNotice] = useState<string | null>(null);
@@ -74,18 +86,23 @@ function MainAppContent({ isSandboxMode, setIsSandboxMode }: { isSandboxMode: bo
     }
   }, [approveUserByToken]);
 
+  // Persistir página activa en localStorage cada vez que cambia
+  React.useEffect(() => {
+    try {
+      localStorage.setItem('sysget_active_page', activePage);
+    } catch { /* ignorar si localStorage no está disponible */ }
+  }, [activePage]);
+
   // Fix: botón atrás del navegador navega dentro de la app en vez de salir
   React.useEffect(() => {
     // Push estado inicial en el historial
-    window.history.pushState({ page: 'dashboard' }, '', window.location.pathname);
+    window.history.pushState({ page: activePage }, '', window.location.pathname);
 
     const handlePopState = (e: PopStateEvent) => {
       if (e.state?.page) {
-        // Navegar a la página guardada en el historial
         setActivePage(e.state.page);
         setSelectedReportPruebaId(null);
       } else {
-        // Si no hay estado, volver al dashboard en vez de salir
         setActivePage('dashboard');
         setSelectedReportPruebaId(null);
         window.history.pushState({ page: 'dashboard' }, '', window.location.pathname);
@@ -94,6 +111,7 @@ function MainAppContent({ isSandboxMode, setIsSandboxMode }: { isSandboxMode: bo
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
