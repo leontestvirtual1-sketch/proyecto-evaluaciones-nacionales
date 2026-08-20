@@ -18,6 +18,7 @@ import { Prueba, Pregunta, AlumnoBasico } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
 import { establecimientosCatalog } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
+import { useAcademicData } from '../context/AcademicDataContext';
 
 interface PrintEvaluacionModalProps {
   isOpen: boolean;
@@ -37,16 +38,17 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   onClose
 }) => {
   const { user } = useAuth();
+  const { nombreEstablecimientoActivo, isProduction } = useAcademicData();
   const [printMode, setPrintMode] = useState<PrintMode>('cuadernillo');
 
   // Encontrar el establecimiento actual y su logo oficial
   const establecimientoActual = establecimientosCatalog.find(
     e => (user?.rbd && e.rbd === user.rbd) || (user?.establecimiento && e.nombre.toLowerCase().includes(user.establecimiento.toLowerCase()))
   ) || {
-    nombre: user?.establecimiento || APP_CONFIG.nombreEstablecimiento,
+    nombre: nombreEstablecimientoActivo || user?.establecimiento || (isProduction ? 'Escuela Premilitar Héroes de la Concepción' : 'Liceo Bicentenario Los Andes'),
     rbd: user?.rbd || '31030',
-    logoUrl: user?.logoUrl || '/logos/escuela-premilitar.png',
-    lema: 'Ad Altiora, Et Meliora, Semper'
+    logoUrl: isProduction ? '/logos/escuela-premilitar.png' : undefined,
+    lema: isProduction ? 'Ad Altiora, Et Meliora, Semper' : 'Excelencia y Futuro'
   };
 
   // Filter students belonging to this course
@@ -271,9 +273,9 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
              ═════════════════════════════════════════════════════════════ */}
           {(printMode === 'cuadernillo' || printMode === 'personalizado') && (
             <div className="space-y-12 print:space-y-0">
-              {(printMode === 'personalizado' ? selectedStudentsToPrint : [null]).map((alumno, aluIdx, arr) => (
+              {(printMode === 'personalizado' ? (selectedStudentsToPrint.length > 0 ? selectedStudentsToPrint : [null]) : [null]).map((alumno, aluIdx, arr) => (
                 <div
-                  key={alumno ? alumno.id : 'generico'}
+                  key={alumno ? alumno.id : `generico-${aluIdx}`}
                   className={`printable-paper-canvas max-w-4xl mx-auto bg-white text-black p-6 sm:p-10 rounded-2xl shadow-xl border border-slate-200 print:shadow-none print:border-0 print:p-0 print:m-0 print:max-w-none print:block print:overflow-visible print:h-auto${aluIdx < arr.length - 1 ? ' break-after-page page-break-after-always' : ''}`}
                 >
                   {/* Membrete Oficial con Logo Institucional */}
@@ -351,12 +353,12 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                   <div className="space-y-4 pt-1 text-left">
                     {itemsToPrint.map((preg, idx) => {
                       // Helper to render markdown headings and bold cleanly
-                      const renderEnunciadoContent = (text: string) => {
-                        const lines = text.split('\n');
+                      const renderEnunciadoContent = (text: string = '') => {
+                        const lines = (text || '').split('\n');
                         return (
                           <div className="space-y-1 text-xs text-slate-900 leading-snug">
                             {lines.map((line, lIdx) => {
-                              const trimmed = line.trim();
+                              const trimmed = line ? line.trim() : '';
                               if (!trimmed) return null;
                               if (trimmed.startsWith('## ') || trimmed.startsWith('# ')) {
                                 return (

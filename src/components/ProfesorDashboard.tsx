@@ -36,6 +36,7 @@ import { SandboxBeacon } from './SandboxBeacon';
 import { SimceHistoricoPremilSection } from './SimceHistoricoPremilSection';
 import { PlanMejoramientoModal } from './PlanMejoramientoModal';
 import { PrintEvaluacionModal } from './PrintEvaluacionModal';
+import { useAcademicData } from '../context/AcademicDataContext';
 import {
   PlanMartinModal,
   EvaluacionIAModal,
@@ -75,6 +76,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   onSelectPruebaReporte,
   onNavigateToEvaluaciones
 }) => {
+  const { alumnos } = useAcademicData();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [adminTab, setAdminTab] = useState<'con_sysget' | 'sin_sysget'>('con_sysget');
   const [planMejoramientoOpen, setPlanMejoramientoOpen] = useState(false);
@@ -908,6 +910,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
         }}
         prueba={selectedPruebaForPrint}
         preguntas={preguntasMock}
+        alumnos={alumnos}
       />
     </div>
   );
