@@ -23,8 +23,8 @@ import {
   ChevronDown
 } from 'lucide-react';
 
-export const GestionUsuariosPage: React.FC = () => {
-  const { usuarios, approveUser, rejectOrSuspendUser, changeUserPlan } = useAuth();
+export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isSandboxMode = false }) => {
+  const { user, usuarios, approveUser, rejectOrSuspendUser, changeUserPlan } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [estadoFilter, setEstadoFilter] = useState<'todos' | UserEstado>('todos');
   const [copiedTokenId, setCopiedTokenId] = useState<string | null>(null);
@@ -65,8 +65,15 @@ export const GestionUsuariosPage: React.FC = () => {
     showToast('Enlace de aprobación directa copiado al portapapeles.');
   };
 
+  const isProductionAdmin = !isSandboxMode && (user?.email === 'leontestvirtual1@gmail.com' || user?.email === 'leontesvirtual1@gmail.com');
+
+  // En modo demo o cuentas no autorizadas, solo mostrar usuarios demo de prueba
+  const baseUsersList = isProductionAdmin
+    ? usuarios
+    : usuarios.filter(u => u.email !== 'luis.leon@premil.cl' && u.email !== 'leontestvirtual1@gmail.com' && !u.establecimiento?.includes('Premilitar'));
+
   // Filtrado
-  const filteredUsers = usuarios.filter(u => {
+  const filteredUsers = baseUsersList.filter(u => {
     const matchesSearch =
       u.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
       u.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -78,10 +85,10 @@ export const GestionUsuariosPage: React.FC = () => {
   });
 
   // Métricas
-  const total = usuarios.length;
-  const pendientes = usuarios.filter(u => u.estado === 'pendiente_aprobacion').length;
-  const activosTrial = usuarios.filter(u => u.estado === 'activo' && u.plan === 'trial').length;
-  const institucional = usuarios.filter(u => u.estado === 'activo' && (u.plan === 'institucional' || u.plan === 'pro')).length;
+  const total = baseUsersList.length;
+  const pendientes = baseUsersList.filter(u => u.estado === 'pendiente_aprobacion').length;
+  const activosTrial = baseUsersList.filter(u => u.estado === 'activo' && u.plan === 'trial').length;
+  const institucional = baseUsersList.filter(u => u.estado === 'activo' && (u.plan === 'institucional' || u.plan === 'pro')).length;
 
   return (
     <div className="space-y-6 animate-fade-in">

@@ -185,12 +185,13 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
       ];
     }
 
-    // Admin demo general
+    // Admin demo general: Cursos del Liceo Bicentenario (6° y 8° Básico)
     if (currentUser?.rol === 'admin') {
       return [
-        { id: 'cur-1', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'DEMO2026', totalAlumnos: 28, establecimiento: colegioNombre },
-        { id: 'cur-2', nombre: '8° Básico B', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'BIOB2026', totalAlumnos: 30, establecimiento: colegioNombre },
-        { id: 'cur-3', nombre: 'II Medio A', nivel: 'II Medio', anio: 2026, codigoInvitacion: 'IIMA2026', totalAlumnos: 35, establecimiento: colegioNombre },
+        { id: 'curso-6a', nombre: '6° Básico A', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6A2026', totalAlumnos: 25, establecimiento: colegioNombre },
+        { id: 'curso-6b', nombre: '6° Básico B', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6B2026', totalAlumnos: 25, establecimiento: colegioNombre },
+        { id: 'curso-1', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'DEMO2026', totalAlumnos: 28, establecimiento: colegioNombre },
+        { id: 'curso-2', nombre: '8° Básico B', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'BIOB2026', totalAlumnos: 30, establecimiento: colegioNombre },
       ];
     }
 

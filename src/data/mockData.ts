@@ -155,8 +155,11 @@ export const demoProfesoresMock: UserProfile[] = [
 ];
 
 export const usuariosRegistradosMock: UserProfile[] = [
-  currentUserAdmin,
-  currentUserProfesorPremilitar // María Teresa González — Lenguaje (Escuela Premilitar)
+  currentUserAdminDemo,
+  currentUserProfesor,         // María González — Matemática
+  currentUserProfesorLenguaje, // Carlos Morales — Lenguaje y Comunicación
+  currentUserProfesorCiencias, // Patricia Muñoz — Ciencias Naturales
+  currentUserAlumno            // Pedro Soto — Alumno
 ];
 
 export const alumnosMock: AlumnoBasico[] = [
@@ -178,44 +181,19 @@ export const alumnosMock: AlumnoBasico[] = [
   { id: 'alu-014', rut: '21.014.014-3', nombre: 'Pablo', apellido: 'Ortega Fuentes', cursoId: 'curso-1', cursoNombre: '8° Básico A', numeroDeLista: 14 },
   { id: 'alu-015', rut: '21.015.015-4', nombre: 'María Paz', apellido: 'Palma Gutiérrez', cursoId: 'curso-1', cursoNombre: '8° Básico A', numeroDeLista: 15 },
   // 6° Básico B (curso-2)
-  { id: 'alu-016', rut: '21.016.016-5', nombre: 'Tomás', apellido: 'Quintero Ramos', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 1 },
-  { id: 'alu-017', rut: '21.017.017-6', nombre: 'Emilia', apellido: 'Rojas Cáceres', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 2 },
-  { id: 'alu-018', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto Alarcón', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 3 },
-  { id: 'alu-019', rut: '21.019.019-8', nombre: 'Renata', apellido: 'Torres Mendoza', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 4 },
-  { id: 'alu-020', rut: '21.020.020-9', nombre: 'Felipe', apellido: 'Urrutia Campos', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 5 },
-  { id: 'alu-021', rut: '21.021.021-K', nombre: 'Natalia', apellido: 'Vidal Sepúlveda', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 6 },
-  { id: 'alu-022', rut: '21.022.022-0', nombre: 'Ignacio', apellido: 'Yáñez Contreras', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 7 },
-  { id: 'alu-023', rut: '21.023.023-1', nombre: 'Daniela', apellido: 'Acuña Palacios', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 8 },
-  { id: 'alu-024', rut: '21.024.024-2', nombre: 'Andrés', apellido: 'Blanco Fuenzalida', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 9 },
-  { id: 'alu-025', rut: '21.025.025-3', nombre: 'Carolina', apellido: 'Cruz Méndez', cursoId: 'curso-2', cursoNombre: '6° Básico B', numeroDeLista: 10 },
+  { id: 'alu-016', rut: '21.016.016-5', nombre: 'Tomás', apellido: 'Quintero Ramos', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 1 },
+  { id: 'alu-017', rut: '21.017.017-6', nombre: 'Emilia', apellido: 'Rojas Cáceres', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 2 },
+  { id: 'alu-018', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto Alarcón', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 3 },
+  { id: 'alu-019', rut: '21.019.019-8', nombre: 'Renata', apellido: 'Torres Mendoza', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 4 },
+  { id: 'alu-020', rut: '21.020.020-9', nombre: 'Felipe', apellido: 'Urrutia Campos', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 5 },
+  { id: 'alu-021', rut: '21.021.021-K', nombre: 'Natalia', apellido: 'Vidal Sepúlveda', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 6 },
+  { id: 'alu-022', rut: '21.022.022-0', nombre: 'Ignacio', apellido: 'Yáñez Contreras', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 7 },
+  { id: 'alu-023', rut: '21.023.023-1', nombre: 'Daniela', apellido: 'Acuña Palacios', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 8 },
+  { id: 'alu-024', rut: '21.024.024-2', nombre: 'Andrés', apellido: 'Blanco Fuenzalida', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 9 },
+  { id: 'alu-025', rut: '21.025.025-3', nombre: 'Carolina', apellido: 'Cruz Méndez', cursoId: 'curso-6b', cursoNombre: '6° Básico B', numeroDeLista: 10 },
 ];
 
 export const seguimientoDocentesMock: SeguimientoDocente[] = [
-  {
-    profesorId: currentUserProfesorPremilitar.id,
-    profesorNombre: 'María Teresa González',
-    profesorEmail: 'luis.leon@premil.cl',
-    avatarColor: 'from-emerald-600 to-teal-700',
-    iniciales: 'MT',
-    asignaturaId: 'asig-2',
-    asignaturaNombre: 'Lenguaje y Comunicación',
-    cursosAsignados: ['2° Medio'],
-    totalEvaluacionesCreadas: 1,
-    totalEvaluacionesActivas: 1,
-    totalAlumnosEvaluados: 0,
-    totalAlumnosMatriculados: 0,
-    coberturaCurricularPorcentaje: 100,
-    promedioLogroAlumnos: 0,
-    puntajeSimceEstimado: 0,
-    estadoAvancePME: 'en_progreso',
-    ejeMayorFortaleza: 'Pauta oficial SIMCE configurada',
-    ejeMayorDebilidad: 'Esperando rendición de estudiantes',
-    ultimaEvaluacionFecha: '2026-08-16',
-    ultimaEvaluacionTitulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
-    ultimaEvaluacionId: 'prueba-len2m-101',
-    planesRemedialesGenerados: 0
-  },
-
   {
     profesorId: currentUserProfesor.id,
     profesorNombre: 'María González',

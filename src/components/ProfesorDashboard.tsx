@@ -22,16 +22,20 @@ import {
   FileCheck2,
   School,
   CheckCircle2,
-  XCircle
+  XCircle,
+  Printer
 } from 'lucide-react';
 import {
   simceHistoricoMock,
   mapaCalorCursosMock,
-  alumnosAlertasCriticasMock
+  alumnosAlertasCriticasMock,
+  AlumnoAlertaCritica,
+  preguntasMock
 } from '../data/mockData';
 import { SandboxBeacon } from './SandboxBeacon';
 import { SimceHistoricoPremilSection } from './SimceHistoricoPremilSection';
 import { PlanMejoramientoModal } from './PlanMejoramientoModal';
+import { PrintEvaluacionModal } from './PrintEvaluacionModal';
 import {
   PlanMartinModal,
   EvaluacionIAModal,
@@ -77,6 +81,8 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const [planMartinOpen, setPlanMartinOpen] = useState(false);
   const [evaluacionIAOpen, setEvaluacionIAOpen] = useState(false);
   const [aislamientoOpen, setAislamientoOpen] = useState(false);
+  const [printModalOpen, setPrintModalOpen] = useState(false);
+  const [selectedPruebaForPrint, setSelectedPruebaForPrint] = useState<Prueba | null>(null);
 
   const isAdmin = profesor.rol === 'admin';
   const isProductionAdmin = isAdmin && !isSandboxMode && (profesor.email === 'leontestvirtual1@gmail.com' || profesor.email === 'leontesvirtual1@gmail.com');
@@ -587,20 +593,23 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60">
-                    {alumnosAlertasCriticasMock.map((a: any) => (
-                      <tr key={a.alumnoId} className="hover:bg-slate-800/40 transition-colors">
-                        <td className="py-3 px-3 font-bold text-white">{a.alumnoNombre}</td>
-                        <td className="py-3 px-3 text-slate-400">{a.cursoNombre}</td>
-                        <td className="py-3 px-3 text-slate-300">{a.ejeNombre}</td>
+                    {alumnosAlertasCriticasMock.map((a: AlumnoAlertaCritica) => (
+                      <tr key={a.id} className="hover:bg-slate-800/40 transition-colors">
+                        <td className="py-3 px-3 font-bold text-white">{a.nombre}</td>
+                        <td className="py-3 px-3 text-slate-400">{a.curso}</td>
+                        <td className="py-3 px-3 text-slate-300">{a.ejeCritico}</td>
                         <td className="py-3 px-3 text-center">
                           <span className="font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
                             {a.porcentajeLogro}%
                           </span>
                         </td>
                         <td className="py-3 px-3 text-right">
-                          <span className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold cursor-pointer">
+                          <button
+                            onClick={() => setPlanMartinOpen(true)}
+                            className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold cursor-pointer transition-colors"
+                          >
                             Ver Plan de Refuerzo →
-                          </span>
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -847,13 +856,25 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
               </div>
 
               {/* Action */}
-              <div className="pt-2">
+              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
                   onClick={() => onSelectPruebaReporte(prueba.id)}
-                  className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl transition-all"
+                  className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-indigo-600/20"
                 >
-                  <BarChart2 className="w-4 h-4 text-indigo-400" />
-                  <span>Ver Reporte Tabulado y Reforzamiento</span>
+                  <BarChart2 className="w-4 h-4" />
+                  <span>Ver Reporte</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setSelectedPruebaForPrint(prueba);
+                    setPrintModalOpen(true);
+                  }}
+                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/80 text-xs font-bold py-2.5 rounded-xl transition-all"
+                  title="Imprimir Cuadernillo de Evaluación y Hoja de Respuestas"
+                >
+                  <Printer className="w-4 h-4 text-indigo-400" />
+                  <span>Imprimir / PDF</span>
                 </button>
               </div>
             </div>
@@ -878,6 +899,15 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
         isOpen={aislamientoOpen}
         onClose={() => setAislamientoOpen(false)}
         asignaturaNombre={profesor.asignaturaNombre || 'Ciencias Naturales'}
+      />
+      <PrintEvaluacionModal
+        isOpen={printModalOpen}
+        onClose={() => {
+          setPrintModalOpen(false);
+          setSelectedPruebaForPrint(null);
+        }}
+        prueba={selectedPruebaForPrint}
+        preguntas={preguntasMock}
       />
     </div>
   );

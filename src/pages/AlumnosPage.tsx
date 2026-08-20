@@ -337,7 +337,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
     if (currentUser?.asignaturaId === 'asig-2' || currentUser?.establecimiento?.includes('Premilitar')) {
       return [];
     }
-    // Admin demo general
+    // Admin demo general: Alumnos del Liceo Bicentenario distribuidos en 8° y 6° Básico
     if (currentUser?.rol === 'admin') {
       return [
         { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
@@ -345,6 +345,9 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
         { id: 'alum-3', rut: '22.222.222-2', nombre: 'Carlos', apellido: 'Martínez', email: 'carlos@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
         { id: 'alum-4', rut: '23.444.555-9', nombre: 'Sofía', apellido: 'Valenzuela', email: 'sofia@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
         { id: 'alum-5', rut: '24.555.666-K', nombre: 'Diego', apellido: 'Fuentes', email: 'diego@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
+        { id: 'alum-6', rut: '21.016.016-5', nombre: 'Tomás', apellido: 'Quintero', email: 'tomas.quintero@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+        { id: 'alum-7', rut: '21.017.017-6', nombre: 'Emilia', apellido: 'Rojas', email: 'emilia.rojas@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+        { id: 'alum-8', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto', email: 'benjamin.soto@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
       ];
     }
     return [];
@@ -368,9 +371,10 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
   const cursosDisponibles = currentUser?.asignaturaId === 'asig-2' || currentUser?.establecimiento?.includes('Premilitar')
     ? [{ id: 'curso-2m', nombre: '2° Medio A' }]
     : [
+        { id: 'curso-6a', nombre: '6° Básico A' },
+        { id: 'curso-6b', nombre: '6° Básico B' },
         { id: 'curso-1', nombre: '8° Básico A' },
-        { id: 'curso-2', nombre: '8° Básico B' },
-        { id: 'curso-2m', nombre: '2° Medio A' }
+        { id: 'curso-2', nombre: '8° Básico B' }
       ];
 
   const codigoInvitacion = currentUser?.asignaturaId === 'asig-2' ? '2MA2026' : 'DEMO2026';

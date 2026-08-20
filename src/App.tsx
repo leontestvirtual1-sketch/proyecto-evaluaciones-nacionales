@@ -361,7 +361,7 @@ function MainAppContent() {
               />
             );
           }
-          return <GestionUsuariosPage />;
+          return <GestionUsuariosPage isSandboxMode={isSandboxMode} />;
         case 'configuracion':
           // RBAC: solo admin puede acceder a Configuración
           if (user.rol !== 'admin') {
