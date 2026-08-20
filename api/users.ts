@@ -48,34 +48,48 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     // ── 1. GET: Listar todos los usuarios para el panel ──
     if (req.method === 'GET') {
-      const { data: perfiles, error: pErr } = await sbAdmin.from('perfiles').select('*');
+      const { data: perfiles, error: pErr } = await sbAdmin
+        .from('perfiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (pErr) {
+        console.error('Error fetching perfiles from Supabase:', pErr);
+      }
       
       const dbUsers = (perfiles || []).map((p: any) => {
-        // Si está en el mapa de tokens pendientes, extraer su token
-        let token = `tok-${p.id.substring(0, 8)}`;
-        let extraInfo: any = {};
-        for (const [t, data] of pendingRegistrationsMap.entries()) {
-          if (data.email?.toLowerCase() === p.email?.toLowerCase() || data.id === p.id) {
-            token = t;
-            extraInfo = data;
-            break;
-          }
+        let token = p.approval_token || `tok-${p.id.substring(0, 8)}`;
+        
+        let userEstado = 'activo';
+        if (p.estado) {
+          userEstado = p.estado;
+        } else if (p.activo === false) {
+          userEstado = 'pendiente_aprobacion';
         }
+
+        const createdAt = p.fecha_registro || p.created_at;
+        const fechaRegStr = createdAt 
+          ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
+          : undefined;
 
         return {
           id: p.id,
           rut: p.rut || '12.345.678-9',
           nombre: p.nombre || 'Usuario',
           apellido: p.apellido || '',
+          apellidoPaterno: p.apellido_paterno || undefined,
+          apellidoMaterno: p.apellido_materno || undefined,
           email: p.email || '',
           rol: p.rol || 'profesor',
           establecimiento: p.establecimiento || 'Establecimiento',
-          rbd: extraInfo.rbd || '',
-          asignaturaNombre: extraInfo.asignaturaNombre || (p.rol === 'profesor' ? 'Lenguaje y Comunicación' : undefined),
-          estado: p.activo ? 'activo' : 'pendiente_aprobacion',
-          plan: 'trial',
-          diasRestantesTrial: 30,
-          fechaRegistro: p.created_at ? p.created_at.replace('T', ' ').substring(0, 16) : new Date().toISOString().substring(0, 16),
+          rbd: p.rbd || '',
+          asignaturaId: p.asignatura_id || undefined,
+          asignaturaNombre: p.asignatura_nombre || (p.rol === 'profesor' ? 'Matemática' : undefined),
+          cargo: p.cargo || undefined,
+          estado: userEstado,
+          plan: p.plan || 'trial',
+          diasRestantesTrial: p.dias_restantes_trial ?? 30,
+          fechaRegistro: fechaRegStr,
           approvalToken: token
         };
       });
@@ -93,8 +107,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const {
           rut,
           nombre,
+          apellidoPaterno,
+          apellidoMaterno,
           apellido,
           email,
+          password,
           rol,
           establecimiento,
           rbd,
@@ -102,67 +119,79 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           asignaturaNombre
         } = body;
 
-        const cleanEmail = email.toLowerCase().trim();
-        const generatedToken = `tok-apr-${Math.random().toString(36).substring(2, 10)}`;
-
-        // Buscar si ya existe en perfiles
-        const { data: existingPerfiles } = await sbAdmin
-          .from('perfiles')
-          .select('*')
-          .eq('email', cleanEmail);
-
-        let userId = '';
-        if (existingPerfiles && existingPerfiles.length > 0) {
-          userId = existingPerfiles[0].id;
-          await sbAdmin.from('perfiles').update({
-            rut,
-            nombre,
-            apellido,
-            rol: rol || 'profesor',
-            establecimiento,
-            activo: false
-          }).eq('id', userId);
-        } else {
-          userId = `usr-${Date.now()}`;
-          // Intentar insertar en perfiles
-          try {
-            await sbAdmin.from('perfiles').insert({
-              id: userId,
-              rut,
-              nombre,
-              apellido,
-              email: cleanEmail,
-              rol: rol || 'profesor',
-              establecimiento,
-              activo: false
-            });
-          } catch (e) {
-            console.warn('Perfiles insert note:', e);
-          }
+        const cleanEmail = (email || '').toLowerCase().trim();
+        if (!cleanEmail) {
+          return res.status(400).json({ error: 'El correo electrónico es obligatorio.' });
         }
 
-        // Guardar registro en memoria del servidor
-        const regRecord = {
-          id: userId,
-          rut,
-          nombre,
-          apellido,
+        const fullApellido = `${apellidoPaterno || ''} ${apellidoMaterno || ''}`.trim() || apellido || '';
+        const generatedToken = `tok-apr-${Math.random().toString(36).substring(2, 10)}`;
+
+        // 1. Crear o sincronizar en Supabase Auth
+        let authUserId = '';
+        const { data: authList } = await sbAdmin.auth.admin.listUsers();
+        const existingAuthUser = authList?.users?.find((u: any) => u.email?.toLowerCase() === cleanEmail);
+
+        if (existingAuthUser) {
+          authUserId = existingAuthUser.id;
+          if (password) {
+            await sbAdmin.auth.admin.updateUserById(authUserId, { password });
+          }
+        } else {
+          const { data: newAuthUser, error: authCreateErr } = await sbAdmin.auth.admin.createUser({
+            email: cleanEmail,
+            password: password || 'Sysget2026!',
+            email_confirm: true,
+            user_metadata: {
+              nombre,
+              apellido: fullApellido,
+              apellidoPaterno,
+              apellidoMaterno,
+              rut,
+              rol: rol || 'profesor',
+              establecimiento
+            }
+          });
+
+          if (authCreateErr || !newAuthUser?.user) {
+            console.error('Error creating auth user in Supabase Auth:', authCreateErr);
+            return res.status(400).json({ error: authCreateErr?.message || 'Error al registrar credenciales en Supabase' });
+          }
+          authUserId = newAuthUser.user.id;
+        }
+
+        // 2. Insertar o actualizar en tabla public.perfiles
+        const profilePayload: any = {
+          id: authUserId,
+          rut: rut || '',
+          nombre: nombre || '',
+          apellido: fullApellido,
           email: cleanEmail,
           rol: rol || 'profesor',
-          establecimiento,
-          rbd,
-          asignaturaId,
-          asignaturaNombre,
+          establecimiento: establecimiento || 'Establecimiento Educacional',
+          rbd: rbd || null,
+          asignatura_id: asignaturaId || null,
+          asignatura_nombre: asignaturaNombre || null,
           estado: 'pendiente_aprobacion',
+          activo: false,
           plan: 'trial',
-          diasRestantesTrial: 30,
-          approvalToken: generatedToken
+          dias_restantes_trial: 30,
+          approval_token: generatedToken,
+          fecha_registro: new Date().toISOString()
         };
-        pendingRegistrationsMap.set(generatedToken, regRecord);
 
-        // Enviar Correo con Nodemailer (Google SMTP)
+        const { error: upsertErr } = await sbAdmin
+          .from('perfiles')
+          .upsert(profilePayload, { onConflict: 'id' });
+
+        if (upsertErr) {
+          console.error('Error guardando perfil en perfiles:', upsertErr);
+          return res.status(500).json({ error: 'Error al registrar perfil: ' + upsertErr.message });
+        }
+
+        // 3. Enviar Correo de Notificación con Google SMTP (Nodemailer)
         const approvalLink = `${APP_URL}?approve_token=${generatedToken}`;
-        const fullName = `${nombre} ${apellido}`.trim();
+        const fullName = `${nombre} ${fullApellido}`.trim();
         const rolLabel = rol === 'profesor' ? '👨‍🏫 Docente' : rol === 'admin' ? '🛡️ Administrador' : '👤 Alumno';
 
         const htmlBody = `
@@ -191,19 +220,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               <h2 style="margin:0 0 24px;color:#f1f5f9;font-size:20px;font-weight:700;">Hola, ${ADMIN_NAME} 👋</h2>
               <p style="margin:0 0 24px;color:#94a3b8;font-size:14px;line-height:1.6;">
                 Un nuevo usuario ha solicitado acceso a <strong style="color:#e2e8f0;">Sysget Saber</strong>. 
-                Revisa los datos y autoriza su período de prueba:
+                Revisa los datos y autoriza su período de prueba de 30 días:
               </p>
 
               <table width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border:1px solid #334155;border-radius:12px;margin-bottom:28px;">
                 <tr><td style="padding:20px 24px;">
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;width:140px;">Nombre</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${fullName}</td>
+                      <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;width:150px;">Nombre(s)</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${nombre || '-'}</td>
                     </tr>
+                    ${apellidoPaterno ? `
+                    <tr>
+                      <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Apellido Paterno</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${apellidoPaterno}</td>
+                    </tr>` : ''}
+                    ${apellidoMaterno ? `
+                    <tr>
+                      <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Apellido Materno</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${apellidoMaterno}</td>
+                    </tr>` : ''}
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">RUT</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rut || 'No especificado'}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-mono;">${rut || 'No especificado'}</td>
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Correo</td>
@@ -279,7 +318,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         return res.status(200).json({
           success: true,
-          userId,
+          userId: authUserId,
           approvalToken: generatedToken
         });
       }
@@ -291,15 +330,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(400).json({ success: false, message: 'Token requerido' });
         }
 
-        // 1. Buscar en memoria
-        let targetRecord = pendingRegistrationsMap.get(token);
+        // Buscar usuario en perfiles con ese approval_token
+        const { data: targetList, error: tErr } = await sbAdmin
+          .from('perfiles')
+          .select('*')
+          .eq('approval_token', token);
 
-        // 2. Si no está en memoria, buscar usuario pendiente en perfiles
+        let targetRecord = targetList && targetList.length > 0 ? targetList[0] : null;
+
+        // Fallback: si no lo encuentra por token, buscar por perfiles pendientes
         if (!targetRecord) {
           const { data: perfilesPendientes } = await sbAdmin
             .from('perfiles')
             .select('*')
-            .eq('activo', false);
+            .eq('estado', 'pendiente_aprobacion');
 
           if (perfilesPendientes && perfilesPendientes.length > 0) {
             targetRecord = perfilesPendientes[0];
@@ -314,7 +358,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         // Activar en Supabase perfiles
-        await sbAdmin.from('perfiles').update({ activo: true }).eq('id', targetRecord.id);
+        await sbAdmin.from('perfiles').update({
+          activo: true,
+          estado: 'activo',
+          plan: 'trial',
+          dias_restantes_trial: 30,
+          approval_token: null
+        }).eq('id', targetRecord.id);
 
         const nombreCompleto = `${targetRecord.nombre} ${targetRecord.apellido || ''}`.trim();
         return res.status(200).json({
@@ -323,26 +373,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           user: {
             ...targetRecord,
             estado: 'activo',
-            plan: 'trial'
+            plan: 'trial',
+            diasRestantesTrial: 30
           }
         });
       }
 
       // ── ACCIÓN: APROBAR POR USER ID (DESDE PANEL ADMIN) ──
       if (action === 'approve-id') {
-        const { userId } = body;
+        const { userId, plan } = body;
         if (!userId) return res.status(400).json({ error: 'userId requerido' });
 
-        await sbAdmin.from('perfiles').update({ activo: true }).eq('id', userId);
+        await sbAdmin.from('perfiles').update({
+          activo: true,
+          estado: 'activo',
+          plan: plan || 'trial',
+          dias_restantes_trial: 30,
+          approval_token: null
+        }).eq('id', userId);
+
         return res.status(200).json({ success: true });
       }
 
       // ── ACCIÓN: SUSPENDER POR USER ID ──
       if (action === 'suspend') {
-        const { userId } = body;
+        const { userId, estado } = body;
         if (!userId) return res.status(400).json({ error: 'userId requerido' });
 
-        await sbAdmin.from('perfiles').update({ activo: false }).eq('id', userId);
+        await sbAdmin.from('perfiles').update({
+          activo: false,
+          estado: estado || 'suspendido'
+        }).eq('id', userId);
+
         return res.status(200).json({ success: true });
       }
     }

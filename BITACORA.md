@@ -2,6 +2,35 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-20] Corrección de Flujo de Registro de Usuarios/Institución, Persistencia en Supabase y Separación de Nombres y Apellidos
+
+- **Problema / Requerimiento**:
+  1. Al registrar un nuevo usuario e institución (ej. "Susana Pizarro" para "Colegio Mi Casa"), llegaba el correo al administrador pero el usuario no aparecía en la consola de administración en producción ni persistía en la base de datos Supabase.
+  2. Causa técnica detectada: `perfiles.id` posee una restricción de clave foránea `REFERENCES auth.users(id)`. En `api/users.ts` se generaba un ID sintético no UUID (`usr-178...`) que violaba la restricción foránea de PostgreSQL en Supabase, fallando silenciosamente. Además, Vercel Serverless Functions son efímeras (stateless), por lo que guardar en memoria RAM no persistía los registros.
+  3. Requerimiento adicional del cliente: Separar explícitamente en el formulario de inscripción los campos **Nombres**, **Apellido Paterno** y **Apellido Materno**.
+
+- **Archivos y Solución Técnica**:
+  - [`src/types/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts):
+    - [MODIFICADO] `UserProfile` ampliado con `apellidoPaterno?: string` y `apellidoMaterno?: string`.
+  - [`src/pages/RegisterPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx):
+    - [MODIFICADO] Formulario reestructurado con 3 campos independientes: `Nombres`, `Apellido Paterno` y `Apellido Materno`.
+    - [MODIFICADO] Validación y armado de `apellido` compuesto (`apellidoPaterno + ' ' + apellidoMaterno`) manteniendo retrocompatibilidad.
+    - [MODIFICADO] Mensaje de confirmación actualizado con el nombre completo y establecimiento.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] `RegisterData` actualizado con `apellidoPaterno` y `apellidoMaterno`.
+    - [MODIFICADO] `loadUsuariosReales` sincronizado con Supabase para mapear el estado real (`pendiente_aprobacion`, `activo`, `suspendido`), días de trial y `approvalToken`.
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - [MODIFICADO] Integración con `sbAdmin.auth.admin.createUser()` para generar un UUID real de `auth.users`, seguido de un `upsert` robusto en `public.perfiles` con `estado: 'pendiente_aprobacion'`, `activo: false`, `approval_token`, `asignatura_nombre` y `rbd`.
+    - [MODIFICADO] Manejadores de aprobación por 1-clic (`approve-token`) y desde la consola (`approve-id`) actualizados para activar la cuenta en Supabase.
+    - [MODIFICADO] Notificación por Google SMTP (Nodemailer) formateada detallando Nombres, Apellido Paterno, Apellido Materno, RUT, Establecimiento, RBD y botón de aprobación directa.
+  - [`supabase/migrations/009_separar_apellidos_perfiles.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/009_separar_apellidos_perfiles.sql):
+    - [NUEVO] Migración SQL documentada para agregar `apellido_paterno` y `apellido_materno` a la tabla `perfiles`.
+
+- **Verificación / Despliegue**:
+  - Creación y persistencia de usuarios en Supabase Auth y tabla `perfiles`: ✅ Verificado (registro guardado con éxito como `pendiente_aprobacion` y visible en la consola).
+  - Flujo de aprobación por ID y por Token: ✅ Verificado (cambio de estado a `activo` y reseteo de token).
+  - Compilación TypeScript & Vite Build: ✅ Exitoso (`tsc && vite build` sin errores).
+
 ### [2026-08-19] Arquitectura de Aislamiento de Fuentes de Datos (Decoupled Data Providers via AcademicDataContext)
 
 - **Problema / Requerimiento**:

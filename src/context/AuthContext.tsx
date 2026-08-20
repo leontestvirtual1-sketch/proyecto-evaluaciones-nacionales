@@ -49,7 +49,9 @@ interface AuthContextType {
 export interface RegisterData {
   rut: string;
   nombre: string;
-  apellido: string;
+  apellidoPaterno: string;
+  apellidoMaterno: string;
+  apellido?: string;
   email: string;
   password: string;
   rol: UserRole;
@@ -147,8 +149,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!error && data && data.length > 0) {
         const realUsers: UserProfile[] = data.map((p: Record<string, unknown>) => {
           const createdAt = (p.created_at || p.creado_en || p.fecha_registro) as string | undefined;
-          let diasRestantes = 30;
-          if (createdAt) {
+          let diasRestantes = (p.dias_restantes_trial as number) ?? 30;
+          if (createdAt && p.dias_restantes_trial === undefined) {
             const createdDate = new Date(createdAt);
             if (!isNaN(createdDate.getTime())) {
               const diffDays = Math.floor((Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -159,11 +161,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
             : undefined;
 
+          // Determinar estado real
+          let userEstado: UserEstado = 'activo';
+          if (p.estado) {
+            userEstado = p.estado as UserEstado;
+          } else if (p.activo === false) {
+            userEstado = 'pendiente_aprobacion';
+          }
+
           return {
             id: p.id as string,
             rut: (p.rut as string) || '',
             nombre: (p.nombre as string) || '',
             apellido: (p.apellido as string) || '',
+            apellidoPaterno: (p.apellido_paterno as string) || undefined,
+            apellidoMaterno: (p.apellido_materno as string) || undefined,
             email: (p.email as string) || '',
             rol: ((p.rol as string) || 'profesor') as UserRole,
             establecimiento: (p.establecimiento as string) || '',
@@ -171,11 +183,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             asignaturaId: (p.asignatura_id as string) || undefined,
             asignaturaNombre: (p.asignatura_nombre as string) || undefined,
             cargo: (p.cargo as string) || undefined,
-            estado: ((p.estado as string) || 'activo') as UserEstado,
+            estado: userEstado,
             plan: ((p.plan as string) || 'trial') as UserPlan,
             logoUrl: (p.logo_url as string) || undefined,
             fechaRegistro: fechaRegStr,
             diasRestantesTrial: diasRestantes,
+            approvalToken: (p.approval_token as string) || undefined,
           };
         });
         setUsuarios(realUsers);

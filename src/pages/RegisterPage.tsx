@@ -29,6 +29,8 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
   const [form, setForm] = useState<RegisterData>({
     rut: '',
     nombre: '',
+    apellidoPaterno: '',
+    apellidoMaterno: '',
     apellido: '',
     email: '',
     password: '',
@@ -43,7 +45,13 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
   const [registeredSuccess, setRegisteredSuccess] = useState(false);
 
   const handleChange = (field: keyof RegisterData, value: string) => {
-    setForm(prev => ({ ...prev, [field]: value }));
+    setForm(prev => {
+      const updated = { ...prev, [field]: value };
+      if (field === 'apellidoPaterno' || field === 'apellidoMaterno') {
+        updated.apellido = `${updated.apellidoPaterno || ''} ${updated.apellidoMaterno || ''}`.trim();
+      }
+      return updated;
+    });
   };
 
   /** Valida RUT chileno con dígito verificador */
@@ -74,8 +82,8 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
     e.preventDefault();
     setError('');
 
-    if (!form.rut || !form.nombre || !form.apellido || !form.email || !form.password || !form.establecimiento) {
-      setError('Completa todos los campos obligatorios.');
+    if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.apellidoMaterno || !form.email || !form.password || !form.establecimiento) {
+      setError('Por favor completa todos los campos obligatorios (Nombres, Apellido Paterno, Apellido Materno, RUT, Email, Establecimiento y Contraseña).');
       return;
     }
 
@@ -99,7 +107,11 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
       return;
     }
 
-    const res = await register(form);
+    const res = await register({
+      ...form,
+      apellido: `${form.apellidoPaterno} ${form.apellidoMaterno}`.trim()
+    });
+
     if (res.error) {
       setError(res.error);
     } else {
@@ -141,7 +153,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                 </div>
                 <h2 className="text-xl font-bold text-white">¡Solicitud de Registro Enviada!</h2>
                 <p className="text-xs text-slate-300">
-                  Tu cuenta para <strong className="text-indigo-300">{form.nombre} {form.apellido}</strong> ({form.establecimiento}) ha sido registrada en nuestro sistema.
+                  Tu cuenta para <strong className="text-indigo-300">{form.nombre} {form.apellidoPaterno} {form.apellidoMaterno}</strong> ({form.establecimiento}) ha sido registrada en nuestro sistema.
                 </p>
               </div>
 
@@ -222,32 +234,48 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                   </div>
                 </div>
 
-                {/* Nombre + Apellido */}
-                <div className="grid grid-cols-2 gap-3">
+                {/* Nombres y Apellidos Separados */}
+                <div className="space-y-3">
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Nombre</label>
+                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Nombres</label>
                     <div className="relative">
                       <input
                         type="text"
                         value={form.nombre}
                         onChange={e => handleChange('nombre', e.target.value)}
-                        placeholder="María"
+                        placeholder="ej. Susana Andrea"
                         className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
                       />
                       <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
                     </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Apellido</label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value={form.apellido}
-                        onChange={e => handleChange('apellido', e.target.value)}
-                        placeholder="González"
-                        className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
-                      />
-                      <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Apellido Paterno</label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={form.apellidoPaterno}
+                          onChange={e => handleChange('apellidoPaterno', e.target.value)}
+                          placeholder="ej. Pizarro"
+                          className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
+                        />
+                        <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Apellido Materno</label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={form.apellidoMaterno}
+                          onChange={e => handleChange('apellidoMaterno', e.target.value)}
+                          placeholder="ej. Rojas"
+                          className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
+                        />
+                        <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
+                      </div>
                     </div>
                   </div>
                 </div>

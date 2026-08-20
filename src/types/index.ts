@@ -16,6 +16,8 @@ export interface UserProfile {
   rut: string;
   nombre: string;
   apellido: string;
+  apellidoPaterno?: string;     // Apellido Paterno
+  apellidoMaterno?: string;     // Apellido Materno
   email: string;
   rol: UserRole;
   establecimiento: string;
