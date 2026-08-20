@@ -18,7 +18,22 @@ export const cursoLenguaje2MMock: Curso = {
   codigoInvitacion: 'LEN2M2026'
 };
 
-export const alumnosLenguaje2MMock: AlumnoBasico[] = [];
+export const alumnosLenguaje2MMock: AlumnoBasico[] = [
+  { id: 'alu-2m-001', rut: '21.401.890-1', nombre: 'Martín', apellido: 'Sepúlveda Fuentes', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 1 },
+  { id: 'alu-2m-002', rut: '21.402.345-2', nombre: 'Constanza', apellido: 'Valenzuela Lagos', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 2 },
+  { id: 'alu-2m-003', rut: '21.403.789-3', nombre: 'Lucas', apellido: 'Morales Alarcón', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 3 },
+  { id: 'alu-2m-004', rut: '21.404.123-4', nombre: 'Valentina', apellido: 'Rojas Carrasco', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 4 },
+  { id: 'alu-2m-005', rut: '21.405.567-5', nombre: 'Benjamín', apellido: 'Silva Pizarro', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 5 },
+  { id: 'alu-2m-006', rut: '21.406.890-6', nombre: 'Sofía', apellido: 'González Vera', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 6 },
+  { id: 'alu-2m-007', rut: '21.407.234-7', nombre: 'Vicente', apellido: 'Tapia Mena', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 7 },
+  { id: 'alu-2m-008', rut: '21.408.678-8', nombre: 'Isidora', apellido: 'Castro Miranda', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 8 },
+  { id: 'alu-2m-009', rut: '21.409.012-9', nombre: 'Joaquín', apellido: 'Muñoz Cáceres', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 9 },
+  { id: 'alu-2m-010', rut: '21.410.345-K', nombre: 'Florencia', apellido: 'Herrera Guzmán', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 10 },
+  { id: 'alu-2m-011', rut: '21.411.678-1', nombre: 'Matías', apellido: 'Araya Bravo', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 11 },
+  { id: 'alu-2m-012', rut: '21.412.901-2', nombre: 'Antonia', apellido: 'Soto Venegas', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 12 },
+  { id: 'alu-2m-013', rut: '21.413.234-3', nombre: 'Rodrigo', apellido: 'Núñez Gallardo', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 13 },
+  { id: 'alu-2m-014', rut: '21.414.567-4', nombre: 'Camila', apellido: 'Espinoza Duarte', cursoId: 'curso-2m', cursoNombre: '2° Medio', numeroDeLista: 14 }
+];
 
 export const pruebaLenguaje2MMock: Prueba = {
   id: 'prueba-len2m-101',
