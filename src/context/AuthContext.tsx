@@ -105,7 +105,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const PRODUCTION_ADMIN_EMAIL = 'leontestvirtual1@gmail.com';
 
-  /** Carga los docentes reales desde Supabase para el Admin de Producción */
+  /** Carga los docentes reales desde Supabase para el Admin de Producción (excluyendo cuentas demo) */
   const loadDocentesReales = useCallback(async () => {
     try {
       const { data, error } = await supabase
@@ -114,23 +114,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('rol', 'profesor')
         .eq('estado', 'activo');
       if (!error && data && data.length > 0) {
-        const docentes: UserProfile[] = data.map((p: Record<string, unknown>) => ({
-          id: p.id as string,
-          rut: (p.rut as string) || '',
-          nombre: (p.nombre as string) || '',
-          apellido: (p.apellido as string) || '',
-          email: (p.email as string) || '',
-          rol: 'profesor' as UserRole,
-          establecimiento: (p.establecimiento as string) || '',
-          rbd: (p.rbd as string) || undefined,
-          asignaturaId: (p.asignatura_id as string) || undefined,
-          asignaturaNombre: (p.asignatura_nombre as string) || undefined,
-          cargo: (p.cargo as string) || undefined,
-          estado: ((p.estado as string) || 'activo') as UserEstado,
-          plan: ((p.plan as string) || 'trial') as UserPlan,
-          logoUrl: (p.logo_url as string) || undefined,
-        }));
-        setDocentesReales(docentes);
+        const docentes: UserProfile[] = data
+          .filter((p: Record<string, unknown>) => {
+            const email = ((p.email as string) || '').toLowerCase();
+            const est = ((p.establecimiento as string) || '').toLowerCase();
+            return !email.endsWith('@demo.cl') && !email.endsWith('@escuelademo.cl') && !est.includes('demo');
+          })
+          .map((p: Record<string, unknown>) => ({
+            id: p.id as string,
+            rut: (p.rut as string) || '',
+            nombre: (p.nombre as string) || '',
+            apellido: (p.apellido as string) || '',
+            apellidoPaterno: (p.apellido_paterno as string) || undefined,
+            apellidoMaterno: (p.apellido_materno as string) || undefined,
+            email: (p.email as string) || '',
+            rol: 'profesor' as UserRole,
+            establecimiento: (p.establecimiento as string) || '',
+            rbd: (p.rbd as string) || undefined,
+            asignaturaId: (p.asignatura_id as string) || undefined,
+            asignaturaNombre: (p.asignatura_nombre as string) || undefined,
+            cargo: (p.cargo as string) || undefined,
+            estado: ((p.estado as string) || 'activo') as UserEstado,
+            plan: ((p.plan as string) || 'trial') as UserPlan,
+            logoUrl: (p.logo_url as string) || undefined,
+          }));
+        setDocentesReales(docentes.length > 0 ? docentes : [currentUserProfesorPremilitar]);
       } else {
         // Fallback: usar los docentes ya registrados en el mock local
         setDocentesReales([currentUserProfesorPremilitar]);

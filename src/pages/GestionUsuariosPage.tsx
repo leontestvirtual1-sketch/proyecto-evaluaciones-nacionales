@@ -66,11 +66,23 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   };
 
   const isProductionAdmin = !isSandboxMode && (user?.email === 'leontestvirtual1@gmail.com' || user?.email === 'leontesvirtual1@gmail.com');
+  const [entornoTab, setEntornoTab] = useState<'produccion' | 'demo'>('produccion');
 
-  // En modo demo o cuentas no autorizadas, solo mostrar usuarios demo de prueba
+  // Clasificador estricto de usuario Demo vs Producción
+  const isUserDemo = (u: UserProfile) => {
+    const email = (u.email || '').toLowerCase();
+    const est = (u.establecimiento || '').toLowerCase();
+    return email.endsWith('@demo.cl') || email.endsWith('@escuelademo.cl') || email.endsWith('@sysget.cl') || est.includes('demo') || est.includes('bicentenario');
+  };
+
+  const demoUsersList = usuarios.filter(u => isUserDemo(u));
+  const prodUsersList = usuarios.filter(u => !isUserDemo(u));
+
+  // En modo DEMO (Sandbox): ÚNICAMENTE usuarios demo (María, Patricia, Carlos, Pedro)
+  // En modo PRODUCCIÓN: Permite ver Producción Real por defecto o alternar a Demo
   const baseUsersList = isProductionAdmin
-    ? usuarios
-    : usuarios.filter(u => u.email !== 'luis.leon@premil.cl' && u.email !== 'leontestvirtual1@gmail.com' && !u.establecimiento?.includes('Premilitar'));
+    ? (entornoTab === 'produccion' ? prodUsersList : demoUsersList)
+    : demoUsersList;
 
   // Filtrado
   const filteredUsers = baseUsersList.filter(u => {
@@ -137,6 +149,33 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           </span>
         </div>
       </div>
+
+      {/* Selector de Entorno (Solo Super Admin) */}
+      {isProductionAdmin && (
+        <div className="flex items-center gap-2 bg-slate-900/60 p-2 border border-slate-800 rounded-2xl">
+          <button
+            onClick={() => setEntornoTab('produccion')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              entornoTab === 'produccion'
+                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-500/20'
+                : 'bg-slate-950/60 text-slate-400 hover:text-white border border-slate-800'
+            }`}
+          >
+            <span>🏢 Cuentas de Producción Real ({prodUsersList.length})</span>
+          </button>
+
+          <button
+            onClick={() => setEntornoTab('demo')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              entornoTab === 'demo'
+                ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg shadow-amber-500/20'
+                : 'bg-slate-950/60 text-slate-400 hover:text-white border border-slate-800'
+            }`}
+          >
+            <span>🎭 Cuentas Demo de Prueba ({demoUsersList.length})</span>
+          </button>
+        </div>
+      )}
 
       {/* Tarjetas de Métricas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
