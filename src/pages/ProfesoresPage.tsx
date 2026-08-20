@@ -22,6 +22,7 @@ import {
 import { UserProfile, Asignatura } from '../types';
 import { asignaturasMock, cursosMock, currentUserProfesorPremilitar, demoProfesoresMock } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
+import { useAcademicData } from '../context/AcademicDataContext';
 
 const STORAGE_KEY_PROFESORES = 'sysget_profesores_list';
 const STORAGE_KEY_PASSWORDS = 'sysget_custom_passwords';
@@ -421,7 +422,8 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   onNavigateToConfig
 }) => {
   const { user, docentesReales } = useAuth();
-  const isDemo = user?.email === 'admin@sysget.cl' || user?.email === 'admin@escuelademo.cl' || user?.email?.includes('@sysget.cl');
+  const { isProduction } = useAcademicData();
+  const isDemo = !isProduction;
   const storageKey = isDemo ? 'sysget_demo_profesores_list' : 'sysget_prod_profesores_list';
 
   // Inicializar según ambiente activo

@@ -23,7 +23,7 @@ import {
 import { UserProfile, RendicionPrueba } from '../types';
 import { PrintEvaluacionModal } from '../components/PrintEvaluacionModal';
 import { IngresoRespuestasModal } from '../components/IngresoRespuestasModal';
-import { alumnosMock } from '../data/mockData';
+import { useAcademicData } from '../context/AcademicDataContext';
 
 
 interface PruebaFacsimilModalProps {
@@ -200,6 +200,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   onSelectPruebaReporte,
   onUpdatePruebaEstado
 }) => {
+  const { alumnos } = useAcademicData();
   const isDocente = currentUser?.rol === 'profesor' && currentUser?.asignaturaId;
   const initialAsignatura = isDocente ? currentUser.asignaturaId! : 'todos';
 
@@ -544,36 +545,20 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
       />
 
       {/* Printable Test Booklet & Answer Sheet Modal */}
-      {(() => {
-        const isProduction = currentUser?.email === 'luis.leon@premil.cl' || currentUser?.email === 'leontestvirtual1@gmail.com' || (currentUser?.rol === 'admin' && currentUser?.email !== 'admin@sysget.cl' && currentUser?.email !== 'admin@escuelademo.cl');
-        let printAlumnos = [];
-        if (!isProduction) {
-          printAlumnos = alumnosMock;
-        } else {
-          try {
-            const stored = JSON.parse(localStorage.getItem('sysget_prod_alumnos_list') || localStorage.getItem('sysget_alumnos_list') || '[]');
-            if (Array.isArray(stored)) {
-              printAlumnos = stored;
-            }
-          } catch (e) {}
-        }
-
-        return (
-          <PrintEvaluacionModal
-            isOpen={printModalOpen}
-            prueba={selectedPruebaForPrint}
-            preguntas={bancoPreguntas}
-            alumnos={printAlumnos}
-            onClose={() => { setPrintModalOpen(false); setSelectedPruebaForPrint(null); }}
-          />
-        );
-      })()}
+      <PrintEvaluacionModal
+        isOpen={printModalOpen}
+        prueba={selectedPruebaForPrint}
+        preguntas={bancoPreguntas}
+        alumnos={alumnos}
+        onClose={() => { setPrintModalOpen(false); setSelectedPruebaForPrint(null); }}
+      />
 
       {/* Quick Answer Sheet Input Modal (Photo & Fast-Track) */}
       <IngresoRespuestasModal
         isOpen={respuestasModalOpen}
         prueba={selectedPruebaForRespuestas}
         preguntas={bancoPreguntas}
+        alumnos={alumnos}
         onClose={() => { setRespuestasModalOpen(false); setSelectedPruebaForRespuestas(null); }}
         onSaveRendicion={(nuevaRendicion) => {
           showToast(`✅ Rendición guardada para ${nuevaRendicion.alumnoNombre} (${nuevaRendicion.porcentajeLogro}% logro)`);

@@ -2,6 +2,39 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-19] Arquitectura de Aislamiento de Fuentes de Datos (Decoupled Data Providers via AcademicDataContext)
+
+- **Problema / Requerimiento**:
+  1. En el ambiente Demo se detectaron filtraciones de datos pertenecientes al ambiente de Producción (profesora María Teresa González de la Escuela Premilitar en el panel de Seguimiento Docente y Gestión de Usuarios).
+  2. La tabla de "Alumnos con Brechas Críticas" no renderizaba nombres correctamente y el botón "Ver Planes" carecía de enlace operativo.
+  3. Existían múltiples fuentes de verdad dispersas (funciones inline `getDashboardData()`, accesos directos a `mockData.ts` con filtros basados en cadenas de correo ad-hoc y comprobaciones frágiles en cada página).
+- **Archivos y Solución Técnica**:
+  - [`src/context/AcademicDataContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AcademicDataContext.tsx):
+    - [NUEVO] Creado `AcademicDataProvider` y hook `useAcademicData()` como **fuente única de verdad** para los datos de la plataforma (cursos, alumnos, evaluaciones, docentes de seguimiento y reportes tabulados activos).
+    - Evalúa centralizadamente `isProduction` según el usuario autenticado y el estado de Sandbox (`isSandboxMode`).
+    - Entrega exclusivamente los datos de la **Escuela Premilitar Héroes de la Concepción** (2° Medio, 90 preguntas de Lenguaje oficiales, 14 alumnos reales) en Producción, y los datos del **Liceo Bicentenario** (6° y 8° Básico con sus alumnos simulados) en Demo.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
+    - [MODIFICADO] `MainAppContentWrapper` aloja `isSandboxMode` y envuelve a la aplicación en `<AcademicDataProvider>`.
+    - [MODIFICADO] Eliminada por completo la función auxiliar inline `getDashboardData()`. El dashboard consume `academicData.pruebas` y `academicData.reporteActivo`.
+    - [MODIFICADO] `EvaluacionGeneratorModal` consume los cursos desde `academicData.cursos`.
+  - [`src/components/ProfesorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx):
+    - [MODIFICADO] Corregidos los accesos de propiedad en la tabla de brechas críticas (`alumno.alumnoNombre` y cálculo de puntaje) e integrado el botón "Imprimir / PDF" con `PrintEvaluacionModal`.
+  - [`src/components/SeguimientoDocenteCard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/SeguimientoDocenteCard.tsx):
+    - [MODIFICADO] Conectado a `useAcademicData()`, impidiendo que los docentes de producción aparezcan en el ambiente demo.
+  - [`src/pages/EvaluacionesPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/EvaluacionesPage.tsx):
+    - [MODIFICADO] Eliminado import directo de `alumnosMock` y lógica inline condicional. Ahora suministra la lista aislada de alumnos proveniente de `useAcademicData()` a los modales `PrintEvaluacionModal` e `IngresoRespuestasModal`.
+  - [`src/pages/ProfesoresPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ProfesoresPage.tsx):
+    - [MODIFICADO] Sustituida la comprobación ad-hoc de emails por `isProduction` centralizado de `useAcademicData()`.
+  - [`src/pages/ConfiguracionPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ConfiguracionPage.tsx):
+    - [MODIFICADO] Vinculado con `nombreEstablecimientoActivo` del contexto para inicializar la escuela activa de manera consistente.
+  - [`src/pages/BancoPreguntasPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/BancoPreguntasPage.tsx):
+    - [MODIFICADO] Inicialización del nivel escolar predeterminado según el entorno (`2° Medio` para Producción y `8° Básico` para Demo).
+- **Verificación / Despliegue**:
+  - Compilación TypeScript & Vite Build: ✅ Exitoso (`built in 40.45s`, 0 errores).
+  - Aislamiento verificado: El modo Demo únicamente visualiza Liceo Bicentenario (6° y 8° Básico), y Producción visualiza Escuela Premilitar (2° Medio) sin mezclar datos.
+
+---
+
 ### [2026-08-17] Blindaje de Aislamiento Sandbox: Tarjeta Admin/UTP hacia Admin Demo y Corrección de Métricas en Landing
 
 - **Problema / Requerimiento**:

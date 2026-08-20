@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserProfile, Asignatura } from '../types';
 import { asignaturasMock } from '../data/mockData';
 import { getSupabaseConfig, testSupabaseConnection } from '../lib/supabaseClient';
+import { useAcademicData } from '../context/AcademicDataContext';
 import {
   Settings,
   Building2,
@@ -58,10 +59,11 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
   asignaturas = asignaturasMock,
   onUpdateAsignaturas
 }) => {
+  const { nombreEstablecimientoActivo } = useAcademicData();
   const [activeTab, setActiveTab] = useState<'establecimiento' | 'asignaturas' | 'evaluaciones' | 'cloud' | 'perfil'>('establecimiento');
 
   // Form States
-  const [establecimiento, setEstablecimiento] = useState(user.establecimiento || 'Liceo Bicentenario de Excelencia');
+  const [establecimiento, setEstablecimiento] = useState(nombreEstablecimientoActivo || user.establecimiento || 'Liceo Bicentenario Los Andes');
   const [rbd, setRbd] = useState('12345-6');
   const [comuna, setComuna] = useState('Santiago');
   const [region, setRegion] = useState('Región Metropolitana');

@@ -9,6 +9,7 @@ import {
   UserProfile
 } from '../types';
 import { PreguntaFormModal } from '../components/PreguntaFormModal';
+import { useAcademicData } from '../context/AcademicDataContext';
 import {
   Library,
   PlusCircle,
@@ -59,23 +60,18 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   onUpdatePregunta,
   onDeletePregunta,
 }) => {
+  const { isProduction } = useAcademicData();
   const isDocente = currentUser?.rol === 'profesor' && currentUser?.asignaturaId;
   const docenteAsigId = currentUser?.asignaturaId || '';
-
-  // Determinar si es usuario de producción
-  const isProduction =
-    currentUser?.email === 'luis.leon@premil.cl' ||
-    currentUser?.email === 'leontestvirtual1@gmail.com' ||
-    (currentUser?.rol === 'admin' && currentUser?.email !== 'admin@sysget.cl' && currentUser?.email !== 'admin@escuelademo.cl');
 
   // Restringir asignaturas para docente
   const availableAsignaturas = isDocente
     ? asignaturas.filter(a => a.id === docenteAsigId)
     : asignaturas;
 
-  // Estado del Filtro de Curso / Nivel (Por defecto 2° Medio para Producción o docente de Lenguaje 2M)
+  // Estado del Filtro de Curso / Nivel (2° Medio para Producción, 8° Básico para Demo)
   const [nivelFilter, setNivelFilter] = useState<string>(
-    isProduction || isDocente ? '2° medio' : '2° medio'
+    isProduction ? '2° medio' : '8° básico'
   );
 
   const [search, setSearch] = useState('');
