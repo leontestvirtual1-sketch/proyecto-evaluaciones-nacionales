@@ -23,7 +23,10 @@ import {
   KeyRound,
   Eye,
   EyeOff,
-  ChevronDown
+  ChevronDown,
+  RefreshCw,
+  Smartphone,
+  Monitor
 } from 'lucide-react';
 
 export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isSandboxMode = false }) => {
@@ -32,7 +35,16 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   const [estadoFilter, setEstadoFilter] = useState<'todos' | UserEstado>('todos');
   const [copiedTokenId, setCopiedTokenId] = useState<string | null>(null);
   const [successToast, setSuccessToast] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Estados para Modal de Envío de Correo Real
   const [selectedUserForEmailModal, setSelectedUserForEmailModal] = useState<UserProfile | null>(null);
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailCustomMessage, setEmailCustomMessage] = useState('');
+  const [emailIncludePassword, setEmailIncludePassword] = useState(false);
+  const [emailTempPassword, setEmailTempPassword] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [emailPreviewMode, setEmailPreviewMode] = useState<'desktop' | 'mobile'>('desktop');
 
   // Estados para Modal de Contraseña
   const [selectedUserForPassword, setSelectedUserForPassword] = useState<UserProfile | null>(null);
@@ -43,7 +55,47 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
 
   const showToast = (msg: string) => {
     setSuccessToast(msg);
-    setTimeout(() => setSuccessToast(null), 3500);
+    setTimeout(() => setSuccessToast(null), 4000);
+  };
+
+  const openEmailModal = (u: UserProfile) => {
+    setSelectedUserForEmailModal(u);
+    setEmailSubject(`✨ ¡Tu cuenta en Sysget Saber ha sido activada! — ${u.establecimiento}`);
+    setEmailCustomMessage('');
+    setEmailIncludePassword(false);
+    setEmailTempPassword('');
+  };
+
+  const handleSendRealEmail = async () => {
+    if (!selectedUserForEmailModal) return;
+    setIsSendingEmail(true);
+    try {
+      const res = await fetch('/api/users?action=send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: selectedUserForEmailModal.email,
+          subject: emailSubject,
+          nombre: `${selectedUserForEmailModal.nombre} ${selectedUserForEmailModal.apellido}`.trim(),
+          establecimiento: selectedUserForEmailModal.establecimiento,
+          plan: selectedUserForEmailModal.plan || 'trial',
+          customMessage: emailCustomMessage,
+          tempPassword: emailIncludePassword ? emailTempPassword : undefined
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        showToast(`❌ Error al enviar: ${data.error || 'No se pudo enviar el correo'}`);
+      } else {
+        showToast(`📧 ¡Correo de activación enviado exitosamente a ${selectedUserForEmailModal.email}!`);
+        setSelectedUserForEmailModal(null);
+      }
+    } catch (e: any) {
+      showToast(`❌ Error de conexión al enviar correo: ${e.message}`);
+    } finally {
+      setIsSendingEmail(false);
+    }
   };
 
   const handleApprove = async (u: UserProfile) => {
@@ -222,21 +274,34 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
             <CreditCard className="w-4 h-4 text-emerald-400" />
           </div>
           <div className="text-2xl font-black text-emerald-300">{institucional}</div>
-          <p className="text-[11px] text-emerald-400/80">Suscripciones Pro / Institucional</p>
+          <p className="text-[11px] text-emerald-400/80">Suscripciones Pro / Inst</p>
         </div>
       </div>
 
-      {/* Barra de Búsqueda y Filtros */}
+      {/* Barra de Búsqueda, Filtros y Sincronización */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-900/40 p-4 border border-slate-800 rounded-2xl">
-        <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            placeholder="Buscar por nombre, email o colegio..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500"
-          />
+        <div className="flex items-center gap-2 w-full sm:w-auto flex-1 max-w-md">
+          <div className="relative w-full">
+            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              placeholder="Buscar por nombre, email o colegio..."
+              className="w-full pl-9 pr-3 py-2 text-xs bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 transition-colors"
+            />
+          </div>
+
+          <button
+            onClick={() => {
+              setIsRefreshing(true);
+              window.location.reload();
+            }}
+            title="Sincronizar usuarios desde Supabase en tiempo real"
+            className="p-2 bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 rounded-xl transition-all flex items-center gap-1 shrink-0"
+          >
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-indigo-400' : ''}`} />
+          </button>
         </div>
 
         {/* Filtro de Estado */}
@@ -254,7 +319,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
               onClick={() => setEstadoFilter(tab.id as any)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 estadoFilter === tab.id
-                  ? 'bg-indigo-600 text-white shadow-md'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-bold'
                   : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
@@ -278,38 +343,36 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                 <th className="py-3.5 px-4 text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-800/60 text-slate-300">
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-500">
-                    No se encontraron usuarios que coincidan con los filtros.
+                  <td colSpan={6} className="text-center py-10 text-slate-500">
+                    No se encontraron usuarios en este filtro.
                   </td>
                 </tr>
               ) : (
                 filteredUsers.map(u => (
                   <tr key={u.id} className="hover:bg-slate-800/30 transition-colors">
-                    {/* Nombre + RUT */}
+                    {/* Usuario & RUT */}
                     <td className="py-3.5 px-4">
-                      <div className="font-bold text-white">
-                        {u.nombre} {u.apellido}
-                      </div>
-                      <div className="text-[11px] text-slate-500">{u.rut}</div>
+                      <div className="font-bold text-white text-xs">{u.nombre} {u.apellido}</div>
+                      <div className="text-[11px] text-slate-500 font-mono">{u.rut}</div>
                     </td>
 
-                    {/* Colegio + Rol */}
+                    {/* Establecimiento & Rol */}
                     <td className="py-3.5 px-4">
-                      <div className="text-slate-200 font-medium flex items-center gap-1">
-                        <Building2 className="w-3 h-3 text-slate-500" />
-                        {u.establecimiento}
+                      <div className="flex items-center gap-1.5 text-xs text-slate-200">
+                        <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="truncate max-w-[200px] font-semibold">{u.establecimiento}</span>
                       </div>
-                      <div className="text-[11px] text-indigo-400 capitalize">
-                        {u.rol} {u.asignaturaNombre ? `• ${u.asignaturaNombre}` : ''}
+                      <div className="text-[11px] text-indigo-400 font-medium">
+                        {u.rol === 'admin' ? 'Admin' : `Profesor • ${u.asignaturaNombre || 'Sin asignar'}`}
                       </div>
                     </td>
 
-                    {/* Email */}
+                    {/* Email y Registro */}
                     <td className="py-3.5 px-4">
-                      <div className="text-slate-300 font-mono text-[11px]">{u.email}</div>
+                      <div className="text-xs font-mono text-slate-300">{u.email}</div>
                       {u.fechaRegistro && (
                         <div className="text-[10px] text-slate-500">Reg: {u.fechaRegistro}</div>
                       )}
@@ -317,23 +380,23 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
 
                     {/* Plan */}
                     <td className="py-3.5 px-4">
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                      <div className="flex flex-col gap-1">
                         <select
                           value={u.plan || 'trial'}
                           onChange={e => handleChangePlan(u, e.target.value as UserPlan)}
-                          className="bg-slate-950 text-slate-200 text-[11px] font-semibold border border-slate-700 rounded-lg px-2 py-1 outline-none focus:border-indigo-500"
+                          className="bg-slate-950 text-white border border-slate-700 rounded-lg px-2 py-1 text-[11px] font-semibold focus:border-indigo-500 outline-none w-fit"
                         >
+                          <option value="free">Free ($0)</option>
                           <option value="trial">Trial (30 días)</option>
-                          <option value="free">Free (Básico)</option>
-                          <option value="pro">Pro ($59.990/m)</option>
-                          <option value="institucional">Institucional ($99.990/m)</option>
+                          <option value="pro">Pro ($59.990)</option>
+                          <option value="institucional">Institucional ($99.990)</option>
                         </select>
 
                         {/* Badges según el plan */}
                         {u.plan === 'trial' && (() => {
                           const diasFinal = calcularDiasRestantesTrial(u);
                           return (
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 ${
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 w-fit ${
                               diasFinal <= 5 
                                 ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' 
                                 : diasFinal <= 15
@@ -345,24 +408,6 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                             </span>
                           );
                         })()}
-
-                        {u.plan === 'free' && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-slate-800/80 text-slate-300 border-slate-700 inline-flex items-center gap-1">
-                            <span>🌱</span> Plan Gratuito
-                          </span>
-                        )}
-
-                        {u.plan === 'pro' && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-violet-500/10 text-violet-300 border-violet-500/30 inline-flex items-center gap-1">
-                            <span>💎</span> Pro Activo
-                          </span>
-                        )}
-
-                        {u.plan === 'institucional' && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-emerald-500/10 text-emerald-300 border-emerald-500/30 inline-flex items-center gap-1">
-                            <span>🏫</span> Institucional
-                          </span>
-                        )}
                       </div>
                     </td>
 
@@ -391,47 +436,6 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                     {/* Acciones */}
                     <td className="py-3.5 px-4 text-right">
                       <div className="flex items-center justify-end gap-1.5">
-                        {u.estado === 'pendiente_aprobacion' ? (
-                          <>
-                            <button
-                              onClick={() => handleApprove(u)}
-                              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold text-[11px] transition-all shadow-md shadow-emerald-600/30 flex items-center gap-1"
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                              Aprobar
-                            </button>
-
-                            {u.approvalToken && (
-                              <button
-                                onClick={() => handleCopyLink(u)}
-                                title="Copiar enlace de aprobación directa del correo"
-                                className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 transition-all"
-                              >
-                                {copiedTokenId === u.id ? (
-                                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                                ) : (
-                                  <Copy className="w-3.5 h-3.5" />
-                                )}
-                              </button>
-                            )}
-                          </>
-                        ) : u.estado === 'activo' ? (
-                          <button
-                            onClick={() => handleSuspend(u)}
-                            className="px-2.5 py-1 bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-400 border border-slate-700 rounded-lg font-semibold text-[11px] transition-all"
-                          >
-                            Suspender
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handleReactivate(u)}
-                            className="px-2.5 py-1 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 rounded-lg font-semibold text-[11px] transition-all"
-                          >
-                            Reactivar
-                          </button>
-                        )}
-
-                        {/* Botón Establecer / Restablecer Contraseña */}
                         <button
                           onClick={() => {
                             setSelectedUserForPassword(u);
@@ -445,10 +449,11 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                           <KeyRound className="w-3.5 h-3.5" />
                         </button>
 
+                        {/* Botón Enviar Correo Real de Activación / Bienvenida */}
                         <button
-                          onClick={() => setSelectedUserForEmailModal(u)}
-                          title="Ver simulación de correo de notificación"
-                          className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 transition-all"
+                          onClick={() => openEmailModal(u)}
+                          title="Enviar correo de activación y bienvenida al usuario"
+                          className="p-1.5 bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 rounded-lg border border-slate-700 hover:border-indigo-500 transition-all"
                         >
                           <Mail className="w-3.5 h-3.5" />
                         </button>
@@ -461,72 +466,6 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           </table>
         </div>
       </div>
-
-      {/* Modal de Simulación de Correo (Resend / SMTP $0) */}
-      {selectedUserForEmailModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-xl rounded-2xl p-6 space-y-4 shadow-2xl animate-fade-in">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div className="flex items-center gap-2 text-white font-bold text-sm">
-                <Mail className="w-4 h-4 text-indigo-400" />
-                Simulación de Notificación por Email (Resend / SMTP $0)
-              </div>
-              <button
-                onClick={() => setSelectedUserForEmailModal(null)}
-                className="text-slate-500 hover:text-white text-xs font-bold"
-              >
-                ✕ Cerrar
-              </button>
-            </div>
-
-            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 font-sans text-xs">
-              <div className="text-slate-400">
-                <strong className="text-slate-200">Para:</strong> {selectedUserForEmailModal.email}
-              </div>
-              <div className="text-slate-400">
-                <strong className="text-slate-200">Asunto:</strong> ¡Tu acceso de prueba (Trial 30 Días) a Sysget Saber está activo! 🎓
-              </div>
-
-              <div className="p-4 bg-slate-900 rounded-lg border border-slate-800 space-y-3 text-slate-300">
-                <p>
-                  Hola <strong>{selectedUserForEmailModal.nombre}</strong>,
-                </p>
-                <p>
-                  Tu cuenta institucional para <strong>{selectedUserForEmailModal.establecimiento}</strong> ha sido verificada y activada por el Administrador.
-                </p>
-                <div className="p-3 bg-indigo-950/40 border border-indigo-500/30 rounded-lg text-indigo-200 space-y-1">
-                  <div className="font-bold">✨ Tu Plan Activo: Trial Gratuito 30 Días</div>
-                  <div className="text-[11px] text-slate-400">
-                    Incluye acceso a ensayos SIMCE 2026, inteligencia pedagógica de reforzamiento y reportes tabulados.
-                  </div>
-                </div>
-                <div className="pt-2 text-center">
-                  <a
-                    href="#"
-                    onClick={e => {
-                      e.preventDefault();
-                      setSelectedUserForEmailModal(null);
-                    }}
-                    className="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg font-bold text-xs shadow-md"
-                  >
-                    Ingresar a Sysget Saber →
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-[11px] text-slate-500 flex items-center justify-between">
-              <span>Servicio de envío: Resend.com (3.000 emails/mes gratis)</span>
-              <button
-                onClick={() => setSelectedUserForEmailModal(null)}
-                className="px-4 py-1.5 bg-slate-800 text-white rounded-lg font-semibold hover:bg-slate-700"
-              >
-                Cerrar Vista Previa
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Modal de Establecer / Restablecer Contraseña */}
       {selectedUserForPassword && (
@@ -658,6 +597,200 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                   </>
                 )}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Profesional de Despacho de Correo Real */}
+      {selectedUserForEmailModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-slate-900 border border-slate-700 w-full max-w-2xl rounded-2xl p-6 space-y-4 shadow-2xl animate-scale-up max-h-[90vh] overflow-y-auto">
+            {/* Header del Modal */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2.5">
+                <span className="p-2 bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 rounded-xl">
+                  <Mail className="w-5 h-5" />
+                </span>
+                <div>
+                  <h3 className="font-bold text-white text-sm">Enviar Correo de Activación y Bienvenida</h3>
+                  <p className="text-[11px] text-slate-400">Despacho oficial vía Google SMTP / Sysget Saber</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedUserForEmailModal(null)}
+                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Formulario de Parámetros del Correo */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div className="space-y-1">
+                <label className="text-slate-400 font-semibold">Destinatario:</label>
+                <div className="p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-mono flex items-center justify-between">
+                  <span className="truncate">{selectedUserForEmailModal.email}</span>
+                  <span className="text-[10px] text-emerald-400 font-bold px-1.5 py-0.5 bg-emerald-500/10 rounded">Verificado</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-slate-400 font-semibold">Establecimiento:</label>
+                <div className="p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 truncate">
+                  {selectedUserForEmailModal.establecimiento}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-1 text-xs">
+              <label className="text-slate-300 font-semibold">Asunto del Correo:</label>
+              <input
+                type="text"
+                value={emailSubject}
+                onChange={e => setEmailSubject(e.target.value)}
+                className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl focus:outline-none focus:border-indigo-500 font-medium text-xs"
+              />
+            </div>
+
+            {/* Mensaje adicional personalizado */}
+            <div className="space-y-1 text-xs">
+              <label className="text-slate-300 font-semibold">Mensaje Personalizado Adicional (Opcional):</label>
+              <textarea
+                rows={2}
+                value={emailCustomMessage}
+                onChange={e => setEmailCustomMessage(e.target.value)}
+                placeholder="Ej: Estimada profesora, tus credenciales fueron activadas con el plan Trial de 30 días para evaluar a los cursos..."
+                className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl focus:outline-none focus:border-indigo-500 resize-none text-xs"
+              />
+            </div>
+
+            {/* Opción de Adjuntar Contraseña */}
+            <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={emailIncludePassword}
+                  onChange={e => {
+                    setEmailIncludePassword(e.target.checked);
+                    if (e.target.checked && !emailTempPassword) {
+                      setEmailTempPassword(`Saber_${Math.floor(1000 + Math.random() * 9000)}!`);
+                    }
+                  }}
+                  className="rounded border-slate-700 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span className="text-slate-300 font-medium">Incluir contraseña en el correo</span>
+              </label>
+
+              {emailIncludePassword && (
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="text"
+                    value={emailTempPassword}
+                    onChange={e => setEmailTempPassword(e.target.value)}
+                    placeholder="Contraseña inicial"
+                    className="flex-1 px-3 py-1.5 bg-slate-900 text-emerald-300 font-mono text-xs border border-slate-700 rounded-lg focus:outline-none focus:border-indigo-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setEmailTempPassword(`Saber_${Math.floor(1000 + Math.random() * 9000)}!`)}
+                    className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-indigo-300 text-[11px] rounded-lg font-semibold border border-slate-700 flex items-center gap-1"
+                  >
+                    <Sparkles className="w-3 h-3 text-amber-400" />
+                    Generar
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Vista Previa del Correo */}
+            <div className="space-y-1.5 text-xs">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="font-semibold">Vista Previa del Mensaje:</span>
+                <div className="flex items-center gap-1 bg-slate-950 p-0.5 rounded-lg border border-slate-800">
+                  <button
+                    type="button"
+                    onClick={() => setEmailPreviewMode('desktop')}
+                    className={`p-1 rounded ${emailPreviewMode === 'desktop' ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:text-white'}`}
+                  >
+                    <Monitor className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEmailPreviewMode('mobile')}
+                    className={`p-1 rounded ${emailPreviewMode === 'mobile' ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:text-white'}`}
+                  >
+                    <Smartphone className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              <div className={`p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3 mx-auto transition-all ${
+                emailPreviewMode === 'mobile' ? 'max-w-xs text-[11px]' : 'w-full text-xs'
+              }`}>
+                <div className="p-3 bg-gradient-to-r from-indigo-900/60 to-violet-900/60 rounded-xl border border-indigo-500/30 text-white font-bold text-center">
+                  🎓 Sysget Saber — Evaluaciones Nacionales
+                </div>
+
+                <div className="space-y-2 text-slate-300">
+                  <p>Hola <strong>{selectedUserForEmailModal.nombre} {selectedUserForEmailModal.apellido}</strong>,</p>
+                  <p>Tu cuenta institucional para <strong>{selectedUserForEmailModal.establecimiento}</strong> está activa.</p>
+
+                  <div className="p-3 bg-slate-900 border border-slate-800 rounded-lg space-y-1 text-slate-300">
+                    <div>• <strong>Usuario:</strong> {selectedUserForEmailModal.email}</div>
+                    <div>• <strong>Plan:</strong> {(selectedUserForEmailModal.plan || 'trial').toUpperCase()} (30 Días Gratis)</div>
+                    {emailIncludePassword && emailTempPassword && (
+                      <div className="text-emerald-400 pt-1 border-t border-slate-800 font-mono">
+                        🔑 <strong>Contraseña:</strong> {emailTempPassword}
+                      </div>
+                    )}
+                  </div>
+
+                  {emailCustomMessage && (
+                    <div className="p-2.5 bg-indigo-950/40 border-l-2 border-indigo-500 text-indigo-200 text-[11px] rounded-r-lg">
+                      {emailCustomMessage}
+                    </div>
+                  )}
+
+                  <div className="pt-2 text-center">
+                    <span className="inline-block px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg shadow-md">
+                      Ingresar a Sysget Saber →
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer y Botón de Envío Real */}
+            <div className="flex items-center justify-between pt-3 border-t border-slate-800">
+              <span className="text-[11px] text-slate-500">Servidor: Google SMTP Oficial (465 SSL)</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedUserForEmailModal(null)}
+                  className="px-3 py-2 text-xs text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition-all font-semibold"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  disabled={isSendingEmail}
+                  onClick={handleSendRealEmail}
+                  className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20 flex items-center gap-2 transition-all"
+                >
+                  {isSendingEmail ? (
+                    <>
+                      <Clock className="w-4 h-4 animate-spin" />
+                      <span>Enviando correo real...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Enviar Correo Real Ahora</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>

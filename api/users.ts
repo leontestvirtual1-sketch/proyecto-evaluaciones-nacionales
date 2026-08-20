@@ -456,6 +456,97 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           message: 'Contraseña actualizada con éxito en Supabase Auth.'
         });
       }
+
+      // ── ACCIÓN: ENVIAR CORREO REAL AL USUARIO ──
+      if (action === 'send-email' || action === 'send-welcome-email') {
+        const { to, subject, nombre, establecimiento, plan, customMessage, tempPassword } = body;
+        if (!to) return res.status(400).json({ error: 'Dirección de correo destinatario requerida.' });
+
+        const emailSubject = subject || `✨ ¡Tu acceso a Sysget Saber ha sido activado! — ${establecimiento || 'Sysget Saber'}`;
+
+        const htmlContent = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f19; color: #ffffff; margin: 0; padding: 20px; }
+    .container { max-width: 580px; margin: 0 auto; background: #111827; border: 1px solid #1f2937; border-radius: 16px; overflow: hidden; }
+    .header { background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 28px 24px; text-align: center; }
+    .header h1 { margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
+    .header p { margin: 6px 0 0; font-size: 13px; color: #e0e7ff; }
+    .content { padding: 28px 24px; font-size: 14px; line-height: 1.6; color: #cbd5e1; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 18px; margin: 18px 0; }
+    .btn { display: inline-block; background: linear-gradient(135deg, #4f46e5, #6366f1); color: #ffffff !important; text-decoration: none; font-weight: 700; font-size: 14px; padding: 14px 32px; border-radius: 10px; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4); text-align: center; }
+    .footer { padding: 18px 24px; background: #0b0f19; text-align: center; font-size: 11px; color: #64748b; border-top: 1px solid #1f2937; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎓 Sysget Saber — Evaluaciones Nacionales</h1>
+      <p>Plataforma de Diagnóstico y Ensayos SIMCE / PAES</p>
+    </div>
+    <div class="content">
+      <p>Hola <strong>${nombre || 'Docente'}</strong>,</p>
+      <p>Tu cuenta institucional para <strong>${establecimiento || 'tu establecimiento'}</strong> está oficialmente activa y lista para usar.</p>
+
+      <div class="card">
+        <div style="font-weight: bold; color: #818cf8; margin-bottom: 8px;">✨ Resumen de tu Cuenta:</div>
+        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Usuario:</strong> ${to}</div>
+        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Establecimiento:</strong> ${establecimiento || 'Establecimiento Registrado'}</div>
+        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Plan:</strong> ${plan ? plan.toUpperCase() : 'TRIAL (30 DÍAS GRATIS)'}</div>
+        ${tempPassword ? `<div style="font-size: 13px; color: #34d399; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #334155;">🔑 <strong>Contraseña inicial:</strong> <code style="background:#0f172a;padding:3px 8px;border-radius:6px;color:#a7f3d0;font-size:14px;">${tempPassword}</code></div>` : ''}
+      </div>
+
+      ${customMessage ? `<div style="background:#1e1b4b;border-left:4px solid #6366f1;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px;color:#c7d2fe;">${customMessage.replace(/\n/g, '<br/>')}</div>` : ''}
+
+      <p>Con tu acceso activo podrás:</p>
+      <ul style="padding-left: 20px; font-size: 13px; color: #94a3b8;">
+        <li>Crear y aplicar ensayos oficiales SIMCE y PAES.</li>
+        <li>Imprimir pruebas y pautas en PDF oficial de alta resolución.</li>
+        <li>Analizar matrices de logro por habilidad y planes remediales con IA.</li>
+      </ul>
+
+      <div style="text-align: center; margin: 28px 0 16px;">
+        <a href="${APP_URL}" class="btn">Ingresar a Sysget Saber →</a>
+      </div>
+
+      <p style="font-size: 12px; color: #64748b; text-align: center;">Enlace de acceso: <a href="${APP_URL}" style="color: #818cf8;">${APP_URL}</a></p>
+    </div>
+    <div class="footer">
+      Sysget Saber © 2026 — Plataforma Educativa de Evaluaciones Nacionales.<br/>
+      Soporte técnico y pedagógico: <a href="mailto:soporte@sysget.cl" style="color: #818cf8;">soporte@sysget.cl</a>
+    </div>
+  </div>
+</body>
+</html>
+        `;
+
+        try {
+          const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+              user: SMTP_USER,
+              pass: SMTP_PASS,
+            },
+          });
+
+          await transporter.sendMail({
+            from: `"Sysget Saber" <${SMTP_USER}>`,
+            to: to,
+            subject: emailSubject,
+            html: htmlContent,
+          });
+
+          return res.status(200).json({ success: true, message: `Correo de activación enviado exitosamente a ${to}` });
+        } catch (mailErr: any) {
+          console.error('Error enviando correo SMTP:', mailErr);
+          return res.status(500).json({ error: `No se pudo enviar el correo: ${mailErr.message}` });
+        }
+      }
     }
 
     return res.status(405).json({ error: 'Método no soportado' });

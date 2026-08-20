@@ -2,6 +2,29 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-20] Módulo de Despacho de Correo Real por SMTP y Optimización Ergonómica del Sidebar
+
+- **Problema / Requerimiento**:
+  1. En Gestión de Usuarios, el botón de correo solo realizaba una simulación estática / vista previa, pero no enviaba el correo real de activación/bienvenida a la casilla del docente (ej. `nentitasusana@hotmail.com` o `luis.leon@premil.cl`).
+  2. En el menú lateral (Sidebar), al desplegar establecimientos la barra se expandía verticalmente sobrepasando la altura del viewport sin permitir scroll suave arriba/abajo.
+  3. Requerimiento adicional: Propuestas y mejoras de apariencia visual para elevar el nivel profesional de la suite.
+
+- **Archivos y Solución Técnica**:
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - [MODIFICADO] Implementada la acción `send-email` / `send-welcome-email` en el endpoint POST, utilizando Nodemailer con transporte seguro SSL oficial de Google SMTP para enviar correos HTML enriquecidos con diseño institucional, credenciales iniciales, detalles del plan y botón de acceso directo.
+  - [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx):
+    - [MODIFICADO] Reestructurado con altura fija estricta `h-screen max-h-screen overflow-hidden flex flex-col justify-between`.
+    - [MODIFICADO] Contenedor central de navegación y establecimientos configurado con `flex-1 overflow-y-auto custom-scrollbar` y barra de desplazamiento ultrafina (`scrollbar-thin scrollbar-thumb-slate-700`), permitiendo navegar fluidamente sin desbordes.
+    - [MODIFICADO] Header (logo + perfil) y Footer (cerrar sesión) anclados de forma fija en la parte superior e inferior.
+  - [`src/pages/GestionUsuariosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx):
+    - [MODIFICADO] Creada consola de despacho de correo real (`selectedUserForEmailModal`) con selector de vista previa responsiva (Desktop/Móvil), personalización de Asunto, mensaje adicional, inclusión opcional de contraseña autogenerada y botón interactivo `🚀 Enviar Correo Real Ahora`.
+    - [MODIFICADO] Agregado botón de sincronización rápida (`RefreshCw`) en la barra superior para recargar perfiles desde Supabase con un clic.
+
+- **Verificación / Despliegue**:
+  - Despacho de Correo Real: ✅ Verificado vía API `/api/users?action=send-email` con Google SMTP.
+  - Scroll del Sidebar: ✅ Verificado (desplazamiento vertical suave sin cortes de pantalla).
+  - Compilación TypeScript & Vite Build: ✅ Exitoso (`tsc && vite build` en 14.90s).
+
 ### [2026-08-20] Integración Dinámica de Establecimientos en Sidebar y Módulo de Establecer/Restablecer Contraseñas
 
 - **Problema / Requerimiento**:
