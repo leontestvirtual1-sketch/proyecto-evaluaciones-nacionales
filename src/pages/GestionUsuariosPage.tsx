@@ -88,7 +88,23 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   const total = baseUsersList.length;
   const pendientes = baseUsersList.filter(u => u.estado === 'pendiente_aprobacion').length;
   const activosTrial = baseUsersList.filter(u => u.estado === 'activo' && u.plan === 'trial').length;
+  const cuentasFree = baseUsersList.filter(u => u.estado === 'activo' && u.plan === 'free').length;
   const institucional = baseUsersList.filter(u => u.estado === 'activo' && (u.plan === 'institucional' || u.plan === 'pro')).length;
+
+  const calcularDiasRestantesTrial = (u: UserProfile): number => {
+    if (u.fechaRegistro) {
+      const regDate = new Date(u.fechaRegistro);
+      if (!isNaN(regDate.getTime())) {
+        const diffMs = Date.now() - regDate.getTime();
+        const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+        return Math.max(0, Math.min(30, 30 - diffDays));
+      }
+    }
+    if (u.diasRestantesTrial !== undefined) {
+      return Math.max(0, Math.min(30, u.diasRestantesTrial));
+    }
+    return 30;
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -252,7 +268,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
 
                     {/* Plan */}
                     <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                         <select
                           value={u.plan || 'trial'}
                           onChange={e => handleChangePlan(u, e.target.value as UserPlan)}
@@ -263,28 +279,41 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                           <option value="pro">Pro ($59.990/m)</option>
                           <option value="institucional">Institucional ($99.990/m)</option>
                         </select>
+
+                        {/* Badges según el plan */}
                         {u.plan === 'trial' && (() => {
-                          let dias = u.diasRestantesTrial;
-                          if ((dias === undefined || dias === 30) && u.fechaRegistro) {
-                            const regDate = new Date(u.fechaRegistro);
-                            if (!isNaN(regDate.getTime())) {
-                              const diffDays = Math.floor((Date.now() - regDate.getTime()) / (1000 * 60 * 60 * 24));
-                              dias = Math.max(0, 30 - diffDays);
-                            }
-                          }
-                          const diasFinal = dias !== undefined ? dias : 30;
+                          const diasFinal = calcularDiasRestantesTrial(u);
                           return (
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 ${
                               diasFinal <= 5 
                                 ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' 
                                 : diasFinal <= 15
                                   ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
                                   : 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
                             }`}>
+                              <Clock className="w-2.5 h-2.5" />
                               {diasFinal}d restantes
                             </span>
                           );
                         })()}
+
+                        {u.plan === 'free' && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-slate-800/80 text-slate-300 border-slate-700 inline-flex items-center gap-1">
+                            <span>🌱</span> Plan Gratuito
+                          </span>
+                        )}
+
+                        {u.plan === 'pro' && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-violet-500/10 text-violet-300 border-violet-500/30 inline-flex items-center gap-1">
+                            <span>💎</span> Pro Activo
+                          </span>
+                        )}
+
+                        {u.plan === 'institucional' && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-emerald-500/10 text-emerald-300 border-emerald-500/30 inline-flex items-center gap-1">
+                            <span>🏫</span> Institucional
+                          </span>
+                        )}
                       </div>
                     </td>
 

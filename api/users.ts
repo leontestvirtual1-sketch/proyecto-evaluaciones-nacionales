@@ -72,6 +72,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
           : undefined;
 
+        let diasRestantes = 30;
+        if (createdAt) {
+          const createdDate = new Date(createdAt);
+          if (!isNaN(createdDate.getTime())) {
+            const diffMs = Date.now() - createdDate.getTime();
+            const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+            diasRestantes = Math.max(0, Math.min(30, 30 - diffDays));
+          }
+        } else if (p.dias_restantes_trial !== undefined) {
+          diasRestantes = Math.max(0, Math.min(30, p.dias_restantes_trial));
+        }
+
         return {
           id: p.id,
           rut: p.rut || '12.345.678-9',
@@ -88,7 +100,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           cargo: p.cargo || undefined,
           estado: userEstado,
           plan: p.plan || 'trial',
-          diasRestantesTrial: p.dias_restantes_trial ?? 30,
+          diasRestantesTrial: diasRestantes,
           fechaRegistro: fechaRegStr,
           approvalToken: token
         };

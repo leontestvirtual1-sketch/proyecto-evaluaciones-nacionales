@@ -149,13 +149,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!error && data && data.length > 0) {
         const realUsers: UserProfile[] = data.map((p: Record<string, unknown>) => {
           const createdAt = (p.created_at || p.creado_en || p.fecha_registro) as string | undefined;
-          let diasRestantes = (p.dias_restantes_trial as number) ?? 30;
-          if (createdAt && p.dias_restantes_trial === undefined) {
+          let diasRestantes = 30;
+          if (createdAt) {
             const createdDate = new Date(createdAt);
             if (!isNaN(createdDate.getTime())) {
-              const diffDays = Math.floor((Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
-              diasRestantes = Math.max(0, 30 - diffDays);
+              const diffMs = Date.now() - createdDate.getTime();
+              const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+              diasRestantes = Math.max(0, Math.min(30, 30 - diffDays));
             }
+          } else if (p.dias_restantes_trial !== undefined) {
+            diasRestantes = Math.max(0, Math.min(30, p.dias_restantes_trial as number));
           }
           const fechaRegStr = createdAt 
             ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
