@@ -85,12 +85,23 @@
 
   /*
    * AISLAMIENTO DE IMPRESIÓN:
-   * createPortal renderiza .print-modal-portal como hijo DIRECTO de <body>,
-   * NO dentro de #root. Por eso es seguro ocultar #root aquí —
-   * el portal (y su contenido) sigue visible al imprimirse.
+   * Cuando se imprime un modal de portal, se activa .printing-portal-active / .printing-modal-active
+   * y se oculta #root para que solo se imprima el cuadernillo/pauta.
+   * Cuando se imprime una vista estándar interna (como ReporteTabuladoView),
+   * #root permanece visible con fondo blanco y fluye naturalmente.
    */
-  #root {
+  body.printing-portal-active #root,
+  #root.printing-modal-active {
     display: none !important;
+  }
+
+  #root {
+    background: #ffffff !important;
+    color: #000000 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    position: static !important;
   }
 
   /* El portal fluye naturalmente en el documento sin overlay */

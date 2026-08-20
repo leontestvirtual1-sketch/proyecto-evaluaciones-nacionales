@@ -128,12 +128,31 @@ function MainAppContent({ isSandboxMode, setIsSandboxMode }: { isSandboxMode: bo
 
   const getReporteForPrueba = (pruebaId: string): ReporteTabuladoCurso => {
     const prueba = pruebas.find(p => p.id === pruebaId);
-    if (pruebaId === 'prueba-102' || (prueba && (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')))) {
-      return reporteLenguajeMock;
+
+    // 1. Entorno de Producción: Escuela Premilitar Héroes de la Concepción (2° Medio)
+    if (
+      academicData.isProduction ||
+      pruebaId.startsWith('prueba-len2m') ||
+      (prueba && (prueba.cursoNombre?.includes('2° Medio') || prueba.nivel?.includes('2° Medio') || prueba.id?.startsWith('prueba-len2m')))
+    ) {
+      return {
+        ...reportePremilitarRealMock,
+        pruebaId: prueba?.id || pruebaId,
+        pruebaTitulo: prueba?.titulo || reportePremilitarRealMock.pruebaTitulo,
+        cursoNombre: prueba?.cursoNombre || '2° Medio',
+      };
     }
+
+    // 2. Entorno Demo: Lenguaje (8° Básico)
+    if (pruebaId === 'prueba-102' || (prueba && (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')))) {
+      return reporteLenguajeDemoMock;
+    }
+
+    // 3. Entorno Demo: Ciencias Naturales (6° Básico)
     if (pruebaId === 'prueba-cn6b-101' || (prueba && prueba.asignaturaNombre.toLowerCase().includes('ciencia'))) {
       return { ...reporteCienciasMock, pruebaId: prueba?.id || pruebaId, pruebaTitulo: prueba?.titulo || reporteCienciasMock.pruebaTitulo, cursoNombre: prueba?.cursoNombre || reporteCienciasMock.cursoNombre };
     }
+
     if (prueba) {
       return {
         ...reporteCursoMock,

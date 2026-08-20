@@ -112,9 +112,10 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
     const originalTitle = document.title;
     document.title = `${prueba.titulo} - ${docSuffix} (${prueba.cursoNombre})`;
     
-    // Add temporary class to #root for legacy browser fallback
+    // Add temporary class to #root and body for print isolation
     const rootEl = document.getElementById('root');
     if (rootEl) rootEl.classList.add('printing-modal-active');
+    document.body.classList.add('printing-portal-active');
 
     window.print();
 
@@ -122,6 +123,7 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
     setTimeout(() => {
       document.title = originalTitle;
       if (rootEl) rootEl.classList.remove('printing-modal-active');
+      document.body.classList.remove('printing-portal-active');
     }, 1000);
   };
 
