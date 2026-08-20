@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-20] Integración Dinámica de Establecimientos en Sidebar y Módulo de Establecer/Restablecer Contraseñas
+
+- **Problema / Requerimiento**:
+  1. En el menú lateral izquierdo (Sidebar), el Super Admin solo veía la *Escuela Premilitar Héroes de la Concepción* y no aparecía el nuevo colegio registrado (*Colegio Mi Casa* con su docente Susana Angélica Pizarro Valenzuela).
+  2. Requerimiento: Habilitar en la consola de Gestión de Usuarios una opción para que el administrador pueda establecer o restablecer directamente la contraseña de acceso de cualquier usuario registrado.
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx):
+    - [MODIFICADO] La agrupación de `colegiosMap` ahora consolida en tiempo real todos los docentes reales (`docentesReales`) y los usuarios de rol profesor registrados en producción (`usuarios.filter(u => u.rol === 'profesor' && !isUserDemo(u))`), desplegando automáticamente cada colegio asociado (*Escuela Premilitar Héroes de la Concepción*, *Colegio Mi Casa*, etc.) con su respectiva nómina de docentes para supervisión con 1 clic.
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - [MODIFICADO] Implementada la acción `reset-password` / `set-password` en el endpoint POST, utilizando `sbAdmin.auth.admin.updateUserById(userId, { password: newPassword })` para actualizar las credenciales en Supabase Auth de forma segura e instantánea.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] Incorporada la función `setUserPassword(userId, email, newPassword)` en `AuthContextType` y `AuthProvider`, sincronizando tanto con el endpoint del servidor como con el almacén local para continuidad de sesión.
+  - [`src/pages/GestionUsuariosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx):
+    - [MODIFICADO] Agregado botón de acción con ícono de llave (`KeyRound`) en cada fila de usuario.
+    - [MODIFICADO] Implementado modal compacto y responsivo `selectedUserForPassword` con generador automático de contraseñas seguras (`Sparkles`), botón para copiar con 1 clic (`Copy`), toggle para mostrar/ocultar caracteres (`Eye`/`EyeOff`) y confirmación toast al guardar.
+
+- **Verificación / Despliegue**:
+  - Sidebar con múltiples establecimientos: ✅ Verificado (*Escuela Premilitar* y *Colegio Mi Casa* visibles con sus docentes).
+  - Modal de cambio de contraseña: ✅ Verificado (generación de contraseña, validación de 6+ caracteres y actualización en Supabase).
+  - Compilación TypeScript & Vite Build: ✅ Exitoso (`tsc && vite build` en 13.67s sin errores).
+
 ### [2026-08-20] Aislamiento Estricto de Usuarios Demo vs Producción y Selector de Entorno para Super Admin
 
 - **Problema / Requerimiento**:

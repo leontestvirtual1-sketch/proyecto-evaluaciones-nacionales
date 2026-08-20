@@ -20,16 +20,26 @@ import {
   Send,
   Calendar,
   Lock,
+  KeyRound,
+  Eye,
+  EyeOff,
   ChevronDown
 } from 'lucide-react';
 
 export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isSandboxMode = false }) => {
-  const { user, usuarios, approveUser, rejectOrSuspendUser, changeUserPlan } = useAuth();
+  const { user, usuarios, approveUser, rejectOrSuspendUser, changeUserPlan, setUserPassword } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [estadoFilter, setEstadoFilter] = useState<'todos' | UserEstado>('todos');
   const [copiedTokenId, setCopiedTokenId] = useState<string | null>(null);
   const [successToast, setSuccessToast] = useState<string | null>(null);
   const [selectedUserForEmailModal, setSelectedUserForEmailModal] = useState<UserProfile | null>(null);
+
+  // Estados para Modal de Contraseña
+  const [selectedUserForPassword, setSelectedUserForPassword] = useState<UserProfile | null>(null);
+  const [newPasswordInput, setNewPasswordInput] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSavingPassword, setIsSavingPassword] = useState(false);
+  const [copiedPassword, setCopiedPassword] = useState(false);
 
   const showToast = (msg: string) => {
     setSuccessToast(msg);
@@ -421,6 +431,20 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                           </button>
                         )}
 
+                        {/* Botón Establecer / Restablecer Contraseña */}
+                        <button
+                          onClick={() => {
+                            setSelectedUserForPassword(u);
+                            setNewPasswordInput('');
+                            setShowPassword(false);
+                            setCopiedPassword(false);
+                          }}
+                          title="Establecer o restablecer contraseña de acceso"
+                          className="p-1.5 bg-slate-800 hover:bg-indigo-950 hover:text-indigo-300 text-slate-300 rounded-lg border border-slate-700 hover:border-indigo-500/40 transition-all flex items-center gap-1"
+                        >
+                          <KeyRound className="w-3.5 h-3.5" />
+                        </button>
+
                         <button
                           onClick={() => setSelectedUserForEmailModal(u)}
                           title="Ver simulación de correo de notificación"
@@ -498,6 +522,141 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                 className="px-4 py-1.5 bg-slate-800 text-white rounded-lg font-semibold hover:bg-slate-700"
               >
                 Cerrar Vista Previa
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Establecer / Restablecer Contraseña */}
+      {selectedUserForPassword && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-4 animate-scale-up">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2.5">
+                <span className="p-2 bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 rounded-xl">
+                  <KeyRound className="w-5 h-5" />
+                </span>
+                <div>
+                  <h3 className="font-bold text-white text-sm">Establecer Contraseña</h3>
+                  <p className="text-[11px] text-slate-400">Actualizar credenciales de acceso</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedUserForPassword(null)}
+                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Datos del usuario */}
+            <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800 space-y-1.5 text-xs">
+              <div className="flex justify-between items-center">
+                <span className="text-slate-400">Usuario:</span>
+                <span className="font-bold text-white">{selectedUserForPassword.nombre} {selectedUserForPassword.apellido}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-400">Correo:</span>
+                <span className="text-indigo-400 font-mono text-[11px]">{selectedUserForPassword.email}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-400">Establecimiento:</span>
+                <span className="text-slate-300 truncate max-w-[220px]">{selectedUserForPassword.establecimiento}</span>
+              </div>
+            </div>
+
+            {/* Input de Nueva Contraseña */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <label className="text-slate-300 font-semibold">Nueva Contraseña:</label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+                    const generated = `Saber_${randomSuffix}!`;
+                    setNewPasswordInput(generated);
+                  }}
+                  className="text-[11px] text-indigo-400 hover:text-indigo-300 font-semibold hover:underline flex items-center gap-1"
+                >
+                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  Generar Automática
+                </button>
+              </div>
+
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={newPasswordInput}
+                  onChange={e => setNewPasswordInput(e.target.value)}
+                  placeholder="Ej: Saber_2026!"
+                  className="w-full pl-3 pr-20 py-2.5 bg-slate-950 text-white font-mono text-xs border border-slate-700 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors"
+                />
+                <div className="absolute right-2 top-2 flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="p-1 text-slate-400 hover:text-white"
+                    title={showPassword ? 'Ocultar' : 'Mostrar'}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                  {newPasswordInput && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(newPasswordInput);
+                        setCopiedPassword(true);
+                        setTimeout(() => setCopiedPassword(false), 2000);
+                      }}
+                      className="p-1 text-slate-400 hover:text-white"
+                      title="Copiar contraseña"
+                    >
+                      {copiedPassword ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    </button>
+                  )}
+                </div>
+              </div>
+              <p className="text-[10px] text-slate-500">Mínimo 6 caracteres. Se actualizará en Supabase Auth inmediatamente.</p>
+            </div>
+
+            {/* Botones de acción */}
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+              <button
+                type="button"
+                onClick={() => setSelectedUserForPassword(null)}
+                className="px-3 py-2 text-xs text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition-all font-semibold"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                disabled={!newPasswordInput || newPasswordInput.length < 6 || isSavingPassword}
+                onClick={async () => {
+                  if (!selectedUserForPassword) return;
+                  setIsSavingPassword(true);
+                  const res = await setUserPassword(selectedUserForPassword.id, selectedUserForPassword.email, newPasswordInput);
+                  setIsSavingPassword(false);
+                  if (res.error) {
+                    showToast(`Error: ${res.error}`);
+                  } else {
+                    showToast(`✅ Contraseña actualizada para ${selectedUserForPassword.nombre} (${newPasswordInput})`);
+                    setSelectedUserForPassword(null);
+                  }
+                }}
+                className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-500/30 flex items-center gap-1.5 transition-all"
+              >
+                {isSavingPassword ? (
+                  <>
+                    <Clock className="w-3.5 h-3.5 animate-spin" />
+                    Guardando...
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-3.5 h-3.5" />
+                    Guardar Contraseña
+                  </>
+                )}
               </button>
             </div>
           </div>

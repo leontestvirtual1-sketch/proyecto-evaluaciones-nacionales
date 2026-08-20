@@ -419,6 +419,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         return res.status(200).json({ success: true });
       }
+
+      // ── ACCIÓN: ESTABLECER O RESTABLECER CONTRASEÑA ──
+      if (action === 'reset-password' || action === 'set-password') {
+        const { userId, email, newPassword } = body;
+        if (!newPassword || newPassword.length < 6) {
+          return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres.' });
+        }
+
+        let targetUserId = userId;
+        if (!targetUserId && email) {
+          const { data: pRecord } = await sbAdmin
+            .from('perfiles')
+            .select('id')
+            .eq('email', email.toLowerCase().trim())
+            .single();
+          if (pRecord) targetUserId = pRecord.id;
+        }
+
+        if (!targetUserId) {
+          return res.status(400).json({ error: 'No se encontró el ID de usuario para actualizar la contraseña.' });
+        }
+
+        // Actualizar contraseña en Supabase Auth
+        const { error: updateAuthErr } = await sbAdmin.auth.admin.updateUserById(targetUserId, {
+          password: newPassword
+        });
+
+        if (updateAuthErr) {
+          console.error('Error al actualizar contraseña en auth:', updateAuthErr);
+          return res.status(500).json({ error: updateAuthErr.message || 'Error al actualizar contraseña en Supabase Auth.' });
+        }
+
+        return res.status(200).json({
+          success: true,
+          message: 'Contraseña actualizada con éxito en Supabase Auth.'
+        });
+      }
     }
 
     return res.status(405).json({ error: 'Método no soportado' });

@@ -102,9 +102,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     });
   });
 
-  const listaDocentes = docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar];
+  // Consolidar docentes reales de producción
+  const isUserDemo = (u: UserProfile) => {
+    const email = (u.email || '').toLowerCase();
+    const est = (u.establecimiento || '').toLowerCase();
+    return email.endsWith('@demo.cl') || email.endsWith('@escuelademo.cl') || email.endsWith('@sysget.cl') || est.includes('demo') || est.includes('bicentenario');
+  };
+
+  const listaDocentes: UserProfile[] = [];
+  listaDocentes.push(currentUserProfesorPremilitar);
+
+  (docentesReales || []).forEach(d => {
+    if (!listaDocentes.some(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id)) {
+      listaDocentes.push(d);
+    }
+  });
+
+  (usuarios || []).filter(u => u.rol === 'profesor' && !isUserDemo(u)).forEach(d => {
+    if (!listaDocentes.some(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id)) {
+      listaDocentes.push(d);
+    }
+  });
+
   listaDocentes.forEach(d => {
     const key = d.rbd || d.establecimiento;
+    if (!key) return;
     if (colegiosMap.has(key)) {
       const existing = colegiosMap.get(key)!;
       if (!existing.docentes.some(doc => doc.id === d.id || doc.email === d.email)) {
@@ -112,7 +134,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
       }
     } else {
       colegiosMap.set(key, {
-        rbd: d.rbd || '31030',
+        rbd: d.rbd || '12345',
         nombre: d.establecimiento,
         logoUrl: d.logoUrl,
         docentes: [d]

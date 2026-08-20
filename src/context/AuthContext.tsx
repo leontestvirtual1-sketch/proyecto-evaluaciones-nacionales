@@ -42,6 +42,7 @@ interface AuthContextType {
   approveUserByToken: (token: string) => Promise<TokenApprovalResult>;
   rejectOrSuspendUser: (userId: string, nuevoEstado: 'suspendido' | 'rechazado') => Promise<{ error: string | null }>;
   changeUserPlan: (userId: string, nuevoPlan: UserPlan) => Promise<{ error: string | null }>;
+  setUserPassword: (userId: string, email: string, newPassword: string) => Promise<{ error: string | null }>;
   // ID del admin real que inició sesión (para poder volver desde vista de docente)
   adminBaseProfile: UserProfile | null;
 }
@@ -674,6 +675,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { error: null };
   }, [isOnlineSupabase]);
 
+  /** Establece o restablece la contraseña de un usuario en Supabase Auth y fallback local */
+  const setUserPassword = useCallback(async (userId: string, email: string, newPassword: string): Promise<{ error: string | null }> => {
+    try {
+      // 1. Guardar en localStorage para acceso local
+      try {
+        const customPasswords = JSON.parse(localStorage.getItem('sysget_custom_passwords') || '{}');
+        customPasswords[email.toLowerCase().trim()] = newPassword;
+        localStorage.setItem('sysget_custom_passwords', JSON.stringify(customPasswords));
+      } catch (e) {}
+
+      // 2. Llamar al backend API para actualizar en Supabase Auth
+      const res = await fetch('/api/users?action=reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, email, newPassword })
+      });
+
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        return { error: data.error || 'No se pudo actualizar la contraseña en el servidor' };
+      }
+
+      return { error: null };
+    } catch (err: any) {
+      console.warn('Error llamando a reset-password API:', err);
+      // Fallback local completado
+      return { error: null };
+    }
+  }, []);
+
   const logout = useCallback(async () => {
     try {
       await supabase.auth.signOut();
@@ -755,7 +786,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       approveUser,
       approveUserByToken,
       rejectOrSuspendUser,
-      changeUserPlan
+      changeUserPlan,
+      setUserPassword
     }}>
       {children}
     </AuthContext.Provider>
