@@ -48,7 +48,7 @@
 
 /* ═════════════════════════════════════════════════════════════
 /* ═════════════════════════════════════════════════════════════
-   ISOLATED PRINT STYLES (ZERO BLANK PAGES, MULTI-PAGE FLOW)
+   MOTOR DE IMPRESIÓN OFICIAL (Zero Blank Pages, Multi-page Flow)
    ═════════════════════════════════════════════════════════════ */
 @media print {
   @page {
@@ -56,13 +56,19 @@
     size: letter portrait;
   }
 
-  /* 1. When portal modal is printing, completely hide #root so it takes ZERO layout height */
-  body:has(.print-modal-portal) #root,
-  #root.printing-modal-active {
+  /* Ocultar elementos de navegación y controles de pantalla */
+  header,
+  nav,
+  aside,
+  footer,
+  .glass-nav,
+  .print-control-bar,
+  .print-hidden-element,
+  .print\:hidden {
     display: none !important;
   }
 
-  /* 2. Reset html and body to clean printable canvas */
+  /* Resetear canvas de impresión en blanco puro */
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
@@ -77,14 +83,16 @@
     position: static !important;
   }
 
-  /* 3. Hide all non-printable controls inside portal */
-  .print-control-bar,
-  .print-modal-portal .print-control-bar,
-  .print-hidden-element {
-    display: none !important;
+  #root {
+    background: #ffffff !important;
+    color: #000000 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    position: static !important;
   }
 
-  /* 4. Portal container flows naturally in standard document flow */
+  /* Contenedor del modal de impresión fluye naturalmente en el documento */
   .print-modal-portal {
     position: static !important;
     display: block !important;
@@ -98,6 +106,7 @@
     backdrop-filter: none !important;
     overflow: visible !important;
     inset: auto !important;
+    z-index: auto !important;
   }
 
   .print-modal-inner {
@@ -128,7 +137,7 @@
     overflow: visible !important;
   }
 
-  /* 5. Canvas takes entire printable page area starting on Page 1 */
+  /* 5. Canvas toma el área imprimible completa desde la página 1 */
   .printable-paper-canvas {
     position: static !important;
     display: block !important;
@@ -140,15 +149,22 @@
     padding: 0 !important;
     background: #ffffff !important;
     color: #000000 !important;
-    border: none !important;
     box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
     overflow: visible !important;
   }
 
-  /* 6. Avoid splitting alternatives and short boxes awkwardly */
+  /* Control estricto de saltos de página */
+  .break-after-page,
+  .page-break-after-always {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
   .page-break-inside-avoid {
-    break-inside: avoid !important;
     page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   .page-break-inside-auto {
@@ -156,18 +172,9 @@
     page-break-inside: auto !important;
   }
 
-  /* 7. Standard Letter print margins to optimize space and avoid orphaned items */
-  @page {
-    size: letter portrait;
-    margin: 10mm 12mm 10mm 12mm;
-  }
-
-  /* 8. Force crisp solid black text and borders */
+  /* Force crisp solid black text and borders */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 }
-
-
-

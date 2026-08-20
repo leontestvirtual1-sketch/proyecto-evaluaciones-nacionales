@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 import {
   Printer,
   FileText,
@@ -653,5 +652,5 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
     </div>
   );
 
-  return createPortal(modalContent, document.body);
+  return modalContent;
 };
