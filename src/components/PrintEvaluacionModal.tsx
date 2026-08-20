@@ -51,13 +51,21 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   };
 
   // Filter students belonging to this course
-  const alumnosDelCurso = alumnos.filter(
-    a => !prueba?.cursoId || a.cursoId === prueba.cursoId || a.cursoNombre === prueba.cursoNombre
-  );
-  const listaAlumnos = alumnosDelCurso.length > 0 ? alumnosDelCurso : alumnos;
+  const alumnosDelCurso = React.useMemo(() => {
+    return (alumnos || []).filter(
+      a => !prueba?.cursoId || a.cursoId === prueba.cursoId || a.cursoNombre === prueba.cursoNombre
+    );
+  }, [alumnos, prueba]);
+  const listaAlumnos = alumnosDelCurso.length > 0 ? alumnosDelCurso : (alumnos || []);
 
   // Selected students IDs for personalized booklet printing
-  const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>(listaAlumnos.map(a => a.id));
+  const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
+
+  React.useEffect(() => {
+    if (listaAlumnos.length > 0) {
+      setSelectedStudentIds(listaAlumnos.map(a => a.id));
+    }
+  }, [listaAlumnos, isOpen, prueba]);
 
   const toggleSelectStudent = (id: string) => {
     setSelectedStudentIds(prev =>
@@ -73,25 +81,25 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
     }
   };
 
-  if (!isOpen || !prueba) return null;
-
   // Filter and prepare questions for this evaluation strictly by preguntasIds
   const preguntasDeLaPrueba = React.useMemo(() => {
     if (!prueba) return [];
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
-      const byId = new Map(preguntas.map(p => [p.id, p]));
+      const byId = new Map((preguntas || []).map(p => [p.id, p]));
       const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
       if (list.length > 0) return list;
     }
-    return preguntas.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
+    return (preguntas || []).filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
   }, [prueba, preguntas]);
 
   // If none matched, fallback to all provided questions up to totalPreguntas
   const itemsToPrint: Pregunta[] = preguntasDeLaPrueba.length > 0
     ? preguntasDeLaPrueba
-    : preguntas.slice(0, prueba.totalPreguntas || 30);
+    : (preguntas || []).slice(0, prueba?.totalPreguntas || 30);
 
   const selectedStudentsToPrint = listaAlumnos.filter(a => selectedStudentIds.includes(a.id));
+
+  if (!isOpen || !prueba) return null;
 
   const handlePrint = () => {
     // Set document title so Chrome/Edge uses it as the default PDF filename
