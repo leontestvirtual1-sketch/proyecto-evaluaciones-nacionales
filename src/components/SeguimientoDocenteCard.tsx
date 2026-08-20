@@ -20,7 +20,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { SeguimientoDocente } from '../types';
-import { seguimientoDocentesMock } from '../data/mockData';
+import { useAcademicData } from '../context/AcademicDataContext';
 
 interface SeguimientoDocenteCardProps {
   onSelectPruebaReporte: (pruebaId: string) => void;
@@ -29,7 +29,9 @@ interface SeguimientoDocenteCardProps {
 export const SeguimientoDocenteCard: React.FC<SeguimientoDocenteCardProps> = ({
   onSelectPruebaReporte
 }) => {
-  const [docentes, setDocentes] = useState<SeguimientoDocente[]>(seguimientoDocentesMock);
+  // ── DATA ISOLATION: sourced from AcademicDataContext to prevent Demo/Prod bleed ──
+  const { seguimientoDocentes } = useAcademicData();
+  const [docentes] = useState<SeguimientoDocente[]>(seguimientoDocentes);
   const [selectedAsignatura, setSelectedAsignatura] = useState<string>('todas');
   const [selectedEstadoPME, setSelectedEstadoPME] = useState<string>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');

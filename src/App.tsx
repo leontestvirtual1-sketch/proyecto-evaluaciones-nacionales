@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+// AcademicDataContext is the SINGLE source of truth for Demo vs Production data isolation.
 import { ShieldCheck } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { AcademicDataProvider, useAcademicData } from './context/AcademicDataContext';
 import { Navbar } from './components/Navbar';
 import { Sidebar, PageId } from './components/Sidebar';
 import { ProfesorDashboard } from './components/ProfesorDashboard';
@@ -38,13 +40,14 @@ import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } f
 
 import { SandboxBanner } from './components/SandboxBanner';
 
-function MainAppContent() {
+function MainAppContent({ isSandboxMode, setIsSandboxMode }: { isSandboxMode: boolean; setIsSandboxMode: (v: boolean) => void }) {
   const { user, isAuthenticated, isLoading, switchRole, approveUserByToken, logout } = useAuth();
+  // ── DATA LAYER: consume from AcademicDataContext (single source of truth) ──
+  const academicData = useAcademicData();
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
   const [activePage, setActivePage] = useState<PageId>('dashboard');
   const [darkMode, setDarkMode] = useState<boolean>(true);
   const [showLanding, setShowLanding] = useState<boolean>(true);
-  const [isSandboxMode, setIsSandboxMode] = useState<boolean>(false);
   const [tokenApprovalNotice, setTokenApprovalNotice] = useState<string | null>(null);
 
   // Si el usuario ya estaba autenticado (sesión restaurada), saltar la Landing directamente (salvo si está en registro)
@@ -246,41 +249,11 @@ function MainAppContent() {
   const renderMainContent = () => {
     // Admin and Profesor share the same staff view
     if (user.rol === 'profesor' || user.rol === 'admin') {
-      const getDashboardData = () => {
-        const isPremil = user.email === 'luis.leon@premil.cl';
-        const isProdAdmin = user.email === 'leontestvirtual1@gmail.com' || (user.rol === 'admin' && !isSandboxMode && user.email !== 'admin@sysget.cl' && user.email !== 'admin@escuelademo.cl');
-
-        // Producción: las pruebas oficiales de la Escuela Premilitar (Agosto, Junio y Abril 2026)
-        if (isPremil || isProdAdmin) {
-          return {
-            dashboardPruebas: pruebas.filter(p =>
-              p.id === 'prueba-len2m-101' ||
-              p.id === 'prueba-len2m-jun-101' ||
-              p.id === 'prueba-len2m-abr-101' ||
-              p.profesorId === currentUserProfesorPremilitar.id
-            ),
-            dashboardReporte: reportePremilitarRealMock
-          };
-        }
-
-        // Demo: únicamente pruebas demo (8° Básico y 6° Básico del Liceo Bicentenario)
-        // Nunca incluye ninguna prueba de la Escuela Premilitar (Agosto, Junio ni Abril)
-        const demoPruebas = pruebas.filter(p =>
-          p.id !== 'prueba-len2m-101' &&
-          p.id !== 'prueba-len2m-jun-101' &&
-          p.id !== 'prueba-len2m-abr-101' &&
-          p.profesorId !== currentUserProfesorPremilitar.id
-        );
-        const dashboardPruebas = user.rol === 'profesor' && user.asignaturaId 
-          ? demoPruebas.filter(p => p.asignaturaId === user.asignaturaId) 
-          : demoPruebas;
-        const dashboardReporte = user.asignaturaId === 'asig-3' 
-          ? reporteCienciasMock 
-          : (user.asignaturaId === 'asig-2' ? reporteLenguajeDemoMock : reporteCursoMock);
-        return { dashboardPruebas, dashboardReporte };
-      };
-
-      const { dashboardPruebas, dashboardReporte } = getDashboardData();
+      // ── DATA ISOLATION: sourced exclusively from AcademicDataContext ──
+      // getDashboardData() has been REMOVED. All data filtering is centralized
+      // in AcademicDataProvider to prevent Demo/Production bleed.
+      const dashboardPruebas = academicData.pruebas;
+      const dashboardReporte = academicData.reporteActivo;
 
       // If viewing test report details
       if (selectedReportPruebaId) {
@@ -520,7 +493,7 @@ function MainAppContent() {
         asignaturas={user?.rol === 'profesor' && user?.asignaturaId ? asignaturasMock.filter(a => a.id === user.asignaturaId) : asignaturasMock}
         ejes={user?.rol === 'profesor' && user?.asignaturaId ? ejesTematicosMock.filter(e => e.asignaturaId === user.asignaturaId) : ejesTematicosMock}
         habilidades={user?.rol === 'profesor' && user?.asignaturaId ? habilidadesMock.filter(h => h.asignaturaId === user.asignaturaId) : habilidadesMock}
-        cursos={user?.rol === 'profesor' ? cursosMock.filter(c => c.profesorId === user.id || !c.profesorId || c.id === 'curso-2m') : cursosMock}
+        cursos={academicData.cursos}
         bancoPreguntas={user?.rol === 'profesor' && user?.asignaturaId ? bancoPreguntas.filter(p => p.asignaturaId === user.asignaturaId) : bancoPreguntas}
         onCreatePrueba={handleCreatePrueba}
       />
@@ -532,8 +505,22 @@ function MainAppContent() {
 export function App() {
   return (
     <AuthProvider>
-      <MainAppContent />
+      <MainAppContentWrapper />
     </AuthProvider>
+  );
+}
+
+function MainAppContentWrapper() {
+  const { user } = useAuth();
+  // isSandboxMode must live HERE so AcademicDataProvider is re-created when it changes
+  const [isSandboxMode, setIsSandboxMode] = useState<boolean>(false);
+  return (
+    <AcademicDataProvider
+      currentUser={user}
+      isSandboxMode={isSandboxMode}
+    >
+      <MainAppContent isSandboxMode={isSandboxMode} setIsSandboxMode={setIsSandboxMode} />
+    </AcademicDataProvider>
   );
 }
 
