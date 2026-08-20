@@ -56,6 +56,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
     if (isProduction) {
       // ═════════════════════════════════════════════════════════════
       // ENTORNO PRODUCCIÓN: Escuela Premilitar Héroes de la Concepción
+      // ESTADO VACÍO LEGÍTIMO: Los alumnos reales aún no han sido
+      // ingresados al sistema. Se devuelve [] según DIRECTIVAS.md.
       // ═════════════════════════════════════════════════════════════
       const prodPruebas = allPruebas.filter(
         p =>
@@ -66,13 +68,14 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       );
 
       const prodCursos = cursosMock.filter(c => c.id === 'curso-2m' || c.nivel.includes('Medio'));
-      const prodAlumnos = alumnosMock.filter(a => a.cursoId === 'curso-2m');
+      // ESTADO VACÍO LEGÍTIMO: sin alumnos reales aún. No usar mocks.
+      const prodAlumnos: AlumnoBasico[] = [];
 
       return {
         isProduction: true,
         pruebas: prodPruebas,
         cursos: prodCursos,
-        alumnos: prodAlumnos,
+        alumnos: prodAlumnos, // [] — estado legítimo hasta que se creen alumnos reales
         seguimientoDocentes: [
           {
             profesorId: currentUserProfesorPremilitar.id,

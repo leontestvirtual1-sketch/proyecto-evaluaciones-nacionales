@@ -194,7 +194,12 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
               }`}
             >
               <Users className="w-4 h-4 text-indigo-300" />
-              <span>2. Por Alumno ({selectedStudentsToPrint.length})</span>
+              <span>
+                2. Por Alumno
+                {listaAlumnos.length > 0
+                  ? ` (${selectedStudentsToPrint.length})`
+                  : ' (Sin alumnos)'}
+              </span>
             </button>
 
             <button
