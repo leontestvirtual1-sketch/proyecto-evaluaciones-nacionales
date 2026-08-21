@@ -758,7 +758,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   /** Cambia la vista al perfil de un docente real (supervisión por Admin Producción) */
   const switchToDocente = useCallback((docenteId: string) => {
-    const docente = docentesReales.find(d => d.id === docenteId);
+    // Primero buscar en docentesReales (cargados desde Supabase rol=profesor activo)
+    // Si no se encuentra por id, buscar también en la lista completa de usuarios
+    const docente =
+      docentesReales.find(d => d.id === docenteId) ||
+      usuarios.find(u => u.id === docenteId && u.rol === 'profesor');
     if (docente) {
       // Guardar perfil base del admin para poder volver
       setUser(prev => {
@@ -766,7 +770,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return docente;
       });
     }
-  }, [docentesReales]);
+  }, [docentesReales, usuarios]);
 
 
   return (
