@@ -19,6 +19,7 @@ import { APP_CONFIG } from '../config/appConfig';
 import { establecimientosCatalog } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
+import { getSequentialPrintTitle } from '../utils/printUtils';
 
 interface PrintEvaluacionModalProps {
   isOpen: boolean;
@@ -109,8 +110,9 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
       : printMode === 'personalizado' ? `Cuadernillos Personalizados (${selectedStudentsToPrint.length} alumnos)`
       : printMode === 'hoja_respuestas' ? 'Hoja de Respuestas'
       : 'Pauta Clave Docente';
+    const baseTitle = `${prueba.titulo} - ${docSuffix} (${prueba.cursoNombre})`;
     const originalTitle = document.title;
-    document.title = `${prueba.titulo} - ${docSuffix} (${prueba.cursoNombre})`;
+    document.title = getSequentialPrintTitle(baseTitle);
     
     // Add temporary class to #root and body for print isolation
     const rootEl = document.getElementById('root');

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { planReforzamientoMartinSepulveda, evaluacionEscrituraIAMock } from '../data/mockData';
 import { APP_CONFIG } from '../config/appConfig';
+import { getSequentialPrintTitle } from '../utils/printUtils';
 
 // ─── 1. PLAN DE REFORZAMIENTO MARTÍN SEPÚLVEDA MODAL ────────────────
 interface PlanMartinModalProps {
@@ -29,8 +30,9 @@ export const PlanMartinModal: React.FC<PlanMartinModalProps> = ({ isOpen, onClos
   if (!isOpen) return null;
 
   const handlePrint = () => {
+    const baseTitle = `Ficha de Reforzamiento Pedagógico - ${planReforzamientoMartinSepulveda.alumno} (${planReforzamientoMartinSepulveda.curso})`;
     const originalTitle = document.title;
-    document.title = `Ficha de Reforzamiento Pedagógico - ${planReforzamientoMartinSepulveda.alumno} (${planReforzamientoMartinSepulveda.curso})`;
+    document.title = getSequentialPrintTitle(baseTitle);
     
     const rootEl = document.getElementById('root');
     if (rootEl) rootEl.classList.add('printing-modal-active');

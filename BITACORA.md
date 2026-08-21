@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Numeración Secuencial Automática de Descarga en el Motor de Impresión PDF
+
+- **Problema / Requerimiento**:
+  1. Al imprimir o descargar varias veces el mismo cuadernillo de evaluación, hoja de respuestas o pauta docente dentro de una misma sesión (vía "Guardar como PDF" del navegador), el sistema asignaba siempre el mismo nombre por defecto (`document.title`), obligando al usuario a confirmar la sobreescritura del archivo en Windows/macOS.
+  2. Requerimiento: Detectar si el documento ya fue descargado previamente en la sesión actual y generar automáticamente nombres correlativos con sufijo secuencial `(1)`, `(2)`, `(3)`, etc.
+
+- **Archivos y Solución Técnica**:
+  - [`src/utils/printUtils.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/utils/printUtils.ts):
+    - [NUEVO] Implementada la función `getSequentialPrintTitle(baseTitle: string): string`. Utiliza `sessionStorage` para registrar un contador por cada tipo de documento (`print_counter_[clave_documento]`). En la primera descarga entrega el nombre limpio, y a partir de la segunda añade el sufijo estándar `(1)`, `(2)`, etc.
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx):
+    - [MODIFICADO] `handlePrint` actualizado para envolver el título del cuadernillo, hoja OMR o pauta con `getSequentialPrintTitle`, asegurando que cada llamada a `window.print()` proponga un nombre único al guardar el PDF.
+  - [`src/components/SandboxSpecialModals.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/SandboxSpecialModals.tsx):
+    - [MODIFICADO] Ficha de reforzamiento pedagógico (Plan Martín Sepúlveda) integrada con `getSequentialPrintTitle`.
+  - [`src/components/ReporteTabuladoView.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ReporteTabuladoView.tsx):
+    - [MODIFICADO] Botón de impresión de Reporte Tabulado Curricular integrado con `getSequentialPrintTitle`.
+
+- **Verificación / Despliegue**:
+  - Primera descarga: `[Nombre Evaluación] - Cuadernillo de Evaluación ([Curso]).pdf`.
+  - Segunda descarga en la sesión: `[Nombre Evaluación] - Cuadernillo de Evaluación ([Curso]) (1).pdf`.
+  - Tercera descarga en la sesión: `[Nombre Evaluación] - Cuadernillo de Evaluación ([Curso]) (2).pdf`.
+  - Compilación y Build Vite: ✅ Exitoso (`built in 10.48s` sin errores).
+
 ### [2026-08-21] Sincronización Dinámica de Establecimientos Registrados en el Dashboard del Super Admin
 
 - **Problema / Requerimiento**:

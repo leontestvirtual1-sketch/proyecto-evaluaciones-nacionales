@@ -15,6 +15,7 @@ import {
   AlertCircle,
   Printer
 } from 'lucide-react';
+import { getSequentialPrintTitle } from '../utils/printUtils';
 
 
 interface ReporteTabuladoViewProps {
@@ -77,8 +78,9 @@ export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = ({
           </div>
           <button
             onClick={() => {
+              const baseTitle = `Reporte Tabulado Curricular - ${reporte.pruebaTitulo} (${reporte.cursoNombre})`;
               const originalTitle = document.title;
-              document.title = `Reporte Tabulado Curricular - ${reporte.pruebaTitulo} (${reporte.cursoNombre})`;
+              document.title = getSequentialPrintTitle(baseTitle);
               window.print();
               setTimeout(() => { document.title = originalTitle; }, 1000);
             }}
