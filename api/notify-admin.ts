@@ -4,11 +4,11 @@ import nodemailer from 'nodemailer';
 type VercelRequest = any;
 type VercelResponse = any;
 
-const ADMIN_EMAIL = 'leontestvirtual1@gmail.com';
-const ADMIN_NAME = 'Luis Andrés León González';
-const APP_URL = 'https://sysget-saber.vercel.app';
-const SMTP_USER = 'leontestvirtual1@gmail.com';
-const SMTP_PASS = 'SMTP_PASS_REDACTED';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'leontestvirtual1@gmail.com';
+const ADMIN_NAME = process.env.ADMIN_NAME || 'Luis Andrés León González';
+const APP_URL = process.env.APP_URL || 'https://sysget-saber.vercel.app';
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS

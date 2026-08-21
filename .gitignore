@@ -34,4 +34,9 @@ dist-ssr
 # MCP config (may contain API keys - DO NOT COMMIT)
 .agents/mcp_config.json
 
+# Scratch and test execution scripts
+test_*.mjs
+test_*.js
+scratch/
+
 .vercel

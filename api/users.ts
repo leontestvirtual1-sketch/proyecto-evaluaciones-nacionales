@@ -5,14 +5,18 @@ import nodemailer from 'nodemailer';
 type VercelRequest = any;
 type VercelResponse = any;
 
-const ADMIN_EMAIL = 'leontestvirtual1@gmail.com';
-const ADMIN_NAME = 'Luis Andrés León González';
-const APP_URL = 'https://sysget-saber.vercel.app';
-const SMTP_USER = 'leontestvirtual1@gmail.com';
-const SMTP_PASS = 'SMTP_PASS_REDACTED';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'leontestvirtual1@gmail.com';
+const ADMIN_NAME = process.env.ADMIN_NAME || 'Luis Andrés León González';
+const APP_URL = process.env.APP_URL || 'https://sysget-saber.vercel.app';
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || 'https://khtdzgfqjggycrcbrytw.supabase.co';
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtodGR6Z2ZxamdneWNyY2JyeXR3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjY0OTAzNCwiZXhwIjoyMTAyMjI1MDM0fQ.tfXmF7LU7vDXMikpImMOlsei2kQFwqGSGljHrrMuYFE';
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://khtdzgfqjggycrcbrytw.supabase.co';
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+
+if (!SUPABASE_SERVICE_ROLE_KEY) {
+  console.warn('⚠️ [SEGURIDAD] SUPABASE_SERVICE_ROLE_KEY no está configurada en las variables de entorno.');
+}
 
 const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 

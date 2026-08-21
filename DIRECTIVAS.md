@@ -148,3 +148,26 @@ const isProduction = useMemo(() => {
 El perfil de Susana Angélica (Colegio Mi Casa) se encuentra en **proceso de poblamiento**. Hasta que se completen sus datos en Supabase, el sistema debe:
 - Mostrar su sección con **Estado Vacío Legítimo** (Directiva 2): 0 cursos, 0 alumnos, "En proceso de carga".
 - **Nunca** mostrar datos del Liceo Bicentenario Demo en su vista.
+
+---
+
+## 10. 🛡️ Directiva de Seguridad: Gestión de Secretos y Prohibición Absoluta de Credenciales Hardcodeadas (Zero-Secret Hardcoding Policy)
+> **Principio**: *Bajo ninguna circunstancia se admitirán credenciales, tokens de servicio, contraseñas de aplicación o llaves maestras escritas en texto plano en el código fuente, ni como valores por defecto (fallbacks) de variables de entorno.*
+> *Establecida: 2026-08-21 — origen: auditoría de seguridad preventiva en endpoints y scripts de backend*
+
+### Reglas Mandatorias de Seguridad
+1. **Prohibición de Fallback con Secretos Reales**:
+   - ❌ **TERMINANTEMENTE PROHIBIDO**: `const PASS = process.env.SMTP_PASS || 'mi_password_real';` o `const KEY = process.env.KEY || 'eyJhbGciOiJIUzI1Ni...';`
+   - ✅ **CORRECTO Y OBLIGATORIO**: `const PASS = process.env.SMTP_PASS || '';` y advertir si no existe.
+2. **Aislamiento de Llaves Maestras (`SUPABASE_SERVICE_ROLE_KEY`)**:
+   - La `SUPABASE_SERVICE_ROLE_KEY` bypasses todas las políticas RLS de PostgreSQL y otorga acceso irrestricto a toda la base de datos.
+   - Solo debe consumirse en el entorno seguro de servidor (`api/*.ts` en Vercel o Supabase Edge Functions) a través de `process.env.SUPABASE_SERVICE_ROLE_KEY`.
+   - **NUNCA** debe ser accesible desde el bundle frontend de Vite ni importarse en `src/`.
+3. **Contraseñas de Aplicación SMTP (`SMTP_PASS`)**:
+   - Las contraseñas de aplicación de Google/Gmail deben residir exclusivamente en `.env.local` (desarrollo local) y en las variables de entorno de Vercel / Supabase (producción).
+4. **Exclusión Estricta en Git (`.gitignore`)**:
+   - Todo archivo `.env*` con valores reales, así como scripts de prueba temporales (`test_*.mjs`, `test_*.js`, `scratch/`), deben estar excluidos en `.gitignore`.
+   - El único archivo de variables de entorno versionado es `.env.example`, conteniendo exclusivamente valores de plantilla y placeholders documentados.
+5. **Protocolo Obligatorio ante Fuga o Sospecha de Compromiso**:
+   - Si una credencial existió en texto plano en el disco o en git, se debe asumir comprometida y rotar de inmediato en el proveedor (Google App Passwords, Supabase API Settings).
+

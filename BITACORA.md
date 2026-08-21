@@ -2,6 +2,40 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Auditoría de Seguridad: Eliminación de Secretos Hardcodeados y Directiva 10 (Zero-Secret Policy)
+
+- **Problema / Requerimiento**:
+  1. Auditoría de seguridad detectó presencia de credenciales reales escritas en texto plano como fallbacks en código fuente:
+     - `test_smtp.mjs`: contraseña de aplicación Google SMTP en texto plano.
+     - `api/users.ts`: fallback con `SUPABASE_SERVICE_ROLE_KEY` y `SMTP_PASS`.
+     - `api/notify-admin.ts`: fallback con `SMTP_PASS`.
+     - `supabase/functions/notify-admin/index.ts`: fallback con `SMTP_PASS`.
+  2. Riesgo de seguridad crítico: La Service Role Key otorga bypass completo de RLS en Supabase, y la contraseña de Gmail permite el uso no autorizado de la cuenta SMTP.
+  3. Requerimiento: Sanitizar todos los archivos, desvincular scripts de prueba del control de versiones, actualizar `.env.example`, formalizar la **Directiva 10** y guiar la rotación inmediata de credenciales.
+
+- **Archivos y Solución Técnica**:
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - [MODIFICADO] Eliminados todos los valores por defecto hardcodeados de `SUPABASE_SERVICE_ROLE_KEY`, `SMTP_PASS` y `SMTP_USER`. Ahora se leen estrictamente de `process.env.*`.
+  - [`api/notify-admin.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/notify-admin.ts):
+    - [MODIFICADO] Eliminados valores por defecto hardcodeados de `SMTP_USER` y `SMTP_PASS`.
+  - [`supabase/functions/notify-admin/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/functions/notify-admin/index.ts):
+    - [MODIFICADO] Eliminados fallbacks hardcodeados en `Deno.env.get()`.
+  - [`test_smtp.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/test_smtp.mjs):
+    - [MODIFICADO] Configurado con `dotenv/config` para leer exclusivamente desde variables de entorno.
+  - [`.gitignore`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.gitignore):
+    - [MODIFICADO] Agregadas reglas para ignorar `test_*.mjs`, `test_*.js` y `scratch/`.
+    - [MODIFICADO] Ejecutado `git rm --cached test_smtp.mjs` para desindexar el archivo del repositorio.
+  - [`.env.example`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.env.example):
+    - [MODIFICADO] Actualizada la plantilla con placeholders claros para `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` y `SUPABASE_SERVICE_ROLE_KEY`.
+  - [`DIRECTIVAS.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/DIRECTIVAS.md):
+    - [NUEVO] Incorporada la **Directiva 10: Política Estricta de Gestión de Secretos y Cero Hardcoding de Credenciales (Zero-Secret Hardcoding Policy)**.
+
+- **Verificación / Despliegue**:
+  - Escaneo de credenciales en código: ✅ 0 secretos encontrados en archivos rastreados.
+  - Compilación TypeScript (`npx tsc --noEmit`): ✅ Exitoso (exit code 0).
+  - Build Vite (`npm run build`): ✅ Exitoso.
+  - Estado de git: `test_smtp.mjs` ignorado y desindexado.
+
 ### [2026-08-21] Fix: Navegación al Supervisor de Docente desde el Sidebar (Susana Angélica / Colegio Mi Casa)
 
 - **Problema / Requerimiento**:

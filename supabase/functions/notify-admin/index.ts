@@ -24,8 +24,8 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const SMTP_USER = Deno.env.get('SMTP_USER') || 'leontesvirtual1@gmail.com';
-    const SMTP_PASS = Deno.env.get('SMTP_PASS') || 'SMTP_PASS_REDACTED';
+    const SMTP_USER = Deno.env.get('SMTP_USER') || '';
+    const SMTP_PASS = Deno.env.get('SMTP_PASS') || '';
     const SMTP_HOST = Deno.env.get('SMTP_HOST') || 'smtp.gmail.com';
     const SMTP_PORT = parseInt(Deno.env.get('SMTP_PORT') || '465', 10);
 
