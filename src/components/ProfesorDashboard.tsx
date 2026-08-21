@@ -372,8 +372,8 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                           ) : (
                             col.docentes.map(d => (
                               <button
-                                key={d.id}
-                                onClick={() => switchToDocente(d.id)}
+                                key={d.id || d.email}
+                                onClick={() => switchToDocente(d.id || d.email)}
                                 className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 text-[10px] font-bold border border-indigo-500/30 transition-all shadow-sm"
                                 title={`Supervisar panel de ${d.nombre} ${d.apellido} (${d.asignaturaNombre || 'Docente'})`}
                               >

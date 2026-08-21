@@ -303,8 +303,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
                             const isCurrent = user?.id === doc.id || user?.email === doc.email;
                             return (
                               <button
-                                key={doc.id}
-                                onClick={() => switchToDocente(doc.id)}
+                                key={doc.id || doc.email}
+                                onClick={() => {
+                                  switchToDocente(doc.id || doc.email);
+                                  onNavigate('dashboard');
+                                }}
                                 className={`w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] transition-all text-left ${
                                   isCurrent
                                     ? 'bg-indigo-600 text-white font-bold shadow-sm'

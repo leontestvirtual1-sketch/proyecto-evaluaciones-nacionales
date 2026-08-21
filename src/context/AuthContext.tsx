@@ -7,6 +7,7 @@ import {
   currentUserProfesorCiencias,
   currentUserProfesorLenguaje,
   currentUserProfesorPremilitar,
+  currentUserProfesorMiCasa,
   currentUserAlumno,
   usuariosRegistradosMock
 } from '../data/mockData';
@@ -757,20 +758,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   /** Cambia la vista al perfil de un docente real (supervisión por Admin Producción) */
-  const switchToDocente = useCallback((docenteId: string) => {
-    // Primero buscar en docentesReales (cargados desde Supabase rol=profesor activo)
-    // Si no se encuentra por id, buscar también en la lista completa de usuarios
-    const docente =
-      docentesReales.find(d => d.id === docenteId) ||
-      usuarios.find(u => u.id === docenteId && u.rol === 'profesor');
+  const switchToDocente = useCallback((docenteIdOrKey: string) => {
+    const searchKey = (docenteIdOrKey || '').toLowerCase().trim();
+    if (!searchKey) return;
+
+    // Pool consolidado de búsqueda
+    const pool: UserProfile[] = [
+      ...docentesReales,
+      ...usuarios.filter(u => u.rol === 'profesor'),
+      currentUserProfesorPremilitar,
+      currentUserProfesorMiCasa
+    ];
+
+    const docente = pool.find(d =>
+      d.id === docenteIdOrKey ||
+      (d.email && d.email.toLowerCase().trim() === searchKey) ||
+      (d.rut && d.rut.toLowerCase().trim() === searchKey) ||
+      (`${d.nombre} ${d.apellido}`).toLowerCase().trim().includes(searchKey) ||
+      (searchKey.includes('susana') && (d.email?.toLowerCase().includes('susana') || d.nombre?.toLowerCase().includes('susana'))) ||
+      (searchKey.includes('maria') && (d.email?.toLowerCase().includes('premil') || d.nombre?.toLowerCase().includes('maria')))
+    );
+
     if (docente) {
       // Guardar perfil base del admin para poder volver
       setUser(prev => {
-        if (prev?.rol === 'admin') setAdminBaseProfile(prev);
+        if (prev?.rol === 'admin' && !adminBaseProfile) {
+          setAdminBaseProfile(prev);
+        }
         return docente;
       });
+    } else {
+      console.warn(`[switchToDocente] No se encontró docente para la clave: "${docenteIdOrKey}"`);
     }
-  }, [docentesReales, usuarios]);
+  }, [docentesReales, usuarios, adminBaseProfile]);
 
 
   return (

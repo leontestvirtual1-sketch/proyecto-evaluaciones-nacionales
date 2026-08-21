@@ -58,11 +58,12 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       return true;
     }
 
-    // Caso normal: el admin o María Teresa están logueados directamente
+    // Caso normal: el admin, María Teresa o Susana están logueados directamente
     const email = currentUser.email.toLowerCase().trim();
     return (
       PRODUCTION_ADMIN_EMAILS.has(email) ||
-      email === 'luis.leon@premil.cl'
+      email === 'luis.leon@premil.cl' ||
+      email === 'nentitasusana@hotmail.com'
     );
   }, [currentUser, adminBaseProfile, isSandboxMode]);
 
