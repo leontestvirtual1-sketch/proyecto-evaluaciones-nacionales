@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Prueba, ReporteTabuladoCurso, UserProfile } from '../types';
 import { StatCard } from './StatCard';
+import { useAuth } from '../context/AuthContext';
 import {
   BookOpen,
   Users,
@@ -21,6 +22,8 @@ import {
   Eye,
   FileCheck2,
   School,
+  Building2,
+  User,
   CheckCircle2,
   XCircle,
   Printer
@@ -30,7 +33,9 @@ import {
   mapaCalorCursosMock,
   alumnosAlertasCriticasMock,
   AlumnoAlertaCritica,
-  preguntasMock
+  preguntasMock,
+  establecimientosCatalog,
+  currentUserProfesorPremilitar
 } from '../data/mockData';
 import { SandboxBeacon } from './SandboxBeacon';
 import { SimceHistoricoPremilSection } from './SimceHistoricoPremilSection';
@@ -77,6 +82,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   onNavigateToEvaluaciones
 }) => {
   const { alumnos } = useAcademicData();
+  const { usuarios, docentesReales, switchToDocente } = useAuth();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [adminTab, setAdminTab] = useState<'con_sysget' | 'sin_sysget'>('con_sysget');
   const [planMejoramientoOpen, setPlanMejoramientoOpen] = useState(false);
@@ -91,6 +97,69 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const isLenguaje = profesor.asignaturaId === 'asig-2' || (profesor.asignaturaNombre || '').toLowerCase().includes('lenguaje');
   const isCiencias = profesor.asignaturaId === 'asig-3' || (profesor.asignaturaNombre || '').toLowerCase().includes('ciencia');
   const isMatematica = !isAdmin && !isLenguaje && !isCiencias;
+
+  // Agrupación dinámica de colegios y sus docentes en producción
+  const isUserDemo = (u: UserProfile) => {
+    const email = (u.email || '').toLowerCase();
+    const est = (u.establecimiento || '').toLowerCase();
+    return email.endsWith('@demo.cl') || email.endsWith('@escuelademo.cl') || email.endsWith('@sysget.cl') || est.includes('demo') || est.includes('bicentenario');
+  };
+
+  const colegiosList = useMemo(() => {
+    const map = new Map<string, { rbd: string; nombre: string; comuna?: string; dependencia?: string; logoUrl?: string; docentes: UserProfile[] }>();
+
+    establecimientosCatalog.forEach(e => {
+      map.set(e.rbd || e.nombre, {
+        rbd: e.rbd || '31030',
+        nombre: e.nombre,
+        comuna: e.comuna || 'La Granja, Región Metropolitana',
+        dependencia: e.dependencia || 'Particular Subvencionado',
+        logoUrl: e.logoUrl,
+        docentes: []
+      });
+    });
+
+    const listaDocentes: UserProfile[] = [];
+    listaDocentes.push(currentUserProfesorPremilitar);
+
+    (docentesReales || []).forEach(d => {
+      if (!listaDocentes.some(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id)) {
+        listaDocentes.push(d);
+      }
+    });
+
+    (usuarios || []).filter(u => u.rol === 'profesor' && !isUserDemo(u)).forEach(d => {
+      if (!listaDocentes.some(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id)) {
+        listaDocentes.push(d);
+      }
+    });
+
+    listaDocentes.forEach(d => {
+      const key = d.rbd || d.establecimiento;
+      if (!key) return;
+      if (map.has(key)) {
+        const existing = map.get(key)!;
+        if (!existing.docentes.some(doc => doc.id === d.id || doc.email === d.email)) {
+          existing.docentes.push(d);
+        }
+      } else {
+        map.set(key, {
+          rbd: d.rbd || 'Registrado',
+          nombre: d.establecimiento,
+          comuna: 'Establecimiento Asociado',
+          dependencia: 'Particular / Subvencionado',
+          logoUrl: d.logoUrl,
+          docentes: [d]
+        });
+      }
+    });
+
+    return Array.from(map.values());
+  }, [docentesReales, usuarios]);
+
+  const totalDocentesProduccion = useMemo(() => {
+    return colegiosList.reduce((acc, c) => acc + c.docentes.length, 0);
+  }, [colegiosList]);
 
   const handleCopyCode = (code: string) => {
     navigator.clipboard.writeText(code);
@@ -180,10 +249,10 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
           title={isProductionAdmin ? 'Establecimientos Registrados' : isAdmin ? 'Promedio SIMCE Proyectado' : 'Logro Promedio Global'}
-          value={isProductionAdmin ? '1 Colegio' : isAdmin ? '261 pts' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioPorcentajeLogro}%`)}
-          subtitle={isProductionAdmin ? 'Escuela Premilitar Héroes de la Conc.' : isAdmin ? 'Meta 2026: 265 pts (+15 pts)' : (reporteActivo.totalAlumnosRendidos === 0 ? `Curso ${reporteActivo.cursoNombre} (Sin rendiciones)` : `Curso ${reporteActivo.cursoNombre}`)}
+          value={isProductionAdmin ? `${colegiosList.length} Colegio${colegiosList.length !== 1 ? 's' : ''}` : isAdmin ? '261 pts' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioPorcentajeLogro}%`)}
+          subtitle={isProductionAdmin ? (colegiosList.length === 1 ? colegiosList[0].nombre : `${colegiosList.length} Establecimientos en Red`) : isAdmin ? 'Meta 2026: 265 pts (+15 pts)' : (reporteActivo.totalAlumnosRendidos === 0 ? `Curso ${reporteActivo.cursoNombre} (Sin rendiciones)` : `Curso ${reporteActivo.cursoNombre}`)}
           icon={<School className="w-5 h-5" />}
-          trend={{ text: isProductionAdmin ? 'RBD: 31030 Activo' : isAdmin ? '+12 pts vs 2024' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Esperando aplicación' : 'Alerta en Argumentación'), type: 'positive' }}
+          trend={{ text: isProductionAdmin ? `${totalDocentesProduccion} Docente${totalDocentesProduccion !== 1 ? 's' : ''} en Producción` : isAdmin ? '+12 pts vs 2024' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Esperando aplicación' : 'Alerta en Argumentación'), type: 'positive' }}
           iconBgColor="bg-amber-500/10 text-amber-600 dark:text-amber-400"
         />
 
@@ -232,77 +301,106 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                   </p>
                 </div>
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 self-start sm:self-center">
-                  1 Establecimiento Asociado
+                  {colegiosList.length} Establecimiento{colegiosList.length !== 1 ? 's' : ''} Asociado{colegiosList.length !== 1 ? 's' : ''}
                 </span>
               </div>
 
+              {/* Fichas de Colegios Registrados */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Ficha Escuela Premilitar */}
-                <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4">
-                  <div className="flex items-start gap-4">
-                    <img
-                      src="/logos/escuela-premilitar.png"
-                      alt="Escuela Premilitar"
-                      className="w-12 h-12 object-contain rounded-xl bg-slate-900 p-1 border border-slate-700 shrink-0"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <h4 className="text-sm font-black text-white truncate">
-                          Escuela Premilitar Héroes de la Concepción
-                        </h4>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          RBD: 31030
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-400 mt-0.5">La Granja, Región Metropolitana • Particular Subvencionado</p>
-                      <div className="text-[11px] text-slate-300 mt-2 flex items-center gap-2">
-                        <span>👤 Docente: <strong>María Teresa González</strong></span>
-                        <span>•</span>
-                        <span>📖 <strong>Lengua y Literatura</strong> (2° Medio)</span>
+                {colegiosList.map(col => (
+                  <div
+                    key={col.rbd || col.nombre}
+                    className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4 hover:border-slate-700 transition-all flex flex-col justify-between"
+                  >
+                    <div className="flex items-start gap-4">
+                      {col.logoUrl ? (
+                        <img
+                          src={col.logoUrl}
+                          alt={col.nombre}
+                          className="w-12 h-12 object-contain rounded-xl bg-slate-900 p-1 border border-slate-700 shrink-0"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-xl bg-indigo-600/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+                          <Building2 className="w-6 h-6" />
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <h4 className="text-sm font-black text-white truncate" title={col.nombre}>
+                            {col.nombre}
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                            RBD: {col.rbd}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-0.5">
+                          {col.comuna || 'Chile'} • {col.dependencia || 'Particular Subvencionado'}
+                        </p>
+                        <div className="text-[11px] text-slate-300 mt-2.5 flex flex-wrap items-center gap-1.5">
+                          <span className="text-slate-400 font-semibold">👤 Docentes ({col.docentes.length}):</span>
+                          {col.docentes.length === 0 ? (
+                            <span className="text-slate-500 text-xs italic">Sin docentes asignados aún</span>
+                          ) : (
+                            col.docentes.map(d => (
+                              <button
+                                key={d.id}
+                                onClick={() => switchToDocente(d.id)}
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 text-[10px] font-bold border border-indigo-500/30 transition-all shadow-sm"
+                                title={`Supervisar panel de ${d.nombre} ${d.apellido} (${d.asignaturaNombre || 'Docente'})`}
+                              >
+                                <User className="w-3 h-3 text-indigo-400" />
+                                <span>{d.nombre} {d.apellido}</span>
+                                <span className="text-indigo-400/80 font-normal">({d.asignaturaNombre?.split(' ')[0] || 'Docente'})</span>
+                              </button>
+                            ))
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-xs">
-                    <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
-                      <div className="text-slate-400 text-[10px] uppercase font-bold">Cursos</div>
-                      <div className="text-sm font-black text-white mt-0.5">1 (2° Medio)</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
-                      <div className="text-slate-400 text-[10px] uppercase font-bold">Evaluaciones</div>
-                      <div className="text-sm font-black text-indigo-400 mt-0.5">{pruebas.length} Activa{pruebas.length !== 1 ? 's' : ''}</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
-                      <div className="text-slate-400 text-[10px] uppercase font-bold">Nómina Alumnos</div>
-                      <div className="text-sm font-black text-amber-400 mt-0.5">0 (En proceso)</div>
+                    <div className="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-xs">
+                      <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div className="text-slate-400 text-[10px] uppercase font-bold">Cursos</div>
+                        <div className="text-sm font-black text-white mt-0.5">{col.rbd === '31030' ? '1 (2° Medio)' : '1 Curso'}</div>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div className="text-slate-400 text-[10px] uppercase font-bold">Evaluaciones</div>
+                        <div className="text-sm font-black text-indigo-400 mt-0.5">
+                          {col.rbd === '31030' ? `${pruebas.length} Activa${pruebas.length !== 1 ? 's' : ''}` : '0 Activas'}
+                        </div>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div className="text-slate-400 text-[10px] uppercase font-bold">Nómina Alumnos</div>
+                        <div className="text-sm font-black text-amber-400 mt-0.5">0 (En proceso)</div>
+                      </div>
                     </div>
                   </div>
+                ))}
+              </div>
+
+              {/* Módulo de Inicio de Poblamiento Institucional */}
+              <div className="p-5 rounded-2xl bg-indigo-950/20 border border-indigo-500/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1.5 max-w-2xl">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <h4 className="text-sm font-bold text-white">Ciclo de Poblamiento en Curso</h4>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    El sistema se encuentra en fase inicial de carga. A medida que subas las nóminas de estudiantes (CSV), los resultados históricos de SIMCE (MINEDUC) y las rendiciones, este panel generará las analíticas de desempeño institucional.
+                  </p>
                 </div>
 
-                {/* Módulo de Inicio de Poblamiento */}
-                <div className="p-5 rounded-2xl bg-indigo-950/20 border border-indigo-500/30 space-y-4 flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-amber-400" />
-                      <h4 className="text-sm font-bold text-white">Ciclo de Poblamiento en Curso</h4>
-                    </div>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      El sistema se encuentra en fase inicial de carga. A medida que subas las nóminas de estudiantes (CSV), los resultados históricos de SIMCE (MINEDUC) y las rendiciones, este panel generará las analíticas de desempeño institucional.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                    <button
-                      onClick={() => onNavigateToEvaluaciones && onNavigateToEvaluaciones()}
-                      className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/20"
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span>Ver Evaluaciones</span>
-                    </button>
-                    <div className="px-3.5 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Esperando Carga de Nómina</span>
-                    </div>
+                <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+                  <button
+                    onClick={() => onNavigateToEvaluaciones && onNavigateToEvaluaciones()}
+                    className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/20"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>Ver Evaluaciones</span>
+                  </button>
+                  <div className="px-3.5 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Esperando Carga de Nómina</span>
                   </div>
                 </div>
               </div>

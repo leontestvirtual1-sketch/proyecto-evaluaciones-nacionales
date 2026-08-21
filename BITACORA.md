@@ -2,6 +2,25 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Sincronización Dinámica de Establecimientos Registrados en el Dashboard del Super Admin
+
+- **Problema / Requerimiento**:
+  1. En el Dashboard General del Super Administrador UTP en entorno de producción, la tarjeta KPI superior indicaba de forma fija `1 Colegio` (`RBD: 31030`) y en la sección `Establecimientos Activos en Producción` solo se mostraba la ficha de la *Escuela Premilitar Héroes de la Concepción*, a pesar de que en el Sidebar izquierdo ya figuraban 2 establecimientos registrados (*Escuela Premilitar* y *Colegio Mi Casa* de Susana Angélica Pizarro Valenzuela).
+  2. Causa técnica detectada: `ProfesorDashboard.tsx` tenía hardcodeado el valor `1 Colegio` y una sola tarjeta estática en el JSX en lugar de calcular dinámicamente el catálogo consolidado de establecimientos desde `AuthContext` (`establecimientosCatalog`, `docentesReales` y `usuarios`).
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/ProfesorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx):
+    - [MODIFICADO] Integrado `useAuth()` para extraer `usuarios`, `docentesReales` y la función de supervisión `switchToDocente`.
+    - [MODIFICADO] Implementado `useMemo` para `colegiosList` idéntico al motor del Sidebar, deduplicando y agrupando colegios reales de producción y sus docentes asociados.
+    - [MODIFICADO] Tarjeta KPI superior actualizada para reflejar `${colegiosList.length} Colegios` (ej. 2 Colegios) y subtítulo con la red de colegios activa.
+    - [MODIFICADO] Badge de la sección actualizado a `{colegiosList.length} Establecimientos Asociados`.
+    - [MODIFICADO] Grilla de establecimientos refactorizada para iterar sobre `colegiosList.map()`, renderizando fichas completas para *Escuela Premilitar Héroes de la Concepción* y *Colegio Mi Casa* con sus respectivos docentes, RBD, dependencias y botones directos para supervisar con 1 clic.
+
+- **Verificación / Despliegue**:
+  - Consistencia Dashboard vs Sidebar: ✅ Verificado (ambos muestran 2 establecimientos en producción en tiempo real).
+  - Supervisión directa por docente: ✅ Verificado (píldoras con botones `switchToDocente` para cada profesor de cada colegio).
+  - Compilación TypeScript: ✅ Exitoso (`npx tsc --noEmit` sin errores).
+
 ### [2026-08-20] Módulo de Despacho de Correo Real por SMTP y Optimización Ergonómica del Sidebar
 
 - **Problema / Requerimiento**:
