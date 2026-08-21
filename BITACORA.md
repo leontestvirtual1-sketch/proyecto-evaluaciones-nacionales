@@ -2,7 +2,25 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Fix: Navegación al Supervisor de Docente desde el Sidebar (Susana Angélica / Colegio Mi Casa)
+
+- **Problema / Requerimiento**:
+  1. Al hacer clic en el nombre de **Susana Angélica Pizarro Valenzuela** en la barra lateral izquierda (sección Establecimientos), el sistema no navegaba ni cambiaba la vista al perfil del docente supervisado — quedaba sin efecto.
+  2. Causa técnica: `switchToDocente()` en `AuthContext.tsx` sólo buscaba al docente en `docentesReales[]` (cargados desde Supabase con filtro `rol=profesor AND estado=activo`). Si Susana no aparecía en esa lista (por ejemplo, con estado distinto a `activo` o por una condición de carga), la búsqueda retornaba `undefined` y no ocurría nada.
+  3. El Sidebar mostraba a Susana correctamente porque también iteraba sobre `usuarios[]` (lista completa de `perfiles` en Supabase), pero al hacer clic, el `id` pasado no se encontraba en `docentesReales`.
+
+- **Archivos y Solución Técnica**:
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] `switchToDocente()` actualizado para buscar primero en `docentesReales` y, como fallback, en `usuarios` filtrando `u.rol === 'profesor'`. Esto garantiza que cualquier docente visible en el Sidebar siempre pueda ser supervisado independientemente del estado de carga.
+
+- **Verificación / Despliegue**:
+  - Click en Susana Angélica desde el Sidebar: ✅ Ahora navega al panel de supervisión del docente.
+  - Click en María Teresa González (Premilitar): ✅ Sin regresiones.
+  - Compilación TypeScript (`npx tsc --noEmit`): ✅ Sin errores (exit code 0).
+  - Commit: `518c6f1` — desplegado en GitHub/Vercel.
+
 ### [2026-08-21] Numeración Secuencial Automática de Descarga en el Motor de Impresión PDF
+
 
 - **Problema / Requerimiento**:
   1. Al imprimir o descargar varias veces el mismo cuadernillo de evaluación, hoja de respuestas o pauta docente dentro de una misma sesión (vía "Guardar como PDF" del navegador), el sistema asignaba siempre el mismo nombre por defecto (`document.title`), obligando al usuario a confirmar la sobreescritura del archivo en Windows/macOS.
