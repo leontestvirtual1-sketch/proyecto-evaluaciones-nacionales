@@ -41,6 +41,15 @@ export const establecimientosCatalog: EstablecimientoInfo[] = [
     dependencia: 'Particular Subvencionado',
     logoUrl: '/logos/escuela-premilitar.png',
     lema: 'Ad Altiora, Et Meliora, Semper'
+  },
+  {
+    // RBD oficial pendiente de confirmar — actualizar cuando esté disponible
+    rbd: '99999',
+    nombre: 'Colegio Mi Casa',
+    comuna: 'Región Metropolitana',
+    dependencia: 'Particular Pagado',
+    logoUrl: '',
+    lema: 'En proceso de incorporación'
   }
 ];
 
