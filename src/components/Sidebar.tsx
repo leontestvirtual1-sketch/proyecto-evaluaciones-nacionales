@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { establecimientosCatalog, currentUserProfesorPremilitar } from '../data/mockData';
+import { establecimientosCatalog, currentUserProfesorPremilitar, currentUserProfesorMiCasa } from '../data/mockData';
 import { UserProfile } from '../types';
 import {
   LayoutDashboard,
@@ -94,7 +94,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
   const colegiosMap = new Map<string, { rbd: string; nombre: string; logoUrl?: string; docentes: UserProfile[] }>();
   
   establecimientosCatalog.forEach(e => {
-    colegiosMap.set(e.rbd || e.nombre, {
+    const key = e.rbd || e.nombre;
+    colegiosMap.set(key, {
       rbd: e.rbd || '31030',
       nombre: e.nombre,
       logoUrl: e.logoUrl,
@@ -111,31 +112,58 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
 
   const listaDocentes: UserProfile[] = [];
   listaDocentes.push(currentUserProfesorPremilitar);
+  listaDocentes.push(currentUserProfesorMiCasa);
 
   (docentesReales || []).forEach(d => {
-    if (!listaDocentes.some(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id)) {
+    const idx = listaDocentes.findIndex(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id);
+    if (idx >= 0) {
+      listaDocentes[idx] = { ...listaDocentes[idx], ...d };
+    } else {
       listaDocentes.push(d);
     }
   });
 
   (usuarios || []).filter(u => u.rol === 'profesor' && !isUserDemo(u)).forEach(d => {
-    if (!listaDocentes.some(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id)) {
+    const idx = listaDocentes.findIndex(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id);
+    if (idx >= 0) {
+      listaDocentes[idx] = { ...listaDocentes[idx], ...d };
+    } else {
       listaDocentes.push(d);
     }
   });
 
+  // Asignar cada docente al colegio correspondiente de forma robusta
   listaDocentes.forEach(d => {
-    const key = d.rbd || d.establecimiento;
-    if (!key) return;
-    if (colegiosMap.has(key)) {
-      const existing = colegiosMap.get(key)!;
-      if (!existing.docentes.some(doc => doc.id === d.id || doc.email === d.email)) {
-        existing.docentes.push(d);
+    let targetCol: { rbd: string; nombre: string; logoUrl?: string; docentes: UserProfile[] } | undefined;
+
+    // 1. Buscar por RBD exacto
+    if (d.rbd) {
+      targetCol = Array.from(colegiosMap.values()).find(c => c.rbd === d.rbd);
+    }
+
+    // 2. Buscar por nombre de colegio coincidente o parcial
+    if (!targetCol && d.establecimiento) {
+      const dEstNorm = d.establecimiento.toLowerCase().trim();
+      targetCol = Array.from(colegiosMap.values()).find(c => {
+        const cNomNorm = c.nombre.toLowerCase().trim();
+        return cNomNorm === dEstNorm || cNomNorm.includes(dEstNorm) || dEstNorm.includes(cNomNorm);
+      });
+    }
+
+    // 3. Heurística específica para Susana / Colegio Mi Casa
+    if (!targetCol && (d.email?.toLowerCase().includes('susana') || d.nombre?.toLowerCase().includes('susana'))) {
+      targetCol = Array.from(colegiosMap.values()).find(c => c.nombre.toLowerCase().includes('mi casa'));
+    }
+
+    if (targetCol) {
+      if (!targetCol.docentes.some(doc => doc.id === d.id || doc.email.toLowerCase() === d.email.toLowerCase())) {
+        targetCol.docentes.push(d);
       }
     } else {
+      const key = d.rbd || d.establecimiento || 'otro';
       colegiosMap.set(key, {
-        rbd: d.rbd || '12345',
-        nombre: d.establecimiento,
+        rbd: d.rbd || '99999',
+        nombre: d.establecimiento || 'Establecimiento Asociado',
         logoUrl: d.logoUrl,
         docentes: [d]
       });

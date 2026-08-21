@@ -84,6 +84,23 @@ export const currentUserProfesorPremilitar: UserProfile = {
   diasRestantesTrial: 30
 };
 
+export const currentUserProfesorMiCasa: UserProfile = {
+  id: 'e14d8a54-fe01-4a6b-a22d-8f8e00000001',
+  rut: '14.149.793-6',
+  nombre: 'Susana Angélica',
+  apellido: 'Pizarro Valenzuela',
+  email: 'nentitasusana@hotmail.com',
+  rol: 'profesor',
+  establecimiento: 'Colegio Mi Casa',
+  rbd: '99999',
+  asignaturaId: 'asig-2',
+  asignaturaNombre: 'Lenguaje y Comunicación',
+  cargo: 'Docente de Lenguaje y Comunicación',
+  estado: 'activo',
+  plan: 'trial',
+  diasRestantesTrial: 30
+};
+
 /** Usuario Admin de demostración — acceso controlado solo para mostrar el panel */
 export const currentUserAdminDemo: UserProfile = {
   id: 'demo-admin-0000-0000-0000-000000000099',
