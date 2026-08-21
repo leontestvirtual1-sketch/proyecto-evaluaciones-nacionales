@@ -104,3 +104,47 @@ Al concluir cualquier ajuste o módulo:
 * **Nota de Restricción Estadística**: Los años con datos marcados con asterisco (*) por tamaño de muestra insuficiente deben ser señalados en el tooltip y/o leyenda del gráfico.
 * **Meta 2026 Visible**: La línea de referencia de meta (240 pts para GSE Medio Bajo) debe ser siempre visible en el gráfico de Tendencia GSE como línea de referencia punteada en color ámbar.
 
+---
+
+## 9. 🔐 Directiva de Detección de Ambiente por Sesión de Admin, No por Email del Usuario Activo
+> **Principio**: *El ambiente (Producción / Demo) se determina por la **sesión que abrió el administrador**, no por el email del usuario cuya vista está activa en ese momento.*
+> *Establecida: 2026-08-21 — origen: bug crítico "datos demo al supervisar docente real Susana Angélica Pizarro Valenzuela"*
+
+### Problema Documentado
+Cuando el Admin de Producción (`leontestvirtual1@gmail.com`) ejecuta `switchToDocente(susana)`, el estado global `user` cambia al perfil de Susana (`nentitasusana@hotmail.com`). Si cualquier componente o contexto evalúa el ambiente basándose solo en `user.email`, lo interpretará como "no producción" y cargará datos Demo/Sandbox (Liceo Bicentenario Los Andes).
+
+### Regla Obligatoria
+* **Fuente de verdad del ambiente**: `adminBaseProfile` (perfil del admin que inició la sesión). Si `adminBaseProfile.email` ∈ `PRODUCTION_ADMIN_EMAILS`, **toda la sesión es de producción**, independientemente del docente supervisado.
+* **`AcademicDataContext.isProduction`** DEBE evaluar `adminBaseProfile` **antes** que `currentUser.email`.
+* **Prohibido**: Usar `currentUser.email === 'leontestvirtual1@gmail.com'` como única condición cuando existe supervisión activa de docente.
+* **`PRODUCTION_ADMIN_EMAILS`**: Mantener como `Set<string>` centralizado en `AcademicDataContext.tsx`. Nunca duplicar emails hardcodeados en múltiples archivos.
+* **Prop obligatorio**: `AcademicDataProvider` debe recibir y procesar `adminBaseProfile?: UserProfile | null` junto a `currentUser`.
+
+### Implementación de Referencia (patrón oficial)
+```tsx
+// En AcademicDataContext.tsx
+const PRODUCTION_ADMIN_EMAILS = new Set(['leontestvirtual1@gmail.com', 'leontesvirtual1@gmail.com']);
+
+const isProduction = useMemo(() => {
+  if (isSandboxMode) return false;
+  if (!currentUser) return false;
+  // 1. Sesión iniciada por admin de producción (aunque supervise a otro docente)
+  if (adminBaseProfile && PRODUCTION_ADMIN_EMAILS.has(adminBaseProfile.email.toLowerCase())) return true;
+  // 2. Admin o docente de producción logueados directamente
+  return PRODUCTION_ADMIN_EMAILS.has(currentUser.email.toLowerCase()) || currentUser.email === 'luis.leon@premil.cl';
+}, [currentUser, adminBaseProfile, isSandboxMode]);
+```
+
+### Tabla de Casos de Uso
+| Situación | `user.email` | `adminBaseProfile.email` | `isProduction` correcto |
+|---|---|---|---|
+| Admin logueado directamente | `leontestvirtual1@gmail.com` | `null` | ✅ `true` |
+| Admin supervisando María Teresa | `luis.leon@premil.cl` | `leontestvirtual1@gmail.com` | ✅ `true` |
+| Admin supervisando Susana Angélica | `nentitasusana@hotmail.com` | `leontestvirtual1@gmail.com` | ✅ `true` |
+| Docente demo logueado | `maria.gonzalez@sysget.cl` | `null` | ❌ `false` → Demo |
+| Admin Demo logueado | `admin@escuelademo.cl` | `null` | ❌ `false` → Demo |
+
+### Corolario: Perfil de Susana en Construcción
+El perfil de Susana Angélica (Colegio Mi Casa) se encuentra en **proceso de poblamiento**. Hasta que se completen sus datos en Supabase, el sistema debe:
+- Mostrar su sección con **Estado Vacío Legítimo** (Directiva 2): 0 cursos, 0 alumnos, "En proceso de carga".
+- **Nunca** mostrar datos del Liceo Bicentenario Demo en su vista.

@@ -548,12 +548,13 @@ export function App() {
 }
 
 function MainAppContentWrapper() {
-  const { user } = useAuth();
+  const { user, adminBaseProfile } = useAuth();
   // isSandboxMode must live HERE so AcademicDataProvider is re-created when it changes
   const [isSandboxMode, setIsSandboxMode] = useState<boolean>(false);
   return (
     <AcademicDataProvider
       currentUser={user}
+      adminBaseProfile={adminBaseProfile}
       isSandboxMode={isSandboxMode}
     >
       <MainAppContent isSandboxMode={isSandboxMode} setIsSandboxMode={setIsSandboxMode} />

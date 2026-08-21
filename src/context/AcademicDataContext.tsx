@@ -29,26 +29,42 @@ const AcademicDataContext = createContext<DataContextType | null>(null);
 interface AcademicDataProviderProps {
   children: React.ReactNode;
   currentUser: UserProfile | null;
+  adminBaseProfile?: UserProfile | null;
   isSandboxMode: boolean;
   customPruebas?: Prueba[];
 }
 
+const PRODUCTION_ADMIN_EMAILS = new Set([
+  'leontestvirtual1@gmail.com',
+  'leontesvirtual1@gmail.com',
+]);
+
 export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
   children,
   currentUser,
+  adminBaseProfile,
   isSandboxMode,
   customPruebas
 }) => {
   const isProduction = useMemo(() => {
     if (isSandboxMode) return false;
     if (!currentUser) return false;
+
+    // ─── DIRECTIVA 9: Detección de Producción por Sesión, no por email del usuario activo ───
+    // Si el admin de producción está supervisando a un docente real (switchToDocente),
+    // currentUser.email es el del docente (ej. Susana), PERO adminBaseProfile.email
+    // sigue siendo leontestvirtual1@gmail.com. La sesión ES de producción.
+    if (adminBaseProfile && PRODUCTION_ADMIN_EMAILS.has(adminBaseProfile.email.toLowerCase().trim())) {
+      return true;
+    }
+
+    // Caso normal: el admin o María Teresa están logueados directamente
     const email = currentUser.email.toLowerCase().trim();
     return (
-      email === 'leontestvirtual1@gmail.com' ||
-      email === 'leontesvirtual1@gmail.com' ||
+      PRODUCTION_ADMIN_EMAILS.has(email) ||
       email === 'luis.leon@premil.cl'
     );
-  }, [currentUser, isSandboxMode]);
+  }, [currentUser, adminBaseProfile, isSandboxMode]);
 
   const value = useMemo<DataContextType>(() => {
     const allPruebas = customPruebas || pruebasMock;
