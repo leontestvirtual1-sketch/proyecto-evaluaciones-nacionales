@@ -59,8 +59,7 @@ BEGIN
     'nentitasusana@hotmail.com',
     'profesor',
     'Colegio Mi Casa',
-    -- RBD: actualizar con el RBD oficial del Colegio Mi Casa cuando esté disponible
-    '99999',
+    '1234',
     'asig-1',
     'Matemática',
     'Docente de Matemática',

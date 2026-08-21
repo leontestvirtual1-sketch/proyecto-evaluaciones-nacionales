@@ -43,8 +43,7 @@ export const establecimientosCatalog: EstablecimientoInfo[] = [
     lema: 'Ad Altiora, Et Meliora, Semper'
   },
   {
-    // RBD oficial pendiente de confirmar — actualizar cuando esté disponible
-    rbd: '99999',
+    rbd: '1234',
     nombre: 'Colegio Mi Casa',
     comuna: 'Región Metropolitana',
     dependencia: 'Particular Pagado',
@@ -92,7 +91,7 @@ export const currentUserProfesorMiCasa: UserProfile = {
   email: 'nentitasusana@hotmail.com',
   rol: 'profesor',
   establecimiento: 'Colegio Mi Casa',
-  rbd: '99999',
+  rbd: '1234',
   asignaturaId: 'asig-1',
   asignaturaNombre: 'Matemática',
   cargo: 'Docente de Matemática',
