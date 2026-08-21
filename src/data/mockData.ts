@@ -93,9 +93,9 @@ export const currentUserProfesorMiCasa: UserProfile = {
   rol: 'profesor',
   establecimiento: 'Colegio Mi Casa',
   rbd: '99999',
-  asignaturaId: 'asig-2',
-  asignaturaNombre: 'Lenguaje y Comunicación',
-  cargo: 'Docente de Lenguaje y Comunicación',
+  asignaturaId: 'asig-1',
+  asignaturaNombre: 'Matemática',
+  cargo: 'Docente de Matemática',
   estado: 'activo',
   plan: 'trial',
   diasRestantesTrial: 30

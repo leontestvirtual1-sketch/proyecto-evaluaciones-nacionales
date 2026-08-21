@@ -11,9 +11,9 @@ SET
   apellido_materno   = 'Valenzuela',
   establecimiento    = 'Colegio Mi Casa',
   rbd                = '99999',
-  asignatura_id      = 'asig-2',
-  asignatura_nombre  = 'Lenguaje y Comunicación',
-  cargo              = 'Docente de Lenguaje y Comunicación',
+  asignatura_id      = 'asig-1',
+  asignatura_nombre  = 'Matemática',
+  cargo              = 'Docente de Matemática',
   estado             = 'activo',
   activo             = true,
   plan               = 'trial'

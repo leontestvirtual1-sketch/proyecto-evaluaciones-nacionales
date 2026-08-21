@@ -61,9 +61,9 @@ BEGIN
     'Colegio Mi Casa',
     -- RBD: actualizar con el RBD oficial del Colegio Mi Casa cuando esté disponible
     '99999',
-    'asig-2',
-    'Lenguaje y Comunicación',
-    'Docente de Lenguaje y Comunicación',
+    'asig-1',
+    'Matemática',
+    'Docente de Matemática',
     'activo',
     'trial',
     true
