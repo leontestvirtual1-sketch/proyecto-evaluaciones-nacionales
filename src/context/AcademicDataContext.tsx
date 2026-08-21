@@ -10,8 +10,7 @@ import {
   reporteLenguajeDemoMock,
   reportePremilitarRealMock,
   currentUserProfesorPremilitar,
-  currentUserAdmin,
-  currentUserAdminDemo
+  currentUserProfesorMiCasa,
 } from '../data/mockData';
 
 export interface DataContextType {
@@ -39,6 +38,12 @@ const PRODUCTION_ADMIN_EMAILS = new Set([
   'leontesvirtual1@gmail.com',
 ]);
 
+// Emails directos de docentes reales de producción
+const PRODUCTION_DOCENTE_EMAILS = new Set([
+  'luis.leon@premil.cl',
+  'nentitasusana@hotmail.com',
+]);
+
 export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
   children,
   currentUser,
@@ -58,24 +63,92 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       return true;
     }
 
-    // Caso normal: el admin, María Teresa o Susana están logueados directamente
     const email = currentUser.email.toLowerCase().trim();
-    return (
-      PRODUCTION_ADMIN_EMAILS.has(email) ||
-      email === 'luis.leon@premil.cl' ||
-      email === 'nentitasusana@hotmail.com'
-    );
+    return PRODUCTION_ADMIN_EMAILS.has(email) || PRODUCTION_DOCENTE_EMAILS.has(email);
   }, [currentUser, adminBaseProfile, isSandboxMode]);
+
+  // Determina si el usuario activo es Susana (Colegio Mi Casa)
+  const isSusana = useMemo(() => {
+    const email = (currentUser?.email || '').toLowerCase().trim();
+    return (
+      email === 'nentitasusana@hotmail.com' ||
+      (currentUser?.establecimiento || '').toLowerCase().includes('mi casa')
+    );
+  }, [currentUser]);
 
   const value = useMemo<DataContextType>(() => {
     const allPruebas = customPruebas || pruebasMock;
 
     if (isProduction) {
-      // ═════════════════════════════════════════════════════════════
-      // ENTORNO PRODUCCIÓN: Escuela Premilitar Héroes de la Concepción
-      // ESTADO VACÍO LEGÍTIMO: Los alumnos reales aún no han sido
-      // ingresados al sistema. Se devuelve [] según DIRECTIVAS.md.
-      // ═════════════════════════════════════════════════════════════
+
+      // ═══════════════════════════════════════════════════════════════════
+      // RAMA A: Colegio Mi Casa — Susana Angélica Pizarro (Matemática)
+      // ESTADO VACÍO LEGÍTIMO (Directiva 2): Docente nueva en proceso de
+      // poblamiento. Sin cursos, alumnos ni pruebas propias aún.
+      // Puede visualizar los ensayos del banco como referencia pedagógica.
+      // ═══════════════════════════════════════════════════════════════════
+      if (isSusana) {
+        // Solo sus pruebas propias (0 hasta que las cree en la plataforma)
+        const susanaPruebas = allPruebas.filter(
+          p => p.profesorId === currentUserProfesorMiCasa.id
+        );
+
+        const reporteVacioMiCasa: ReporteTabuladoCurso = {
+          ...reporteCursoMock,
+          pruebaId: 'reporte-micasa-vacio',
+          pruebaTitulo: 'Colegio Mi Casa — Matemática (En proceso de población)',
+          cursoNombre: 'Sin cursos asignados aún',
+          totalAlumnosRendidos: 0,
+          totalAlumnosMatriculados: 0,
+          promedioPorcentajeLogro: 0,
+          promedioEscalaNacional: 0,
+          desgloseEjes: [],
+          desgloseHabilidades: [],
+          preguntasMasFalladas: [],
+          planAccionReforzamiento: [],
+          rendiciones: []
+        };
+
+        const susanaSeguimiento: SeguimientoDocente = {
+          profesorId: currentUserProfesorMiCasa.id,
+          profesorNombre: 'Susana Angélica Pizarro Valenzuela',
+          profesorEmail: 'nentitasusana@hotmail.com',
+          avatarColor: 'from-violet-600 to-purple-700',
+          iniciales: 'SP',
+          asignaturaId: 'asig-1',
+          asignaturaNombre: 'Matemática',
+          cursosAsignados: [],
+          totalEvaluacionesCreadas: 0,
+          totalEvaluacionesActivas: 0,
+          totalAlumnosEvaluados: 0,
+          totalAlumnosMatriculados: 0,
+          coberturaCurricularPorcentaje: 0,
+          promedioLogroAlumnos: 0,
+          puntajeSimceEstimado: 0,
+          estadoAvancePME: 'en_progreso', // valor válido del tipo (equivalente a "iniciando")
+          ejeMayorFortaleza: 'En proceso de configuración',
+          ejeMayorDebilidad: 'En proceso de configuración',
+          ultimaEvaluacionFecha: '',
+          ultimaEvaluacionTitulo: 'Sin evaluaciones creadas aún',
+          ultimaEvaluacionId: '',
+          planesRemedialesGenerados: 0
+        };
+
+        return {
+          isProduction: true,
+          pruebas: susanaPruebas,      // [] — estado vacío legítimo hasta que cree sus propias
+          cursos: [],                   // [] — sin cursos aún (Directiva 2)
+          alumnos: [],                  // [] — sin alumnos aún (Directiva 2)
+          seguimientoDocentes: [susanaSeguimiento],
+          reporteActivo: reporteVacioMiCasa,
+          nombreEstablecimientoActivo: 'Colegio Mi Casa'
+        };
+      }
+
+      // ═══════════════════════════════════════════════════════════════════
+      // RAMA B: Escuela Premilitar Héroes de la Concepción — María Teresa González
+      // ESTADO VACÍO LEGÍTIMO: Alumnos reales aún no registrados.
+      // ═══════════════════════════════════════════════════════════════════
       const prodPruebas = allPruebas.filter(
         p =>
           p.id === 'prueba-len2m-101' ||
@@ -85,14 +158,13 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       );
 
       const prodCursos = cursosMock.filter(c => c.id === 'curso-2m' || c.nivel.includes('Medio'));
-      // ESTADO VACÍO LEGÍTIMO: sin alumnos reales aún. No usar mocks.
       const prodAlumnos: AlumnoBasico[] = [];
 
       return {
         isProduction: true,
         pruebas: prodPruebas,
         cursos: prodCursos,
-        alumnos: prodAlumnos, // [] — estado legítimo hasta que se creen alumnos reales
+        alumnos: prodAlumnos,
         seguimientoDocentes: [
           {
             profesorId: currentUserProfesorPremilitar.id,
@@ -122,6 +194,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         reporteActivo: reportePremilitarRealMock,
         nombreEstablecimientoActivo: 'Escuela Premilitar Héroes de la Concepción'
       };
+
     } else {
       // ═════════════════════════════════════════════════════════════
       // ENTORNO DEMO / SANDBOX: Liceo Bicentenario Los Andes (6° y 8° Básico)
@@ -160,7 +233,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         nombreEstablecimientoActivo: 'Liceo Bicentenario Los Andes (Demo)'
       };
     }
-  }, [isProduction, customPruebas, currentUser]);
+  }, [isProduction, isSusana, customPruebas, currentUser]);
 
   return <AcademicDataContext.Provider value={value}>{children}</AcademicDataContext.Provider>;
 };
