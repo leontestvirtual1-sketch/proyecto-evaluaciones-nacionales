@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Vinculación Robusta de Susana Angélica Pizarro con Colegio Mi Casa en Sidebar y Dashboard
+
+- **Problema / Requerimiento**:
+  1. Al registrarse el establecimiento **Colegio Mi Casa** en el catálogo, en la barra lateral izquierda (Sidebar) aparecía el acordeón del colegio pero indicaba *"Sin docentes asignados aún"*, mientras que el usuario Susana Angélica no quedaba correctamente anidado dentro de la ficha de su establecimiento.
+  2. Causa técnica: Discrepancia en la clave del Map (`rbd: '99999'` vs `d.establecimiento: 'Colegio Mi Casa'`). Si en Supabase el `rbd` no venía explícitamente como `'99999'`, el algoritmo de búsqueda por clave fallaba al indexar el docente dentro del colegio preexistente.
+
+- **Archivos y Solución Técnica**:
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
+    - [MODIFICADO] Creado y exportado `currentUserProfesorMiCasa` con datos de Susana Angélica Pizarro Valenzuela (`nentitasusana@hotmail.com` - Colegio Mi Casa, RBD 99999).
+  - [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx):
+    - [MODIFICADO] Algoritmo de agrupación refactorizado con matcher multicriterio (por RBD exacto, por nombre normalizado de colegio y por heurística de docente). Susana ahora queda siempre vinculada bajo la tarjeta desplegable de **Colegio Mi Casa**.
+  - [`src/components/ProfesorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx):
+    - [MODIFICADO] Aplicado el mismo matcher multicriterio en `colegiosList`, mostrando a Susana con su botón directo de supervisión `switchToDocente`.
+  - [`supabase/migrations/010_create_susana_pizarro_colegio_mi_casa.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/010_create_susana_pizarro_colegio_mi_casa.sql) y [`supabase/migrations/010b_fix_susana_establecimiento.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/010b_fix_susana_establecimiento.sql):
+    - [NUEVO] Scripts de migración SQL preparados para sincronizar en Supabase.
+
+- **Verificación / Despliegue**:
+  - Sidebar: ✅ Despliega **Colegio Mi Casa** con **Susana Angélica Pizarro Valenzuela (Lenguaje)** anidada.
+  - Dashboard General: ✅ Muestra tarjeta de Colegio Mi Casa con Susana como docente asociada.
+  - Navegación: ✅ Clic en Susana cambia a su perfil de supervisión con Estado Vacío Legítimo (sin datos demo).
+  - Commit: `bb68887` — desplegado en GitHub y Vercel.
+
 ### [2026-08-21] Auditoría de Seguridad: Eliminación de Secretos Hardcodeados y Directiva 10 (Zero-Secret Policy)
 
 - **Problema / Requerimiento**:
