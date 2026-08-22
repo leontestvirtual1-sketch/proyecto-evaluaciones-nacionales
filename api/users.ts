@@ -132,6 +132,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           rol,
           establecimiento,
           rbd,
+          comuna,
+          dependencia,
           asignaturaId,
           asignaturaNombre,
           cargo
@@ -194,14 +196,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           authUserId = newAuthUser.user.id;
         }
 
-        // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos
+        // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos con comuna y dependencia
         const cleanRbd = (rbd || '').trim();
         const cleanEstablecimiento = (establecimiento || '').trim();
+        const cleanComuna = (comuna || '').trim();
+        const cleanDependencia = (dependencia || '').trim();
+
         if (cleanRbd && cleanEstablecimiento) {
           try {
             await sbAdmin.from('establecimientos').upsert({
               rbd: cleanRbd,
-              nombre: cleanEstablecimiento
+              nombre: cleanEstablecimiento,
+              comuna: cleanComuna || null,
+              dependencia: cleanDependencia || 'Particular Subvencionado',
+              updated_at: new Date().toISOString()
             }, { onConflict: 'rbd' });
           } catch (estErr) {
             console.warn('Advertencia al upsert en establecimientos:', estErr);
@@ -220,6 +228,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           rol: rol || 'profesor',
           establecimiento: cleanEstablecimiento || 'Establecimiento Educacional',
           rbd: cleanRbd || null,
+          comuna: cleanComuna || null,
+          dependencia: cleanDependencia || null,
           asignatura_id: asignaturaId || null,
           asignatura_nombre: asignaturaNombre || null,
           cargo: cargo || (asignaturaNombre ? `Docente de ${asignaturaNombre}` : 'Docente'),
@@ -260,6 +270,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           rol,
           establecimiento,
           rbd,
+          comuna,
+          dependencia,
           asignaturaId,
           asignaturaNombre
         } = body;
@@ -309,14 +321,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           authUserId = newAuthUser.user.id;
         }
 
-        // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos
+        // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos con comuna y dependencia
         const cleanRbd = (rbd || '').trim();
         const cleanEstablecimiento = (establecimiento || '').trim();
+        const cleanComuna = (comuna || '').trim();
+        const cleanDependencia = (dependencia || '').trim();
+
         if (cleanRbd && cleanEstablecimiento) {
           try {
             await sbAdmin.from('establecimientos').upsert({
               rbd: cleanRbd,
-              nombre: cleanEstablecimiento
+              nombre: cleanEstablecimiento,
+              comuna: cleanComuna || null,
+              dependencia: cleanDependencia || 'Particular Subvencionado',
+              updated_at: new Date().toISOString()
             }, { onConflict: 'rbd' });
           } catch (estErr) {
             console.warn('Advertencia al upsert en establecimientos:', estErr);
@@ -335,6 +353,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           rol: rol || 'profesor',
           establecimiento: cleanEstablecimiento || 'Establecimiento Educacional',
           rbd: cleanRbd || null,
+          comuna: cleanComuna || null,
+          dependencia: cleanDependencia || null,
           asignatura_id: asignaturaId || null,
           asignatura_nombre: asignaturaNombre || null,
           estado: 'pendiente_aprobacion',

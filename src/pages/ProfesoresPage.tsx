@@ -267,6 +267,8 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
         rol: 'profesor',
         establecimiento: form.establecimiento,
         rbd: normalizarRBD(form.rbd),
+        comuna: form.comuna,
+        dependencia: form.dependencia,
         asignaturaId: form.asignaturaId || asignaturas[0]?.id || 'asig-1',
         asignaturaNombre: selectedAsig?.nombre || form.asignaturaNombre || 'Matemática',
         cargo: form.cargo || `Docente de ${selectedAsig?.nombre || 'Especialidad'}`,

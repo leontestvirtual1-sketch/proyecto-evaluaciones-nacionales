@@ -61,6 +61,8 @@ export interface RegisterData {
   rol: UserRole;
   establecimiento: string;
   rbd?: string;
+  comuna?: string;
+  dependencia?: string;
   asignaturaId?: string;
   asignaturaNombre?: string;
 }

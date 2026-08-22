@@ -216,6 +216,8 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                     email: form.email,
                     establecimiento: form.establecimiento,
                     rbd: form.rbd || '',
+                    comuna: form.comuna || '',
+                    dependencia: form.dependencia || '',
                     asignaturaId: form.asignaturaId || 'asig-1',
                     asignaturaNombre: form.asignaturaNombre || 'Matemática'
                   }}

@@ -14,6 +14,8 @@ export interface DocenteFormData {
   email: string;
   establecimiento: string;
   rbd: string;
+  comuna?: string;
+  dependencia?: string;
   asignaturaId: string;
   asignaturaNombre: string;
   cargo?: string;
@@ -95,12 +97,16 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
       setIsCustomEstablecimiento(true);
       onChange('establecimiento', '');
       onChange('rbd', '');
+      onChange('comuna', '');
+      onChange('dependencia', 'Particular Subvencionado');
     } else {
       setIsCustomEstablecimiento(false);
       const selected = establecimientosList.find(est => est.rbd === val);
       if (selected) {
         onChange('rbd', selected.rbd);
         onChange('establecimiento', selected.nombre);
+        onChange('comuna', selected.comuna || '');
+        onChange('dependencia', selected.dependencia || 'Particular Subvencionado');
       }
     }
   };
@@ -224,7 +230,7 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
       </div>
 
       {/* Establecimiento y RBD */}
-      <div className="space-y-2 p-3 bg-slate-50/50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-xl">
+      <div className="space-y-2.5 p-3 bg-slate-50/50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-xl">
         <div className="flex items-center justify-between">
           <label className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
             <Building2 className="w-4 h-4 text-indigo-500" />
@@ -278,20 +284,55 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
         </div>
 
         {isCustomEstablecimiento && (
-          <div className="space-y-1 pt-1 animate-fade-in">
-            <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400">
-              Nombre Oficial del Establecimiento
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.establecimiento}
-              onChange={e => onChange('establecimiento', e.target.value)}
-              placeholder="ej. Colegio San Francisco de Asís"
-              className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-indigo-400/50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400"
-            />
+          <div className="space-y-2.5 pt-1 border-t border-slate-200 dark:border-slate-800/80 animate-fade-in">
+            <div className="space-y-1">
+              <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                Nombre Oficial del Establecimiento <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.establecimiento}
+                onChange={e => onChange('establecimiento', e.target.value)}
+                placeholder="ej. Colegio San Francisco de Asís"
+                className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-indigo-400/50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                  Comuna <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.comuna || ''}
+                  onChange={e => onChange('comuna', e.target.value)}
+                  placeholder="ej. Santiago / Renca / Providencia"
+                  className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                  Dependencia Administrativa
+                </label>
+                <select
+                  value={formData.dependencia || 'Particular Subvencionado'}
+                  onChange={e => onChange('dependencia', e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                >
+                  <option value="Particular Subvencionado">Particular Subvencionado</option>
+                  <option value="Municipal">Municipal / SLEP</option>
+                  <option value="Particular Pagado">Particular Pagado</option>
+                  <option value="Administración Delegada">Administración Delegada</option>
+                </select>
+              </div>
+            </div>
+
             <p className="text-[10px] text-slate-400 dark:text-slate-500">
-              El RBD y nombre quedarán fijados para agrupar automáticamente a todos los docentes de tu colegio.
+              El RBD, nombre, comuna y dependencia quedarán guardados en la tabla oficial de establecimientos.
             </p>
           </div>
         )}

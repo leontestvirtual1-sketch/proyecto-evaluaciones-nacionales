@@ -22,6 +22,8 @@ export interface UserProfile {
   rol: UserRole;
   establecimiento: string;
   rbd?: string;                // Código RBD oficial del establecimiento
+  comuna?: string;             // Comuna del establecimiento
+  dependencia?: string;        // Dependencia administrativa (Particular Subvencionado, Municipal, etc.)
   logoUrl?: string;            // Ruta al logo o insignia del colegio
   asignaturaId?: string;       // Asignatura principal para aislamiento de ambiente (ej. 'asig-1' = Matemática)
   asignaturaNombre?: string;   // Nombre descriptivo (ej. 'Matemática')
