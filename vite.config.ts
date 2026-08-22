@@ -15,13 +15,14 @@ export default defineConfig({
     open: true
   },
   build: {
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 1200,
     rollupOptions: {
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'supabase-vendor': ['@supabase/supabase-js'],
           'icons-vendor': ['lucide-react'],
+          'charts-vendor': ['recharts'],
         },
       },
     },
