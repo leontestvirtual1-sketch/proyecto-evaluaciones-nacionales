@@ -543,7 +543,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           await transporter.sendMail({
             from: `"Sysget Saber" <${SMTP_USER}>`,
             to: ADMIN_EMAIL,
-            subject: `🔔 Nueva solicitud de acceso: ${fullName} (${establecimiento || 'Establecimiento'})`,
+            subject: `🔔 Nueva solicitud de acceso: ${safeFullName} (${safeEstablecimiento || 'Establecimiento'})`,
             html: htmlBody,
           });
         } catch (mailErr) {
