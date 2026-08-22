@@ -2,6 +2,27 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Generación de Paquete Seguro y Saneado para Entrega Externa
+
+- **Problema / Requerimiento**:
+  - Preparar un paquete ZIP entregable para auditoría/cliente externo que cumpla estrictamente con la política de mínimo privilegio y confidencialidad:
+    - **Incluir**: Código fuente saneado (`src/`, `api/`), `.env.example` sin valores, `README.md` reducido, `LICENSE` (MIT), assets propios, datos sintéticos y migración de esquema consolidada sin semillas ni usuarios reales (`supabase/schema.sql`).
+    - **Excluir**: `.agents/`, `request.MD`, `DIRECTIVAS.md`, `BITACORA.md`, `.git/`, `.env.local`, `evaluaciones_fuente/`, `public/preguntas/`, scripts de prueba en `scratch/` y migraciones individuales con personas/cuentas.
+
+- **Archivos y Solución Técnica**:
+  - [`supabase/schema_export_clean.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/schema_export_clean.sql):
+    - [NUEVO] Esquema consolidado DDL con tablas `establecimientos`, `comunas` (52 de la RM), `perfiles`, `cursos`, `evaluaciones` y `rendiciones`, índices y políticas de seguridad RLS `WITH CHECK` sin datos de usuarios reales.
+  - [`LICENSE`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/LICENSE):
+    - [NUEVO] Licencia estándar MIT.
+  - [`sysget-saber-entrega-segura.zip`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/sysget-saber-entrega-segura.zip):
+    - [NUEVO] Archivo ZIP de 4.18 MB empaquetado y auditado con 0 archivos prohibidos o sensibles.
+
+- **Verificación / Despliegue**:
+  - Auditoría de contenido del ZIP: ✅ Verificado mediante `tar -tf` (0 referencias a `.git`, `.agents`, `BITACORA`, `DIRECTIVAS`, `request.MD` o credenciales).
+  - Git Commit & Push: ✅ Subido a rama `main` en GitHub (`05b058c`).
+
+
+
 ### [2026-08-21] Hardening de Seguridad, Integridad Académica de Evaluaciones y Accesibilidad WCAG (S-11 a S-14, F-01 a F-05, U-01 a U-04)
 
 - **Problema / Requerimiento**:
