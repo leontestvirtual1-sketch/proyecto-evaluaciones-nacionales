@@ -40,7 +40,17 @@ import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } f
 
 import { SandboxBanner } from './components/SandboxBanner';
 
-function MainAppContent({ isSandboxMode, setIsSandboxMode }: { isSandboxMode: boolean; setIsSandboxMode: (v: boolean) => void }) {
+function MainAppContent({
+  isSandboxMode,
+  setIsSandboxMode,
+  pruebas,
+  setPruebas,
+}: {
+  isSandboxMode: boolean;
+  setIsSandboxMode: (v: boolean) => void;
+  pruebas: Prueba[];
+  setPruebas: React.Dispatch<React.SetStateAction<Prueba[]>>;
+}) {
   const { user, isAuthenticated, isLoading, switchRole, approveUserByToken, logout } = useAuth();
   // ── DATA LAYER: consume from AcademicDataContext (single source of truth) ──
   const academicData = useAcademicData();
@@ -117,14 +127,45 @@ function MainAppContent({ isSandboxMode, setIsSandboxMode }: { isSandboxMode: bo
 
   // App Data State
   const [asignaturas, setAsignaturas] = useState<Asignatura[]>(asignaturasMock);
-  const [bancoPreguntas, setBancoPreguntas] = useState<Pregunta[]>(preguntasMock);
-  const [pruebas, setPruebas] = useState<Prueba[]>(pruebasMock);
+  // El banco es privado para cada perfil productivo. Los mocks sólo existen
+  // dentro del sandbox y nunca se cargan en la sesión de un docente real.
+  const [bancoPreguntas, setBancoPreguntas] = useState<Pregunta[]>([]);
+  const [bancoOwnerId, setBancoOwnerId] = useState<string | null>(null);
   const [rendiciones, setRendiciones] = useState<RendicionPrueba[]>(rendicionesMock);
 
   // View States
   const [selectedReportPruebaId, setSelectedReportPruebaId] = useState<string | null>(null);
   const [activePruebaForRunner, setActivePruebaForRunner] = useState<Prueba | null>(null);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (!user) {
+      setBancoPreguntas([]);
+      setBancoOwnerId(null);
+      return;
+    }
+
+    if (isSandboxMode) {
+      setBancoPreguntas(preguntasMock);
+      setBancoOwnerId(user.id);
+      return;
+    }
+
+    try {
+      const stored = localStorage.getItem(`sysget_banco_preguntas_${user.id}`);
+      setBancoPreguntas(stored ? JSON.parse(stored) : []);
+    } catch {
+      setBancoPreguntas([]);
+    }
+    setBancoOwnerId(user.id);
+  }, [user?.id, isSandboxMode]);
+
+  React.useEffect(() => {
+    // Evita sobrescribir el banco del siguiente usuario durante un cambio de
+    // sesión, antes de que termine de cargarse su contenido.
+    if (!user || isSandboxMode || bancoOwnerId !== user.id) return;
+    localStorage.setItem(`sysget_banco_preguntas_${user.id}`, JSON.stringify(bancoPreguntas));
+  }, [bancoPreguntas, bancoOwnerId, isSandboxMode, user?.id]);
 
   const getReporteForPrueba = (pruebaId: string): ReporteTabuladoCurso => {
     const prueba = pruebas.find(p => p.id === pruebaId);
@@ -551,13 +592,22 @@ function MainAppContentWrapper() {
   const { user, adminBaseProfile } = useAuth();
   // isSandboxMode must live HERE so AcademicDataProvider is re-created when it changes
   const [isSandboxMode, setIsSandboxMode] = useState<boolean>(false);
+  // El proveedor académico recibe las evaluaciones creadas durante la sesión.
+  // Así una docente nueva parte en cero y sus evaluaciones aparecen al crearlas.
+  const [pruebas, setPruebas] = useState<Prueba[]>(pruebasMock);
   return (
     <AcademicDataProvider
       currentUser={user}
       adminBaseProfile={adminBaseProfile}
       isSandboxMode={isSandboxMode}
+      customPruebas={pruebas}
     >
-      <MainAppContent isSandboxMode={isSandboxMode} setIsSandboxMode={setIsSandboxMode} />
+      <MainAppContent
+        isSandboxMode={isSandboxMode}
+        setIsSandboxMode={setIsSandboxMode}
+        pruebas={pruebas}
+        setPruebas={setPruebas}
+      />
     </AcademicDataProvider>
   );
 }

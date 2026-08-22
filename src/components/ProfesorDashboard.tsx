@@ -82,7 +82,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   onSelectPruebaReporte,
   onNavigateToEvaluaciones
 }) => {
-  const { alumnos } = useAcademicData();
+  const { alumnos, isProduction } = useAcademicData();
   const { usuarios, docentesReales, switchToDocente } = useAuth();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [adminTab, setAdminTab] = useState<'con_sysget' | 'sin_sysget'>('con_sysget');
@@ -744,7 +744,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
       {!isAdmin && (
         <div className="space-y-6">
           {/* Narrative student alert banner for Math */}
-          {isMatematica && (
+          {!isProduction && isMatematica && (
             <div className="p-6 rounded-3xl bg-gradient-to-r from-rose-950/40 via-slate-900 to-indigo-950/30 border border-rose-500/30 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-400 flex items-center justify-center font-black text-base flex-shrink-0">

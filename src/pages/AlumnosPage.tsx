@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
   Users,
   PlusCircle,
@@ -50,8 +50,8 @@ const AlumnoFormModal: React.FC<AlumnoFormModalProps> = ({
     email: '',
     rol: 'alumno',
     establecimiento: establecimientoNombre,
-    cursoId: cursosDisponibles[0]?.id || 'curso-2m',
-    cursoNombre: cursosDisponibles[0]?.nombre || '2° Medio A'
+    cursoId: cursosDisponibles[0]?.id || '',
+    cursoNombre: cursosDisponibles[0]?.nombre || ''
   });
 
   useEffect(() => {
@@ -65,8 +65,8 @@ const AlumnoFormModal: React.FC<AlumnoFormModalProps> = ({
         email: '',
         rol: 'alumno',
         establecimiento: establecimientoNombre,
-        cursoId: cursosDisponibles[0]?.id || 'curso-2m',
-        cursoNombre: cursosDisponibles[0]?.nombre || '2° Medio A'
+        cursoId: cursosDisponibles[0]?.id || '',
+        cursoNombre: cursosDisponibles[0]?.nombre || ''
       });
     }
   }, [editAlumno, isOpen, establecimientoNombre, cursosDisponibles]);
@@ -74,13 +74,13 @@ const AlumnoFormModal: React.FC<AlumnoFormModalProps> = ({
   if (!isOpen) return null;
 
   const handleSave = () => {
-    if (!form.rut || !form.nombre || !form.apellido || !form.email) return;
+    if (!form.rut || !form.nombre || !form.apellido || !form.email || !form.cursoId) return;
     const selectedCurso = cursosDisponibles.find(c => c.id === form.cursoId);
     onSave({
       id: editAlumno?.id || `alum-${Date.now()}`,
       ...form,
       establecimiento: establecimientoNombre,
-      cursoNombre: selectedCurso ? selectedCurso.nombre : form.cursoNombre || '2° Medio A'
+      cursoNombre: selectedCurso ? selectedCurso.nombre : form.cursoNombre || ''
     } as AlumnoConCurso);
     onClose();
   };
@@ -130,15 +130,11 @@ const AlumnoFormModal: React.FC<AlumnoFormModalProps> = ({
               onChange={e => {
                 const cId = e.target.value;
                 const cObj = cursosDisponibles.find(c => c.id === cId);
-                setForm(prev => ({ ...prev, cursoId: cId, cursoNombre: cObj?.nombre || '2° Medio A' }));
+                setForm(prev => ({ ...prev, cursoId: cId, cursoNombre: cObj?.nombre || '' }));
               }}
               className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all text-slate-900 dark:text-white"
             >
-              {cursosDisponibles.length === 0 ? (
-                <option value="curso-2m">2° Medio A</option>
-              ) : (
-                cursosDisponibles.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)
-              )}
+              {cursosDisponibles.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
             </select>
           </div>
         </div>
@@ -162,6 +158,7 @@ interface CSVModalProps {
   onClose: () => void;
   onImport: (alumnos: AlumnoConCurso[]) => void;
   establecimientoNombre: string;
+  cursosDisponibles: { id: string; nombre: string }[];
 }
 
 const CSV_TEMPLATE = `rut,nombre,apellido,email,curso
@@ -169,7 +166,7 @@ const CSV_TEMPLATE = `rut,nombre,apellido,email,curso
 23.333.444-5,Ignacio,Pérez,i.perez@premilitar.cl,2° Medio A
 24.555.666-7,Camila,Rojas,c.rojas@premilitar.cl,2° Medio A`;
 
-const AlumnoCargaMasivaModal: React.FC<CSVModalProps> = ({ isOpen, onClose, onImport, establecimientoNombre }) => {
+const AlumnoCargaMasivaModal: React.FC<CSVModalProps> = ({ isOpen, onClose, onImport, establecimientoNombre, cursosDisponibles }) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<AlumnoConCurso[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
@@ -186,13 +183,18 @@ const AlumnoCargaMasivaModal: React.FC<CSVModalProps> = ({ isOpen, onClose, onIm
     reader.onload = ev => {
       const raw = ev.target?.result as string;
       const { rows, errors: errs } = parseAlumnosCSV(raw);
-      setErrors(errs);
-      const mappedProfiles = csvAlumnosToProfiles(rows).map((p, idx) => ({
-        ...p,
-        establecimiento: establecimientoNombre,
-        cursoId: 'curso-2m',
-        cursoNombre: rows[idx]?.curso || '2° Medio A'
-      }));
+      const cursosPorNombre = new Map(cursosDisponibles.map(c => [c.nombre.trim().toLocaleLowerCase(), c]));
+      const courseErrors: string[] = [];
+      const mappedProfiles = csvAlumnosToProfiles(rows).flatMap((p, idx) => {
+        const cursoNombre = rows[idx]?.curso?.trim() || '';
+        const curso = cursosPorNombre.get(cursoNombre.toLocaleLowerCase());
+        if (!curso) {
+          courseErrors.push(`Fila ${idx + 2}: el curso "${cursoNombre}" no existe en tu lista de cursos.`);
+          return [];
+        }
+        return [{ ...p, establecimiento: establecimientoNombre, cursoId: curso.id, cursoNombre: curso.nombre }];
+      });
+      setErrors([...errs, ...courseErrors]);
       setPreview(mappedProfiles);
     };
     reader.readAsText(file, 'UTF-8');
@@ -367,17 +369,21 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
     localStorage.setItem(storageKey, JSON.stringify(alumnos));
   }, [alumnos, storageKey]);
 
-  // Cursos disponibles para el dropdown
-  const cursosDisponibles = currentUser?.asignaturaId === 'asig-2' || currentUser?.establecimiento?.includes('Premilitar')
-    ? [{ id: 'curso-2m', nombre: '2° Medio A' }]
-    : [
-        { id: 'curso-6a', nombre: '6° Básico A' },
-        { id: 'curso-6b', nombre: '6° Básico B' },
-        { id: 'curso-1', nombre: '8° Básico A' },
-        { id: 'curso-2', nombre: '8° Básico B' }
-      ];
+  // Los alumnos sólo se matriculan en cursos creados por el mismo perfil.
+  const cursosDisponibles = useMemo(() => {
+    try {
+      const saved = localStorage.getItem(`sysget_cursos_${currentUser?.id || 'default'}`);
+      const cursos = saved ? JSON.parse(saved) : [];
+      return Array.isArray(cursos)
+        ? cursos.map((curso: CursoItem) => ({ id: curso.id, nombre: curso.nombre, codigoInvitacion: curso.codigoInvitacion }))
+        : [];
+    } catch {
+      return [];
+    }
+  }, [currentUser?.id]);
+  const puedeGestionarAlumnos = cursosDisponibles.length > 0;
 
-  const codigoInvitacion = currentUser?.asignaturaId === 'asig-2' ? '2MA2026' : 'DEMO2026';
+  const codigoInvitacion = cursosDisponibles[0]?.codigoInvitacion || '';
 
   const filtered = alumnos.filter(a => {
     const matchesSearch = `${a.nombre} ${a.apellido} ${a.rut} ${a.email}`.toLowerCase().includes(search.toLowerCase());
@@ -424,13 +430,17 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setCsvModalOpen(true)}
-            className="flex items-center gap-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-sky-600/20 transition-all"
+            disabled={!puedeGestionarAlumnos}
+            title={puedeGestionarAlumnos ? 'Cargar alumnos desde CSV' : 'Primero crea un curso'}
+            className="flex items-center gap-2 bg-sky-600 hover:bg-sky-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-sky-600/20 transition-all"
           >
             <Upload className="w-4 h-4" /> Carga CSV
           </button>
           <button
             onClick={() => { setEditingAlumno(null); setFormModalOpen(true); }}
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-emerald-600/20 transition-all"
+            disabled={!puedeGestionarAlumnos}
+            title={puedeGestionarAlumnos ? 'Registrar alumno' : 'Primero crea un curso'}
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md shadow-emerald-600/20 transition-all"
           >
             <PlusCircle className="w-4 h-4" /> Nuevo Alumno
           </button>
@@ -445,20 +455,23 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
           </div>
           <div>
             <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              Código de Invitación — Auto-registro del Alumno
+              {puedeGestionarAlumnos ? 'Código de Invitación — Auto-registro del Alumno' : 'Aún no hay cursos creados'}
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              El alumno ingresa este código al registrarse para unirse al curso automáticamente.
+              {puedeGestionarAlumnos
+                ? 'El alumno ingresa este código al registrarse para unirse al curso automáticamente.'
+                : 'Crea el primer curso antes de cargar alumnos o compartir un código de invitación.'}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <span className="font-mono font-extrabold text-base tracking-widest text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
+          {puedeGestionarAlumnos && <span className="font-mono font-extrabold text-base tracking-widest text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
             {codigoInvitacion}
-          </span>
+          </span>}
           <button
             onClick={handleCopyCode}
-            className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 bg-emerald-500/10 hover:bg-emerald-500/20 px-3 py-1.5 rounded-xl transition-colors"
+            disabled={!puedeGestionarAlumnos}
+            className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 bg-emerald-500/10 hover:bg-emerald-500/20 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 rounded-xl transition-colors"
           >
             {copiedCode ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             {copiedCode ? 'Copiado' : 'Copiar Código'}
@@ -507,13 +520,15 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
             <div className="flex justify-center gap-3">
               <button
                 onClick={() => setCsvModalOpen(true)}
-                className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md transition-all"
+                disabled={!puedeGestionarAlumnos}
+                className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md transition-all"
               >
                 <Upload className="w-4 h-4" /> Cargar Nómina CSV
               </button>
               <button
                 onClick={() => { setEditingAlumno(null); setFormModalOpen(true); }}
-                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md transition-all"
+                disabled={!puedeGestionarAlumnos}
+                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md transition-all"
               >
                 <PlusCircle className="w-4 h-4" /> Nuevo Alumno
               </button>
@@ -608,6 +623,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
         onClose={() => setCsvModalOpen(false)}
         onImport={handleImportCSV}
         establecimientoNombre={colegioNombre}
+        cursosDisponibles={cursosDisponibles}
       />
     </div>
   );

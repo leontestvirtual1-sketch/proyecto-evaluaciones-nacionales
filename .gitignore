@@ -55,6 +55,8 @@ public/preguntas/
 
 # Legacy / Development Supabase migrations (schema_export_clean.sql remains official)
 supabase/migrations/
+!supabase/migrations/
+!supabase/migrations/20260822_private_teacher_data.sql
 
 # Scratch & ZIP Archives
 test_*.mjs

@@ -164,7 +164,14 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
     const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const savedCursos = JSON.parse(saved) as CursoItem[];
+        // Corrige exclusivamente el curso ficticio generado por versiones
+        // anteriores para docentes nuevos; no afecta cursos creados por ellos.
+        const isLegacyPlaceholder = savedCursos.length === 1 &&
+          savedCursos[0]?.nombre === 'Curso 1' &&
+          savedCursos[0]?.nivel === '8° Básico' &&
+          savedCursos[0]?.totalAlumnos === 0;
+        return isLegacyPlaceholder ? [] : savedCursos;
       } catch (err) {
         console.error('Error parsing saved cursos:', err);
       }
@@ -195,18 +202,8 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
       ];
     }
 
-    // Docente sin cursos iniciales
-    return [
-      {
-        id: `cur-${Date.now()}`,
-        nombre: 'Curso 1',
-        nivel: '8° Básico',
-        anio: 2026,
-        codigoInvitacion: generateCode(),
-        totalAlumnos: 0,
-        establecimiento: colegioNombre
-      }
-    ];
+    // Docente nuevo: el primer curso debe ser creado explícitamente.
+    return [];
   };
 
   const [cursos, setCursos] = useState<CursoItem[]>(getInitialCursos);
