@@ -34,6 +34,7 @@ dist-ssr
 # MCP config & Agent workspace rules
 .agents/
 .agents/*
+.antigravityignore
 
 # Internal Project Documentation & Requirements
 BITACORA.md
@@ -44,15 +45,16 @@ MANUAL_DE_IMPLEMENTACION.md
 MANUAL_DE_USUARIO.md
 *.docx
 
-# Source exams and internal assets
+# Source exams, diagrams & intellectual property
 evaluaciones_fuente/
+ciclo_evaluacion_simce.*
+public/ciclo_evaluacion_simce.*
+public/docs/
+public/logos/
 public/preguntas/
 
-# Legacy migrations with real personal data / credentials
-supabase/migrations/004_create_superadmin_luis_leon.sql
-supabase/migrations/006_create_production_users.sql
-supabase/migrations/010_create_susana_pizarro_colegio_mi_casa.sql
-supabase/migrations/010b_fix_susana_establecimiento.sql
+# Legacy / Development Supabase migrations (schema_export_clean.sql remains official)
+supabase/migrations/
 
 # Scratch & ZIP Archives
 test_*.mjs
@@ -61,4 +63,5 @@ scratch/
 *.zip
 
 .vercel
+
 
