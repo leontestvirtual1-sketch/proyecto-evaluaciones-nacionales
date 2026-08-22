@@ -91,6 +91,7 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
 }) => {
   const [establecimientosList, setEstablecimientosList] = useState<EstablecimientoInfo[]>(establecimientosCatalog);
   const [isCustomEstablecimiento, setIsCustomEstablecimiento] = useState(false);
+  const [comunasList, setComunasList] = useState<string[]>(COMUNAS_REGION_METROPOLITANA);
 
   // Cargar establecimientos desde Supabase si están disponibles
   useEffect(() => {
@@ -123,6 +124,26 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
     }
     loadEstablecimientos();
   }, []);
+
+  // Cargar comunas desde Supabase (tabla public.comunas) con fallback al array local
+  useEffect(() => {
+    async function loadComunas() {
+      try {
+        const { data, error } = await supabase
+          .from('comunas')
+          .select('nombre, provincia')
+          .eq('region_numero', '13')
+          .order('nombre', { ascending: true });
+        if (!error && data && data.length > 0) {
+          setComunasList(data.map(c => c.nombre));
+        }
+      } catch (err) {
+        console.warn('Usando listado local de comunas de la RM:', err);
+      }
+    }
+    loadComunas();
+  }, []);
+
 
   // Verificar si el establecimiento actual está en la lista conocida
   useEffect(() => {
@@ -367,7 +388,7 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
                   className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
                 >
                   <option value="" disabled>Seleccione una comuna...</option>
-                  {COMUNAS_REGION_METROPOLITANA.map(comunaName => (
+                  {comunasList.map(comunaName => (
                     <option key={comunaName} value={comunaName}>
                       {comunaName}
                     </option>
