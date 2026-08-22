@@ -2,6 +2,43 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Normalización Integral de Alta de Docentes (RBD Relacional, Creación Directa Supabase y Formularios Unificados)
+
+- **Problema / Requerimiento**:
+  1. **Discrepancia en Formularios:** Existían dos formularios desarticulados para el alta de docentes: `RegisterPage.tsx` (con nombres/apellidos separados y conectado a Supabase) vs. `ProfesoresPage.tsx` (con apellido único, sin campo RBD y persistiendo únicamente en `localStorage`).
+  2. **Cuentas Inoperativas desde Admin UTP:** Los docentes creados desde el botón "Agregar Docente" en el panel del administrador no existían en Supabase Auth y la contraseña temporal ingresada se perdía como código muerto.
+  3. **Heurísticas Frágiles de Agrupamiento:** El agrupamiento por establecimiento en `Sidebar.tsx` y `ProfesorDashboard.tsx` dependía de coincidencias de texto libre y heurísticas hardcodeadas, provocando establecimientos duplicados ("Sin docentes asignados aún") o docentes huérfanos.
+  4. **Seguridad y Consistencia en Backend:** `api/users.ts` utilizaba `listUsers()` no paginado y poseía un fallback inseguro en `approve-token` que aprobaba perfiles pendientes de forma genérica.
+
+- **Archivos y Solución Técnica**:
+  - [`supabase/migrations/011_create_establecimientos_and_normalize_rbd.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/011_create_establecimientos_and_normalize_rbd.sql):
+    - [NUEVO] Creada la tabla oficial `public.establecimientos` (`rbd` PK, `nombre`, `comuna`, `dependencia`), poblada con colegios oficiales (`31030`, `99999`, `10101`) y normalizados los datos en `perfiles`.
+    - [NUEVO] Agregado índice único en `perfiles.rut` y reescritas las políticas RLS en `perfiles` y `cursos` para comparar por `rbd`.
+  - [`src/utils/chileValidators.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/utils/chileValidators.ts):
+    - [NUEVO] Implementadas funciones de validación chilena estándar: `validarRutChileno`, `formatearRutChileno`, `validarRBD` y `normalizarRBD`.
+  - [`src/components/DocenteFormFields.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/DocenteFormFields.tsx):
+    - [NUEVO] Componente unificado reutilizable para captura y validación estricta de Nombres, Apellido Paterno, Apellido Materno, RUT, Email Institucional, Establecimiento, RBD y Especialidad MINEDUC con autocompletado y catálogo dinámico.
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - [MODIFICADO] Implementada la acción `action=admin-create`: crea la cuenta en Supabase Auth con `tempPassword` y `email_confirm: true`, y crea el perfil en `public.perfiles` con `estado: 'activo'`, `activo: true`, `rbd`, `apellido_paterno` y `apellido_materno`.
+    - [MODIFICADO] Reemplazado `listUsers()` por consulta directa a `perfiles.select('id').eq('email', cleanEmail)`.
+    - [MODIFICADO] Eliminado fallback inseguro en `action=approve-token` (retorna 404 estricto si el token no existe).
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] Expuestas las funciones `loadDocentesReales` y `loadUsuariosReales` a través del contexto para permitir recargas reactivas tras altas de docentes.
+  - [`src/pages/ProfesoresPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/ProfesoresPage.tsx):
+    - [MODIFICADO] Modal de Docente refactorizado con `DocenteFormFields` y campo de "Contraseña Inicial".
+    - [MODIFICADO] `handleSave` conectado a `fetch('/api/users?action=admin-create')` con recarga inmediata en Supabase vía `loadDocentesReales()`. Modo demo preservado con `localStorage`.
+  - [`src/pages/RegisterPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx):
+    - [MODIFICADO] Integrado con `DocenteFormFields` y validación de RBD obligatorio antes de enviar solicitud.
+  - [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx) y [`src/components/ProfesorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/ProfesorDashboard.tsx):
+    - [MODIFICADO] Eliminadas heurísticas de matching por texto y fallbacks inventados (`'99999'`). Agrupamiento 100% determinístico por RBD exacto.
+
+- **Verificación / Despliegue**:
+  - Compilación TypeScript (`tsc`): ✅ Exitosa, 0 errores.
+  - Build Vite de Producción (`npm run build`): ✅ Exitosa (`dist/index.html` y bundles generados).
+  - Formularios Unificados: ✅ Ambos flujos (`RegisterPage` y `ProfesoresPage`) capturan los mismos campos estructurados y validan RUT y RBD.
+  - Backend Seguro: ✅ Creación admin activa en Supabase Auth y validación de tokens sin fallbacks.
+
+
 ### [2026-08-21] Vinculación Robusta de Susana Angélica Pizarro con Colegio Mi Casa en Sidebar y Dashboard
 
 - **Problema / Requerimiento**:

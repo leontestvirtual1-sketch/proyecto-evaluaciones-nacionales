@@ -44,6 +44,8 @@ interface AuthContextType {
   rejectOrSuspendUser: (userId: string, nuevoEstado: 'suspendido' | 'rechazado') => Promise<{ error: string | null }>;
   changeUserPlan: (userId: string, nuevoPlan: UserPlan) => Promise<{ error: string | null }>;
   setUserPassword: (userId: string, email: string, newPassword: string) => Promise<{ error: string | null }>;
+  loadDocentesReales: () => Promise<void>;
+  loadUsuariosReales: () => Promise<void>;
   // ID del admin real que inició sesión (para poder volver desde vista de docente)
   adminBaseProfile: UserProfile | null;
 }
@@ -811,7 +813,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       approveUserByToken,
       rejectOrSuspendUser,
       changeUserPlan,
-      setUserPassword
+      setUserPassword,
+      loadDocentesReales,
+      loadUsuariosReales
     }}>
       {children}
     </AuthContext.Provider>

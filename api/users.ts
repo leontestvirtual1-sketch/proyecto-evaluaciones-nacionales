@@ -113,12 +113,141 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ users: dbUsers });
     }
 
-    // ── 2. POST: Acciones de Registro, Aprobación y Suspensión ──
+    // ── 2. POST: Acciones de Registro, Creación Admin, Aprobación y Suspensión ──
     if (req.method === 'POST') {
       const { action } = req.query || {};
       const body = req.body || {};
 
-      // ── ACCIÓN: REGISTRO ──
+      // ── ACCIÓN: CREACIÓN DIRECTA POR ADMINISTRADOR (DOCENTE ACTIVO INMEDIATO) ──
+      if (action === 'admin-create') {
+        const {
+          rut,
+          nombre,
+          apellidoPaterno,
+          apellidoMaterno,
+          apellido,
+          email,
+          tempPassword,
+          password,
+          rol,
+          establecimiento,
+          rbd,
+          asignaturaId,
+          asignaturaNombre,
+          cargo
+        } = body;
+
+        const cleanEmail = (email || '').toLowerCase().trim();
+        if (!cleanEmail) {
+          return res.status(400).json({ error: 'El correo electrónico es obligatorio.' });
+        }
+
+        const fullApellido = `${apellidoPaterno || ''} ${apellidoMaterno || ''}`.trim() || apellido || '';
+        const userPass = tempPassword || password || 'Sysget2026!';
+
+        // 1. Crear o sincronizar en Supabase Auth
+        let authUserId = '';
+        const { data: existingProfile } = await sbAdmin
+          .from('perfiles')
+          .select('id')
+          .eq('email', cleanEmail)
+          .maybeSingle();
+
+        if (existingProfile?.id) {
+          authUserId = existingProfile.id;
+          if (userPass) {
+            await sbAdmin.auth.admin.updateUserById(authUserId, {
+              password: userPass,
+              user_metadata: {
+                nombre,
+                apellido: fullApellido,
+                apellidoPaterno,
+                apellidoMaterno,
+                rut,
+                rol: rol || 'profesor',
+                establecimiento,
+                rbd
+              }
+            });
+          }
+        } else {
+          const { data: newAuthUser, error: authCreateErr } = await sbAdmin.auth.admin.createUser({
+            email: cleanEmail,
+            password: userPass,
+            email_confirm: true,
+            user_metadata: {
+              nombre,
+              apellido: fullApellido,
+              apellidoPaterno,
+              apellidoMaterno,
+              rut,
+              rol: rol || 'profesor',
+              establecimiento,
+              rbd
+            }
+          });
+
+          if (authCreateErr || !newAuthUser?.user) {
+            console.error('Error creating auth user in Supabase Auth:', authCreateErr);
+            return res.status(400).json({ error: authCreateErr?.message || 'Error al registrar credenciales en Supabase' });
+          }
+          authUserId = newAuthUser.user.id;
+        }
+
+        // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos
+        const cleanRbd = (rbd || '').trim();
+        const cleanEstablecimiento = (establecimiento || '').trim();
+        if (cleanRbd && cleanEstablecimiento) {
+          try {
+            await sbAdmin.from('establecimientos').upsert({
+              rbd: cleanRbd,
+              nombre: cleanEstablecimiento
+            }, { onConflict: 'rbd' });
+          } catch (estErr) {
+            console.warn('Advertencia al upsert en establecimientos:', estErr);
+          }
+        }
+
+        // 3. Insertar o actualizar perfil activo en tabla public.perfiles
+        const profilePayload: any = {
+          id: authUserId,
+          rut: rut ? rut.trim() : '',
+          nombre: (nombre || '').trim(),
+          apellido: fullApellido,
+          apellido_paterno: (apellidoPaterno || '').trim() || null,
+          apellido_materno: (apellidoMaterno || '').trim() || null,
+          email: cleanEmail,
+          rol: rol || 'profesor',
+          establecimiento: cleanEstablecimiento || 'Establecimiento Educacional',
+          rbd: cleanRbd || null,
+          asignatura_id: asignaturaId || null,
+          asignatura_nombre: asignaturaNombre || null,
+          cargo: cargo || (asignaturaNombre ? `Docente de ${asignaturaNombre}` : 'Docente'),
+          estado: 'activo',
+          activo: true,
+          plan: 'trial',
+          dias_restantes_trial: 30,
+          approval_token: null,
+          fecha_registro: new Date().toISOString()
+        };
+
+        const { error: upsertErr } = await sbAdmin
+          .from('perfiles')
+          .upsert(profilePayload, { onConflict: 'id' });
+
+        if (upsertErr) {
+          console.error('Error guardando perfil en perfiles:', upsertErr);
+          return res.status(500).json({ error: 'Error al registrar perfil: ' + upsertErr.message });
+        }
+
+        return res.status(200).json({
+          success: true,
+          user: profilePayload,
+          message: `Docente ${nombre} ${fullApellido} creado y activado exitosamente en Supabase.`
+        });
+      }
+
+      // ── ACCIÓN: REGISTRO PÚBLICO (REQUIERE APROBACIÓN) ──
       if (action === 'register' || (!action && body.email && body.password)) {
         const {
           rut,
@@ -145,11 +274,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         // 1. Crear o sincronizar en Supabase Auth
         let authUserId = '';
-        const { data: authList } = await sbAdmin.auth.admin.listUsers();
-        const existingAuthUser = authList?.users?.find((u: any) => u.email?.toLowerCase() === cleanEmail);
+        const { data: existingProfile } = await sbAdmin
+          .from('perfiles')
+          .select('id')
+          .eq('email', cleanEmail)
+          .maybeSingle();
 
-        if (existingAuthUser) {
-          authUserId = existingAuthUser.id;
+        if (existingProfile?.id) {
+          authUserId = existingProfile.id;
           if (password) {
             await sbAdmin.auth.admin.updateUserById(authUserId, { password });
           }
@@ -165,7 +297,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               apellidoMaterno,
               rut,
               rol: rol || 'profesor',
-              establecimiento
+              establecimiento,
+              rbd
             }
           });
 
@@ -176,16 +309,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           authUserId = newAuthUser.user.id;
         }
 
-        // 2. Insertar o actualizar en tabla public.perfiles
+        // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos
+        const cleanRbd = (rbd || '').trim();
+        const cleanEstablecimiento = (establecimiento || '').trim();
+        if (cleanRbd && cleanEstablecimiento) {
+          try {
+            await sbAdmin.from('establecimientos').upsert({
+              rbd: cleanRbd,
+              nombre: cleanEstablecimiento
+            }, { onConflict: 'rbd' });
+          } catch (estErr) {
+            console.warn('Advertencia al upsert en establecimientos:', estErr);
+          }
+        }
+
+        // 3. Insertar o actualizar en tabla public.perfiles
         const profilePayload: any = {
           id: authUserId,
-          rut: rut || '',
-          nombre: nombre || '',
+          rut: rut ? rut.trim() : '',
+          nombre: (nombre || '').trim(),
           apellido: fullApellido,
+          apellido_paterno: (apellidoPaterno || '').trim() || null,
+          apellido_materno: (apellidoMaterno || '').trim() || null,
           email: cleanEmail,
           rol: rol || 'profesor',
-          establecimiento: establecimiento || 'Establecimiento Educacional',
-          rbd: rbd || null,
+          establecimiento: cleanEstablecimiento || 'Establecimiento Educacional',
+          rbd: cleanRbd || null,
           asignatura_id: asignaturaId || null,
           asignatura_nombre: asignaturaNombre || null,
           estado: 'pendiente_aprobacion',
@@ -205,7 +354,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(500).json({ error: 'Error al registrar perfil: ' + upsertErr.message });
         }
 
-        // 3. Enviar Correo de Notificación con Google SMTP (Nodemailer)
+        // 4. Enviar Correo de Notificación con Google SMTP (Nodemailer)
         const approvalLink = `${APP_URL}?approve_token=${generatedToken}`;
         const fullName = `${nombre} ${fullApellido}`.trim();
         const rolLabel = rol === 'profesor' ? '👨‍🏫 Docente' : rol === 'admin' ? '🛡️ Administrador' : '👤 Alumno';
@@ -352,24 +501,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .select('*')
           .eq('approval_token', token);
 
-        let targetRecord = targetList && targetList.length > 0 ? targetList[0] : null;
-
-        // Fallback: si no lo encuentra por token, buscar por perfiles pendientes
-        if (!targetRecord) {
-          const { data: perfilesPendientes } = await sbAdmin
-            .from('perfiles')
-            .select('*')
-            .eq('estado', 'pendiente_aprobacion');
-
-          if (perfilesPendientes && perfilesPendientes.length > 0) {
-            targetRecord = perfilesPendientes[0];
-          }
-        }
+        const targetRecord = targetList && targetList.length > 0 ? targetList[0] : null;
 
         if (!targetRecord) {
           return res.status(404).json({
             success: false,
-            message: 'El enlace de aprobación es inválido o la cuenta ya fue activada previamente.'
+            message: 'El enlace de aprobación es inválido, ha expirado o la cuenta ya fue activada previamente.'
           });
         }
 

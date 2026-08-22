@@ -110,15 +110,16 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
     const map = new Map<string, { rbd: string; nombre: string; comuna?: string; dependencia?: string; logoUrl?: string; docentes: UserProfile[] }>();
 
     establecimientosCatalog.forEach(e => {
-      const key = e.rbd || e.nombre;
-      map.set(key, {
-        rbd: e.rbd || '31030',
-        nombre: e.nombre,
-        comuna: e.comuna || 'La Granja, Región Metropolitana',
-        dependencia: e.dependencia || 'Particular Subvencionado',
-        logoUrl: e.logoUrl,
-        docentes: []
-      });
+      if (e.rbd) {
+        map.set(e.rbd, {
+          rbd: e.rbd,
+          nombre: e.nombre,
+          comuna: e.comuna || 'Región Metropolitana',
+          dependencia: e.dependencia || 'Particular Subvencionado',
+          logoUrl: e.logoUrl,
+          docentes: []
+        });
+      }
     });
 
     const listaDocentes: UserProfile[] = [];
@@ -143,43 +144,26 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
       }
     });
 
-    // Asignar cada docente al colegio correspondiente de forma robusta
+    // Asignar cada docente al colegio correspondiente por RBD exacto
     listaDocentes.forEach(d => {
-      let targetCol: { rbd: string; nombre: string; comuna?: string; dependencia?: string; logoUrl?: string; docentes: UserProfile[] } | undefined;
+      const rbdKey = (d.rbd || '').trim();
+      if (!rbdKey) return;
 
-      // 1. Buscar por RBD exacto
-      if (d.rbd) {
-        targetCol = Array.from(map.values()).find(c => c.rbd === d.rbd);
-      }
-
-      // 2. Buscar por nombre de colegio coincidente o parcial
-      if (!targetCol && d.establecimiento) {
-        const dEstNorm = d.establecimiento.toLowerCase().trim();
-        targetCol = Array.from(map.values()).find(c => {
-          const cNomNorm = c.nombre.toLowerCase().trim();
-          return cNomNorm === dEstNorm || cNomNorm.includes(dEstNorm) || dEstNorm.includes(cNomNorm);
-        });
-      }
-
-      // 3. Heurística específica para Susana / Colegio Mi Casa
-      if (!targetCol && (d.email?.toLowerCase().includes('susana') || d.nombre?.toLowerCase().includes('susana'))) {
-        targetCol = Array.from(map.values()).find(c => c.nombre.toLowerCase().includes('mi casa'));
-      }
-
-      if (targetCol) {
-        if (!targetCol.docentes.some(doc => doc.id === d.id || doc.email.toLowerCase() === d.email.toLowerCase())) {
-          targetCol.docentes.push(d);
-        }
-      } else {
-        const key = d.rbd || d.establecimiento || 'otro';
-        map.set(key, {
-          rbd: d.rbd || '99999',
-          nombre: d.establecimiento || 'Establecimiento Asociado',
-          comuna: 'Establecimiento Asociado',
+      let targetCol = map.get(rbdKey);
+      if (!targetCol) {
+        targetCol = {
+          rbd: rbdKey,
+          nombre: d.establecimiento || `Establecimiento RBD ${rbdKey}`,
+          comuna: 'Establecimiento Registrado',
           dependencia: 'Particular / Subvencionado',
           logoUrl: d.logoUrl,
-          docentes: [d]
-        });
+          docentes: []
+        };
+        map.set(rbdKey, targetCol);
+      }
+
+      if (!targetCol.docentes.some(doc => doc.id === d.id || doc.email.toLowerCase() === d.email.toLowerCase())) {
+        targetCol.docentes.push(d);
       }
     });
 

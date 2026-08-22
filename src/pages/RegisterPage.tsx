@@ -1,24 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth, RegisterData } from '../context/AuthContext';
-import { GraduationCap, Mail, Lock, User, Building2, CreditCard, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck, Clock, Copy, Check, ExternalLink, BookOpen, Hash } from 'lucide-react';
+import { GraduationCap, Mail, Lock, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck, Clock, Copy, Check, ExternalLink } from 'lucide-react';
 import { UserRole } from '../types';
 import { asignaturasMock } from '../data/mockData';
-
-const ASIGNATURAS_MINEDUC = [
-  { id: 'asig-1', codigo: 'MAT', nombre: 'Matemática' },
-  { id: 'asig-2', codigo: 'LEN', nombre: 'Lenguaje y Comunicación' },
-  { id: 'asig-3', codigo: 'CN', nombre: 'Ciencias Naturales' },
-  { id: 'asig-hist', codigo: 'HIST', nombre: 'Historia, Geografía y Cs. Sociales' },
-  { id: 'asig-ing', codigo: 'ING', nombre: 'Idioma Extranjero: Inglés' },
-  { id: 'asig-ef', codigo: 'EF', nombre: 'Educación Física y Salud' },
-  { id: 'asig-art', codigo: 'ART', nombre: 'Artes Visuales' },
-  { id: 'asig-mus', codigo: 'MUS', nombre: 'Música' },
-  { id: 'asig-tec', codigo: 'TEC', nombre: 'Tecnología' },
-  { id: 'asig-filo', codigo: 'FILO', nombre: 'Filosofía' },
-  { id: 'asig-fis', codigo: 'FIS', nombre: 'Física' },
-  { id: 'asig-quim', codigo: 'QUIM', nombre: 'Química' },
-  { id: 'asig-otra', codigo: 'OTRA', nombre: 'Otra asignatura' },
-];
+import { DocenteFormFields, DocenteFormData } from '../components/DocenteFormFields';
+import { validarRutChileno, validarRBD, normalizarRBD } from '../utils/chileValidators';
 
 interface RegisterPageProps {
   onGoToLogin: () => void;
@@ -44,7 +30,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
   const [error, setError] = useState('');
   const [registeredSuccess, setRegisteredSuccess] = useState(false);
 
-  const handleChange = (field: keyof RegisterData, value: string) => {
+  const handleFieldChange = (field: keyof DocenteFormData | 'password' | 'rol', value: string) => {
     setForm(prev => {
       const updated = { ...prev, [field]: value };
       if (field === 'apellidoPaterno' || field === 'apellidoMaterno') {
@@ -54,36 +40,12 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
     });
   };
 
-  /** Valida RUT chileno con dígito verificador */
-  const validarRutChileno = (rut: string): boolean => {
-    // Limpiar puntos, guiones y espacios
-    const clean = rut.replace(/[\.\-\s]/g, '').toUpperCase();
-    if (clean.length < 2) return false;
-
-    const cuerpo = clean.slice(0, -1);
-    const dv = clean.slice(-1);
-
-    if (!/^\d+$/.test(cuerpo)) return false;
-
-    // Calcular dígito verificador
-    let suma = 0;
-    let multiplicador = 2;
-    for (let i = cuerpo.length - 1; i >= 0; i--) {
-      suma += parseInt(cuerpo[i]) * multiplicador;
-      multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
-    }
-    const dvEsperado = 11 - (suma % 11);
-    const dvCalculado = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : String(dvEsperado);
-
-    return dv === dvCalculado;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.apellidoMaterno || !form.email || !form.password || !form.establecimiento) {
-      setError('Por favor completa todos los campos obligatorios (Nombres, Apellido Paterno, Apellido Materno, RUT, Email, Establecimiento y Contraseña).');
+    if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.apellidoMaterno || !form.email || !form.password || !form.establecimiento || !form.rbd) {
+      setError('Por favor completa todos los campos obligatorios (Nombres, Apellido Paterno, Apellido Materno, RUT, Email, Establecimiento, RBD y Contraseña).');
       return;
     }
 
@@ -98,6 +60,12 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
       return;
     }
 
+    // Validar RBD chileno
+    if (!validarRBD(form.rbd || '')) {
+      setError('El RBD ingresado no es válido. Debe ser el código numérico oficial MINEDUC de tu establecimiento.');
+      return;
+    }
+
     if (form.password !== confirmPassword) {
       setError('Las contraseñas no coinciden.');
       return;
@@ -109,6 +77,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
 
     const res = await register({
       ...form,
+      rbd: normalizarRBD(form.rbd || ''),
       apellido: `${form.apellidoPaterno} ${form.apellidoMaterno}`.trim()
     });
 
@@ -140,24 +109,26 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
           <h1 className="text-2xl font-extrabold text-white">
             Sysget<span className="text-indigo-400">Saber</span>
           </h1>
+          <p className="text-sm text-slate-400">Plataforma de Evaluaciones Nacionales — Chile 2026</p>
         </div>
 
         {/* Card */}
-        <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-8 shadow-2xl space-y-5">
+        <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden">
           {registeredSuccess ? (
-            /* Vista de Éxito y Pasos de Verificación */
-            <div className="space-y-6 animate-fade-in">
-              <div className="text-center space-y-2">
-                <div className="w-14 h-14 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-emerald-500/20">
-                  <CheckCircle2 className="w-8 h-8" />
-                </div>
+            /* Vista de Éxito */
+            <div className="text-center space-y-5 animate-fade-in py-2">
+              <div className="w-16 h-16 bg-emerald-500/20 border-2 border-emerald-500/50 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+                <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+              </div>
+              
+              <div className="space-y-1">
                 <h2 className="text-xl font-bold text-white">¡Solicitud de Registro Enviada!</h2>
-                <p className="text-xs text-slate-300">
-                  Tu cuenta para <strong className="text-indigo-300">{form.nombre} {form.apellidoPaterno} {form.apellidoMaterno}</strong> ({form.establecimiento}) ha sido registrada en nuestro sistema.
+                <p className="text-xs text-slate-400">
+                  Tu cuenta ha sido creada exitosamente para <strong>{form.email}</strong>.
                 </p>
               </div>
 
-              {/* Proceso en 2 Pasos */}
+              {/* Proceso de Activación */}
               <div className="space-y-3 bg-slate-950/70 border border-slate-800 rounded-xl p-4 text-left">
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-indigo-600/30 border border-indigo-500 text-indigo-300 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -218,7 +189,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                       <button
                         key={r.value}
                         type="button"
-                        onClick={() => handleChange('rol', r.value)}
+                        onClick={() => handleFieldChange('rol', r.value)}
                         className={`p-3 rounded-xl border text-left transition-all ${
                           form.rol === r.value
                             ? 'bg-indigo-600 border-indigo-600 text-white shadow-md'
@@ -234,146 +205,23 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                   </div>
                 </div>
 
-                {/* Nombres y Apellidos Separados */}
-                <div className="space-y-3">
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Nombres</label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value={form.nombre}
-                        onChange={e => handleChange('nombre', e.target.value)}
-                        placeholder="ej. Susana Andrea"
-                        className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
-                      />
-                      <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Apellido Paterno</label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={form.apellidoPaterno}
-                          onChange={e => handleChange('apellidoPaterno', e.target.value)}
-                          placeholder="ej. Pizarro"
-                          className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
-                        />
-                        <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
-                      </div>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Apellido Materno</label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={form.apellidoMaterno}
-                          onChange={e => handleChange('apellidoMaterno', e.target.value)}
-                          placeholder="ej. Rojas"
-                          className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
-                        />
-                        <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* RUT */}
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">RUT</label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={form.rut}
-                      onChange={e => handleChange('rut', e.target.value)}
-                      placeholder="12.345.678-9"
-                      className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
-                    />
-                    <CreditCard className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
-                  </div>
-                </div>
-
-                {/* Email */}
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Correo Electrónico</label>
-                  <div className="relative">
-                    <input
-                      type="email"
-                      value={form.email}
-                      onChange={e => handleChange('email', e.target.value)}
-                      placeholder="nombre@colegio.cl"
-                      className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
-                    />
-                    <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
-                  </div>
-                </div>
-
-                {/* Establecimiento + RBD */}
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Establecimiento Educacional</label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={form.establecimiento}
-                      onChange={e => handleChange('establecimiento', e.target.value)}
-                      placeholder="Liceo / Colegio Ejemplo"
-                      className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
-                    />
-                    <Building2 className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center justify-between">
-                    <span>RBD del Establecimiento</span>
-                    <span className="text-[10px] font-normal text-slate-500 normal-case">(Opcional — ubica tu colegio en el sistema MINEDUC)</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={form.rbd || ''}
-                      onChange={e => handleChange('rbd', e.target.value)}
-                      placeholder="ej. 12345-6"
-                      className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600 font-mono"
-                    />
-                    <Hash className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
-                  </div>
-                  <p className="text-[10px] text-slate-500">Con el RBD podemos localizar automáticamente la región, dependencia y datos del establecimiento.</p>
-                </div>
-
-                {/* Especialidad — Solo para docentes */}
-                {form.rol === 'profesor' && (
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                      <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
-                      Especialidad / Asignatura Principal
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={form.asignaturaId || 'asig-1'}
-                        onChange={e => {
-                          const selected = ASIGNATURAS_MINEDUC.find(a => a.id === e.target.value);
-                          setForm(prev => ({
-                            ...prev,
-                            asignaturaId: e.target.value,
-                            asignaturaNombre: selected?.nombre || ''
-                          }));
-                        }}
-                        className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-950 text-white border border-indigo-500/40 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
-                      >
-                        {ASIGNATURAS_MINEDUC.map(asig => (
-                          <option key={asig.id} value={asig.id}>
-                            {asig.nombre} ({asig.codigo})
-                          </option>
-                        ))}
-                      </select>
-                      <BookOpen className="w-4 h-4 text-indigo-400 absolute left-3.5 top-3" />
-                    </div>
-                    <p className="text-[10px] text-slate-500">Define qué banco de preguntas y evaluaciones tendrás disponibles por defecto.</p>
-                  </div>
-                )}
+                {/* Campos Unificados del Docente */}
+                <DocenteFormFields
+                  formData={{
+                    rut: form.rut,
+                    nombre: form.nombre,
+                    apellidoPaterno: form.apellidoPaterno,
+                    apellidoMaterno: form.apellidoMaterno,
+                    apellido: form.apellido,
+                    email: form.email,
+                    establecimiento: form.establecimiento,
+                    rbd: form.rbd || '',
+                    asignaturaId: form.asignaturaId || 'asig-1',
+                    asignaturaNombre: form.asignaturaNombre || 'Matemática'
+                  }}
+                  onChange={(field, val) => handleFieldChange(field, val)}
+                  asignaturas={asignaturasMock}
+                />
 
                 {/* Password grid */}
                 <div className="grid grid-cols-2 gap-3">
@@ -383,7 +231,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                       <input
                         type="password"
                         value={form.password}
-                        onChange={e => handleChange('password', e.target.value)}
+                        onChange={e => handleFieldChange('password', e.target.value)}
                         placeholder="••••••••"
                         className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-600"
                       />

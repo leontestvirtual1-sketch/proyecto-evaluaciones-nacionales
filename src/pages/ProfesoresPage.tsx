@@ -147,10 +147,13 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, profesor, onClose
   );
 };
 
+import { DocenteFormFields, DocenteFormData } from '../components/DocenteFormFields';
+import { validarRutChileno, validarRBD, normalizarRBD } from '../utils/chileValidators';
+
 interface ProfesorFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (p: UserProfile) => void;
+  onSave: (p: UserProfile, tempPassword?: string) => Promise<void> | void;
   editProfesor?: UserProfile | null;
   asignaturas?: Asignatura[];
   onNavigateToConfig?: () => void;
@@ -164,73 +167,118 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
   asignaturas = asignaturasMock,
   onNavigateToConfig
 }) => {
-  const [form, setForm] = useState<Partial<UserProfile>>({
+  const [form, setForm] = useState<DocenteFormData>({
     rut: '',
     nombre: '',
+    apellidoPaterno: '',
+    apellidoMaterno: '',
     apellido: '',
     email: '',
-    rol: 'profesor',
     establecimiento: 'Liceo Bicentenario Los Andes',
+    rbd: '10101',
     asignaturaId: asignaturas[0]?.id || 'asig-1',
     asignaturaNombre: asignaturas[0]?.nombre || 'Matemática',
     cargo: `Docente de ${asignaturas[0]?.nombre || 'Matemática'}`
   });
 
-  const [tempPassword, setTempPassword] = useState('demo1234');
+  const [tempPassword, setTempPassword] = useState('Sysget2026!');
+  const [error, setError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   // Sync state whenever editProfesor or isOpen changes
   useEffect(() => {
     if (editProfesor) {
+      const apParts = (editProfesor.apellido || '').split(' ');
       setForm({
-        ...editProfesor,
+        rut: editProfesor.rut || '',
+        nombre: editProfesor.nombre || '',
+        apellidoPaterno: editProfesor.apellidoPaterno || apParts[0] || '',
+        apellidoMaterno: editProfesor.apellidoMaterno || apParts.slice(1).join(' ') || '',
+        apellido: editProfesor.apellido || '',
+        email: editProfesor.email || '',
         asignaturaId: editProfesor.asignaturaId || asignaturas[0]?.id || 'asig-1',
         asignaturaNombre: editProfesor.asignaturaNombre || asignaturas[0]?.nombre || 'Matemática',
-        establecimiento: editProfesor.establecimiento || 'Liceo Bicentenario Los Andes'
+        establecimiento: editProfesor.establecimiento || 'Liceo Bicentenario Los Andes',
+        rbd: editProfesor.rbd || '10101',
+        cargo: editProfesor.cargo || `Docente de ${editProfesor.asignaturaNombre || 'Matemática'}`
       });
+      setError('');
     } else {
       setForm({
         rut: '',
         nombre: '',
+        apellidoPaterno: '',
+        apellidoMaterno: '',
         apellido: '',
         email: '',
-        rol: 'profesor',
         establecimiento: 'Liceo Bicentenario Los Andes',
+        rbd: '10101',
         asignaturaId: asignaturas[0]?.id || 'asig-1',
         asignaturaNombre: asignaturas[0]?.nombre || 'Matemática',
         cargo: `Docente de ${asignaturas[0]?.nombre || 'Matemática'}`
       });
-      setTempPassword('demo1234');
+      setTempPassword('Sysget2026!');
+      setError('');
     }
   }, [editProfesor, isOpen, asignaturas]);
 
   if (!isOpen) return null;
 
-  const handleAsignaturaChange = (asigId: string) => {
-    const selected = asignaturas.find(a => a.id === asigId);
-    setForm(prev => ({
-      ...prev,
-      asignaturaId: asigId,
-      asignaturaNombre: selected?.nombre || '',
-      cargo: `Docente de ${selected?.nombre || 'Especialidad'}`
-    }));
+  const handleFieldChange = (field: keyof DocenteFormData, value: string) => {
+    setForm(prev => {
+      const updated = { ...prev, [field]: value };
+      if (field === 'apellidoPaterno' || field === 'apellidoMaterno') {
+        updated.apellido = `${updated.apellidoPaterno || ''} ${updated.apellidoMaterno || ''}`.trim();
+      }
+      return updated;
+    });
   };
 
-  const handleSave = () => {
-    if (!form.rut || !form.nombre || !form.apellido || !form.email) return;
+  const handleSave = async () => {
+    setError('');
+    if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.email || !form.establecimiento || !form.rbd) {
+      setError('Por favor completa todos los campos requeridos (*).');
+      return;
+    }
+
+    if (!validarRutChileno(form.rut)) {
+      setError('El RUT ingresado no es válido. Verifica el número y dígito verificador.');
+      return;
+    }
+
+    if (!validarRBD(form.rbd)) {
+      setError('El RBD ingresado no es válido. Debe ser numérico oficial MINEDUC.');
+      return;
+    }
+
+    const fullApellido = `${form.apellidoPaterno} ${form.apellidoMaterno}`.trim() || form.apellido || '';
     const selectedAsig = asignaturas.find(a => a.id === form.asignaturaId);
-    onSave({
-      id: editProfesor?.id || `prof-${Date.now()}`,
-      rut: form.rut!,
-      nombre: form.nombre!,
-      apellido: form.apellido!,
-      email: form.email!,
-      rol: 'profesor',
-      establecimiento: form.establecimiento || 'Liceo Bicentenario Los Andes',
-      asignaturaId: form.asignaturaId || asignaturas[0]?.id || 'asig-1',
-      asignaturaNombre: selectedAsig?.nombre || form.asignaturaNombre || asignaturas[0]?.nombre || 'Matemática',
-      cargo: form.cargo || `Docente de ${selectedAsig?.nombre || 'Especialidad'}`
-    });
-    onClose();
+
+    setIsSaving(true);
+    try {
+      await onSave({
+        id: editProfesor?.id || `prof-${Date.now()}`,
+        rut: form.rut,
+        nombre: form.nombre,
+        apellido: fullApellido,
+        apellidoPaterno: form.apellidoPaterno,
+        apellidoMaterno: form.apellidoMaterno,
+        email: form.email,
+        rol: 'profesor',
+        establecimiento: form.establecimiento,
+        rbd: normalizarRBD(form.rbd),
+        asignaturaId: form.asignaturaId || asignaturas[0]?.id || 'asig-1',
+        asignaturaNombre: selectedAsig?.nombre || form.asignaturaNombre || 'Matemática',
+        cargo: form.cargo || `Docente de ${selectedAsig?.nombre || 'Especialidad'}`,
+        estado: 'activo',
+        plan: 'trial'
+      }, tempPassword);
+      onClose();
+    } catch (err: any) {
+      setError(err.message || 'Ocurrió un error al registrar el docente.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -247,7 +295,7 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
                 {editProfesor ? `Editar Perfil: ${editProfesor.nombre} ${editProfesor.apellido}` : 'Registrar Nuevo Docente'}
               </h3>
               <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                {editProfesor ? 'Actualiza los datos de especialidad y contacto' : 'Asigna especialidad curricular y credenciales'}
+                {editProfesor ? 'Actualiza los datos de especialidad y contacto' : 'Crea credenciales reales y asigna especialidad'}
               </p>
             </div>
           </div>
@@ -259,152 +307,62 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
           </button>
         </div>
 
-        {/* Form Body - 2 Compact Columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-left flex-1 overflow-y-auto pr-0.5">
-          {/* Col 1 */}
-          <div className="space-y-2">
-            <div className="space-y-0.5">
-              <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Nombre
-              </label>
-              <input
-                type="text"
-                value={form.nombre || ''}
-                onChange={e => setForm(prev => ({ ...prev, nombre: e.target.value }))}
-                placeholder="Ej. Patricia"
-                className="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
-              />
-            </div>
-
-            <div className="space-y-0.5">
-              <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                RUT Docente
-              </label>
-              <input
-                type="text"
-                value={form.rut || ''}
-                onChange={e => setForm(prev => ({ ...prev, rut: e.target.value }))}
-                placeholder="13.456.789-0"
-                className="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-mono font-medium"
-              />
-            </div>
-
-            <div className="space-y-0.5">
-              <div className="flex items-center justify-between">
-                <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Especialidad
-                </label>
-                {onNavigateToConfig && (
-                  <button
-                    type="button"
-                    onClick={() => { onClose(); onNavigateToConfig(); }}
-                    className="text-[9px] text-indigo-500 hover:underline font-semibold"
-                  >
-                    + Catálogo
-                  </button>
-                )}
-              </div>
-              <select
-                value={form.asignaturaId || asignaturas[0]?.id || 'asig-1'}
-                onChange={e => handleAsignaturaChange(e.target.value)}
-                className="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-bold text-indigo-600 dark:text-indigo-400"
-              >
-                {asignaturas.map(asig => (
-                  <option key={asig.id} value={asig.id}>
-                    {asig.codigo === 'MAT' ? '📐' : asig.codigo === 'CN' ? '🔬' : asig.codigo === 'LEN' ? '📖' : asig.codigo === 'HIST' ? '🏛️' : '📚'} {asig.nombre} ({asig.codigo})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-0.5">
-              <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Establecimiento
-              </label>
-              <input
-                type="text"
-                value={form.establecimiento || 'Liceo Bicentenario Los Andes'}
-                onChange={e => setForm(prev => ({ ...prev, establecimiento: e.target.value }))}
-                placeholder="Nombre del colegio"
-                className="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-              />
-            </div>
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-3 p-2.5 bg-rose-500/10 border border-rose-500/20 rounded-xl text-xs text-rose-500 font-medium">
+            ⚠️ {error}
           </div>
+        )}
 
-          {/* Col 2 */}
-          <div className="space-y-2">
-            <div className="space-y-0.5">
-              <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Apellido
+        {/* Form Body - DocenteFormFields */}
+        <div className="flex-1 overflow-y-auto pr-0.5 space-y-3">
+          <DocenteFormFields
+            formData={form}
+            onChange={handleFieldChange}
+            asignaturas={asignaturas}
+            showCargoField={true}
+          />
+
+          {!editProfesor ? (
+            <div className="space-y-1 p-3 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800/40 rounded-xl">
+              <label className="text-xs font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+                <Lock className="w-3.5 h-3.5" /> Contraseña Inicial de Acceso
               </label>
               <input
                 type="text"
-                value={form.apellido || ''}
-                onChange={e => setForm(prev => ({ ...prev, apellido: e.target.value }))}
-                placeholder="Ej. Muñoz"
-                className="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
+                value={tempPassword}
+                onChange={e => setTempPassword(e.target.value)}
+                placeholder="Sysget2026!"
+                className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 border border-indigo-300 dark:border-indigo-700 rounded-xl font-mono text-indigo-600 dark:text-indigo-300 font-bold outline-none focus:ring-2 focus:ring-indigo-500/20"
               />
+              <p className="text-[10px] text-indigo-500 dark:text-indigo-400">
+                Esta contraseña se activará en Supabase Auth y permitirá al docente ingresar inmediatamente.
+              </p>
             </div>
-
-            <div className="space-y-0.5">
-              <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Correo Institucional
-              </label>
-              <input
-                type="email"
-                value={form.email || ''}
-                onChange={e => setForm(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="patricia.munoz@escuelademo.cl"
-                className="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
-              />
+          ) : (
+            <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
+              💡 <strong className="text-slate-700 dark:text-slate-300">Contraseña:</strong> Usa la opción "Restablecer Contraseña" desde el menú de la tabla para cambiar sus claves.
             </div>
-
-            <div className="space-y-0.5">
-              <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Cargo / Nivel Pedagógico
-              </label>
-              <input
-                type="text"
-                value={form.cargo || ''}
-                onChange={e => setForm(prev => ({ ...prev, cargo: e.target.value }))}
-                placeholder="Ej. Docente 6° a 8° Básico"
-                className="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-              />
-            </div>
-
-            {!editProfesor ? (
-              <div className="space-y-0.5">
-                <label className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider flex items-center gap-1">
-                  <Lock className="w-3 h-3" /> Contraseña Inicial
-                </label>
-                <input
-                  type="text"
-                  value={tempPassword}
-                  onChange={e => setTempPassword(e.target.value)}
-                  className="w-full px-2.5 py-1.5 text-xs bg-indigo-500/10 dark:bg-slate-950 border border-indigo-500/30 rounded-lg font-mono text-indigo-600 dark:text-indigo-300 font-bold"
-                />
-              </div>
-            ) : (
-              <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
-                💡 <strong className="text-slate-700 dark:text-slate-300">Contraseña:</strong> Usa "Restablecer Contraseña" desde el menú de la tabla.
-              </div>
-            )}
-          </div>
+          )}
         </div>
 
         {/* Footer Actions */}
-        <div className="flex items-center justify-end gap-2.5 pt-2.5 mt-2.5 border-t border-slate-100 dark:border-slate-800">
+        <div className="flex items-center justify-end gap-2.5 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800">
           <button
+            type="button"
+            disabled={isSaving}
             onClick={onClose}
-            className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+            className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
+            type="button"
+            disabled={isSaving}
             onClick={handleSave}
-            className="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md shadow-indigo-600/20 transition-all hover:scale-105 active:scale-95"
+            className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md shadow-indigo-600/20 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 flex items-center gap-1.5"
           >
-            {editProfesor ? 'Guardar Cambios' : 'Registrar Docente'}
+            {isSaving ? 'Guardando en Supabase...' : editProfesor ? 'Guardar Cambios' : 'Registrar Docente'}
           </button>
         </div>
       </div>
@@ -421,7 +379,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   asignaturas = asignaturasMock,
   onNavigateToConfig
 }) => {
-  const { user, docentesReales } = useAuth();
+  const { user, docentesReales, loadDocentesReales } = useAuth();
   const { isProduction } = useAcademicData();
   const isDemo = !isProduction;
   const storageKey = isDemo ? 'sysget_demo_profesores_list' : 'sysget_prod_profesores_list';
@@ -477,15 +435,49 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  const handleSave = (prof: UserProfile) => {
-    setProfesores(prev => {
-      const exists = prev.find(p => p.id === prof.id);
-      const updated = exists ? prev.map(p => p.id === prof.id ? prof : p) : [prof, ...prev];
-      localStorage.setItem(storageKey, JSON.stringify(updated));
-      return updated;
-    });
+  const handleSave = async (prof: UserProfile, tempPassword?: string) => {
+    if (!isDemo) {
+      try {
+        const resp = await fetch('/api/users?action=admin-create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...prof,
+            tempPassword: tempPassword || 'Sysget2026!'
+          })
+        });
+
+        const data = await resp.json();
+        if (!resp.ok || data.error) {
+          throw new Error(data.error || 'Error al registrar docente en Supabase.');
+        }
+
+        if (loadDocentesReales) {
+          await loadDocentesReales();
+        }
+
+        setProfesores(prev => {
+          const exists = prev.find(p => p.id === prof.id || p.email === prof.email);
+          const updated = exists ? prev.map(p => (p.id === prof.id || p.email === prof.email) ? prof : p) : [prof, ...prev];
+          return updated;
+        });
+
+        showToast(`✅ Docente ${prof.nombre} ${prof.apellido} registrado y activado exitosamente en Supabase.`);
+      } catch (err: any) {
+        console.error('Error guardando docente:', err);
+        showToast(`⚠️ Error: ${err.message}`);
+        throw err;
+      }
+    } else {
+      setProfesores(prev => {
+        const exists = prev.find(p => p.id === prof.id);
+        const updated = exists ? prev.map(p => p.id === prof.id ? prof : p) : [prof, ...prev];
+        localStorage.setItem(storageKey, JSON.stringify(updated));
+        return updated;
+      });
+      showToast(`Docente ${prof.nombre} ${prof.apellido} guardado en Demo.`);
+    }
     setEditingProfesor(null);
-    showToast(`Docente ${prof.nombre} ${prof.apellido} guardado correctamente.`);
   };
 
   const handleDelete = (id: string) => {

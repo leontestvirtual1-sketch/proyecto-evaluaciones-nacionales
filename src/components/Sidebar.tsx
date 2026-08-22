@@ -94,13 +94,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
   const colegiosMap = new Map<string, { rbd: string; nombre: string; logoUrl?: string; docentes: UserProfile[] }>();
   
   establecimientosCatalog.forEach(e => {
-    const key = e.rbd || e.nombre;
-    colegiosMap.set(key, {
-      rbd: e.rbd || '31030',
-      nombre: e.nombre,
-      logoUrl: e.logoUrl,
-      docentes: []
-    });
+    if (e.rbd) {
+      colegiosMap.set(e.rbd, {
+        rbd: e.rbd,
+        nombre: e.nombre,
+        logoUrl: e.logoUrl,
+        docentes: []
+      });
+    }
   });
 
   // Consolidar docentes reales de producción
@@ -132,41 +133,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     }
   });
 
-  // Asignar cada docente al colegio correspondiente de forma robusta
+  // Asignar cada docente a su colegio por RBD exacto
   listaDocentes.forEach(d => {
-    let targetCol: { rbd: string; nombre: string; logoUrl?: string; docentes: UserProfile[] } | undefined;
+    const rbdKey = (d.rbd || '').trim();
+    if (!rbdKey) return;
 
-    // 1. Buscar por RBD exacto
-    if (d.rbd) {
-      targetCol = Array.from(colegiosMap.values()).find(c => c.rbd === d.rbd);
-    }
-
-    // 2. Buscar por nombre de colegio coincidente o parcial
-    if (!targetCol && d.establecimiento) {
-      const dEstNorm = d.establecimiento.toLowerCase().trim();
-      targetCol = Array.from(colegiosMap.values()).find(c => {
-        const cNomNorm = c.nombre.toLowerCase().trim();
-        return cNomNorm === dEstNorm || cNomNorm.includes(dEstNorm) || dEstNorm.includes(cNomNorm);
-      });
-    }
-
-    // 3. Heurística específica para Susana / Colegio Mi Casa
-    if (!targetCol && (d.email?.toLowerCase().includes('susana') || d.nombre?.toLowerCase().includes('susana'))) {
-      targetCol = Array.from(colegiosMap.values()).find(c => c.nombre.toLowerCase().includes('mi casa'));
-    }
-
-    if (targetCol) {
-      if (!targetCol.docentes.some(doc => doc.id === d.id || doc.email.toLowerCase() === d.email.toLowerCase())) {
-        targetCol.docentes.push(d);
-      }
-    } else {
-      const key = d.rbd || d.establecimiento || 'otro';
-      colegiosMap.set(key, {
-        rbd: d.rbd || '99999',
-        nombre: d.establecimiento || 'Establecimiento Asociado',
+    let targetCol = colegiosMap.get(rbdKey);
+    if (!targetCol) {
+      targetCol = {
+        rbd: rbdKey,
+        nombre: d.establecimiento || `Establecimiento RBD ${rbdKey}`,
         logoUrl: d.logoUrl,
-        docentes: [d]
-      });
+        docentes: []
+      };
+      colegiosMap.set(rbdKey, targetCol);
+    }
+
+    if (!targetCol.docentes.some(doc => doc.id === d.id || doc.email.toLowerCase() === d.email.toLowerCase())) {
+      targetCol.docentes.push(d);
     }
   });
 
