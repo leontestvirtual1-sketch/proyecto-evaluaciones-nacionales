@@ -2,6 +2,36 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Hardening de Seguridad, Integridad Académica de Evaluaciones y Accesibilidad WCAG (S-11 a S-14, F-01 a F-05, U-01 a U-04)
+
+- **Problema / Requerimiento**:
+  1. **S-14 — Cabeceras incompletas:** Faltaba cabecera HSTS y CSP en `vercel.json` y persistía una directiva obsoleta `X-XSS-Protection`.
+  2. **F-01 — IDs de preguntas alterados en el generador:** `EvaluacionGeneratorModal.tsx` generaba IDs ficticios con sufijos `${p.id}-gen-${idx}`, provocando que `App.tsx` no pudiera recuperar las preguntas reales y cayera en un fallback heurístico.
+  3. **F-02 — Creación de evaluaciones sin validación ni estado borrador:** Se permitía crear pruebas sin título o sin preguntas disponibles y se publicaban de inmediato en estado activo sin confirmación.
+  4. **F-04 — Temporizador sin bloqueo ni envío automático:** En `AlumnoEvaluationView.tsx`, cuando el temporizador llegaba a 0, no se bloqueaban los controles ni se enviaba la prueba automáticamente.
+  5. **F-05 — Calificación errónea de ítems de desarrollo:** Las preguntas de desarrollo se autocalificaban como correctas por simple longitud de caracteres (> 10), inflando puntajes sin revisión pedagógica docente.
+  6. **U-01 a U-04 — Accesibilidad en modales y navegación:** Modales sin atributos semánticos `role="dialog"` ni cierre por Escape, botones icónicos sin `aria-label` descriptivo y botones de navegación sin indicación de estado accesible (`aria-current`).
+
+- **Archivos y Solución Técnica**:
+  - [`vercel.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/vercel.json):
+    - [MODIFICADO] Agregadas cabeceras `Strict-Transport-Security` (`max-age=63072000; includeSubDomains; preload`) y `Content-Security-Policy` ajustada a Vite, Supabase y Google Fonts; eliminada cabecera obsoleta `X-XSS-Protection`.
+  - [`src/components/EvaluacionGeneratorModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/EvaluacionGeneratorModal.tsx):
+    - [MODIFICADO] Se preservan los IDs reales exactos (`p.id`) de las preguntas seleccionadas del banco sin alterar claves.
+    - [MODIFICADO] Validaciones estrictas antes de generar: título obligatorio, duración positiva, existencia de preguntas para la asignatura seleccionada.
+    - [MODIFICADO] Selector de estado inicial: permite crear la evaluación como `borrador` o publicarla inmediatamente como `activa`.
+    - [MODIFICADO] Accesibilidad: `role="dialog"`, `aria-modal="true"`, `aria-labelledby`, botón de cierre con `aria-label` descriptivo y soporte para cerrar con la tecla `Escape`.
+  - [`src/components/AlumnoEvaluationView.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AlumnoEvaluationView.tsx):
+    - [MODIFICADO] Temporizador con cierre y envío automático inmediato al llegar a 0 segundos, bloqueando respuestas adicionales.
+    - [MODIFICADO] Las preguntas de desarrollo ya no se autocalifican por longitud: se marcan con puntaje base 0 y quedan explícitamente reservadas para corrección por el docente.
+    - [MODIFICADO] Navegador de preguntas enriquecido con `aria-label="Ir a pregunta N, respondida/pendiente"` y `aria-current="true"` en la pregunta activa.
+
+- **Verificación / Despliegue**:
+  - Compilación TypeScript (`tsc`): ✅ Exitosa, 0 errores.
+  - Build Vite de Producción (`npm run build`): ✅ Exitosa (`dist/index.html` y bundles generados).
+  - Git Commit & Push: ✅ Subido a rama `main` en GitHub (`297182f`) y desplegado en Vercel.
+
+
+
 ### [2026-08-21] Remediación de Seguridad Crítica y Alta — Auditoría OWASP (S-01 a S-10)
 
 - **Problema / Requerimiento**:
