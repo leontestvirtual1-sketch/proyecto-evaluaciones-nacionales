@@ -31,12 +31,34 @@ dist-ssr
 *.sln
 *.sw?
 
-# MCP config (may contain API keys - DO NOT COMMIT)
-.agents/mcp_config.json
+# MCP config & Agent workspace rules
+.agents/
+.agents/*
 
-# Scratch and test execution scripts
+# Internal Project Documentation & Requirements
+BITACORA.md
+DIRECTIVAS.md
+request.MD
+request*.md
+MANUAL_DE_IMPLEMENTACION.md
+MANUAL_DE_USUARIO.md
+*.docx
+
+# Source exams and internal assets
+evaluaciones_fuente/
+public/preguntas/
+
+# Legacy migrations with real personal data / credentials
+supabase/migrations/004_create_superadmin_luis_leon.sql
+supabase/migrations/006_create_production_users.sql
+supabase/migrations/010_create_susana_pizarro_colegio_mi_casa.sql
+supabase/migrations/010b_fix_susana_establecimiento.sql
+
+# Scratch & ZIP Archives
 test_*.mjs
 test_*.js
 scratch/
+*.zip
 
 .vercel
+
