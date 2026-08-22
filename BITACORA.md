@@ -11,15 +11,16 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   4. **Seguridad y Consistencia en Backend:** `api/users.ts` utilizaba `listUsers()` no paginado y poseía un fallback inseguro en `approve-token` que aprobaba perfiles pendientes de forma genérica.
 
 - **Archivos y Solución Técnica**:
-  - [`supabase/migrations/011_create_establecimientos_and_normalize_rbd.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/011_create_establecimientos_and_normalize_rbd.sql):
+  - [`supabase/migrations/011_create_establecimientos_and_normalize_rbd.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/011_create_establecimientos_and_normalize_rbd.sql) y [`supabase/migrations/012_add_comuna_dependencia_perfiles.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/012_add_comuna_dependencia_perfiles.sql):
     - [NUEVO] Creada la tabla oficial `public.establecimientos` (`rbd` PK, `nombre`, `comuna`, `dependencia`), poblada con colegios oficiales (`31030`, `99999`, `10101`) y normalizados los datos en `perfiles`.
+    - [NUEVO] Agregadas columnas `comuna` y `dependencia` en `perfiles` y `establecimientos`, con captura obligatoria desde los formularios y persistencia garantizada en base de datos.
     - [NUEVO] Agregado índice único en `perfiles.rut` y reescritas las políticas RLS en `perfiles` y `cursos` para comparar por `rbd`.
   - [`src/utils/chileValidators.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/utils/chileValidators.ts):
     - [NUEVO] Implementadas funciones de validación chilena estándar: `validarRutChileno`, `formatearRutChileno`, `validarRBD` y `normalizarRBD`.
   - [`src/components/DocenteFormFields.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/DocenteFormFields.tsx):
-    - [NUEVO] Componente unificado reutilizable para captura y validación estricta de Nombres, Apellido Paterno, Apellido Materno, RUT, Email Institucional, Establecimiento, RBD y Especialidad MINEDUC con autocompletado y catálogo dinámico.
+    - [NUEVO] Componente unificado reutilizable para captura y validación estricta de Nombres, Apellido Paterno, Apellido Materno, RUT, Email Institucional, Establecimiento, RBD, Comuna, Dependencia y Especialidad MINEDUC con autocompletado y catálogo dinámico.
   - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
-    - [MODIFICADO] Implementada la acción `action=admin-create`: crea la cuenta en Supabase Auth con `tempPassword` y `email_confirm: true`, y crea el perfil en `public.perfiles` con `estado: 'activo'`, `activo: true`, `rbd`, `apellido_paterno` y `apellido_materno`.
+    - [MODIFICADO] Implementada la acción `action=admin-create`: crea la cuenta en Supabase Auth con `tempPassword` y `email_confirm: true`, y crea el perfil en `public.perfiles` y `establecimientos` con `estado: 'activo'`, `activo: true`, `rbd`, `comuna`, `dependencia`, `apellido_paterno` y `apellido_materno`.
     - [MODIFICADO] Reemplazado `listUsers()` por consulta directa a `perfiles.select('id').eq('email', cleanEmail)`.
     - [MODIFICADO] Eliminado fallback inseguro en `action=approve-token` (retorna 404 estricto si el token no existe).
   - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
