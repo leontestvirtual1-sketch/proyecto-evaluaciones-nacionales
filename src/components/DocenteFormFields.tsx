@@ -1,9 +1,64 @@
 import React, { useEffect, useState } from 'react';
-import { User, Mail, Building2, Hash, BookOpen, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { User, Mail, Building2, Hash, BookOpen, AlertCircle, CheckCircle2, MapPin } from 'lucide-react';
 import { Asignatura, EstablecimientoInfo } from '../types';
 import { asignaturasMock, establecimientosCatalog } from '../data/mockData';
 import { validarRutChileno, formatearRutChileno, validarRBD, normalizarRBD } from '../utils/chileValidators';
 import { supabase } from '../lib/supabaseClient';
+
+export const COMUNAS_REGION_METROPOLITANA = [
+  'Santiago',
+  'Cerrillos',
+  'Cerro Navia',
+  'Conchalí',
+  'El Bosque',
+  'Estación Central',
+  'Huechuraba',
+  'Independencia',
+  'La Cisterna',
+  'La Florida',
+  'La Granja',
+  'La Pintana',
+  'La Reina',
+  'Las Condes',
+  'Lo Barnechea',
+  'Lo Espejo',
+  'Lo Prado',
+  'Macul',
+  'Maipú',
+  'Ñuñoa',
+  'Pedro Aguirre Cerda',
+  'Peñalolén',
+  'Providencia',
+  'Pudahuel',
+  'Quilicura',
+  'Quinta Normal',
+  'Recoleta',
+  'Renca',
+  'San Joaquín',
+  'San Miguel',
+  'San Ramón',
+  'Vitacura',
+  'Puente Alto',
+  'Pirque',
+  'San José de Maipo',
+  'Colina',
+  'Lampa',
+  'Til Til',
+  'San Bernardo',
+  'Buin',
+  'Calera de Tango',
+  'Paine',
+  'Melipilla',
+  'Alhué',
+  'Curacaví',
+  'María Pinto',
+  'San Pedro',
+  'Talagante',
+  'El Monte',
+  'Isla de Maipo',
+  'Padre Hurtado',
+  'Peñaflor'
+].sort((a, b) => a.localeCompare('es'));
 
 export interface DocenteFormData {
   rut: string;
@@ -301,17 +356,23 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                  Comuna <span className="text-red-500">*</span>
+                <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  <MapPin className="w-3 h-3 text-indigo-500" />
+                  Comuna (Región Metropolitana) <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
+                <select
                   required
-                  value={formData.comuna || ''}
+                  value={formData.comuna || 'Santiago'}
                   onChange={e => onChange('comuna', e.target.value)}
-                  placeholder="ej. Santiago / Renca / Providencia"
-                  className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400"
-                />
+                  className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
+                >
+                  <option value="" disabled>Seleccione una comuna...</option>
+                  {COMUNAS_REGION_METROPOLITANA.map(comunaName => (
+                    <option key={comunaName} value={comunaName}>
+                      {comunaName}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="space-y-1">
