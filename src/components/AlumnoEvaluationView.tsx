@@ -21,56 +21,28 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
   const [respuestas, setRespuestas] = useState<Record<string, string>>({});
   const [tiempoRestante, setTiempoRestante] = useState<number>(prueba.duracionMinutos * 60);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [tiempoExpirado, setTiempoExpirado] = useState<boolean>(false);
   const [completedRendicion, setCompletedRendicion] = useState<RendicionPrueba | null>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTiempoRestante(prev => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatTiempo = (segundos: number) => {
-    const min = Math.floor(segundos / 60);
-    const seg = segundos % 60;
-    return `${min}:${seg < 10 ? '0' : ''}${seg}`;
-  };
-
-  const preguntaActual = preguntas[currentIdx];
-  const totalRespondidas = Object.keys(respuestas).length;
-  const progresoPorcentaje = Math.round((totalRespondidas / preguntas.length) * 100);
-
-  const handleSelectRespuesta = (letraOTexto: string) => {
-    setRespuestas(prev => ({
-      ...prev,
-      [preguntaActual.id]: letraOTexto
-    }));
-  };
-
-  const handleSubmitEvaluation = () => {
+  const handleSubmitEvaluation = React.useCallback((porTiempo = false) => {
     setIsSubmitting(true);
+    if (porTiempo) setTiempoExpirado(true);
 
     let puntajeObtenido = 0;
     let puntajeMaximo = 0;
+    let tieneDesarrolloPendiente = false;
 
     const respuestasDetalladas = preguntas.map(p => {
       const respDada = respuestas[p.id] || '';
       let esCorrecta = false;
 
       if (p.tipo === 'seleccion_multiple') {
-        esCorrecta = respDada === p.respuestaCorrecta;
+        esCorrecta = respDada.toUpperCase() === (p.respuestaCorrecta || '').toUpperCase();
         if (esCorrecta) puntajeObtenido += p.puntaje;
       } else {
-        // Desarrollo demo scoring
-        esCorrecta = respDada.trim().length > 10;
-        if (esCorrecta) puntajeObtenido += p.puntaje;
+        // F-05: Preguntas de desarrollo quedan pendientes de revisión docente (no se autocalifican)
+        tieneDesarrolloPendiente = true;
+        esCorrecta = false;
       }
       puntajeMaximo += p.puntaje;
 
@@ -82,7 +54,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
       };
     });
 
-    const porcentajeLogro = Math.round((puntajeObtenido / puntajeMaximo) * 100);
+    const porcentajeLogro = puntajeMaximo > 0 ? Math.round((puntajeObtenido / puntajeMaximo) * 100) : 0;
     // Escala nacional 100 a 350
     const puntajeEscalaNacional = Math.round(100 + (porcentajeLogro / 100) * 250);
 
@@ -90,7 +62,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
       id: `rend-${Date.now()}`,
       pruebaId: prueba.id,
       alumnoId: alumno.id,
-      alumnoNombre: `${alumno.nombre} ${alumno.apellido}`,
+      alumnoNombre: `${alumno.nombre} ${alumno.apellido}`.trim(),
       alumnoRut: alumno.rut,
       fechaRendicion: new Date().toISOString().replace('T', ' ').substring(0, 16),
       puntajeObtenido,
@@ -106,6 +78,41 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
       setIsSubmitting(false);
       onFinish(nuevaRendicion);
     }, 800);
+  }, [preguntas, respuestas, prueba.id, alumno, onFinish]);
+
+  // F-04: Temporizador con bloqueo y envío automático al llegar a 0
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTiempoRestante(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          // Envío automático inmediato al expirar el tiempo
+          handleSubmitEvaluation(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [handleSubmitEvaluation]);
+
+  const formatTiempo = (segundos: number) => {
+    const min = Math.floor(segundos / 60);
+    const seg = segundos % 60;
+    return `${min}:${seg < 10 ? '0' : ''}${seg}`;
+  };
+
+  const preguntaActual = preguntas[currentIdx];
+  const totalRespondidas = Object.keys(respuestas).length;
+  const progresoPorcentaje = Math.round((totalRespondidas / preguntas.length) * 100);
+
+  const handleSelectRespuesta = (letraOTexto: string) => {
+    if (tiempoRestante <= 0 || isSubmitting) return; // Bloquear si expiró el tiempo
+    setRespuestas(prev => ({
+      ...prev,
+      [preguntaActual.id]: letraOTexto
+    }));
   };
 
   if (completedRendicion) {
@@ -283,7 +290,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
               </button>
             ) : (
               <button
-                onClick={handleSubmitEvaluation}
+                onClick={() => handleSubmitEvaluation(false)}
                 disabled={isSubmitting}
                 className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-md transition-all"
               >
@@ -312,6 +319,8 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
                 <button
                   key={p.id}
                   onClick={() => setCurrentIdx(idx)}
+                  aria-label={`Ir a pregunta ${idx + 1}, ${isAnswered ? 'respondida' : 'pendiente'}`}
+                  aria-current={isCurrent ? 'true' : undefined}
                   className={`h-10 rounded-xl text-xs font-bold transition-all flex items-center justify-center ${classes}`}
                 >
                   {idx + 1}

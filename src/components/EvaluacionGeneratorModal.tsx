@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Asignatura, EjeTematico, Habilidad, Curso, Prueba, Pregunta } from '../types';
-import { X, Sparkles, CheckCircle2, ChevronRight, Layers, Clock, HelpCircle, FilePlus } from 'lucide-react';
+import { X, Sparkles, CheckCircle2, ChevronRight, Layers, Clock, HelpCircle, FilePlus, AlertCircle } from 'lucide-react';
 
 interface EvaluacionGeneratorModalProps {
   isOpen: boolean;
@@ -31,6 +31,8 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
   const [nivel, setNivel] = useState<string>('8° básico');
   const [duracionMinutos, setDuracionMinutos] = useState<number>(45);
   const [numPreguntas, setNumPreguntas] = useState<number>(5);
+  const [estadoInicial, setEstadoInicial] = useState<'activa' | 'borrador'>('borrador');
+  const [errorValidacion, setErrorValidacion] = useState<string | null>(null);
 
   React.useEffect(() => {
     if (asignaturas.length > 0 && (!asignaturaId || !asignaturas.find(a => a.id === asignaturaId))) {
@@ -45,31 +47,49 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
     }
   }, [cursos, isOpen]);
 
+  // Cierre con Escape (U-01)
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const currentAsignatura = asignaturas.find(a => a.id === asignaturaId) || asignaturas[0];
   const currentCurso = cursos.find(c => c.id === cursoId) || cursos[0];
 
-  // Filter available questions strictly by subject
+  // Filter available questions strictly by subject (F-01)
   const preguntasDisponibles = bancoPreguntas.filter(p => p.asignaturaId === (currentAsignatura?.id || asignaturaId));
 
-  const preguntasSeleccionadas: Pregunta[] = [];
-  if (preguntasDisponibles.length > 0) {
-    for (let i = 0; i < numPreguntas; i++) {
-      const base = preguntasDisponibles[i % preguntasDisponibles.length];
-      preguntasSeleccionadas.push({
-        ...base,
-        id: base.id
-      });
-    }
-  }
+  // Seleccionar preguntas reales sin duplicar IDs falsos
+  const totalDisponibles = preguntasDisponibles.length;
+  const cantASeleccionar = Math.min(numPreguntas, totalDisponibles);
+  const preguntasSeleccionadas: Pregunta[] = preguntasDisponibles.slice(0, cantASeleccionar);
 
   const handleGenerate = () => {
+    setErrorValidacion(null);
+
+    if (!titulo.trim()) {
+      setErrorValidacion('Debes ingresar un título para la evaluación.');
+      return;
+    }
+    if (preguntasSeleccionadas.length === 0) {
+      setErrorValidacion('No hay preguntas disponibles para la asignatura seleccionada en el banco.');
+      return;
+    }
+    if (duracionMinutos <= 0) {
+      setErrorValidacion('La duración en minutos debe ser mayor a 0.');
+      return;
+    }
+
     const codigoUnico = `EVAL-${Math.floor(1000 + Math.random() * 9000)}`;
     const nuevaPrueba: Prueba = {
       id: `prueba-${Date.now()}`,
-      titulo,
-      descripcion,
+      titulo: titulo.trim(),
+      descripcion: descripcion.trim(),
       asignaturaId: currentAsignatura?.id || asignaturaId,
       asignaturaNombre: currentAsignatura?.nombre || 'Lenguaje y Comunicación',
       nivel: currentCurso?.nivel || nivel,
@@ -79,9 +99,10 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
       codigoPublico: codigoUnico,
       duracionMinutos,
       creadoEn: new Date().toISOString().split('T')[0],
-      preguntasIds: preguntasSeleccionadas.map((p, idx) => `${p.id}-gen-${idx}`),
-      totalPreguntas: numPreguntas,
-      estado: 'activa'
+      // F-01: Conservar IDs reales exactos del banco de preguntas
+      preguntasIds: preguntasSeleccionadas.map(p => p.id),
+      totalPreguntas: preguntasSeleccionadas.length,
+      estado: estadoInicial
     };
 
     onCreatePrueba(nuevaPrueba);
@@ -89,7 +110,12 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="eval-generator-title"
+    >
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
@@ -98,17 +124,18 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                Generador de Evaluaciones — Sysget Saber
-              </h3>
+              <h2 id="eval-generator-title" className="text-base font-bold text-slate-900 dark:text-white">
+                Generador de Ensayos y Evaluaciones
+              </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Paso {step} de 3 — Configuración de preguntas y taxonomía
+                Selección de preguntas calibradas por estándares MINEDUC
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg transition-colors"
+            aria-label="Cerrar modal de generador de evaluaciones"
+            className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -284,6 +311,40 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
                   </div>
                 ))}
               </div>
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Estado inicial:</span>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEstadoInicial('borrador')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                      estadoInicial === 'borrador'
+                        ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                        : 'bg-transparent text-slate-500 border-slate-300 dark:border-slate-700'
+                    }`}
+                  >
+                    📝 Guardar como Borrador
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEstadoInicial('activa')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                      estadoInicial === 'activa'
+                        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                        : 'bg-transparent text-slate-500 border-slate-300 dark:border-slate-700'
+                    }`}
+                  >
+                    🚀 Publicar Inmediatamente
+                  </button>
+                </div>
+              </div>
+
+              {errorValidacion && (
+                <div className="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs rounded-xl flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorValidacion}</span>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -301,7 +362,10 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
 
           {step < 3 ? (
             <button
-              onClick={() => setStep(step + 1)}
+              onClick={() => {
+                setErrorValidacion(null);
+                setStep(step + 1);
+              }}
               className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition-all"
             >
               <span>Siguiente Paso</span>
@@ -313,7 +377,7 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
               className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition-all"
             >
               <FilePlus className="w-4 h-4" />
-              <span>Publicar Evaluación</span>
+              <span>{estadoInicial === 'activa' ? 'Publicar Evaluación' : 'Crear en Borrador'}</span>
             </button>
           )}
         </div>
