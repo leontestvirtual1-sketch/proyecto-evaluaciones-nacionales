@@ -42,12 +42,21 @@ interface BancoPreguntasPageProps {
 export const normalizeNivel = (lvl?: string): string => {
   if (!lvl) return '';
   const clean = lvl.toLowerCase().trim();
-  if (clean.includes('2') || clean.includes('ii medio') || clean.includes('segundo')) return '2° medio';
-  if (clean.includes('8') || clean.includes('octavo')) return '8° básico';
-  if (clean.includes('6') || clean.includes('sexto')) return '6° básico';
-  if (clean.includes('4') && clean.includes('básico')) return '4° básico';
-  if (clean.includes('4') && (clean.includes('medio') || clean.includes('paes'))) return '4° medio';
+  if (clean.includes('4') && (clean.includes('bás') || clean.includes('bas') || clean.includes('b'))) return '4° básico';
+  if (clean.includes('6') && (clean.includes('bás') || clean.includes('bas') || clean.includes('b'))) return '6° básico';
+  if (clean.includes('8') && (clean.includes('bás') || clean.includes('bas') || clean.includes('b'))) return '8° básico';
+  if (clean.includes('2') && (clean.includes('med') || clean.includes('ii') || clean.includes('m') || clean.includes('segundo'))) return '2° medio';
+  if (clean.includes('4') && (clean.includes('med') || clean.includes('iv') || clean.includes('paes') || clean.includes('cuarto'))) return '4° medio';
   return clean;
+};
+
+// Metadata visual de niveles escolares
+const LEVEL_METADATA: Record<string, { label: string; icon: string; sublabel: string }> = {
+  '4° básico': { label: '4° Básico', icon: '🌱', sublabel: 'SIMCE 4° Básico' },
+  '6° básico': { label: '6° Básico', icon: '🔬', sublabel: 'SIMCE 6° Básico' },
+  '8° básico': { label: '8° Básico', icon: '📚', sublabel: 'SIMCE 8° Básico' },
+  '2° medio':  { label: '2° Medio',  icon: '🎓', sublabel: 'SIMCE 2° Medio' },
+  '4° medio':  { label: '4° Medio',  icon: '🏛️', sublabel: 'PAES Regular' },
 };
 
 export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
@@ -69,10 +78,96 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     ? asignaturas.filter(a => a.id === docenteAsigId)
     : asignaturas;
 
-  // Estado del Filtro de Curso / Nivel (2° Medio para Producción, 8° Básico para Demo)
-  const [nivelFilter, setNivelFilter] = useState<string>(
-    isProduction ? '2° medio' : '8° básico'
-  );
+  // Cargar cursos creados por el docente en su perfil actual
+  const userCursos = useMemo(() => {
+    try {
+      const storageKey = `sysget_cursos_${currentUser?.id || 'default'}`;
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {
+      console.error('Error reading cursos in BancoPreguntasPage', e);
+    }
+    return [];
+  }, [currentUser]);
+
+  // Lista de niveles dinámicos según cursos del docente y preguntas disponibles
+  const nivelesDisponibles = useMemo(() => {
+    const counts: Record<string, number> = {};
+    preguntas.forEach(p => {
+      const matchAsig = isDocente ? p.asignaturaId === docenteAsigId : true;
+      if (matchAsig) {
+        const norm = normalizeNivel(p.nivel) || 'Sin nivel';
+        counts[norm] = (counts[norm] || 0) + 1;
+      }
+    });
+
+    const activeKeys = new Set<string>();
+
+    // 1. Añadir los niveles de los cursos explícitamente creados por el docente
+    userCursos.forEach((c: { nivel?: string; nombre?: string }) => {
+      const norm = normalizeNivel(c.nivel || c.nombre);
+      if (norm) activeKeys.add(norm);
+    });
+
+    // 2. Añadir niveles donde el docente ya tenga preguntas creadas
+    Object.keys(counts).forEach(k => {
+      if (counts[k] > 0) activeKeys.add(k);
+    });
+
+    // 3. Si no es docente (o admin demo general sin cursos), proveer los niveles estándar de demo
+    if (activeKeys.size === 0) {
+      if (!isDocente) {
+        activeKeys.add('8° básico');
+        activeKeys.add('6° básico');
+        activeKeys.add('2° medio');
+      } else {
+        // Docente sin cursos ni preguntas: predeterminar 4° básico o 8° básico según corresponda
+        activeKeys.add('4° básico');
+      }
+    }
+
+    return Array.from(activeKeys).map(key => {
+      const meta = LEVEL_METADATA[key] || {
+        label: key.charAt(0).toUpperCase() + key.slice(1),
+        icon: '📚',
+        sublabel: `Nivel ${key}`
+      };
+      return {
+        key,
+        label: meta.label,
+        icon: meta.icon,
+        sublabel: meta.sublabel,
+        count: counts[key] || 0
+      };
+    });
+  }, [preguntas, userCursos, isDocente, docenteAsigId]);
+
+  // Estado del Filtro de Curso / Nivel: seleccionar por defecto el primer curso del docente
+  const [nivelFilter, setNivelFilter] = useState<string>(() => {
+    if (userCursos.length > 0) {
+      const firstNorm = normalizeNivel(userCursos[0].nivel || userCursos[0].nombre);
+      if (firstNorm) return firstNorm;
+    }
+    const firstPreg = preguntas.find(p => isDocente ? p.asignaturaId === docenteAsigId : true);
+    if (firstPreg) {
+      const norm = normalizeNivel(firstPreg.nivel);
+      if (norm) return norm;
+    }
+    return '';
+  });
+
+  // Sincronizar nivelFilter si cambia la lista de niveles disponibles
+  React.useEffect(() => {
+    if (nivelesDisponibles.length > 0 && nivelFilter !== '') {
+      const exists = nivelesDisponibles.some(lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter));
+      if (!exists) {
+        setNivelFilter(nivelesDisponibles[0].key);
+      }
+    }
+  }, [nivelesDisponibles, nivelFilter]);
 
   const [search, setSearch] = useState('');
   const [asignaturaFilter, setAsignaturaFilter] = useState(isDocente ? docenteAsigId : '');
@@ -83,24 +178,6 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
-
-  // Lista de niveles disponibles en el banco con conteos
-  const nivelesDisponibles = useMemo(() => {
-    const counts: Record<string, number> = {};
-    preguntas.forEach(p => {
-      const norm = normalizeNivel(p.nivel) || 'Sin nivel';
-      counts[norm] = (counts[norm] || 0) + 1;
-    });
-
-    const standardLevels = [
-      { key: '2° medio', label: '2° Medio', icon: '🎓', sublabel: 'SIMCE 2° Medio' },
-      { key: '8° básico', label: '8° Básico', icon: '📚', sublabel: 'SIMCE 8° Básico' },
-      { key: '6° básico', label: '6° Básico', icon: '🔬', sublabel: 'SIMCE 6° Básico' },
-      { key: '4° medio', label: '4° Medio / PAES', icon: '🏛️', sublabel: 'PAES Regular' },
-    ];
-
-    return standardLevels.filter(lvl => (counts[lvl.key] || 0) > 0 || lvl.key === '2° medio');
-  }, [preguntas]);
 
   // Contexto activo para filtrar ejes y habilidades
   const activeSubjectId = isDocente ? docenteAsigId : (asignaturaFilter || '');
@@ -516,7 +593,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           setEditingPregunta(null);
         }}
         editPregunta={editingPregunta}
-        initialNivel={nivelFilter || '2° medio'}
+        initialNivel={nivelFilter || (nivelesDisponibles[0]?.key) || '4° básico'}
         asignaturas={availableAsignaturas}
         ejes={availableEjes}
         habilidades={availableHabilidades}

@@ -67,6 +67,32 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
 
   const [errorMsg, setErrorMsg] = useState<string>('');
 
+  React.useEffect(() => {
+    if (isOpen) {
+      setAsignaturaId(editPregunta?.asignaturaId || asignaturas[0]?.id || 'asig-1');
+      setEjeTematicoId(editPregunta?.ejeTematicoId || ejes[0]?.id || 'eje-mat-1');
+      setHabilidadId(editPregunta?.habilidadId || habilidades[0]?.id || 'hab-mat-2');
+      setTipo(editPregunta?.tipo || 'seleccion_multiple');
+      setNivel(editPregunta?.nivel || initialNivel || '4° básico');
+      setDificultad(editPregunta?.dificultad || 'media');
+      setEnunciado(editPregunta?.enunciado || '');
+      setPuntaje(editPregunta?.puntaje || 1);
+      setFuente(editPregunta?.fuente || 'Elaboración Docente');
+      setRespuestaCorrecta(editPregunta?.respuestaCorrecta || 'A');
+      setAlternativas(
+        editPregunta?.alternativas && editPregunta.alternativas.length > 0
+          ? editPregunta.alternativas
+          : [
+              { letra: 'A', texto: '', es_correcta: true },
+              { letra: 'B', texto: '', es_correcta: false },
+              { letra: 'C', texto: '', es_correcta: false },
+              { letra: 'D', texto: '', es_correcta: false },
+            ]
+      );
+      setErrorMsg('');
+    }
+  }, [isOpen, editPregunta, initialNivel, asignaturas, ejes, habilidades]);
+
   if (!isOpen) return null;
 
   const filteredEjes = ejes.filter(e => e.asignaturaId === asignaturaId || !e.asignaturaId);
