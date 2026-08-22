@@ -25,7 +25,7 @@ import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 
 const STORAGE_KEY_PROFESORES = 'sysget_profesores_list';
-const STORAGE_KEY_PASSWORDS = 'sysget_custom_passwords';
+// SEGURIDAD: STORAGE_KEY_PASSWORDS eliminada — las contraseñas nunca se almacenan en localStorage (S-01).
 
 interface PasswordModalProps {
   isOpen: boolean;
@@ -39,15 +39,16 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, profesor, onClose
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   if (!isOpen || !profesor) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (newPassword.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
+    if (newPassword.length < 8) {
+      setError('La contraseña debe tener al menos 8 caracteres.');
       return;
     }
 
@@ -56,10 +57,17 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, profesor, onClose
       return;
     }
 
-    onSuccess(profesor.id, newPassword);
-    setNewPassword('');
-    setConfirmPassword('');
-    onClose();
+    setIsSaving(true);
+    try {
+      // Capturar password ANTES de limpiar el estado
+      const capturedPassword = newPassword;
+      setNewPassword('');
+      setConfirmPassword('');
+      onSuccess(profesor.id, capturedPassword);
+      onClose();
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -381,7 +389,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   asignaturas = asignaturasMock,
   onNavigateToConfig
 }) => {
-  const { user, docentesReales, loadDocentesReales } = useAuth();
+  const { user, docentesReales, loadDocentesReales, setUserPassword } = useAuth();
   const { isProduction } = useAcademicData();
   const isDemo = !isProduction;
   const storageKey = isDemo ? 'sysget_demo_profesores_list' : 'sysget_prod_profesores_list';
@@ -493,17 +501,19 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
     if (p) showToast(`Docente ${p.nombre} ${p.apellido} eliminado.`);
   };
 
-  const handlePasswordResetSuccess = (profId: string, newPass: string) => {
+  /**
+   * Callback del PasswordModal: llama al backend con JWT para actualizar la contraseña.
+   * SEGURIDAD: No escribe contraseñas en localStorage (S-01).
+   */
+  const handlePasswordResetSuccess = async (profId: string, newPass: string) => {
     const prof = profesores.find(p => p.id === profId);
-    if (prof) {
-      try {
-        const passwordsMap = JSON.parse(localStorage.getItem(STORAGE_KEY_PASSWORDS) || '{}');
-        passwordsMap[prof.email.toLowerCase().trim()] = newPass;
-        localStorage.setItem(STORAGE_KEY_PASSWORDS, JSON.stringify(passwordsMap));
-        showToast(`Contraseña de ${prof.nombre} ${prof.apellido} actualizada exitosamente.`);
-      } catch (err) {
-        console.error('Error guardando contraseña en localStorage:', err);
-      }
+    if (!prof) return;
+
+    const { error } = await setUserPassword(profId, prof.email, newPass);
+    if (error) {
+      showToast(`⚠️ Error: ${error}`);
+    } else {
+      showToast(`✅ Contraseña de ${prof.nombre} ${prof.apellido} actualizada en Supabase.`);
     }
   };
 

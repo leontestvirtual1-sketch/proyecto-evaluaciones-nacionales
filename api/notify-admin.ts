@@ -10,6 +10,13 @@ const APP_URL = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
 
+/**
+ * SEGURIDAD (S-04): Secreto compartido para autenticar llamadas al endpoint de notificación.
+ * Debe configurarse como variable de entorno NOTIFY_SECRET en Vercel (valor largo y aleatorio).
+ * Sin este secreto, cualquier llamada es rechazada con 401.
+ */
+const NOTIFY_SECRET = process.env.NOTIFY_SECRET || '';
+
 function escapeHtml(str: any): string {
   if (typeof str !== 'string') return '';
   return str
@@ -28,7 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const isAllowed = origin === ALLOWED_ORIGIN || origin.startsWith('http://localhost');
   res.setHeader('Access-Control-Allow-Origin', isAllowed ? origin : ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-notify-secret');
   res.setHeader('Vary', 'Origin');
 
   if (req.method === 'OPTIONS') {
@@ -37,6 +44,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
+  // ── AUTENTICACIÓN (S-04): Verificar secreto compartido ──────────────────
+  if (!NOTIFY_SECRET) {
+    // Fail-secure: si la variable no está configurada, el endpoint está deshabilitado
+    console.error('[SEGURIDAD] NOTIFY_SECRET no configurado. Endpoint deshabilitado hasta configurar la variable.');
+    return res.status(503).json({ error: 'Servicio de notificaciones no disponible.' });
+  }
+
+  const requestSecret = req.headers?.['x-notify-secret'] || '';
+  if (requestSecret !== NOTIFY_SECRET) {
+    console.warn('[SEGURIDAD] Intento de acceso a notify-admin con secreto inválido. Origin:', origin);
+    return res.status(401).json({ error: 'No autorizado.' });
   }
 
   try {
@@ -51,6 +71,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       rut,
       approvalToken,
     } = req.body || {};
+
+    // Validar campos requeridos mínimos
+    if (!email || !nombre) {
+      return res.status(400).json({ error: 'Campos requeridos: nombre, email.' });
+    }
+
 
     const safeNombre = escapeHtml(nombre);
     const safeApellido = escapeHtml(apellido);

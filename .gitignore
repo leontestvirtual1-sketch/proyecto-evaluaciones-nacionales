@@ -63,5 +63,6 @@ scratch/
 *.zip
 
 .vercel
+supabase/.temp/
 
 

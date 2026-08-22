@@ -368,52 +368,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
 
-  /** Llama a la Edge Function que notifica al admin por Resend */
-  const notifyAdminNewRegistration = async (userData: RegisterData, token: string) => {
-    const payload = {
-      nombre: userData.nombre,
-      apellido: userData.apellido,
-      email: userData.email,
-      rut: userData.rut,
-      rol: userData.rol,
-      establecimiento: userData.establecimiento,
-      rbd: userData.rbd,
-      asignaturaNombre: userData.asignaturaNombre,
-      approvalToken: token,
-    };
 
-    try {
-      // 1. Intentar endpoint directo en Vercel (/api/notify-admin)
-      const res = await fetch('/api/notify-admin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) return;
-    } catch (e) {
-      console.warn('Vercel API notify-admin offline, probando Supabase Edge Function...');
-    }
-
-    try {
-      // 2. Fallback a Supabase Edge Function
-      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-      const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      await fetch(`${SUPABASE_URL}/functions/v1/notify-admin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify(payload),
-      });
-    } catch (e) {
-      console.warn('No se pudo notificar al admin por email:', e);
-    }
-  };
+  /** Helper centralizado: inyecta el Bearer JWT de Supabase en todas las llamadas admin */
+  const authenticatedFetch = useCallback(async (url: string, options: RequestInit = {}): Promise<Response> => {
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token || '';
+    return fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options.headers as Record<string, string> || {}),
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+      },
+    });
+  }, []);
 
   const fetchUsers = useCallback(async () => {
     try {
-      const res = await fetch('/api/users');
+      const res = await authenticatedFetch('/api/users');
       if (res.ok) {
         const data = await res.json();
         if (data.users && Array.isArray(data.users) && data.users.length > 0) {
@@ -423,12 +395,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
     } catch (e) {
-      console.warn('Error fetching /api/users, using registered accounts fallback:', e);
+      console.warn('Error fetching /api/users:', e);
       setUsuarios(usuariosRegistradosMock);
     }
-  }, []);
+  }, [authenticatedFetch]);
 
   useEffect(() => {
+    // fetchUsers se ejecuta sólo cuando el usuario esté autenticado
+    // para que el token Bearer esté disponible
     fetchUsers();
   }, [fetchUsers]);
 
@@ -462,30 +436,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const approveUser = useCallback(async (userId: string, nuevoPlan: UserPlan = 'trial') => {
     try {
-      await fetch('/api/users?action=approve-id', {
+      const res = await authenticatedFetch('/api/users?action=approve-id', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, plan: nuevoPlan })
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        return { error: err.error || 'Error al aprobar el usuario.' };
+      }
       await fetchUsers();
     } catch (e) {
       console.warn('Error syncing approval:', e);
+      return { error: 'Error de conexión al aprobar el usuario.' };
     }
 
     setUsuarios(prev => prev.map(u => {
       if (u.id === userId) {
-        return {
-          ...u,
-          estado: 'activo',
-          plan: nuevoPlan,
-          diasRestantesTrial: 30
-        };
+        return { ...u, estado: 'activo', plan: nuevoPlan, diasRestantesTrial: 30 };
       }
       return u;
     }));
 
     return { error: null };
-  }, [fetchUsers]);
+  }, [authenticatedFetch, fetchUsers]);
 
   const approveUserByToken = useCallback(async (token: string): Promise<TokenApprovalResult> => {
     try {
@@ -519,25 +492,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const rejectOrSuspendUser = useCallback(async (userId: string, nuevoEstado: 'suspendido' | 'rechazado') => {
     try {
-      await fetch('/api/users?action=suspend', {
+      const res = await authenticatedFetch('/api/users?action=suspend', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, estado: nuevoEstado })
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        return { error: err.error || 'Error al actualizar el estado.' };
+      }
       await fetchUsers();
     } catch (e) {
       console.warn('Error updating status in Supabase:', e);
+      return { error: 'Error de conexión.' };
     }
 
     setUsuarios(prev => prev.map(u => {
-      if (u.id === userId) {
-        return { ...u, estado: nuevoEstado };
-      }
+      if (u.id === userId) return { ...u, estado: nuevoEstado };
       return u;
     }));
 
     return { error: null };
-  }, [fetchUsers]);
+  }, [authenticatedFetch, fetchUsers]);
 
   const changeUserPlan = useCallback(async (userId: string, nuevoPlan: UserPlan) => {
     try {
@@ -561,35 +536,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { error: null };
   }, [isOnlineSupabase]);
 
-  /** Establece o restablece la contraseña de un usuario en Supabase Auth y fallback local */
-  const setUserPassword = useCallback(async (userId: string, email: string, newPassword: string): Promise<{ error: string | null }> => {
+  /**
+   * Establece o restablece la contraseña de un usuario en Supabase Auth.
+   * SEGURIDAD: No almacena contraseñas en localStorage (S-01).
+   * Requiere token de administrador autenticado en el backend (S-03).
+   */
+  const setUserPassword = useCallback(async (userId: string, _email: string, newPassword: string): Promise<{ error: string | null }> => {
     try {
-      // 1. Guardar en localStorage para acceso local
-      try {
-        const customPasswords = JSON.parse(localStorage.getItem('sysget_custom_passwords') || '{}');
-        customPasswords[email.toLowerCase().trim()] = newPassword;
-        localStorage.setItem('sysget_custom_passwords', JSON.stringify(customPasswords));
-      } catch (e) {}
-
-      // 2. Llamar al backend API para actualizar en Supabase Auth
-      const res = await fetch('/api/users?action=reset-password', {
+      // Llamar al backend con JWT de admin — acción unificada 'set-password'
+      const res = await authenticatedFetch('/api/users?action=set-password', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, email, newPassword })
+        body: JSON.stringify({ userId, newPassword })
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok || data.error) {
-        return { error: data.error || 'No se pudo actualizar la contraseña en el servidor' };
+        return { error: data.error || 'No se pudo actualizar la contraseña en el servidor.' };
       }
 
       return { error: null };
     } catch (err: any) {
-      console.warn('Error llamando a reset-password API:', err);
-      // Fallback local completado
-      return { error: null };
+      console.error('Error llamando a set-password API:', err);
+      return { error: 'Error de conexión al actualizar la contraseña.' };
     }
-  }, []);
+  }, [authenticatedFetch]);
 
   const logout = useCallback(async () => {
     try {

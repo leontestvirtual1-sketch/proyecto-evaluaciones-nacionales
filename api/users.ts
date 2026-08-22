@@ -31,25 +31,8 @@ if (!SUPABASE_SERVICE_ROLE_KEY) {
 
 const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-// Memoria compartida para tokens de aprobación en el servidor
-const pendingRegistrationsMap = new Map<string, any>();
-
-// Inicializar token para María Teresa por defecto
-pendingRegistrationsMap.set('tok-maria-18359422', {
-  id: '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18',
-  rut: '18.359.422-2',
-  nombre: 'María Teresa',
-  apellido: 'González',
-  email: 'luis.leon@premil.cl',
-  rol: 'profesor',
-  establecimiento: 'Escuela Premilitar Héroes de la Concepción',
-  rbd: '31030',
-  asignaturaNombre: 'Lenguaje y Comunicación',
-  estado: 'pendiente_aprobacion',
-  plan: 'trial',
-  diasRestantesTrial: 30,
-  approvalToken: 'tok-maria-18359422'
-});
+// NOTA: Los tokens de aprobación se almacenan en Supabase (columna approval_token).
+// No se hardcodean datos de usuario en memoria.
 
 // ── Helper: Verificar JWT de Supabase y exigir rol admin ──────────────────
 async function requireAdmin(req: VercelRequest): Promise<{ ok: boolean; error?: string }> {
@@ -163,7 +146,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const body = req.body || {};
 
       // Acciones que requieren admin autenticado
-      const ADMIN_ACTIONS = ['admin-create', 'approve-id', 'suspend', 'send-email', 'send-welcome-email'];
+      const ADMIN_ACTIONS = ['admin-create', 'approve-id', 'suspend', 'send-email', 'send-welcome-email', 'set-password'];
       if (ADMIN_ACTIONS.includes(action as string)) {
         const authCheck = await requireAdmin(req);
         if (!authCheck.ok) {
