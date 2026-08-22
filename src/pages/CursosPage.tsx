@@ -177,8 +177,16 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
       }
     }
 
-    // Por defecto para María Teresa González (Lenguaje 2° Medio)
-    if (currentUser?.asignaturaId === 'asig-2' || currentUser?.establecimiento?.includes('Premilitar')) {
+    const email = (currentUser?.email || '').toLowerCase();
+    const est = (currentUser?.establecimiento || '').toLowerCase();
+    const isDocenteReal = email === 'luis.leon@premil.cl' || 
+                          email.includes('susana') || 
+                          est.includes('premilitar') || 
+                          est.includes('mi casa') ||
+                          currentUser?.plan === 'trial';
+
+    // Docente de Lenguaje Escuela Premilitar
+    if (email === 'luis.leon@premil.cl' || (est.includes('premilitar') && currentUser?.asignaturaId === 'asig-2')) {
       return [
         {
           id: 'cur-2m',
@@ -192,17 +200,29 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
       ];
     }
 
-    // Admin demo general: Cursos del Liceo Bicentenario (6° y 8° Básico)
-    if (currentUser?.rol === 'admin') {
+    // Docente real nuevo (ej. Susana Pizarro): el primer curso debe ser creado explícitamente (0 cursos)
+    if (isDocenteReal && !email.endsWith('@escuelademo.cl') && !email.endsWith('@demo.cl') && !email.endsWith('@sysget.cl')) {
+      return [];
+    }
+
+    // Perfiles Demo (Admin Demo o Docentes Demo del Liceo Bicentenario)
+    const isDemoAccount = email.endsWith('@escuelademo.cl') || 
+                          email.endsWith('@demo.cl') || 
+                          email.endsWith('@sysget.cl') || 
+                          currentUser?.rol === 'admin' ||
+                          est.includes('demo') || 
+                          est.includes('bicentenario');
+
+    if (isDemoAccount) {
       return [
-        { id: 'curso-6a', nombre: '6° Básico A', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6A2026', totalAlumnos: 25, establecimiento: colegioNombre },
-        { id: 'curso-6b', nombre: '6° Básico B', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6B2026', totalAlumnos: 25, establecimiento: colegioNombre },
         { id: 'curso-1', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'DEMO2026', totalAlumnos: 28, establecimiento: colegioNombre },
         { id: 'curso-2', nombre: '8° Básico B', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'BIOB2026', totalAlumnos: 30, establecimiento: colegioNombre },
+        { id: 'curso-6a', nombre: '6° Básico A', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6A2026', totalAlumnos: 25, establecimiento: colegioNombre },
+        { id: 'curso-6b', nombre: '6° Básico B', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6B2026', totalAlumnos: 25, establecimiento: colegioNombre },
       ];
     }
 
-    // Docente nuevo: el primer curso debe ser creado explícitamente.
+    // Docente nuevo por defecto: inicia limpio
     return [];
   };
 

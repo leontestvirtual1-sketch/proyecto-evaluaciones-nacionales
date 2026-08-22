@@ -325,22 +325,41 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
   const colegioNombre = currentUser?.establecimiento || APP_CONFIG.nombreEstablecimiento;
   const storageKey = `sysget_alumnos_${currentUser?.id || 'default'}`;
 
-  // Inicializar alumnos aislados: para María Teresa o docente nuevo empieza en 0 alumnos
+  // Inicializar alumnos aislados: para docentes reales (Susana, Premilitar, nuevos) empieza en 0 alumnos.
+  // Para perfiles demo (Liceo Bicentenario / escuelademo.cl / admin demo) carga la nomina demo de 8° y 6°.
   const getInitialAlumnos = (): AlumnoConCurso[] => {
     const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       } catch (err) {
         console.error('Error parsing saved alumnos:', err);
       }
     }
-    // Si es docente de Lenguaje o Premilitar, parte en 0 para ingreso limpio
-    if (currentUser?.asignaturaId === 'asig-2' || currentUser?.establecimiento?.includes('Premilitar')) {
+
+    const email = (currentUser?.email || '').toLowerCase();
+    const est = (currentUser?.establecimiento || '').toLowerCase();
+    const isDocenteReal = email === 'luis.leon@premil.cl' || 
+                          email.includes('susana') || 
+                          est.includes('premilitar') || 
+                          est.includes('mi casa') ||
+                          currentUser?.plan === 'trial';
+
+    // Docente real de produccion: siempre inicia 100% limpio (0 alumnos)
+    if (isDocenteReal && !email.endsWith('@escuelademo.cl') && !email.endsWith('@demo.cl') && !email.endsWith('@sysget.cl')) {
       return [];
     }
-    // Admin demo general: Alumnos del Liceo Bicentenario distribuidos en 8° y 6° Básico
-    if (currentUser?.rol === 'admin') {
+
+    // Perfiles Demo (Admin Demo o Docentes Demo de Matemática, Ciencias, Historia del Bicentenario)
+    const isDemoAccount = email.endsWith('@escuelademo.cl') || 
+                          email.endsWith('@demo.cl') || 
+                          email.endsWith('@sysget.cl') || 
+                          currentUser?.rol === 'admin' ||
+                          est.includes('demo') || 
+                          est.includes('bicentenario');
+
+    if (isDemoAccount) {
       return [
         { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
         { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
@@ -352,6 +371,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
         { id: 'alum-8', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto', email: 'benjamin.soto@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
       ];
     }
+
     return [];
   };
 
