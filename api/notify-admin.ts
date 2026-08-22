@@ -10,11 +10,26 @@ const APP_URL = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
 
+function escapeHtml(str: any): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+const ALLOWED_ORIGIN = process.env.APP_URL || 'https://sysget-saber.vercel.app';
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // CORS restringido
+  const origin = req.headers?.origin || '';
+  const isAllowed = origin === ALLOWED_ORIGIN || origin.startsWith('http://localhost');
+  res.setHeader('Access-Control-Allow-Origin', isAllowed ? origin : ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Vary', 'Origin');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -37,8 +52,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       approvalToken,
     } = req.body || {};
 
-    const approvalLink = `${APP_URL}?approve_token=${approvalToken}`;
-    const fullName = `${nombre || ''} ${apellido || ''}`.trim() || 'Nuevo Usuario';
+    const safeNombre = escapeHtml(nombre);
+    const safeApellido = escapeHtml(apellido);
+    const safeEmail = escapeHtml(email);
+    const safeEstablecimiento = escapeHtml(establecimiento);
+    const safeRbd = escapeHtml(rbd);
+    const safeAsignatura = escapeHtml(asignaturaNombre);
+    const safeRut = escapeHtml(rut);
+    const safeToken = encodeURIComponent(approvalToken || '');
+
+    const approvalLink = `${APP_URL}?approve_token=${safeToken}`;
+    const fullName = `${safeNombre} ${safeApellido}`.trim() || 'Nuevo Usuario';
     const rolLabel = rol === 'profesor' ? '👨‍🏫 Docente' : rol === 'admin' ? '🛡️ Administrador' : '👤 Alumno';
 
     const htmlBody = `
@@ -82,24 +106,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">RUT</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rut || 'No especificado'}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${safeRut || 'No especificado'}</td>
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Correo</td>
-                      <td style="padding:6px 0;color:#818cf8;font-size:14px;">${email}</td>
+                      <td style="padding:6px 0;color:#818cf8;font-size:14px;">${safeEmail}</td>
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Rol Solicitado</td>
                       <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rolLabel}</td>
                     </tr>
-                    ${asignaturaNombre ? `
+                    ${safeAsignatura ? `
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Especialidad</td>
-                      <td style="padding:6px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${asignaturaNombre}</td>
+                      <td style="padding:6px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${safeAsignatura}</td>
                     </tr>` : ''}
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Establecimiento</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${establecimiento || 'No especificado'} ${rbd ? `<span style="color:#94a3b8;font-size:12px;">(RBD: ${rbd})</span>` : ''}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${safeEstablecimiento || 'No especificado'} ${safeRbd ? `<span style="color:#94a3b8;font-size:12px;">(RBD: ${safeRbd})</span>` : ''}</td>
                     </tr>
                   </table>
                 </td></tr>

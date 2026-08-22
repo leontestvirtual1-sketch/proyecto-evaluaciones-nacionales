@@ -69,32 +69,17 @@ export interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Usuarios autorizados oficiales del sistema
+// Perfiles de usuarios oficiales sin credenciales — solo para restaurar sesión en RAM
+// cuando Supabase Auth ya la validó previamente.
 const DEMO_USERS: Record<string, UserProfile> = {
-  // Super Administrador Oficial
   'leontestvirtual1@gmail.com': currentUserAdmin,
   'leontesvirtual1@gmail.com':  currentUserAdmin,
-  // Docente Oficial — María Teresa González (Escuela Premilitar Héroes de la Concepción)
   'luis.leon@premil.cl':        currentUserProfesorPremilitar,
-  // Admin Demo para evaluación
   'admin@sysget.cl':            currentUserAdminDemo,
 };
 
-/** Contraseñas autorizadas por correo (fallback local cuando Supabase no está disponible) */
-const DEMO_USER_PASSWORDS: Record<string, string[]> = {
-  'leontestvirtual1@gmail.com': ['Saber_2026!'],
-  'leontesvirtual1@gmail.com':  ['Saber_2026!'],
-  'luis.leon@premil.cl':        ['Premil_2026!'],
-  'admin@sysget.cl':            ['Saber_2026!', 'admin123', 'demo1234'],
-};
-
-/**
- * ⛔ SEGURIDAD: Esta función NO debe inferir usuarios por patrones genéricos.
- * Solo retorna null (bloqueo total). El acceso solo se permite a emails
- * explícitamente listados en DEMO_USERS o registrados en la base de datos.
- */
+/** No hay inferencia por patrones — siempre retorna null */
 function inferUserFromEmail(_email: string): UserProfile | null {
-  // Rechazo absoluto — no hay inferencia por patrones de dominio ni roles
   return null;
 }
 
@@ -295,8 +280,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const cleanEmail = email.toLowerCase().trim();
     const cleanPass = password.trim();
 
+    // SEGURIDAD: Todo login pasa exclusivamente por Supabase Auth.
+    // No existen fallbacks locales ni contraseñas hardcodeadas (S-02).
     try {
-      // 1. Try real Supabase auth first
       const { data, error } = await supabase.auth.signInWithPassword({
         email: cleanEmail,
         password: cleanPass
@@ -313,34 +299,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (profile) {
           const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
 
-          // Verificar estado de aprobación
           if (estado === 'pendiente_aprobacion') {
             await supabase.auth.signOut();
             return {
               error: 'Tu cuenta está pendiente de activación por el Administrador de Sysget Saber. Te enviaremos un correo electrónico cuando tu acceso de prueba (Trial 30 días) esté activo.'
             };
           }
-
           if (estado === 'suspendido') {
             await supabase.auth.signOut();
-            return {
-              error: 'Esta cuenta ha sido suspendida temporalmente. Contacta a soporte@sysget.cl para regularizar tu plan.'
-            };
+            return { error: 'Esta cuenta ha sido suspendida temporalmente. Contacta a soporte@sysget.cl para regularizar tu plan.' };
           }
-
           if (estado === 'rechazado') {
             await supabase.auth.signOut();
-            return {
-              error: 'Tu solicitud de acceso no fue aprobada por el administrador.'
-            };
+            return { error: 'Tu solicitud de acceso no fue aprobada por el administrador.' };
           }
 
           const isPremil = cleanEmail === 'luis.leon@premil.cl';
           const loggedUser: UserProfile = {
             id: profile.id,
-            rut: profile.rut || '18.359.422-2',
-            nombre: profile.nombre || 'María Teresa',
-            apellido: profile.apellido || 'González',
+            rut: profile.rut || '',
+            nombre: profile.nombre || '',
+            apellido: profile.apellido || '',
             email: data.user.email || cleanEmail,
             rol: (profile.rol as UserRole) || 'profesor',
             establecimiento: profile.establecimiento || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : APP_CONFIG.nombreEstablecimiento),
@@ -350,142 +329,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             cargo: profile.cargo || (isPremil ? 'Docente de Lenguaje y Comunicación' : undefined),
             estado: estado,
             plan: (profile.plan as UserPlan) || 'trial',
-            diasRestantesTrial: 30
+            diasRestantesTrial: profile.dias_restantes_trial ?? 30
           };
           setUser(loggedUser);
           localStorage.setItem('sysget_session_email', cleanEmail);
           return { error: null };
+
         } else {
-          // Supabase autenticado pero sin perfil en tabla perfiles (Super Admin creado en Supabase Auth)
+          // Supabase autenticado pero sin perfil en tabla — puede ser admin sin perfil creado
           const demoFallback = DEMO_USERS[cleanEmail];
           if (demoFallback) {
             setUser({ ...demoFallback, id: data.user.id, email: cleanEmail });
             localStorage.setItem('sysget_session_email', cleanEmail);
             return { error: null };
           }
+          await supabase.auth.signOut();
+          return { error: 'No se encontró un perfil asociado a este correo. Contacta al administrador.' };
         }
-      } else if (error) {
-        // Supabase respondió con error de autenticación explícito
-        const isCredentialsError = 
+      }
+
+      if (error) {
+        const isCredErr =
           error.message?.toLowerCase().includes('invalid login credentials') ||
           error.message?.toLowerCase().includes('invalid grant') ||
           error.status === 400;
-
-        if (isCredentialsError) {
-          // Validar si existe clave offline autorizada para este correo
-          const allowedDemo = DEMO_USER_PASSWORDS[cleanEmail];
-          let customPass: string | null = null;
-          try {
-            const cp = JSON.parse(localStorage.getItem('sysget_custom_passwords') || '{}');
-            if (cp[cleanEmail]) customPass = cp[cleanEmail];
-          } catch (e) {}
-
-          const validPasswords = customPass ? [customPass, ...(allowedDemo || [])] : (allowedDemo || []);
-          if (validPasswords.length > 0) {
-            if (!validPasswords.includes(cleanPass)) {
-              return { error: 'Contraseña incorrecta. Por favor verifica tus credenciales.' };
-            }
-            const targetUser = DEMO_USERS[cleanEmail];
-            if (targetUser) {
-              setUser({ ...targetUser, email: cleanEmail });
-              localStorage.setItem('sysget_session_email', cleanEmail);
-              return { error: null };
-            }
-          }
-          return { error: 'Contraseña o correo incorrectos. Por favor verifica tus credenciales.' };
+        if (isCredErr) {
+          return { error: 'Correo o contraseña incorrectos. Verifica tus credenciales.' };
         }
+        return { error: 'No se pudo conectar con el servicio de autenticación. Intenta más tarde.' };
       }
+
     } catch (err) {
-      console.warn('Supabase auth offline, checking local credentials fallback');
+      console.error('Error en login:', err);
+      return { error: 'Error de conexión. Verifica tu red e intenta nuevamente.' };
     }
 
-    // 2. Revisar lista de usuarios registrados dinámicamente
-    const foundMock = usuarios.find(u => u.email.toLowerCase() === cleanEmail);
-    if (foundMock) {
-      if (foundMock.estado === 'pendiente_aprobacion') {
-        return {
-          error: 'Tu cuenta está pendiente de activación por el Administrador de Sysget Saber. Te enviaremos un correo electrónico cuando tu acceso de prueba (Trial 30 días) esté activo.'
-        };
-      }
-      if (foundMock.estado === 'suspendido') {
-        return {
-          error: 'Esta cuenta ha sido suspendida temporalmente. Contacta a soporte@sysget.cl para regularizar tu plan.'
-        };
-      }
-      if (foundMock.estado === 'rechazado') {
-        return {
-          error: 'Tu solicitud de acceso no fue aprobada.'
-        };
-      }
+    return { error: 'Credenciales no reconocidas. Verifica tu correo y contraseña.' };
+  }, []);
 
-      // ⛔ SEGURIDAD: Validar contraseña estrictamente
-      const allowedForMock = DEMO_USER_PASSWORDS[cleanEmail];
-      let customPassForMock: string | null = null;
-      try {
-        const cp = JSON.parse(localStorage.getItem('sysget_custom_passwords') || '{}');
-        if (cp[cleanEmail]) customPassForMock = cp[cleanEmail];
-      } catch (e) {}
-
-      const validPasswords = customPassForMock
-        ? [customPassForMock, ...(allowedForMock || [])]
-        : (allowedForMock || []);
-
-      if (validPasswords.length === 0 || !validPasswords.includes(cleanPass)) {
-        return { error: 'Contraseña incorrecta. Por favor verifica tus credenciales.' };
-      }
-
-      setUser(foundMock);
-      localStorage.setItem('sysget_session_email', cleanEmail);
-      return { error: null };
-    }
-
-    // 3. Login con cuentas autorizadas oficiales
-    let customPasswordForUser: string | null = null;
-    try {
-      const customPasswords = JSON.parse(localStorage.getItem('sysget_custom_passwords') || '{}');
-      if (customPasswords[cleanEmail]) {
-        customPasswordForUser = customPasswords[cleanEmail];
-      }
-    } catch (e) {}
-
-    let dynamicProfesor: UserProfile | null = null;
-    try {
-      const localProfesores = JSON.parse(localStorage.getItem('sysget_profesores_list') || '[]');
-      if (Array.isArray(localProfesores)) {
-        dynamicProfesor = localProfesores.find((p: UserProfile) => p.email.toLowerCase().trim() === cleanEmail) || null;
-      }
-    } catch (e) {}
-
-    const targetUser = dynamicProfesor || DEMO_USERS[cleanEmail];
-
-    if (targetUser) {
-      const defaultAllowed = DEMO_USER_PASSWORDS[cleanEmail];
-      const allowedPasswords = customPasswordForUser 
-        ? [customPasswordForUser, ...(defaultAllowed || [])] 
-        : (defaultAllowed || []);
-
-      if (allowedPasswords.length === 0 || !allowedPasswords.includes(cleanPass)) {
-        return {
-          error: 'Contraseña incorrecta para este usuario. Por favor verifica tus credenciales.'
-        };
-      }
-
-      setUser({ ...targetUser, email: cleanEmail });
-      localStorage.setItem('sysget_session_email', cleanEmail);
-      return { error: null };
-    }
-
-    // 4. Inferir por pistas (retorna null por seguridad)
-    const inferredUser = inferUserFromEmail(cleanEmail);
-    if (inferredUser) {
-      setUser({ ...inferredUser, email: cleanEmail });
-      localStorage.setItem('sysget_session_email', cleanEmail);
-      return { error: null };
-    }
-
-    // 5. Credenciales no reconocidas
-    return { error: 'Credenciales no reconocidas. Verifica tu correo y contraseña o solicita tu cuenta de prueba.' };
-  }, [usuarios]);
 
   /** Llama a la Edge Function que notifica al admin por Resend */
   const notifyAdminNewRegistration = async (userData: RegisterData, token: string) => {

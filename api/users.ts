@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from '@supabase/supabase-js';
 import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 
 type VercelRequest = any;
 type VercelResponse = any;
+
+function escapeHtml(str: any): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'leontestvirtual1@gmail.com';
 const ADMIN_NAME = process.env.ADMIN_NAME || 'Luis Andrés León González';
@@ -40,27 +51,60 @@ pendingRegistrationsMap.set('tok-maria-18359422', {
   approvalToken: 'tok-maria-18359422'
 });
 
+// ── Helper: Verificar JWT de Supabase y exigir rol admin ──────────────────
+async function requireAdmin(req: VercelRequest): Promise<{ ok: boolean; error?: string }> {
+  const authHeader = req.headers?.authorization || '';
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+  if (!token) return { ok: false, error: 'No autorizado: se requiere token de sesión.' };
+
+  const { data: { user }, error: authErr } = await sbAdmin.auth.getUser(token);
+  if (authErr || !user) return { ok: false, error: 'Token inválido o expirado.' };
+
+  const { data: perfil } = await sbAdmin
+    .from('perfiles')
+    .select('rol')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  if (perfil?.rol !== 'admin') {
+    return { ok: false, error: 'Acceso denegado: se requiere rol de administrador.' };
+  }
+  return { ok: true };
+}
+
+const ALLOWED_ORIGIN = process.env.APP_URL || 'https://sysget-saber.vercel.app';
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // CORS — solo permitir el origen de producción o localhost en desarrollo
+  const origin = req.headers?.origin || '';
+  const isAllowed = origin === ALLOWED_ORIGIN || origin.startsWith('http://localhost');
+  res.setHeader('Access-Control-Allow-Origin', isAllowed ? origin : ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Vary', 'Origin');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
   try {
-    // ── 1. GET: Listar todos los usuarios para el panel ──
+    // ── 1. GET: Listar usuarios — SOLO admins autenticados ──
     if (req.method === 'GET') {
+      const authCheck = await requireAdmin(req);
+      if (!authCheck.ok) {
+        return res.status(403).json({ error: authCheck.error });
+      }
+
       const { data: perfiles, error: pErr } = await sbAdmin
         .from('perfiles')
-        .select('*')
+        // Seleccionar solo campos mínimos — sin approval_token ni datos sensibles
+        .select('id, rut, nombre, apellido, apellido_paterno, apellido_materno, email, rol, establecimiento, rbd, asignatura_id, asignatura_nombre, cargo, estado, plan, dias_restantes_trial, fecha_registro, created_at, activo')
         .order('created_at', { ascending: false });
 
       if (pErr) {
         console.error('Error fetching perfiles from Supabase:', pErr);
       }
-      
+
       const dbUsers = (perfiles || []).map((p: any) => {
         let token = p.approval_token || `tok-${p.id.substring(0, 8)}`;
         
@@ -117,6 +161,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method === 'POST') {
       const { action } = req.query || {};
       const body = req.body || {};
+
+      // Acciones que requieren admin autenticado
+      const ADMIN_ACTIONS = ['admin-create', 'approve-id', 'suspend', 'send-email', 'send-welcome-email'];
+      if (ADMIN_ACTIONS.includes(action as string)) {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) {
+          return res.status(403).json({ error: authCheck.error });
+        }
+      }
 
       // ── ACCIÓN: CREACIÓN DIRECTA POR ADMINISTRADOR (DOCENTE ACTIVO INMEDIATO) ──
       if (action === 'admin-create') {
@@ -257,7 +310,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
       }
 
-      // ── ACCIÓN: REGISTRO PÚBLICO (REQUIERE APROBACIÓN) ──
+      // ── ACCIÓN: REGISTRO PÚBLICO (REQUIERE APROBACIÓN) — rol forzado a 'profesor' ──
       if (action === 'register' || (!action && body.email && body.password)) {
         const {
           rut,
@@ -267,7 +320,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           apellido,
           email,
           password,
-          rol,
+          // rol del body se ignora intencionalmente — siempre forzamos 'profesor'
           establecimiento,
           rbd,
           comuna,
@@ -275,6 +328,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           asignaturaId,
           asignaturaNombre
         } = body;
+        const rol = 'profesor'; // S-04: nunca confiar en el rol del cliente
 
         const cleanEmail = (email || '').toLowerCase().trim();
         if (!cleanEmail) {
@@ -282,7 +336,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         const fullApellido = `${apellidoPaterno || ''} ${apellidoMaterno || ''}`.trim() || apellido || '';
-        const generatedToken = `tok-apr-${Math.random().toString(36).substring(2, 10)}`;
+        // S-09: Token criptográficamente seguro de 32 bytes (64 caracteres hexadecimales)
+        const generatedToken = `tok-apr-${crypto.randomBytes(32).toString('hex')}`;
 
         // 1. Crear o sincronizar en Supabase Auth
         let authUserId = '';
@@ -298,9 +353,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             await sbAdmin.auth.admin.updateUserById(authUserId, { password });
           }
         } else {
+          // Generar contraseña temporal criptográfica si no viene una
+          const fallbackPassword = `Saber_${crypto.randomBytes(8).toString('hex')}!`;
           const { data: newAuthUser, error: authCreateErr } = await sbAdmin.auth.admin.createUser({
             email: cleanEmail,
-            password: password || 'Sysget2026!',
+            password: password || fallbackPassword,
             email_confirm: true,
             user_metadata: {
               nombre,
@@ -374,9 +431,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(500).json({ error: 'Error al registrar perfil: ' + upsertErr.message });
         }
 
-        // 4. Enviar Correo de Notificación con Google SMTP (Nodemailer)
-        const approvalLink = `${APP_URL}?approve_token=${generatedToken}`;
-        const fullName = `${nombre} ${fullApellido}`.trim();
+        // 4. Enviar Correo de Notificación con Google SMTP (Nodemailer) sanitizado
+        const safeToken = encodeURIComponent(generatedToken);
+        const approvalLink = `${APP_URL}?approve_token=${safeToken}`;
+        const safeNombre = escapeHtml(nombre);
+        const safePaterno = escapeHtml(apellidoPaterno);
+        const safeMaterno = escapeHtml(apellidoMaterno);
+        const safeFullName = `${safeNombre} ${escapeHtml(fullApellido)}`.trim() || 'Nuevo Usuario';
+        const safeEmail = escapeHtml(cleanEmail);
+        const safeRut = escapeHtml(rut);
+        const safeEstablecimiento = escapeHtml(cleanEstablecimiento);
+        const safeRbd = escapeHtml(cleanRbd);
+        const safeAsignatura = escapeHtml(asignaturaNombre);
         const rolLabel = rol === 'profesor' ? '👨‍🏫 Docente' : rol === 'admin' ? '🛡️ Administrador' : '👤 Alumno';
 
         const htmlBody = `
@@ -413,38 +479,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;width:150px;">Nombre(s)</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${nombre || '-'}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${safeNombre || '-'}</td>
                     </tr>
-                    ${apellidoPaterno ? `
+                    ${safePaterno ? `
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Apellido Paterno</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${apellidoPaterno}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${safePaterno}</td>
                     </tr>` : ''}
-                    ${apellidoMaterno ? `
+                    ${safeMaterno ? `
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Apellido Materno</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${apellidoMaterno}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-weight:600;">${safeMaterno}</td>
                     </tr>` : ''}
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">RUT</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-mono;">${rut || 'No especificado'}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;font-mono;">${safeRut || 'No especificado'}</td>
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Correo</td>
-                      <td style="padding:6px 0;color:#818cf8;font-size:14px;">${cleanEmail}</td>
+                      <td style="padding:6px 0;color:#818cf8;font-size:14px;">${safeEmail}</td>
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Rol Solicitado</td>
                       <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rolLabel}</td>
                     </tr>
-                    ${asignaturaNombre ? `
+                    ${safeAsignatura ? `
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Especialidad</td>
-                      <td style="padding:6px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${asignaturaNombre}</td>
+                      <td style="padding:6px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${safeAsignatura}</td>
                     </tr>` : ''}
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Establecimiento</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${establecimiento || 'No especificado'} ${rbd ? `<span style="color:#94a3b8;font-size:12px;">(RBD: ${rbd})</span>` : ''}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${safeEstablecimiento || 'No especificado'} ${safeRbd ? `<span style="color:#94a3b8;font-size:12px;">(RBD: ${safeRbd})</span>` : ''}</td>
                     </tr>
                   </table>
                 </td></tr>
@@ -581,41 +647,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json({ success: true });
       }
 
-      // ── ACCIÓN: ESTABLECER O RESTABLECER CONTRASEÑA ──
-      if (action === 'reset-password' || action === 'set-password') {
-        const { userId, email, newPassword } = body;
-        if (!newPassword || newPassword.length < 6) {
-          return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres.' });
+      // ── ACCIÓN: SET-PASSWORD — solo admins autenticados (S-03: eliminado el reset público) ──
+      // Para recuperación de contraseña de usuarios finales, usar el flujo estándar:
+      // supabase.auth.resetPasswordForEmail() desde el cliente.
+      if (action === 'set-password') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) {
+          return res.status(403).json({ error: authCheck.error });
         }
 
-        let targetUserId = userId;
-        if (!targetUserId && email) {
-          const { data: pRecord } = await sbAdmin
-            .from('perfiles')
-            .select('id')
-            .eq('email', email.toLowerCase().trim())
-            .single();
-          if (pRecord) targetUserId = pRecord.id;
+        const { userId, newPassword } = body;
+        if (!newPassword || newPassword.length < 8) {
+          return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres.' });
+        }
+        if (!userId) {
+          return res.status(400).json({ error: 'userId es requerido.' });
         }
 
-        if (!targetUserId) {
-          return res.status(400).json({ error: 'No se encontró el ID de usuario para actualizar la contraseña.' });
-        }
-
-        // Actualizar contraseña en Supabase Auth
-        const { error: updateAuthErr } = await sbAdmin.auth.admin.updateUserById(targetUserId, {
+        const { error: updateAuthErr } = await sbAdmin.auth.admin.updateUserById(userId, {
           password: newPassword
         });
 
         if (updateAuthErr) {
           console.error('Error al actualizar contraseña en auth:', updateAuthErr);
-          return res.status(500).json({ error: updateAuthErr.message || 'Error al actualizar contraseña en Supabase Auth.' });
+          return res.status(500).json({ error: 'No se pudo actualizar la contraseña.' });
         }
 
-        return res.status(200).json({
-          success: true,
-          message: 'Contraseña actualizada con éxito en Supabase Auth.'
-        });
+        return res.status(200).json({ success: true, message: 'Contraseña actualizada con éxito.' });
       }
 
       // ── ACCIÓN: ENVIAR CORREO REAL AL USUARIO ──
