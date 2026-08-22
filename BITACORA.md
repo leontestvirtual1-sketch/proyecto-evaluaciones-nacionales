@@ -2,6 +2,41 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-21] Remediación de Seguridad Crítica y Alta — Auditoría OWASP (S-01 a S-10)
+
+- **Problema / Requerimiento**:
+  1. **S-01 / S-07 — Falta de autenticación y autorización en API:** El endpoint `api/users.ts` permitía operaciones sensibles (listar perfiles con PII, suspender cuentas, resetear contraseñas) a visitantes anónimos omitiendo RLS.
+  2. **S-02 / S-06 — Credenciales embebidas y persistencia local de contraseñas:** Existía un diccionario de contraseñas de producción/demo en el bundle del cliente (`DEMO_USER_PASSWORDS`) y fallbacks en `localStorage`.
+  3. **S-03 — Reset de contraseñas desprotegido:** La acción `reset-password` permitía sobreescribir la contraseña de cualquier usuario sin autenticación.
+  4. **S-04 — Escalada de privilegios en registro:** La acción `register` aceptaba el campo `rol` del cliente sin forzar el rol base.
+  5. **S-08 / S-11 — CORS permisivo y riesgo XSS en emails:** Ambas APIs (`users.ts` y `notify-admin.ts`) tenían `Access-Control-Allow-Origin: *` e interpolaban variables sin escapar.
+  6. **S-09 / S-10 — Tokens débiles y RLS permeable:** Tokens generados con `Math.random()` sin expiración y RLS en `perfiles` sin `WITH CHECK` para bloquear auto-asignación de roles.
+
+- **Archivos y Solución Técnica**:
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - [MODIFICADO] Creado helper `requireAdmin` que valida el JWT de Supabase y el rol `admin` antes de permitir listados o mutaciones administrativas.
+    - [MODIFICADO] Restringido CORS al dominio oficial `APP_URL` y localhost en desarrollo con cabecera `Vary: Origin`.
+    - [MODIFICADO] La acción `register` ahora ignora el rol del cliente y fuerza siempre `rol: 'profesor'` con `estado: 'pendiente_aprobacion'`.
+    - [MODIFICADO] Eliminada la acción pública `reset-password`. La acción `set-password` queda reservada para administradores autenticados.
+    - [MODIFICADO] Generación de tokens de aprobación criptográficos de 32 bytes (`crypto.randomBytes(32).toString('hex')`).
+    - [MODIFICADO] Función `escapeHtml` aplicada a todas las variables interpoladas en plantillas de correo.
+  - [`api/notify-admin.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/notify-admin.ts):
+    - [MODIFICADO] CORS restringido al origen de producción y localhost.
+    - [MODIFICADO] Función `escapeHtml` para sanitizar todas las variables del cuerpo del correo.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - [MODIFICADO] Eliminado completamente el objeto `DEMO_USER_PASSWORDS` y los fallbacks de login offline con contraseñas hardcodeadas o `localStorage`.
+    - [MODIFICADO] El flujo de autenticación ahora se delega 100% a Supabase Auth (`supabase.auth.signInWithPassword`).
+  - [`supabase/migrations/014_security_hardening_rls_and_tokens.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/014_security_hardening_rls_and_tokens.sql):
+    - [NUEVO] Políticas estrictas RLS en `public.perfiles` con cláusula `WITH CHECK` para impedir que usuarios regulares modifiquen su propio `rol`, `estado`, `plan`, `rbd`, `establecimiento` o `activo`.
+    - [NUEVO] Columna `approval_token_expires_at` con TTL de 72 horas e índice optimizado.
+
+- **Verificación / Despliegue**:
+  - Compilación TypeScript (`tsc`): ✅ Exitosa, 0 errores.
+  - Build Vite de Producción (`npm run build`): ✅ Exitosa (`dist/index.html` y bundles generados).
+  - Git Commit & Push: ✅ Subido a rama `main` en GitHub (`8c9d62f`) y desplegado en Vercel.
+
+
+
 ### [2026-08-21] Normalización Integral de Alta de Docentes (RBD Relacional, Creación Directa Supabase y Formularios Unificados)
 
 - **Problema / Requerimiento**:
