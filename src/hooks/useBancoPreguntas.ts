@@ -120,25 +120,21 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
           if (isMounted) {
             const dbQuestions = data.map(mapRowToPregunta);
             if (user!.rol === 'admin') {
-              const allGlobal = [
-                ...preguntasMock,
-                ...preguntasLenguaje2MMock,
-                ...preguntasLenguaje2MJunioMock,
-                ...preguntasLenguaje2MAbrilMock,
-              ];
-              const uniqueMap = new Map<string, Pregunta>();
-              allGlobal.forEach(p => uniqueMap.set(p.id, p));
-              // Las preguntas de Supabase se fusionan preservando imágenes del catálogo si no están en DB
-              dbQuestions.forEach(p => {
-                const existing = uniqueMap.get(p.id);
-                uniqueMap.set(p.id, {
-                  ...existing,
-                  ...p,
-                  imagenUrl: p.imagenUrl || existing?.imagenUrl,
-                  tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown
-                });
+              const imageMap = new Map<string, { imagenUrl?: string; tablaMarkdown?: string }>();
+              [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock].forEach(p => {
+                imageMap.set(p.id, { imagenUrl: p.imagenUrl, tablaMarkdown: p.tablaMarkdown });
               });
-              setPreguntas(Array.from(uniqueMap.values()));
+
+              // Preservar preguntas reales de Supabase enriqueciendo imágenes si existen en el catálogo
+              const merged = dbQuestions.map(p => {
+                const meta = imageMap.get(p.id);
+                return {
+                  ...p,
+                  imagenUrl: p.imagenUrl || meta?.imagenUrl,
+                  tablaMarkdown: p.tablaMarkdown || meta?.tablaMarkdown
+                };
+              });
+              setPreguntas(merged);
             } else {
               // Dinámico para cualquier docente: combina preguntas de su especialidad con sus preguntas de Supabase
               const teacherAsig = user!.asignaturaId || '';

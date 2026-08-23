@@ -137,28 +137,42 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   // Catálogo 100% dinámico de docentes para filtros de Admin
   const docentesDisponibles = useMemo(() => {
     const list = docentes && docentes.length > 0 ? docentes : [];
-    const map = new Map<string, { id: string; nombre: string; asignatura: string; asigId: string; establecimiento: string; email: string }>();
+    const map = new Map<string, { id: string; rawId?: string; nombre: string; asignatura: string; asigId: string; establecimiento: string; email: string }>();
 
-    // Base de producción
-    map.set('mariateresa', { id: 'mariateresa', nombre: 'María Teresa González', asignatura: 'Lengua y Literatura', asigId: 'asig-2', establecimiento: 'Escuela Premilitar Héroes de la Concepción', email: 'mariateresa.gonzalez@premil.cl' });
-    map.set('susana', { id: 'susana', nombre: 'Susana Angélica Pizarro Valenzuela', asignatura: 'Matemática', asigId: 'asig-1', establecimiento: 'Colegio Mi Casa', email: 'nentitasusana@hotmail.com' });
+    // Base inicial de producción
+    map.set('mariateresa', {
+      id: 'mariateresa',
+      nombre: 'María Teresa González',
+      asignatura: 'Lengua y Literatura',
+      asigId: 'asig-2',
+      establecimiento: 'Escuela Premilitar Héroes de la Concepción',
+      email: 'mariateresa.gonzalez@premil.cl'
+    });
+    map.set('susana', {
+      id: 'susana',
+      nombre: 'Susana Angélica Pizarro Valenzuela',
+      asignatura: 'Matemática',
+      asigId: 'asig-1',
+      establecimiento: 'Colegio Mi Casa',
+      email: 'nentitasusana@hotmail.com'
+    });
 
     list.forEach(d => {
-      const key = (d.email || d.id || '').toLowerCase();
-      const isSusana = key.includes('susana') || (d.nombre && d.nombre.toLowerCase().includes('susana'));
-      const isPremil = key.includes('premil') || key.includes('mariateresa');
-      
+      const emailLower = (d.email || '').toLowerCase();
+      const isSusana = emailLower.includes('susana') || (d.nombre && d.nombre.toLowerCase().includes('susana'));
+      const isPremil = emailLower.includes('premil') || emailLower.includes('mariateresa');
+      const keyId = isSusana ? 'susana' : isPremil ? 'mariateresa' : d.id;
+
       const docEntry = {
-        id: isSusana ? 'susana' : isPremil ? 'mariateresa' : d.id,
-        nombre: `${d.nombre} ${d.apellido}`.trim(),
+        id: keyId,
+        rawId: d.id,
+        nombre: `${d.nombre} ${d.apellido || ''}`.trim(),
         asignatura: d.asignaturaNombre || (isSusana ? 'Matemática' : isPremil ? 'Lengua y Literatura' : 'Especialidad'),
         asigId: d.asignaturaId || (isSusana ? 'asig-1' : isPremil ? 'asig-2' : ''),
         establecimiento: d.establecimiento || (isSusana ? 'Colegio Mi Casa' : isPremil ? 'Escuela Premilitar Héroes de la Concepción' : ''),
         email: d.email || ''
       };
-      if (isSusana) map.set('susana', docEntry);
-      else if (isPremil) map.set('mariateresa', docEntry);
-      else map.set(d.id, docEntry);
+      map.set(keyId, docEntry);
     });
 
     return Array.from(map.values());
@@ -170,7 +184,6 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     docentesDisponibles.forEach(d => {
       if (d.establecimiento) setEst.add(d.establecimiento);
     });
-    // Añadir establecimientos desde las fuentes de preguntas
     preguntas.forEach(p => {
       if (p.establecimiento) setEst.add(p.establecimiento);
     });
@@ -192,34 +205,34 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     const counts: Record<string, number> = {};
 
     const selectedDoc = !isDocente && docenteFilter
-      ? docentesDisponibles.find(d => d.id === docenteFilter || d.email.toLowerCase() === docenteFilter.toLowerCase() || d.nombre.toLowerCase().includes(docenteFilter.toLowerCase()))
+      ? docentesDisponibles.find(d => d.id === docenteFilter || (d.rawId && d.rawId === docenteFilter) || d.email.toLowerCase() === docenteFilter.toLowerCase())
       : null;
 
     preguntas.forEach(p => {
-      // Filtrar por asignatura
+      // 1. Filtrar por asignatura
       const matchAsig = isDocente
         ? p.asignaturaId === docenteAsigId
         : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
 
-      // Filtrar por establecimiento dinámico (Admin)
+      // 2. Filtrar por establecimiento dinámico (Admin)
       let matchEstablecimiento = true;
       if (!isDocente && establecimientoFilter) {
-        const docForQ = docentesDisponibles.find(d => d.id === p.propietarioId || d.asigId === p.asignaturaId);
+        const docForQ = docentesDisponibles.find(d => d.id === p.propietarioId || d.rawId === p.propietarioId || d.asigId === p.asignaturaId);
         matchEstablecimiento = Boolean(
           p.establecimiento === establecimientoFilter ||
           (docForQ && docForQ.establecimiento === establecimientoFilter) ||
-          p.fuente?.toLowerCase().includes(establecimientoFilter.toLowerCase())
+          (establecimientoFilter === 'Colegio Mi Casa' && p.asignaturaId === 'asig-1') ||
+          (establecimientoFilter.includes('Premilitar') && p.asignaturaId === 'asig-2')
         );
       }
 
-      // Filtrar por docente dinámico (Admin)
+      // 3. Filtrar por docente dinámico (Admin)
       let matchDocente = true;
       if (!isDocente && docenteFilter && selectedDoc) {
         matchDocente = Boolean(
           p.propietarioId === selectedDoc.id ||
-          p.asignaturaId === selectedDoc.asigId ||
-          p.fuente?.toLowerCase().includes('matemática') ||
-          p.fuente?.toLowerCase().includes('simce')
+          (selectedDoc.rawId && p.propietarioId === selectedDoc.rawId) ||
+          p.asignaturaId === selectedDoc.asigId
         );
       }
 
@@ -231,26 +244,26 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
     const activeKeys = new Set<string>();
 
-    // 1. Añadir los niveles de los cursos explícitamente creados por el docente
+    // Añadir niveles de los cursos del docente si aplica
     userCursos.forEach((c: { nivel?: string; nombre?: string }) => {
       const norm = normalizeNivel(c.nivel || c.nombre);
       if (norm) activeKeys.add(norm);
     });
 
-    // Si está filtrado por Susana o Colegio Mi Casa o el docente activo es Susana, garantizar sus 3 niveles
+    // Si está filtrado por Susana o Colegio Mi Casa, garantizar sus 3 niveles
     const isUserSusana = (currentUser?.email || '').toLowerCase().includes('susana') || (currentUser?.establecimiento || '').toLowerCase().includes('mi casa');
-    if (selectedDoc?.id === 'susana' || establecimientoFilter === 'Colegio Mi Casa' || isUserSusana) {
+    if (selectedDoc?.id === 'susana' || establecimientoFilter === 'Colegio Mi Casa' || isUserSusana || (asignaturaFilter === 'asig-1' && !isDocente)) {
       activeKeys.add('4° básico');
       activeKeys.add('6° básico');
       activeKeys.add('8° básico');
     }
 
-    // 2. Añadir niveles donde haya preguntas con los filtros activos
+    // Añadir niveles donde haya preguntas con los filtros activos
     Object.keys(counts).forEach(k => {
       if (counts[k] > 0) activeKeys.add(k);
     });
 
-    // 3. Niveles estándar si aún no hay ninguno
+    // Niveles estándar si aún no hay ninguno
     if (activeKeys.size === 0) {
       if (!isDocente) {
         activeKeys.add('4° básico');
@@ -276,7 +289,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         count: counts[key] || 0
       };
     });
-  }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
+  }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles, currentUser?.email, currentUser?.establecimiento]);
 
   // Sincronizar nivelFilter:
   // - Para docente: si nivelFilter está vacío, asignar el nivel inicial correspondiente
@@ -293,6 +306,10 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
   // Base de preguntas filtradas por ASIGNATURA, CURSO/NIVEL, ESTABLECIMIENTO y DOCENTE
   const basePreguntas = useMemo(() => {
+    const selectedDoc = !isDocente && docenteFilter
+      ? docentesDisponibles.find(d => d.id === docenteFilter || (d.rawId && d.rawId === docenteFilter) || d.email.toLowerCase() === docenteFilter.toLowerCase())
+      : null;
+
     return preguntas.filter(p => {
       // 1. Asignatura
       const matchAsig = isDocente
@@ -305,21 +322,22 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       // 3. Establecimiento dinámico (Admin)
       let matchEstablecimiento = true;
       if (!isDocente && establecimientoFilter) {
-        const docForQ = docentesDisponibles.find(d => d.id === p.propietarioId || d.asigId === p.asignaturaId);
+        const docForQ = docentesDisponibles.find(d => d.id === p.propietarioId || d.rawId === p.propietarioId || d.asigId === p.asignaturaId);
         matchEstablecimiento = Boolean(
           p.establecimiento === establecimientoFilter ||
           (docForQ && docForQ.establecimiento === establecimientoFilter) ||
-          p.fuente?.toLowerCase().includes(establecimientoFilter.toLowerCase())
+          (establecimientoFilter === 'Colegio Mi Casa' && p.asignaturaId === 'asig-1') ||
+          (establecimientoFilter.includes('Premilitar') && p.asignaturaId === 'asig-2')
         );
       }
 
       // 4. Docente dinámico (Admin)
       let matchDocente = true;
-      if (!isDocente && docenteFilter) {
-        const selectedDoc = docentesDisponibles.find(d => d.id === docenteFilter);
+      if (!isDocente && docenteFilter && selectedDoc) {
         matchDocente = Boolean(
-          p.propietarioId === docenteFilter ||
-          (selectedDoc && p.asignaturaId === selectedDoc.asigId)
+          p.propietarioId === selectedDoc.id ||
+          (selectedDoc.rawId && p.propietarioId === selectedDoc.rawId) ||
+          p.asignaturaId === selectedDoc.asigId
         );
       }
 
