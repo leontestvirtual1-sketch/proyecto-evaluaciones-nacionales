@@ -42,15 +42,32 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   const { nombreEstablecimientoActivo, isProduction } = useAcademicData();
   const [printMode, setPrintMode] = useState<PrintMode>('cuadernillo');
 
-  // Encontrar el establecimiento actual y su logo oficial
-  const establecimientoActual = establecimientosCatalog.find(
-    e => (user?.rbd && e.rbd === user.rbd) || (user?.establecimiento && e.nombre.toLowerCase().includes(user.establecimiento.toLowerCase()))
-  ) || {
-    nombre: nombreEstablecimientoActivo || user?.establecimiento || (isProduction ? 'Escuela Premilitar Héroes de la Concepción' : 'Liceo Bicentenario Los Andes'),
-    rbd: user?.rbd || '31030',
-    logoUrl: isProduction ? '/logos/escuela-premilitar.png' : undefined,
-    lema: isProduction ? 'Ad Altiora, Et Meliora, Semper' : 'Excelencia y Futuro'
-  };
+  // Encontrar el establecimiento actual y su logo oficial dinámicamente
+  const establecimientoActual = React.useMemo(() => {
+    const establecimientoNombre = prueba?.establecimiento || user?.establecimiento || nombreEstablecimientoActivo || '';
+    const rbd = user?.rbd || (establecimientoNombre.toLowerCase().includes('premilitar') ? '31030' : '1234');
+    
+    const matched = establecimientosCatalog.find(
+      e => (rbd && e.rbd === rbd) || 
+           (establecimientoNombre && (e.nombre.toLowerCase().includes(establecimientoNombre.toLowerCase()) || establecimientoNombre.toLowerCase().includes(e.nombre.toLowerCase())))
+    );
+
+    const isPremil = establecimientoNombre.toLowerCase().includes('premilitar') || rbd === '31030' || (user?.email || '').toLowerCase().includes('premil');
+
+    if (matched) {
+      return {
+        ...matched,
+        logoUrl: matched.logoUrl || (isPremil ? '/logos/escuela-premilitar.png' : user?.logoUrl || undefined)
+      };
+    }
+
+    return {
+      nombre: establecimientoNombre || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : (isProduction ? 'Colegio Mi Casa' : 'Liceo Bicentenario Los Andes')),
+      rbd: rbd,
+      logoUrl: isPremil ? '/logos/escuela-premilitar.png' : user?.logoUrl || undefined,
+      lema: isPremil ? 'Ad Altiora, Et Meliora, Semper' : 'Excelencia y Futuro'
+    };
+  }, [prueba, user, nombreEstablecimientoActivo, isProduction]);
 
   // Filter students belonging to this course
   const alumnosDelCurso = React.useMemo(() => {
