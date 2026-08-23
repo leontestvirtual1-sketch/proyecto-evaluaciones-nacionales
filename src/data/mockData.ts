@@ -436,6 +436,108 @@ export const preguntasMock: Pregunta[] = [
   // ✅ Ensayo SIMCE Lenguaje 2° Medio — Abril 2026 (Escuela Premilitar)
   ...preguntasLenguaje2MAbrilMock,
 
+  // === 0. MATEMÁTICA 4° BÁSICO (COLEGIO MI CASA / SUSANA PIZARRO) ===
+  {
+    id: 'preg-mat-4b-01',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-1',
+    habilidadId: 'hab-mat-1',
+    tipo: 'seleccion_multiple',
+    nivel: '4° Básico',
+    dificultad: 'facil',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: 'En un huerto escolar se cosecharon 348 manzanas el lunes y 275 manzanas el martes. ¿Cuántas manzanas se cosecharon en total?',
+    alternativas: [
+      { letra: 'A', texto: '513 manzanas', es_correcta: false },
+      { letra: 'B', texto: '623 manzanas', es_correcta: true },
+      { letra: 'C', texto: '613 manzanas', es_correcta: false },
+      { letra: 'D', texto: '723 manzanas', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 4° Básico'
+  },
+  {
+    id: 'preg-mat-4b-02',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-1',
+    habilidadId: 'hab-mat-2',
+    tipo: 'seleccion_multiple',
+    nivel: '4° Básico',
+    dificultad: 'media',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: 'Un profesor tiene 36 lápices y los reparte en partes iguales entre 4 estudiantes. ¿Cuántos lápices recibe cada estudiante?',
+    alternativas: [
+      { letra: 'A', texto: '7 lápices', es_correcta: false },
+      { letra: 'B', texto: '8 lápices', es_correcta: false },
+      { letra: 'C', texto: '9 lápices', es_correcta: true },
+      { letra: 'D', texto: '12 lápices', es_correcta: false }
+    ],
+    respuestaCorrecta: 'C',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 4° Básico'
+  },
+  {
+    id: 'preg-mat-4b-03',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-2',
+    habilidadId: 'hab-mat-2',
+    tipo: 'seleccion_multiple',
+    nivel: '4° Básico',
+    dificultad: 'media',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: 'Observa la siguiente secuencia numérica: 12, 18, 24, 30, ___. ¿Cuál es el número que sigue?',
+    alternativas: [
+      { letra: 'A', texto: '34', es_correcta: false },
+      { letra: 'B', texto: '36', es_correcta: true },
+      { letra: 'C', texto: '38', es_correcta: false },
+      { letra: 'D', texto: '40', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 4° Básico'
+  },
+  {
+    id: 'preg-mat-4b-04',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-3',
+    habilidadId: 'hab-mat-1',
+    tipo: 'seleccion_multiple',
+    nivel: '4° Básico',
+    dificultad: 'facil',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: '¿Cuál de las siguientes figuras geométricas tiene exactamente 4 lados de igual longitud y 4 ángulos rectos?',
+    alternativas: [
+      { letra: 'A', texto: 'Rectángulo', es_correcta: false },
+      { letra: 'B', texto: 'Rombo', es_correcta: false },
+      { letra: 'C', texto: 'Cuadrado', es_correcta: true },
+      { letra: 'D', texto: 'Trapecio', es_correcta: false }
+    ],
+    respuestaCorrecta: 'C',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 4° Básico'
+  },
+  {
+    id: 'preg-mat-4b-05',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-4',
+    habilidadId: 'hab-mat-3',
+    tipo: 'seleccion_multiple',
+    nivel: '4° Básico',
+    dificultad: 'alta',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: 'En un gráfico de barras, la barra de "Perros" llega a 15 y la de "Gatos" llega a 9. ¿Cuántos estudiantes más prefieren perros que gatos?',
+    alternativas: [
+      { letra: 'A', texto: '4 estudiantes', es_correcta: false },
+      { letra: 'B', texto: '6 estudiantes', es_correcta: true },
+      { letra: 'C', texto: '8 estudiantes', es_correcta: false },
+      { letra: 'D', texto: '24 estudiantes', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 4° Básico'
+  },
+
   // === 1. MATEMÁTICA Y LENGUAJE 8° BÁSICO ===
 
   // 1. Números - Aplicación
@@ -2696,6 +2798,35 @@ export const preguntasMock: Pregunta[] = [
 export const cursosMock: Curso[] = [
 
   cursoLenguaje2MMock,
+
+  // ✅ Cursos de Colegio Mi Casa (Susana Angélica Pizarro Valenzuela)
+  {
+    id: 'curso-mc-4b',
+    nombre: '4° Básico A',
+    nivel: '4° básico',
+    profesorId: currentUserProfesorMiCasa.id,
+    establecimiento: 'Colegio Mi Casa',
+    anio: 2026,
+    codigoInvitacion: 'MC4B2026'
+  },
+  {
+    id: 'curso-mc-8b',
+    nombre: '8° Básico A',
+    nivel: '8° básico',
+    profesorId: currentUserProfesorMiCasa.id,
+    establecimiento: 'Colegio Mi Casa',
+    anio: 2026,
+    codigoInvitacion: 'MC8B2026'
+  },
+  {
+    id: 'curso-mc-2m',
+    nombre: '2° Medio A',
+    nivel: '2° medio',
+    profesorId: currentUserProfesorMiCasa.id,
+    establecimiento: 'Colegio Mi Casa',
+    anio: 2026,
+    codigoInvitacion: 'MC2M2026'
+  },
 
   {
 

@@ -73,7 +73,6 @@ const AuthContext = createContext<AuthContextType | null>(null);
 // cuando Supabase Auth ya la validó previamente.
 const DEMO_USERS: Record<string, UserProfile> = {
   'leontestvirtual1@gmail.com':       currentUserAdmin,
-  'leontesvirtual1@gmail.com':        currentUserAdmin,
   'mariateresa.gonzalez@premil.cl':    currentUserProfesorPremilitar,
   'luis.leon@premil.cl':              currentUserProfesorPremilitar,
   'nentitasusana@hotmail.com':        currentUserProfesorMiCasa,
@@ -149,6 +148,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   /** Carga todos los usuarios registrados reales desde Supabase para el Admin */
   const loadUsuariosReales = useCallback(async () => {
+    const baseProductionUsers: UserProfile[] = [
+      currentUserAdmin,
+      currentUserProfesorPremilitar,
+      currentUserProfesorMiCasa,
+    ];
+
     try {
       const { data, error } = await supabase
         .from('perfiles')
@@ -201,26 +206,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
       };
 
+      const userMap = new Map<string, UserProfile>();
+      // 1. Inicializar con usuarios de demo para pestaña Demo
+      usuariosRegistradosMock.forEach(u => userMap.set(u.email.toLowerCase(), u));
+      // 2. Fusionar perfiles base de producción
+      baseProductionUsers.forEach(u => userMap.set(u.email.toLowerCase(), u));
+
+      // 3. Fusionar datos directos de Supabase
       if (!error && data && data.length > 0) {
-        const realUsers = data.map(mapRow);
-        setUsuarios(realUsers);
-      } else {
-        // Si la tabla retorna vacío (ej. RLS sin filas para admin sin perfil),
-        // intentar poblar con sesión activa de Supabase como mínimo
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          const { data: ownProfile } = await supabase
-            .from('perfiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
-          if (ownProfile) {
-            setUsuarios([mapRow(ownProfile)]);
+        data.forEach((p: Record<string, unknown>) => {
+          const mapped = mapRow(p);
+          if (mapped.email) {
+            userMap.set(mapped.email.toLowerCase(), mapped);
           }
-        }
+        });
       }
+
+      setUsuarios(Array.from(userMap.values()));
     } catch {
-      // Mantener estado actual si no conecta
+      const fallbackMap = new Map<string, UserProfile>();
+      usuariosRegistradosMock.forEach(u => fallbackMap.set(u.email.toLowerCase(), u));
+      baseProductionUsers.forEach(u => fallbackMap.set(u.email.toLowerCase(), u));
+      setUsuarios(Array.from(fallbackMap.values()));
     }
   }, []);
 
@@ -604,7 +611,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const switchRole = useCallback((role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar' | 'demo' | 'prod') => {
     if (role === 'admin') {
       const savedEmail = localStorage.getItem('sysget_session_email')?.toLowerCase();
-      if (extra === 'prod' || (!extra && (savedEmail === 'leontestvirtual1@gmail.com' || savedEmail === 'leontesvirtual1@gmail.com'))) {
+      if (extra === 'prod' || (!extra && savedEmail === 'leontestvirtual1@gmail.com')) {
         setUser(adminBaseProfile || currentUserAdmin);
       } else {
         // En cualquier flujo de demostración, sandbox o switch a demo, asignar siempre el admin de prueba

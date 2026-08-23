@@ -127,7 +127,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
     showToast('Enlace de aprobación directa copiado al portapapeles.');
   };
 
-  const isProductionAdmin = !isSandboxMode && (user?.email === 'leontestvirtual1@gmail.com' || user?.email === 'leontesvirtual1@gmail.com');
+  const isProductionAdmin = !isSandboxMode && user?.email === 'leontestvirtual1@gmail.com';
   const [entornoTab, setEntornoTab] = useState<'produccion' | 'demo'>('produccion');
 
   // Clasificador estricto de usuario Demo vs Producción

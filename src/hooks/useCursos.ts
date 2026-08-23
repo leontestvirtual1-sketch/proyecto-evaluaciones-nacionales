@@ -133,35 +133,47 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
           return;
         }
 
-        // Si no hay cursos en Supabase, verificar si hay que migrar desde localStorage
+        // Si la tabla cursos en Supabase no tiene filas aún, auto-poblar los cursos oficiales de producción
         if (!isMigratedRef.current) {
           isMigratedRef.current = true;
-          try {
-            const localStored = localStorage.getItem(storageKey);
-            if (localStored) {
-              const localList: CursoItem[] = JSON.parse(localStored);
-              // Filtrar placeholders obsoletos
-              const validList = localList.filter(c => !(c.nombre === 'Curso 1' && c.totalAlumnos === 0));
-              if (validList.length > 0) {
-                const rows = validList.map(c => mapCursoToRow(c, currentUser!.id, currentUser!.rbd));
-                const { error: insertErr } = await supabase.from('cursos').upsert(rows, { onConflict: 'id' });
-                if (!insertErr && isMounted) {
-                  setCursos(validList);
-                  localStorage.removeItem(storageKey);
-                  setIsLoading(false);
-                  return;
-                }
-              }
-            }
-          } catch (e) {
-            console.error('[useCursos] Error migrando cursos locales:', e);
-          }
-        }
+          const isSusana = (currentUser!.email || '').toLowerCase().includes('susana') || (currentUser!.establecimiento || '').toLowerCase().includes('mi casa');
+          const isPremil = (currentUser!.email || '').toLowerCase().includes('premil.cl') || (currentUser!.email || '').toLowerCase().includes('mariateresa');
+          const isAdmin = currentUser!.rol === 'admin';
 
-        // Docente de producción nuevo: empieza limpio con 0 cursos
-        if (isMounted) {
-          setCursos([]);
-          setIsLoading(false);
+          let initialProdCursos: CursoItem[] = [];
+
+          if (isSusana) {
+            initialProdCursos = [
+              { id: 'curso-mc-4b', nombre: '4° Básico A', nivel: '4° Básico', anio: 2026, codigoInvitacion: 'MC4B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id },
+              { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'MC8B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id },
+              { id: 'curso-mc-2m', nombre: '2° Medio A', nivel: '2° Medio', anio: 2026, codigoInvitacion: 'MC2M2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id }
+            ];
+          } else if (isPremil) {
+            initialProdCursos = [
+              { id: 'curso-prem-2m', nombre: '2° Medio A', nivel: '2° Medio', anio: 2026, codigoInvitacion: 'PREM2M26', totalAlumnos: 0, establecimiento: 'Escuela Premilitar Héroes de la Concepción', rbd: '31030', profesorJefeId: currentUser!.id }
+            ];
+          } else if (isAdmin) {
+            initialProdCursos = [
+              { id: 'curso-prem-2m', nombre: '2° Medio A', nivel: '2° Medio', anio: 2026, codigoInvitacion: 'PREM2M26', totalAlumnos: 0, establecimiento: 'Escuela Premilitar Héroes de la Concepción', rbd: '31030' },
+              { id: 'curso-mc-4b', nombre: '4° Básico A', nivel: '4° Básico', anio: 2026, codigoInvitacion: 'MC4B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' },
+              { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'MC8B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' },
+              { id: 'curso-mc-2m', nombre: '2° Medio A', nivel: '2° Medio', anio: 2026, codigoInvitacion: 'MC2M2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' }
+            ];
+          }
+
+          if (initialProdCursos.length > 0) {
+            if (isMounted) {
+              setCursos(initialProdCursos);
+              setIsLoading(false);
+            }
+            try {
+              const rows = initialProdCursos.map(c => mapCursoToRow(c, currentUser!.id, c.rbd || currentUser!.rbd));
+              await supabase.from('cursos').upsert(rows, { onConflict: 'id' });
+            } catch (err) {
+              console.error('[useCursos] Error auto-seeding cursos en Supabase:', err);
+            }
+            return;
+          }
         }
       } catch (err) {
         console.error('[useCursos] Error general al cargar cursos:', err);

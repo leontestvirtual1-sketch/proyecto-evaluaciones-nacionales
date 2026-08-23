@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
   
   const pendientesCount = usuarios.filter(u => u.estado === 'pendiente_aprobacion').length;
 
-  const isProductionAdmin = !isSandboxMode && (user?.email === 'leontestvirtual1@gmail.com' || user?.email === 'leontesvirtual1@gmail.com' || adminBaseProfile?.email === 'leontestvirtual1@gmail.com');
+  const isProductionAdmin = !isSandboxMode && (user?.email === 'leontestvirtual1@gmail.com' || adminBaseProfile?.email === 'leontestvirtual1@gmail.com');
   const isSupervisingDocente = user?.rol === 'profesor' && adminBaseProfile?.email === 'leontestvirtual1@gmail.com';
 
   const NAV_ITEMS_ADMIN: NavItem[] = [

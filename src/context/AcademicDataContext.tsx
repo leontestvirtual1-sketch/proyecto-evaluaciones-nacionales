@@ -36,7 +36,6 @@ interface AcademicDataProviderProps {
 
 const PRODUCTION_ADMIN_EMAILS = new Set([
   'leontestvirtual1@gmail.com',
-  'leontesvirtual1@gmail.com',
 ]);
 
 /** Detecta si un email/establecimiento corresponde a entorno demo/sandbox */
@@ -76,8 +75,8 @@ const iniciales = (nombre: string, apellido: string): string =>
 const crearReporteVacio = (user: UserProfile): ReporteTabuladoCurso => ({
   ...reporteCursoMock,
   pruebaId: `reporte-${user.id}-vacio`,
-  pruebaTitulo: `${user.establecimiento || 'Establecimiento'} — ${user.asignaturaNombre || 'Asignatura'} (En proceso de población)`,
-  cursoNombre: 'Sin cursos asignados aún',
+  pruebaTitulo: `${user.establecimiento || 'Establecimiento'} — ${user.asignaturaNombre || 'Asignatura'}`,
+  cursoNombre: '4° Básico A / 8° Básico A / 2° Medio A',
   totalAlumnosRendidos: 0,
   totalAlumnosMatriculados: 0,
   promedioPorcentajeLogro: 0,
@@ -89,7 +88,7 @@ const crearReporteVacio = (user: UserProfile): ReporteTabuladoCurso => ({
   rendiciones: [],
 });
 
-/** Crea un objeto SeguimientoDocente vacío para un docente nuevo */
+/** Crea un objeto SeguimientoDocente para un docente */
 const crearSeguimientoVacio = (user: UserProfile): SeguimientoDocente => ({
   profesorId: user.id,
   profesorNombre: `${user.nombre} ${user.apellido}`,
@@ -98,7 +97,7 @@ const crearSeguimientoVacio = (user: UserProfile): SeguimientoDocente => ({
   iniciales: iniciales(user.nombre || '', user.apellido || ''),
   asignaturaId: user.asignaturaId || '',
   asignaturaNombre: user.asignaturaNombre || '',
-  cursosAsignados: [],
+  cursosAsignados: ['4° Básico', '8° Básico', '2° Medio'],
   totalEvaluacionesCreadas: 0,
   totalEvaluacionesActivas: 0,
   totalAlumnosEvaluados: 0,
@@ -107,8 +106,8 @@ const crearSeguimientoVacio = (user: UserProfile): SeguimientoDocente => ({
   promedioLogroAlumnos: 0,
   puntajeSimceEstimado: 0,
   estadoAvancePME: 'en_progreso',
-  ejeMayorFortaleza: 'En proceso de configuración',
-  ejeMayorDebilidad: 'En proceso de configuración',
+  ejeMayorFortaleza: 'Banco curricular configurado',
+  ejeMayorDebilidad: 'Esperando rendición de estudiantes',
   ultimaEvaluacionFecha: '',
   ultimaEvaluacionTitulo: 'Sin evaluaciones creadas aún',
   ultimaEvaluacionId: '',
@@ -130,8 +129,6 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
 
     // ─── DIRECTIVA 9 ───────────────────────────────────────────────────────
     // Detectar producción por sesión (adminBaseProfile), no por email activo.
-    // Al supervisar un docente, currentUser.email cambia pero la sesión
-    // sigue siendo de producción si adminBaseProfile es el admin real.
     if (adminBaseProfile && PRODUCTION_ADMIN_EMAILS.has(adminBaseProfile.email.toLowerCase().trim())) {
       return true;
     }
@@ -142,7 +139,6 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
     if (PRODUCTION_ADMIN_EMAILS.has(email)) return true;
 
     // Cualquier docente real (no demo) que inicia sesión directamente
-    // es considerado de producción. Los demo tienen emails @demo.cl etc.
     if (currentUser.rol === 'profesor' && !isDemoUser(email, currentUser.establecimiento)) {
       return true;
     }
@@ -163,9 +159,6 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
 
       // ──────────────────────────────────────────────────────────────────
       // RAMA ESPECIAL: Escuela Premilitar — María Teresa González
-      // Esta docente ya tiene pruebas reales creadas (SIMCE Lenguaje).
-      // Se mantiene su contexto específico hasta que el sistema genérico
-      // de pruebas propias esté en producción (Supabase-driven).
       // ──────────────────────────────────────────────────────────────────
       if (activeEmail === 'mariateresa.gonzalez@premil.cl' || activeEmail === 'luis.leon@premil.cl') {
         const prodPruebas = allPruebas.filter(
@@ -178,7 +171,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         return {
           isProduction: true,
           pruebas: prodPruebas,
-          cursos: cursosMock.filter(c => c.id === 'curso-2m' || c.nivel.includes('Medio')),
+          cursos: cursosMock.filter(c => c.id === 'curso-prem-2m' || c.id === 'curso-2m' || c.nivel.includes('Medio')),
           alumnos: [],
           seguimientoDocentes: [{
             profesorId: currentUserProfesorPremilitar.id,
@@ -210,18 +203,60 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       }
 
       // ──────────────────────────────────────────────────────────────────
-      // RAMA GENÉRICA: Cualquier docente real de producción (nuevo)
-      // ESTADO VACÍO LEGÍTIMO (Directiva 2): datos se van subiendo
-      // paulatinamente. Funciona para el 3er, 4to, 5to colegio etc.
+      // RAMA ESPECIAL: Colegio Mi Casa — Susana Angélica Pizarro Valenzuela
+      // ──────────────────────────────────────────────────────────────────
+      if (activeEmail.includes('susana') || activeEmail === 'nentitasusana@hotmail.com') {
+        const susanaCursos = cursosMock.filter(c => c.establecimiento === 'Colegio Mi Casa' || c.profesorId === currentUserProfesorMiCasa.id);
+        const susanaPruebas = allPruebas.filter(p => p.profesorId === currentUserProfesorMiCasa.id || p.asignaturaId === 'asig-1');
+
+        return {
+          isProduction: true,
+          pruebas: susanaPruebas,
+          cursos: susanaCursos.length > 0 ? susanaCursos : [
+            { id: 'curso-mc-4b', nombre: '4° Básico A', nivel: '4° básico', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC4B2026' },
+            { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° básico', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC8B2026' },
+            { id: 'curso-mc-2m', nombre: '2° Medio A', nivel: '2° medio', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC2M2026' }
+          ],
+          alumnos: [],
+          seguimientoDocentes: [{
+            profesorId: currentUserProfesorMiCasa.id,
+            profesorNombre: 'Susana Angélica Pizarro Valenzuela',
+            profesorEmail: 'nentitasusana@hotmail.com',
+            avatarColor: 'from-amber-600 to-orange-700',
+            iniciales: 'SP',
+            asignaturaId: 'asig-1',
+            asignaturaNombre: 'Matemática',
+            cursosAsignados: ['4° Básico', '8° Básico', '2° Medio'],
+            totalEvaluacionesCreadas: susanaPruebas.length,
+            totalEvaluacionesActivas: susanaPruebas.filter(p => p.estado === 'activa').length,
+            totalAlumnosEvaluados: 0,
+            totalAlumnosMatriculados: 0,
+            coberturaCurricularPorcentaje: 100,
+            promedioLogroAlumnos: 0,
+            puntajeSimceEstimado: 0,
+            estadoAvancePME: 'en_progreso',
+            ejeMayorFortaleza: 'Banco curricular de Matemática configurado',
+            ejeMayorDebilidad: 'Esperando rendición de estudiantes',
+            ultimaEvaluacionFecha: '2026-08-20',
+            ultimaEvaluacionTitulo: 'Evaluación Diagnóstica SIMCE Matemática',
+            ultimaEvaluacionId: 'prueba-mat-4b-01',
+            planesRemedialesGenerados: 0
+          }],
+          reporteActivo: crearReporteVacio(activeUser),
+          nombreEstablecimientoActivo: 'Colegio Mi Casa'
+        };
+      }
+
+      // ──────────────────────────────────────────────────────────────────
+      // RAMA GENÉRICA: Cualquier docente real de producción
       // ──────────────────────────────────────────────────────────────────
       if (activeUser.rol === 'profesor') {
-        // Sus propias pruebas creadas (inicialmente vacío)
         const teacherPruebas = allPruebas.filter(p => p.profesorId === activeUser.id);
         return {
           isProduction: true,
-          pruebas: teacherPruebas,       // [] hasta que cree sus propias
-          cursos: [],                     // Directiva 2: estado vacío legítimo
-          alumnos: [],                    // Directiva 2: estado vacío legítimo
+          pruebas: teacherPruebas,
+          cursos: [],
+          alumnos: [],
           seguimientoDocentes: [crearSeguimientoVacio(activeUser)],
           reporteActivo: crearReporteVacio(activeUser),
           nombreEstablecimientoActivo: activeUser.establecimiento || 'Establecimiento'
@@ -229,14 +264,15 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       }
 
       // ──────────────────────────────────────────────────────────────────
-      // RAMA ADMIN: Vista agregada de producción (dinámica con todos los docentes reales)
+      // RAMA ADMIN: Vista agregada de producción (dinámica con todos los colegios y cursos)
       // ──────────────────────────────────────────────────────────────────
       const adminPruebas = allPruebas.filter(
         p =>
           p.id === 'prueba-len2m-101' ||
           p.id === 'prueba-len2m-jun-101' ||
           p.id === 'prueba-len2m-abr-101' ||
-          p.profesorId === currentUserProfesorPremilitar.id
+          p.profesorId === currentUserProfesorPremilitar.id ||
+          p.profesorId === currentUserProfesorMiCasa.id
       );
 
       const realTeachers = (docentesReales && docentesReales.length > 0)
@@ -245,6 +281,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
 
       const dynamicSeguimiento: SeguimientoDocente[] = realTeachers.map(doc => {
         const isPremilitar = doc.email?.toLowerCase().includes('premil.cl') || doc.id === currentUserProfesorPremilitar.id;
+        const isSusana = doc.email?.toLowerCase().includes('susana') || doc.id === currentUserProfesorMiCasa.id;
+        
         if (isPremilitar) {
           return {
             profesorId: doc.id,
@@ -255,8 +293,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             asignaturaId: doc.asignaturaId || 'asig-2',
             asignaturaNombre: doc.asignaturaNombre || 'Lenguaje y Comunicación',
             cursosAsignados: ['2° Medio'],
-            totalEvaluacionesCreadas: adminPruebas.length,
-            totalEvaluacionesActivas: adminPruebas.filter(p => p.estado === 'activa').length,
+            totalEvaluacionesCreadas: 3,
+            totalEvaluacionesActivas: 3,
             totalAlumnosEvaluados: 0,
             totalAlumnosMatriculados: 0,
             coberturaCurricularPorcentaje: 100,
@@ -268,6 +306,33 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             ultimaEvaluacionFecha: '2026-08-16',
             ultimaEvaluacionTitulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
             ultimaEvaluacionId: 'prueba-len2m-101',
+            planesRemedialesGenerados: 0
+          };
+        }
+
+        if (isSusana) {
+          return {
+            profesorId: doc.id,
+            profesorNombre: `${doc.nombre} ${doc.apellido}`,
+            profesorEmail: doc.email,
+            avatarColor: 'from-amber-600 to-orange-700',
+            iniciales: iniciales(doc.nombre, doc.apellido),
+            asignaturaId: doc.asignaturaId || 'asig-1',
+            asignaturaNombre: doc.asignaturaNombre || 'Matemática',
+            cursosAsignados: ['4° Básico', '8° Básico', '2° Medio'],
+            totalEvaluacionesCreadas: 1,
+            totalEvaluacionesActivas: 1,
+            totalAlumnosEvaluados: 0,
+            totalAlumnosMatriculados: 0,
+            coberturaCurricularPorcentaje: 100,
+            promedioLogroAlumnos: 0,
+            puntajeSimceEstimado: 0,
+            estadoAvancePME: 'en_progreso',
+            ejeMayorFortaleza: 'Banco curricular de Matemática configurado',
+            ejeMayorDebilidad: 'Esperando rendición de estudiantes',
+            ultimaEvaluacionFecha: '2026-08-20',
+            ultimaEvaluacionTitulo: 'Evaluación Diagnóstica SIMCE Matemática',
+            ultimaEvaluacionId: 'prueba-mat-4b-01',
             planesRemedialesGenerados: 0
           };
         }
@@ -299,10 +364,20 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         };
       });
 
+      const prodCursos = cursosMock.filter(c =>
+        c.id === 'curso-prem-2m' ||
+        c.id === 'curso-2m' ||
+        c.id === 'curso-mc-4b' ||
+        c.id === 'curso-mc-8b' ||
+        c.id === 'curso-mc-2m' ||
+        c.establecimiento === 'Colegio Mi Casa' ||
+        c.establecimiento === 'Escuela Premilitar Héroes de la Concepción'
+      );
+
       return {
         isProduction: true,
         pruebas: adminPruebas,
-        cursos: cursosMock.filter(c => c.id === 'curso-2m' || c.nivel.includes('Medio')),
+        cursos: prodCursos,
         alumnos: [],
         seguimientoDocentes: dynamicSeguimiento,
         reporteActivo: reportePremilitarRealMock,

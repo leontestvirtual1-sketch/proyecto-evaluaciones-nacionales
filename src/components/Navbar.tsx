@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Fast Role Switcher ONLY for Demo Supervisor session OR Return button for Production Admin */}
             {(() => {
               const sessionEmail = localStorage.getItem('sysget_session_email')?.toLowerCase() || '';
-              const isProductionAdmin = sessionEmail === 'leontestvirtual1@gmail.com' || sessionEmail === 'leontesvirtual1@gmail.com' || user.email === 'leontestvirtual1@gmail.com';
+              const isProductionAdmin = sessionEmail === 'leontestvirtual1@gmail.com' || user.email === 'leontestvirtual1@gmail.com';
               const isDemoAdmin = sessionEmail === 'admin@sysget.cl' || user.email === 'admin@sysget.cl';
 
               if (isProductionAdmin) {

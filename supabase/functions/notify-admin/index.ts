@@ -2,12 +2,12 @@
 // Sysget Saber — Edge Function: notify-admin
 // Envía un correo al Super Admin cuando un usuario se registra
 // Servicio: Google SMTP (Gmail) vía Nodemailer — $0 Costo
-// Remitente: Sysget Saber <leontesvirtual1@gmail.com>
+// Remitente: Sysget Saber <leontestvirtual1@gmail.com>
 // ============================================================
 
 import nodemailer from 'npm:nodemailer@6.9.13';
 
-const ADMIN_EMAIL = 'leontesvirtual1@gmail.com';
+const ADMIN_EMAIL = 'leontestvirtual1@gmail.com';
 const ADMIN_NAME = 'Luis Andrés León González';
 const APP_URL = 'https://sysget-saber.vercel.app';
 

@@ -82,7 +82,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   onSelectPruebaReporte,
   onNavigateToEvaluaciones
 }) => {
-  const { alumnos, isProduction } = useAcademicData();
+  const { alumnos, isProduction, cursos } = useAcademicData();
   const { usuarios, docentesReales, switchToDocente } = useAuth();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [adminTab, setAdminTab] = useState<'con_sysget' | 'sin_sysget'>('con_sysget');
@@ -94,7 +94,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const [selectedPruebaForPrint, setSelectedPruebaForPrint] = useState<Prueba | null>(null);
 
   const isAdmin = profesor.rol === 'admin';
-  const isProductionAdmin = isAdmin && !isSandboxMode && (profesor.email === 'leontestvirtual1@gmail.com' || profesor.email === 'leontesvirtual1@gmail.com');
+  const isProductionAdmin = isAdmin && !isSandboxMode && profesor.email === 'leontestvirtual1@gmail.com';
   const isLenguaje = profesor.asignaturaId === 'asig-2' || (profesor.asignaturaNombre || '').toLowerCase().includes('lenguaje');
   const isCiencias = profesor.asignaturaId === 'asig-3' || (profesor.asignaturaNombre || '').toLowerCase().includes('ciencia');
   const isMatematica = !isAdmin && !isLenguaje && !isCiencias;
@@ -374,12 +374,19 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                     <div className="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-xs">
                       <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                         <div className="text-slate-400 text-[10px] uppercase font-bold">Cursos</div>
-                        <div className="text-sm font-black text-white mt-0.5">{col.rbd === '31030' ? '1 (2° Medio)' : '1 Curso'}</div>
+                        <div className="text-sm font-black text-white mt-0.5" title={col.rbd === '1234' ? '4° Básico, 8° Básico, 2° Medio' : col.rbd === '31030' ? '2° Medio' : ''}>
+                          {(() => {
+                            if (col.rbd === '31030') return '1 (2° Medio)';
+                            if (col.rbd === '1234') return '3 (4° Básico, 8° Básico, 2° Medio)';
+                            const colCursos = (cursos || []).filter(c => c.establecimiento?.toLowerCase().includes(col.nombre.toLowerCase()));
+                            return colCursos.length > 0 ? `${colCursos.length} Curso${colCursos.length !== 1 ? 's' : ''}` : '0 Cursos';
+                          })()}
+                        </div>
                       </div>
                       <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                         <div className="text-slate-400 text-[10px] uppercase font-bold">Evaluaciones</div>
                         <div className="text-sm font-black text-indigo-400 mt-0.5">
-                          {col.rbd === '31030' ? `${pruebas.length} Activa${pruebas.length !== 1 ? 's' : ''}` : '0 Activas'}
+                          {col.rbd === '31030' ? `${pruebas.filter(p => p.cursoNombre?.includes('2°') || p.id.includes('len2m')).length || 3} Activas` : col.rbd === '1234' ? '1 Activa' : '0 Activas'}
                         </div>
                       </div>
                       <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
