@@ -137,12 +137,21 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
               setPreguntas(merged);
             } else {
               // Dinámico para cualquier docente: combina preguntas de su especialidad con sus preguntas de Supabase
-              const teacherAsig = user!.asignaturaId || '';
-              const baseForSubject = teacherAsig
+              const userEmail = (user!.email || '').toLowerCase();
+              const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
+              const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
+              const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
+              const isLenguaje = teacherAsig === 'asig-2' || isPremil;
+
+              const baseForSubject = isLenguaje
                 ? [
-                    ...preguntasMock.filter(p => p.asignaturaId === teacherAsig),
-                    ...(teacherAsig === 'asig-2' ? [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock] : [])
+                    ...preguntasLenguaje2MMock,
+                    ...preguntasLenguaje2MJunioMock,
+                    ...preguntasLenguaje2MAbrilMock,
+                    ...preguntasMock.filter(p => p.asignaturaId === 'asig-2')
                   ]
+                : teacherAsig
+                ? preguntasMock.filter(p => p.asignaturaId === teacherAsig)
                 : preguntasMock;
 
               const uniqueMap = new Map<string, Pregunta>();
@@ -206,12 +215,21 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
           }
 
           // 2. Dinámico para cualquier docente actual o futuro según su asignatura
-          const teacherAsig = user!.asignaturaId || '';
-          const subjectQuestions = teacherAsig
+          const userEmail = (user!.email || '').toLowerCase();
+          const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
+          const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
+          const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
+          const isLenguaje = teacherAsig === 'asig-2' || isPremil;
+
+          const subjectQuestions = isLenguaje
             ? [
-                ...preguntasMock.filter(p => p.asignaturaId === teacherAsig),
-                ...(teacherAsig === 'asig-2' ? [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock] : [])
+                ...preguntasLenguaje2MMock,
+                ...preguntasLenguaje2MJunioMock,
+                ...preguntasLenguaje2MAbrilMock,
+                ...preguntasMock.filter(p => p.asignaturaId === 'asig-2')
               ]
+            : teacherAsig
+            ? preguntasMock.filter(p => p.asignaturaId === teacherAsig)
             : preguntasMock;
 
           const uniqueMap = new Map<string, Pregunta>();

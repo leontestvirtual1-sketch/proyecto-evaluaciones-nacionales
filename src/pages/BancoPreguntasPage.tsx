@@ -87,9 +87,11 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   onUpdatePregunta,
   onDeletePregunta,
 }) => {
-  const { isProduction } = useAcademicData();
-  const isDocente = currentUser?.rol === 'profesor' && currentUser?.asignaturaId;
-  const docenteAsigId = currentUser?.asignaturaId || '';
+  const userEmail = (currentUser?.email || '').toLowerCase();
+  const isPremilTeacher = userEmail.includes('premil') || userEmail.includes('mariateresa') || currentUser?.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
+  const isSusanaTeacher = userEmail.includes('susana') || userEmail.includes('nentitasusana') || currentUser?.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
+  const isDocente = currentUser?.rol === 'profesor';
+  const docenteAsigId = currentUser?.asignaturaId || (isPremilTeacher ? 'asig-2' : isSusanaTeacher ? 'asig-1' : '');
 
   // Restringir asignaturas para docente
   const availableAsignaturas = isDocente
