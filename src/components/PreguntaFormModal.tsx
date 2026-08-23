@@ -23,20 +23,35 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
   ejes,
   habilidades,
 }) => {
-  const [asignaturaId, setAsignaturaId] = useState<string>(
-    editPregunta?.asignaturaId || asignaturas[0]?.id || 'asig-1'
-  );
+  const defaultAsigId = editPregunta?.asignaturaId || asignaturas[0]?.id || 'asig-2';
+  const [asignaturaId, setAsignaturaId] = useState<string>(defaultAsigId);
+
+  const filteredEjes = ejes.filter(e => e.asignaturaId === asignaturaId || !e.asignaturaId);
+  const filteredHabilidades = habilidades.filter(h => h.asignaturaId === asignaturaId || !h.asignaturaId);
+
   const [ejeTematicoId, setEjeTematicoId] = useState<string>(
-    editPregunta?.ejeTematicoId || ejes[0]?.id || 'eje-mat-1'
+    editPregunta?.ejeTematicoId || filteredEjes[0]?.id || 'eje-len-2m-1'
   );
   const [habilidadId, setHabilidadId] = useState<string>(
-    editPregunta?.habilidadId || habilidades[0]?.id || 'hab-mat-2'
+    editPregunta?.habilidadId || filteredHabilidades[0]?.id || 'hab-len-1'
   );
   const [tipo, setTipo] = useState<TipoPregunta>(
     editPregunta?.tipo || 'seleccion_multiple'
   );
+
+  const normalizeInitialNivel = (lvl?: string) => {
+    if (!lvl) return '2° Medio';
+    const c = lvl.toLowerCase();
+    if (c.includes('2') && c.includes('med')) return '2° Medio';
+    if (c.includes('4') && c.includes('bás')) return '4° básico';
+    if (c.includes('6') && c.includes('bás')) return '6° básico';
+    if (c.includes('8') && c.includes('bás')) return '8° básico';
+    if (c.includes('4') && c.includes('med')) return '4° medio';
+    return lvl;
+  };
+
   const [nivel, setNivel] = useState<string>(
-    editPregunta?.nivel || initialNivel || '2° Medio'
+    editPregunta?.nivel || normalizeInitialNivel(initialNivel)
   );
   const [dificultad, setDificultad] = useState<DificultadPregunta>(
     editPregunta?.dificultad || 'media'
@@ -69,11 +84,15 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
 
   React.useEffect(() => {
     if (isOpen) {
-      setAsignaturaId(editPregunta?.asignaturaId || asignaturas[0]?.id || 'asig-1');
-      setEjeTematicoId(editPregunta?.ejeTematicoId || ejes[0]?.id || 'eje-mat-1');
-      setHabilidadId(editPregunta?.habilidadId || habilidades[0]?.id || 'hab-mat-2');
+      const currentAsig = editPregunta?.asignaturaId || asignaturas[0]?.id || 'asig-2';
+      const validEjes = ejes.filter(e => e.asignaturaId === currentAsig || !e.asignaturaId);
+      const validHabs = habilidades.filter(h => h.asignaturaId === currentAsig || !h.asignaturaId);
+
+      setAsignaturaId(currentAsig);
+      setEjeTematicoId(editPregunta?.ejeTematicoId || validEjes[0]?.id || '');
+      setHabilidadId(editPregunta?.habilidadId || validHabs[0]?.id || '');
       setTipo(editPregunta?.tipo || 'seleccion_multiple');
-      setNivel(editPregunta?.nivel || initialNivel || '4° básico');
+      setNivel(editPregunta?.nivel || normalizeInitialNivel(initialNivel));
       setDificultad(editPregunta?.dificultad || 'media');
       setEnunciado(editPregunta?.enunciado || '');
       setPuntaje(editPregunta?.puntaje || 1);
@@ -94,9 +113,6 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
   }, [isOpen, editPregunta, initialNivel, asignaturas, ejes, habilidades]);
 
   if (!isOpen) return null;
-
-  const filteredEjes = ejes.filter(e => e.asignaturaId === asignaturaId || !e.asignaturaId);
-  const filteredHabilidades = habilidades.filter(h => h.asignaturaId === asignaturaId || !h.asignaturaId);
 
   const handleAlternativaChange = (index: number, texto: string) => {
     const updated = [...alternativas];
