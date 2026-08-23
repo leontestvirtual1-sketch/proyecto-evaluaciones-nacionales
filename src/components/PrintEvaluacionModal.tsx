@@ -69,11 +69,13 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
       };
     }
 
+    const isMiCasa = establecimientoNombre.toLowerCase().includes('mi casa') || rbd === '1234' || userEmail.includes('susana');
+
     return {
-      nombre: establecimientoNombre || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : (isProduction ? 'Colegio Mi Casa' : 'Liceo Bicentenario Los Andes')),
+      nombre: establecimientoNombre || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : (isMiCasa ? 'Colegio Mi Casa' : (isProduction ? 'Colegio Mi Casa' : 'Liceo Bicentenario Los Andes'))),
       rbd: rbd,
-      logoUrl: isPremil ? '/logos/escuela-premilitar.png' : user?.logoUrl || undefined,
-      lema: isPremil ? 'Ad Altiora, Et Meliora, Semper' : 'Excelencia y Futuro'
+      logoUrl: isPremil ? '/logos/escuela-premilitar.png' : (isMiCasa ? '/logos/colegio-mi-casa.png' : user?.logoUrl || undefined),
+      lema: isPremil ? 'Ad Altiora, Et Meliora, Semper' : (isMiCasa ? 'Formando el Futuro' : 'Excelencia y Futuro')
     };
   }, [prueba, user, nombreEstablecimientoActivo, isProduction]);
 

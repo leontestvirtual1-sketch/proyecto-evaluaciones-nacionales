@@ -58,9 +58,9 @@ export const establecimientosCatalog: EstablecimientoInfo[] = [
     rbd: '1234',
     nombre: 'Colegio Mi Casa',
     comuna: 'Región Metropolitana',
-    dependencia: 'Particular Pagado',
-    logoUrl: '',
-    lema: 'En proceso de incorporación'
+    dependencia: 'Particular Subvencionado',
+    logoUrl: '/logos/colegio-mi-casa.png',
+    lema: 'Formando el Futuro'
   }
 ];
 
@@ -106,6 +106,7 @@ export const currentUserProfesorMiCasa: UserProfile = {
   rol: 'profesor',
   establecimiento: 'Colegio Mi Casa',
   rbd: '1234',
+  logoUrl: '/logos/colegio-mi-casa.png',
   asignaturaId: 'asig-1',
   asignaturaNombre: 'Matemática',
   cargo: 'Docente de Matemática',
