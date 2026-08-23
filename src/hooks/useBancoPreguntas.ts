@@ -17,6 +17,7 @@ interface UseBancoPreguntasProps {
 export function mapRowToPregunta(row: any): Pregunta {
   return {
     id: row.id,
+    propietarioId: row.propietario_id || undefined,
     asignaturaId: row.asignatura_id || '',
     ejeTematicoId: row.eje_tematico_id || '',
     habilidadId: row.habilidad_id || '',
@@ -131,17 +132,17 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
               dbQuestions.forEach(p => uniqueMap.set(p.id, p));
               setPreguntas(Array.from(uniqueMap.values()));
             } else {
-              // Si es docente (ej. Susana o María Teresa), combinar preguntas base con sus preguntas manuales de Supabase
-              const isSusanaTeacher = user!.email.toLowerCase().includes('susana') || user!.asignaturaId === 'asig-1';
-              const baseQuestions = isSusanaTeacher
-                ? preguntasMock.filter(p => p.asignaturaId === 'asig-1')
-                : [
-                    ...preguntasLenguaje2MMock,
-                    ...preguntasLenguaje2MJunioMock,
-                    ...preguntasLenguaje2MAbrilMock,
-                  ];
+              // Dinámico para cualquier docente: combina preguntas de su especialidad con sus preguntas de Supabase
+              const teacherAsig = user!.asignaturaId || '';
+              const baseForSubject = teacherAsig
+                ? [
+                    ...preguntasMock.filter(p => p.asignaturaId === teacherAsig),
+                    ...(teacherAsig === 'asig-2' ? [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock] : [])
+                  ]
+                : preguntasMock;
+
               const uniqueMap = new Map<string, Pregunta>();
-              baseQuestions.forEach(p => uniqueMap.set(p.id, p));
+              baseForSubject.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
               dbQuestions.forEach(p => uniqueMap.set(p.id, p));
               setPreguntas(Array.from(uniqueMap.values()));
             }
@@ -150,7 +151,7 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
           return;
         }
 
-        // Si el banco en Supabase está vacío o se está inicializando, verificamos el seed por perfil
+        // Si el banco en Supabase está vacío o se está inicializando, verificamos el seed por especialidad
         if (!isMigratingRef.current) {
           isMigratingRef.current = true;
 
@@ -173,70 +174,35 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
             return;
           }
 
-          // 2. Caso Susana Pizarro (Colegio Mi Casa — Matemática)
-          const isSusanaTeacher =
-            user!.email.toLowerCase().includes('susana') ||
-            user!.email.toLowerCase().includes('nentita') ||
-            user!.establecimiento?.toLowerCase().includes('casa') ||
-            user!.asignaturaId === 'asig-1';
+          // 2. Dinámico para cualquier docente actual o futuro según su asignatura
+          const teacherAsig = user!.asignaturaId || '';
+          const subjectQuestions = teacherAsig
+            ? [
+                ...preguntasMock.filter(p => p.asignaturaId === teacherAsig),
+                ...(teacherAsig === 'asig-2' ? [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock] : [])
+              ]
+            : preguntasMock;
 
-          if (isSusanaTeacher) {
-            const mathQuestions = preguntasMock.filter(p => p.asignaturaId === 'asig-1');
-            const uniqueMap = new Map<string, Pregunta>();
-            mathQuestions.forEach(p => uniqueMap.set(p.id, p));
-            const seedQuestions = Array.from(uniqueMap.values());
+          const uniqueMap = new Map<string, Pregunta>();
+          subjectQuestions.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
+          const seedQuestions = Array.from(uniqueMap.values());
 
+          if (seedQuestions.length > 0) {
             if (isMounted) {
               setPreguntas(seedQuestions);
               setIsLoading(false);
             }
 
-            // Persistir en segundo plano en Supabase
+            // Persistir de forma segura en Supabase para el docente
             try {
               const rowsToInsert = seedQuestions.map(p => mapPreguntaToRow(p, user!.id));
               const { error: seedError } = await supabase.from('preguntas').upsert(rowsToInsert, { onConflict: 'id' });
               if (seedError) {
-                console.warn('[useBancoPreguntas] Warning al guardar seed de Susana en Supabase:', seedError.message);
+                console.warn('[useBancoPreguntas] Seed notice:', seedError.message);
               }
             } catch (err) {
-              console.error('[useBancoPreguntas] Error al persistir seed de Susana:', err);
+              console.error('[useBancoPreguntas] Error al persistir seed:', err);
             }
-            return;
-          }
-
-          // 3. Caso María Teresa González (Escuela Premilitar — Lenguaje y Literatura)
-          const isPremilitarTeacher =
-            user!.email.toLowerCase().includes('premil.cl') ||
-            user!.email.toLowerCase().includes('maria') ||
-            user!.establecimiento?.toLowerCase().includes('premilitar') ||
-            user!.asignaturaId === 'asig-2';
-
-          if (isPremilitarTeacher) {
-            const allPremilitarQuestions = [
-              ...preguntasLenguaje2MMock,
-              ...preguntasLenguaje2MJunioMock,
-              ...preguntasLenguaje2MAbrilMock,
-            ];
-
-            const uniqueMap = new Map<string, Pregunta>();
-            allPremilitarQuestions.forEach(p => uniqueMap.set(p.id, p));
-            const seedQuestions = Array.from(uniqueMap.values());
-
-            if (isMounted) {
-              setPreguntas(seedQuestions);
-              setIsLoading(false);
-            }
-
-            try {
-              const rowsToInsert = seedQuestions.map(p => mapPreguntaToRow(p, user!.id));
-              const { error: seedError } = await supabase.from('preguntas').upsert(rowsToInsert, { onConflict: 'id' });
-              if (seedError) {
-                console.warn('[useBancoPreguntas] Warning al guardar seed de María Teresa en Supabase:', seedError.message);
-              }
-            } catch (err) {
-              console.error('[useBancoPreguntas] Error al persistir seed de María Teresa:', err);
-            }
-
             return;
           }
 

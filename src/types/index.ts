@@ -78,6 +78,9 @@ export type DificultadPregunta = 'baja' | 'media' | 'alta';
 
 export interface Pregunta {
   id: string;
+  propietarioId?: string;
+  propietarioNombre?: string;
+  establecimiento?: string;
   asignaturaId: string;
   ejeTematicoId: string;
   habilidadId: string;

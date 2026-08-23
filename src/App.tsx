@@ -52,7 +52,7 @@ function MainAppContent({
   pruebas: Prueba[];
   setPruebas: React.Dispatch<React.SetStateAction<Prueba[]>>;
 }) {
-  const { user, isAuthenticated, isLoading, switchRole, approveUserByToken, logout } = useAuth();
+  const { user, isAuthenticated, isLoading, switchRole, approveUserByToken, logout, docentesReales } = useAuth();
   // ── DATA LAYER: consume from AcademicDataContext (single source of truth) ──
   const academicData = useAcademicData();
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
@@ -344,6 +344,7 @@ function MainAppContent({
               asignaturas={asignaturas}
               ejes={ejesTematicosMock}
               habilidades={habilidadesMock}
+              docentes={docentesReales}
               currentUser={user}
               onAddPregunta={handleAddPregunta}
               onUpdatePregunta={handleUpdatePregunta}
