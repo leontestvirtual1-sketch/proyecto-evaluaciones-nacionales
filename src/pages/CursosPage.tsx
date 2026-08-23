@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { APP_CONFIG } from '../config/appConfig';
 import { UserProfile } from '../types';
+import { useCursos, CursoItem } from '../hooks/useCursos';
+export type { CursoItem };
 import {
   BookOpen,
   PlusCircle,
@@ -14,16 +16,6 @@ import {
   RefreshCw,
   X
 } from 'lucide-react';
-
-export interface CursoItem {
-  id: string;
-  nombre: string;
-  nivel: string;
-  anio: number;
-  codigoInvitacion: string;
-  totalAlumnos: number;
-  establecimiento: string;
-}
 
 function generateCode(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -193,108 +185,33 @@ const CursoFormModal: React.FC<CursoFormModalProps> = ({
 
 interface CursosPageProps {
   currentUser?: UserProfile | null;
+  isSandboxMode?: boolean;
 }
 
-export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
+export const CursosPage: React.FC<CursosPageProps> = ({ currentUser, isSandboxMode = false }) => {
   const colegioNombre = currentUser?.establecimiento || APP_CONFIG.nombreEstablecimiento;
-  const storageKey = `sysget_cursos_${currentUser?.id || 'default'}`;
+  const { cursos, isLoading, saveCurso, deleteCurso, regenCodigo } = useCursos({
+    currentUser,
+    isSandboxMode,
+  });
 
-  // Cursos iniciales aislados según el perfil docente
-  const getInitialCursos = (): CursoItem[] => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
-      try {
-        const savedCursos = JSON.parse(saved) as CursoItem[];
-        // Corrige exclusivamente el curso ficticio generado por versiones
-        // anteriores para docentes nuevos; no afecta cursos creados por ellos.
-        const isLegacyPlaceholder = savedCursos.length === 1 &&
-          savedCursos[0]?.nombre === 'Curso 1' &&
-          savedCursos[0]?.nivel === '8° Básico' &&
-          savedCursos[0]?.totalAlumnos === 0;
-        return isLegacyPlaceholder ? [] : savedCursos;
-      } catch (err) {
-        console.error('Error parsing saved cursos:', err);
-      }
-    }
-
-    const email = (currentUser?.email || '').toLowerCase();
-    const est = (currentUser?.establecimiento || '').toLowerCase();
-    const isDocenteReal = email === 'mariateresa.gonzalez@premil.cl' ||
-                          email === 'luis.leon@premil.cl' || 
-                          email.includes('susana') || 
-                          est.includes('premilitar') || 
-                          est.includes('mi casa') ||
-                          currentUser?.plan === 'trial';
-
-    // Docente de Lenguaje Escuela Premilitar
-    if (email === 'mariateresa.gonzalez@premil.cl' || email === 'luis.leon@premil.cl' || (est.includes('premilitar') && currentUser?.asignaturaId === 'asig-2')) {
-      return [
-        {
-          id: 'cur-2m',
-          nombre: '2° Medio',
-          nivel: 'II Medio',
-          anio: 2026,
-          codigoInvitacion: 'LEN2M2026',
-          totalAlumnos: 0,
-          establecimiento: colegioNombre
-        }
-      ];
-    }
-
-    // Docente real nuevo (ej. Susana Pizarro): el primer curso debe ser creado explícitamente (0 cursos)
-    if (isDocenteReal && !email.endsWith('@escuelademo.cl') && !email.endsWith('@demo.cl') && !email.endsWith('@sysget.cl')) {
-      return [];
-    }
-
-    // Perfiles Demo (Admin Demo o Docentes Demo del Liceo Bicentenario)
-    // IMPORTANTE: el admin de produccion (ej. leontestvirtual1@gmail.com) tiene rol='admin'
-    // pero NO es cuenta demo — no debe cargar los cursos ficticios.
-    const isDemoAccount = email.endsWith('@escuelademo.cl') ||
-                          email.endsWith('@demo.cl') ||
-                          email.endsWith('@sysget.cl') ||
-                          email === 'admin@sysget.cl' ||
-                          est.includes('demo') ||
-                          est.includes('bicentenario');
-
-    if (isDemoAccount) {
-      return [
-        { id: 'curso-1', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'DEMO2026', totalAlumnos: 28, establecimiento: colegioNombre },
-        { id: 'curso-2', nombre: '8° Básico B', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'BIOB2026', totalAlumnos: 30, establecimiento: colegioNombre },
-        { id: 'curso-6a', nombre: '6° Básico A', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6A2026', totalAlumnos: 25, establecimiento: colegioNombre },
-        { id: 'curso-6b', nombre: '6° Básico B', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'CN6B2026', totalAlumnos: 25, establecimiento: colegioNombre },
-      ];
-    }
-
-    // Docente nuevo por defecto: inicia limpio
-    return [];
-  };
-
-  const [cursos, setCursos] = useState<CursoItem[]>(getInitialCursos);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCurso, setEditingCurso] = useState<CursoItem | null>(null);
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // Sincronizar en localStorage cada vez que cambien los cursos
-  useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(cursos));
-  }, [cursos, storageKey]);
-
   const handleSave = (c: CursoItem) => {
-    setCursos(prev => {
-      const exists = prev.find(p => p.id === c.id);
-      return exists ? prev.map(p => p.id === c.id ? c : p) : [c, ...prev];
-    });
+    saveCurso(c);
     setEditingCurso(null);
   };
 
   const handleDelete = (id: string) => {
-    setCursos(prev => prev.filter(c => c.id !== id));
+    deleteCurso(id);
     setActiveMenuId(null);
   };
 
   const handleRegenCode = (id: string) => {
-    setCursos(prev => prev.map(c => c.id === id ? { ...c, codigoInvitacion: generateCode() } : c));
+    regenCodigo(id);
     setActiveMenuId(null);
   };
 

@@ -40,17 +40,20 @@ import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } f
 
 import { SandboxBanner } from './components/SandboxBanner';
 import { useBancoPreguntas } from './hooks/useBancoPreguntas';
+import { useEvaluaciones } from './hooks/useEvaluaciones';
 
 function MainAppContent({
   isSandboxMode,
   setIsSandboxMode,
   pruebas,
-  setPruebas,
+  onCreatePrueba,
+  onUpdatePruebaEstado,
 }: {
   isSandboxMode: boolean;
   setIsSandboxMode: (v: boolean) => void;
   pruebas: Prueba[];
-  setPruebas: React.Dispatch<React.SetStateAction<Prueba[]>>;
+  onCreatePrueba: (nuevaPrueba: Prueba) => void;
+  onUpdatePruebaEstado: (pruebaId: string, nuevoEstado: 'borrador' | 'activa' | 'finalizada') => void;
 }) {
   const { user, isAuthenticated, isLoading, switchRole, approveUserByToken, logout, docentesReales } = useAuth();
   // ── DATA LAYER: consume from AcademicDataContext (single source of truth) ──
@@ -232,16 +235,15 @@ function MainAppContent({
   };
 
   const handleCreatePrueba = (nuevaPrueba: Prueba) => {
-    setPruebas([nuevaPrueba, ...pruebas]);
+    onCreatePrueba(nuevaPrueba);
   };
 
   const handleFinishRendicion = (nuevaRendicion: RendicionPrueba) => {
     setRendiciones([nuevaRendicion, ...rendiciones]);
   };
 
-
   const handleUpdatePruebaEstado = (pruebaId: string, nuevoEstado: 'borrador' | 'activa' | 'finalizada') => {
-    setPruebas(prev => prev.map(p => p.id === pruebaId ? { ...p, estado: nuevoEstado } : p));
+    onUpdatePruebaEstado(pruebaId, nuevoEstado);
   };
 
   const getPreguntasForRunner = (prueba: Prueba, banco: Pregunta[]): Pregunta[] => {
@@ -334,9 +336,9 @@ function MainAppContent({
             />
           );
         case 'alumnos':
-          return <AlumnosPage currentUser={user} />;
+          return <AlumnosPage currentUser={user} isSandboxMode={isSandboxMode} />;
         case 'cursos':
-          return <CursosPage currentUser={user} />;
+          return <CursosPage currentUser={user} isSandboxMode={isSandboxMode} />;
         case 'banco-preguntas':
           return (
             <BancoPreguntasPage
@@ -555,11 +557,13 @@ export function App() {
 
 function MainAppContentWrapper() {
   const { user, adminBaseProfile, docentesReales } = useAuth();
-  // isSandboxMode must live HERE so AcademicDataProvider is re-created when it changes
   const [isSandboxMode, setIsSandboxMode] = useState<boolean>(false);
-  // El proveedor académico recibe las evaluaciones creadas durante la sesión.
-  // Así una docente nueva parte en cero y sus evaluaciones aparecen al crearlas.
-  const [pruebas, setPruebas] = useState<Prueba[]>(pruebasMock);
+  const {
+    pruebas,
+    addEvaluacion,
+    updateEvaluacionEstado,
+  } = useEvaluaciones({ currentUser: user, isSandboxMode });
+
   return (
     <AcademicDataProvider
       currentUser={user}
@@ -572,7 +576,8 @@ function MainAppContentWrapper() {
         isSandboxMode={isSandboxMode}
         setIsSandboxMode={setIsSandboxMode}
         pruebas={pruebas}
-        setPruebas={setPruebas}
+        onCreatePrueba={addEvaluacion}
+        onUpdatePruebaEstado={updateEvaluacionEstado}
       />
     </AcademicDataProvider>
   );

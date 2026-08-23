@@ -20,7 +20,7 @@ import {
 import { UserProfile } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
 import { parseAlumnosCSV, csvAlumnosToProfiles } from '../utils/csvParser';
-import { CursoItem } from './CursosPage';
+import { CursoItem, useCursos } from '../hooks/useCursos';
 
 // Extendemos localmente con cursoId para el filtro
 export type AlumnoConCurso = UserProfile & { cursoId?: string; cursoNombre?: string };
@@ -319,11 +319,14 @@ const AlumnoCargaMasivaModal: React.FC<CSVModalProps> = ({ isOpen, onClose, onIm
 // ─── Main AlumnosPage ─────────────────────────────────────────
 interface AlumnosPageProps {
   currentUser?: UserProfile | null;
+  isSandboxMode?: boolean;
 }
 
-export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
+export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandboxMode = false }) => {
   const colegioNombre = currentUser?.establecimiento || APP_CONFIG.nombreEstablecimiento;
   const storageKey = `sysget_alumnos_${currentUser?.id || 'default'}`;
+
+  const { cursos: cursosFromHook } = useCursos({ currentUser, isSandboxMode });
 
   // Inicializar alumnos aislados: para docentes reales (Susana, Premilitar, nuevos) empieza en 0 alumnos.
   // Para perfiles demo (Liceo Bicentenario / escuelademo.cl / admin demo) carga la nomina demo de 8° y 6°.
@@ -391,18 +394,14 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
     localStorage.setItem(storageKey, JSON.stringify(alumnos));
   }, [alumnos, storageKey]);
 
-  // Los alumnos sólo se matriculan en cursos creados por el mismo perfil.
+  // Cursos disponibles obtenidos reactivamente del hook
   const cursosDisponibles = useMemo(() => {
-    try {
-      const saved = localStorage.getItem(`sysget_cursos_${currentUser?.id || 'default'}`);
-      const cursos = saved ? JSON.parse(saved) : [];
-      return Array.isArray(cursos)
-        ? cursos.map((curso: CursoItem) => ({ id: curso.id, nombre: curso.nombre, codigoInvitacion: curso.codigoInvitacion }))
-        : [];
-    } catch {
-      return [];
-    }
-  }, [currentUser?.id]);
+    return cursosFromHook.map(curso => ({
+      id: curso.id,
+      nombre: curso.nombre,
+      codigoInvitacion: curso.codigoInvitacion,
+    }));
+  }, [cursosFromHook]);
   const puedeGestionarAlumnos = cursosDisponibles.length > 0;
 
   const codigoInvitacion = cursosDisponibles[0]?.codigoInvitacion || '';

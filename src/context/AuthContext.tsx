@@ -357,6 +357,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           };
           setUser(loggedUser);
           localStorage.setItem('sysget_session_email', cleanEmail);
+          loadUsuariosReales();
+          loadDocentesReales();
           return { error: null };
 
         } else {
@@ -365,6 +367,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (demoFallback) {
             setUser({ ...demoFallback, id: data.user.id, email: cleanEmail });
             localStorage.setItem('sysget_session_email', cleanEmail);
+            loadUsuariosReales();
+            loadDocentesReales();
             return { error: null };
           }
           await supabase.auth.signOut();
@@ -408,21 +412,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const fetchUsers = useCallback(async () => {
+    // 1. Intentar cargar perfiles reales directamente desde Supabase
+    await loadUsuariosReales();
+    await loadDocentesReales();
+
+    // 2. Si existe el endpoint /api/users (producción Vercel), sincronizar datos extendidos
     try {
       const res = await authenticatedFetch('/api/users');
       if (res.ok) {
         const data = await res.json();
         if (data.users && Array.isArray(data.users) && data.users.length > 0) {
           setUsuarios(data.users);
-        } else {
-          setUsuarios(usuariosRegistradosMock);
         }
       }
-    } catch (e) {
-      console.warn('Error fetching /api/users:', e);
-      setUsuarios(usuariosRegistradosMock);
+    } catch {
+      // Si la API serverless no responde (ej. en desarrollo Vite), los datos ya fueron cargados desde Supabase
     }
-  }, [authenticatedFetch]);
+  }, [authenticatedFetch, loadUsuariosReales, loadDocentesReales]);
 
   useEffect(() => {
     // fetchUsers se ejecuta sólo cuando el usuario esté autenticado

@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 
 export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isSandboxMode = false }) => {
-  const { user, usuarios, approveUser, rejectOrSuspendUser, changeUserPlan, setUserPassword } = useAuth();
+  const { user, usuarios, approveUser, rejectOrSuspendUser, changeUserPlan, setUserPassword, loadUsuariosReales } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [estadoFilter, setEstadoFilter] = useState<'todos' | UserEstado>('todos');
   const [copiedTokenId, setCopiedTokenId] = useState<string | null>(null);
@@ -205,6 +205,19 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={async () => {
+              setIsRefreshing(true);
+              await (loadUsuariosReales ? loadUsuariosReales() : Promise.resolve());
+              setIsRefreshing(false);
+              showToast('Perfiles sincronizados con Supabase.');
+            }}
+            disabled={isRefreshing}
+            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-50"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-indigo-400' : ''}`} />
+            {isRefreshing ? 'Sincronizando...' : 'Recargar'}
+          </button>
           <span className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl text-xs font-bold flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4" />
             Control de Costo Cero ($0)
