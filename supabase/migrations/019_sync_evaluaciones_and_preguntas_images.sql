@@ -8,43 +8,41 @@ BEGIN;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ──────────────────────────────────────────────────────────────────────────────
--- 1. ADAPTACIÓN SEGURA DE TIPOS DE COLUMNAS (UUID -> TEXT si aplica)
+-- 1. ADAPTACIÓN SEGURA DE TIPOS DE COLUMNAS (UUID -> TEXT)
 -- ──────────────────────────────────────────────────────────────────────────────
 
--- Tabla Cursos: permitir IDs semánticos ('curso-prem-2m', 'curso-mc-4b', etc.)
+-- Liberar Foreign Keys dependientes que bloqueaban el cambio a TEXT
+ALTER TABLE IF EXISTS public.matriculas DROP CONSTRAINT IF EXISTS matriculas_curso_id_fkey;
+ALTER TABLE IF EXISTS public.pruebas DROP CONSTRAINT IF EXISTS pruebas_curso_id_fkey;
+ALTER TABLE IF EXISTS public.rendiciones DROP CONSTRAINT IF EXISTS rendiciones_curso_id_fkey;
+
+-- Convertir curso_id en tablas dependientes a TEXT
 DO $$
 BEGIN
-  -- Si id es tipo uuid, convertirlo a text
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns 
-    WHERE table_schema = 'public' AND table_name = 'cursos' AND column_name = 'id' AND data_type = 'uuid'
-  ) THEN
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'matriculas' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.matriculas ALTER COLUMN curso_id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.pruebas ALTER COLUMN curso_id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'cursos' AND column_name = 'id' AND data_type = 'uuid') THEN
     ALTER TABLE public.cursos ALTER COLUMN id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.pruebas ALTER COLUMN id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'preguntas' AND column_name = 'id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.preguntas ALTER COLUMN id TYPE TEXT;
   END IF;
 END $$;
 
+-- Columnas en public.cursos
 ALTER TABLE public.cursos 
   ADD COLUMN IF NOT EXISTS profesor_jefe_id UUID REFERENCES public.perfiles(id) ON DELETE SET NULL,
   ADD COLUMN IF NOT EXISTS rbd TEXT,
   ADD COLUMN IF NOT EXISTS total_alumnos INTEGER NOT NULL DEFAULT 0;
 
--- Tabla Pruebas: columnas extendidas y tipo TEXT
-DO $$
-BEGIN
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns 
-    WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'id' AND data_type = 'uuid'
-  ) THEN
-    ALTER TABLE public.pruebas ALTER COLUMN id TYPE TEXT;
-  END IF;
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns 
-    WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'curso_id' AND data_type = 'uuid'
-  ) THEN
-    ALTER TABLE public.pruebas ALTER COLUMN curso_id TYPE TEXT;
-  END IF;
-END $$;
-
+-- Columnas en public.pruebas
 ALTER TABLE public.pruebas
   ADD COLUMN IF NOT EXISTS asignatura_nombre TEXT,
   ADD COLUMN IF NOT EXISTS curso_nombre TEXT,
@@ -55,17 +53,7 @@ ALTER TABLE public.pruebas
   ADD COLUMN IF NOT EXISTS estado TEXT DEFAULT 'activa',
   ADD COLUMN IF NOT EXISTS establecimiento TEXT;
 
--- Tabla Preguntas: columnas extendidas
-DO $$
-BEGIN
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns 
-    WHERE table_schema = 'public' AND table_name = 'preguntas' AND column_name = 'id' AND data_type = 'uuid'
-  ) THEN
-    ALTER TABLE public.preguntas ALTER COLUMN id TYPE TEXT;
-  END IF;
-END $$;
-
+-- Columnas en public.preguntas
 ALTER TABLE public.preguntas 
   ADD COLUMN IF NOT EXISTS imagen_url TEXT,
   ADD COLUMN IF NOT EXISTS tabla_markdown TEXT;
@@ -99,7 +87,7 @@ BEGIN
 END $$;
 
 -- ──────────────────────────────────────────────────────────────────────────────
--- 3. BANCO DE PREGUNTAS OFICIAL SIMCE LENGUAJE 2° MEDIO (CON IMÁGENES)
+-- 3. BANCO DE PREGUNTAS CON IMÁGENES
 -- ──────────────────────────────────────────────────────────────────────────────
 DO $$
 DECLARE
@@ -163,7 +151,7 @@ BEGIN
 END $$;
 
 -- ──────────────────────────────────────────────────────────────────────────────
--- 4. EVALUACIONES OFICIALES DE MARÍA TERESA / ESCUELA PREMILITAR
+-- 4. EVALUACIONES OFICIALES PREMILITAR
 -- ──────────────────────────────────────────────────────────────────────────────
 DO $$
 DECLARE
@@ -227,7 +215,6 @@ BEGIN
     estado = EXCLUDED.estado,
     establecimiento = EXCLUDED.establecimiento,
     updated_at = NOW();
-
 END $$;
 
 -- ──────────────────────────────────────────────────────────────────────────────
