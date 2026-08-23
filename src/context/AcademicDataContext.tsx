@@ -10,6 +10,7 @@ import {
   reporteLenguajeDemoMock,
   reportePremilitarRealMock,
   currentUserProfesorPremilitar,
+  currentUserProfesorMiCasa,
 } from '../data/mockData';
 
 export interface DataContextType {
@@ -240,7 +241,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
 
       const realTeachers = (docentesReales && docentesReales.length > 0)
         ? docentesReales
-        : [currentUserProfesorPremilitar];
+        : [currentUserProfesorPremilitar, currentUserProfesorMiCasa];
 
       const dynamicSeguimiento: SeguimientoDocente[] = realTeachers.map(doc => {
         const isPremilitar = doc.email?.toLowerCase().includes('premil.cl') || doc.id === currentUserProfesorPremilitar.id;

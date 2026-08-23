@@ -76,6 +76,7 @@ const DEMO_USERS: Record<string, UserProfile> = {
   'leontesvirtual1@gmail.com':        currentUserAdmin,
   'mariateresa.gonzalez@premil.cl':    currentUserProfesorPremilitar,
   'luis.leon@premil.cl':              currentUserProfesorPremilitar,
+  'nentitasusana@hotmail.com':        currentUserProfesorMiCasa,
   'admin@sysget.cl':                  currentUserAdminDemo,
 };
 
@@ -87,11 +88,12 @@ function inferUserFromEmail(_email: string): UserProfile | null {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [usuarios, setUsuarios] = useState<UserProfile[]>(usuariosRegistradosMock);
-  // Docentes reales cargados desde Supabase (solo para Admin de Producción)
-  const [docentesReales, setDocentesReales] = useState<UserProfile[]>([]);
-  // Perfil base del admin (para volver desde supervisión de docente)
   const [adminBaseProfile, setAdminBaseProfile] = useState<UserProfile | null>(null);
+  const [usuarios, setUsuarios] = useState<UserProfile[]>([]);
+  const [docentesReales, setDocentesReales] = useState<UserProfile[]>([
+    currentUserProfesorPremilitar,
+    currentUserProfesorMiCasa,
+  ]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOnlineSupabase, setIsOnlineSupabase] = useState(false);
 
@@ -99,13 +101,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   /** Carga los docentes reales desde Supabase para el Admin de Producción (excluyendo cuentas demo) */
   const loadDocentesReales = useCallback(async () => {
+    const defaultDocentes = [currentUserProfesorPremilitar, currentUserProfesorMiCasa];
     try {
       const { data, error } = await supabase
         .from('perfiles')
         .select('*')
         .eq('rol', 'profesor');
       if (!error && data && data.length > 0) {
-        const docentes: UserProfile[] = data
+        const dbDocentes: UserProfile[] = data
           .filter((p: Record<string, unknown>) => {
             const email = ((p.email as string) || '').toLowerCase();
             const est = ((p.establecimiento as string) || '').toLowerCase();
@@ -129,13 +132,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             plan: ((p.plan as string) || 'trial') as UserPlan,
             logoUrl: (p.logo_url as string) || undefined,
           }));
-        setDocentesReales(docentes.length > 0 ? docentes : [currentUserProfesorPremilitar]);
+
+        // Combinar datos asegurando que no se pierdan los perfiles oficiales
+        const mapByEmail = new Map<string, UserProfile>();
+        defaultDocentes.forEach(d => mapByEmail.set(d.email.toLowerCase(), d));
+        dbDocentes.forEach(d => mapByEmail.set(d.email.toLowerCase(), d));
+
+        setDocentesReales(Array.from(mapByEmail.values()));
       } else {
-        // Fallback: usar los docentes ya registrados en el mock local
-        setDocentesReales([currentUserProfesorPremilitar]);
+        setDocentesReales(defaultDocentes);
       }
     } catch {
-      setDocentesReales([currentUserProfesorPremilitar]);
+      setDocentesReales(defaultDocentes);
     }
   }, []);
 

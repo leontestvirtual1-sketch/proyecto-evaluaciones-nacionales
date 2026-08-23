@@ -20,7 +20,7 @@ import {
   X
 } from 'lucide-react';
 import { UserProfile, Asignatura } from '../types';
-import { asignaturasMock, cursosMock, currentUserProfesorPremilitar, demoProfesoresMock } from '../data/mockData';
+import { asignaturasMock, cursosMock, currentUserProfesorPremilitar, currentUserProfesorMiCasa, demoProfesoresMock } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 
@@ -404,7 +404,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   // Inicializar según ambiente activo
   const [profesores, setProfesores] = useState<UserProfile[]>(() => {
     if (isDemo) return demoProfesoresMock;
-    return docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar];
+    return docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar, currentUserProfesorMiCasa];
   });
 
   // Reaccionar ante cambios en docentesReales o cambio de ambiente
@@ -422,7 +422,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
       }
       setProfesores(demoProfesoresMock);
     } else {
-      setProfesores(docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar]);
+      setProfesores(docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar, currentUserProfesorMiCasa]);
     }
   }, [isDemo, storageKey, docentesReales]);
 
