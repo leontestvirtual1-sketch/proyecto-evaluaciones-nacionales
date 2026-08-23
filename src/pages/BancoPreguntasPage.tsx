@@ -10,6 +10,7 @@ import {
 } from '../types';
 import { PreguntaFormModal } from '../components/PreguntaFormModal';
 import { useAcademicData } from '../context/AcademicDataContext';
+import { useCursos } from '../hooks/useCursos';
 import {
   Library,
   PlusCircle,
@@ -37,8 +38,8 @@ interface BancoPreguntasPageProps {
   docentes?: UserProfile[];
   currentUser?: UserProfile;
   onAddPregunta: (p: Pregunta) => Promise<{ success: boolean; error?: string }> | void;
-  onUpdatePregunta: (p: Pregunta) => void;
-  onDeletePregunta: (id: string) => void;
+  onUpdatePregunta: (p: Pregunta) => Promise<{ success: boolean; error?: string }> | void;
+  onDeletePregunta: (id: string) => Promise<{ success: boolean; error?: string }> | void;
 }
 
 // Normalizador de niveles — clave interna en minúsculas con °
@@ -100,25 +101,8 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     ? asignaturas.filter(a => a.id === docenteAsigId)
     : asignaturas;
 
-  // Cargar cursos del docente con la clave correcta (prod vs demo)
-  const userCursos = useMemo(() => {
-    if (!currentUser?.id) return [];
-    const keys = [
-      `sysget_prod_cursos_${currentUser.id}`,
-      `sysget_demo_cursos_${currentUser.id}`,
-      `sysget_cursos_${currentUser.id}`, // clave legacy
-    ];
-    for (const key of keys) {
-      try {
-        const saved = localStorage.getItem(key);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-        }
-      } catch { /* ignorar */ }
-    }
-    return [];
-  }, [currentUser]);
+  // Cargar cursos del docente directamente desde Supabase vía useCursos (sin localStorage)
+  const { cursos: userCursos } = useCursos({ currentUser, isSandboxMode: false });
 
   const [search, setSearch] = useState('');
   // Asignatura pre-aplicada según el rol:
@@ -367,14 +351,22 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     });
   }, [basePreguntas, search, ejeFilter, habilidadFilter, dificultadFilter, tipoFilter]);
 
-  const handleDuplicate = (p: Pregunta) => {
+  const handleDuplicate = async (p: Pregunta) => {
     const duplicada: Pregunta = {
       ...p,
       id: `preg-${Date.now()}`,
       enunciado: `${p.enunciado} (Copia)`,
       fuente: `Copia de ${p.fuente}`,
     };
-    onAddPregunta(duplicada);
+    setSaveStatus({ type: 'saving', msg: 'Duplicando y guardando en Supabase...' });
+    const result = await onAddPregunta(duplicada);
+    if (result && !result.success) {
+      setSaveStatus({ type: 'error', msg: result.error || 'Error al duplicar pregunta.' });
+      setTimeout(() => setSaveStatus(null), 6000);
+    } else {
+      setSaveStatus({ type: 'success', msg: '✅ Pregunta duplicada y guardada en Supabase' });
+      setTimeout(() => setSaveStatus(null), 4000);
+    }
   };
 
   // KPIs dinámicos calculados estrictamente para el Curso / Nivel seleccionado
@@ -764,7 +756,19 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                       <Edit2 className="w-3.5 h-3.5" />
                     </button>
                     <button
-                      onClick={() => onDeletePregunta(pregunta.id)}
+                      onClick={async () => {
+                        if (window.confirm('¿Estás seguro de eliminar esta pregunta del banco en Supabase?')) {
+                          setSaveStatus({ type: 'saving', msg: 'Eliminando pregunta de Supabase...' });
+                          const res = await onDeletePregunta(pregunta.id);
+                          if (res && !res.success) {
+                            setSaveStatus({ type: 'error', msg: res.error || 'Error al eliminar pregunta.' });
+                            setTimeout(() => setSaveStatus(null), 6000);
+                          } else {
+                            setSaveStatus({ type: 'success', msg: '✅ Pregunta eliminada exitosamente de Supabase' });
+                            setTimeout(() => setSaveStatus(null), 4000);
+                          }
+                        }
+                      }}
                       className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                       title="Eliminar pregunta"
                     >
@@ -836,8 +840,16 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         onClose={() => { setModalOpen(false); setEditingPregunta(null); }}
         onSave={async p => {
           if (editingPregunta) {
-            onUpdatePregunta(p);
-            setEditingPregunta(null);
+            setSaveStatus({ type: 'saving', msg: 'Actualizando pregunta en Supabase...' });
+            const result = await onUpdatePregunta(p);
+            if (result && !result.success) {
+              setSaveStatus({ type: 'error', msg: result.error || 'Error al actualizar. Intenta de nuevo.' });
+              setTimeout(() => setSaveStatus(null), 6000);
+            } else {
+              setSaveStatus({ type: 'success', msg: '✅ Pregunta actualizada exitosamente en Supabase' });
+              setTimeout(() => setSaveStatus(null), 4000);
+              setEditingPregunta(null);
+            }
           } else {
             setSaveStatus({ type: 'saving', msg: 'Guardando pregunta en Supabase...' });
             const result = await onAddPregunta(p);

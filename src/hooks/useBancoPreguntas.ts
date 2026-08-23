@@ -59,7 +59,6 @@ export function mapPreguntaToRow(p: Pregunta, userId: string): Record<string, an
 export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProps) {
   const [preguntas, setPreguntas] = useState<Pregunta[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const isMigratingRef = useRef<boolean>(false);
 
   // Carga inicial y sincronización
   useEffect(() => {
@@ -76,7 +75,7 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
       return;
     }
 
-    // ── MODO PRODUCCIÓN (Supabase First) ──
+    // ── MODO PRODUCCIÓN (Supabase First - Directiva 3) ──
     let isMounted = true;
     setIsLoading(true);
 
@@ -88,25 +87,6 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
         const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
         const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
-        const isLenguaje = teacherAsig === 'asig-2' || isPremil;
-
-        // Base oficial garantizada según especialidad
-        const baseForSubject = user!.rol === 'admin'
-          ? [
-              ...preguntasMock,
-              ...preguntasLenguaje2MMock,
-              ...preguntasLenguaje2MJunioMock,
-              ...preguntasLenguaje2MAbrilMock,
-            ]
-          : isLenguaje
-          ? [
-              ...preguntasLenguaje2MMock,
-              ...preguntasLenguaje2MJunioMock,
-              ...preguntasLenguaje2MAbrilMock
-            ]
-          : teacherAsig
-          ? preguntasMock.filter(p => p.asignaturaId === teacherAsig)
-          : preguntasMock;
 
         // Si no es admin, consultar las preguntas de su asignatura O de su ID de docente
         if (user!.rol !== 'admin') {
@@ -125,56 +105,38 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
 
         if (isMounted) {
           const dbQuestions = data && data.length > 0 ? data.map(mapRowToPregunta) : [];
-          const uniqueMap = new Map<string, Pregunta>();
 
-          // 1. Inicializar con el catálogo base oficial (imágenes y markdown)
-          baseForSubject.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
-
-          // 2. Fusionar con las preguntas de la base de datos Supabase (fuente de verdad)
+          // Enriquecedor de metadatos (imágenes oficiales y tablas formateadas)
           const imageMap = new Map<string, { imagenUrl?: string; tablaMarkdown?: string }>();
           [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock].forEach(p => {
             imageMap.set(p.id, { imagenUrl: p.imagenUrl, tablaMarkdown: p.tablaMarkdown });
           });
 
-          dbQuestions.forEach(p => {
-            const existing = uniqueMap.get(p.id);
+          const enrichedQuestions = dbQuestions.map(p => {
             const meta = imageMap.get(p.id);
-            uniqueMap.set(p.id, {
-              ...existing,
+            return {
               ...p,
-              imagenUrl: p.imagenUrl || existing?.imagenUrl || meta?.imagenUrl,
-              tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown || meta?.tablaMarkdown
-            });
+              imagenUrl: p.imagenUrl || meta?.imagenUrl,
+              tablaMarkdown: p.tablaMarkdown || meta?.tablaMarkdown
+            };
           });
 
-          // 3. Producción: limpiar claves residuales del localStorage para evitar
-          //    que preguntas fantasma (no persistidas en Supabase) inflen el contador.
-          //    El localStorage ya NO es fuente de verdad — solo Supabase (Directiva 3).
+          // Limpiar claves residuales de localStorage para cumplir con almacenamiento limpio (Directiva 3)
           try {
             const keysToClean = [
               `sysget_banco_preguntas_${user!.id}`,
               'sysget_banco_preguntas_custom'
             ];
             keysToClean.forEach(k => localStorage.removeItem(k));
-          } catch (e) { /* ignorar en entornos sin localStorage */ }
+          } catch { /* ignorar en entornos sin localStorage */ }
 
-          setPreguntas(Array.from(uniqueMap.values()));
+          setPreguntas(enrichedQuestions);
           setIsLoading(false);
         }
       } catch (err) {
         console.error('[useBancoPreguntas] Error general al cargar banco:', err);
         if (isMounted) {
-          const userEmail = (user!.email || '').toLowerCase();
-          const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
-          const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : '');
-          const fallback = (teacherAsig === 'asig-2' || isPremil)
-            ? [
-                ...preguntasLenguaje2MMock,
-                ...preguntasLenguaje2MJunioMock,
-                ...preguntasLenguaje2MAbrilMock,
-              ]
-            : preguntasMock;
-          setPreguntas(fallback);
+          setPreguntas([]);
           setIsLoading(false);
         }
       }
@@ -187,7 +149,7 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
     };
   }, [user?.id, user?.email, isSandboxMode]);
 
-  // Agregar pregunta — SUPABASE FIRST (Directiva 3)
+  // Agregar pregunta — SUPABASE FIRST (Directiva 3, sin localStorage)
   const addPregunta = useCallback(
     async (p: Pregunta): Promise<{ success: boolean; error?: string }> => {
       const fullPregunta: Pregunta = {
@@ -195,7 +157,7 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         propietarioId: user?.id || p.propietarioId,
         asignaturaId: p.asignaturaId || user?.asignaturaId || 'asig-2',
         establecimiento: p.establecimiento || user?.establecimiento,
-        nivel: p.nivel || '2° Medio'
+        nivel: p.nivel || '4° Básico'
       };
 
       // ── MODO SANDBOX / DEMO: solo memoria ──
@@ -204,25 +166,18 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         return { success: true };
       }
 
-      // ── MODO PRODUCCIÓN: Supabase es la fuente de verdad ──
+      // ── MODO PRODUCCIÓN: Supabase es la fuente única de verdad ──
       try {
         const row = mapPreguntaToRow(fullPregunta, user.id);
         const { error } = await supabase.from('preguntas').upsert(row, { onConflict: 'id' });
 
         if (error) {
           console.error('[useBancoPreguntas] Error al insertar en Supabase:', error);
-          return { success: false, error: `Error al guardar en base de datos: ${error.message}` };
+          return { success: false, error: `Error en base de datos: ${error.message}` };
         }
 
-        // Solo al confirmar guardado en Supabase → actualizar estado y localStorage como caché
+        // Confirmado en Supabase → actualizar estado en React
         setPreguntas(prev => [fullPregunta, ...prev.filter(item => item.id !== fullPregunta.id)]);
-
-        try {
-          const key1 = `sysget_banco_preguntas_${user.id}`;
-          const current1: Pregunta[] = JSON.parse(localStorage.getItem(key1) || '[]');
-          localStorage.setItem(key1, JSON.stringify([fullPregunta, ...current1.filter(x => x.id !== fullPregunta.id)]));
-        } catch (e) { /* caché opcional, no crítico */ }
-
         return { success: true };
       } catch (err: any) {
         console.error('[useBancoPreguntas] Excepción al agregar pregunta:', err);
@@ -232,50 +187,60 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
     [user, isSandboxMode]
   );
 
-  // Actualizar pregunta
+  // Actualizar pregunta — SUPABASE FIRST (Directiva 3, sin localStorage)
   const updatePregunta = useCallback(
-    async (p: Pregunta) => {
-      setPreguntas(prev => prev.map(item => (item.id === p.id ? p : item)));
-
-      if (isSandboxMode || !user) return;
+    async (p: Pregunta): Promise<{ success: boolean; error?: string }> => {
+      if (isSandboxMode || !user) {
+        setPreguntas(prev => prev.map(item => (item.id === p.id ? p : item)));
+        return { success: true };
+      }
 
       try {
         const row = mapPreguntaToRow(p, user.id);
         const { error } = await supabase
           .from('preguntas')
           .update(row)
-          .eq('id', p.id)
-          .eq('propietario_id', user.id);
+          .eq('id', p.id);
 
         if (error) {
           console.error('[useBancoPreguntas] Error al actualizar en Supabase:', error);
+          return { success: false, error: `Error al actualizar: ${error.message}` };
         }
-      } catch (err) {
+
+        setPreguntas(prev => prev.map(item => (item.id === p.id ? p : item)));
+        return { success: true };
+      } catch (err: any) {
         console.error('[useBancoPreguntas] Excepción al actualizar pregunta:', err);
+        return { success: false, error: `Error inesperado: ${err?.message || 'Sin conexión'}` };
       }
     },
     [user, isSandboxMode]
   );
 
-  // Eliminar pregunta
+  // Eliminar pregunta — SUPABASE FIRST (Directiva 3, sin localStorage)
   const deletePregunta = useCallback(
-    async (id: string) => {
-      setPreguntas(prev => prev.filter(item => item.id !== id));
-
-      if (isSandboxMode || !user) return;
+    async (id: string): Promise<{ success: boolean; error?: string }> => {
+      if (isSandboxMode || !user) {
+        setPreguntas(prev => prev.filter(item => item.id !== id));
+        return { success: true };
+      }
 
       try {
         const { error } = await supabase
           .from('preguntas')
           .delete()
-          .eq('id', id)
-          .eq('propietario_id', user.id);
+          .eq('id', id);
 
         if (error) {
           console.error('[useBancoPreguntas] Error al eliminar de Supabase:', error);
+          return { success: false, error: `Error al eliminar: ${error.message}` };
         }
-      } catch (err) {
+
+        setPreguntas(prev => prev.filter(item => item.id !== id));
+        return { success: true };
+      } catch (err: any) {
         console.error('[useBancoPreguntas] Excepción al eliminar pregunta:', err);
+        return { success: false, error: `Error inesperado: ${err?.message || 'Sin conexión'}` };
       }
     },
     [user, isSandboxMode]
