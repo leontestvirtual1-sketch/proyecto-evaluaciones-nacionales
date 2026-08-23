@@ -109,12 +109,71 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     return [];
   }, [currentUser]);
 
-  // Lista de niveles dinámicos según cursos del docente y preguntas disponibles
+  const [search, setSearch] = useState('');
+  const [asignaturaFilter, setAsignaturaFilter] = useState(isDocente ? docenteAsigId : '');
+  const [establecimientoFilter, setEstablecimientoFilter] = useState('');
+  const [docenteFilter, setDocenteFilter] = useState('');
+  const [ejeFilter, setEjeFilter] = useState('');
+  const [habilidadFilter, setHabilidadFilter] = useState('');
+  const [dificultadFilter, setDificultadFilter] = useState('');
+  const [tipoFilter, setTipoFilter] = useState('');
+  const [nivelFilter, setNivelFilter] = useState<string>('');
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
+
+  // Catálogo de docentes y colegios para filtros de Admin
+  const docentesDisponibles = useMemo(() => [
+    { id: 'mariateresa', nombre: 'María Teresa González', asignatura: 'Lengua y Literatura', asigId: 'asig-2', establecimiento: 'Escuela Premilitar Héroes de la Concepción' },
+    { id: 'susana', nombre: 'Susana Angélica Pizarro', asignatura: 'Matemática', asigId: 'asig-1', establecimiento: 'Colegio Mi Casa' },
+  ], []);
+
+  const establecimientosDisponibles = useMemo(() => [
+    'Escuela Premilitar Héroes de la Concepción',
+    'Colegio Mi Casa',
+  ], []);
+
+  // Contexto activo para filtrar ejes y habilidades
+  const activeSubjectId = isDocente ? docenteAsigId : (asignaturaFilter || '');
+  const availableEjes = activeSubjectId
+    ? ejes.filter(e => e.asignaturaId === activeSubjectId)
+    : ejes;
+
+  const availableHabilidades = activeSubjectId
+    ? habilidades.filter(h => h.asignaturaId === activeSubjectId)
+    : habilidades;
+
+  // Lista de niveles dinámicos según cursos del docente y preguntas filtradas por docente/colegio/materia
   const nivelesDisponibles = useMemo(() => {
     const counts: Record<string, number> = {};
+
     preguntas.forEach(p => {
-      const matchAsig = isDocente ? p.asignaturaId === docenteAsigId : true;
-      if (matchAsig) {
+      // Filtrar por asignatura
+      const matchAsig = isDocente
+        ? p.asignaturaId === docenteAsigId
+        : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
+
+      // Filtrar por establecimiento (Admin)
+      let matchEstablecimiento = true;
+      if (!isDocente && establecimientoFilter) {
+        if (establecimientoFilter.includes('Premilitar')) {
+          matchEstablecimiento = p.asignaturaId === 'asig-2' || p.fuente?.toLowerCase().includes('premilitar');
+        } else if (establecimientoFilter.includes('Casa')) {
+          matchEstablecimiento = p.asignaturaId === 'asig-1' || p.fuente?.toLowerCase().includes('casa') || p.fuente?.toLowerCase().includes('oficial') || p.fuente?.toLowerCase().includes('liberada');
+        }
+      }
+
+      // Filtrar por docente (Admin)
+      let matchDocente = true;
+      if (!isDocente && docenteFilter) {
+        if (docenteFilter === 'mariateresa') {
+          matchDocente = p.asignaturaId === 'asig-2' || p.fuente?.toLowerCase().includes('premilitar');
+        } else if (docenteFilter === 'susana') {
+          matchDocente = p.asignaturaId === 'asig-1';
+        }
+      }
+
+      if (matchAsig && matchEstablecimiento && matchDocente) {
         const norm = normalizeNivel(p.nivel) || 'Sin nivel';
         counts[norm] = (counts[norm] || 0) + 1;
       }
@@ -128,19 +187,18 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       if (norm) activeKeys.add(norm);
     });
 
-    // 2. Añadir niveles donde el docente ya tenga preguntas creadas
+    // 2. Añadir niveles donde haya preguntas con los filtros activos
     Object.keys(counts).forEach(k => {
       if (counts[k] > 0) activeKeys.add(k);
     });
 
-    // 3. Si no es docente (o admin demo general sin cursos), proveer los niveles estándar de demo
+    // 3. Niveles estándar si aún no hay ninguno
     if (activeKeys.size === 0) {
       if (!isDocente) {
         activeKeys.add('8° básico');
         activeKeys.add('6° básico');
         activeKeys.add('2° medio');
       } else {
-        // Docente sin cursos ni preguntas: predeterminar 4° básico o 8° básico según corresponda
         activeKeys.add('4° básico');
       }
     }
@@ -159,80 +217,26 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         count: counts[key] || 0
       };
     });
-  }, [preguntas, userCursos, isDocente, docenteAsigId]);
+  }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter]);
 
-  // Estado del Filtro de Curso / Nivel: seleccionar por defecto el nivel que tenga preguntas
-  const [nivelFilter, setNivelFilter] = useState<string>(() => {
-    // 1. Priorizar el nivel que ya tenga preguntas
-    const firstPreg = preguntas.find(p => isDocente ? p.asignaturaId === docenteAsigId : true);
-    if (firstPreg) {
-      const norm = normalizeNivel(firstPreg.nivel);
-      if (norm) return norm;
-    }
-    // 2. Si no hay preguntas, usar el primer curso del docente
-    if (userCursos.length > 0) {
-      const firstNorm = normalizeNivel(userCursos[0].nivel || userCursos[0].nombre);
-      if (firstNorm) return firstNorm;
-    }
-    return '';
-  });
-
-  // Sincronizar nivelFilter si cambia la lista de niveles disponibles o al cargar preguntas
+  // Sincronizar nivelFilter SOLO si el nivel específico seleccionado ya no tiene preguntas con el filtro activo
   React.useEffect(() => {
-    if (nivelesDisponibles.length > 0) {
-      // Si el nivel seleccionado no tiene preguntas pero hay otro nivel que sí tiene, cambiar a él
-      const currentLevelHasQuestions = nivelesDisponibles.some(
-        lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter) && (lvl.count || 0) > 0
-      );
+    // Si nivelFilter está vacío ('Todos los Cursos'), respetarlo y NO forzar un nivel
+    if (!nivelFilter) return;
 
-      if (!currentLevelHasQuestions) {
+    if (nivelesDisponibles.length > 0) {
+      const currentLevelObj = nivelesDisponibles.find(lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter));
+      // Si el nivel seleccionado tiene 0 preguntas, cambiar al primer nivel con preguntas > 0
+      if (!currentLevelObj || (currentLevelObj.count || 0) === 0) {
         const levelWithQuestions = nivelesDisponibles.find(lvl => (lvl.count || 0) > 0);
         if (levelWithQuestions) {
           setNivelFilter(levelWithQuestions.key);
-          return;
+        } else {
+          setNivelFilter('');
         }
-      }
-
-      // Si el nivelFilter actual no existe en absoluto, seleccionar el primer nivel
-      const exists = nivelesDisponibles.some(lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter));
-      if (!exists) {
-        setNivelFilter(nivelesDisponibles[0].key);
       }
     }
   }, [nivelesDisponibles, nivelFilter]);
-
-  const [search, setSearch] = useState('');
-  const [asignaturaFilter, setAsignaturaFilter] = useState(isDocente ? docenteAsigId : '');
-  const [establecimientoFilter, setEstablecimientoFilter] = useState('');
-  const [docenteFilter, setDocenteFilter] = useState('');
-  const [ejeFilter, setEjeFilter] = useState('');
-  const [habilidadFilter, setHabilidadFilter] = useState('');
-  const [dificultadFilter, setDificultadFilter] = useState('');
-  const [tipoFilter, setTipoFilter] = useState('');
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
-
-  // Contexto activo para filtrar ejes y habilidades
-  const activeSubjectId = isDocente ? docenteAsigId : (asignaturaFilter || '');
-  const availableEjes = activeSubjectId
-    ? ejes.filter(e => e.asignaturaId === activeSubjectId)
-    : ejes;
-
-  const availableHabilidades = activeSubjectId
-    ? habilidades.filter(h => h.asignaturaId === activeSubjectId)
-    : habilidades;
-
-  // Catálogo de docentes y colegios para filtros de Admin
-  const docentesDisponibles = useMemo(() => [
-    { id: 'mariateresa', nombre: 'María Teresa González', asignatura: 'Lengua y Literatura', asigId: 'asig-2', establecimiento: 'Escuela Premilitar Héroes de la Concepción' },
-    { id: 'susana', nombre: 'Susana Angélica Pizarro', asignatura: 'Matemática', asigId: 'asig-1', establecimiento: 'Colegio Mi Casa' },
-  ], []);
-
-  const establecimientosDisponibles = useMemo(() => [
-    'Escuela Premilitar Héroes de la Concepción',
-    'Colegio Mi Casa',
-  ], []);
 
   // Base de preguntas filtradas por ASIGNATURA, CURSO/NIVEL, ESTABLECIMIENTO y DOCENTE
   const basePreguntas = useMemo(() => {
