@@ -214,8 +214,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
           pruebas: susanaPruebas,
           cursos: susanaCursos.length > 0 ? susanaCursos : [
             { id: 'curso-mc-4b', nombre: '4° Básico A', nivel: '4° básico', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC4B2026' },
-            { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° básico', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC8B2026' },
-            { id: 'curso-mc-2m', nombre: '2° Medio A', nivel: '2° medio', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC2M2026' }
+            { id: 'curso-mc-6b', nombre: '6° Básico A', nivel: '6° básico', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC6B2026' },
+            { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° básico', profesorId: currentUserProfesorMiCasa.id, establecimiento: 'Colegio Mi Casa', anio: 2026, codigoInvitacion: 'MC8B2026' }
           ],
           alumnos: [],
           seguimientoDocentes: [{
@@ -226,7 +226,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             iniciales: 'SP',
             asignaturaId: 'asig-1',
             asignaturaNombre: 'Matemática',
-            cursosAsignados: ['4° Básico', '8° Básico', '2° Medio'],
+            cursosAsignados: ['4° Básico', '6° Básico', '8° Básico'],
             totalEvaluacionesCreadas: susanaPruebas.length,
             totalEvaluacionesActivas: susanaPruebas.filter(p => p.estado === 'activa').length,
             totalAlumnosEvaluados: 0,
@@ -319,7 +319,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             iniciales: iniciales(doc.nombre, doc.apellido),
             asignaturaId: doc.asignaturaId || 'asig-1',
             asignaturaNombre: doc.asignaturaNombre || 'Matemática',
-            cursosAsignados: ['4° Básico', '8° Básico', '2° Medio'],
+            cursosAsignados: ['4° Básico', '6° Básico', '8° Básico'],
             totalEvaluacionesCreadas: 1,
             totalEvaluacionesActivas: 1,
             totalAlumnosEvaluados: 0,
@@ -368,15 +368,15 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         c.id === 'curso-prem-2m' ||
         c.id === 'curso-2m' ||
         c.id === 'curso-mc-4b' ||
+        c.id === 'curso-mc-6b' ||
         c.id === 'curso-mc-8b' ||
-        c.id === 'curso-mc-2m' ||
         c.establecimiento === 'Colegio Mi Casa' ||
         c.establecimiento === 'Escuela Premilitar Héroes de la Concepción'
       );
 
       return {
         isProduction: true,
-        pruebas: adminPruebas,
+        pruebas: adminPruebas.length > 0 ? adminPruebas : pruebasMock.filter(p => p.id.startsWith('prueba-len2m')),
         cursos: prodCursos,
         alumnos: [],
         seguimientoDocentes: dynamicSeguimiento,

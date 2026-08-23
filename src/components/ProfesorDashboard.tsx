@@ -374,10 +374,10 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                     <div className="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-xs">
                       <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                         <div className="text-slate-400 text-[10px] uppercase font-bold">Cursos</div>
-                        <div className="text-sm font-black text-white mt-0.5" title={col.rbd === '1234' ? '4° Básico, 8° Básico, 2° Medio' : col.rbd === '31030' ? '2° Medio' : ''}>
+                        <div className="text-sm font-black text-white mt-0.5" title={col.rbd === '1234' ? '4° Básico, 6° Básico, 8° Básico' : col.rbd === '31030' ? '2° Medio' : ''}>
                           {(() => {
                             if (col.rbd === '31030') return '1 (2° Medio)';
-                            if (col.rbd === '1234') return '3 (4° Básico, 8° Básico, 2° Medio)';
+                            if (col.rbd === '1234') return '3 (4° Básico, 6° Básico, 8° Básico)';
                             const colCursos = (cursos || []).filter(c => c.establecimiento?.toLowerCase().includes(col.nombre.toLowerCase()));
                             return colCursos.length > 0 ? `${colCursos.length} Curso${colCursos.length !== 1 ? 's' : ''}` : '0 Cursos';
                           })()}

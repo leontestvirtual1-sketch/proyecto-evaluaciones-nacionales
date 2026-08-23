@@ -114,11 +114,12 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         }
 
         // Si la tabla en Supabase está vacía:
-        // Si es María Teresa González, auto-poblar sus evaluaciones oficiales
+        // Si es Admin o María Teresa González, auto-poblar sus evaluaciones oficiales
         const email = (currentUser!.email || '').toLowerCase();
         const isPremilitarTeacher = email.includes('premil.cl') || email.includes('mariateresa');
+        const isAdmin = currentUser!.rol === 'admin';
 
-        if (isPremilitarTeacher && !isSeededRef.current) {
+        if ((isPremilitarTeacher || isAdmin) && !isSeededRef.current) {
           isSeededRef.current = true;
           const premilitarPruebas = [
             { ...pruebaLenguaje2MMock, profesorId: currentUser!.id },

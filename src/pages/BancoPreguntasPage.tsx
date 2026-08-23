@@ -96,22 +96,30 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     ? asignaturas.filter(a => a.id === docenteAsigId)
     : asignaturas;
 
-  // Cargar cursos creados por el docente en su perfil actual
+  // Cargar cursos del docente con la clave correcta (prod vs demo)
   const userCursos = useMemo(() => {
-    try {
-      const storageKey = `sysget_cursos_${currentUser?.id || 'default'}`;
-      const saved = localStorage.getItem(storageKey);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
-    } catch (e) {
-      console.error('Error reading cursos in BancoPreguntasPage', e);
+    if (!currentUser?.id) return [];
+    const keys = [
+      `sysget_prod_cursos_${currentUser.id}`,
+      `sysget_demo_cursos_${currentUser.id}`,
+      `sysget_cursos_${currentUser.id}`, // clave legacy
+    ];
+    for (const key of keys) {
+      try {
+        const saved = localStorage.getItem(key);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch { /* ignorar */ }
     }
     return [];
   }, [currentUser]);
 
   const [search, setSearch] = useState('');
+  // Asignatura pre-aplicada según el rol:
+  // - Docente: siempre su asignatura (bloqueado en UI)
+  // - Admin: sin filtro inicial (ve todo)
   const [asignaturaFilter, setAsignaturaFilter] = useState(isDocente ? docenteAsigId : '');
   const [establecimientoFilter, setEstablecimientoFilter] = useState('');
   const [docenteFilter, setDocenteFilter] = useState('');
@@ -119,6 +127,8 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   const [habilidadFilter, setHabilidadFilter] = useState('');
   const [dificultadFilter, setDificultadFilter] = useState('');
   const [tipoFilter, setTipoFilter] = useState('');
+  // Nivel inicial: vacío (Todos) para admin; para docente se auto-seleccionará
+  // el primer nivel disponible mediante el efecto de sincronización existente
   const [nivelFilter, setNivelFilter] = useState<string>('');
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -227,11 +237,12 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       if (norm) activeKeys.add(norm);
     });
 
-    // Si está filtrado por Susana o Colegio Mi Casa, garantizar sus 3 niveles
-    if (selectedDoc?.id === 'susana' || establecimientoFilter === 'Colegio Mi Casa') {
+    // Si está filtrado por Susana o Colegio Mi Casa o el docente activo es Susana, garantizar sus 3 niveles
+    const isUserSusana = (currentUser?.email || '').toLowerCase().includes('susana') || (currentUser?.establecimiento || '').toLowerCase().includes('mi casa');
+    if (selectedDoc?.id === 'susana' || establecimientoFilter === 'Colegio Mi Casa' || isUserSusana) {
       activeKeys.add('4° básico');
+      activeKeys.add('6° básico');
       activeKeys.add('8° básico');
-      activeKeys.add('2° medio');
     }
 
     // 2. Añadir niveles donde haya preguntas con los filtros activos
@@ -243,6 +254,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     if (activeKeys.size === 0) {
       if (!isDocente) {
         activeKeys.add('4° básico');
+        activeKeys.add('6° básico');
         activeKeys.add('8° básico');
         activeKeys.add('2° medio');
       } else {
@@ -266,14 +278,25 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     });
   }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
 
-  // Sincronizar nivelFilter SOLO si el nivel específico seleccionado ya no tiene preguntas con el filtro activo
+  // Sincronizar nivelFilter:
+  // - Si el docente tiene nivelFilter vacío, auto-seleccionar el primer nivel con preguntas
+  // - Si el nivel seleccionado ya no tiene preguntas, mover al primero que tenga
+  // - Admin con nivelFilter vacío = "Todos los Cursos" (NO forzar nivel)
   React.useEffect(() => {
-    // Si nivelFilter está vacío ('Todos los Cursos'), respetarlo y NO forzar un nivel
-    if (!nivelFilter) return;
+    if (nivelesDisponibles.length === 0) return;
 
-    if (nivelesDisponibles.length > 0) {
+    // Para docente: auto-seleccionar nivel si está vacío
+    if (isDocente && !nivelFilter) {
+      const firstWithQuestions = nivelesDisponibles.find(lvl => (lvl.count || 0) > 0);
+      const firstAny = nivelesDisponibles[0];
+      const target = firstWithQuestions || firstAny;
+      if (target) setNivelFilter(target.key);
+      return;
+    }
+
+    // Si hay un nivel seleccionado pero ya no tiene preguntas, mover al primero que tenga
+    if (nivelFilter) {
       const currentLevelObj = nivelesDisponibles.find(lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter));
-      // Si el nivel seleccionado tiene 0 preguntas, cambiar al primer nivel con preguntas > 0
       if (!currentLevelObj || (currentLevelObj.count || 0) === 0) {
         const levelWithQuestions = nivelesDisponibles.find(lvl => (lvl.count || 0) > 0);
         if (levelWithQuestions) {
@@ -283,7 +306,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         }
       }
     }
-  }, [nivelesDisponibles, nivelFilter]);
+  }, [nivelesDisponibles, nivelFilter, isDocente]);
 
   // Base de preguntas filtradas por ASIGNATURA, CURSO/NIVEL, ESTABLECIMIENTO y DOCENTE
   const basePreguntas = useMemo(() => {

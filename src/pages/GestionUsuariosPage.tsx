@@ -408,19 +408,42 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                         {/* Badges según el plan */}
                         {u.plan === 'trial' && (() => {
                           const diasFinal = calcularDiasRestantesTrial(u);
+                          const pct = Math.round((diasFinal / 30) * 100);
                           return (
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 w-fit ${
-                              diasFinal <= 5 
-                                ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' 
-                                : diasFinal <= 15
-                                  ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
-                                  : 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
-                            }`}>
-                              <Clock className="w-2.5 h-2.5" />
-                              {diasFinal}d restantes
-                            </span>
+                            <div className="flex flex-col gap-1 mt-1">
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 w-fit ${
+                                diasFinal <= 5 
+                                  ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' 
+                                  : diasFinal <= 15
+                                    ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                                    : 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
+                              }`}>
+                                <Clock className="w-2.5 h-2.5" />
+                                {diasFinal} días restantes ({pct}%)
+                              </span>
+                              <div className="w-28 bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                                <div
+                                  className={`h-full rounded-full transition-all ${
+                                    diasFinal <= 5 ? 'bg-rose-500' : diasFinal <= 15 ? 'bg-amber-500' : 'bg-indigo-500'
+                                  }`}
+                                  style={{ width: `${pct}%` }}
+                                />
+                              </div>
+                            </div>
                           );
                         })()}
+                        {u.plan === 'institucional' && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 w-fit bg-emerald-500/10 text-emerald-300 border-emerald-500/30">
+                            <ShieldCheck className="w-2.5 h-2.5" />
+                            Acceso Ilimitado
+                          </span>
+                        )}
+                        {u.plan === 'pro' && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 w-fit bg-sky-500/10 text-sky-300 border-sky-500/30">
+                            <Sparkles className="w-2.5 h-2.5" />
+                            Plan Pro
+                          </span>
+                        )}
                       </div>
                     </td>
 

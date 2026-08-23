@@ -59,7 +59,9 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const isMigratedRef = useRef<boolean>(false);
 
-  const storageKey = `sysget_cursos_${currentUser?.id || 'default'}`;
+  const storageKey = isSandboxMode
+    ? `sysget_demo_cursos_${currentUser?.id || 'default'}`
+    : `sysget_prod_cursos_${currentUser?.id || 'default'}`;
   const colegioNombre = currentUser?.establecimiento || APP_CONFIG.nombreEstablecimiento;
 
   // Cursos iniciales para modo demo/sandbox
@@ -97,6 +99,9 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
 
     // ── MODO PRODUCCIÓN (Supabase First) ──
     let isMounted = true;
+    // Resetear el ref de migración al montar/remontar para evitar el bug
+    // de React StrictMode que ejecuta el efecto dos veces en desarrollo
+    isMigratedRef.current = false;
     setIsLoading(true);
 
     async function loadCursos() {
@@ -133,7 +138,7 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
           return;
         }
 
-        // Si la tabla cursos en Supabase no tiene filas aún, auto-poblar los cursos oficiales de producción
+        // Si la tabla cursos en Supabase no tiene filas para este usuario, auto-poblar
         if (!isMigratedRef.current) {
           isMigratedRef.current = true;
           const isSusana = (currentUser!.email || '').toLowerCase().includes('susana') || (currentUser!.establecimiento || '').toLowerCase().includes('mi casa');
@@ -145,8 +150,8 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
           if (isSusana) {
             initialProdCursos = [
               { id: 'curso-mc-4b', nombre: '4° Básico A', nivel: '4° Básico', anio: 2026, codigoInvitacion: 'MC4B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id },
-              { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'MC8B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id },
-              { id: 'curso-mc-2m', nombre: '2° Medio A', nivel: '2° Medio', anio: 2026, codigoInvitacion: 'MC2M2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id }
+              { id: 'curso-mc-6b', nombre: '6° Básico A', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'MC6B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id },
+              { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'MC8B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234', profesorJefeId: currentUser!.id }
             ];
           } else if (isPremil) {
             initialProdCursos = [
@@ -156,8 +161,8 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
             initialProdCursos = [
               { id: 'curso-prem-2m', nombre: '2° Medio A', nivel: '2° Medio', anio: 2026, codigoInvitacion: 'PREM2M26', totalAlumnos: 0, establecimiento: 'Escuela Premilitar Héroes de la Concepción', rbd: '31030' },
               { id: 'curso-mc-4b', nombre: '4° Básico A', nivel: '4° Básico', anio: 2026, codigoInvitacion: 'MC4B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' },
-              { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'MC8B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' },
-              { id: 'curso-mc-2m', nombre: '2° Medio A', nivel: '2° Medio', anio: 2026, codigoInvitacion: 'MC2M2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' }
+              { id: 'curso-mc-6b', nombre: '6° Básico A', nivel: '6° Básico', anio: 2026, codigoInvitacion: 'MC6B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' },
+              { id: 'curso-mc-8b', nombre: '8° Básico A', nivel: '8° Básico', anio: 2026, codigoInvitacion: 'MC8B2026', totalAlumnos: 0, establecimiento: 'Colegio Mi Casa', rbd: '1234' }
             ];
           }
 
@@ -175,6 +180,12 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
             return;
           }
         }
+
+        // Fallback final: tabla vacía y sin seed aplicable
+        if (isMounted) {
+          setCursos([]);
+          setIsLoading(false);
+        }
       } catch (err) {
         console.error('[useCursos] Error general al cargar cursos:', err);
         if (isMounted) {
@@ -188,6 +199,7 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
 
     return () => {
       isMounted = false;
+      isMigratedRef.current = false; // reset para el próximo mount
     };
   }, [currentUser?.id, currentUser?.rol, isSandboxMode, storageKey, getDemoCursos]);
 

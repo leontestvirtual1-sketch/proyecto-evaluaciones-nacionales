@@ -74,7 +74,8 @@ export const currentUserAdmin: UserProfile = {
   establecimiento: 'Sysget Saber',
   cargo: 'Super Administrador / Fundador',
   estado: 'activo',
-  plan: 'institucional'
+  plan: 'institucional',
+  fechaRegistro: '2026-08-01 08:00'
 };
 
 export const currentUserProfesorPremilitar: UserProfile = {
@@ -92,7 +93,8 @@ export const currentUserProfesorPremilitar: UserProfile = {
   cargo: 'Docente de Lenguaje y Comunicación',
   estado: 'activo',
   plan: 'trial',
-  diasRestantesTrial: 30
+  diasRestantesTrial: 28,
+  fechaRegistro: '2026-08-21 09:30'
 };
 
 export const currentUserProfesorMiCasa: UserProfile = {
@@ -109,7 +111,8 @@ export const currentUserProfesorMiCasa: UserProfile = {
   cargo: 'Docente de Matemática',
   estado: 'activo',
   plan: 'trial',
-  diasRestantesTrial: 30
+  diasRestantesTrial: 28,
+  fechaRegistro: '2026-08-21 11:15'
 };
 
 /** Usuario Admin de demostración — acceso controlado solo para mostrar el panel */
@@ -538,7 +541,111 @@ export const preguntasMock: Pregunta[] = [
     fuente: 'SIMCE Oficial Matemática 4° Básico'
   },
 
-  // === 1. MATEMÁTICA Y LENGUAJE 8° BÁSICO ===
+  // === PREGUNTAS MATEMÁTICA 6° BÁSICO (Colegio Mi Casa - Susana Pizarro) ===
+  {
+    id: 'preg-mat-6b-01',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-1',
+    habilidadId: 'hab-mat-1',
+    tipo: 'seleccion_multiple',
+    nivel: '6° Básico',
+    dificultad: 'media',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: '¿Cuál es el resultado de la operación 3/4 + 2/3 expresado como fracción irreductible?',
+    alternativas: [
+      { letra: 'A', texto: '5/7', es_correcta: false },
+      { letra: 'B', texto: '17/12', es_correcta: true },
+      { letra: 'C', texto: '5/12', es_correcta: false },
+      { letra: 'D', texto: '6/12', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 6° Básico'
+  },
+  {
+    id: 'preg-mat-6b-02',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-2',
+    habilidadId: 'hab-mat-2',
+    tipo: 'seleccion_multiple',
+    nivel: '6° Básico',
+    dificultad: 'media',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: 'En la ecuación 3x + 7 = 22, ¿cuál es el valor de x?',
+    alternativas: [
+      { letra: 'A', texto: 'x = 3', es_correcta: false },
+      { letra: 'B', texto: 'x = 5', es_correcta: true },
+      { letra: 'C', texto: 'x = 7', es_correcta: false },
+      { letra: 'D', texto: 'x = 9', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 6° Básico'
+  },
+  {
+    id: 'preg-mat-6b-03',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-3',
+    habilidadId: 'hab-mat-3',
+    tipo: 'seleccion_multiple',
+    nivel: '6° Básico',
+    dificultad: 'alta',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: 'Un prisma recto de base rectangular tiene 5 cm de largo, 4 cm de ancho y 10 cm de alto. ¿Cuál es su volumen en centímetros cúbicos?',
+    alternativas: [
+      { letra: 'A', texto: '190 cm³', es_correcta: false },
+      { letra: 'B', texto: '200 cm³', es_correcta: true },
+      { letra: 'C', texto: '220 cm³', es_correcta: false },
+      { letra: 'D', texto: '250 cm³', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 6° Básico'
+  },
+
+  // === PREGUNTAS MATEMÁTICA 8° BÁSICO (Colegio Mi Casa - Susana Pizarro) ===
+  {
+    id: 'preg-mat-8b-01',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-1',
+    habilidadId: 'hab-mat-2',
+    tipo: 'seleccion_multiple',
+    nivel: '8° Básico',
+    dificultad: 'media',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: '¿Cuál es el valor de la potencia (-2)³ + (-3)²?',
+    alternativas: [
+      { letra: 'A', texto: '-17', es_correcta: false },
+      { letra: 'B', texto: '-1', es_correcta: false },
+      { letra: 'C', texto: '1', es_correcta: true },
+      { letra: 'D', texto: '17', es_correcta: false }
+    ],
+    respuestaCorrecta: 'C',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 8° Básico'
+  },
+  {
+    id: 'preg-mat-8b-02',
+    asignaturaId: 'asig-1',
+    ejeTematicoId: 'eje-mat-2',
+    habilidadId: 'hab-mat-3',
+    tipo: 'seleccion_multiple',
+    nivel: '8° Básico',
+    dificultad: 'alta',
+    propietarioId: currentUserProfesorMiCasa.id,
+    enunciado: 'Si una función afín modela el costo total C(x) = 1500x + 3000 de x fotocopias empastadas, ¿cuánto se pagará por 10 fotocopias empastadas?',
+    alternativas: [
+      { letra: 'A', texto: '$15.000', es_correcta: false },
+      { letra: 'B', texto: '$18.000', es_correcta: true },
+      { letra: 'C', texto: '$21.000', es_correcta: false },
+      { letra: 'D', texto: '$24.000', es_correcta: false }
+    ],
+    respuestaCorrecta: 'B',
+    puntaje: 1,
+    fuente: 'SIMCE Oficial Matemática 8° Básico'
+  },
+
+  // === 1. MATEMÁTICA Y LENGUAJE 8° BÁSICO (DEMO) ===
 
   // 1. Números - Aplicación
 
@@ -2810,6 +2917,15 @@ export const cursosMock: Curso[] = [
     codigoInvitacion: 'MC4B2026'
   },
   {
+    id: 'curso-mc-6b',
+    nombre: '6° Básico A',
+    nivel: '6° básico',
+    profesorId: currentUserProfesorMiCasa.id,
+    establecimiento: 'Colegio Mi Casa',
+    anio: 2026,
+    codigoInvitacion: 'MC6B2026'
+  },
+  {
     id: 'curso-mc-8b',
     nombre: '8° Básico A',
     nivel: '8° básico',
@@ -2817,15 +2933,6 @@ export const cursosMock: Curso[] = [
     establecimiento: 'Colegio Mi Casa',
     anio: 2026,
     codigoInvitacion: 'MC8B2026'
-  },
-  {
-    id: 'curso-mc-2m',
-    nombre: '2° Medio A',
-    nivel: '2° medio',
-    profesorId: currentUserProfesorMiCasa.id,
-    establecimiento: 'Colegio Mi Casa',
-    anio: 2026,
-    codigoInvitacion: 'MC2M2026'
   },
 
   {

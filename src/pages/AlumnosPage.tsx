@@ -324,39 +324,41 @@ interface AlumnosPageProps {
 
 export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandboxMode = false }) => {
   const colegioNombre = currentUser?.establecimiento || APP_CONFIG.nombreEstablecimiento;
-  const storageKey = `sysget_alumnos_${currentUser?.id || 'default'}`;
+  const storageKey = isSandboxMode
+    ? `sysget_demo_alumnos_${currentUser?.id || 'default'}`
+    : `sysget_prod_alumnos_${currentUser?.id || 'default'}`;
 
   const { cursos: cursosFromHook } = useCursos({ currentUser, isSandboxMode });
 
-  // Inicializar alumnos aislados: para docentes reales (Susana, Premilitar, nuevos) empieza en 0 alumnos.
-  // Para perfiles demo (Liceo Bicentenario / escuelademo.cl / admin demo) carga la nomina demo de 8° y 6°.
+  // Inicializar alumnos aislados:
+  // En PRODUCCIÓN: siempre inicia 100% limpio (0 alumnos) con empty state legítimo (Directiva 2)
+  // En MODO DEMO / SANDBOX: carga la nómina demo de 8° y 6°
   const getInitialAlumnos = (): AlumnoConCurso[] => {
     const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed)) return parsed;
       } catch (err) {
         console.error('Error parsing saved alumnos:', err);
       }
     }
 
-    const email = (currentUser?.email || '').toLowerCase();
-    const est = (currentUser?.establecimiento || '').toLowerCase();
-    const isDocenteReal = email === 'mariateresa.gonzalez@premil.cl' ||
-                          email === 'luis.leon@premil.cl' || 
-                          email.includes('susana') || 
-                          est.includes('premilitar') || 
-                          est.includes('mi casa') ||
-                          currentUser?.plan === 'trial';
-
-    // Docente real de produccion: siempre inicia 100% limpio (0 alumnos)
-    if (isDocenteReal && !email.endsWith('@escuelademo.cl') && !email.endsWith('@demo.cl') && !email.endsWith('@sysget.cl')) {
-      return [];
+    if (isSandboxMode) {
+      return [
+        { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
+        { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
+        { id: 'alum-3', rut: '22.222.222-2', nombre: 'Carlos', apellido: 'Martínez', email: 'carlos@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
+        { id: 'alum-4', rut: '23.444.555-9', nombre: 'Sofía', apellido: 'Valenzuela', email: 'sofia@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
+        { id: 'alum-5', rut: '24.555.666-K', nombre: 'Diego', apellido: 'Fuentes', email: 'diego@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
+        { id: 'alum-6', rut: '21.016.016-5', nombre: 'Tomás', apellido: 'Quintero', email: 'tomas.quintero@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+        { id: 'alum-7', rut: '21.017.017-6', nombre: 'Emilia', apellido: 'Rojas', email: 'emilia.rojas@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+        { id: 'alum-8', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto', email: 'benjamin.soto@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+      ];
     }
 
-    // IMPORTANTE: el admin de produccion (ej. leontestvirtual1@gmail.com) tiene rol='admin'
-    // pero NO es cuenta demo — no debe ver alumnos ficticios.
+    const email = (currentUser?.email || '').toLowerCase();
+    const est = (currentUser?.establecimiento || '').toLowerCase();
     const isDemoAccount = email.endsWith('@escuelademo.cl') ||
                           email.endsWith('@demo.cl') ||
                           email.endsWith('@sysget.cl') ||
@@ -364,7 +366,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
                           est.includes('demo') ||
                           est.includes('bicentenario');
 
-    if (isDemoAccount) {
+    if (isDemoAccount && !email.includes('leontestvirtual1') && !email.includes('mariateresa') && !email.includes('susana')) {
       return [
         { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
         { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
