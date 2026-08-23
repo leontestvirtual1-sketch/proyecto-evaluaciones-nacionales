@@ -81,8 +81,19 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
       try {
         let query = supabase.from('pruebas').select('*');
 
-        if (currentUser!.rol !== 'admin') {
-          query = query.eq('profesor_id', currentUser!.id);
+        const email = (currentUser!.email || '').toLowerCase();
+        const isPremilitarTeacher = email.includes('premil.cl') || email.includes('mariateresa') || currentUser!.id === 'prof-prem-01';
+        const isSusanaTeacher = email.includes('susana') || email.includes('nentitasusana') || currentUser!.id === 'prof-mc-01';
+        const isAdmin = currentUser!.rol === 'admin';
+
+        if (!isAdmin) {
+          if (isPremilitarTeacher) {
+            query = query.or(`profesor_id.eq.${currentUser!.id},profesor_id.eq.prof-prem-01,asignatura_id.eq.asig-2`);
+          } else if (isSusanaTeacher) {
+            query = query.or(`profesor_id.eq.${currentUser!.id},profesor_id.eq.prof-mc-01,asignatura_id.eq.asig-1`);
+          } else {
+            query = query.eq('profesor_id', currentUser!.id);
+          }
         }
 
         const { data, error } = await query.order('created_at', { ascending: false });
@@ -90,11 +101,8 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         if (error) {
           console.warn('[useEvaluaciones] Error al consultar Supabase:', error.message);
           if (isMounted) {
-            // Caso María Teresa en fallback de red
-            const email = (currentUser!.email || '').toLowerCase();
-            if (email.includes('premil.cl') || email.includes('mariateresa')) {
-              setPruebas([pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock]);
-            } else if (currentUser!.rol === 'admin') {
+            // Caso María Teresa en fallback
+            if (isPremilitarTeacher || isAdmin) {
               setPruebas([pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock]);
             } else {
               setPruebas([]);
@@ -107,20 +115,22 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         if (data && data.length > 0) {
           if (isMounted) {
             const dbPruebas = data.map(mapRowToPrueba);
-            setPruebas(dbPruebas);
+            // Si es docente de Lenguaje o María Teresa, asegurar que las 3 oficiales estén presentes
+            if (isPremilitarTeacher) {
+              const mapById = new Map<string, Prueba>();
+              [pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock].forEach(p => mapById.set(p.id, p));
+              dbPruebas.forEach(p => mapById.set(p.id, p));
+              setPruebas(Array.from(mapById.values()));
+            } else {
+              setPruebas(dbPruebas);
+            }
             setIsLoading(false);
           }
           return;
         }
 
-        // Si la tabla en Supabase está vacía:
-        // Si es Admin o María Teresa González, auto-poblar sus evaluaciones oficiales
-        const email = (currentUser!.email || '').toLowerCase();
-        const isPremilitarTeacher = email.includes('premil.cl') || email.includes('mariateresa');
-        const isAdmin = currentUser!.rol === 'admin';
-
-        if ((isPremilitarTeacher || isAdmin) && !isSeededRef.current) {
-          isSeededRef.current = true;
+        // Si la tabla en Supabase está vacía o sin filas para este docente:
+        if (isPremilitarTeacher || isAdmin) {
           const premilitarPruebas = [
             { ...pruebaLenguaje2MMock, profesorId: currentUser!.id },
             { ...pruebaLenguaje2MJunioMock, profesorId: currentUser!.id },
@@ -143,7 +153,7 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
           return;
         }
 
-        // Para cualquier otro docente nuevo de producción: parte en 0 legítimo
+        // Para cualquier otro docente nuevo de producción: parte en 0 legítimo (Directiva 2)
         if (isMounted) {
           setPruebas([]);
           setIsLoading(false);
@@ -151,7 +161,12 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
       } catch (err) {
         console.error('[useEvaluaciones] Error general al cargar evaluaciones:', err);
         if (isMounted) {
-          setPruebas([]);
+          const email = (currentUser!.email || '').toLowerCase();
+          if (email.includes('premil.cl') || email.includes('mariateresa') || currentUser!.rol === 'admin') {
+            setPruebas([pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock]);
+          } else {
+            setPruebas([]);
+          }
           setIsLoading(false);
         }
       }

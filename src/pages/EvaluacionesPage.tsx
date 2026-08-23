@@ -45,7 +45,8 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
   const preguntasDeLaPrueba = React.useMemo(() => {
     if (!prueba) return [];
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
-      const byId = new Map(preguntas.map(p => [p.id, p]));
+      const byId = new Map<string, Pregunta>();
+      preguntas.forEach(p => byId.set(p.id, p));
       const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
       if (list.length > 0) return list;
     }

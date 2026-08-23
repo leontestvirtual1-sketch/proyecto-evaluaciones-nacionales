@@ -279,34 +279,17 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
 
   // Sincronizar nivelFilter:
-  // - Si el docente tiene nivelFilter vacío, auto-seleccionar el primer nivel con preguntas
-  // - Si el nivel seleccionado ya no tiene preguntas, mover al primero que tenga
-  // - Admin con nivelFilter vacío = "Todos los Cursos" (NO forzar nivel)
+  // - Para docente: si nivelFilter está vacío, asignar el nivel inicial correspondiente
+  // - Admin: puede ver "Todos los Cursos" o filtrar por nivel específico
   React.useEffect(() => {
-    if (nivelesDisponibles.length === 0) return;
-
-    // Para docente: auto-seleccionar nivel si está vacío
     if (isDocente && !nivelFilter) {
-      const firstWithQuestions = nivelesDisponibles.find(lvl => (lvl.count || 0) > 0);
-      const firstAny = nivelesDisponibles[0];
-      const target = firstWithQuestions || firstAny;
-      if (target) setNivelFilter(target.key);
-      return;
-    }
-
-    // Si hay un nivel seleccionado pero ya no tiene preguntas, mover al primero que tenga
-    if (nivelFilter) {
-      const currentLevelObj = nivelesDisponibles.find(lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter));
-      if (!currentLevelObj || (currentLevelObj.count || 0) === 0) {
-        const levelWithQuestions = nivelesDisponibles.find(lvl => (lvl.count || 0) > 0);
-        if (levelWithQuestions) {
-          setNivelFilter(levelWithQuestions.key);
-        } else {
-          setNivelFilter('');
-        }
+      if (docenteAsigId === 'asig-2' || (currentUser?.email || '').toLowerCase().includes('premil')) {
+        setNivelFilter('2° medio');
+      } else {
+        setNivelFilter('4° básico');
       }
     }
-  }, [nivelesDisponibles, nivelFilter, isDocente]);
+  }, [isDocente, docenteAsigId, currentUser?.email]);
 
   // Base de preguntas filtradas por ASIGNATURA, CURSO/NIVEL, ESTABLECIMIENTO y DOCENTE
   const basePreguntas = useMemo(() => {

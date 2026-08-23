@@ -166,12 +166,21 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             p.id === 'prueba-len2m-101' ||
             p.id === 'prueba-len2m-jun-101' ||
             p.id === 'prueba-len2m-abr-101' ||
-            p.profesorId === currentUserProfesorPremilitar.id
+            p.profesorId === currentUserProfesorPremilitar.id ||
+            p.asignaturaId === 'asig-2'
         );
+        const fallbackPremilitar = [
+          pruebasMock.find(p => p.id === 'prueba-len2m-101') || allPruebas[0],
+          pruebasMock.find(p => p.id === 'prueba-len2m-jun-101') || allPruebas[1],
+          pruebasMock.find(p => p.id === 'prueba-len2m-abr-101') || allPruebas[2]
+        ].filter(Boolean) as Prueba[];
+
+        const finalPremilPruebas = prodPruebas.length > 0 ? prodPruebas : (fallbackPremilitar.length > 0 ? fallbackPremilitar : pruebasMock.filter(p => p.id.startsWith('prueba-len2m')));
+
         return {
           isProduction: true,
-          pruebas: prodPruebas,
-          cursos: cursosMock.filter(c => c.id === 'curso-prem-2m' || c.id === 'curso-2m' || c.nivel.includes('Medio')),
+          pruebas: finalPremilPruebas,
+          cursos: cursosMock.filter(c => c.id === 'curso-prem-2m' || c.id === 'curso-2m' || c.nivel.includes('Medio') || c.establecimiento?.includes('Premilitar')),
           alumnos: [],
           seguimientoDocentes: [{
             profesorId: currentUserProfesorPremilitar.id,
@@ -182,8 +191,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             asignaturaId: 'asig-2',
             asignaturaNombre: 'Lenguaje y Comunicación',
             cursosAsignados: ['2° Medio'],
-            totalEvaluacionesCreadas: prodPruebas.length,
-            totalEvaluacionesActivas: prodPruebas.filter(p => p.estado === 'activa').length,
+            totalEvaluacionesCreadas: finalPremilPruebas.length,
+            totalEvaluacionesActivas: finalPremilPruebas.filter(p => p.estado === 'activa').length,
             totalAlumnosEvaluados: 0,
             totalAlumnosMatriculados: 0,
             coberturaCurricularPorcentaje: 100,

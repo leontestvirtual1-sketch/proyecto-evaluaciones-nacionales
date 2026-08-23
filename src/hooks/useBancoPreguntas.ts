@@ -128,8 +128,16 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
               ];
               const uniqueMap = new Map<string, Pregunta>();
               allGlobal.forEach(p => uniqueMap.set(p.id, p));
-              // Las preguntas de Supabase (ej. creadas manualmente por Susana) tienen prioridad
-              dbQuestions.forEach(p => uniqueMap.set(p.id, p));
+              // Las preguntas de Supabase se fusionan preservando imágenes del catálogo si no están en DB
+              dbQuestions.forEach(p => {
+                const existing = uniqueMap.get(p.id);
+                uniqueMap.set(p.id, {
+                  ...existing,
+                  ...p,
+                  imagenUrl: p.imagenUrl || existing?.imagenUrl,
+                  tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown
+                });
+              });
               setPreguntas(Array.from(uniqueMap.values()));
             } else {
               // Dinámico para cualquier docente: combina preguntas de su especialidad con sus preguntas de Supabase
@@ -143,7 +151,15 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
 
               const uniqueMap = new Map<string, Pregunta>();
               baseForSubject.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
-              dbQuestions.forEach(p => uniqueMap.set(p.id, p));
+              dbQuestions.forEach(p => {
+                const existing = uniqueMap.get(p.id);
+                uniqueMap.set(p.id, {
+                  ...existing,
+                  ...p,
+                  imagenUrl: p.imagenUrl || existing?.imagenUrl,
+                  tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown
+                });
+              });
               setPreguntas(Array.from(uniqueMap.values()));
             }
             setIsLoading(false);
