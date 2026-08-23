@@ -30,7 +30,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   darkMode,
   onToggleDarkMode
 }) => {
-  const schoolLogo = user.logoUrl || establecimientosCatalog.find(
+  const isPremil = user.establecimiento?.toLowerCase().includes('premilitar') || user.rbd === '31030' || (user.email || '').toLowerCase().includes('premil');
+  const schoolLogo = (isPremil ? '/logos/escuela-premilitar.png' : user.logoUrl) || establecimientosCatalog.find(
     e => (user.rbd && e.rbd === user.rbd) || e.nombre.toLowerCase().includes(user.establecimiento.toLowerCase())
   )?.logoUrl;
 
@@ -76,7 +77,16 @@ export const Navbar: React.FC<NavbarProps> = ({
             {user.rol !== 'admin' && (
               <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 text-xs font-semibold border border-slate-200 dark:border-slate-700 truncate max-w-[260px]">
                 {schoolLogo ? (
-                  <img src={schoolLogo} alt="Logo" className="w-5 h-5 object-contain rounded shrink-0" />
+                  <img 
+                    src={schoolLogo} 
+                    alt="Logo" 
+                    className="w-5 h-5 object-contain rounded shrink-0"
+                    onError={(e) => {
+                      if (isPremil) {
+                        e.currentTarget.src = '/logos/escuela-premilitar.png';
+                      }
+                    }}
+                  />
                 ) : (
                   <School className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
                 )}

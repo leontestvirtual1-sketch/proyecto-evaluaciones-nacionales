@@ -84,218 +84,105 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
       try {
         let query = supabase.from('preguntas').select('*');
 
-        // Si no es admin, filtrar estrictamente por su ID de docente
+        const userEmail = (user!.email || '').toLowerCase();
+        const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
+        const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
+        const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
+        const isLenguaje = teacherAsig === 'asig-2' || isPremil;
+
+        // Base oficial garantizada según especialidad
+        const baseForSubject = user!.rol === 'admin'
+          ? [
+              ...preguntasMock,
+              ...preguntasLenguaje2MMock,
+              ...preguntasLenguaje2MJunioMock,
+              ...preguntasLenguaje2MAbrilMock,
+            ]
+          : isLenguaje
+          ? [
+              ...preguntasLenguaje2MMock,
+              ...preguntasLenguaje2MJunioMock,
+              ...preguntasLenguaje2MAbrilMock,
+              ...preguntasMock.filter(p => p.asignaturaId === 'asig-2')
+            ]
+          : teacherAsig
+          ? preguntasMock.filter(p => p.asignaturaId === teacherAsig)
+          : preguntasMock;
+
+        // Si no es admin, consultar las preguntas de su asignatura O de su ID de docente
         if (user!.rol !== 'admin') {
-          query = query.eq('propietario_id', user!.id);
+          if (teacherAsig) {
+            query = query.or(`propietario_id.eq.${user!.id},asignatura_id.eq.${teacherAsig}`);
+          } else {
+            query = query.eq('propietario_id', user!.id);
+          }
         }
 
         const { data, error } = await query.order('created_at', { ascending: false });
 
         if (error) {
           console.warn('[useBancoPreguntas] Error al consultar Supabase:', error.message);
-          if (isMounted) {
-            if (user!.rol === 'admin') {
-              const allPremilitar = [
-                ...preguntasLenguaje2MMock,
-                ...preguntasLenguaje2MJunioMock,
-                ...preguntasLenguaje2MAbrilMock,
-              ];
-              const uniqueMap = new Map<string, Pregunta>();
-              allPremilitar.forEach(p => uniqueMap.set(p.id, p));
-              setPreguntas(Array.from(uniqueMap.values()));
-            } else {
-              try {
-                const stored = localStorage.getItem(`sysget_banco_preguntas_${user!.id}`);
-                setPreguntas(stored ? JSON.parse(stored) : []);
-              } catch {
-                setPreguntas([]);
-              }
-            }
-            setIsLoading(false);
-          }
-          return;
-        }
-
-        if (data && data.length > 0) {
-          if (isMounted) {
-            const dbQuestions = data.map(mapRowToPregunta);
-            if (user!.rol === 'admin') {
-              const imageMap = new Map<string, { imagenUrl?: string; tablaMarkdown?: string }>();
-              [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock].forEach(p => {
-                imageMap.set(p.id, { imagenUrl: p.imagenUrl, tablaMarkdown: p.tablaMarkdown });
-              });
-
-              // Preservar preguntas reales de Supabase enriqueciendo imágenes si existen en el catálogo
-              const merged = dbQuestions.map(p => {
-                const meta = imageMap.get(p.id);
-                return {
-                  ...p,
-                  imagenUrl: p.imagenUrl || meta?.imagenUrl,
-                  tablaMarkdown: p.tablaMarkdown || meta?.tablaMarkdown
-                };
-              });
-              setPreguntas(merged);
-            } else {
-              // Dinámico para cualquier docente: combina preguntas de su especialidad con sus preguntas de Supabase
-              const userEmail = (user!.email || '').toLowerCase();
-              const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
-              const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
-              const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
-              const isLenguaje = teacherAsig === 'asig-2' || isPremil;
-
-              const baseForSubject = isLenguaje
-                ? [
-                    ...preguntasLenguaje2MMock,
-                    ...preguntasLenguaje2MJunioMock,
-                    ...preguntasLenguaje2MAbrilMock,
-                    ...preguntasMock.filter(p => p.asignaturaId === 'asig-2')
-                  ]
-                : teacherAsig
-                ? preguntasMock.filter(p => p.asignaturaId === teacherAsig)
-                : preguntasMock;
-
-              const uniqueMap = new Map<string, Pregunta>();
-              baseForSubject.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
-              dbQuestions.forEach(p => {
-                const existing = uniqueMap.get(p.id);
-                uniqueMap.set(p.id, {
-                  ...existing,
-                  ...p,
-                  imagenUrl: p.imagenUrl || existing?.imagenUrl,
-                  tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown
-                });
-              });
-
-              // Cargar y fusionar preguntas manuales guardadas en localStorage
-              try {
-                const localKeys = [`sysget_banco_preguntas_${user!.id}`, 'sysget_banco_preguntas_custom'];
-                localKeys.forEach(k => {
-                  const stored = localStorage.getItem(k);
-                  if (stored) {
-                    const parsed: Pregunta[] = JSON.parse(stored);
-                    if (Array.isArray(parsed)) {
-                      parsed.forEach(lp => {
-                        if (lp && lp.id) {
-                          uniqueMap.set(lp.id, { ...lp, propietarioId: user!.id });
-                        }
-                      });
-                    }
-                  }
-                });
-              } catch (e) {}
-
-              setPreguntas(Array.from(uniqueMap.values()));
-            }
-            setIsLoading(false);
-          }
-          return;
-        }
-
-        // Si el banco en Supabase está vacío o se está inicializando, verificamos el seed por especialidad
-        if (!isMigratingRef.current) {
-          isMigratingRef.current = true;
-
-          // 1. Caso Administrador: proveer catálogo global institucional completo
-          if (user!.rol === 'admin') {
-            const allGlobal = [
-              ...preguntasMock,
-              ...preguntasLenguaje2MMock,
-              ...preguntasLenguaje2MJunioMock,
-              ...preguntasLenguaje2MAbrilMock,
-            ];
-            const uniqueMap = new Map<string, Pregunta>();
-            allGlobal.forEach(p => uniqueMap.set(p.id, p));
-            const globalQuestions = Array.from(uniqueMap.values());
-
-            if (isMounted) {
-              setPreguntas(globalQuestions);
-              setIsLoading(false);
-            }
-            return;
-          }
-
-          // 2. Dinámico para cualquier docente actual o futuro según su asignatura
-          const userEmail = (user!.email || '').toLowerCase();
-          const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
-          const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
-          const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
-          const isLenguaje = teacherAsig === 'asig-2' || isPremil;
-
-          const subjectQuestions = isLenguaje
-            ? [
-                ...preguntasLenguaje2MMock,
-                ...preguntasLenguaje2MJunioMock,
-                ...preguntasLenguaje2MAbrilMock,
-                ...preguntasMock.filter(p => p.asignaturaId === 'asig-2')
-              ]
-            : teacherAsig
-            ? preguntasMock.filter(p => p.asignaturaId === teacherAsig)
-            : preguntasMock;
-
-          const uniqueMap = new Map<string, Pregunta>();
-          subjectQuestions.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
-          const seedQuestions = Array.from(uniqueMap.values());
-
-          if (seedQuestions.length > 0) {
-            if (isMounted) {
-              setPreguntas(seedQuestions);
-              setIsLoading(false);
-            }
-
-            // Persistir de forma segura en Supabase para el docente
-            try {
-              const rowsToInsert = seedQuestions.map(p => mapPreguntaToRow(p, user!.id));
-              const { error: seedError } = await supabase.from('preguntas').upsert(rowsToInsert, { onConflict: 'id' });
-              if (seedError) {
-                console.warn('[useBancoPreguntas] Seed notice:', seedError.message);
-              }
-            } catch (err) {
-              console.error('[useBancoPreguntas] Error al persistir seed:', err);
-            }
-            return;
-          }
-
-          // 4. Migrar de localStorage si existían preguntas guardadas previamente
-          try {
-            const localStored = localStorage.getItem(`sysget_banco_preguntas_${user!.id}`);
-            if (localStored) {
-              const localList: Pregunta[] = JSON.parse(localStored);
-              if (localList.length > 0) {
-                const rows = localList.map(p => mapPreguntaToRow(p, user!.id));
-                const { error: migError } = await supabase.from('preguntas').upsert(rows);
-                if (!migError && isMounted) {
-                  setPreguntas(localList);
-                  localStorage.removeItem(`sysget_banco_preguntas_${user!.id}`);
-                  setIsLoading(false);
-                  return;
-                }
-              }
-            }
-          } catch (e) {
-            console.error('[useBancoPreguntas] Error migrando localStorage a Supabase:', e);
-          }
         }
 
         if (isMounted) {
-          setPreguntas([]);
+          const dbQuestions = data && data.length > 0 ? data.map(mapRowToPregunta) : [];
+          const uniqueMap = new Map<string, Pregunta>();
+
+          // 1. Inicializar con el catálogo base oficial
+          baseForSubject.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
+
+          // 2. Fusionar con las preguntas de la base de datos Supabase
+          const imageMap = new Map<string, { imagenUrl?: string; tablaMarkdown?: string }>();
+          [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock].forEach(p => {
+            imageMap.set(p.id, { imagenUrl: p.imagenUrl, tablaMarkdown: p.tablaMarkdown });
+          });
+
+          dbQuestions.forEach(p => {
+            const existing = uniqueMap.get(p.id);
+            const meta = imageMap.get(p.id);
+            uniqueMap.set(p.id, {
+              ...existing,
+              ...p,
+              imagenUrl: p.imagenUrl || existing?.imagenUrl || meta?.imagenUrl,
+              tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown || meta?.tablaMarkdown
+            });
+          });
+
+          // 3. Cargar y fusionar preguntas manuales guardadas en localStorage
+          try {
+            const localKeys = [`sysget_banco_preguntas_${user!.id}`, 'sysget_banco_preguntas_custom'];
+            localKeys.forEach(k => {
+              const stored = localStorage.getItem(k);
+              if (stored) {
+                const parsed: Pregunta[] = JSON.parse(stored);
+                if (Array.isArray(parsed)) {
+                  parsed.forEach(lp => {
+                    if (lp && lp.id) {
+                      uniqueMap.set(lp.id, { ...lp, propietarioId: user!.id });
+                    }
+                  });
+                }
+              }
+            });
+          } catch (e) {}
+
+          setPreguntas(Array.from(uniqueMap.values()));
           setIsLoading(false);
         }
       } catch (err) {
         console.error('[useBancoPreguntas] Error general al cargar banco:', err);
         if (isMounted) {
-          if (user!.rol === 'admin') {
-            const allGlobal = [
-              ...preguntasMock,
-              ...preguntasLenguaje2MMock,
-              ...preguntasLenguaje2MJunioMock,
-              ...preguntasLenguaje2MAbrilMock,
-            ];
-            const uniqueMap = new Map<string, Pregunta>();
-            allGlobal.forEach(p => uniqueMap.set(p.id, p));
-            setPreguntas(Array.from(uniqueMap.values()));
-          } else {
-            setPreguntas([]);
-          }
+          const userEmail = (user!.email || '').toLowerCase();
+          const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
+          const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : '');
+          const fallback = (teacherAsig === 'asig-2' || isPremil)
+            ? [
+                ...preguntasLenguaje2MMock,
+                ...preguntasLenguaje2MJunioMock,
+                ...preguntasLenguaje2MAbrilMock,
+              ]
+            : preguntasMock;
+          setPreguntas(fallback);
           setIsLoading(false);
         }
       }
