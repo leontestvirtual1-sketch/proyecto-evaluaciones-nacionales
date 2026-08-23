@@ -110,6 +110,7 @@ export interface Prueba {
   id: string;
   titulo: string;
   descripcion: string;
+  establecimiento?: string;
   asignaturaId: string;
   asignaturaNombre: string;
   nivel: string;

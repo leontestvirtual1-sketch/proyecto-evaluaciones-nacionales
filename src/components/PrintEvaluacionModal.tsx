@@ -16,7 +16,10 @@ import {
 } from 'lucide-react';
 import { Prueba, Pregunta, AlumnoBasico } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
-import { establecimientosCatalog } from '../data/mockData';
+import { establecimientosCatalog, preguntasMock } from '../data/mockData';
+import { preguntasLenguaje2MMock } from '../data/len2mQuestionsMock';
+import { preguntasLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
+import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { getSequentialPrintTitle } from '../utils/printUtils';
@@ -103,12 +106,30 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   // Filter and prepare questions for this evaluation strictly by preguntasIds
   const preguntasDeLaPrueba = React.useMemo(() => {
     if (!prueba) return [];
+    
+    // Mapa con todas las preguntas disponibles (provistas + catálogo oficial)
+    const byId = new Map<string, Pregunta>();
+    
+    const allOfficial: Pregunta[] = [
+      ...preguntasLenguaje2MMock,
+      ...preguntasLenguaje2MJunioMock,
+      ...preguntasLenguaje2MAbrilMock,
+      ...preguntasMock
+    ];
+    allOfficial.forEach(p => byId.set(p.id, p));
+    (preguntas || []).forEach(p => byId.set(p.id, p));
+
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
-      const byId = new Map((preguntas || []).map(p => [p.id, p]));
       const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
       if (list.length > 0) return list;
     }
-    return (preguntas || []).filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
+    
+    const bySubject = (preguntas || []).filter(p => p.asignaturaId === prueba.asignaturaId);
+    if (bySubject.length > 0) {
+      return bySubject.slice(0, prueba.totalPreguntas || 30);
+    }
+    
+    return allOfficial.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
   }, [prueba, preguntas]);
 
   // If none matched, fallback to all provided questions up to totalPreguntas
