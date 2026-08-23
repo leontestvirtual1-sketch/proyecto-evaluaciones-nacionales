@@ -531,30 +531,6 @@ Su pluma no fue un simple instrumento de redacción, sino una espada de combate 
       updated_at = NOW();
   END IF;
 
-  -- 2. Asegurar Preguntas Oficiales SIMCE Matemática para Colegio Mi Casa
-  IF v_micasa_owner IS NOT NULL THEN
-    INSERT INTO public.preguntas (
-      id, propietario_id, asignatura_id, eje_tematico_id, habilidad_id,
-      tipo, nivel, dificultad, enunciado, alternativas, respuesta_correcta, puntaje, fuente, created_at, updated_at
-    )
-    VALUES
-      ('preg-mat-4b-01', v_micasa_owner, 'asig-1', 'eje-mat-1', 'hab-mat-1', 'seleccion_multiple', '4° Básico', 'baja', 'En un huerto escolar se cosecharon 348 manzanas el lunes y 275 manzanas el martes. ¿Cuántas manzanas se cosecharon en total?', '[{"letra":"A","texto":"513 manzanas","es_correcta":false},{"letra":"B","texto":"623 manzanas","es_correcta":true},{"letra":"C","texto":"613 manzanas","es_correcta":false},{"letra":"D","texto":"723 manzanas","es_correcta":false}]'::jsonb, 'B', 1, 'SIMCE Oficial Matemática 4° Básico', NOW(), NOW()),
-      ('preg-mat-4b-02', v_micasa_owner, 'asig-1', 'eje-mat-1', 'hab-mat-2', 'seleccion_multiple', '4° Básico', 'media', 'Un profesor tiene 36 lápices y los reparte en partes iguales entre 4 estudiantes. ¿Cuántos lápices recibe cada estudiante?', '[{"letra":"A","texto":"7 lápices","es_correcta":false},{"letra":"B","texto":"8 lápices","es_correcta":false},{"letra":"C","texto":"9 lápices","es_correcta":true},{"letra":"D","texto":"12 lápices","es_correcta":false}]'::jsonb, 'C', 1, 'SIMCE Oficial Matemática 4° Básico', NOW(), NOW()),
-      ('preg-mat-4b-03', v_micasa_owner, 'asig-1', 'eje-mat-2', 'hab-mat-2', 'seleccion_multiple', '4° Básico', 'media', 'Observa la siguiente secuencia numérica: 12, 18, 24, 30, ___. ¿Cuál es el número que sigue?', '[{"letra":"A","texto":"34","es_correcta":false},{"letra":"B","texto":"36","es_correcta":true},{"letra":"C","texto":"38","es_correcta":false},{"letra":"D","texto":"40","es_correcta":false}]'::jsonb, 'B', 1, 'SIMCE Oficial Matemática 4° Básico', NOW(), NOW()),
-      ('preg-mat-4b-04', v_micasa_owner, 'asig-1', 'eje-mat-3', 'hab-mat-1', 'seleccion_multiple', '4° Básico', 'baja', '¿Cuál de las siguientes figuras geométricas tiene exactamente 4 lados de igual longitud y 4 ángulos rectos?', '[{"letra":"A","texto":"Rectángulo","es_correcta":false},{"letra":"B","texto":"Rombo","es_correcta":false},{"letra":"C","texto":"Cuadrado","es_correcta":true},{"letra":"D","texto":"Trapecio","es_correcta":false}]'::jsonb, 'C', 1, 'SIMCE Oficial Matemática 4° Básico', NOW(), NOW()),
-      ('preg-mat-4b-05', v_micasa_owner, 'asig-1', 'eje-mat-4', 'hab-mat-3', 'seleccion_multiple', '4° Básico', 'alta', 'En un gráfico de barras, la barra de "Perros" llega a 15 y la de "Gatos" llega a 9. ¿Cuántos estudiantes más prefieren perros que gatos?', '[{"letra":"A","texto":"4 estudiantes","es_correcta":false},{"letra":"B","texto":"6 estudiantes","es_correcta":true},{"letra":"C","texto":"8 estudiantes","es_correcta":false},{"letra":"D","texto":"24 estudiantes","es_correcta":false}]'::jsonb, 'B', 1, 'SIMCE Oficial Matemática 4° Básico', NOW(), NOW()),
-      ('preg-mat-6b-01', v_micasa_owner, 'asig-1', 'eje-mat-1', 'hab-mat-1', 'seleccion_multiple', '6° Básico', 'baja', '¿Cuál es el resultado de 3/4 + 1/2?', '[{"letra":"A","texto":"4/6","es_correcta":false},{"letra":"B","texto":"5/4","es_correcta":true},{"letra":"C","texto":"1","es_correcta":false},{"letra":"D","texto":"4/8","es_correcta":false}]'::jsonb, 'B', 1, 'SIMCE Oficial Matemática 6° Básico', NOW(), NOW()),
-      ('preg-mat-6b-02', v_micasa_owner, 'asig-1', 'eje-mat-2', 'hab-mat-2', 'seleccion_multiple', '6° Básico', 'media', 'Un ángulo mide 65°. ¿Cuánto mide su ángulo complementario?', '[{"letra":"A","texto":"25°","es_correcta":true},{"letra":"B","texto":"35°","es_correcta":false},{"letra":"C","texto":"115°","es_correcta":false},{"letra":"D","texto":"125°","es_correcta":false}]'::jsonb, 'A', 1, 'SIMCE Oficial Matemática 6° Básico', NOW(), NOW()),
-      ('preg-mat-8b-01', v_micasa_owner, 'asig-1', 'eje-mat-1', 'hab-mat-2', 'seleccion_multiple', '8° Básico', 'media', 'Un curso compró 2 cajas de plumones. Cada caja contenía 10 plumones. Repartieron esos plumones en partes iguales entre 4 grupos. ¿Cuántos plumones recibió cada grupo?', '[{"letra":"A","texto":"3 plumones","es_correcta":false},{"letra":"B","texto":"5 plumones","es_correcta":true},{"letra":"C","texto":"8 plumones","es_correcta":false},{"letra":"D","texto":"16 plumones","es_correcta":false}]'::jsonb, 'B', 1, 'SIMCE Oficial Matemática 8° Básico', NOW(), NOW()),
-      ('preg-mat-8b-02', v_micasa_owner, 'asig-1', 'eje-mat-2', 'hab-mat-3', 'seleccion_multiple', '8° Básico', 'alta', 'Si 3x - 7 = 14, ¿cuál es el valor de x?', '[{"letra":"A","texto":"5","es_correcta":false},{"letra":"B","texto":"7","es_correcta":true},{"letra":"C","texto":"9","es_correcta":false},{"letra":"D","texto":"21","es_correcta":false}]'::jsonb, 'B', 1, 'SIMCE Oficial Matemática 8° Básico', NOW(), NOW())
-    ON CONFLICT (id) DO UPDATE SET
-      enunciado = EXCLUDED.enunciado,
-      alternativas = EXCLUDED.alternativas,
-      respuesta_correcta = EXCLUDED.respuesta_correcta,
-      fuente = EXCLUDED.fuente,
-      updated_at = NOW();
-  END IF;
-
 END $$;
 
 COMMIT;
