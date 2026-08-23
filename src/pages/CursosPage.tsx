@@ -38,11 +38,14 @@ interface CursoFormModalProps {
   establecimientoNombre: string;
 }
 
+// Nomenclatura unificada con BancoPreguntasPage — usar siempre grado en número + "Básico" o "Medio"
 const NIVELES = [
   '1° Básico', '2° Básico', '3° Básico', '4° Básico',
   '5° Básico', '6° Básico', '7° Básico', '8° Básico',
-  'I Medio', 'II Medio', 'III Medio', 'IV Medio',
+  '1° Medio', '2° Medio', '3° Medio', '4° Medio',
 ];
+
+const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F', 'Único'];
 
 const CursoFormModal: React.FC<CursoFormModalProps> = ({
   isOpen,
@@ -51,29 +54,53 @@ const CursoFormModal: React.FC<CursoFormModalProps> = ({
   editCurso,
   establecimientoNombre
 }) => {
-  const [nombre, setNombre] = useState(editCurso?.nombre || '');
-  const [nivel, setNivel] = useState(editCurso?.nivel || 'II Medio');
+  const [nivel, setNivel] = useState(editCurso?.nivel || '2° Medio');
+  const [letra, setLetra] = useState<string>(() => {
+    if (editCurso?.nombre) {
+      const parts = editCurso.nombre.trim().split(' ');
+      const last = parts[parts.length - 1];
+      if (LETRAS.includes(last)) return last;
+    }
+    return 'A';
+  });
+  const [nombre, setNombre] = useState(editCurso?.nombre || '2° Medio A');
   const [anio, setAnio] = useState(editCurso?.anio || 2026);
 
+  // Sincronizar al abrir o editar
   useEffect(() => {
     if (editCurso) {
       setNombre(editCurso.nombre);
       setNivel(editCurso.nivel);
       setAnio(editCurso.anio);
+      const parts = editCurso.nombre.trim().split(' ');
+      const last = parts[parts.length - 1];
+      setLetra(LETRAS.includes(last) ? last : 'A');
     } else {
-      setNombre('');
-      setNivel('II Medio');
+      setNivel('2° Medio');
+      setLetra('A');
+      setNombre('2° Medio A');
       setAnio(2026);
     }
   }, [editCurso, isOpen]);
 
+  // Actualizar nombre al cambiar nivel o letra
+  const handleNivelChange = (newNivel: string) => {
+    setNivel(newNivel);
+    setNombre(letra === 'Único' ? newNivel : `${newNivel} ${letra}`);
+  };
+
+  const handleLetraChange = (newLetra: string) => {
+    setLetra(newLetra);
+    setNombre(newLetra === 'Único' ? nivel : `${nivel} ${newLetra}`);
+  };
+
   if (!isOpen) return null;
 
   const handleSave = () => {
-    if (!nombre.trim()) return;
+    const finalNombre = nombre.trim() || (letra === 'Único' ? nivel : `${nivel} ${letra}`);
     onSave({
       id: editCurso?.id || `cur-${Date.now()}`,
-      nombre,
+      nombre: finalNombre,
       nivel,
       anio,
       codigoInvitacion: editCurso?.codigoInvitacion || generateCode(),
@@ -101,27 +128,40 @@ const CursoFormModal: React.FC<CursoFormModalProps> = ({
         </div>
 
         <div className="space-y-3">
-          <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nombre del Curso</label>
-            <input
-              type="text"
-              value={nombre}
-              onChange={e => setNombre(e.target.value)}
-              placeholder="Ej: 2° Medio A"
-              className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all text-slate-900 dark:text-white"
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nivel Escolar</label>
+              <select
+                value={nivel}
+                onChange={e => handleNivelChange(e.target.value)}
+                className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-violet-500/20 transition-all text-slate-900 dark:text-white font-medium"
+              >
+                {NIVELES.map(n => <option key={n} value={n}>{n}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Letra / Paralelo</label>
+              <select
+                value={letra}
+                onChange={e => handleLetraChange(e.target.value)}
+                className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-violet-500/20 transition-all text-slate-900 dark:text-white font-medium"
+              >
+                {LETRAS.map(l => <option key={l} value={l}>Paralelo {l}</option>)}
+              </select>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nivel</label>
-              <select
-                value={nivel}
-                onChange={e => setNivel(e.target.value)}
-                className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-violet-500/20 transition-all text-slate-900 dark:text-white"
-              >
-                {NIVELES.map(n => <option key={n} value={n}>{n}</option>)}
-              </select>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nombre Oficial</label>
+              <input
+                type="text"
+                value={nombre}
+                onChange={e => setNombre(e.target.value)}
+                placeholder="Ej: 2° Medio A"
+                className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all text-slate-900 dark:text-white font-semibold"
+              />
             </div>
 
             <div>

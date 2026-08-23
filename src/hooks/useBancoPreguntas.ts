@@ -92,18 +92,26 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
 
         if (error) {
           console.warn('[useBancoPreguntas] Error al consultar Supabase:', error.message);
-          // Fallback a localStorage si la tabla aún no existe o hay error transitorio
-          try {
-            const stored = localStorage.getItem(`sysget_banco_preguntas_${user!.id}`);
-            if (stored && isMounted) {
-              setPreguntas(JSON.parse(stored));
-            } else if (isMounted) {
-              setPreguntas([]);
+          if (isMounted) {
+            if (user!.rol === 'admin') {
+              const allPremilitar = [
+                ...preguntasLenguaje2MMock,
+                ...preguntasLenguaje2MJunioMock,
+                ...preguntasLenguaje2MAbrilMock,
+              ];
+              const uniqueMap = new Map<string, Pregunta>();
+              allPremilitar.forEach(p => uniqueMap.set(p.id, p));
+              setPreguntas(Array.from(uniqueMap.values()));
+            } else {
+              try {
+                const stored = localStorage.getItem(`sysget_banco_preguntas_${user!.id}`);
+                setPreguntas(stored ? JSON.parse(stored) : []);
+              } catch {
+                setPreguntas([]);
+              }
             }
-          } catch {
-            if (isMounted) setPreguntas([]);
+            setIsLoading(false);
           }
-          if (isMounted) setIsLoading(false);
           return;
         }
 
@@ -119,7 +127,25 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         if (!isMigratingRef.current) {
           isMigratingRef.current = true;
 
-          // 1. Caso especial: María Teresa González (Escuela Premilitar)
+          // 1. Caso Administrador: proveer catálogo global institucional
+          if (user!.rol === 'admin') {
+            const allPremilitar = [
+              ...preguntasLenguaje2MMock,
+              ...preguntasLenguaje2MJunioMock,
+              ...preguntasLenguaje2MAbrilMock,
+            ];
+            const uniqueMap = new Map<string, Pregunta>();
+            allPremilitar.forEach(p => uniqueMap.set(p.id, p));
+            const globalQuestions = Array.from(uniqueMap.values());
+
+            if (isMounted) {
+              setPreguntas(globalQuestions);
+              setIsLoading(false);
+            }
+            return;
+          }
+
+          // 2. Caso especial: María Teresa González (Escuela Premilitar)
           const isPremilitarTeacher =
             user!.email.toLowerCase().includes('premil.cl') ||
             user!.email.toLowerCase().includes('maria') ||
@@ -157,7 +183,7 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
             return;
           }
 
-          // 2. Migrar de localStorage si existían preguntas guardadas previamente
+          // 3. Migrar de localStorage si existían preguntas guardadas previamente
           try {
             const localStored = localStorage.getItem(`sysget_banco_preguntas_${user!.id}`);
             if (localStored) {
@@ -185,7 +211,18 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
       } catch (err) {
         console.error('[useBancoPreguntas] Error general al cargar banco:', err);
         if (isMounted) {
-          setPreguntas([]);
+          if (user!.rol === 'admin') {
+            const allPremilitar = [
+              ...preguntasLenguaje2MMock,
+              ...preguntasLenguaje2MJunioMock,
+              ...preguntasLenguaje2MAbrilMock,
+            ];
+            const uniqueMap = new Map<string, Pregunta>();
+            allPremilitar.forEach(p => uniqueMap.set(p.id, p));
+            setPreguntas(Array.from(uniqueMap.values()));
+          } else {
+            setPreguntas([]);
+          }
           setIsLoading(false);
         }
       }

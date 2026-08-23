@@ -38,25 +38,41 @@ interface BancoPreguntasPageProps {
   onDeletePregunta: (id: string) => void;
 }
 
-// Normalizador de niveles para evitar desajustes por mayúsculas/tildes
+// Normalizador de niveles — clave interna en minúsculas con °
 export const normalizeNivel = (lvl?: string): string => {
   if (!lvl) return '';
   const clean = lvl.toLowerCase().trim();
-  if (clean.includes('4') && (clean.includes('bás') || clean.includes('bas') || clean.includes('b'))) return '4° básico';
-  if (clean.includes('6') && (clean.includes('bás') || clean.includes('bas') || clean.includes('b'))) return '6° básico';
-  if (clean.includes('8') && (clean.includes('bás') || clean.includes('bas') || clean.includes('b'))) return '8° básico';
-  if (clean.includes('2') && (clean.includes('med') || clean.includes('ii') || clean.includes('m') || clean.includes('segundo'))) return '2° medio';
-  if (clean.includes('4') && (clean.includes('med') || clean.includes('iv') || clean.includes('paes') || clean.includes('cuarto'))) return '4° medio';
+  // Básica
+  if ((clean.includes('1') || clean.includes('primer')) && (clean.includes('bás') || clean.includes('bas'))) return '1° básico';
+  if ((clean.includes('2') || clean.includes('segund')) && (clean.includes('bás') || clean.includes('bas'))) return '2° básico';
+  if ((clean.includes('3') || clean.includes('tercer')) && (clean.includes('bás') || clean.includes('bas'))) return '3° básico';
+  if ((clean.includes('4') || clean.includes('cuart'))  && (clean.includes('bás') || clean.includes('bas'))) return '4° básico';
+  if ((clean.includes('5') || clean.includes('quint'))  && (clean.includes('bás') || clean.includes('bas'))) return '5° básico';
+  if ((clean.includes('6') || clean.includes('sext'))   && (clean.includes('bás') || clean.includes('bas'))) return '6° básico';
+  if ((clean.includes('7') || clean.includes('séptim')) && (clean.includes('bás') || clean.includes('bas'))) return '7° básico';
+  if ((clean.includes('8') || clean.includes('octav'))  && (clean.includes('bás') || clean.includes('bas'))) return '8° básico';
+  // Media
+  if ((clean.includes('1') || clean === 'i medio' || clean === 'primero medio') && clean.includes('med')) return '1° medio';
+  if ((clean.includes('2') || clean === 'ii medio' || clean === 'segundo medio') && clean.includes('med')) return '2° medio';
+  if ((clean.includes('3') || clean === 'iii medio' || clean === 'tercer medio') && clean.includes('med')) return '3° medio';
+  if ((clean.includes('4') || clean === 'iv medio'  || clean.includes('cuarto med') || clean.includes('paes')) && clean.includes('med')) return '4° medio';
   return clean;
 };
 
 // Metadata visual de niveles escolares
 const LEVEL_METADATA: Record<string, { label: string; icon: string; sublabel: string }> = {
-  '4° básico': { label: '4° Básico', icon: '🌱', sublabel: 'SIMCE 4° Básico' },
+  '1° básico': { label: '1° Básico', icon: '🌿', sublabel: 'SIMCE 1° Básico' },
+  '2° básico': { label: '2° Básico', icon: '🌱', sublabel: 'SIMCE 2° Básico' },
+  '3° básico': { label: '3° Básico', icon: '📘', sublabel: 'SIMCE 3° Básico' },
+  '4° básico': { label: '4° Básico', icon: '🔵', sublabel: 'SIMCE 4° Básico' },
+  '5° básico': { label: '5° Básico', icon: '📗', sublabel: 'SIMCE 5° Básico' },
   '6° básico': { label: '6° Básico', icon: '🔬', sublabel: 'SIMCE 6° Básico' },
+  '7° básico': { label: '7° Básico', icon: '📙', sublabel: 'SIMCE 7° Básico' },
   '8° básico': { label: '8° Básico', icon: '📚', sublabel: 'SIMCE 8° Básico' },
-  '2° medio':  { label: '2° Medio',  icon: '🎓', sublabel: 'SIMCE 2° Medio' },
-  '4° medio':  { label: '4° Medio',  icon: '🏛️', sublabel: 'PAES Regular' },
+  '1° medio':  { label: '1° Medio',  icon: '🎯', sublabel: 'SIMCE 1° Medio'  },
+  '2° medio':  { label: '2° Medio',  icon: '🎓', sublabel: 'SIMCE 2° Medio'  },
+  '3° medio':  { label: '3° Medio',  icon: '🏫', sublabel: 'SIMCE 3° Medio'  },
+  '4° medio':  { label: '4° Medio',  icon: '🏛️', sublabel: 'PAES Regular'    },
 };
 
 export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
