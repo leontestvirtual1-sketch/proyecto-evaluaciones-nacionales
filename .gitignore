@@ -50,8 +50,6 @@ evaluaciones_fuente/
 ciclo_evaluacion_simce.*
 public/ciclo_evaluacion_simce.*
 public/docs/
-public/logos/
-public/preguntas/
 
 # Legacy / Development Supabase migrations (schema_export_clean.sql remains official)
 supabase/migrations/
