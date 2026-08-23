@@ -79,6 +79,13 @@ const DEMO_USERS: Record<string, UserProfile> = {
   'admin@sysget.cl':                  currentUserAdminDemo,
 };
 
+/** Correos específicos de docentes de producción que nunca deben asumir rol de admin */
+export const PROFESSOR_EMAILS_ONLY = new Set([
+  'mariateresa.gonzalez@premil.cl',
+  'luis.leon@premil.cl',
+  'nentitasusana@hotmail.com',
+]);
+
 /** No hay inferencia por patrones — siempre retorna null */
 function inferUserFromEmail(_email: string): UserProfile | null {
   return null;
@@ -251,14 +258,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
             // Restaurar sesión solo si la cuenta está activa o es admin
             if (estado === 'activo' || profile.rol === 'admin' || profile.rol === 'superadmin') {
-              const isPremil = email.toLowerCase() === 'mariateresa.gonzalez@premil.cl' || email.toLowerCase() === 'luis.leon@premil.cl';
+              const emailLower = email.toLowerCase();
+              const isPremil = emailLower === 'mariateresa.gonzalez@premil.cl' || emailLower === 'luis.leon@premil.cl';
+              const isKnownTeacher = PROFESSOR_EMAILS_ONLY.has(emailLower);
+              const resolvedRole: UserRole = isKnownTeacher ? 'profesor' : ((profile.rol as UserRole) || 'profesor');
               const restoredUser: UserProfile = {
                 id: profile.id,
                 rut: profile.rut || '18.359.422-2',
                 nombre: profile.nombre || 'María Teresa',
                 apellido: profile.apellido || 'González',
                 email: email,
-                rol: (profile.rol as UserRole) || 'profesor',
+                rol: resolvedRole,
                 establecimiento: profile.establecimiento || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : APP_CONFIG.nombreEstablecimiento),
                 rbd: profile.rbd || (isPremil ? '31030' : undefined),
                 asignaturaId: profile.asignatura_id || (isPremil ? 'asig-2' : undefined),
@@ -345,14 +355,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return { error: 'Tu solicitud de acceso no fue aprobada por el administrador.' };
           }
 
+          setAdminBaseProfile(null);
           const isPremil = cleanEmail === 'mariateresa.gonzalez@premil.cl' || cleanEmail === 'luis.leon@premil.cl';
+          const isKnownTeacher = PROFESSOR_EMAILS_ONLY.has(cleanEmail);
+          const resolvedRole: UserRole = isKnownTeacher ? 'profesor' : ((profile.rol as UserRole) || 'profesor');
           const loggedUser: UserProfile = {
             id: profile.id,
             rut: profile.rut || '',
             nombre: profile.nombre || '',
             apellido: profile.apellido || '',
             email: data.user.email || cleanEmail,
-            rol: (profile.rol as UserRole) || 'profesor',
+            rol: resolvedRole,
             establecimiento: profile.establecimiento || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : APP_CONFIG.nombreEstablecimiento),
             rbd: profile.rbd || (isPremil ? '31030' : undefined),
             asignaturaId: profile.asignatura_id || (isPremil ? 'asig-2' : undefined),
@@ -605,6 +618,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // ignore
     }
     localStorage.removeItem('sysget_session_email');
+    setAdminBaseProfile(null);
     setUser(null);
   }, []);
 

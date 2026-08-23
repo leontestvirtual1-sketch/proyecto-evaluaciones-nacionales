@@ -81,8 +81,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     { id: 'dashboard', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
   ];
 
+  const isRealAdmin = !isSandboxMode 
+    ? (user?.email === 'leontestvirtual1@gmail.com' || (user?.rol === 'admin' && !user?.email?.includes('premil') && !user?.email?.includes('susana') && !user?.email?.includes('mi casa')))
+    : (user?.rol === 'admin' || user?.email === 'admin@sysget.cl' || user?.email === 'admin@escuelademo.cl');
+
   let items: NavItem[];
-  if (user?.rol === 'admin') {
+  if (isRealAdmin) {
     items = NAV_ITEMS_ADMIN;
   } else if (user?.rol === 'profesor') {
     items = NAV_ITEMS_PROFESOR;

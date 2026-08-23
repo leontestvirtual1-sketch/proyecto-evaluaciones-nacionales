@@ -48,14 +48,19 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   // Encontrar el establecimiento actual y su logo oficial dinámicamente
   const establecimientoActual = React.useMemo(() => {
     const establecimientoNombre = prueba?.establecimiento || user?.establecimiento || nombreEstablecimientoActivo || '';
-    const rbd = user?.rbd || (establecimientoNombre.toLowerCase().includes('premilitar') ? '31030' : '1234');
+    const userEmail = (user?.email || '').toLowerCase();
+    const isPremil = establecimientoNombre.toLowerCase().includes('premilitar') || 
+                     user?.rbd === '31030' || 
+                     userEmail.includes('premil') ||
+                     userEmail.includes('mariateresa') ||
+                     (prueba?.titulo && (prueba.titulo.toLowerCase().includes('2° medio') || prueba.titulo.toLowerCase().includes('lengua')));
+
+    const rbd = user?.rbd || (isPremil ? '31030' : (establecimientoNombre.toLowerCase().includes('premilitar') ? '31030' : '1234'));
     
     const matched = establecimientosCatalog.find(
       e => (rbd && e.rbd === rbd) || 
            (establecimientoNombre && (e.nombre.toLowerCase().includes(establecimientoNombre.toLowerCase()) || establecimientoNombre.toLowerCase().includes(e.nombre.toLowerCase())))
     );
-
-    const isPremil = establecimientoNombre.toLowerCase().includes('premilitar') || rbd === '31030' || (user?.email || '').toLowerCase().includes('premil');
 
     if (matched) {
       return {
@@ -117,7 +122,15 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
       ...preguntasMock
     ];
     allOfficial.forEach(p => byId.set(p.id, p));
-    (preguntas || []).forEach(p => byId.set(p.id, p));
+    (preguntas || []).forEach(p => {
+      const existing = byId.get(p.id);
+      byId.set(p.id, {
+        ...p,
+        // Preservar imagenUrl y tablaMarkdown de los assets oficiales si la DB trae null
+        imagenUrl: p.imagenUrl || existing?.imagenUrl,
+        tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown
+      });
+    });
 
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
       const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
