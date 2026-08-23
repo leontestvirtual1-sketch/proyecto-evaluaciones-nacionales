@@ -102,8 +102,7 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
           ? [
               ...preguntasLenguaje2MMock,
               ...preguntasLenguaje2MJunioMock,
-              ...preguntasLenguaje2MAbrilMock,
-              ...preguntasMock.filter(p => p.asignaturaId === 'asig-2')
+              ...preguntasLenguaje2MAbrilMock
             ]
           : teacherAsig
           ? preguntasMock.filter(p => p.asignaturaId === teacherAsig)
