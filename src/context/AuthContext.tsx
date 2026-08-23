@@ -153,58 +153,74 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data, error } = await supabase
         .from('perfiles')
         .select('*');
+
+      const mapRow = (p: Record<string, unknown>): UserProfile => {
+        const createdAt = (p.created_at || p.creado_en || p.fecha_registro) as string | undefined;
+        let diasRestantes = 30;
+        if (createdAt) {
+          const createdDate = new Date(createdAt);
+          if (!isNaN(createdDate.getTime())) {
+            const diffMs = Date.now() - createdDate.getTime();
+            const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+            diasRestantes = Math.max(0, Math.min(30, 30 - diffDays));
+          }
+        } else if (p.dias_restantes_trial !== undefined) {
+          diasRestantes = Math.max(0, Math.min(30, p.dias_restantes_trial as number));
+        }
+        const fechaRegStr = createdAt
+          ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
+          : undefined;
+
+        let userEstado: UserEstado = 'activo';
+        if (p.estado) {
+          userEstado = p.estado as UserEstado;
+        } else if (p.activo === false) {
+          userEstado = 'pendiente_aprobacion';
+        }
+
+        return {
+          id: p.id as string,
+          rut: (p.rut as string) || '',
+          nombre: (p.nombre as string) || '',
+          apellido: (p.apellido as string) || '',
+          apellidoPaterno: (p.apellido_paterno as string) || undefined,
+          apellidoMaterno: (p.apellido_materno as string) || undefined,
+          email: (p.email as string) || '',
+          rol: ((p.rol as string) || 'profesor') as UserRole,
+          establecimiento: (p.establecimiento as string) || '',
+          rbd: (p.rbd as string) || undefined,
+          asignaturaId: (p.asignatura_id as string) || undefined,
+          asignaturaNombre: (p.asignatura_nombre as string) || undefined,
+          cargo: (p.cargo as string) || undefined,
+          estado: userEstado,
+          plan: ((p.plan as string) || 'trial') as UserPlan,
+          logoUrl: (p.logo_url as string) || undefined,
+          fechaRegistro: fechaRegStr,
+          diasRestantesTrial: diasRestantes,
+          approvalToken: (p.approval_token as string) || undefined,
+        };
+      };
+
       if (!error && data && data.length > 0) {
-        const realUsers: UserProfile[] = data.map((p: Record<string, unknown>) => {
-          const createdAt = (p.created_at || p.creado_en || p.fecha_registro) as string | undefined;
-          let diasRestantes = 30;
-          if (createdAt) {
-            const createdDate = new Date(createdAt);
-            if (!isNaN(createdDate.getTime())) {
-              const diffMs = Date.now() - createdDate.getTime();
-              const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
-              diasRestantes = Math.max(0, Math.min(30, 30 - diffDays));
-            }
-          } else if (p.dias_restantes_trial !== undefined) {
-            diasRestantes = Math.max(0, Math.min(30, p.dias_restantes_trial as number));
-          }
-          const fechaRegStr = createdAt 
-            ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
-            : undefined;
-
-          // Determinar estado real
-          let userEstado: UserEstado = 'activo';
-          if (p.estado) {
-            userEstado = p.estado as UserEstado;
-          } else if (p.activo === false) {
-            userEstado = 'pendiente_aprobacion';
-          }
-
-          return {
-            id: p.id as string,
-            rut: (p.rut as string) || '',
-            nombre: (p.nombre as string) || '',
-            apellido: (p.apellido as string) || '',
-            apellidoPaterno: (p.apellido_paterno as string) || undefined,
-            apellidoMaterno: (p.apellido_materno as string) || undefined,
-            email: (p.email as string) || '',
-            rol: ((p.rol as string) || 'profesor') as UserRole,
-            establecimiento: (p.establecimiento as string) || '',
-            rbd: (p.rbd as string) || undefined,
-            asignaturaId: (p.asignatura_id as string) || undefined,
-            asignaturaNombre: (p.asignatura_nombre as string) || undefined,
-            cargo: (p.cargo as string) || undefined,
-            estado: userEstado,
-            plan: ((p.plan as string) || 'trial') as UserPlan,
-            logoUrl: (p.logo_url as string) || undefined,
-            fechaRegistro: fechaRegStr,
-            diasRestantesTrial: diasRestantes,
-            approvalToken: (p.approval_token as string) || undefined,
-          };
-        });
+        const realUsers = data.map(mapRow);
         setUsuarios(realUsers);
+      } else {
+        // Si la tabla retorna vacío (ej. RLS sin filas para admin sin perfil),
+        // intentar poblar con sesión activa de Supabase como mínimo
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          const { data: ownProfile } = await supabase
+            .from('perfiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+          if (ownProfile) {
+            setUsuarios([mapRow(ownProfile)]);
+          }
+        }
       }
     } catch {
-      // mantener estado actual si no conecta
+      // Mantener estado actual si no conecta
     }
   }, []);
 

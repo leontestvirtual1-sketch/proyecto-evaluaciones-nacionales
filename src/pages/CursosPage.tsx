@@ -247,11 +247,13 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
     }
 
     // Perfiles Demo (Admin Demo o Docentes Demo del Liceo Bicentenario)
-    const isDemoAccount = email.endsWith('@escuelademo.cl') || 
-                          email.endsWith('@demo.cl') || 
-                          email.endsWith('@sysget.cl') || 
-                          currentUser?.rol === 'admin' ||
-                          est.includes('demo') || 
+    // IMPORTANTE: el admin de produccion (ej. leontestvirtual1@gmail.com) tiene rol='admin'
+    // pero NO es cuenta demo — no debe cargar los cursos ficticios.
+    const isDemoAccount = email.endsWith('@escuelademo.cl') ||
+                          email.endsWith('@demo.cl') ||
+                          email.endsWith('@sysget.cl') ||
+                          email === 'admin@sysget.cl' ||
+                          est.includes('demo') ||
                           est.includes('bicentenario');
 
     if (isDemoAccount) {
