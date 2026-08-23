@@ -1,12 +1,18 @@
 -- =====================================================================
--- Migración 023: Corrección — Visibilidad Total del Banco para Admin
--- Causa raíz: La migración 20260822_private_teacher_data.sql sobrescribió
--- las políticas RLS de public.preguntas restringiendo SELECT/INSERT/UPDATE/DELETE
--- exclusivamente a "propietario_id = auth.uid()", impidiendo que el Super Admin
--- institucional (rol = 'admin') pueda supervisar y gestionar el catálogo completo.
+-- Migración 023 (CORREGIDA): Visibilidad Total del Banco para Admin
+-- Ejecutar en Supabase SQL Editor -> proyecto de PRODUCCIÓN.
+--
+-- Ajuste sobre la versión del commit cb3e569: se agrega la columna
+-- es_super_admin de forma segura (no existía aún en producción) para
+-- que la condición WHERE no falle, y se mantiene rol = 'admin' como
+-- criterio principal (que sí existe y ya funciona hoy en perfiles).
 -- =====================================================================
 
 BEGIN;
+
+-- 0. Aseguramos que la columna exista antes de usarla en las políticas
+ALTER TABLE public.perfiles
+  ADD COLUMN IF NOT EXISTS es_super_admin BOOLEAN NOT NULL DEFAULT FALSE;
 
 -- 1. Limpieza de nombres de políticas anteriores para evitar conflictos
 DROP POLICY IF EXISTS "Preguntas privadas del propietario" ON public.preguntas;
@@ -27,7 +33,7 @@ CREATE POLICY "Preguntas lectura propietario o admin"
     propietario_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.perfiles p_admin
-      WHERE p_admin.id = auth.uid() 
+      WHERE p_admin.id = auth.uid()
         AND (p_admin.rol = 'admin' OR p_admin.es_super_admin = TRUE)
     )
   );
@@ -39,7 +45,7 @@ CREATE POLICY "Preguntas insercion propietario o admin"
     propietario_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.perfiles p_admin
-      WHERE p_admin.id = auth.uid() 
+      WHERE p_admin.id = auth.uid()
         AND (p_admin.rol = 'admin' OR p_admin.es_super_admin = TRUE)
     )
   );
@@ -51,7 +57,7 @@ CREATE POLICY "Preguntas edicion propietario o admin"
     propietario_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.perfiles p_admin
-      WHERE p_admin.id = auth.uid() 
+      WHERE p_admin.id = auth.uid()
         AND (p_admin.rol = 'admin' OR p_admin.es_super_admin = TRUE)
     )
   )
@@ -59,7 +65,7 @@ CREATE POLICY "Preguntas edicion propietario o admin"
     propietario_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.perfiles p_admin
-      WHERE p_admin.id = auth.uid() 
+      WHERE p_admin.id = auth.uid()
         AND (p_admin.rol = 'admin' OR p_admin.es_super_admin = TRUE)
     )
   );
@@ -71,9 +77,12 @@ CREATE POLICY "Preguntas eliminacion propietario o admin"
     propietario_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.perfiles p_admin
-      WHERE p_admin.id = auth.uid() 
+      WHERE p_admin.id = auth.uid()
         AND (p_admin.rol = 'admin' OR p_admin.es_super_admin = TRUE)
     )
   );
 
 COMMIT;
+
+-- 6. Verificación rápida (opcional): confirma que las 4 políticas quedaron activas
+-- SELECT policyname, cmd FROM pg_policies WHERE tablename = 'preguntas';
