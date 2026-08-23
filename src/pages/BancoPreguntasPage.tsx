@@ -203,6 +203,8 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
   const [search, setSearch] = useState('');
   const [asignaturaFilter, setAsignaturaFilter] = useState(isDocente ? docenteAsigId : '');
+  const [establecimientoFilter, setEstablecimientoFilter] = useState('');
+  const [docenteFilter, setDocenteFilter] = useState('');
   const [ejeFilter, setEjeFilter] = useState('');
   const [habilidadFilter, setHabilidadFilter] = useState('');
   const [dificultadFilter, setDificultadFilter] = useState('');
@@ -221,18 +223,51 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     ? habilidades.filter(h => h.asignaturaId === activeSubjectId)
     : habilidades;
 
-  // Base de preguntas estrictamente filtradas por ASIGNATURA y por CURSO / NIVEL
+  // Catálogo de docentes y colegios para filtros de Admin
+  const docentesDisponibles = useMemo(() => [
+    { id: 'mariateresa', nombre: 'María Teresa González', asignatura: 'Lengua y Literatura', asigId: 'asig-2', establecimiento: 'Escuela Premilitar Héroes de la Concepción' },
+    { id: 'susana', nombre: 'Susana Angélica Pizarro', asignatura: 'Matemática', asigId: 'asig-1', establecimiento: 'Colegio Mi Casa' },
+  ], []);
+
+  const establecimientosDisponibles = useMemo(() => [
+    'Escuela Premilitar Héroes de la Concepción',
+    'Colegio Mi Casa',
+  ], []);
+
+  // Base de preguntas filtradas por ASIGNATURA, CURSO/NIVEL, ESTABLECIMIENTO y DOCENTE
   const basePreguntas = useMemo(() => {
     return preguntas.filter(p => {
+      // 1. Asignatura
       const matchAsig = isDocente
         ? p.asignaturaId === docenteAsigId
         : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
 
+      // 2. Curso / Nivel
       const matchNivel = !nivelFilter || normalizeNivel(p.nivel) === normalizeNivel(nivelFilter);
 
-      return matchAsig && matchNivel;
+      // 3. Establecimiento (Admin)
+      let matchEstablecimiento = true;
+      if (!isDocente && establecimientoFilter) {
+        if (establecimientoFilter.includes('Premilitar')) {
+          matchEstablecimiento = p.asignaturaId === 'asig-2' || p.fuente?.toLowerCase().includes('premilitar');
+        } else if (establecimientoFilter.includes('Casa')) {
+          matchEstablecimiento = p.asignaturaId === 'asig-1' || p.fuente?.toLowerCase().includes('casa') || p.fuente?.toLowerCase().includes('oficial') || p.fuente?.toLowerCase().includes('liberada');
+        }
+      }
+
+      // 4. Docente (Admin)
+      let matchDocente = true;
+      if (!isDocente && docenteFilter) {
+        if (docenteFilter === 'mariateresa') {
+          matchDocente = p.asignaturaId === 'asig-2' || p.fuente?.toLowerCase().includes('premilitar');
+        } else if (docenteFilter === 'susana') {
+          matchDocente = p.asignaturaId === 'asig-1';
+        }
+      }
+
+      return matchAsig && matchNivel && matchEstablecimiento && matchDocente;
     });
-  }, [preguntas, isDocente, docenteAsigId, asignaturaFilter, nivelFilter]);
+  }, [preguntas, isDocente, docenteAsigId, asignaturaFilter, nivelFilter, establecimientoFilter, docenteFilter]);
 
   // Preguntas filtradas por los criterios secundarios (búsqueda, eje, habilidad, dificultad, tipo)
   const filtered = useMemo(() => {
@@ -395,16 +430,21 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <span>Filtros Específicos para {nivelFilter ? nivelFilter.toUpperCase() : 'TODOS LOS CURSOS'}</span>
           </div>
 
-          {isDocente && (
+          {isDocente ? (
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
               <Lock className="w-3 h-3" /> Especialidad Aislada: {currentUser?.asignaturaNombre}
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <Sparkles className="w-3 h-3" /> Vista Administrador: Catálogo Multicolegio y Multidocente
             </span>
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
+        {/* Fila 1 de Filtros (Filtros Principales e Institucionales) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
           {/* Search text */}
-          <div className="sm:col-span-2 relative">
+          <div className="relative">
             <input
               type="text"
               value={search}
@@ -414,6 +454,50 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             />
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
           </div>
+
+          {/* Filtro Establecimiento (Admin) */}
+          {!isDocente ? (
+            <select
+              value={establecimientoFilter}
+              onChange={e => setEstablecimientoFilter(e.target.value)}
+              className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 font-medium"
+            >
+              <option value="">🏢 Todos los Establecimientos</option>
+              {establecimientosDisponibles.map(est => (
+                <option key={est} value={est}>{est}</option>
+              ))}
+            </select>
+          ) : (
+            <div className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5 truncate">
+              <span>🏫</span>
+              <span className="truncate">{currentUser?.establecimiento || 'Mi Colegio'}</span>
+            </div>
+          )}
+
+          {/* Filtro Docente (Admin) */}
+          {!isDocente ? (
+            <select
+              value={docenteFilter}
+              onChange={e => {
+                setDocenteFilter(e.target.value);
+                const doc = docentesDisponibles.find(d => d.id === e.target.value);
+                if (doc) {
+                  setAsignaturaFilter(doc.asigId);
+                }
+              }}
+              className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 font-medium"
+            >
+              <option value="">👨‍🏫 Todos los Docentes</option>
+              {docentesDisponibles.map(doc => (
+                <option key={doc.id} value={doc.id}>{doc.nombre} ({doc.asignatura})</option>
+              ))}
+            </select>
+          ) : (
+            <div className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 truncate">
+              <span>{currentUser?.asignaturaId === 'asig-1' ? '📐' : currentUser?.asignaturaId === 'asig-3' ? '🔬' : '📖'}</span>
+              <span className="truncate">{currentUser?.asignaturaNombre}</span>
+            </div>
+          )}
 
           {/* Asignatura filter */}
           {!isDocente ? (
@@ -426,16 +510,25 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
               }}
               className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 font-semibold"
             >
-              <option value="">Todas las Asignaturas</option>
+              <option value="">📚 Todas las Asignaturas</option>
               {asignaturas.map(a => <option key={a.id} value={a.id}>{a.nombre}</option>)}
             </select>
           ) : (
-            <div className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5 truncate">
-              <span>{currentUser?.asignaturaId === 'asig-1' ? '📐' : currentUser?.asignaturaId === 'asig-3' ? '🔬' : '📖'}</span>
-              <span className="truncate">{currentUser?.asignaturaNombre}</span>
-            </div>
+            <select
+              value={dificultadFilter}
+              onChange={e => setDificultadFilter(e.target.value)}
+              className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20"
+            >
+              <option value="">Toda Dificultad</option>
+              <option value="baja">Baja</option>
+              <option value="media">Media</option>
+              <option value="alta">Alta</option>
+            </select>
           )}
+        </div>
 
+        {/* Fila 2 de Filtros Pedagógicos (Ejes, Habilidades, Dificultad, Tipo) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1 border-t border-slate-100 dark:border-slate-800/80">
           {/* Eje filter strictly filtered by subject */}
           <select
             value={ejeFilter}
@@ -444,6 +537,16 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           >
             <option value="">Todos los Ejes Temáticos</option>
             {availableEjes.map(e => <option key={e.id} value={e.id}>{e.nombre}</option>)}
+          </select>
+
+          {/* Habilidad filter */}
+          <select
+            value={habilidadFilter}
+            onChange={e => setHabilidadFilter(e.target.value)}
+            className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20"
+          >
+            <option value="">Todas las Habilidades</option>
+            {availableHabilidades.map(h => <option key={h.id} value={h.id}>{h.nombre}</option>)}
           </select>
 
           {/* Dificultad filter */}
