@@ -74,7 +74,7 @@ export interface Alternativa {
 }
 
 export type TipoPregunta = 'seleccion_multiple' | 'desarrollo';
-export type DificultadPregunta = 'baja' | 'media' | 'alta' | 'facil' | 'dificil';
+export type DificultadPregunta = 'baja' | 'media' | 'alta';
 
 export interface Pregunta {
   id: string;

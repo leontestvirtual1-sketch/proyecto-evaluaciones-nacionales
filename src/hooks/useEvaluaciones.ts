@@ -79,7 +79,7 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
 
     async function loadPruebas() {
       try {
-        let query = supabase.from('pruebas').select('*');
+        let query = supabase.from('evaluaciones').select('*');
 
         const email = (currentUser!.email || '').toLowerCase();
         const isPremilitarTeacher = email.includes('premil.cl') || email.includes('mariateresa') || currentUser!.id === 'prof-prem-01';
@@ -146,7 +146,7 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
             const rows = premilitarPruebas.map(p =>
               mapPruebaToRow(p, currentUser!.id, currentUser!.establecimiento || 'Escuela Premilitar Héroes de la Concepción')
             );
-            await supabase.from('pruebas').upsert(rows, { onConflict: 'id' });
+            await supabase.from('evaluaciones').upsert(rows, { onConflict: 'id' });
           } catch (err) {
             console.error('[useEvaluaciones] Error auto-seeding evaluaciones Premilitar:', err);
           }
@@ -192,7 +192,7 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
           currentUser.id,
           currentUser.establecimiento || 'Establecimiento'
         );
-        const { error } = await supabase.from('pruebas').upsert(row, { onConflict: 'id' });
+        const { error } = await supabase.from('evaluaciones').upsert(row, { onConflict: 'id' });
         if (error) {
           console.error('[useEvaluaciones] Error guardando evaluación en Supabase:', error.message);
         }
@@ -212,7 +212,7 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
 
       try {
         const { error } = await supabase
-          .from('pruebas')
+          .from('evaluaciones')
           .update({ estado: nuevoEstado, updated_at: new Date().toISOString() })
           .eq('id', pruebaId);
         if (error) {
@@ -233,7 +233,7 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
       if (isSandboxMode || !currentUser) return;
 
       try {
-        const { error } = await supabase.from('pruebas').delete().eq('id', pruebaId);
+        const { error } = await supabase.from('evaluaciones').delete().eq('id', pruebaId);
         if (error) {
           console.error('[useEvaluaciones] Error eliminando evaluación en Supabase:', error.message);
         }

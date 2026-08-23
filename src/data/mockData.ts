@@ -447,7 +447,7 @@ export const preguntasMock: Pregunta[] = [
     habilidadId: 'hab-mat-1',
     tipo: 'seleccion_multiple',
     nivel: '4° Básico',
-    dificultad: 'facil',
+    dificultad: 'baja',
     propietarioId: currentUserProfesorMiCasa.id,
     enunciado: 'En un huerto escolar se cosecharon 348 manzanas el lunes y 275 manzanas el martes. ¿Cuántas manzanas se cosecharon en total?',
     alternativas: [
@@ -507,7 +507,7 @@ export const preguntasMock: Pregunta[] = [
     habilidadId: 'hab-mat-1',
     tipo: 'seleccion_multiple',
     nivel: '4° Básico',
-    dificultad: 'facil',
+    dificultad: 'baja',
     propietarioId: currentUserProfesorMiCasa.id,
     enunciado: '¿Cuál de las siguientes figuras geométricas tiene exactamente 4 lados de igual longitud y 4 ángulos rectos?',
     alternativas: [
