@@ -145,23 +145,39 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     });
   }, [preguntas, userCursos, isDocente, docenteAsigId]);
 
-  // Estado del Filtro de Curso / Nivel: seleccionar por defecto el primer curso del docente
+  // Estado del Filtro de Curso / Nivel: seleccionar por defecto el nivel que tenga preguntas
   const [nivelFilter, setNivelFilter] = useState<string>(() => {
-    if (userCursos.length > 0) {
-      const firstNorm = normalizeNivel(userCursos[0].nivel || userCursos[0].nombre);
-      if (firstNorm) return firstNorm;
-    }
+    // 1. Priorizar el nivel que ya tenga preguntas
     const firstPreg = preguntas.find(p => isDocente ? p.asignaturaId === docenteAsigId : true);
     if (firstPreg) {
       const norm = normalizeNivel(firstPreg.nivel);
       if (norm) return norm;
     }
+    // 2. Si no hay preguntas, usar el primer curso del docente
+    if (userCursos.length > 0) {
+      const firstNorm = normalizeNivel(userCursos[0].nivel || userCursos[0].nombre);
+      if (firstNorm) return firstNorm;
+    }
     return '';
   });
 
-  // Sincronizar nivelFilter si cambia la lista de niveles disponibles
+  // Sincronizar nivelFilter si cambia la lista de niveles disponibles o al cargar preguntas
   React.useEffect(() => {
-    if (nivelesDisponibles.length > 0 && nivelFilter !== '') {
+    if (nivelesDisponibles.length > 0) {
+      // Si el nivel seleccionado no tiene preguntas pero hay otro nivel que sí tiene, cambiar a él
+      const currentLevelHasQuestions = nivelesDisponibles.some(
+        lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter) && (lvl.count || 0) > 0
+      );
+
+      if (!currentLevelHasQuestions) {
+        const levelWithQuestions = nivelesDisponibles.find(lvl => (lvl.count || 0) > 0);
+        if (levelWithQuestions) {
+          setNivelFilter(levelWithQuestions.key);
+          return;
+        }
+      }
+
+      // Si el nivelFilter actual no existe en absoluto, seleccionar el primer nivel
       const exists = nivelesDisponibles.some(lvl => normalizeNivel(lvl.key) === normalizeNivel(nivelFilter));
       if (!exists) {
         setNivelFilter(nivelesDisponibles[0].key);

@@ -137,14 +137,24 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
             allPremilitarQuestions.forEach(p => uniqueMap.set(p.id, p));
             const seedQuestions = Array.from(uniqueMap.values());
 
-            const rowsToInsert = seedQuestions.map(p => mapPreguntaToRow(p, user!.id));
-            const { error: seedError } = await supabase.from('preguntas').upsert(rowsToInsert);
-
-            if (!seedError && isMounted) {
+            // 1. Mostrar de inmediato en UI
+            if (isMounted) {
               setPreguntas(seedQuestions);
               setIsLoading(false);
-              return;
             }
+
+            // 2. Persistir en segundo plano en Supabase
+            try {
+              const rowsToInsert = seedQuestions.map(p => mapPreguntaToRow(p, user!.id));
+              const { error: seedError } = await supabase.from('preguntas').upsert(rowsToInsert, { onConflict: 'id' });
+              if (seedError) {
+                console.warn('[useBancoPreguntas] Warning al guardar seed en Supabase:', seedError.message);
+              }
+            } catch (err) {
+              console.error('[useBancoPreguntas] Error al persistir seed:', err);
+            }
+
+            return;
           }
 
           // 2. Migrar de localStorage si existían preguntas guardadas previamente
