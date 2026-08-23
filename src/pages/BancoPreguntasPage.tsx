@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   Pregunta,
   Asignatura,
@@ -24,7 +24,9 @@ import {
   Copy,
   GraduationCap,
   Award,
-  Lock
+  Lock,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
 
 interface BancoPreguntasPageProps {
@@ -34,7 +36,7 @@ interface BancoPreguntasPageProps {
   habilidades: Habilidad[];
   docentes?: UserProfile[];
   currentUser?: UserProfile;
-  onAddPregunta: (p: Pregunta) => void;
+  onAddPregunta: (p: Pregunta) => Promise<{ success: boolean; error?: string }> | void;
   onUpdatePregunta: (p: Pregunta) => void;
   onDeletePregunta: (id: string) => void;
 }
@@ -135,6 +137,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
+  const [saveStatus, setSaveStatus] = useState<{ type: 'success' | 'error' | 'saving'; msg: string } | null>(null);
 
   // Catálogo 100% dinámico de docentes para filtros de Admin
   const docentesDisponibles = useMemo(() => {
@@ -387,6 +390,19 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Toast feedback Supabase */}
+      {saveStatus && (
+        <div className={`fixed top-4 right-4 z-[200] flex items-center gap-3 px-4 py-3 rounded-xl shadow-xl text-sm font-semibold border animate-fade-in ${
+          saveStatus.type === 'success' ? 'bg-emerald-600 text-white border-emerald-500' :
+          saveStatus.type === 'error'   ? 'bg-rose-600 text-white border-rose-500' :
+          'bg-indigo-600 text-white border-indigo-500'
+        }`}>
+          {saveStatus.type === 'saving' && <Loader2 className="w-4 h-4 animate-spin" />}
+          {saveStatus.type === 'success' && <CheckCircle2 className="w-4 h-4" />}
+          {saveStatus.type === 'error'   && <AlertCircle className="w-4 h-4" />}
+          <span>{saveStatus.msg}</span>
+        </div>
+      )}
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -818,13 +834,22 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       <PreguntaFormModal
         isOpen={modalOpen}
         onClose={() => { setModalOpen(false); setEditingPregunta(null); }}
-        onSave={p => {
+        onSave={async p => {
           if (editingPregunta) {
             onUpdatePregunta(p);
+            setEditingPregunta(null);
           } else {
-            onAddPregunta(p);
+            setSaveStatus({ type: 'saving', msg: 'Guardando pregunta en Supabase...' });
+            const result = await onAddPregunta(p);
+            if (result && !result.success) {
+              setSaveStatus({ type: 'error', msg: result.error || 'Error al guardar. Intenta de nuevo.' });
+              setTimeout(() => setSaveStatus(null), 6000);
+            } else {
+              setSaveStatus({ type: 'success', msg: '✅ Pregunta guardada exitosamente en Supabase' });
+              setTimeout(() => setSaveStatus(null), 4000);
+              setEditingPregunta(null);
+            }
           }
-          setEditingPregunta(null);
         }}
         editPregunta={editingPregunta}
         initialNivel={nivelFilter || (nivelesDisponibles[0]?.key) || '4° básico'}

@@ -194,9 +194,9 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
     };
   }, [user?.id, user?.email, isSandboxMode]);
 
-  // Agregar pregunta
+  // Agregar pregunta — SUPABASE FIRST (Directiva 3)
   const addPregunta = useCallback(
-    async (p: Pregunta) => {
+    async (p: Pregunta): Promise<{ success: boolean; error?: string }> => {
       const fullPregunta: Pregunta = {
         ...p,
         propietarioId: user?.id || p.propietarioId,
@@ -205,31 +205,35 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         nivel: p.nivel || '2° Medio'
       };
 
-      // Optimistic update
-      setPreguntas(prev => [fullPregunta, ...prev.filter(item => item.id !== fullPregunta.id)]);
+      // ── MODO SANDBOX / DEMO: solo memoria ──
+      if (isSandboxMode || !user) {
+        setPreguntas(prev => [fullPregunta, ...prev.filter(item => item.id !== fullPregunta.id)]);
+        return { success: true };
+      }
 
-      // Guardar en localStorage inmediatamente para garantizar disponibilidad offline y entre recargas
-      if (user) {
+      // ── MODO PRODUCCIÓN: Supabase es la fuente de verdad ──
+      try {
+        const row = mapPreguntaToRow(fullPregunta, user.id);
+        const { error } = await supabase.from('preguntas').upsert(row, { onConflict: 'id' });
+
+        if (error) {
+          console.error('[useBancoPreguntas] Error al insertar en Supabase:', error);
+          return { success: false, error: `Error al guardar en base de datos: ${error.message}` };
+        }
+
+        // Solo al confirmar guardado en Supabase → actualizar estado y localStorage como caché
+        setPreguntas(prev => [fullPregunta, ...prev.filter(item => item.id !== fullPregunta.id)]);
+
         try {
           const key1 = `sysget_banco_preguntas_${user.id}`;
           const current1: Pregunta[] = JSON.parse(localStorage.getItem(key1) || '[]');
           localStorage.setItem(key1, JSON.stringify([fullPregunta, ...current1.filter(x => x.id !== fullPregunta.id)]));
+        } catch (e) { /* caché opcional, no crítico */ }
 
-          const currentAll: Pregunta[] = JSON.parse(localStorage.getItem('sysget_banco_preguntas_custom') || '[]');
-          localStorage.setItem('sysget_banco_preguntas_custom', JSON.stringify([fullPregunta, ...currentAll.filter(x => x.id !== fullPregunta.id)]));
-        } catch (e) {}
-      }
-
-      if (isSandboxMode || !user) return;
-
-      try {
-        const row = mapPreguntaToRow(fullPregunta, user.id);
-        const { error } = await supabase.from('preguntas').upsert(row, { onConflict: 'id' });
-        if (error) {
-          console.error('[useBancoPreguntas] Error al insertar en Supabase:', error);
-        }
-      } catch (err) {
+        return { success: true };
+      } catch (err: any) {
         console.error('[useBancoPreguntas] Excepción al agregar pregunta:', err);
+        return { success: false, error: `Error inesperado: ${err?.message || 'Sin conexión'}` };
       }
     },
     [user, isSandboxMode]
