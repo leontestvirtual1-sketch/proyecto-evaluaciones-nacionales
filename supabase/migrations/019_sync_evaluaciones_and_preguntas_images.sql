@@ -8,18 +8,24 @@ BEGIN;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ──────────────────────────────────────────────────────────────────────────────
--- 1. LIBERAR POLÍTICAS Y CONSTRAINTS QUE BLOQUEAN LA CONVERSIÓN A TEXT
+-- 1. LIBERAR POLÍTICAS Y CONSTRAINTS DINÁMICAMENTE (100% SEGURO)
 -- ──────────────────────────────────────────────────────────────────────────────
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'rendiciones') THEN
+    DROP POLICY IF EXISTS "Profesores ven rendiciones de sus pruebas" ON public.rendiciones;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'respuestas_alumnos') THEN
+    DROP POLICY IF EXISTS "Profesores ven respuestas de sus pruebas" ON public.respuestas_alumnos;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'pruebas') THEN
+    DROP POLICY IF EXISTS "Alumnos ven pruebas activas" ON public.pruebas;
+    DROP POLICY IF EXISTS "Profesores gestionan sus pruebas" ON public.pruebas;
+    DROP POLICY IF EXISTS "Lectura de pruebas publicas o por perfil" ON public.pruebas;
+    DROP POLICY IF EXISTS "Insercion y actualizacion de pruebas por profesor o admin" ON public.pruebas;
+  END IF;
+END $$;
 
--- Eliminar temporalmente políticas RLS dependientes en rendiciones y respuestas
-DROP POLICY IF EXISTS "Profesores ven rendiciones de sus pruebas" ON public.rendiciones;
-DROP POLICY IF EXISTS "Profesores ven respuestas de sus pruebas" ON public.respuestas_alumnos;
-DROP POLICY IF EXISTS "Alumnos ven pruebas activas" ON public.pruebas;
-DROP POLICY IF EXISTS "Profesores gestionan sus pruebas" ON public.pruebas;
-DROP POLICY IF EXISTS "Lectura de pruebas publicas o por perfil" ON public.pruebas;
-DROP POLICY IF EXISTS "Insercion y actualizacion de pruebas por profesor o admin" ON public.pruebas;
-
--- Liberar Foreign Keys
 ALTER TABLE IF EXISTS public.matriculas DROP CONSTRAINT IF EXISTS matriculas_curso_id_fkey;
 ALTER TABLE IF EXISTS public.pruebas DROP CONSTRAINT IF EXISTS pruebas_curso_id_fkey;
 ALTER TABLE IF EXISTS public.rendiciones DROP CONSTRAINT IF EXISTS rendiciones_curso_id_fkey;
@@ -30,7 +36,6 @@ ALTER TABLE IF EXISTS public.rendiciones DROP CONSTRAINT IF EXISTS rendiciones_p
 -- ──────────────────────────────────────────────────────────────────────────────
 DO $$
 BEGIN
-  -- Tablas dependientes
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'matriculas' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
     ALTER TABLE public.matriculas ALTER COLUMN curso_id TYPE TEXT;
   END IF;
@@ -40,34 +45,28 @@ BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'rendiciones' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
     ALTER TABLE public.rendiciones ALTER COLUMN curso_id TYPE TEXT;
   END IF;
-
-  -- Tabla Cursos
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'cursos' AND column_name = 'id' AND data_type = 'uuid') THEN
     ALTER TABLE public.cursos ALTER COLUMN id TYPE TEXT;
   END IF;
-
-  -- Tabla Pruebas
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'id' AND data_type = 'uuid') THEN
     ALTER TABLE public.pruebas ALTER COLUMN id TYPE TEXT;
   END IF;
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
     ALTER TABLE public.pruebas ALTER COLUMN curso_id TYPE TEXT;
   END IF;
-
-  -- Tabla Preguntas
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'preguntas' AND column_name = 'id' AND data_type = 'uuid') THEN
     ALTER TABLE public.preguntas ALTER COLUMN id TYPE TEXT;
   END IF;
 END $$;
 
 -- Columnas extendidas en public.cursos
-ALTER TABLE public.cursos 
+ALTER TABLE IF EXISTS public.cursos 
   ADD COLUMN IF NOT EXISTS profesor_jefe_id UUID REFERENCES public.perfiles(id) ON DELETE SET NULL,
   ADD COLUMN IF NOT EXISTS rbd TEXT,
   ADD COLUMN IF NOT EXISTS total_alumnos INTEGER NOT NULL DEFAULT 0;
 
 -- Columnas extendidas en public.pruebas
-ALTER TABLE public.pruebas
+ALTER TABLE IF EXISTS public.pruebas
   ADD COLUMN IF NOT EXISTS asignatura_nombre TEXT,
   ADD COLUMN IF NOT EXISTS curso_nombre TEXT,
   ADD COLUMN IF NOT EXISTS total_preguntas INTEGER DEFAULT 30,
@@ -78,7 +77,7 @@ ALTER TABLE public.pruebas
   ADD COLUMN IF NOT EXISTS establecimiento TEXT;
 
 -- Columnas extendidas en public.preguntas
-ALTER TABLE public.preguntas 
+ALTER TABLE IF EXISTS public.preguntas 
   ADD COLUMN IF NOT EXISTS imagen_url TEXT,
   ADD COLUMN IF NOT EXISTS tabla_markdown TEXT;
 
@@ -244,37 +243,44 @@ END $$;
 -- ──────────────────────────────────────────────────────────────────────────────
 -- 6. POLÍTICAS RLS SEGURAS
 -- ──────────────────────────────────────────────────────────────────────────────
-ALTER TABLE public.pruebas ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.rendiciones ENABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS public.pruebas ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Lectura de pruebas publicas o por perfil"
-  ON public.pruebas FOR SELECT
-  USING (true);
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'pruebas') THEN
+    CREATE POLICY "Lectura de pruebas publicas o por perfil"
+      ON public.pruebas FOR SELECT
+      USING (true);
 
-CREATE POLICY "Insercion y actualizacion de pruebas por profesor o admin"
-  ON public.pruebas FOR ALL
-  USING (
-    profesor_id = auth.uid()
-    OR EXISTS (
-      SELECT 1 FROM public.perfiles p
-      WHERE p.id = auth.uid() AND (p.rol = 'admin' OR p.es_super_admin = TRUE)
-    )
-  )
-  WITH CHECK (
-    profesor_id = auth.uid()
-    OR EXISTS (
-      SELECT 1 FROM public.perfiles p
-      WHERE p.id = auth.uid() AND (p.rol = 'admin' OR p.es_super_admin = TRUE)
-    )
-  );
+    CREATE POLICY "Insercion y actualizacion de pruebas por profesor o admin"
+      ON public.pruebas FOR ALL
+      USING (
+        profesor_id = auth.uid()
+        OR EXISTS (
+          SELECT 1 FROM public.perfiles p
+          WHERE p.id = auth.uid() AND (p.rol = 'admin' OR p.es_super_admin = TRUE)
+        )
+      )
+      WITH CHECK (
+        profesor_id = auth.uid()
+        OR EXISTS (
+          SELECT 1 FROM public.perfiles p
+          WHERE p.id = auth.uid() AND (p.rol = 'admin' OR p.es_super_admin = TRUE)
+        )
+      );
+  END IF;
 
-CREATE POLICY "Profesores ven rendiciones de sus pruebas"
-  ON public.rendiciones FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.pruebas p
-      WHERE p.id = rendiciones.prueba_id AND (p.profesor_id = auth.uid() OR EXISTS (SELECT 1 FROM public.perfiles per WHERE per.id = auth.uid() AND per.rol = 'admin'))
-    )
-  );
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'rendiciones') THEN
+    ALTER TABLE public.rendiciones ENABLE ROW LEVEL SECURITY;
+    CREATE POLICY "Profesores ven rendiciones de sus pruebas"
+      ON public.rendiciones FOR SELECT
+      USING (
+        EXISTS (
+          SELECT 1 FROM public.pruebas p
+          WHERE p.id = rendiciones.prueba_id AND (p.profesor_id = auth.uid() OR EXISTS (SELECT 1 FROM public.perfiles per WHERE per.id = auth.uid() AND per.rol = 'admin'))
+        )
+      );
+  END IF;
+END $$;
 
 COMMIT;
