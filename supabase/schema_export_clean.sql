@@ -214,3 +214,52 @@ CREATE TABLE IF NOT EXISTS public.rendiciones (
 ALTER TABLE public.rendiciones ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Lectura de rendiciones propias o de docente" ON public.rendiciones;
 CREATE POLICY "Lectura de rendiciones propias o de docente" ON public.rendiciones FOR SELECT USING (TRUE);
+
+-- 8. TABLA: BANCO DE PREGUNTAS
+CREATE TABLE IF NOT EXISTS public.preguntas (
+  id                  TEXT        PRIMARY KEY DEFAULT ('preg-' || uuid_generate_v4()::text),
+  propietario_id      UUID        NOT NULL REFERENCES public.perfiles(id) ON DELETE CASCADE,
+  asignatura_id       TEXT        NOT NULL,
+  eje_tematico_id     TEXT,
+  habilidad_id        TEXT,
+  tipo                TEXT        NOT NULL CHECK (tipo IN ('seleccion_multiple', 'desarrollo')),
+  nivel               TEXT        NOT NULL,
+  dificultad          TEXT        NOT NULL CHECK (dificultad IN ('baja', 'media', 'alta')),
+  enunciado           TEXT        NOT NULL,
+  imagen_url          TEXT,
+  tabla_markdown      TEXT,
+  alternativas        JSONB       NOT NULL DEFAULT '[]'::jsonb,
+  respuesta_correcta  TEXT,
+  puntaje             NUMERIC(6,2) NOT NULL DEFAULT 1 CHECK (puntaje > 0),
+  fuente              TEXT        NOT NULL DEFAULT 'Creada por docente',
+  created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_preguntas_propietario  ON public.preguntas(propietario_id);
+CREATE INDEX IF NOT EXISTS idx_preguntas_asignatura   ON public.preguntas(asignatura_id);
+CREATE INDEX IF NOT EXISTS idx_preguntas_nivel        ON public.preguntas(nivel);
+
+ALTER TABLE public.preguntas ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Preguntas privadas del propietario" ON public.preguntas;
+CREATE POLICY "Preguntas privadas del propietario"
+  ON public.preguntas FOR SELECT
+  USING (propietario_id = auth.uid());
+
+DROP POLICY IF EXISTS "Creacion de preguntas propias" ON public.preguntas;
+CREATE POLICY "Creacion de preguntas propias"
+  ON public.preguntas FOR INSERT
+  WITH CHECK (propietario_id = auth.uid());
+
+DROP POLICY IF EXISTS "Edicion de preguntas propias" ON public.preguntas;
+CREATE POLICY "Edicion de preguntas propias"
+  ON public.preguntas FOR UPDATE
+  USING  (propietario_id = auth.uid())
+  WITH CHECK (propietario_id = auth.uid());
+
+DROP POLICY IF EXISTS "Eliminacion de preguntas propias" ON public.preguntas;
+CREATE POLICY "Eliminacion de preguntas propias"
+  ON public.preguntas FOR DELETE
+  USING (propietario_id = auth.uid());
+

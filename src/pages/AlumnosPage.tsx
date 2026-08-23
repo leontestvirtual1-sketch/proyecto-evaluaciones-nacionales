@@ -340,7 +340,8 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser }) => {
 
     const email = (currentUser?.email || '').toLowerCase();
     const est = (currentUser?.establecimiento || '').toLowerCase();
-    const isDocenteReal = email === 'luis.leon@premil.cl' || 
+    const isDocenteReal = email === 'mariateresa.gonzalez@premil.cl' ||
+                          email === 'luis.leon@premil.cl' || 
                           email.includes('susana') || 
                           est.includes('premilitar') || 
                           est.includes('mi casa') ||

@@ -179,14 +179,15 @@ export const CursosPage: React.FC<CursosPageProps> = ({ currentUser }) => {
 
     const email = (currentUser?.email || '').toLowerCase();
     const est = (currentUser?.establecimiento || '').toLowerCase();
-    const isDocenteReal = email === 'luis.leon@premil.cl' || 
+    const isDocenteReal = email === 'mariateresa.gonzalez@premil.cl' ||
+                          email === 'luis.leon@premil.cl' || 
                           email.includes('susana') || 
                           est.includes('premilitar') || 
                           est.includes('mi casa') ||
                           currentUser?.plan === 'trial';
 
     // Docente de Lenguaje Escuela Premilitar
-    if (email === 'luis.leon@premil.cl' || (est.includes('premilitar') && currentUser?.asignaturaId === 'asig-2')) {
+    if (email === 'mariateresa.gonzalez@premil.cl' || email === 'luis.leon@premil.cl' || (est.includes('premilitar') && currentUser?.asignaturaId === 'asig-2')) {
       return [
         {
           id: 'cur-2m',

@@ -39,6 +39,7 @@ import {
 import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } from './types';
 
 import { SandboxBanner } from './components/SandboxBanner';
+import { useBancoPreguntas } from './hooks/useBancoPreguntas';
 
 function MainAppContent({
   isSandboxMode,
@@ -127,45 +128,20 @@ function MainAppContent({
 
   // App Data State
   const [asignaturas, setAsignaturas] = useState<Asignatura[]>(asignaturasMock);
-  // El banco es privado para cada perfil productivo. Los mocks sólo existen
-  // dentro del sandbox y nunca se cargan en la sesión de un docente real.
-  const [bancoPreguntas, setBancoPreguntas] = useState<Pregunta[]>([]);
-  const [bancoOwnerId, setBancoOwnerId] = useState<string | null>(null);
   const [rendiciones, setRendiciones] = useState<RendicionPrueba[]>(rendicionesMock);
+
+  // Banco de Preguntas conectado a Supabase (con fallback y aislamiento estricto por docente)
+  const {
+    preguntas: bancoPreguntas,
+    addPregunta: handleAddPregunta,
+    updatePregunta: handleUpdatePregunta,
+    deletePregunta: handleDeletePregunta,
+  } = useBancoPreguntas({ user, isSandboxMode });
 
   // View States
   const [selectedReportPruebaId, setSelectedReportPruebaId] = useState<string | null>(null);
   const [activePruebaForRunner, setActivePruebaForRunner] = useState<Prueba | null>(null);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState<boolean>(false);
-
-  React.useEffect(() => {
-    if (!user) {
-      setBancoPreguntas([]);
-      setBancoOwnerId(null);
-      return;
-    }
-
-    if (isSandboxMode) {
-      setBancoPreguntas(preguntasMock);
-      setBancoOwnerId(user.id);
-      return;
-    }
-
-    try {
-      const stored = localStorage.getItem(`sysget_banco_preguntas_${user.id}`);
-      setBancoPreguntas(stored ? JSON.parse(stored) : []);
-    } catch {
-      setBancoPreguntas([]);
-    }
-    setBancoOwnerId(user.id);
-  }, [user?.id, isSandboxMode]);
-
-  React.useEffect(() => {
-    // Evita sobrescribir el banco del siguiente usuario durante un cambio de
-    // sesión, antes de que termine de cargarse su contenido.
-    if (!user || isSandboxMode || bancoOwnerId !== user.id) return;
-    localStorage.setItem(`sysget_banco_preguntas_${user.id}`, JSON.stringify(bancoPreguntas));
-  }, [bancoPreguntas, bancoOwnerId, isSandboxMode, user?.id]);
 
   const getReporteForPrueba = (pruebaId: string): ReporteTabuladoCurso => {
     const prueba = pruebas.find(p => p.id === pruebaId);
@@ -263,18 +239,6 @@ function MainAppContent({
     setRendiciones([nuevaRendicion, ...rendiciones]);
   };
 
-  // Preguntas handlers
-  const handleAddPregunta = (p: Pregunta) => {
-    setBancoPreguntas([p, ...bancoPreguntas]);
-  };
-
-  const handleUpdatePregunta = (p: Pregunta) => {
-    setBancoPreguntas(prev => prev.map(item => item.id === p.id ? p : item));
-  };
-
-  const handleDeletePregunta = (id: string) => {
-    setBancoPreguntas(prev => prev.filter(item => item.id !== id));
-  };
 
   const handleUpdatePruebaEstado = (pruebaId: string, nuevoEstado: 'borrador' | 'activa' | 'finalizada') => {
     setPruebas(prev => prev.map(p => p.id === pruebaId ? { ...p, estado: nuevoEstado } : p));
@@ -589,7 +553,7 @@ export function App() {
 }
 
 function MainAppContentWrapper() {
-  const { user, adminBaseProfile } = useAuth();
+  const { user, adminBaseProfile, docentesReales } = useAuth();
   // isSandboxMode must live HERE so AcademicDataProvider is re-created when it changes
   const [isSandboxMode, setIsSandboxMode] = useState<boolean>(false);
   // El proveedor académico recibe las evaluaciones creadas durante la sesión.
@@ -601,6 +565,7 @@ function MainAppContentWrapper() {
       adminBaseProfile={adminBaseProfile}
       isSandboxMode={isSandboxMode}
       customPruebas={pruebas}
+      docentesReales={docentesReales}
     >
       <MainAppContent
         isSandboxMode={isSandboxMode}

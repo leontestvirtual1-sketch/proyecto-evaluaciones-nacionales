@@ -30,6 +30,7 @@ interface AcademicDataProviderProps {
   adminBaseProfile?: UserProfile | null;
   isSandboxMode: boolean;
   customPruebas?: Prueba[];
+  docentesReales?: UserProfile[];
 }
 
 const PRODUCTION_ADMIN_EMAILS = new Set([
@@ -118,7 +119,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
   currentUser,
   adminBaseProfile,
   isSandboxMode,
-  customPruebas
+  customPruebas,
+  docentesReales
 }) => {
 
   const isProduction = useMemo(() => {
@@ -164,7 +166,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       // Se mantiene su contexto específico hasta que el sistema genérico
       // de pruebas propias esté en producción (Supabase-driven).
       // ──────────────────────────────────────────────────────────────────
-      if (activeEmail === 'luis.leon@premil.cl') {
+      if (activeEmail === 'mariateresa.gonzalez@premil.cl' || activeEmail === 'luis.leon@premil.cl') {
         const prodPruebas = allPruebas.filter(
           p =>
             p.id === 'prueba-len2m-101' ||
@@ -180,7 +182,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
           seguimientoDocentes: [{
             profesorId: currentUserProfesorPremilitar.id,
             profesorNombre: 'María Teresa González',
-            profesorEmail: 'luis.leon@premil.cl',
+            profesorEmail: 'mariateresa.gonzalez@premil.cl',
             avatarColor: 'from-emerald-600 to-teal-700',
             iniciales: 'MT',
             asignaturaId: 'asig-2',
@@ -226,7 +228,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       }
 
       // ──────────────────────────────────────────────────────────────────
-      // RAMA ADMIN: Vista agregada de producción (usa Premilitar como base)
+      // RAMA ADMIN: Vista agregada de producción (dinámica con todos los docentes reales)
       // ──────────────────────────────────────────────────────────────────
       const adminPruebas = allPruebas.filter(
         p =>
@@ -235,35 +237,73 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
           p.id === 'prueba-len2m-abr-101' ||
           p.profesorId === currentUserProfesorPremilitar.id
       );
+
+      const realTeachers = (docentesReales && docentesReales.length > 0)
+        ? docentesReales
+        : [currentUserProfesorPremilitar];
+
+      const dynamicSeguimiento: SeguimientoDocente[] = realTeachers.map(doc => {
+        const isPremilitar = doc.email?.toLowerCase().includes('premil.cl') || doc.id === currentUserProfesorPremilitar.id;
+        if (isPremilitar) {
+          return {
+            profesorId: doc.id,
+            profesorNombre: `${doc.nombre} ${doc.apellido}`,
+            profesorEmail: doc.email,
+            avatarColor: 'from-emerald-600 to-teal-700',
+            iniciales: iniciales(doc.nombre, doc.apellido),
+            asignaturaId: doc.asignaturaId || 'asig-2',
+            asignaturaNombre: doc.asignaturaNombre || 'Lenguaje y Comunicación',
+            cursosAsignados: ['2° Medio'],
+            totalEvaluacionesCreadas: adminPruebas.length,
+            totalEvaluacionesActivas: adminPruebas.filter(p => p.estado === 'activa').length,
+            totalAlumnosEvaluados: 0,
+            totalAlumnosMatriculados: 0,
+            coberturaCurricularPorcentaje: 100,
+            promedioLogroAlumnos: 0,
+            puntajeSimceEstimado: 0,
+            estadoAvancePME: 'en_progreso',
+            ejeMayorFortaleza: 'Pauta oficial SIMCE configurada',
+            ejeMayorDebilidad: 'Esperando rendición de estudiantes',
+            ultimaEvaluacionFecha: '2026-08-16',
+            ultimaEvaluacionTitulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
+            ultimaEvaluacionId: 'prueba-len2m-101',
+            planesRemedialesGenerados: 0
+          };
+        }
+
+        const docPruebas = allPruebas.filter(p => p.profesorId === doc.id);
+        return {
+          profesorId: doc.id,
+          profesorNombre: `${doc.nombre} ${doc.apellido}`,
+          profesorEmail: doc.email,
+          avatarColor: avatarColorFromEmail(doc.email),
+          iniciales: iniciales(doc.nombre || '', doc.apellido || ''),
+          asignaturaId: doc.asignaturaId || '',
+          asignaturaNombre: doc.asignaturaNombre || 'En proceso de asignación',
+          cursosAsignados: doc.establecimiento ? [doc.establecimiento] : [],
+          totalEvaluacionesCreadas: docPruebas.length,
+          totalEvaluacionesActivas: docPruebas.filter(p => p.estado === 'activa').length,
+          totalAlumnosEvaluados: 0,
+          totalAlumnosMatriculados: 0,
+          coberturaCurricularPorcentaje: docPruebas.length > 0 ? 50 : 0,
+          promedioLogroAlumnos: 0,
+          puntajeSimceEstimado: 0,
+          estadoAvancePME: 'en_progreso',
+          ejeMayorFortaleza: docPruebas.length > 0 ? 'Evaluaciones creadas' : 'En proceso de configuración',
+          ejeMayorDebilidad: 'Esperando rendición de estudiantes',
+          ultimaEvaluacionFecha: docPruebas[0]?.creadoEn || '',
+          ultimaEvaluacionTitulo: docPruebas[0]?.titulo || 'Sin evaluaciones creadas aún',
+          ultimaEvaluacionId: docPruebas[0]?.id || '',
+          planesRemedialesGenerados: 0
+        };
+      });
+
       return {
         isProduction: true,
         pruebas: adminPruebas,
         cursos: cursosMock.filter(c => c.id === 'curso-2m' || c.nivel.includes('Medio')),
         alumnos: [],
-        seguimientoDocentes: [{
-          profesorId: currentUserProfesorPremilitar.id,
-          profesorNombre: 'María Teresa González',
-          profesorEmail: 'luis.leon@premil.cl',
-          avatarColor: 'from-emerald-600 to-teal-700',
-          iniciales: 'MT',
-          asignaturaId: 'asig-2',
-          asignaturaNombre: 'Lenguaje y Comunicación',
-          cursosAsignados: ['2° Medio'],
-          totalEvaluacionesCreadas: adminPruebas.length,
-          totalEvaluacionesActivas: adminPruebas.filter(p => p.estado === 'activa').length,
-          totalAlumnosEvaluados: 0,
-          totalAlumnosMatriculados: 0,
-          coberturaCurricularPorcentaje: 100,
-          promedioLogroAlumnos: 0,
-          puntajeSimceEstimado: 0,
-          estadoAvancePME: 'en_progreso',
-          ejeMayorFortaleza: 'Pauta oficial SIMCE configurada',
-          ejeMayorDebilidad: 'Esperando rendición de estudiantes',
-          ultimaEvaluacionFecha: '2026-08-16',
-          ultimaEvaluacionTitulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
-          ultimaEvaluacionId: 'prueba-len2m-101',
-          planesRemedialesGenerados: 0
-        }],
+        seguimientoDocentes: dynamicSeguimiento,
         reporteActivo: reportePremilitarRealMock,
         nombreEstablecimientoActivo: 'Sysget Saber — Vista Global'
       };

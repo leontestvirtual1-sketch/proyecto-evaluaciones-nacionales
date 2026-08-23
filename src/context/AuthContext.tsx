@@ -72,10 +72,11 @@ const AuthContext = createContext<AuthContextType | null>(null);
 // Perfiles de usuarios oficiales sin credenciales — solo para restaurar sesión en RAM
 // cuando Supabase Auth ya la validó previamente.
 const DEMO_USERS: Record<string, UserProfile> = {
-  'leontestvirtual1@gmail.com': currentUserAdmin,
-  'leontesvirtual1@gmail.com':  currentUserAdmin,
-  'luis.leon@premil.cl':        currentUserProfesorPremilitar,
-  'admin@sysget.cl':            currentUserAdminDemo,
+  'leontestvirtual1@gmail.com':       currentUserAdmin,
+  'leontesvirtual1@gmail.com':        currentUserAdmin,
+  'mariateresa.gonzalez@premil.cl':    currentUserProfesorPremilitar,
+  'luis.leon@premil.cl':              currentUserProfesorPremilitar,
+  'admin@sysget.cl':                  currentUserAdminDemo,
 };
 
 /** No hay inferencia por patrones — siempre retorna null */
@@ -102,8 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data, error } = await supabase
         .from('perfiles')
         .select('*')
-        .eq('rol', 'profesor')
-        .eq('estado', 'activo');
+        .eq('rol', 'profesor');
       if (!error && data && data.length > 0) {
         const docentes: UserProfile[] = data
           .filter((p: Record<string, unknown>) => {
@@ -220,7 +220,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
             // Restaurar sesión solo si la cuenta está activa o es admin
             if (estado === 'activo' || profile.rol === 'admin' || profile.rol === 'superadmin') {
-              const isPremil = email.toLowerCase() === 'luis.leon@premil.cl';
+              const isPremil = email.toLowerCase() === 'mariateresa.gonzalez@premil.cl' || email.toLowerCase() === 'luis.leon@premil.cl';
               const restoredUser: UserProfile = {
                 id: profile.id,
                 rut: profile.rut || '18.359.422-2',
@@ -314,7 +314,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return { error: 'Tu solicitud de acceso no fue aprobada por el administrador.' };
           }
 
-          const isPremil = cleanEmail === 'luis.leon@premil.cl';
+          const isPremil = cleanEmail === 'mariateresa.gonzalez@premil.cl' || cleanEmail === 'luis.leon@premil.cl';
           const loggedUser: UserProfile = {
             id: profile.id,
             rut: profile.rut || '',

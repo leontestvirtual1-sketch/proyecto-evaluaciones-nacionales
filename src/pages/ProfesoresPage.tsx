@@ -394,35 +394,36 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   const isDemo = !isProduction;
   const storageKey = isDemo ? 'sysget_demo_profesores_list' : 'sysget_prod_profesores_list';
 
+  // Cargar docentes reales desde Supabase al montar
+  useEffect(() => {
+    if (!isDemo) {
+      loadDocentesReales();
+    }
+  }, [isDemo, loadDocentesReales]);
+
   // Inicializar según ambiente activo
   const [profesores, setProfesores] = useState<UserProfile[]>(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      } catch (err) {
-        console.error('Error cargando profesores desde localStorage:', err);
-      }
-    }
-    return isDemo ? demoProfesoresMock : (docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar]);
+    if (isDemo) return demoProfesoresMock;
+    return docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar];
   });
 
-  // Reaccionar ante cambio de ambiente
+  // Reaccionar ante cambios en docentesReales o cambio de ambiente
   useEffect(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setProfesores(parsed);
-          return;
-        }
-      } catch (err) {
-        console.error('Error cargando profesores:', err);
+    if (isDemo) {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setProfesores(parsed);
+            return;
+          }
+        } catch {}
       }
+      setProfesores(demoProfesoresMock);
+    } else {
+      setProfesores(docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar]);
     }
-    setProfesores(isDemo ? demoProfesoresMock : (docentesReales.length > 0 ? docentesReales : [currentUserProfesorPremilitar]));
   }, [isDemo, storageKey, docentesReales]);
 
   const [search, setSearch] = useState('');

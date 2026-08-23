@@ -31,7 +31,7 @@ export const SeguimientoDocenteCard: React.FC<SeguimientoDocenteCardProps> = ({
 }) => {
   // ── DATA ISOLATION: sourced from AcademicDataContext to prevent Demo/Prod bleed ──
   const { seguimientoDocentes } = useAcademicData();
-  const [docentes] = useState<SeguimientoDocente[]>(seguimientoDocentes);
+  const docentes = seguimientoDocentes;
   const [selectedAsignatura, setSelectedAsignatura] = useState<string>('todas');
   const [selectedEstadoPME, setSelectedEstadoPME] = useState<string>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');

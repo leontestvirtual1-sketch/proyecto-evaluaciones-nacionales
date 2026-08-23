@@ -33,6 +33,18 @@ import {
   preguntasLenguaje2MAbrilMock
 } from './len2mAbrilQuestionsMock';
 
+export {
+  ejesTematicosLenguaje2MMock,
+  cursoLenguaje2MMock,
+  alumnosLenguaje2MMock,
+  pruebaLenguaje2MMock,
+  preguntasLenguaje2MMock,
+  pruebaLenguaje2MJunioMock,
+  preguntasLenguaje2MJunioMock,
+  pruebaLenguaje2MAbrilMock,
+  preguntasLenguaje2MAbrilMock
+};
+
 export const establecimientosCatalog: EstablecimientoInfo[] = [
   {
     rbd: '31030',
@@ -70,7 +82,7 @@ export const currentUserProfesorPremilitar: UserProfile = {
   rut: '18.359.422-2',
   nombre: 'María Teresa',
   apellido: 'González',
-  email: 'luis.leon@premil.cl',
+  email: 'mariateresa.gonzalez@premil.cl',
   rol: 'profesor',
   establecimiento: 'Escuela Premilitar Héroes de la Concepción',
   rbd: '31030',
