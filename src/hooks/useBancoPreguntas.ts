@@ -117,7 +117,34 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
 
         if (data && data.length > 0) {
           if (isMounted) {
-            setPreguntas(data.map(mapRowToPregunta));
+            const dbQuestions = data.map(mapRowToPregunta);
+            if (user!.rol === 'admin') {
+              const allGlobal = [
+                ...preguntasMock,
+                ...preguntasLenguaje2MMock,
+                ...preguntasLenguaje2MJunioMock,
+                ...preguntasLenguaje2MAbrilMock,
+              ];
+              const uniqueMap = new Map<string, Pregunta>();
+              allGlobal.forEach(p => uniqueMap.set(p.id, p));
+              // Las preguntas de Supabase (ej. creadas manualmente por Susana) tienen prioridad
+              dbQuestions.forEach(p => uniqueMap.set(p.id, p));
+              setPreguntas(Array.from(uniqueMap.values()));
+            } else {
+              // Si es docente (ej. Susana o María Teresa), combinar preguntas base con sus preguntas manuales de Supabase
+              const isSusanaTeacher = user!.email.toLowerCase().includes('susana') || user!.asignaturaId === 'asig-1';
+              const baseQuestions = isSusanaTeacher
+                ? preguntasMock.filter(p => p.asignaturaId === 'asig-1')
+                : [
+                    ...preguntasLenguaje2MMock,
+                    ...preguntasLenguaje2MJunioMock,
+                    ...preguntasLenguaje2MAbrilMock,
+                  ];
+              const uniqueMap = new Map<string, Pregunta>();
+              baseQuestions.forEach(p => uniqueMap.set(p.id, p));
+              dbQuestions.forEach(p => uniqueMap.set(p.id, p));
+              setPreguntas(Array.from(uniqueMap.values()));
+            }
             setIsLoading(false);
           }
           return;

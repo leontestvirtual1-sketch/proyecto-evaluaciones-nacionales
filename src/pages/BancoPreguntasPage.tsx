@@ -459,7 +459,10 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           {!isDocente ? (
             <select
               value={establecimientoFilter}
-              onChange={e => setEstablecimientoFilter(e.target.value)}
+              onChange={e => {
+                setEstablecimientoFilter(e.target.value);
+                setNivelFilter(''); // Ver todas las preguntas del colegio seleccionado
+              }}
               className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 font-medium"
             >
               <option value="">🏢 Todos los Establecimientos</option>
@@ -480,9 +483,12 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
               value={docenteFilter}
               onChange={e => {
                 setDocenteFilter(e.target.value);
+                setNivelFilter(''); // Ver todas las preguntas del docente seleccionado
                 const doc = docentesDisponibles.find(d => d.id === e.target.value);
                 if (doc) {
                   setAsignaturaFilter(doc.asigId);
+                } else {
+                  setAsignaturaFilter('');
                 }
               }}
               className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 font-medium"
@@ -505,6 +511,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
               value={asignaturaFilter}
               onChange={e => {
                 setAsignaturaFilter(e.target.value);
+                setNivelFilter('');
                 setEjeFilter('');
                 setHabilidadFilter('');
               }}
@@ -589,6 +596,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             const eje = ejes.find(e => e.id === pregunta.ejeTematicoId);
             const hab = habilidades.find(h => h.id === pregunta.habilidadId);
             const asig = asignaturas.find(a => a.id === pregunta.asignaturaId);
+            const isMatematica = pregunta.asignaturaId === 'asig-1';
 
             const difColor =
               pregunta.dificultad === 'baja'
@@ -608,6 +616,14 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                       {asig?.nombre || 'General'}
                     </span>
+
+                    {/* Badge de Autor / Establecimiento */}
+                    {!isDocente && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                        <span>🏫</span>
+                        {isMatematica ? 'Susana Pizarro — Col. Mi Casa' : 'María Teresa — Esc. Premilitar'}
+                      </span>
+                    )}
 
                     {/* Badge de Curso / Nivel */}
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-600/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30">
