@@ -81,18 +81,30 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
       try {
         let query = supabase.from('evaluaciones').select('*');
 
+        const isValidUUID = (id?: string) => Boolean(id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id));
         const email = (currentUser!.email || '').toLowerCase();
-        const isPremilitarTeacher = email.includes('premil.cl') || email.includes('mariateresa') || currentUser!.id === 'prof-prem-01';
-        const isSusanaTeacher = email.includes('susana') || email.includes('nentitasusana') || currentUser!.id === 'prof-mc-01';
+        const isPremilitarTeacher = email.includes('premil.cl') || email.includes('mariateresa');
+        const isSusanaTeacher = email.includes('susana') || email.includes('nentitasusana');
         const isAdmin = currentUser!.rol === 'admin';
+        const teacherAsig = currentUser!.asignaturaId || (isPremilitarTeacher ? 'asig-2' : isSusanaTeacher ? 'asig-1' : '');
 
         if (!isAdmin) {
           if (isPremilitarTeacher) {
-            query = query.or(`profesor_id.eq.${currentUser!.id},profesor_id.eq.prof-prem-01,asignatura_id.eq.asig-2`);
+            if (isValidUUID(currentUser!.id)) {
+              query = query.or(`profesor_id.eq.${currentUser!.id},asignatura_id.eq.asig-2`);
+            } else {
+              query = query.eq('asignatura_id', 'asig-2');
+            }
           } else if (isSusanaTeacher) {
-            query = query.or(`profesor_id.eq.${currentUser!.id},profesor_id.eq.prof-mc-01,asignatura_id.eq.asig-1`);
-          } else {
+            if (isValidUUID(currentUser!.id)) {
+              query = query.or(`profesor_id.eq.${currentUser!.id},asignatura_id.eq.asig-1`);
+            } else {
+              query = query.eq('asignatura_id', 'asig-1');
+            }
+          } else if (isValidUUID(currentUser!.id)) {
             query = query.eq('profesor_id', currentUser!.id);
+          } else if (teacherAsig) {
+            query = query.eq('asignatura_id', teacherAsig);
           }
         }
 

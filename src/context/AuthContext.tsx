@@ -436,19 +436,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await loadUsuariosReales();
     await loadDocentesReales();
 
-    // 2. Si existe el endpoint /api/users (producción Vercel), sincronizar datos extendidos
-    try {
-      const res = await authenticatedFetch('/api/users');
-      if (res.ok) {
-        const data = await res.json();
-        if (data.users && Array.isArray(data.users) && data.users.length > 0) {
-          setUsuarios(data.users);
+    // 2. Si el usuario autenticado es Administrador y existe el endpoint /api/users, sincronizar
+    if (user?.rol === 'admin') {
+      try {
+        const res = await authenticatedFetch('/api/users');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.users && Array.isArray(data.users) && data.users.length > 0) {
+            setUsuarios(data.users);
+          }
         }
+      } catch {
+        // Si la API serverless no responde (ej. en desarrollo Vite), los datos ya fueron cargados desde Supabase
       }
-    } catch {
-      // Si la API serverless no responde (ej. en desarrollo Vite), los datos ya fueron cargados desde Supabase
     }
-  }, [authenticatedFetch, loadUsuariosReales, loadDocentesReales]);
+  }, [authenticatedFetch, loadUsuariosReales, loadDocentesReales, user?.rol]);
 
   useEffect(() => {
     // fetchUsers se ejecuta sólo cuando el usuario esté autenticado
