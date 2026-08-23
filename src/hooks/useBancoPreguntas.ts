@@ -127,10 +127,10 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
           const dbQuestions = data && data.length > 0 ? data.map(mapRowToPregunta) : [];
           const uniqueMap = new Map<string, Pregunta>();
 
-          // 1. Inicializar con el catálogo base oficial
+          // 1. Inicializar con el catálogo base oficial (imágenes y markdown)
           baseForSubject.forEach(p => uniqueMap.set(p.id, { ...p, propietarioId: user!.id }));
 
-          // 2. Fusionar con las preguntas de la base de datos Supabase
+          // 2. Fusionar con las preguntas de la base de datos Supabase (fuente de verdad)
           const imageMap = new Map<string, { imagenUrl?: string; tablaMarkdown?: string }>();
           [...preguntasLenguaje2MMock, ...preguntasLenguaje2MJunioMock, ...preguntasLenguaje2MAbrilMock].forEach(p => {
             imageMap.set(p.id, { imagenUrl: p.imagenUrl, tablaMarkdown: p.tablaMarkdown });
@@ -147,23 +147,16 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
             });
           });
 
-          // 3. Cargar y fusionar preguntas manuales guardadas en localStorage
+          // 3. Producción: limpiar claves residuales del localStorage para evitar
+          //    que preguntas fantasma (no persistidas en Supabase) inflen el contador.
+          //    El localStorage ya NO es fuente de verdad — solo Supabase (Directiva 3).
           try {
-            const localKeys = [`sysget_banco_preguntas_${user!.id}`, 'sysget_banco_preguntas_custom'];
-            localKeys.forEach(k => {
-              const stored = localStorage.getItem(k);
-              if (stored) {
-                const parsed: Pregunta[] = JSON.parse(stored);
-                if (Array.isArray(parsed)) {
-                  parsed.forEach(lp => {
-                    if (lp && lp.id) {
-                      uniqueMap.set(lp.id, { ...lp, propietarioId: user!.id });
-                    }
-                  });
-                }
-              }
-            });
-          } catch (e) {}
+            const keysToClean = [
+              `sysget_banco_preguntas_${user!.id}`,
+              'sysget_banco_preguntas_custom'
+            ];
+            keysToClean.forEach(k => localStorage.removeItem(k));
+          } catch (e) { /* ignorar en entornos sin localStorage */ }
 
           setPreguntas(Array.from(uniqueMap.values()));
           setIsLoading(false);
