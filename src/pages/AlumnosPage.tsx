@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   Users,
   PlusCircle,
@@ -21,6 +21,7 @@ import { UserProfile } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
 import { parseAlumnosCSV, csvAlumnosToProfiles } from '../utils/csvParser';
 import { CursoItem, useCursos } from '../hooks/useCursos';
+import { supabase } from '../lib/supabaseClient';
 
 // Extendemos localmente con cursoId para el filtro
 export type AlumnoConCurso = UserProfile & { cursoId?: string; cursoNombre?: string };
@@ -330,59 +331,33 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
 
   const { cursos: cursosFromHook } = useCursos({ currentUser, isSandboxMode });
 
-  // Inicializar alumnos aislados:
-  // En PRODUCCIÓN: siempre inicia 100% limpio (0 alumnos) con empty state legítimo (Directiva 2)
-  // En MODO DEMO / SANDBOX: carga la nómina demo de 8° y 6°
-  const getInitialAlumnos = (): AlumnoConCurso[] => {
+  const getInitialDemoAlumnos = (): AlumnoConCurso[] => {
     const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) return parsed;
       } catch (err) {
-        console.error('Error parsing saved alumnos:', err);
+        console.error('Error parsing saved demo alumnos:', err);
       }
     }
-
-    if (isSandboxMode) {
-      return [
-        { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
-        { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
-        { id: 'alum-3', rut: '22.222.222-2', nombre: 'Carlos', apellido: 'Martínez', email: 'carlos@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
-        { id: 'alum-4', rut: '23.444.555-9', nombre: 'Sofía', apellido: 'Valenzuela', email: 'sofia@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
-        { id: 'alum-5', rut: '24.555.666-K', nombre: 'Diego', apellido: 'Fuentes', email: 'diego@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
-        { id: 'alum-6', rut: '21.016.016-5', nombre: 'Tomás', apellido: 'Quintero', email: 'tomas.quintero@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
-        { id: 'alum-7', rut: '21.017.017-6', nombre: 'Emilia', apellido: 'Rojas', email: 'emilia.rojas@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
-        { id: 'alum-8', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto', email: 'benjamin.soto@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
-      ];
-    }
-
-    const email = (currentUser?.email || '').toLowerCase();
-    const est = (currentUser?.establecimiento || '').toLowerCase();
-    const isDemoAccount = email.endsWith('@escuelademo.cl') ||
-                          email.endsWith('@demo.cl') ||
-                          email.endsWith('@sysget.cl') ||
-                          email === 'admin@sysget.cl' ||
-                          est.includes('demo') ||
-                          est.includes('bicentenario');
-
-    if (isDemoAccount && !email.includes('leontestvirtual1') && !email.includes('mariateresa') && !email.includes('susana')) {
-      return [
-        { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
-        { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
-        { id: 'alum-3', rut: '22.222.222-2', nombre: 'Carlos', apellido: 'Martínez', email: 'carlos@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
-        { id: 'alum-4', rut: '23.444.555-9', nombre: 'Sofía', apellido: 'Valenzuela', email: 'sofia@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
-        { id: 'alum-5', rut: '24.555.666-K', nombre: 'Diego', apellido: 'Fuentes', email: 'diego@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
-        { id: 'alum-6', rut: '21.016.016-5', nombre: 'Tomás', apellido: 'Quintero', email: 'tomas.quintero@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
-        { id: 'alum-7', rut: '21.017.017-6', nombre: 'Emilia', apellido: 'Rojas', email: 'emilia.rojas@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
-        { id: 'alum-8', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto', email: 'benjamin.soto@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
-      ];
-    }
-
-    return [];
+    return [
+      { id: 'alum-1', rut: '22.876.543-0', nombre: 'Pedro', apellido: 'Soto', email: 'pedro@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
+      { id: 'alum-2', rut: '23.111.111-1', nombre: 'Ana', apellido: 'López', email: 'ana@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
+      { id: 'alum-3', rut: '22.222.222-2', nombre: 'Carlos', apellido: 'Martínez', email: 'carlos@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
+      { id: 'alum-4', rut: '23.444.555-9', nombre: 'Sofía', apellido: 'Valenzuela', email: 'sofia@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-2', cursoNombre: '8° Básico B' },
+      { id: 'alum-5', rut: '24.555.666-K', nombre: 'Diego', apellido: 'Fuentes', email: 'diego@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-1', cursoNombre: '8° Básico A' },
+      { id: 'alum-6', rut: '21.016.016-5', nombre: 'Tomás', apellido: 'Quintero', email: 'tomas.quintero@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+      { id: 'alum-7', rut: '21.017.017-6', nombre: 'Emilia', apellido: 'Rojas', email: 'emilia.rojas@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+      { id: 'alum-8', rut: '21.018.018-7', nombre: 'Benjamín', apellido: 'Soto', email: 'benjamin.soto@demo.cl', rol: 'alumno', establecimiento: colegioNombre, cursoId: 'curso-6b', cursoNombre: '6° Básico B' },
+    ];
   };
 
-  const [alumnos, setAlumnos] = useState<AlumnoConCurso[]>(getInitialAlumnos);
+  const [alumnos, setAlumnos] = useState<AlumnoConCurso[]>(() => {
+    if (isSandboxMode) return getInitialDemoAlumnos();
+    return [];
+  });
+  const [isLoadingProd, setIsLoadingProd] = useState<boolean>(!isSandboxMode);
   const [search, setSearch] = useState('');
   const [cursoFilter, setCursoFilter] = useState('');
   const [formModalOpen, setFormModalOpen] = useState(false);
@@ -391,10 +366,83 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
 
-  // Guardar en localStorage cada vez que cambie la lista de alumnos
+  // ── MODO PRODUCCIÓN: Cargar alumnos directamente desde Supabase ──
+  const loadAlumnosFromSupabase = useCallback(async () => {
+    if (isSandboxMode || !currentUser) return;
+    setIsLoadingProd(true);
+    try {
+      let query = supabase
+        .from('perfiles')
+        .select(`
+          id, rut, nombre, apellido, email, rol, establecimiento, rbd, cargo
+        `)
+        .eq('rol', 'alumno');
+
+      const isSuperAdmin = currentUser.email === 'leontestvirtual1@gmail.com';
+      if (!isSuperAdmin) {
+        if (currentUser.rbd) {
+          query = query.eq('rbd', currentUser.rbd);
+        } else if (currentUser.establecimiento) {
+          query = query.ilike('establecimiento', `%${currentUser.establecimiento}%`);
+        }
+      }
+
+      const { data: perfilesRows, error: pErr } = await query;
+      if (pErr) {
+        console.error('Error cargando alumnos de Supabase:', pErr);
+        setIsLoadingProd(false);
+        return;
+      }
+
+      // Obtener matrículas para mapear curso
+      const { data: matriculasRows } = await supabase
+        .from('matriculas')
+        .select('alumno_id, curso_id');
+
+      const matriculaMap = new Map<string, string>();
+      (matriculasRows || []).forEach((m: any) => {
+        matriculaMap.set(m.alumno_id, m.curso_id);
+      });
+
+      const cursosMap = new Map<string, string>();
+      cursosFromHook.forEach(c => cursosMap.set(c.id, c.nombre));
+
+      const alumnosList: AlumnoConCurso[] = (perfilesRows || []).map((p: any) => {
+        const cId = matriculaMap.get(p.id);
+        return {
+          id: p.id,
+          rut: p.rut || '',
+          nombre: p.nombre || '',
+          apellido: p.apellido || '',
+          email: p.email || '',
+          rol: 'alumno',
+          establecimiento: p.establecimiento || colegioNombre,
+          rbd: p.rbd || currentUser.rbd,
+          cursoId: cId,
+          cursoNombre: cId ? cursosMap.get(cId) || 'Curso asignado' : undefined,
+        };
+      });
+
+      setAlumnos(alumnosList);
+    } catch (err) {
+      console.error('Error inesperado al cargar alumnos:', err);
+    } finally {
+      setIsLoadingProd(false);
+    }
+  }, [isSandboxMode, currentUser, colegioNombre, cursosFromHook]);
+
   useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(alumnos));
-  }, [alumnos, storageKey]);
+    if (!isSandboxMode) {
+      loadAlumnosFromSupabase();
+    }
+  }, [isSandboxMode, loadAlumnosFromSupabase]);
+
+  // Guardar en localStorage ÚNICAMENTE en modo Demo/Sandbox
+  useEffect(() => {
+    if (isSandboxMode) {
+      localStorage.setItem(storageKey, JSON.stringify(alumnos));
+    }
+  }, [alumnos, isSandboxMode, storageKey]);
 
   // Cursos disponibles obtenidos reactivamente del hook
   const cursosDisponibles = useMemo(() => {
@@ -414,16 +462,79 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     return matchesSearch && matchesCurso;
   });
 
-  const handleSaveAlumno = (a: AlumnoConCurso) => {
-    setAlumnos(prev => {
-      const exists = prev.find(p => p.id === a.id);
-      return exists ? prev.map(p => p.id === a.id ? a : p) : [a, ...prev];
-    });
+  const handleSaveAlumno = async (a: AlumnoConCurso) => {
+    if (!isSandboxMode && currentUser) {
+      try {
+        const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
+        const perfilRow = {
+          id: alumnoId,
+          rut: a.rut,
+          nombre: a.nombre,
+          apellido: a.apellido,
+          email: a.email || `${a.rut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl`,
+          rol: 'alumno',
+          establecimiento: a.establecimiento || colegioNombre,
+          rbd: currentUser.rbd || null,
+          estado: 'activo',
+          plan: 'trial'
+        };
+
+        const { error: pErr } = await supabase.from('perfiles').upsert(perfilRow, { onConflict: 'id' });
+        if (pErr) console.error('Error guardando perfil de alumno:', pErr);
+
+        if (a.cursoId) {
+          const { error: mErr } = await supabase.from('matriculas').upsert({
+            alumno_id: alumnoId,
+            curso_id: a.cursoId
+          }, { onConflict: 'alumno_id,curso_id' });
+          if (mErr) console.warn('Error guardando matrícula:', mErr);
+        }
+
+        await loadAlumnosFromSupabase();
+      } catch (err) {
+        console.error('Error guardando alumno en Supabase:', err);
+      }
+    } else {
+      setAlumnos(prev => {
+        const exists = prev.find(p => p.id === a.id);
+        return exists ? prev.map(p => p.id === a.id ? a : p) : [a, ...prev];
+      });
+    }
     setEditingAlumno(null);
   };
 
-  const handleImportCSV = (nuevos: AlumnoConCurso[]) => {
-    setAlumnos(prev => [...nuevos, ...prev]);
+  const handleImportCSV = async (nuevos: AlumnoConCurso[]) => {
+    if (!isSandboxMode && currentUser) {
+      try {
+        for (const a of nuevos) {
+          const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
+          await supabase.from('perfiles').upsert({
+            id: alumnoId,
+            rut: a.rut,
+            nombre: a.nombre,
+            apellido: a.apellido,
+            email: a.email || `${a.rut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl`,
+            rol: 'alumno',
+            establecimiento: a.establecimiento || colegioNombre,
+            rbd: currentUser.rbd || null,
+            estado: 'activo',
+            plan: 'trial'
+          }, { onConflict: 'id' });
+
+          if (a.cursoId) {
+            await supabase.from('matriculas').upsert({
+              alumno_id: alumnoId,
+              curso_id: a.cursoId
+            }, { onConflict: 'alumno_id,curso_id' });
+          }
+        }
+        await loadAlumnosFromSupabase();
+      } catch (err) {
+        console.error('Error importando CSV a Supabase:', err);
+      }
+    } else {
+      setAlumnos(prev => [...nuevos, ...prev]);
+    }
   };
 
   const handleCopyCode = () => {
@@ -432,8 +543,18 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     setTimeout(() => setCopiedCode(false), 2000);
   };
 
-  const handleDelete = (id: string) => {
-    setAlumnos(prev => prev.filter(a => a.id !== id));
+  const handleDelete = async (id: string) => {
+    if (!isSandboxMode) {
+      try {
+        await supabase.from('matriculas').delete().eq('alumno_id', id);
+        await supabase.from('perfiles').delete().eq('id', id);
+        await loadAlumnosFromSupabase();
+      } catch (err) {
+        console.error('Error eliminando alumno de Supabase:', err);
+      }
+    } else {
+      setAlumnos(prev => prev.filter(a => a.id !== id));
+    }
     setActiveMenuId(null);
   };
 

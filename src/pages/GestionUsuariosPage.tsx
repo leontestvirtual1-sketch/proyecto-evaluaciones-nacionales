@@ -26,8 +26,10 @@ import {
   ChevronDown,
   RefreshCw,
   Smartphone,
-  Monitor
+  Monitor,
+  BookMarked
 } from 'lucide-react';
+import { AdminCatalogoPanel } from '../components/AdminCatalogoPanel';
 
 export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isSandboxMode = false }) => {
   const { user, usuarios, approveUser, rejectOrSuspendUser, changeUserPlan, setUserPassword, loadUsuariosReales } = useAuth();
@@ -128,7 +130,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   };
 
   const isProductionAdmin = !isSandboxMode && user?.email === 'leontestvirtual1@gmail.com';
-  const [entornoTab, setEntornoTab] = useState<'produccion' | 'demo'>('produccion');
+  const [entornoTab, setEntornoTab] = useState<'produccion' | 'catalogo' | 'demo'>('produccion');
 
   // Clasificador estricto de usuario Demo vs Producción
   const isUserDemo = (u: UserProfile) => {
@@ -240,6 +242,18 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           </button>
 
           <button
+            onClick={() => setEntornoTab('catalogo')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              entornoTab === 'catalogo'
+                ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/20'
+                : 'bg-slate-950/60 text-slate-400 hover:text-white border border-slate-800'
+            }`}
+          >
+            <BookMarked className="w-3.5 h-3.5" />
+            <span>📚 Catálogo SIMCE & Solicitudes</span>
+          </button>
+
+          <button
             onClick={() => setEntornoTab('demo')}
             className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               entornoTab === 'demo'
@@ -251,6 +265,13 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           </button>
         </div>
       )}
+
+      {entornoTab === 'catalogo' ? (
+        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <AdminCatalogoPanel onToast={showToast} />
+        </div>
+      ) : (
+        <>
 
       {/* Tarjetas de Métricas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -502,6 +523,8 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           </table>
         </div>
       </div>
+      </>
+      )}
 
       {/* Modal de Establecer / Restablecer Contraseña */}
       {selectedUserForPassword && (

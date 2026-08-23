@@ -479,7 +479,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
         showToast(`⚠️ Error: ${err.message}`);
         throw err;
       }
-    } else {
+    } else if (isDemo) {
       setProfesores(prev => {
         const exists = prev.find(p => p.id === prof.id);
         const updated = exists ? prev.map(p => p.id === prof.id ? prof : p) : [prof, ...prev];
@@ -491,15 +491,34 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
     setEditingProfesor(null);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     const p = profesores.find(item => item.id === id);
-    setProfesores(prev => {
-      const updated = prev.filter(item => item.id !== id);
-      localStorage.setItem(storageKey, JSON.stringify(updated));
-      return updated;
-    });
+    if (!isDemo) {
+      try {
+        const resp = await fetch('/api/users?action=suspend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: id })
+        });
+        if (!resp.ok) {
+          const data = await resp.json();
+          throw new Error(data.error || 'Error al suspender docente en Supabase.');
+        }
+        if (loadDocentesReales) await loadDocentesReales();
+        setProfesores(prev => prev.filter(item => item.id !== id));
+        if (p) showToast(`✅ Docente ${p.nombre} ${p.apellido} suspendido en Supabase.`);
+      } catch (err: any) {
+        showToast(`⚠️ Error al eliminar: ${err.message}`);
+      }
+    } else {
+      setProfesores(prev => {
+        const updated = prev.filter(item => item.id !== id);
+        localStorage.setItem(storageKey, JSON.stringify(updated));
+        return updated;
+      });
+      if (p) showToast(`Docente ${p.nombre} ${p.apellido} eliminado.`);
+    }
     setActiveMenuId(null);
-    if (p) showToast(`Docente ${p.nombre} ${p.apellido} eliminado.`);
   };
 
   /**

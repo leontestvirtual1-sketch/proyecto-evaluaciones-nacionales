@@ -5,6 +5,7 @@ type VercelRequest = any;
 type VercelResponse = any;
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'leontestvirtual1@gmail.com';
+const CC_EMAIL = process.env.CC_EMAIL || 'luisleong.premil@gmail.com';
 const ADMIN_NAME = process.env.ADMIN_NAME || 'Luis Andrés León González';
 const APP_URL = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 const SMTP_USER = process.env.SMTP_USER || '';
@@ -208,6 +209,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const info = await transporter.sendMail({
       from: `"Sysget Saber" <${SMTP_USER}>`,
       to: ADMIN_EMAIL,
+      cc: CC_EMAIL !== ADMIN_EMAIL ? CC_EMAIL : undefined,
       subject: `🔔 Nueva solicitud de acceso: ${fullName} (${establecimiento || 'Establecimiento'})`,
       html: htmlBody,
     });

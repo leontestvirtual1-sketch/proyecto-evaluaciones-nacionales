@@ -18,12 +18,14 @@ import {
   X,
   HelpCircle,
   FileCheck,
-  Camera
+  Camera,
+  BookMarked
 } from 'lucide-react';
 import { UserProfile, RendicionPrueba } from '../types';
 import { PrintEvaluacionModal } from '../components/PrintEvaluacionModal';
 import { IngresoRespuestasModal } from '../components/IngresoRespuestasModal';
 import { useAcademicData } from '../context/AcademicDataContext';
+import { CatalogoEvaluacionesModal } from '../components/CatalogoEvaluacionesModal';
 
 
 interface PruebaFacsimilModalProps {
@@ -186,6 +188,7 @@ interface EvaluacionesPageProps {
   asignaturas: Asignatura[];
   bancoPreguntas?: Pregunta[];
   currentUser?: UserProfile;
+  isSandboxMode?: boolean;
   onOpenGenerator: () => void;
   onSelectPruebaReporte: (pruebaId: string) => void;
   onUpdatePruebaEstado: (pruebaId: string, nuevoEstado: 'borrador' | 'activa' | 'finalizada') => void;
@@ -197,6 +200,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   asignaturas,
   bancoPreguntas = [],
   currentUser,
+  isSandboxMode = false,
   onOpenGenerator,
   onSelectPruebaReporte,
   onUpdatePruebaEstado
@@ -216,6 +220,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   const [selectedPruebaForPrint, setSelectedPruebaForPrint] = useState<Prueba | null>(null);
   const [respuestasModalOpen, setRespuestasModalOpen] = useState(false);
   const [selectedPruebaForRespuestas, setSelectedPruebaForRespuestas] = useState<Prueba | null>(null);
+  const [catalogoModalOpen, setCatalogoModalOpen] = useState(false);
 
   const showToast = (msg: string) => {
 
@@ -282,13 +287,27 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={onOpenGenerator}
-            className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold px-5 py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
-          >
-            <PlusCircle className="w-5 h-5" />
-            <span>Nueva Evaluación</span>
-          </button>
+          <div className="flex items-center gap-2 flex-wrap justify-end">
+            {/* Catálogo SIMCE: sólo visible para docentes en producción */}
+            {currentUser?.rol === 'profesor' && currentUser?.asignaturaId && !isSandboxMode && (
+              <button
+                id="btn-catalogo-simce"
+                onClick={() => setCatalogoModalOpen(true)}
+                className="flex items-center justify-center gap-2 bg-violet-700 hover:bg-violet-600 active:bg-violet-800 text-white font-bold px-4 py-3 rounded-xl shadow-lg shadow-violet-700/20 transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+              >
+                <BookMarked className="w-4 h-4" />
+                <span className="hidden sm:inline">Catálogo SIMCE</span>
+                <span className="sm:hidden">📚</span>
+              </button>
+            )}
+            <button
+              onClick={onOpenGenerator}
+              className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold px-5 py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+            >
+              <PlusCircle className="w-5 h-5" />
+              <span>Nueva Evaluación</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -565,6 +584,15 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           showToast(`✅ Rendición guardada para ${nuevaRendicion.alumnoNombre} (${nuevaRendicion.porcentajeLogro}% logro)`);
         }}
       />
+
+      {/* Catálogo SIMCE — solo docentes en producción */}
+      {currentUser && !isSandboxMode && (
+        <CatalogoEvaluacionesModal
+          isOpen={catalogoModalOpen}
+          onClose={() => setCatalogoModalOpen(false)}
+          currentUser={currentUser}
+        />
+      )}
     </div>
   );
 };

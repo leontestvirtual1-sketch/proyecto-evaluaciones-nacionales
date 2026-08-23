@@ -123,6 +123,39 @@ export interface Prueba {
   preguntasIds: string[];
   totalPreguntas: number;
   estado: 'borrador' | 'activa' | 'finalizada';
+  esCatalogo?: boolean;
+  precioCLP?: number;
+  descripcionCatalogo?: string;
+}
+
+// ── Catálogo de Evaluaciones SIMCE ──────────────────────────────────────────
+
+export interface EvaluacionCatalogo {
+  id: string;
+  titulo: string;
+  descripcion: string;
+  asignaturaId: string;
+  nivel: string;
+  precioCLP: number;          // 0 = gratuita (incluida en plan)
+  descripcionCatalogo?: string;
+  totalPreguntas: number;
+}
+
+export type EstadoSolicitud = 'pendiente' | 'aprobada' | 'rechazada';
+
+export interface SolicitudEvaluacion {
+  id: string;
+  evaluacionId: string;
+  evaluacionTitulo?: string;
+  asignatura?: string;
+  profesorId: string;
+  docenteNombre?: string;
+  docenteEmail?: string;
+  establecimiento: string;
+  rbd?: string;
+  mensaje?: string;
+  estado: EstadoSolicitud;
+  createdAt: string;
 }
 
 export interface RespuestaAlumno {
