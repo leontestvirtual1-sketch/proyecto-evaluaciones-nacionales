@@ -70,6 +70,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       rbd,
       asignaturaNombre,
       rut,
+      telefono,
       approvalToken,
     } = req.body || {};
 
@@ -86,6 +87,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const safeRbd = escapeHtml(rbd);
     const safeAsignatura = escapeHtml(asignaturaNombre);
     const safeRut = escapeHtml(rut);
+    const safeTelefono = escapeHtml(telefono);
     const safeToken = encodeURIComponent(approvalToken || '');
 
     const approvalLink = `${APP_URL}?approve_token=${safeToken}`;
@@ -139,6 +141,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Correo</td>
                       <td style="padding:6px 0;color:#818cf8;font-size:14px;">${safeEmail}</td>
                     </tr>
+                    ${safeTelefono ? `
+                    <tr>
+                      <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Teléfono</td>
+                      <td style="padding:6px 0;color:#34d399;font-size:14px;font-mono;">${safeTelefono}</td>
+                    </tr>` : ''}
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Rol Solicitado</td>
                       <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rolLabel}</td>

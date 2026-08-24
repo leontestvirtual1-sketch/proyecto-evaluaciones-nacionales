@@ -19,6 +19,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
     apellidoMaterno: '',
     apellido: '',
     email: '',
+    telefono: '',
     password: '',
     rol: 'profesor',
     establecimiento: '',
@@ -46,6 +47,11 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
 
     if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.apellidoMaterno || !form.email || !form.password || !form.establecimiento || !form.rbd) {
       setError('Por favor completa todos los campos obligatorios (Nombres, Apellido Paterno, Apellido Materno, RUT, Email, Establecimiento, RBD y Contraseña).');
+      return;
+    }
+
+    if (!form.telefono || form.telefono.trim().length < 9) {
+      setError('El teléfono celular es obligatorio. Ingresa un número válido en formato +56 9 XXXX XXXX.');
       return;
     }
 
@@ -214,6 +220,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                     apellidoMaterno: form.apellidoMaterno,
                     apellido: form.apellido,
                     email: form.email,
+                    telefono: form.telefono || '',
                     establecimiento: form.establecimiento,
                     rbd: form.rbd || '',
                     comuna: form.comuna || '',

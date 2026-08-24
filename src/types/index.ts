@@ -19,6 +19,7 @@ export interface UserProfile {
   apellidoPaterno?: string;     // Apellido Paterno
   apellidoMaterno?: string;     // Apellido Materno
   email: string;
+  telefono?: string;           // Teléfono celular de contacto (+56 9 XXXX XXXX)
   rol: UserRole;
   establecimiento: string;
   rbd?: string;                // Código RBD oficial del establecimiento

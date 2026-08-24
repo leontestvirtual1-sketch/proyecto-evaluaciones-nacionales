@@ -47,6 +47,14 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   const [emailTempPassword, setEmailTempPassword] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [emailPreviewMode, setEmailPreviewMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [emailSendResult, setEmailSendResult] = useState<{
+    success: boolean;
+    to?: string;
+    messageId?: string;
+    timestamp?: string;
+    errorMsg?: string;
+    smtpCode?: number;
+  } | null>(null);
 
   // Estados para Modal de Contraseña
   const [selectedUserForPassword, setSelectedUserForPassword] = useState<UserProfile | null>(null);
@@ -71,6 +79,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   const handleSendRealEmail = async () => {
     if (!selectedUserForEmailModal) return;
     setIsSendingEmail(true);
+    setEmailSendResult(null);
     try {
       const res = await fetch('/api/users?action=send-email', {
         method: 'POST',
@@ -88,13 +97,26 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
 
       const data = await res.json();
       if (!res.ok || data.error) {
-        showToast(`❌ Error al enviar: ${data.error || 'No se pudo enviar el correo'}`);
+        setEmailSendResult({
+          success: false,
+          to: selectedUserForEmailModal.email,
+          errorMsg: data.error || 'No se pudo enviar el correo.',
+          smtpCode: data.smtpCode
+        });
       } else {
-        showToast(`📧 ¡Correo de activación enviado exitosamente a ${selectedUserForEmailModal.email}!`);
+        setEmailSendResult({
+          success: true,
+          to: data.to || selectedUserForEmailModal.email,
+          messageId: data.messageId,
+          timestamp: data.timestamp || new Date().toISOString()
+        });
         setSelectedUserForEmailModal(null);
       }
     } catch (e: any) {
-      showToast(`❌ Error de conexión al enviar correo: ${e.message}`);
+      setEmailSendResult({
+        success: false,
+        errorMsg: `Error de conexión: ${e.message}`
+      });
     } finally {
       setIsSendingEmail(false);
     }
@@ -189,6 +211,87 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 bg-emerald-600 text-white rounded-xl shadow-2xl border border-emerald-400/40 text-xs font-semibold animate-slide-up">
           <CheckCircle2 className="w-4 h-4" />
           {successToast}
+        </div>
+      )}
+
+      {/* Modal Resultado de Envío de Correo */}
+      {emailSendResult && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className={`w-full max-w-md rounded-2xl border shadow-2xl p-6 space-y-4 ${
+            emailSendResult.success
+              ? 'bg-slate-900 border-emerald-500/40'
+              : 'bg-slate-900 border-rose-500/40'
+          }`}>
+            {/* Icono + título */}
+            <div className="flex items-center gap-3">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                emailSendResult.success ? 'bg-emerald-500/20 border border-emerald-500/40' : 'bg-rose-500/20 border border-rose-500/40'
+              }`}>
+                {emailSendResult.success
+                  ? <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  : <XCircle className="w-5 h-5 text-rose-400" />}
+              </div>
+              <div>
+                <h3 className={`text-sm font-bold ${emailSendResult.success ? 'text-emerald-300' : 'text-rose-300'}`}>
+                  {emailSendResult.success ? '✅ Correo entregado exitosamente' : '❌ Error al enviar el correo'}
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  {emailSendResult.success ? 'El servidor SMTP confirmó la entrega.' : 'El servidor SMTP reportó un error.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Detalles */}
+            <div className={`rounded-xl p-3 space-y-2 text-xs ${
+              emailSendResult.success ? 'bg-emerald-950/30 border border-emerald-800/40' : 'bg-rose-950/30 border border-rose-800/40'
+            }`}>
+              {emailSendResult.to && (
+                <div className="flex justify-between gap-2">
+                  <span className="text-slate-400 font-semibold uppercase tracking-wide text-[10px]">Destinatario</span>
+                  <span className="text-white font-mono text-[11px]">{emailSendResult.to}</span>
+                </div>
+              )}
+              {emailSendResult.success && emailSendResult.messageId && (
+                <div className="flex justify-between gap-2">
+                  <span className="text-slate-400 font-semibold uppercase tracking-wide text-[10px]">Message ID</span>
+                  <span className="text-emerald-300 font-mono text-[10px] truncate max-w-[200px]">{emailSendResult.messageId}</span>
+                </div>
+              )}
+              {emailSendResult.success && emailSendResult.timestamp && (
+                <div className="flex justify-between gap-2">
+                  <span className="text-slate-400 font-semibold uppercase tracking-wide text-[10px]">Enviado</span>
+                  <span className="text-slate-300 text-[11px]">{new Date(emailSendResult.timestamp).toLocaleString('es-CL')}</span>
+                </div>
+              )}
+              {!emailSendResult.success && emailSendResult.errorMsg && (
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-semibold uppercase tracking-wide text-[10px]">Detalle del error</span>
+                  <p className="text-rose-300 text-[11px] leading-relaxed bg-rose-950/40 rounded-lg p-2">{emailSendResult.errorMsg}</p>
+                </div>
+              )}
+              {!emailSendResult.success && emailSendResult.smtpCode && (
+                <div className="flex justify-between gap-2">
+                  <span className="text-slate-400 font-semibold uppercase tracking-wide text-[10px]">Código SMTP</span>
+                  <span className="text-rose-400 font-mono font-bold">{emailSendResult.smtpCode}</span>
+                </div>
+              )}
+              {!emailSendResult.success && (
+                <div className="mt-2 p-2 bg-amber-950/30 border border-amber-700/30 rounded-lg">
+                  <p className="text-amber-300 text-[10px] leading-relaxed">
+                    💡 <strong>Causa probable:</strong> Las variables <code>SMTP_USER</code> y <code>SMTP_PASS</code> no están configuradas en las variables de entorno de Vercel. Ve a{' '}
+                    <span className="font-mono">vercel.com → Settings → Environment Variables</span>.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => setEmailSendResult(null)}
+              className="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all border border-slate-700"
+            >
+              Cerrar
+            </button>
+          </div>
         </div>
       )}
 
@@ -404,9 +507,15 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                       </div>
                     </td>
 
-                    {/* Email y Registro */}
+                    {/* Email, Teléfono y Registro */}
                     <td className="py-3.5 px-4">
                       <div className="text-xs font-mono text-slate-300">{u.email}</div>
+                      {u.telefono && (
+                        <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-mono mt-0.5">
+                          <Smartphone className="w-2.5 h-2.5" />
+                          {u.telefono}
+                        </div>
+                      )}
                       {u.fechaRegistro && (
                         <div className="text-[10px] text-slate-500">Reg: {u.fechaRegistro}</div>
                       )}

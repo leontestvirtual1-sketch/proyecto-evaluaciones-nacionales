@@ -303,6 +303,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           apellidoMaterno,
           apellido,
           email,
+          telefono,
           password,
           // rol del body se ignora intencionalmente — siempre forzamos 'profesor'
           establecimiento,
@@ -391,6 +392,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           apellido_paterno: (apellidoPaterno || '').trim() || null,
           apellido_materno: (apellidoMaterno || '').trim() || null,
           email: cleanEmail,
+          telefono: (telefono || '').trim() || null,
           rol: rol || 'profesor',
           establecimiento: cleanEstablecimiento || 'Establecimiento Educacional',
           rbd: cleanRbd || null,
@@ -424,6 +426,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const safeFullName = `${safeNombre} ${escapeHtml(fullApellido)}`.trim() || 'Nuevo Usuario';
         const safeEmail = escapeHtml(cleanEmail);
         const safeRut = escapeHtml(rut);
+        const safeTelefono = escapeHtml(telefono);
         const safeEstablecimiento = escapeHtml(cleanEstablecimiento);
         const safeRbd = escapeHtml(cleanRbd);
         const safeAsignatura = escapeHtml(asignaturaNombre);
@@ -483,6 +486,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Correo</td>
                       <td style="padding:6px 0;color:#818cf8;font-size:14px;">${safeEmail}</td>
                     </tr>
+                    ${safeTelefono ? `
+                    <tr>
+                      <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Teléfono</td>
+                      <td style="padding:6px 0;color:#34d399;font-size:14px;font-mono;">${safeTelefono}</td>
+                    </tr>` : ''}
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Rol Solicitado</td>
                       <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rolLabel}</td>
@@ -530,6 +538,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 </body>
 </html>`;
 
+        let emailStatus: 'sent' | 'failed' = 'failed';
+        let emailError: string | undefined;
         try {
           const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -548,14 +558,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             subject: `🔔 Nueva solicitud de acceso: ${safeFullName} (${safeEstablecimiento || 'Establecimiento'})`,
             html: htmlBody,
           });
-        } catch (mailErr) {
-          console.warn('Mail send warning:', mailErr);
+          emailStatus = 'sent';
+        } catch (mailErr: any) {
+          emailStatus = 'failed';
+          emailError = mailErr?.message || String(mailErr);
+          console.warn('[notify-admin] Mail send warning:', emailError);
         }
 
         return res.status(200).json({
           success: true,
           userId: authUserId,
-          approvalToken: generatedToken
+          approvalToken: generatedToken,
+          emailStatus,
+          ...(emailError ? { emailError } : {})
         });
       }
 
@@ -738,17 +753,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             },
           });
 
-          await transporter.sendMail({
+          const mailInfo = await transporter.sendMail({
             from: `"Sysget Saber" <${SMTP_USER}>`,
             to: to,
             subject: emailSubject,
             html: htmlContent,
           });
 
-          return res.status(200).json({ success: true, message: `Correo de activación enviado exitosamente a ${to}` });
+          return res.status(200).json({
+            success: true,
+            message: `Correo enviado exitosamente a ${to}`,
+            to,
+            messageId: mailInfo.messageId,
+            timestamp: new Date().toISOString(),
+            response: mailInfo.response
+          });
         } catch (mailErr: any) {
           console.error('Error enviando correo SMTP:', mailErr);
-          return res.status(500).json({ error: `No se pudo enviar el correo: ${mailErr.message}` });
+          return res.status(500).json({
+            error: `No se pudo enviar el correo: ${mailErr.message}`,
+            code: mailErr.code,
+            smtpResponse: mailErr.response,
+            smtpCode: mailErr.responseCode
+          });
         }
       }
     }

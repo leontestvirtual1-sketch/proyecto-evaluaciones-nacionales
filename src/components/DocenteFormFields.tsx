@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { User, Mail, Building2, Hash, BookOpen, AlertCircle, CheckCircle2, MapPin } from 'lucide-react';
+import { User, Mail, Building2, Hash, BookOpen, AlertCircle, CheckCircle2, MapPin, Phone } from 'lucide-react';
 import { Asignatura, EstablecimientoInfo } from '../types';
 import { asignaturasMock, establecimientosCatalog } from '../data/mockData';
 import { validarRutChileno, formatearRutChileno, validarRBD, normalizarRBD } from '../utils/chileValidators';
@@ -67,6 +67,7 @@ export interface DocenteFormData {
   apellidoMaterno: string;
   apellido?: string;
   email: string;
+  telefono?: string;
   establecimiento: string;
   rbd: string;
   comuna?: string;
@@ -167,6 +168,28 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
     }
   };
 
+  // Formato +56 9 XXXX XXXX — exactamente 8 dígitos después del prefijo
+  const validarTelefonoChileno = (tel: string): boolean | null => {
+    if (!tel || tel.trim().length === 0) return null;
+    const digits = tel.replace(/\D/g, '');
+    // Acepta: 9XXXXXXXX (9 dígitos) o 569XXXXXXXX (11 dígitos con prefijo)
+    return /^(569[0-9]{8}|9[0-9]{8})$/.test(digits);
+  };
+
+  const formatearTelefono = (raw: string): string => {
+    // Formatea a +56 9 XXXX XXXX si tiene los dígitos suficientes
+    const digits = raw.replace(/\D/g, '');
+    if (/^569[0-9]{8}$/.test(digits)) {
+      return `+56 ${digits[2]} ${digits.slice(3, 7)} ${digits.slice(7)}`;
+    }
+    if (/^9[0-9]{8}$/.test(digits)) {
+      return `+56 ${digits[0]} ${digits.slice(1, 5)} ${digits.slice(5)}`;
+    }
+    return raw;
+  };
+
+  const isTelefonoValid = validarTelefonoChileno(formData.telefono || '');
+
   const handleEstablecimientoSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     if (val === 'CUSTOM') {
@@ -238,13 +261,13 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
         </div>
       </div>
 
-      {/* Fila 2: RUT + Correo */}
-      <div className="grid grid-cols-2 gap-2">
+      {/* Fila 2: RUT + Teléfono + Correo */}
+      <div className="grid grid-cols-3 gap-2">
         <div>
           <label className="block text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-0.5 flex items-center justify-between">
             <span>RUT <span className="text-red-500">*</span></span>
-            {isRutValid === true && <span className="text-emerald-500 font-medium flex items-center gap-0.5 normal-case"><CheckCircle2 className="w-3 h-3" /> OK</span>}
-            {isRutValid === false && <span className="text-rose-500 font-medium flex items-center gap-0.5 normal-case"><AlertCircle className="w-3 h-3" /> Inválido</span>}
+            {isRutValid === true && <span className="text-emerald-500 font-medium flex items-center gap-0.5 normal-case"><CheckCircle2 className="w-3 h-3" />OK</span>}
+            {isRutValid === false && <span className="text-rose-500 font-medium flex items-center gap-0.5 normal-case"><AlertCircle className="w-3 h-3" />Inválido</span>}
           </label>
           <div className="relative">
             <input type="text" required value={formData.rut} onChange={handleRutChange} onBlur={handleRutBlur}
@@ -253,6 +276,27 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
                 isRutValid === false ? 'border-rose-500 ring-1 ring-rose-500/20' : 'border-slate-300 dark:border-slate-700'
               } rounded-lg outline-none focus:ring-1 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all placeholder:text-slate-400`} />
             <Hash className="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" />
+          </div>
+        </div>
+        <div>
+          <label className="block text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-0.5 flex items-center justify-between">
+            <span>Teléfono <span className="text-red-500">*</span></span>
+            {isTelefonoValid === true && <span className="text-emerald-500 font-medium flex items-center gap-0.5 normal-case"><CheckCircle2 className="w-3 h-3" />OK</span>}
+            {isTelefonoValid === false && <span className="text-rose-500 font-medium flex items-center gap-0.5 normal-case"><AlertCircle className="w-3 h-3" />Inválido</span>}
+          </label>
+          <div className="relative">
+            <input
+              type="tel"
+              required
+              value={formData.telefono || ''}
+              onChange={e => onChange('telefono', e.target.value)}
+              onBlur={e => { const f = formatearTelefono(e.target.value); if (f !== e.target.value) onChange('telefono', f); }}
+              placeholder="+56 9 XXXX XXXX"
+              className={`w-full pl-7 pr-2 py-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white border ${
+                isTelefonoValid === false ? 'border-rose-500 ring-1 ring-rose-500/20' : 'border-slate-300 dark:border-slate-700'
+              } rounded-lg outline-none focus:ring-1 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all placeholder:text-slate-400`}
+            />
+            <Phone className="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" />
           </div>
         </div>
         <div>

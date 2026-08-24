@@ -57,6 +57,7 @@ export interface RegisterData {
   apellidoMaterno: string;
   apellido?: string;
   email: string;
+  telefono?: string;
   password: string;
   rol: UserRole;
   establecimiento: string;
@@ -198,6 +199,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           apellidoPaterno: (p.apellido_paterno as string) || undefined,
           apellidoMaterno: (p.apellido_materno as string) || undefined,
           email: (p.email as string) || '',
+          telefono: (p.telefono as string) || undefined,
           rol: ((p.rol as string) || 'profesor') as UserRole,
           establecimiento: (p.establecimiento as string) || '',
           rbd: (p.rbd as string) || undefined,
