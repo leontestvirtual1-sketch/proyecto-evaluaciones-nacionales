@@ -24,27 +24,51 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
   const [tiempoExpirado, setTiempoExpirado] = useState<boolean>(false);
   const [completedRendicion, setCompletedRendicion] = useState<RendicionPrueba | null>(null);
 
-  const handleSubmitEvaluation = React.useCallback((porTiempo = false) => {
+  const handleSubmitEvaluation = React.useCallback(async (porTiempo = false) => {
     setIsSubmitting(true);
     if (porTiempo) setTiempoExpirado(true);
 
+    try {
+      // 1. Intentar calificar en el servidor seguro (service_role)
+      const res = await fetch('/api/grade-evaluation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pruebaId: prueba.id,
+          alumnoId: alumno.id,
+          alumnoNombre: `${alumno.nombre} ${alumno.apellido}`.trim(),
+          alumnoRut: alumno.rut,
+          respuestas
+        })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.rendicion) {
+          setCompletedRendicion(data.rendicion);
+          setIsSubmitting(false);
+          onFinish(data.rendicion);
+          return;
+        }
+      }
+    } catch (apiErr) {
+      console.warn('Fallo llamada /api/grade-evaluation, aplicando fallback local:', apiErr);
+    }
+
+    // Fallback local (modo demo o sin conexión)
     let puntajeObtenido = 0;
     let puntajeMaximo = 0;
-    let tieneDesarrolloPendiente = false;
 
     const respuestasDetalladas = preguntas.map(p => {
       const respDada = respuestas[p.id] || '';
+      const pPuntaje = Number(p.puntaje) || 1;
       let esCorrecta = false;
 
       if (p.tipo === 'seleccion_multiple') {
         esCorrecta = respDada.toUpperCase() === (p.respuestaCorrecta || '').toUpperCase();
-        if (esCorrecta) puntajeObtenido += p.puntaje;
-      } else {
-        // F-05: Preguntas de desarrollo quedan pendientes de revisión docente (no se autocalifican)
-        tieneDesarrolloPendiente = true;
-        esCorrecta = false;
+        if (esCorrecta) puntajeObtenido += pPuntaje;
       }
-      puntajeMaximo += p.puntaje;
+      puntajeMaximo += pPuntaje;
 
       return {
         preguntaId: p.id,
@@ -55,7 +79,6 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
     });
 
     const porcentajeLogro = puntajeMaximo > 0 ? Math.round((puntajeObtenido / puntajeMaximo) * 100) : 0;
-    // Escala nacional 100 a 350
     const puntajeEscalaNacional = Math.round(100 + (porcentajeLogro / 100) * 250);
 
     const nuevaRendicion: RendicionPrueba = {
@@ -73,11 +96,9 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
       estado: 'enviada'
     };
 
-    setTimeout(() => {
-      setCompletedRendicion(nuevaRendicion);
-      setIsSubmitting(false);
-      onFinish(nuevaRendicion);
-    }, 800);
+    setCompletedRendicion(nuevaRendicion);
+    setIsSubmitting(false);
+    onFinish(nuevaRendicion);
   }, [preguntas, respuestas, prueba.id, alumno, onFinish]);
 
   // F-04: Temporizador con bloqueo y envío automático al llegar a 0

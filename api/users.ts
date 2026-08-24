@@ -182,7 +182,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         const fullApellido = `${apellidoPaterno || ''} ${apellidoMaterno || ''}`.trim() || apellido || '';
-        const userPass = tempPassword || password || 'Sysget2026!';
+        const userPass = tempPassword || password || `Saber_${crypto.randomBytes(6).toString('hex')}!`;
 
         // 1. Crear o sincronizar en Supabase Auth
         let authUserId = '';
@@ -290,6 +290,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json({
           success: true,
           user: profilePayload,
+          temporaryPassword: userPass,
           message: `Docente ${nombre} ${fullApellido} creado y activado exitosamente en Supabase.`
         });
       }
