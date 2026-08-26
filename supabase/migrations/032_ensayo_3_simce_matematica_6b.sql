@@ -13,10 +13,12 @@ INSERT INTO public.evaluaciones (
   asignatura_id,
   nivel,
   tiempo_limite,
+  estado,
   es_catalogo,
   precio_clp,
   descripcion_catalogo,
   profesor_id,
+  total_preguntas,
   created_at,
   updated_at
 ) VALUES (
@@ -26,10 +28,12 @@ INSERT INTO public.evaluaciones (
   'asig-1',
   '6° Básico',
   90,
+  'activa',
   TRUE,
   0,
   'Evaluación integral estándar SIMCE de Matemática 6° Básico con 35 ítems de selección múltiple, tabla de especificaciones MINEDUC y distribución psicométrica equilibrada.',
   NULL,
+  35,
   NOW(),
   NOW()
 )
@@ -39,8 +43,10 @@ ON CONFLICT (id) DO UPDATE SET
   asignatura_id = EXCLUDED.asignatura_id,
   nivel = EXCLUDED.nivel,
   tiempo_limite = EXCLUDED.tiempo_limite,
+  estado = EXCLUDED.estado,
   es_catalogo = EXCLUDED.es_catalogo,
   descripcion_catalogo = EXCLUDED.descripcion_catalogo,
+  total_preguntas = EXCLUDED.total_preguntas,
   updated_at = NOW();
 
 -- 2. Insertar Preguntas en public.preguntas
