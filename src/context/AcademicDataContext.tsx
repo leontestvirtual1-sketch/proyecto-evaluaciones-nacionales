@@ -214,9 +214,9 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       // ──────────────────────────────────────────────────────────────────
       // RAMA ESPECIAL: Colegio Mi Casa — Susana Angélica Pizarro Valenzuela
       // ──────────────────────────────────────────────────────────────────
-      if (activeEmail.includes('susana') || activeEmail === 'nentitasusana@hotmail.com') {
-        const susanaCursos = cursosMock.filter(c => c.establecimiento === 'Colegio Mi Casa' || c.profesorId === currentUserProfesorMiCasa.id);
-        const susanaPruebas = allPruebas.filter(p => p.profesorId === currentUserProfesorMiCasa.id || p.asignaturaId === 'asig-1');
+      if (activeEmail.includes('susana') || activeEmail === 'nentitasusana@hotmail.com' || activeUser.id === currentUserProfesorMiCasa.id) {
+        const susanaCursos = cursosMock.filter(c => c.establecimiento === 'Colegio Mi Casa' || c.profesorId === currentUserProfesorMiCasa.id || c.profesorId === activeUser.id);
+        const susanaPruebas = allPruebas.filter(p => p.profesorId === currentUserProfesorMiCasa.id || p.profesorId === activeUser.id);
 
         return {
           isProduction: true,

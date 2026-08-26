@@ -926,8 +926,28 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {pruebas.map((prueba) => (
+        {pruebas.length === 0 ? (
+          <div className="glass-card p-8 text-center space-y-3">
+            <FileText className="w-10 h-10 text-slate-300 dark:text-slate-700 mx-auto" />
+            <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300">
+              No tienes evaluaciones creadas aún
+            </h4>
+            <p className="text-xs text-slate-400 max-w-md mx-auto">
+              Crea tu primera evaluación formativa o ensayo SIMCE a partir de las preguntas de tu banco curricular de {profesor.asignaturaNombre || 'tu especialidad'}.
+            </p>
+            {onOpenGenerator && (
+              <button
+                onClick={onOpenGenerator}
+                className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md transition-all"
+              >
+                <PlusCircle className="w-3.5 h-3.5" />
+                <span>+ Crear Primer Ensayo SIMCE</span>
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {pruebas.map((prueba) => (
             <div
               key={prueba.id}
               className="glass-card p-6 space-y-4 hover:shadow-lg transition-all duration-200 flex flex-col justify-between"
@@ -999,7 +1019,8 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* MODALS */}

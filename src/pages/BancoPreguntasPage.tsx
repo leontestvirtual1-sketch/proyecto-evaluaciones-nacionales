@@ -679,7 +679,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <p className="text-xs text-slate-400 mt-1">Crea una nueva pregunta o selecciona otro curso en las pestañas superiores</p>
           </div>
         ) : (
-          filtered.map(pregunta => {
+          filtered.map((pregunta, index) => {
             const eje = ejes.find(e => e.id === pregunta.ejeTematicoId);
             const hab = habilidades.find(h => h.id === pregunta.habilidadId);
             const asig = asignaturas.find(a => a.id === pregunta.asignaturaId);
@@ -700,6 +700,11 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                 {/* Top badges + actions */}
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-2">
+                    {/* Número secuencial claro y visible */}
+                    <span className="px-2.5 py-0.5 rounded-md text-xs font-black bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm">
+                      N° {index + 1}
+                    </span>
+
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                       {asig?.nombre || 'General'}
                     </span>
