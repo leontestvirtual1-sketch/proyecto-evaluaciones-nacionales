@@ -204,7 +204,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       let query = sbAdmin
         .from("evaluaciones")
         .select(
-          "id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas, pregunta_ids"
+          "id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas"
         )
         .eq("es_catalogo", true)
         .order("created_at", { ascending: false });
