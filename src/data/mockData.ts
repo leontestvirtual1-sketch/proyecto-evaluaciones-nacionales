@@ -33,6 +33,12 @@ import {
   preguntasLenguaje2MAbrilMock
 } from './len2mAbrilQuestionsMock';
 
+import {
+  ejesTematicosMatematica6BMock,
+  preguntasMatematica6BMock,
+  pruebaMatematica6BMock
+} from './mat6bQuestionsMock';
+
 export {
   ejesTematicosLenguaje2MMock,
   cursoLenguaje2MMock,
@@ -42,7 +48,10 @@ export {
   pruebaLenguaje2MJunioMock,
   preguntasLenguaje2MJunioMock,
   pruebaLenguaje2MAbrilMock,
-  preguntasLenguaje2MAbrilMock
+  preguntasLenguaje2MAbrilMock,
+  ejesTematicosMatematica6BMock,
+  preguntasMatematica6BMock,
+  pruebaMatematica6BMock
 };
 
 export const establecimientosCatalog: EstablecimientoInfo[] = [
@@ -350,6 +359,8 @@ export const ejesTematicosMock: EjeTematico[] = [
 
   ...ejesTematicosLenguaje2MMock,
 
+  ...ejesTematicosMatematica6BMock,
+
   { id: 'eje-mat-1', codigo: 'MAT-NUM-8', nombre: 'Números y Operaciones', asignaturaId: 'asig-1' },
 
   { id: 'eje-mat-2', codigo: 'MAT-ALG-8', nombre: 'Álgebra y Funciones', asignaturaId: 'asig-1' },
@@ -439,6 +450,9 @@ export const preguntasMock: Pregunta[] = [
 
   // ✅ Ensayo SIMCE Lenguaje 2° Medio — Abril 2026 (Escuela Premilitar)
   ...preguntasLenguaje2MAbrilMock,
+
+  // ✅ Ensayo 3 SIMCE Matemática 6° Básico
+  ...preguntasMatematica6BMock,
 
   // === 0. MATEMÁTICA 4° BÁSICO (COLEGIO MI CASA / SUSANA PIZARRO) ===
   {
@@ -3013,6 +3027,9 @@ export const cursosMock: Curso[] = [
 
 
 export const pruebasMock: Prueba[] = [
+
+  // ✅ Ensayo 3 SIMCE Matemática 6° Básico
+  pruebaMatematica6BMock,
 
   // ✅ Ensayo SIMCE Lenguaje 2° Medio — María Teresa González (Escuela Premilitar)
   pruebaLenguaje2MMock,
