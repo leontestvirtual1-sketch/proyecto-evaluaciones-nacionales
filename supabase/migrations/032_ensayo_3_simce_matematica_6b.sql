@@ -10,7 +10,7 @@ ALTER TABLE public.evaluaciones
   ALTER COLUMN profesor_id DROP NOT NULL,
   ALTER COLUMN curso_id DROP NOT NULL;
 
-DO $$
+DO $migration032$
 BEGIN
   IF EXISTS (
     SELECT 1 FROM information_schema.columns 
@@ -18,7 +18,7 @@ BEGIN
   ) THEN
     ALTER TABLE public.evaluaciones ALTER COLUMN establecimiento DROP NOT NULL;
   END IF;
-END $$;
+END $migration032$;
 
 -- 1. Registrar Evaluación en public.evaluaciones (Catálogo)
 INSERT INTO public.evaluaciones (
@@ -65,7 +65,7 @@ ON CONFLICT (id) DO UPDATE SET
   updated_at = NOW();
 
 -- 2. Insertar Preguntas en public.preguntas
-DO $$
+DO $migration032$
 DECLARE
   v_admin_id UUID;
 BEGIN
@@ -344,6 +344,6 @@ Si se hace girar la flecha, ¿dónde es más probable que esta se detenga?', '[{
     fuente            = EXCLUDED.fuente,
     updated_at        = NOW();
 
-END $$;
+END $migration032$;
 
 COMMIT;
