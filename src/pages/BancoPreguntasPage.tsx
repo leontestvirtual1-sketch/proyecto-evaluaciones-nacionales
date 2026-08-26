@@ -9,6 +9,7 @@ import {
   UserProfile
 } from '../types';
 import { PreguntaFormModal } from '../components/PreguntaFormModal';
+import { EnunciadoRenderer } from '../components/common/EnunciadoRenderer';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { useCursos } from '../hooks/useCursos';
 import {
@@ -777,10 +778,10 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                   </div>
                 </div>
 
-                {/* Enunciado */}
-                <p className="text-sm font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line">
-                  {pregunta.enunciado}
-                </p>
+                {/* Enunciado con soporte Markdown, tablas, figuras y fórmulas */}
+                <div className="text-sm text-slate-900 dark:text-white leading-relaxed">
+                  <EnunciadoRenderer content={pregunta.enunciado} />
+                </div>
 
                 {/* Optional Image */}
                 {pregunta.imagenUrl && (

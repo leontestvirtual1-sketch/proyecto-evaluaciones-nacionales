@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { preguntasMock } from '../data/mockData';
 import { Pregunta } from '../types';
+import { EnunciadoRenderer } from './common/EnunciadoRenderer';
 
 interface MiniSIMCERunnerProps {
   onFinish?: () => void;
@@ -181,9 +182,9 @@ export const MiniSIMCERunner: React.FC<MiniSIMCERunnerProps> = ({
                     Dificultad: {currentQ.dificultad}
                   </span>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-white leading-relaxed">
-                  {currentQ.enunciado}
-                </h3>
+                <div className="text-base sm:text-lg font-bold text-white leading-relaxed">
+                  <EnunciadoRenderer content={currentQ.enunciado} />
+                </div>
               </div>
 
               {/* Alternatives List */}

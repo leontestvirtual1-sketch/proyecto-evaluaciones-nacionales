@@ -23,6 +23,7 @@ import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { getSequentialPrintTitle } from '../utils/printUtils';
+import { EnunciadoRenderer } from './common/EnunciadoRenderer';
 
 interface PrintEvaluacionModalProps {
   isOpen: boolean;
@@ -422,44 +423,6 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                   {/* Question List — Continuous Print Flow */}
                   <div className="space-y-4 pt-1 text-left">
                     {itemsToPrint.map((preg, idx) => {
-                      // Helper to render markdown headings and bold cleanly
-                      const renderEnunciadoContent = (text: string = '') => {
-                        const lines = (text || '').split('\n');
-                        return (
-                          <div className="space-y-1 text-xs text-slate-900 leading-snug">
-                            {lines.map((line, lIdx) => {
-                              const trimmed = line ? line.trim() : '';
-                              if (!trimmed) return null;
-                              if (trimmed.startsWith('## ') || trimmed.startsWith('# ')) {
-                                return (
-                                  <div key={lIdx} className="font-bold text-xs sm:text-sm text-black pt-1 pb-0.5 border-b border-slate-300">
-                                    {trimmed.replace(/^#+\s*/, '')}
-                                  </div>
-                                );
-                              }
-                              if (trimmed.startsWith('### ')) {
-                                return (
-                                  <div key={lIdx} className="font-bold text-xs text-slate-900 pt-0.5">
-                                    {trimmed.replace(/^###\s*/, '')}
-                                  </div>
-                                );
-                              }
-                              const parts = trimmed.split(/(\*\*.*?\*\*)/g);
-                              return (
-                                <p key={lIdx} className="leading-relaxed">
-                                  {parts.map((part, pIdx) => {
-                                    if (part.startsWith('**') && part.endsWith('**')) {
-                                      return <strong key={pIdx} className="font-bold text-black">{part.slice(2, -2)}</strong>;
-                                    }
-                                    return part;
-                                  })}
-                                </p>
-                              );
-                            })}
-                          </div>
-                        );
-                      };
-
                       return (
                         <div key={preg.id || idx} className="page-break-inside-auto space-y-2 pb-3 border-b border-slate-200 last:border-0">
                           {/* Question Number & Enunciado */}
@@ -467,8 +430,8 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                             <span className="font-black text-xs bg-black text-white px-1.5 py-0.5 rounded flex-shrink-0">
                               {idx + 1}
                             </span>
-                            <div className="flex-1">
-                              {renderEnunciadoContent(preg.enunciado)}
+                            <div className="flex-1 text-xs leading-snug">
+                              <EnunciadoRenderer content={preg.enunciado} />
                             </div>
                           </div>
 
