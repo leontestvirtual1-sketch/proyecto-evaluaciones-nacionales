@@ -4,6 +4,15 @@ interface EnunciadoRendererProps {
   content?: string;
   className?: string;
   forceLightMode?: boolean;
+  stripLeadingNumber?: boolean;
+}
+
+/**
+ * Sanitiza números de ítem redundantes al inicio de líneas (ej. "23. ¿Qué...", "5. ¿Cuál...", "**23.** ")
+ * para que no colisionen con los números secuenciales asignados dinámicamente por la interfaz.
+ */
+function sanitizeEnunciadoLine(line: string): string {
+  return line.replace(/^(\s*(?:\*\*)?[0-9]{1,3}[.)\-]+(?:\*\*)?\s*)([¿A-ZÁÉÍÓÚÑa-z])/g, '$2');
 }
 
 /**
@@ -18,6 +27,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
   content = '',
   className = '',
   forceLightMode = false,
+  stripLeadingNumber = true,
 }) => {
   if (!content) return null;
 
@@ -226,10 +236,11 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
       }
     }
 
-    // Párrafo de texto regular
+    // Párrafo de texto regular (sanitizando números de ítem redundantes como "23. ", "5. ")
+    const formattedLine = stripLeadingNumber ? sanitizeEnunciadoLine(trimmed) : trimmed;
     blocks.push(
       <div key={`p-${i}`} className={`text-sm ${textClass} leading-relaxed`}>
-        {renderInline(trimmed)}
+        {renderInline(formattedLine)}
       </div>
     );
     i++;
