@@ -275,13 +275,16 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       // ──────────────────────────────────────────────────────────────────
       // RAMA ADMIN: Vista agregada de producción (dinámica con todos los colegios y cursos)
       // ──────────────────────────────────────────────────────────────────
-      const adminPruebas = allPruebas.filter(
-        p =>
-          p.id === 'prueba-len2m-101' ||
-          p.id === 'prueba-len2m-jun-101' ||
-          p.id === 'prueba-len2m-abr-101' ||
-          p.profesorId === currentUserProfesorPremilitar.id ||
-          p.profesorId === currentUserProfesorMiCasa.id
+      // El Admin ve TODAS las evaluaciones reales de Producción (Directiva 9):
+      // allPruebas ya viene de useEvaluaciones → Supabase con UUIDs reales.
+      // NO filtrar por IDs hardcodeados de mock (que difieren de los UUIDs reales en BD).
+      const adminPruebas = allPruebas.filter(p =>
+        // Incluir siempre los ensayos oficiales de Lenguaje 2° Medio
+        p.id === 'prueba-len2m-101' ||
+        p.id === 'prueba-len2m-jun-101' ||
+        p.id === 'prueba-len2m-abr-101' ||
+        // Incluir evaluaciones de cualquier docente real (UUID real de Supabase)
+        (Boolean(p.profesorId) && p.profesorId !== '')
       );
 
       const realTeachers = (docentesReales && docentesReales.length > 0)
@@ -320,6 +323,11 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         }
 
         if (isSusana) {
+          // Contar las evaluaciones reales de Susana usando su UUID real de Supabase
+          const susanaPruebasReal = allPruebas.filter(p =>
+            p.profesorId === doc.id ||
+            p.profesorId === 'e14d8a54-fe01-4a6b-a22d-8f85c288465a'
+          );
           return {
             profesorId: doc.id,
             profesorNombre: `${doc.nombre} ${doc.apellido}`,
@@ -329,8 +337,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             asignaturaId: doc.asignaturaId || 'asig-1',
             asignaturaNombre: doc.asignaturaNombre || 'Matemática',
             cursosAsignados: ['4° Básico', '6° Básico', '8° Básico'],
-            totalEvaluacionesCreadas: 1,
-            totalEvaluacionesActivas: 1,
+            totalEvaluacionesCreadas: susanaPruebasReal.length,
+            totalEvaluacionesActivas: susanaPruebasReal.filter(p => p.estado === 'activa').length,
             totalAlumnosEvaluados: 0,
             totalAlumnosMatriculados: 0,
             coberturaCurricularPorcentaje: 100,
@@ -339,9 +347,9 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             estadoAvancePME: 'en_progreso',
             ejeMayorFortaleza: 'Banco curricular de Matemática configurado',
             ejeMayorDebilidad: 'Esperando rendición de estudiantes',
-            ultimaEvaluacionFecha: '2026-08-20',
-            ultimaEvaluacionTitulo: 'Evaluación Diagnóstica SIMCE Matemática',
-            ultimaEvaluacionId: 'prueba-mat-4b-01',
+            ultimaEvaluacionFecha: susanaPruebasReal[0]?.creadoEn || '2026-08-20',
+            ultimaEvaluacionTitulo: susanaPruebasReal[0]?.titulo || 'Evaluación Diagnóstica SIMCE Matemática',
+            ultimaEvaluacionId: susanaPruebasReal[0]?.id || '',
             planesRemedialesGenerados: 0
           };
         }
