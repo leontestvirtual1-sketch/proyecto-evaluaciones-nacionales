@@ -148,7 +148,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
 
 
   const value = useMemo<DataContextType>(() => {
-    const allPruebas = customPruebas || pruebasMock;
+    // En Producción NO se usa pruebasMock bajo ninguna circunstancia (Directiva 1)
+    const allPruebas = isProduction ? (customPruebas || []) : (customPruebas || pruebasMock);
 
     // ═══════════════════════════════════════════════════════════════════
     // ENTORNO DE PRODUCCIÓN
@@ -169,17 +170,10 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             p.profesorId === currentUserProfesorPremilitar.id ||
             p.asignaturaId === 'asig-2'
         );
-        const fallbackPremilitar = [
-          pruebasMock.find(p => p.id === 'prueba-len2m-101') || allPruebas[0],
-          pruebasMock.find(p => p.id === 'prueba-len2m-jun-101') || allPruebas[1],
-          pruebasMock.find(p => p.id === 'prueba-len2m-abr-101') || allPruebas[2]
-        ].filter(Boolean) as Prueba[];
-
-        const finalPremilPruebas = prodPruebas.length > 0 ? prodPruebas : (fallbackPremilitar.length > 0 ? fallbackPremilitar : pruebasMock.filter(p => p.id.startsWith('prueba-len2m')));
 
         return {
           isProduction: true,
-          pruebas: finalPremilPruebas,
+          pruebas: prodPruebas,
           cursos: cursosMock.filter(c => c.id === 'curso-prem-2m' || c.id === 'curso-2m' || c.nivel.includes('Medio') || c.establecimiento?.includes('Premilitar')),
           alumnos: [],
           seguimientoDocentes: [{
@@ -191,8 +185,8 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             asignaturaId: 'asig-2',
             asignaturaNombre: 'Lenguaje y Comunicación',
             cursosAsignados: ['2° Medio'],
-            totalEvaluacionesCreadas: finalPremilPruebas.length,
-            totalEvaluacionesActivas: finalPremilPruebas.filter(p => p.estado === 'activa').length,
+            totalEvaluacionesCreadas: prodPruebas.length,
+            totalEvaluacionesActivas: prodPruebas.filter(p => p.estado === 'activa').length,
             totalAlumnosEvaluados: 0,
             totalAlumnosMatriculados: 0,
             coberturaCurricularPorcentaje: 100,
@@ -393,7 +387,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
 
       return {
         isProduction: true,
-        pruebas: adminPruebas.length > 0 ? adminPruebas : pruebasMock.filter(p => p.id.startsWith('prueba-len2m')),
+        pruebas: adminPruebas,
         cursos: prodCursos,
         alumnos: [],
         seguimientoDocentes: dynamicSeguimiento,
