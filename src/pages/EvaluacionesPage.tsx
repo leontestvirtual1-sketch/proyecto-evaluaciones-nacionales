@@ -26,6 +26,11 @@ import { PrintEvaluacionModal } from '../components/PrintEvaluacionModal';
 import { IngresoRespuestasModal } from '../components/IngresoRespuestasModal';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { CatalogoEvaluacionesModal } from '../components/CatalogoEvaluacionesModal';
+import { EnunciadoRenderer } from '../components/common/EnunciadoRenderer';
+import { preguntasLenguaje2MMock } from '../data/len2mQuestionsMock';
+import { preguntasLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
+import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
+import { preguntasMatematica6BMock } from '../data/mat6bQuestionsMock';
 
 
 interface PruebaFacsimilModalProps {
@@ -46,9 +51,30 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
   // Match questions strictly by prueba.preguntasIds if defined, preserving order
   const preguntasDeLaPrueba = React.useMemo(() => {
     if (!prueba) return [];
+
+    const byId = new Map<string, Pregunta>();
+    [
+      ...preguntasLenguaje2MMock,
+      ...preguntasLenguaje2MJunioMock,
+      ...preguntasLenguaje2MAbrilMock,
+      ...preguntasMatematica6BMock
+    ].forEach(p => byId.set(p.id, p));
+    (preguntas || []).forEach(p => byId.set(p.id, p));
+
+    if (prueba.id === 'prueba-len2m-101' || prueba.id?.startsWith('prueba-len2m-101') || (prueba.titulo.includes('Agosto 2026') && prueba.nivel === '2° Medio')) {
+      return preguntasLenguaje2MMock.map(p => byId.get(p.id) || p);
+    }
+    if (prueba.id === 'prueba-len2m-jun-101' || prueba.id?.startsWith('prueba-len2m-jun') || (prueba.titulo.includes('Junio 2026') && prueba.nivel === '2° Medio')) {
+      return preguntasLenguaje2MJunioMock.map(p => byId.get(p.id) || p);
+    }
+    if (prueba.id === 'prueba-len2m-abr-101' || prueba.id?.startsWith('prueba-len2m-abr') || (prueba.titulo.includes('Abril 2026') && prueba.nivel === '2° Medio')) {
+      return preguntasLenguaje2MAbrilMock.map(p => byId.get(p.id) || p);
+    }
+    if (prueba.id === 'eval-simce-mat-6b-e3' || prueba.id?.startsWith('eval-simce-mat-6b')) {
+      return preguntasMatematica6BMock.map(p => byId.get(p.id) || p);
+    }
+
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
-      const byId = new Map<string, Pregunta>();
-      preguntas.forEach(p => byId.set(p.id, p));
       const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
       if (list.length > 0) return list;
     }
@@ -118,10 +144,10 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
                   </span>
                 </div>
 
-                {/* Enunciado */}
-                <p className="text-sm font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line">
-                  {preg.enunciado}
-                </p>
+                {/* Enunciado con EnunciadoRenderer */}
+                <div className="text-sm font-semibold text-slate-900 dark:text-white leading-relaxed">
+                  <EnunciadoRenderer content={preg.enunciado} />
+                </div>
 
                 {/* Imagen/Figura si existe */}
                 {preg.imagenUrl && (

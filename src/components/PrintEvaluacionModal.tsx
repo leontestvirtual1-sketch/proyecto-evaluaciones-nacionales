@@ -17,9 +17,10 @@ import {
 import { Prueba, Pregunta, AlumnoBasico } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
 import { establecimientosCatalog, preguntasMock } from '../data/mockData';
-import { preguntasLenguaje2MMock } from '../data/len2mQuestionsMock';
-import { preguntasLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
-import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
+import { preguntasLenguaje2MMock, pruebaLenguaje2MMock } from '../data/len2mQuestionsMock';
+import { preguntasLenguaje2MJunioMock, pruebaLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
+import { preguntasLenguaje2MAbrilMock, pruebaLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
+import { preguntasMatematica6BMock, pruebaMatematica6BMock } from '../data/mat6bQuestionsMock';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { getSequentialPrintTitle } from '../utils/printUtils';
@@ -122,6 +123,7 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
       ...preguntasLenguaje2MMock,
       ...preguntasLenguaje2MJunioMock,
       ...preguntasLenguaje2MAbrilMock,
+      ...preguntasMatematica6BMock,
       ...preguntasMock
     ];
     allOfficial.forEach(p => byId.set(p.id, p));
@@ -134,6 +136,20 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
         tablaMarkdown: p.tablaMarkdown || existing?.tablaMarkdown
       });
     });
+
+    // Ensayos oficiales SIMCE reconocidos con set completo de preguntas
+    if (prueba.id === 'prueba-len2m-101' || prueba.id?.startsWith('prueba-len2m-101') || (prueba.titulo.includes('Agosto 2026') && prueba.nivel === '2° Medio')) {
+      return preguntasLenguaje2MMock.map(p => byId.get(p.id) || p);
+    }
+    if (prueba.id === 'prueba-len2m-jun-101' || prueba.id?.startsWith('prueba-len2m-jun') || (prueba.titulo.includes('Junio 2026') && prueba.nivel === '2° Medio')) {
+      return preguntasLenguaje2MJunioMock.map(p => byId.get(p.id) || p);
+    }
+    if (prueba.id === 'prueba-len2m-abr-101' || prueba.id?.startsWith('prueba-len2m-abr') || (prueba.titulo.includes('Abril 2026') && prueba.nivel === '2° Medio')) {
+      return preguntasLenguaje2MAbrilMock.map(p => byId.get(p.id) || p);
+    }
+    if (prueba.id === 'eval-simce-mat-6b-e3' || prueba.id?.startsWith('eval-simce-mat-6b')) {
+      return preguntasMatematica6BMock.map(p => byId.get(p.id) || p);
+    }
 
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
       const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
@@ -431,7 +447,7 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                               {idx + 1}
                             </span>
                             <div className="flex-1 text-xs leading-snug">
-                              <EnunciadoRenderer content={preg.enunciado} />
+                              <EnunciadoRenderer content={preg.enunciado} forceLightMode={true} />
                             </div>
                           </div>
 

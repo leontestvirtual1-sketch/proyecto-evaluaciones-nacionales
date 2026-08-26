@@ -95,16 +95,11 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
             } else {
               query = query.eq('asignatura_id', 'asig-2');
             }
-          } else if (isSusanaTeacher) {
-            if (isValidUUID(currentUser!.id)) {
-              query = query.or(`profesor_id.eq.${currentUser!.id},asignatura_id.eq.asig-1`);
-            } else {
-              query = query.eq('asignatura_id', 'asig-1');
-            }
           } else if (isValidUUID(currentUser!.id)) {
+            // Aislamiento estricto (Directivas 1 y 2): docentes reales solo ven evaluaciones creadas por ellos
             query = query.eq('profesor_id', currentUser!.id);
           } else if (teacherAsig) {
-            query = query.eq('asignatura_id', teacherAsig);
+            query = query.eq('profesor_id', currentUser!.id);
           }
         }
 
@@ -113,7 +108,6 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         if (error) {
           console.warn('[useEvaluaciones] Error al consultar Supabase:', error.message);
           if (isMounted) {
-            // Caso María Teresa en fallback
             if (isPremilitarTeacher || isAdmin) {
               setPruebas([pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock]);
             } else {
@@ -127,12 +121,33 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         if (data && data.length > 0) {
           if (isMounted) {
             const dbPruebas = data.map(mapRowToPrueba);
-            // Si es docente de Lenguaje o María Teresa, asegurar que las 3 oficiales estén presentes
+            // Si es docente de Lenguaje o María Teresa, asegurar que las 3 oficiales estén completas con sus 30 preguntas
             if (isPremilitarTeacher) {
-              const mapById = new Map<string, Prueba>();
-              [pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock].forEach(p => mapById.set(p.id, p));
-              dbPruebas.forEach(p => mapById.set(p.id, p));
-              setPruebas(Array.from(mapById.values()));
+              const officialMap = new Map<string, Prueba>();
+              [pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock].forEach(p => officialMap.set(p.id, p));
+              
+              const merged = dbPruebas.map(p => {
+                const official = officialMap.get(p.id);
+                if (official) {
+                  return {
+                    ...official,
+                    ...p,
+                    // Si la DB tiene menos de 30 preguntasIds, preservar las 30 oficiales
+                    preguntasIds: (p.preguntasIds && p.preguntasIds.length >= 30) ? p.preguntasIds : official.preguntasIds,
+                    totalPreguntas: official.totalPreguntas
+                  };
+                }
+                return p;
+              });
+
+              // Asegurar que las que no vinieron en DB se agreguen
+              officialMap.forEach((off, id) => {
+                if (!merged.some(m => m.id === id)) {
+                  merged.push(off);
+                }
+              });
+
+              setPruebas(merged);
             } else {
               setPruebas(dbPruebas);
             }

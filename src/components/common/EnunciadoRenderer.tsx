@@ -3,6 +3,7 @@ import React from 'react';
 interface EnunciadoRendererProps {
   content?: string;
   className?: string;
+  forceLightMode?: boolean;
 }
 
 /**
@@ -16,8 +17,19 @@ interface EnunciadoRendererProps {
 export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
   content = '',
   className = '',
+  forceLightMode = false,
 }) => {
   if (!content) return null;
+
+  const textClass = forceLightMode
+    ? 'text-slate-900 font-medium'
+    : 'text-slate-800 dark:text-slate-200';
+  const boldClass = forceLightMode
+    ? 'font-bold text-black'
+    : 'font-bold text-slate-900 dark:text-white';
+  const headingClass = forceLightMode
+    ? 'font-black text-black'
+    : 'font-bold text-slate-900 dark:text-white';
 
   // Renderizar texto inline (negrita, cursiva, latex básico, imágenes inline)
   const renderInline = (text: string) => {
@@ -77,7 +89,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
           if (part.startsWith('**') && part.endsWith('**')) {
             const inner = part.slice(2, -2);
             return (
-              <strong key={`${keyPrefix}-b-${pIdx}`} className="font-bold text-slate-900 dark:text-white">
+              <strong key={`${keyPrefix}-b-${pIdx}`} className={boldClass}>
                 {inner}
               </strong>
             );
@@ -121,7 +133,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
     // Separador horizontal
     if (trimmed === '---' || trimmed === '***') {
       blocks.push(
-        <hr key={`hr-${i}`} className="my-3 border-slate-200 dark:border-slate-800" />
+        <hr key={`hr-${i}`} className={`my-3 ${forceLightMode ? 'border-slate-300' : 'border-slate-200 dark:border-slate-800'}`} />
       );
       i++;
       continue;
@@ -130,7 +142,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
     // Encabezados
     if (trimmed.startsWith('# ')) {
       blocks.push(
-        <h3 key={`h1-${i}`} className="text-base font-bold text-slate-900 dark:text-white pt-2 pb-1 border-b border-slate-200 dark:border-slate-800">
+        <h3 key={`h1-${i}`} className={`text-base font-black ${forceLightMode ? 'text-black border-slate-300' : 'text-slate-900 dark:text-white border-slate-200 dark:border-slate-800'} pt-2 pb-1 border-b`}>
           {renderInline(trimmed.replace(/^#\s+/, ''))}
         </h3>
       );
@@ -139,7 +151,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
     }
     if (trimmed.startsWith('## ')) {
       blocks.push(
-        <h4 key={`h2-${i}`} className="text-sm font-bold text-slate-900 dark:text-white pt-2 pb-0.5">
+        <h4 key={`h2-${i}`} className={`text-sm font-bold ${forceLightMode ? 'text-black' : 'text-slate-900 dark:text-white'} pt-2 pb-0.5`}>
           {renderInline(trimmed.replace(/^##\s+/, ''))}
         </h4>
       );
@@ -148,7 +160,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
     }
     if (trimmed.startsWith('### ')) {
       blocks.push(
-        <h5 key={`h3-${i}`} className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider pt-1.5 pb-0.5">
+        <h5 key={`h3-${i}`} className={`text-xs font-bold ${forceLightMode ? 'text-slate-900 font-extrabold uppercase' : 'text-indigo-600 dark:text-indigo-400 uppercase tracking-wider'} pt-1.5 pb-0.5`}>
           {renderInline(trimmed.replace(/^###\s+/, ''))}
         </h5>
       );
@@ -176,10 +188,10 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
         const dataRows = isSeparator ? tableLines.slice(2) : tableLines.slice(1);
 
         blocks.push(
-          <div key={`table-${i}`} className="my-3 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900/60 max-w-full">
+          <div key={`table-${i}`} className={`my-3 overflow-x-auto rounded-xl border ${forceLightMode ? 'border-slate-400 bg-white' : 'border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900/60'} max-w-full`}>
             <table className="w-full text-xs text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold">
+                <tr className={`${forceLightMode ? 'bg-slate-100 border-b border-slate-300 text-slate-900' : 'bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'} font-bold`}>
                   {headerCols.map((col, cIdx) => (
                     <th key={`th-${cIdx}`} className="px-3.5 py-2.5 text-center first:text-left">
                       {renderInline(col)}
@@ -187,7 +199,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+              <tbody className={forceLightMode ? 'divide-y divide-slate-200' : 'divide-y divide-slate-100 dark:divide-slate-800/60'}>
                 {dataRows.map((row, rIdx) => {
                   const cells = row
                     .split('|')
@@ -196,10 +208,10 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
                   return (
                     <tr
                       key={`tr-${rIdx}`}
-                      className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors text-slate-800 dark:text-slate-300"
+                      className={forceLightMode ? 'text-slate-900' : 'hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors text-slate-800 dark:text-slate-300'}
                     >
                       {cells.map((cell, cIdx) => (
-                        <td key={`td-${cIdx}`} className="px-3.5 py-2 text-center first:text-left align-middle">
+                        <td key={`td-${cIdx}`} className="px-3.5 py-2 text-center first:text-left align-middle font-medium">
                           {renderInline(cell)}
                         </td>
                       ))}
@@ -216,7 +228,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
 
     // Párrafo de texto regular
     blocks.push(
-      <div key={`p-${i}`} className="text-sm font-normal text-slate-800 dark:text-slate-200 leading-relaxed">
+      <div key={`p-${i}`} className={`text-sm ${textClass} leading-relaxed`}>
         {renderInline(trimmed)}
       </div>
     );
