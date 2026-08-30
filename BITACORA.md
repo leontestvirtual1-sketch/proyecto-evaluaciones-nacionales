@@ -2,6 +2,27 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-30] Visualizador Completo de Contenidos de Catálogo: Cuadernillo, Preguntas y Pauta Oficial
+
+- **Problema / Requerimiento**:
+  Implementar la funcionalidad que permite a administradores y docentes visualizar interactivamente el contenido íntegro de cada evaluación del catálogo (enunciados, lecturas compartidas, alternativas, imágenes pedagógicas, tablas y pauta docente oficial con claves y especificaciones), con opción de previsualización e impresión directa del cuadernillo.
+
+- **Archivos y Solución Técnica**:
+  - [`api/evaluaciones-catalogo.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/evaluaciones-catalogo.ts):
+    - [MODIFICADO] Añadida acción `GET ?action=preguntas&evaluacion_id=XXX` que consulta y retorna las preguntas asociadas a cualquier instrumento de catálogo con sus alternativas y especificaciones.
+  - [`src/components/CatalogoDetalleModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoDetalleModal.tsx):
+    - [NUEVO] Componente modal interactivo con pestañas de: 1) Cuadernillo de preguntas renderizado con fórmulas y diagramas, toggle de claves de corrección; 2) Tabla oficial de pauta docente y solucionario; 3) Integración directa con el motor de impresión oficial (`PrintEvaluacionModal`).
+  - [`src/components/AdminCatalogoPanel.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AdminCatalogoPanel.tsx):
+    - [MODIFICADO] Incorporado botón `👁️ Ver Contenido` en cada tarjeta de evaluación de catálogo del Super Admin.
+  - [`src/components/CatalogoEvaluacionesModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoEvaluacionesModal.tsx):
+    - [MODIFICADO] Incorporado botón `👁️ Ver Contenido` para que los profesores previsualicen el instrumento antes de solicitarlo.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores.
+  - Desplegado en Vercel.
+
+---
+
 ### [2026-08-30] Ingesta Catálogo PAES: PAES Oficial Competencia Lectora 2026 (65 preguntas)
 
 - **Problema / Requerimiento**:

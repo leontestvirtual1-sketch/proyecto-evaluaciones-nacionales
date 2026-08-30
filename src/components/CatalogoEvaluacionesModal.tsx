@@ -16,7 +16,9 @@ import {
   Star,
   BookMarked,
   MessageSquare,
+  Eye
 } from "lucide-react";
+import { CatalogoDetalleModal } from "./CatalogoDetalleModal";
 
 interface CatalogoEvaluacionesModalProps {
   isOpen: boolean;
@@ -45,6 +47,7 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
   const [mensaje, setMensaje] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [toast, setToast] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
+  const [previewEval, setPreviewEval] = useState<EvaluacionCatalogo | null>(null);
 
   const showToast = (type: "ok" | "err", msg: string) => {
     setToast({ type, msg });
@@ -371,7 +374,15 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
                     </div>
 
                     {/* Action */}
-                    <div className="shrink-0">
+                    <div className="shrink-0 flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                      <button
+                        onClick={() => setPreviewEval(ev)}
+                        className="flex items-center gap-1 text-xs font-semibold text-slate-300 bg-slate-700/60 hover:bg-indigo-600 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors border border-slate-600/50"
+                        title="Ver preguntas y pauta del instrumento"
+                      >
+                        <Eye size={13} />
+                        <span className="hidden sm:inline">Ver Contenido</span>
+                      </button>
                       {estado === "aprobada" ? (
                         <span className="flex items-center gap-1 text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-lg">
                           <CheckCircle2 size={14} /> En mis evaluaciones
@@ -457,6 +468,15 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
           </div>
         )}
       </div>
+
+      {/* Modal para Visualizar Contenido Completo del Catálogo */}
+      {previewEval && (
+        <CatalogoDetalleModal
+          isOpen={!!previewEval}
+          onClose={() => setPreviewEval(null)}
+          evaluacion={previewEval}
+        />
+      )}
     </div>
   );
 };

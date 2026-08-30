@@ -221,6 +221,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ evaluaciones: data || [] });
     }
 
+    // ── GET: Preguntas de una evaluación de catálogo ────────────────────────
+    if (req.method === "GET" && action === "preguntas") {
+      const { evaluacion_id } = req.query || {};
+      if (!evaluacion_id) return res.status(400).json({ error: "evaluacion_id requerido." });
+
+      const EVAL_PREGUNTA_PREFIX: Record<string, string> = {
+        'eval-paes-mat1-2023-f113': 'preg-paes-m1-23-%',
+        'eval-paes-lect-2026-f103': 'preg-paes-lec-26-%',
+        'eval-diag-ciu-3m-2026': 'preg-ciu3m-diag-%',
+        'diag_ciudadana_3m_2026': 'preg-ciu3m-diag-%',
+        'eval-simce-mat-6b-ensayo3': 'preg-mat6b-e3-%',
+        'eval-simce-mat-6b-e3': 'preg-mat6b-e3-%',
+        'eval-simce-mat-2m-ensayo3': 'preg-mat2m-e3-%',
+        'eval-simce-mat-2m-e3': 'preg-mat2m-e3-%',
+        'eval-simce-lect-2m-ensayo6': 'preg-len2m-e6-%',
+        'eval-simce-len-2m-e6': 'preg-len2m-e6-%',
+      };
+
+      const prefix = EVAL_PREGUNTA_PREFIX[evaluacion_id as string];
+      let query = sbAdmin.from("preguntas").select("*").order("id");
+      if (prefix) {
+        query = query.ilike("id", prefix);
+      } else {
+        query = query.or(`fuente.ilike.%${evaluacion_id}%,id.ilike.%${evaluacion_id}%`);
+      }
+
+      const { data, error } = await query;
+      if (error) {
+        console.error("Error fetching preguntas:", error);
+        return res.status(500).json({ error: "Error al cargar preguntas." });
+      }
+      return res.status(200).json({ preguntas: data || [] });
+    }
+
     // ── GET: Lista de solicitudes (solo admin) ──────────────────────────────
     if (req.method === "GET" && action === "solicitudes") {
       const adminCheck = await requireAdmin(req);

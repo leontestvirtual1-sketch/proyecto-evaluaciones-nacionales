@@ -19,8 +19,10 @@ import {
   DollarSign,
   X,
   Save,
-  Check
+  Check,
+  Eye
 } from "lucide-react";
+import { CatalogoDetalleModal } from "./CatalogoDetalleModal";
 
 interface AdminCatalogoPanelProps {
   authToken?: string;
@@ -84,6 +86,7 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
   const [editPrecio, setEditPrecio] = useState<number>(0);
   const [editDesc, setEditDesc] = useState<string>("");
   const [isSavingPrice, setIsSavingPrice] = useState(false);
+  const [previewEval, setPreviewEval] = useState<EvaluacionCatalogo | null>(null);
 
   const showToast = (type: "ok" | "err", msg: string) => {
     setToast({ type, msg });
@@ -520,7 +523,15 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 mt-0.5 shrink-0">
+                  <div className="flex items-center gap-1.5 mt-0.5 shrink-0 flex-wrap sm:flex-nowrap">
+                    <button
+                      onClick={() => setPreviewEval(ev)}
+                      title="Ver contenido, preguntas y pauta oficial"
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/30 hover:border-indigo-500 text-indigo-300 hover:text-white text-xs font-bold transition-all shadow-sm"
+                    >
+                      <Eye size={13} />
+                      <span>Ver Contenido</span>
+                    </button>
                     <button
                       onClick={() => openEditModal(ev)}
                       title="Editar precio y descripción comercial"
@@ -625,6 +636,16 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Modal para Visualizar Contenido Completo del Catálogo */}
+      {previewEval && (
+        <CatalogoDetalleModal
+          isOpen={!!previewEval}
+          onClose={() => setPreviewEval(null)}
+          evaluacion={previewEval}
+          authToken={authToken}
+        />
       )}
     </div>
   );
