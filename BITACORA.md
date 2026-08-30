@@ -167,7 +167,7 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
 ### [2026-08-25] Ingesta de Ensayo 3 SIMCE Matemática 6° Básico y Creación de Skill «eval-ingesta-catalogo»
 
 - **Problema / Requerimiento**:
-  1. **Ingesta de Evaluación Matemática 6° Básico:** Procesar el instrumento oficial `Ensayo 3 SIMCE Matemática 6° Básico` cruzándolo con su tabla de especificaciones, extrayendo las 35 preguntas y figuras matemáticas asociadas, sanitizando cualquier referencia a marcas de terceros (eliminación total de "umaximo").
+  1. **Ingesta de Evaluación Matemática 6° Básico:** Procesar el instrumento oficial `Ensayo 3 SIMCE Matemática 6° Básico` cruzándolo con su tabla de especificaciones, extrayendo las 35 preguntas y figuras matemáticas asociadas, sanitizando cualquier referencia a marcas de terceros o proveedores externos.
   2. **Inferencia Psicométrica y Curricular MINEDUC:** Categorizar cada pregunta en los 5 ejes temáticos de Matemática 6° Básico, determinando su OA, habilidad psicométrica, nivel de complejidad (Baja: 1 pto, Media: 2 ptos, Alta: 3 ptos) y puntaje ponderado.
   3. **Persistencia y Catálogo:** Cargar la evaluación en `public.evaluaciones` (`es_catalogo = TRUE`) y `public.preguntas` en Supabase, y disponibilizarla en el frontend.
   4. **Estandarización mediante Skill:** Crear el skill oficial `.agents/skills/eval-ingesta-catalogo/` para automatizar futuros flujos donde solo se entreguen las preguntas sin tabla de especificaciones.
