@@ -130,15 +130,25 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
     <>
       {/* Overlay — cerrar al hacer clic fuera */}
       <div
-        className="fixed inset-0 z-[65] flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md"
+        className="fixed inset-0 z-[65] flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-md"
         role="dialog"
         aria-modal="true"
         aria-label={`Detalle: ${evaluacion.titulo}`}
         onClick={onClose}
       >
+        {/* Botón X flotante — siempre visible en esquina superior derecha */}
+        <button
+          onClick={onClose}
+          className="fixed top-3 right-3 z-[70] w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 border border-slate-600 text-slate-200 hover:bg-red-600 hover:border-red-500 hover:text-white shadow-xl transition-all"
+          aria-label="Cerrar (Esc)"
+          title="Cerrar (Esc)"
+        >
+          <X size={18} />
+        </button>
+
         {/* Panel interior — detener propagación para no cerrar al hacer clic dentro */}
         <div
-          className="relative w-full max-w-5xl h-[92vh] flex flex-col bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+          className="relative w-full sm:max-w-5xl h-[100dvh] sm:h-auto sm:max-h-[90vh] flex flex-col bg-slate-900 border-0 sm:border border-slate-700 sm:rounded-2xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-200"
           onClick={(e) => e.stopPropagation()}
         >
           {/* ── HEADER ─────────────────────────────────────────────────── */}

@@ -17,6 +17,81 @@ function sanitizeEnunciadoLine(line: string): string {
 }
 
 /**
+ * Normaliza texto con artefactos de extracción PDF:
+ * - Fusiona fragmentos de números con separador de miles que quedaron en líneas separadas
+ *   (ej: "$\n120\n000" → "$120.000", "1\n,25" → "1,25")
+ * - Elimina líneas que son solo marcas de forma/fuente ("FORMA 113 | 2023", etc.)
+ * - Colapsa líneas muy cortas que son claramente parte de la anterior
+ */
+function normalizeMathText(raw: string): string {
+  // 1. Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
+  let text = raw
+    .replace(/FORMA\s+\d+\s*[|│]\s*\d{4}/gi, '')
+    .replace(/www\.[a-z0-9.-]+\.[a-z]{2,}/gi, '');
+
+  // 2. Unir líneas que son solo dígitos/símbolos de miles con la línea anterior/siguiente
+  //    Patrón: línea termina con $ o cifra, siguiente es solo dígitos o coma+dígitos
+  const lines = text.split('\n');
+  const merged: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const cur = lines[i];
+    const trimCur = cur.trim();
+
+    // Línea vacía: pasar tal cual
+    if (!trimCur) {
+      merged.push(cur);
+      continue;
+    }
+
+    // ¿Esta línea parece un fragmento de número que sigue a la anterior?
+    // Casos: solo dígitos, solo ",digits", solo "digits,", símbolo $, etc.
+    const isNumberFragment = /^[,.]?\d{1,3}[,.]?$/.test(trimCur) || /^[,.]\d+$/.test(trimCur);
+    // ¿La línea anterior termina en un símbolo monetario o en dígitos?
+    const prevEndsWithNumOrSymbol = merged.length > 0 && /[\$\d,.]\s*$/.test(merged[merged.length - 1]);
+
+    if (isNumberFragment && prevEndsWithNumOrSymbol) {
+      // Fusionar con la línea anterior sin espacio si es solo dígitos (miles)
+      const prev = merged[merged.length - 1].trimEnd();
+      const separator = /^\d+$/.test(trimCur) ? '.' : '';
+      merged[merged.length - 1] = prev + separator + trimCur;
+      continue;
+    }
+
+    // ¿La línea siguiente es un fragmento numérico que completa esta?
+    // Si esta línea termina en $ o "por" o en dígito, y la siguiente es solo dígitos
+    if (i + 1 < lines.length) {
+      const nextTrim = lines[i + 1].trim();
+      const nextIsFragment = /^[,.]?\d{1,3}[,.]?$/.test(nextTrim) || /^[,.]\d+$/.test(nextTrim);
+      if (nextIsFragment && /[\$\d,.]$/.test(trimCur)) {
+        // Absorber la siguiente línea ahora
+        const separator = /^\d+$/.test(nextTrim) ? '.' : '';
+        merged.push(cur.trimEnd() + separator + nextTrim);
+        i++; // saltar la siguiente
+        continue;
+      }
+    }
+
+    merged.push(cur);
+  }
+
+  // 3. Segunda pasada: fusionar líneas muy cortas (≤3 chars, solo símbolo) con la siguiente
+  const result: string[] = [];
+  for (let i = 0; i < merged.length; i++) {
+    const t = merged[i].trim();
+    if (t.length <= 3 && /^[\$€£%·×÷±≤≥≠≈pqrf]$/.test(t) && i + 1 < merged.length) {
+      // Fusionar símbolo suelto con la línea siguiente
+      result.push(t + ' ' + merged[i + 1].trim());
+      i++;
+    } else {
+      result.push(merged[i]);
+    }
+  }
+
+  return result.join('\n');
+}
+
+/**
  * Renderiza texto enriquecido con formato Markdown:
  * - Negrita (**texto**) y Cursiva (*texto*)
  * - Encabezados (#, ##, ###) y Separadores (---)
@@ -128,7 +203,9 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
   };
 
   // Parser de bloques (párrafos, encabezados, tablas)
-  const lines = content.split('\n');
+  // Normalizar texto antes de parsear para corregir artefactos de extracción PDF
+  const normalizedContent = normalizeMathText(content);
+  const lines = normalizedContent.split('\n');
   const blocks: React.ReactNode[] = [];
   let i = 0;
 
@@ -248,5 +325,5 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
     i++;
   }
 
-  return <div className={`space-y-2 ${className}`}>{blocks}</div>;
+  return <div className={`space-y-1 ${className}`}>{blocks}</div>;
 };
