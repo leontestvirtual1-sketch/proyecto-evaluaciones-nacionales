@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   X,
   BookOpen,
   CheckCircle2,
   Tag,
-  Clock,
   Printer,
-  Sparkles,
-  ChevronLeft,
-  ChevronRight,
-  ListOrdered,
-  FileText,
   KeyRound,
   Loader2,
   AlertCircle,
-  HelpCircle
 } from 'lucide-react';
 import { EvaluacionCatalogo, Pregunta, Prueba } from '../types';
 import { getTipoEvaluacion } from './AdminCatalogoPanel';
@@ -38,12 +31,26 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
   const [preguntas, setPreguntas] = useState<Pregunta[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [mostrarRespuestas, setMostrarRespuestas] = useState(false);
-  const [filtroEje, setFiltroEje] = useState<string>('todos');
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+
+  // Cerrar con tecla Escape
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isPrintModalOpen) onClose();
+    },
+    [onClose, isPrintModalOpen]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
 
   useEffect(() => {
     if (!isOpen || !evaluacion) {
       setPreguntas([]);
+      setActiveTab('cuadernillo');
+      setMostrarRespuestas(false);
       return;
     }
 
@@ -53,9 +60,10 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
         const headers: Record<string, string> = { 'Content-Type': 'application/json' };
         if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
 
-        const res = await fetch(`/api/evaluaciones-catalogo?action=preguntas&evaluacion_id=${evaluacion.id}`, {
-          headers,
-        });
+        const res = await fetch(
+          `/api/evaluaciones-catalogo?action=preguntas&evaluacion_id=${evaluacion.id}`,
+          { headers }
+        );
 
         if (res.ok) {
           const data = await res.json();
@@ -90,13 +98,17 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
 
   const tipo = getTipoEvaluacion(evaluacion.titulo);
 
-  // Generar objeto Prueba temporal para PrintEvaluacionModal
   const pruebaData: Prueba = {
     id: evaluacion.id,
     titulo: evaluacion.titulo,
     descripcion: evaluacion.descripcionCatalogo || evaluacion.descripcion,
     asignaturaId: evaluacion.asignaturaId,
-    asignaturaNombre: evaluacion.asignaturaId === 'asig-1' ? 'Matemática' : evaluacion.asignaturaId === 'asig-2' ? 'Lengua y Literatura' : 'Educación Ciudadana',
+    asignaturaNombre:
+      evaluacion.asignaturaId === 'asig-1'
+        ? 'Matemática'
+        : evaluacion.asignaturaId === 'asig-2'
+        ? 'Lengua y Literatura'
+        : 'Educación Ciudadana',
     nivel: evaluacion.nivel,
     profesorId: 'admin',
     cursoId: 'catalogo',
@@ -112,37 +124,65 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
     descripcionCatalogo: evaluacion.descripcionCatalogo,
   };
 
+  const LETRAS = ['A', 'B', 'C', 'D', 'E'];
+
   return (
     <>
+      {/* Overlay — cerrar al hacer clic fuera */}
       <div
         className="fixed inset-0 z-[65] flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md"
         role="dialog"
         aria-modal="true"
+        aria-label={`Detalle: ${evaluacion.titulo}`}
+        onClick={onClose}
       >
-        <div className="relative w-full max-w-5xl h-[92vh] flex flex-col bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-slate-800 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 flex items-start justify-between gap-4">
+        {/* Panel interior — detener propagación para no cerrar al hacer clic dentro */}
+        <div
+          className="relative w-full max-w-5xl h-[92vh] flex flex-col bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* ── HEADER ─────────────────────────────────────────────────── */}
+          <div className="px-5 py-4 border-b border-slate-800 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 flex items-start justify-between gap-4 shrink-0">
             <div className="min-w-0 flex-1">
+              {/* Badges */}
               <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${tipo.bg} ${tipo.text}`}>
+                <span
+                  className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${tipo.bg} ${tipo.text}`}
+                >
                   <span className={`w-1.5 h-1.5 rounded-full ${tipo.dot}`} />
                   {tipo.label}
                 </span>
                 <span className="text-xs text-slate-400 font-semibold">{evaluacion.nivel}</span>
                 <span className="text-slate-600">·</span>
-                <span className="text-xs text-slate-400 font-semibold">{evaluacion.totalPreguntas} preguntas</span>
+                <span className="text-xs text-slate-400 font-semibold">
+                  {evaluacion.totalPreguntas} preguntas
+                </span>
                 <span className="text-slate-600">·</span>
-                <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${evaluacion.precioCLP === 0 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}`}>
-                  <Tag size={10} className="inline mr-1" />
-                  {evaluacion.precioCLP === 0 ? 'Incluida en plan ($0)' : `$${evaluacion.precioCLP.toLocaleString('es-CL')} CLP`}
+                <span
+                  className={`text-[11px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 ${
+                    evaluacion.precioCLP === 0
+                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                      : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                  }`}
+                >
+                  <Tag size={10} />
+                  {evaluacion.precioCLP === 0
+                    ? 'Incluida en plan'
+                    : `$${evaluacion.precioCLP.toLocaleString('es-CL')} CLP`}
                 </span>
               </div>
-              <h2 className="text-lg font-bold text-white tracking-tight truncate">{evaluacion.titulo}</h2>
+
+              <h2 className="text-lg font-bold text-white tracking-tight truncate">
+                {evaluacion.titulo}
+              </h2>
               <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">
-                {evaluacion.descripcionCatalogo || evaluacion.descripcion || 'Instrumento estandarizado alineado al currículum oficial.'}
+                {evaluacion.descripcionCatalogo ||
+                  evaluacion.descripcion ||
+                  'Instrumento estandarizado alineado al currículum oficial.'}
               </p>
             </div>
 
+            {/* Acciones header */}
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsPrintModalOpen(true)}
@@ -150,21 +190,22 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                 title="Abrir motor de impresión y cuadernillo oficial"
               >
                 <Printer size={14} />
-                <span className="hidden sm:inline">Imprimir Cuadernillo</span>
+                <span className="hidden sm:inline">Imprimir</span>
               </button>
+              {/* Botón Cerrar — prominente */}
               <button
                 onClick={onClose}
-                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-                aria-label="Cerrar"
+                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-red-600/20 hover:border-red-500/40 border border-transparent transition-all"
+                aria-label="Cerrar panel de detalle"
+                title="Cerrar (Esc)"
               >
                 <X size={20} />
               </button>
             </div>
           </div>
 
-          {/* Navigation Bar & Toolbar */}
-          <div className="px-6 py-2.5 bg-slate-950/60 border-b border-slate-800 flex items-center justify-between gap-4 flex-wrap">
-            {/* Tabs */}
+          {/* ── BARRA DE TABS + OPCIONES ───────────────────────────────── */}
+          <div className="px-5 py-2.5 bg-slate-950/60 border-b border-slate-800 flex items-center justify-between gap-4 flex-wrap shrink-0">
             <div className="flex gap-1 bg-slate-800/80 p-1 rounded-xl">
               <button
                 onClick={() => setActiveTab('cuadernillo')}
@@ -174,8 +215,13 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
-                <BookOpen size={14} />
-                <span>📝 Cuadernillo de Preguntas ({preguntas.length})</span>
+                <BookOpen size={13} />
+                Cuadernillo
+                {!isLoading && preguntas.length > 0 && (
+                  <span className="ml-1 bg-white/20 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                    {preguntas.length}
+                  </span>
+                )}
               </button>
               <button
                 onClick={() => setActiveTab('pauta')}
@@ -185,132 +231,185 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
-                <KeyRound size={14} />
-                <span>📋 Pauta y Solucionario Docente</span>
+                <KeyRound size={13} />
+                Pauta Docente
               </button>
             </div>
 
-            {/* Toggle ver respuestas */}
-            {activeTab === 'cuadernillo' && (
-              <label className="flex items-center gap-2 text-xs font-semibold text-slate-300 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={mostrarRespuestas}
-                  onChange={(e) => setMostrarRespuestas(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500 w-4 h-4 cursor-pointer"
-                />
-                <span className="text-slate-300">Mostrar claves de corrección</span>
-              </label>
-            )}
+            <div className="flex items-center gap-3">
+              {activeTab === 'cuadernillo' && (
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-300 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={mostrarRespuestas}
+                    onChange={(e) => setMostrarRespuestas(e.target.checked)}
+                    className="rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500 w-4 h-4 cursor-pointer"
+                  />
+                  Ver claves
+                </label>
+              )}
+              {/* Hint de cierre */}
+              <span className="hidden sm:inline text-[10px] text-slate-600 font-medium">
+                ESC para cerrar
+              </span>
+            </div>
           </div>
 
-          {/* Content Body */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/40 space-y-6">
+          {/* ── CUERPO SCROLLABLE ──────────────────────────────────────── */}
+          <div className="flex-1 overflow-y-auto bg-slate-900/40">
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center py-24 text-slate-400 gap-3">
+              <div className="flex flex-col items-center justify-center py-28 text-slate-400 gap-3">
                 <Loader2 size={32} className="animate-spin text-indigo-400" />
-                <p className="text-sm font-semibold">Cargando preguntas de la evaluación...</p>
+                <p className="text-sm font-semibold">Cargando preguntas...</p>
               </div>
             ) : preguntas.length === 0 ? (
-              <div className="text-center py-20 text-slate-500 space-y-2">
+              <div className="text-center py-24 text-slate-500 space-y-2">
                 <AlertCircle size={36} className="mx-auto opacity-30 text-amber-400" />
-                <p className="text-sm font-semibold">No se encontraron preguntas cargadas para esta evaluación.</p>
+                <p className="text-sm font-semibold">
+                  No se encontraron preguntas para esta evaluación.
+                </p>
               </div>
             ) : activeTab === 'cuadernillo' ? (
-              /* Vista Cuadernillo */
-              <div className="space-y-6 max-w-4xl mx-auto">
-                {preguntas.map((p, idx) => (
-                  <div
-                    key={p.id}
-                    className="bg-slate-800/60 border border-slate-700/70 hover:border-slate-600 rounded-2xl p-5 sm:p-6 shadow-sm transition-all"
-                  >
-                    {/* Header pregunta */}
-                    <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-700/50">
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 font-bold text-sm flex items-center justify-center">
-                          {idx + 1}
-                        </span>
-                        <div>
-                          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                            Pregunta #{idx + 1}
+              /* ── TAB: CUADERNILLO ────────────────────────────────── */
+              <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 space-y-5">
+                {preguntas.map((p, idx) => {
+                  const altCorrectaIdx = p.alternativas.findIndex(
+                    (a) => a.letra === p.respuestaCorrecta
+                  );
+                  return (
+                    <div
+                      key={p.id}
+                      className="bg-slate-800/50 border border-slate-700/60 hover:border-slate-600/80 rounded-2xl overflow-hidden shadow transition-all"
+                    >
+                      {/* ─ Barra superior numeración ─ */}
+                      <div className="flex items-center justify-between gap-3 px-5 py-3 bg-slate-900/60 border-b border-slate-700/50">
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 rounded-xl bg-indigo-600 text-white font-black text-sm flex items-center justify-center shadow-md shadow-indigo-600/30">
+                            {idx + 1}
                           </span>
-                          <span className="text-slate-600 mx-1.5">·</span>
-                          <span className="text-xs text-slate-400">{p.dificultad ? `Dificultad ${p.dificultad}` : 'Puntuable'}</span>
+                          <div className="flex flex-col leading-tight">
+                            <span className="text-xs font-bold text-white">
+                              Pregunta {idx + 1}
+                              {p.alternativas.length > 0 && (
+                                <span className="ml-2 text-slate-400 font-normal">
+                                  · {p.alternativas.length} alternativas
+                                </span>
+                              )}
+                            </span>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              {p.dificultad && (
+                                <span
+                                  className={`text-[10px] font-bold px-1.5 py-0 rounded-full ${
+                                    p.dificultad === 'alta'
+                                      ? 'bg-red-500/15 text-red-400'
+                                      : p.dificultad === 'media'
+                                      ? 'bg-amber-500/15 text-amber-400'
+                                      : 'bg-emerald-500/15 text-emerald-400'
+                                  }`}
+                                >
+                                  {p.dificultad.charAt(0).toUpperCase() + p.dificultad.slice(1)}
+                                </span>
+                              )}
+                              <span className="text-[10px] text-slate-500">
+                                {p.puntaje || 1} pto.
+                              </span>
+                            </div>
+                          </div>
                         </div>
+
+                        {mostrarRespuestas && p.respuestaCorrecta && (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full">
+                            <CheckCircle2 size={13} />
+                            Clave: {p.respuestaCorrecta}
+                          </span>
+                        )}
                       </div>
 
-                      {mostrarRespuestas && (
-                        <span className="inline-flex items-center gap-1 text-xs font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full">
-                          <CheckCircle2 size={13} /> Clave: {p.respuestaCorrecta}
-                        </span>
+                      {/* ─ Enunciado ─ */}
+                      <div className="px-5 pt-4 pb-3 text-sm sm:text-[15px] text-slate-100 leading-relaxed">
+                        <EnunciadoRenderer content={p.enunciado} />
+                      </div>
+
+                      {/* ─ Imagen ─ */}
+                      {p.imagenUrl && (
+                        <div className="mx-5 mb-3 p-2 bg-slate-950/50 rounded-xl border border-slate-700/50 flex justify-center">
+                          <img
+                            src={p.imagenUrl}
+                            alt={`Figura Pregunta ${idx + 1}`}
+                            className="max-h-72 max-w-full rounded-lg object-contain bg-white/90 p-2"
+                          />
+                        </div>
+                      )}
+
+                      {/* ─ Alternativas ─ */}
+                      {p.alternativas.length > 0 && (
+                        <div className="px-5 pb-4 space-y-2">
+                          <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1 pl-1">
+                            Alternativas
+                          </div>
+                          {p.alternativas.map((alt, altIdx) => {
+                            const isCorrect = alt.letra === p.respuestaCorrecta;
+                            const showCorrect = mostrarRespuestas && isCorrect;
+                            return (
+                              <div
+                                key={alt.letra}
+                                className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
+                                  showCorrect
+                                    ? 'bg-emerald-900/25 border-emerald-500/50'
+                                    : 'bg-slate-900/40 border-slate-700/50'
+                                }`}
+                              >
+                                {/* Letra */}
+                                <span
+                                  className={`w-6 h-6 rounded-lg text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ${
+                                    showCorrect
+                                      ? 'bg-emerald-500 text-white shadow shadow-emerald-500/30'
+                                      : 'bg-slate-800 text-slate-300 border border-slate-600'
+                                  }`}
+                                >
+                                  {alt.letra || LETRAS[altIdx]}
+                                </span>
+
+                                {/* Texto */}
+                                <div
+                                  className={`text-sm flex-1 leading-snug pt-0.5 ${
+                                    showCorrect ? 'text-emerald-100 font-medium' : 'text-slate-300'
+                                  }`}
+                                >
+                                  <EnunciadoRenderer content={alt.texto} />
+                                </div>
+
+                                {showCorrect && (
+                                  <CheckCircle2
+                                    size={16}
+                                    className="text-emerald-400 shrink-0 mt-1"
+                                  />
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
                       )}
                     </div>
-
-                    {/* Enunciado */}
-                    <div className="text-sm sm:text-base text-slate-200 leading-relaxed mb-4">
-                      <EnunciadoRenderer content={p.enunciado} />
-                    </div>
-
-                    {/* Imagen de la pregunta */}
-                    {p.imagenUrl && (
-                      <div className="my-4 p-2 bg-slate-950/40 rounded-xl border border-slate-700/50 flex justify-center">
-                        <img
-                          src={p.imagenUrl}
-                          alt={`Figura Pregunta ${idx + 1}`}
-                          className="max-h-80 max-w-full rounded-lg object-contain bg-white/90 p-2"
-                        />
-                      </div>
-                    )}
-
-                    {/* Alternativas */}
-                    <div className="space-y-2.5 mt-4">
-                      {p.alternativas.map((alt) => {
-                        const isCorrect = alt.letra === p.respuestaCorrecta;
-                        return (
-                          <div
-                            key={alt.letra}
-                            className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
-                              mostrarRespuestas && isCorrect
-                                ? 'bg-emerald-900/20 border-emerald-500/50 text-emerald-200 font-medium'
-                                : 'bg-slate-900/50 border-slate-700/60 text-slate-300'
-                            }`}
-                          >
-                            <span
-                              className={`w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ${
-                                mostrarRespuestas && isCorrect
-                                  ? 'bg-emerald-600 text-white'
-                                  : 'bg-slate-800 text-slate-400 border border-slate-700'
-                              }`}
-                            >
-                              {alt.letra}
-                            </span>
-                            <div className="text-sm flex-1 leading-snug pt-0.5">
-                              <EnunciadoRenderer content={alt.texto} />
-                            </div>
-                            {mostrarRespuestas && isCorrect && (
-                              <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-1" />
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
-              /* Vista Pauta y Solucionario Docente */
-              <div className="max-w-4xl mx-auto space-y-4">
+              /* ── TAB: PAUTA DOCENTE ──────────────────────────────── */
+              <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 space-y-4">
                 <div className="bg-slate-800/80 border border-slate-700 rounded-2xl overflow-hidden shadow-lg">
                   <div className="p-4 bg-gradient-to-r from-indigo-950/60 to-slate-800 border-b border-slate-700 flex items-center justify-between">
                     <div>
                       <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                        <KeyRound size={16} className="text-indigo-400" />
+                        <KeyRound size={15} className="text-indigo-400" />
                         Tabla Oficial de Claves y Especificaciones
                       </h3>
-                      <p className="text-xs text-slate-400">Solucionario oficial y desglose por ítem</p>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        Solucionario oficial · {preguntas.length} ítems
+                      </p>
                     </div>
                     <span className="text-xs font-bold text-slate-300 bg-slate-900/80 px-3 py-1 rounded-full border border-slate-700">
-                      Total: {preguntas.length} Ítems
+                      {preguntas.length} ítems
                     </span>
                   </div>
 
@@ -318,38 +417,47 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                     <table className="w-full text-left text-xs border-collapse">
                       <thead>
                         <tr className="bg-slate-900/80 text-slate-400 font-bold border-b border-slate-700 uppercase tracking-wider">
-                          <th className="py-3 px-4 text-center w-16">#</th>
-                          <th className="py-3 px-4 text-center w-24">Clave</th>
-                          <th className="py-3 px-4">Dificultad</th>
-                          <th className="py-3 px-4">Puntaje</th>
-                          <th className="py-3 px-4">Resumen del Ítem</th>
+                          <th className="py-3 px-4 text-center w-14">#</th>
+                          <th className="py-3 px-4 text-center w-20">Clave</th>
+                          <th className="py-3 px-4 w-28">Dificultad</th>
+                          <th className="py-3 px-4 w-20">Puntaje</th>
+                          <th className="py-3 px-4">Inicio del enunciado</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-700/50 text-slate-300 font-medium">
                         {preguntas.map((p, idx) => (
-                          <tr key={p.id} className="hover:bg-slate-700/30 transition-colors">
+                          <tr
+                            key={p.id}
+                            className="hover:bg-slate-700/30 transition-colors"
+                          >
                             <td className="py-2.5 px-4 text-center font-bold text-indigo-400">
                               {idx + 1}
                             </td>
                             <td className="py-2.5 px-4 text-center">
-                              <span className="inline-block w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold leading-6">
+                              <span className="inline-flex w-6 h-6 items-center justify-center rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-black">
                                 {p.respuestaCorrecta}
                               </span>
                             </td>
-                            <td className="py-2.5 px-4 capitalize">
-                              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                                p.dificultad === 'alta' ? 'bg-red-500/10 text-red-400' :
-                                p.dificultad === 'media' ? 'bg-amber-500/10 text-amber-400' :
-                                'bg-emerald-500/10 text-emerald-400'
-                              }`}>
-                                {p.dificultad || 'Media'}
+                            <td className="py-2.5 px-4">
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                  p.dificultad === 'alta'
+                                    ? 'bg-red-500/10 text-red-400'
+                                    : p.dificultad === 'media'
+                                    ? 'bg-amber-500/10 text-amber-400'
+                                    : 'bg-emerald-500/10 text-emerald-400'
+                                }`}
+                              >
+                                {p.dificultad
+                                  ? p.dificultad.charAt(0).toUpperCase() + p.dificultad.slice(1)
+                                  : 'Media'}
                               </span>
                             </td>
                             <td className="py-2.5 px-4 text-slate-400">
                               {p.puntaje || 1} pto.
                             </td>
-                            <td className="py-2.5 px-4 text-slate-300 max-w-md truncate">
-                              {p.enunciado.replace(/\n+/g, ' ').substring(0, 90)}...
+                            <td className="py-2.5 px-4 text-slate-300 max-w-xs truncate text-[11px]">
+                              {p.enunciado.replace(/\n+/g, ' ').substring(0, 80)}…
                             </td>
                           </tr>
                         ))}
@@ -363,7 +471,7 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
         </div>
       </div>
 
-      {/* Modal de Impresión */}
+      {/* Modal de Impresión (sobre este modal) */}
       {isPrintModalOpen && (
         <PrintEvaluacionModal
           isOpen={isPrintModalOpen}
