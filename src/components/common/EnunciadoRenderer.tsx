@@ -1,4 +1,5 @@
 import React from 'react';
+import { resolveImageUrl } from '../../lib/storage';
 
 interface EnunciadoRendererProps {
   content?: string;
@@ -55,10 +56,11 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
       }
       const alt = match[1];
       const src = match[2];
+      const resolvedSrc = resolveImageUrl(src);
       parts.push(
         <span key={`img-${match.index}`} className="inline-block my-1.5 align-middle mx-1">
           <img
-            src={src}
+            src={resolvedSrc}
             alt={alt || 'Figura'}
             className="max-h-48 max-w-full rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900 object-contain inline-block p-1"
             loading="lazy"

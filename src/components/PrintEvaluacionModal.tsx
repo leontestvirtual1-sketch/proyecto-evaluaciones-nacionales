@@ -25,6 +25,7 @@ import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { getSequentialPrintTitle } from '../utils/printUtils';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
+import { resolveImageUrl } from '../lib/storage';
 
 interface PrintEvaluacionModalProps {
   isOpen: boolean;
@@ -455,7 +456,7 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                           {preg.imagenUrl && (
                             <div className="my-1.5 flex justify-center page-break-inside-avoid">
                               <img
-                                src={preg.imagenUrl}
+                                src={resolveImageUrl(preg.imagenUrl)}
                                 alt={`Figura pregunta ${idx + 1}`}
                                 className="max-h-48 max-w-full object-contain border border-slate-300 rounded p-1 bg-white"
                               />

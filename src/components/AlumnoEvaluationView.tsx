@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Prueba, Pregunta, UserProfile, RendicionPrueba } from '../types';
 import { Clock, CheckCircle2, AlertCircle, ArrowRight, ArrowLeft, Send, Sparkles, Award } from 'lucide-react';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
+import { resolveImageUrl } from '../lib/storage';
 
 interface AlumnoEvaluationViewProps {
   prueba: Prueba;
@@ -239,7 +240,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
             {preguntaActual.imagenUrl && (
               <div className="p-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm my-3">
                 <img
-                  src={preguntaActual.imagenUrl}
+                  src={resolveImageUrl(preguntaActual.imagenUrl)}
                   alt={`Figura Pregunta N° ${currentIdx + 1}`}
                   className="max-h-80 w-auto object-contain rounded-xl"
                 />

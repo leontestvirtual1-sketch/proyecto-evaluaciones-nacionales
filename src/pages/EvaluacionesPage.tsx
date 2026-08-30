@@ -27,6 +27,7 @@ import { IngresoRespuestasModal } from '../components/IngresoRespuestasModal';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { CatalogoEvaluacionesModal } from '../components/CatalogoEvaluacionesModal';
 import { EnunciadoRenderer } from '../components/common/EnunciadoRenderer';
+import { resolveImageUrl } from '../lib/storage';
 import { preguntasLenguaje2MMock } from '../data/len2mQuestionsMock';
 import { preguntasLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
 import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
@@ -153,7 +154,7 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
                 {preg.imagenUrl && (
                   <div className="p-3 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm max-w-md my-2">
                     <img
-                      src={preg.imagenUrl}
+                      src={resolveImageUrl(preg.imagenUrl)}
                       alt={`Figura Pregunta ${idx + 1}`}
                       className="max-h-64 w-auto object-contain rounded-lg"
                     />
