@@ -2,6 +2,26 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-30] Ingesta Catálogo PAES: PAES Oficial Competencia Lectora 2026 (65 preguntas)
+
+- **Problema / Requerimiento**:
+  Procesar e incorporar la prueba oficial DEMRE `PAES Competencia Lectora Proceso 2026` al catálogo general en Supabase sin asignar (`es_catalogo = TRUE`, `profesor_id = NULL`), extrayendo sus 65 preguntas y lecturas compartidas, vinculando el Clavijero Oficial DEMRE con identificación de ítems piloto de calibración psicométrica, y generando la Pauta Docente oficial para el profesor con precio comercial configurado ($29.990 CLP). Fuente: PDFs en `C:\Users\luisl\OneDrive\Desktop\pruebas_paes\`.
+
+- **Archivos y Solución Técnica**:
+  - [`supabase/migrations/038_paes_oficial_competencia_lectora_2026.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/038_paes_oficial_competencia_lectora_2026.sql):
+    - [NUEVO] Migración SQL que inserta la evaluación `eval-paes-lect-2026-f103` y sus 65 preguntas en `public.evaluaciones` y `public.preguntas` con taxonomía DEMRE (Localizar, Interpretar, Evaluar).
+  - [`docs/pautas/PAUTA_DOCENTE_PAES_COMPETENCIA_LECTORA_2026.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_PAES_COMPETENCIA_LECTORA_2026.md):
+    - [NUEVO] Pauta Docente oficial con el Clavijero Oficial DEMRE de 65 ítems, identificación de ítems piloto, y tabla de transformación a escala PAES (100 a 1000 puntos).
+  - [`scripts/seed-paes-lect-2026.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/seed-paes-lect-2026.js):
+    - [NUEVO] Script Node.js de ingesta que persistió las 65 preguntas y la evaluación en la base de datos de producción.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores.
+  - Auditoría Supabase: 9 evaluaciones totales (6 en catálogo sin asignar + 3 activas de María Teresa), 355 preguntas en `public.preguntas`.
+  - Desplegado en Vercel.
+
+---
+
 ### [2026-08-30] Ingesta Catálogo PAES: PAES Oficial Competencia Matemática 1 (M1) 2023 Forma 113
 
 - **Problema / Requerimiento**:
