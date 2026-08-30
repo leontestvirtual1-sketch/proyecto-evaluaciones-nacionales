@@ -89,16 +89,10 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         const teacherAsig = currentUser!.asignaturaId || (isPremilitarTeacher ? 'asig-2' : isSusanaTeacher ? 'asig-1' : '');
 
         if (!isAdmin) {
-          if (isPremilitarTeacher) {
-            if (isValidUUID(currentUser!.id)) {
-              query = query.or(`profesor_id.eq.${currentUser!.id},asignatura_id.eq.asig-2`);
-            } else {
-              query = query.eq('asignatura_id', 'asig-2');
-            }
-          } else if (isValidUUID(currentUser!.id)) {
-            // Aislamiento estricto (Directivas 1 y 2): docentes reales solo ven evaluaciones creadas por ellos
+          if (isValidUUID(currentUser!.id)) {
+            // Aislamiento estricto (Directivas 1, 2 y 4): cada docente real solo ve sus evaluaciones asignadas/creadas
             query = query.eq('profesor_id', currentUser!.id);
-          } else if (teacherAsig) {
+          } else {
             query = query.eq('profesor_id', currentUser!.id);
           }
         }

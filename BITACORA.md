@@ -2,6 +2,27 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-30] Aislamiento Estricto de Evaluaciones Docentes y Suite de Pautas Docentes de Catálogo
+
+- **Problema / Requerimiento**:
+  1. Corregir filtrado en `useEvaluaciones.ts` donde la docente María Teresa visualizaba erróneamente evaluaciones no asignadas del catálogo de Lenguaje (`Ensayo 6 SIMCE Lengua y Literatura 2° Medio`) en lugar de únicamente sus 3 evaluaciones propias.
+  2. Generar y estandarizar las Pautas de Corrección y Solucionarios Técnico-Pedagógicos para todas las evaluaciones del catálogo general en `docs/pautas/`.
+  3. Aclarar el flujo de calificación: las pautas docentes son de uso exclusivo del profesor; al ingresar las alternativas de los alumnos se calcula automáticamente el puntaje, porcentaje y nota/escala definida.
+
+- **Archivos y Solución Técnica**:
+  - [`src/hooks/useEvaluaciones.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/hooks/useEvaluaciones.ts):
+    - [MODIFICADO] Eliminada la cláusula `or(asignatura_id.eq.asig-2)` en consultas de docentes no administradores. Se aplica filtrado estricto `eq('profesor_id', currentUser.id)`, garantizando que docentes reales solo visualicen sus evaluaciones asignadas y no las del catálogo sin asignar.
+  - [`docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md):
+    - [NUEVO] Pauta docente oficial con tabla de especificaciones (35 ítems), habilidades, ejes y justificaciones para Matemática 2° Medio.
+  - [`docs/pautas/PAUTA_DOCENTE_SIMCE_LECTURA_2M_ENSAYO6.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_LECTURA_2M_ENSAYO6.md):
+    - [NUEVO] Pauta docente oficial con tabla de especificaciones (35 ítems), habilidades lectoras y justificaciones para Lengua y Literatura 2° Medio.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores.
+  - Desplegado en Vercel.
+
+---
+
 ### [2026-08-30] Ingesta Catálogo y Pauta Docente: Prueba Diagnóstica Educación Ciudadana III° Medio 2026
 
 - **Problema / Requerimiento**:
