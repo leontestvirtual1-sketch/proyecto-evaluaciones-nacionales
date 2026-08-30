@@ -14,7 +14,12 @@ import {
   AlertCircle,
   Send,
   Filter,
-  Sparkles
+  Sparkles,
+  Edit3,
+  DollarSign,
+  X,
+  Save,
+  Check
 } from "lucide-react";
 
 interface AdminCatalogoPanelProps {
@@ -74,6 +79,12 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
   const [categoriaFiltro, setCategoriaFiltro] = useState<TipoCategoriaFiltro>("todos");
   const [toast, setToast] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
 
+  // Modal para editar precio y condiciones comerciales
+  const [editingEval, setEditingEval] = useState<EvaluacionCatalogo | null>(null);
+  const [editPrecio, setEditPrecio] = useState<number>(0);
+  const [editDesc, setEditDesc] = useState<string>("");
+  const [isSavingPrice, setIsSavingPrice] = useState(false);
+
   const showToast = (type: "ok" | "err", msg: string) => {
     setToast({ type, msg });
     setTimeout(() => setToast(null), 4500);
@@ -130,7 +141,7 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
           asignaturaId: e.asignatura_id,
           nivel: e.nivel,
           precioCLP: e.precio_clp ?? 0,
-          descripcionCatalogo: e.descripcion_catalogo,
+          descripcionCatalogo: e.descripcion_catalogo || "",
           totalPreguntas: e.total_preguntas ?? 0,
         }))
       );
@@ -199,7 +210,7 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       const res = await fetch("/api/evaluaciones-catalogo?action=marcar-catalogo", {
         method: "POST",
         headers,
-        body: JSON.stringify({ evaluacionId: ev.id, esCatalogo }),
+        body: JSON.stringify({ evaluacion_id: ev.id, es_catalogo: esCatalogo }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error al actualizar catálogo");
@@ -212,6 +223,48 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       showToast("err", e.message || "No se pudo modificar el catálogo");
     } finally {
       setIsProcessing(null);
+    }
+  };
+
+  // Abrir modal de edición de precio
+  const openEditModal = (ev: EvaluacionCatalogo) => {
+    setEditingEval(ev);
+    setEditPrecio(ev.precioCLP || 0);
+    setEditDesc(ev.descripcionCatalogo || ev.descripcion || "");
+  };
+
+  // Guardar nuevo precio / descripción en Supabase
+  const handleSavePrecio = async () => {
+    if (!editingEval) return;
+    setIsSavingPrice(true);
+    try {
+      const headers = await getHeaders();
+      const res = await fetch("/api/evaluaciones-catalogo?action=marcar-catalogo", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          evaluacion_id: editingEval.id,
+          es_catalogo: true,
+          precio_clp: Number(editPrecio),
+          descripcion_catalogo: editDesc.trim(),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Error al guardar precio");
+
+      showToast("ok", `Condiciones actualizadas: $${Number(editPrecio).toLocaleString("es-CL")} CLP`);
+      setEvalsSinAsignar((prev) =>
+        prev.map((e) =>
+          e.id === editingEval.id
+            ? { ...e, precioCLP: Number(editPrecio), descripcionCatalogo: editDesc.trim() }
+            : e
+        )
+      );
+      setEditingEval(null);
+    } catch (e: any) {
+      showToast("err", e.message || "Error al actualizar precio");
+    } finally {
+      setIsSavingPrice(false);
     }
   };
 
@@ -451,25 +504,126 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
                       <span className="text-[11px] text-slate-500">·</span>
                       <span className="text-[11px] text-slate-400">{ev.totalPreguntas} preguntas</span>
                       <span className="text-[11px] text-slate-500">·</span>
-                      <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${ev.precioCLP === 0 ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"}`}>
-                        <Tag size={8} className="inline mr-0.5" />
-                        {ev.precioCLP === 0 ? "Gratuita" : `$${ev.precioCLP.toLocaleString("es-CL")}`}
-                      </span>
+                      <button
+                        onClick={() => openEditModal(ev)}
+                        className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-all flex items-center gap-1 ${
+                          ev.precioCLP === 0
+                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
+                            : "bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20"
+                        }`}
+                        title="Hacer clic para editar precio y condiciones"
+                      >
+                        <Tag size={9} />
+                        {ev.precioCLP === 0 ? "Incluida en plan ($0)" : `$${ev.precioCLP.toLocaleString("es-CL")} CLP`}
+                        <Edit3 size={9} className="ml-0.5 opacity-60" />
+                      </button>
                     </div>
                   </div>
-                  <button
-                    id={`btn-toggle-catalogo-${ev.id}`}
-                    onClick={() => handleToggleCatalogo(ev, false)}
-                    disabled={isProcessing === ev.id}
-                    title="Quitar del catálogo"
-                    className="text-indigo-400 hover:text-red-400 transition-colors mt-0.5"
-                  >
-                    {isProcessing === ev.id ? <Loader2 size={16} className="animate-spin" /> : <ToggleRight size={20} />}
-                  </button>
+                  
+                  <div className="flex items-center gap-2 mt-0.5 shrink-0">
+                    <button
+                      onClick={() => openEditModal(ev)}
+                      title="Editar precio y descripción comercial"
+                      className="p-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600/80 text-slate-400 hover:text-white transition-colors"
+                    >
+                      <Edit3 size={15} />
+                    </button>
+                    <button
+                      id={`btn-toggle-catalogo-${ev.id}`}
+                      onClick={() => handleToggleCatalogo(ev, false)}
+                      disabled={isProcessing === ev.id}
+                      title="Quitar del catálogo"
+                      className="text-indigo-400 hover:text-red-400 transition-colors p-1"
+                    >
+                      {isProcessing === ev.id ? <Loader2 size={16} className="animate-spin" /> : <ToggleRight size={20} />}
+                    </button>
+                  </div>
                 </div>
               );
             })
           )}
+        </div>
+      )}
+
+      {/* Modal para Editar Precio y Condiciones Comerciales */}
+      {editingEval && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center">
+                  <DollarSign size={18} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-white">Administrar Precio y Condiciones</h4>
+                  <p className="text-xs text-slate-400">Configuración comercial para el catálogo de venta</p>
+                </div>
+              </div>
+              <button onClick={() => setEditingEval(null)} className="text-slate-400 hover:text-white p-1">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="bg-slate-800/60 border border-slate-700/80 rounded-xl p-3">
+              <p className="text-xs font-semibold text-white">{editingEval.titulo}</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">{editingEval.nivel} · {editingEval.totalPreguntas} preguntas</p>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  💵 Precio de Venta / Asignación (CLP)
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-bold">$</span>
+                  <input
+                    type="number"
+                    min="0"
+                    step="1000"
+                    value={editPrecio}
+                    onChange={(e) => setEditPrecio(Number(e.target.value))}
+                    placeholder="0 para incluir en planes suscritos"
+                    className="w-full pl-8 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+                <p className="text-[11px] text-slate-400 mt-1">
+                  {editPrecio === 0
+                    ? "🟢 $0: Incluida dentro de la cuota de suscripción según plan docente."
+                    : `🏷️ $${Number(editPrecio).toLocaleString("es-CL")} CLP: Requiere pago o autorización especial.`}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  📝 Descripción Comercial para Catálogo
+                </label>
+                <textarea
+                  rows={3}
+                  value={editDesc}
+                  onChange={(e) => setEditDesc(e.target.value)}
+                  placeholder="Describe el valor pedagógico de esta evaluación para los colegios..."
+                  className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-2 border-t border-slate-800">
+              <button
+                onClick={() => setEditingEval(null)}
+                className="flex-1 py-2 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-xs font-semibold"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleSavePrecio}
+                disabled={isSavingPrice}
+                className="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/30 disabled:opacity-50"
+              >
+                {isSavingPrice ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+                Guardar Cambios
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
