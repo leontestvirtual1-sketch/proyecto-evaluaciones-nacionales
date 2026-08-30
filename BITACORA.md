@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-30] Ingesta Catálogo PAES: PAES Oficial Competencia Matemática 1 (M1) 2023 Forma 113
+
+- **Problema / Requerimiento**:
+  Procesar e incorporar la prueba oficial de acceso universitario DEMRE `PAES Competencia Matemática 1 (M1) Proceso 2023 (Forma 113)` al catálogo de producción en Supabase sin asignar a ningún docente (`es_catalogo = TRUE`, `profesor_id = NULL`), extrayendo sus 65 preguntas y figuras geométricas/algebraicas, asociando el Clavijero Oficial DEMRE con distinción de ítems piloto, y generando la Pauta Docente oficial para el profesor. Fuente: PDF `C:\Users\luisl\OneDrive\...\PAES Demre\paes-oficial-matematica1-p2023.pdf`.
+
+- **Archivos y Solución Técnica**:
+  - [`supabase/migrations/037_paes_oficial_matematica1_2023_forma113.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/037_paes_oficial_matematica1_2023_forma113.sql):
+    - [NUEVO] Migración SQL que define e inserta la evaluación `eval-paes-mat1-2023-f113` y sus 65 preguntas en `public.evaluaciones` y `public.preguntas` con ejes temáticos DEMRE (Números, Álgebra, Geometría, Probabilidad).
+  - [`docs/pautas/PAUTA_DOCENTE_PAES_MATEMATICA1_2023_FORMA113.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_PAES_MATEMATICA1_2023_FORMA113.md):
+    - [NUEVO] Pauta Docente oficial con el Clavijero Oficial DEMRE de 65 ítems, identificación de las 5 preguntas piloto (7, 9, 36, 47 y 65), y tabla de transformación a escala PAES (100 a 1000 puntos).
+  - [`public/preguntas/paes_mat1_2023_forma113/`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/preguntas/paes_mat1_2023_forma113/):
+    - [NUEVO] 17 figuras geométricas y diagramas sincronizados en el bucket Supabase Storage `evaluaciones-media`.
+  - [`scripts/seed-paes-m1-2023.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/seed-paes-m1-2023.js):
+    - [NUEVO] Script Node.js de ingesta que persistió las 65 preguntas y la evaluación en la base de datos de producción.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores.
+  - Auditoría Supabase: 8 evaluaciones totales (5 en catálogo sin asignar + 3 activas de María Teresa), 290 preguntas en `public.preguntas`.
+  - Desplegado en Vercel.
+
+---
+
 ### [2026-08-30] Rediseño y Categorización: Catálogo de Evaluaciones & Solicitudes (Diagnósticos, SIMCE y PAES)
 
 - **Problema / Requerimiento**:
