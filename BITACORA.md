@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-30] Ingesta Catálogo y Pauta Docente: Prueba Diagnóstica Educación Ciudadana III° Medio 2026
+
+- **Problema / Requerimiento**:
+  Procesar e incorporar la evaluación diagnóstica de Educación Ciudadana para 3° Medio al catálogo de producción en Supabase sin asignar a ningún docente (`es_catalogo = TRUE`, `profesor_id = NULL`), sanitizando marcas de terceros al 100%, cargando las preguntas y alternativas sin respuestas para los alumnos, y generando una Pauta de Corrección y Solucionario Técnico-Pedagógico para el profesor. Fuente: PDF `Ensayo - Prueba Diagnóstica Todos los OAs Educación Ciudadana III° Medio 2026 - Con pauta.pdf`.
+
+- **Archivos y Solución Técnica**:
+  - [`supabase/migrations/036_prueba_diagnostica_educacion_ciudadana_3m.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/036_prueba_diagnostica_educacion_ciudadana_3m.sql):
+    - [NUEVO] Migración SQL que define e inserta la evaluación `eval-diag-ciu-3m-2026` y sus 25 preguntas en `public.evaluaciones` y `public.preguntas` con taxonomía MINEDUC (OA 01 al OA 09).
+  - [`docs/pautas/PAUTA_DOCENTE_EDUCACION_CIUDADANA_3M_2026.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_EDUCACION_CIUDADANA_3M_2026.md):
+    - [NUEVO] Documento completo de Pauta Docente con tabla de especificaciones, claves de respuesta correcta, habilidades cognitivas, niveles de complejidad y argumentación pedagógica detallada de cada ítem.
+  - [`public/preguntas/diag_ciudadana_3m_2026/`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/preguntas/diag_ciudadana_3m_2026/):
+    - [NUEVO] Figuras e imágenes pedagógicas (`p01_mapa_operacion_barbarroja.png` y `p25_campamento_desigualdad.jpg`) sincronizadas tanto en almacenamiento local como en el bucket Supabase Storage `evaluaciones-media`.
+  - [`scripts/seed-ciudadana-3m.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/seed-ciudadana-3m.js):
+    - [NUEVO] Script Node.js de ingesta automatizada que subió los recursos visuales al CDN e insertó las 25 preguntas y la evaluación en la base de datos de producción.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` ejecutado con éxito (0 errores).
+  - Auditoría Supabase: 7 evaluaciones en total (4 en catálogo sin asignar + 3 activas de María Teresa), 225 preguntas en la tabla `public.preguntas`.
+  - Base de datos y almacenamiento de medios verificados en Supabase.
+
+---
+
 ### [2026-08-30] Ingesta Catálogo SIMCE 2° Medio — Matemática E3 y Lengua y Literatura E6
 
 - **Problema / Requerimiento**:
