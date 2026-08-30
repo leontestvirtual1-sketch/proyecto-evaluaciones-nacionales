@@ -353,7 +353,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
             }`}
           >
             <BookMarked className="w-3.5 h-3.5" />
-            <span>📚 Catálogo SIMCE & Solicitudes</span>
+            <span>📚 Catálogo de Evaluaciones & Solicitudes</span>
           </button>
 
           <button

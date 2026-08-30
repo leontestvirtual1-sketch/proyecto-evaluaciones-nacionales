@@ -315,15 +315,15 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
 
           <div className="flex items-center gap-2 flex-wrap justify-end">
-            {/* Catálogo SIMCE: sólo visible para docentes en producción */}
+            {/* Catálogo de Evaluaciones: sólo visible para docentes en producción */}
             {currentUser?.rol === 'profesor' && currentUser?.asignaturaId && !isSandboxMode && (
               <button
-                id="btn-catalogo-simce"
+                id="btn-catalogo-evaluaciones"
                 onClick={() => setCatalogoModalOpen(true)}
                 className="flex items-center justify-center gap-2 bg-violet-700 hover:bg-violet-600 active:bg-violet-800 text-white font-bold px-4 py-3 rounded-xl shadow-lg shadow-violet-700/20 transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
               >
                 <BookMarked className="w-4 h-4" />
-                <span className="hidden sm:inline">Catálogo SIMCE</span>
+                <span className="hidden sm:inline">Catálogo de Evaluaciones</span>
                 <span className="sm:hidden">📚</span>
               </button>
             )}

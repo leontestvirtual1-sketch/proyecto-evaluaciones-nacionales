@@ -2,6 +2,27 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-30] Rediseño y Categorización: Catálogo de Evaluaciones & Solicitudes (Diagnósticos, SIMCE y PAES)
+
+- **Problema / Requerimiento**:
+  Renombrar el módulo de "Catálogo SIMCE & Solicitudes" a "Catálogo de Evaluaciones & Solicitudes" para reflejar adecuadamente la incorporación de evaluaciones diagnósticas curriculares por OAs (como Educación Ciudadana 3° Medio) y futuros ensayos PAES. Implementar un sistema de categorización visual con filtros dinámicos (Todos, Diagnósticas, SIMCE, PAES) y badges semánticos en cada tarjeta de instrumento.
+
+- **Archivos y Solución Técnica**:
+  - [`src/pages/GestionUsuariosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx):
+    - [MODIFICADO] Pestaña de Super Admin renombrada a `📚 Catálogo de Evaluaciones & Solicitudes`.
+  - [`src/components/AdminCatalogoPanel.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AdminCatalogoPanel.tsx):
+    - [MODIFICADO] Cabecera renombrada a `Catálogo de Evaluaciones Nacionales`. Añadida barra de sub-filtros por tipo (`Todos`, `🟢 Evaluaciones Diagnósticas`, `🔵 Ensayos SIMCE`, `🟣 Ensayos PAES`) y función utilitaria `getTipoEvaluacion` con badges visuales distintivos.
+  - [`src/components/CatalogoEvaluacionesModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoEvaluacionesModal.tsx):
+    - [MODIFICADO] Modal de docentes actualizado a `📚 Catálogo de Evaluaciones` con selector de filtros por categoría y badges semánticos por instrumento.
+  - [`src/pages/EvaluacionesPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/EvaluacionesPage.tsx):
+    - [MODIFICADO] Botón de acceso de docentes renombrado a `Catálogo de Evaluaciones`.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores.
+  - Desplegado en Vercel.
+
+---
+
 ### [2026-08-30] Aislamiento Estricto de Evaluaciones Docentes y Suite de Pautas Docentes de Catálogo
 
 - **Problema / Requerimiento**:

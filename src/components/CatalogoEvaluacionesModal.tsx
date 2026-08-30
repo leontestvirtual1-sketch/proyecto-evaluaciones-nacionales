@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { EvaluacionCatalogo, SolicitudEvaluacion, UserProfile } from "../types";
+import { getTipoEvaluacion, TipoCategoriaFiltro } from "./AdminCatalogoPanel";
 import {
   BookOpen,
   X,
@@ -39,6 +40,7 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
   const [misSolicitudes, setMisSolicitudes] = useState<SolicitudEvaluacion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [categoriaFiltro, setCategoriaFiltro] = useState<TipoCategoriaFiltro>("todos");
   const [selectedEval, setSelectedEval] = useState<EvaluacionCatalogo | null>(null);
   const [mensaje, setMensaje] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -101,15 +103,19 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
     } finally {
       setIsLoading(false);
     }
-  }, [isOpen, currentUser]);
+  }, [isOpen, currentUser.id, currentUser.asignaturaId, currentUser.establecimiento]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  const getSolicitudEstado = (evalId: string): "pendiente" | "aprobada" | "rechazada" | null => {
-    const s = misSolicitudes.find((s) => s.evaluacionId === evalId);
-    return s ? s.estado : null;
+  const plan = currentUser.plan || "free";
+  const planLimit = PLAN_LIMITS[plan] ?? 0;
+  const aprobadas = misSolicitudes.filter((s) => s.estado === "aprobada").length;
+
+  const getSolicitudEstado = (evalId: string): "ninguna" | "pendiente" | "aprobada" | "rechazada" => {
+    const sol = misSolicitudes.find((s) => s.evaluacionId === evalId);
+    return sol ? (sol.estado as any) : "ninguna";
   };
 
   const handleSolicitar = async () => {
@@ -117,54 +123,84 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
     setIsSending(true);
     try {
       const session = (await supabase.auth.getSession()).data.session;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (session?.access_token) headers["Authorization"] = `Bearer ${session.access_token}`;
+
       const res = await fetch("/api/evaluaciones-catalogo?action=solicitar", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.access_token || ""}`,
-        },
-        body: JSON.stringify({ evaluacion_id: selectedEval.id, mensaje: mensaje.trim() || undefined }),
+        headers,
+        body: JSON.stringify({
+          evaluacionId: selectedEval.id,
+          mensaje: mensaje.trim() || undefined,
+        }),
       });
+
       const data = await res.json();
-      if (data.success) {
-        showToast("ok", "✅ " + data.message);
-        setSelectedEval(null);
-        setMensaje("");
-        await loadData();
-      } else {
-        showToast("err", "❌ " + (data.message || "Error al enviar solicitud"));
-      }
+      if (!res.ok) throw new Error(data.error || "Error al enviar solicitud");
+
+      showToast("ok", "¡Solicitud enviada! El administrador la revisará pronto.");
+      setMisSolicitudes((prev) => [
+        {
+          id: data.solicitud?.id || `sol-${Date.now()}`,
+          evaluacionId: selectedEval.id,
+          estado: "pendiente",
+          createdAt: new Date().toISOString(),
+          mensaje,
+          establecimiento: currentUser.establecimiento || "",
+          profesorId: currentUser.id,
+        },
+        ...prev,
+      ]);
+      setSelectedEval(null);
+      setMensaje("");
     } catch (e: any) {
-      showToast("err", "❌ Error de conexión: " + e.message);
+      showToast("err", e.message || "No se pudo enviar la solicitud");
     } finally {
       setIsSending(false);
     }
   };
 
-  if (!isOpen) return null;
+  const filtered = catalogo.filter((e) => {
+    const matchesSearch = e.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (e.descripcion || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      e.nivel.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    if (!matchesSearch) return false;
+    if (categoriaFiltro === "todos") return true;
+    const tipo = getTipoEvaluacion(e.titulo);
+    return tipo.categoria === categoriaFiltro;
+  });
 
-  const plan = currentUser.plan || "trial";
-  const planLimit = PLAN_LIMITS[plan] ?? 0;
-  const aprobadas = misSolicitudes.filter((s) => s.estado === "aprobada").length;
-  const filtered = catalogo.filter((e) =>
-    e.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (e.descripcionCatalogo || "").toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const conteoDiag = catalogo.filter(e => getTipoEvaluacion(e.titulo).categoria === "diagnosticas").length;
+  const conteoSimce = catalogo.filter(e => getTipoEvaluacion(e.titulo).categoria === "simce").length;
+  const conteoPaes = catalogo.filter(e => getTipoEvaluacion(e.titulo).categoria === "paes").length;
 
-  const estadoBadge = (estado: "pendiente" | "aprobada" | "rechazada" | null) => {
-    if (!estado) return null;
-    const conf = {
-      pendiente: { label: "Solicitud pendiente", cls: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-      aprobada: { label: "✓ Aprobada", cls: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" },
-      rechazada: { label: "✗ Rechazada", cls: "bg-red-500/20 text-red-300 border-red-500/30" },
-    };
-    const c = conf[estado];
-    return (
-      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${c.cls}`}>
-        {c.label}
-      </span>
-    );
+  const estadoBadge = (estado: string) => {
+    switch (estado) {
+      case "pendiente":
+        return (
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">
+            <Clock size={11} /> Solicitud pendiente
+          </span>
+        );
+      case "aprobada":
+        return (
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+            <CheckCircle2 size={11} /> Asignada a tus evaluaciones
+          </span>
+        );
+      case "rechazada":
+        return (
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded-full">
+            <AlertCircle size={11} /> Solicitud rechazada
+          </span>
+        );
+      default:
+        return null;
+    }
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="catalogo-title">
@@ -183,8 +219,8 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
               <BookMarked size={18} className="text-indigo-400" />
             </div>
             <div>
-              <h2 id="catalogo-title" className="text-base font-bold text-white">📚 Catálogo SIMCE</h2>
-              <p className="text-xs text-slate-400">Evaluaciones disponibles según tu plan</p>
+              <h2 id="catalogo-title" className="text-base font-bold text-white">📚 Catálogo de Evaluaciones</h2>
+              <p className="text-xs text-slate-400">Evaluaciones diagnósticas, SIMCE y PAES disponibles para tu asignatura</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -217,18 +253,73 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
           )}
         </div>
 
-        {/* Search */}
-        <div className="px-6 pt-4 pb-3">
+        {/* Search & Category Filter */}
+        <div className="px-6 pt-4 pb-3 space-y-3">
           <div className="relative">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               id="catalogo-search"
               type="text"
-              placeholder="Buscar evaluación..."
+              placeholder="Buscar por título, nivel o tema..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-9 pr-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500"
             />
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+            <button
+              onClick={() => setCategoriaFiltro("todos")}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all shrink-0 ${
+                categoriaFiltro === "todos"
+                  ? "bg-indigo-600 text-white shadow"
+                  : "bg-slate-800 text-slate-400 hover:text-white border border-slate-700"
+              }`}
+            >
+              Todos ({catalogo.length})
+            </button>
+
+            {conteoDiag > 0 && (
+              <button
+                onClick={() => setCategoriaFiltro("diagnosticas")}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0 ${
+                  categoriaFiltro === "diagnosticas"
+                    ? "bg-emerald-600 text-white shadow"
+                    : "bg-slate-800 text-slate-400 hover:text-emerald-300 border border-slate-700"
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                Diagnósticas ({conteoDiag})
+              </button>
+            )}
+
+            {conteoSimce > 0 && (
+              <button
+                onClick={() => setCategoriaFiltro("simce")}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0 ${
+                  categoriaFiltro === "simce"
+                    ? "bg-blue-600 text-white shadow"
+                    : "bg-slate-800 text-slate-400 hover:text-blue-300 border border-slate-700"
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full bg-blue-400" />
+                SIMCE ({conteoSimce})
+              </button>
+            )}
+
+            {conteoPaes > 0 && (
+              <button
+                onClick={() => setCategoriaFiltro("paes")}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0 ${
+                  categoriaFiltro === "paes"
+                    ? "bg-purple-600 text-white shadow"
+                    : "bg-slate-800 text-slate-400 hover:text-purple-300 border border-slate-700"
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full bg-purple-400" />
+                PAES ({conteoPaes})
+              </button>
+            )}
           </div>
         </div>
 
@@ -241,13 +332,14 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-slate-500 text-center gap-3">
               <BookOpen size={36} className="opacity-30" />
-              <p className="text-sm">No hay evaluaciones disponibles para tu asignatura en este momento.</p>
+              <p className="text-sm">No hay evaluaciones en esta categoría para tu asignatura.</p>
             </div>
           ) : (
             filtered.map((ev) => {
               const estado = getSolicitudEstado(ev.id);
               const canRequest = planLimit > 0 && (aprobadas < planLimit || plan === "institucional");
               const isGratuita = ev.precioCLP === 0;
+              const tipo = getTipoEvaluacion(ev.titulo);
 
               return (
                 <div key={ev.id} className={`rounded-xl border p-4 transition-all ${estado === "aprobada" ? "border-emerald-700/40 bg-emerald-900/10" : "border-slate-700 bg-slate-800/60 hover:border-indigo-600/50 hover:bg-slate-800"}`}>
@@ -255,10 +347,14 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <h3 className="text-sm font-semibold text-white truncate">{ev.titulo}</h3>
+                        <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${tipo.bg} ${tipo.text}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${tipo.dot}`} />
+                          {tipo.label}
+                        </span>
                         {estadoBadge(estado)}
                       </div>
                       <p className="text-xs text-slate-400 mb-2 line-clamp-2">
-                        {ev.descripcionCatalogo || ev.descripcion || "Evaluación SIMCE estandarizada"}
+                        {ev.descripcionCatalogo || ev.descripcion || "Evaluación estandarizada alineada al currículum MINEDUC"}
                       </p>
                       <div className="flex items-center gap-3 flex-wrap">
                         <span className="flex items-center gap-1 text-[11px] text-slate-500">
@@ -307,53 +403,56 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
           )}
         </div>
 
-        {/* Sub-modal: Formulario de Solicitud */}
+        {/* Modal Solicitar */}
         {selectedEval && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm z-20 p-6">
-            <div className="w-full max-w-md bg-slate-900 rounded-2xl border border-indigo-600/40 shadow-2xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Send size={16} className="text-indigo-400" /> Solicitar acceso
-                </h3>
-                <button onClick={() => setSelectedEval(null)} className="text-slate-400 hover:text-white" aria-label="Cancelar">
-                  <X size={16} />
-                </button>
+          <div className="absolute inset-0 bg-slate-900/95 flex flex-col p-6 z-20 overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-bold text-white">Confirmar Solicitud de Evaluación</h3>
+              <button onClick={() => setSelectedEval(null)} className="p-1 rounded-lg text-slate-400 hover:text-white">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700 mb-4">
+              <p className="text-sm font-semibold text-white">{selectedEval.titulo}</p>
+              <p className="text-xs text-slate-400 mt-1">{selectedEval.descripcionCatalogo || selectedEval.descripcion}</p>
+              <div className="flex gap-3 mt-3 text-xs text-slate-400">
+                <span>📚 {selectedEval.totalPreguntas} preguntas</span>
+                <span>🎓 {selectedEval.nivel}</span>
+                <span className="text-emerald-400 font-semibold">{selectedEval.precioCLP === 0 ? "Gratuita" : `$${selectedEval.precioCLP.toLocaleString("es-CL")}`}</span>
               </div>
-              <div className="bg-slate-800/70 rounded-xl px-4 py-3 mb-4 border border-slate-700">
-                <p className="text-xs text-slate-400 mb-0.5">Evaluación seleccionada</p>
-                <p className="text-sm font-semibold text-white">{selectedEval.titulo}</p>
-                <p className="text-xs text-indigo-400 mt-0.5">{selectedEval.nivel}</p>
-              </div>
-              <label className="block mb-2">
-                <span className="flex items-center gap-1 text-xs text-slate-400 mb-1.5">
-                  <MessageSquare size={12} /> Mensaje opcional para el administrador
-                </span>
-                <textarea
-                  id="catalogo-mensaje"
-                  value={mensaje}
-                  onChange={(e) => setMensaje(e.target.value)}
-                  placeholder="Ej: Necesito esta evaluación para 2° Medio B, semana próxima."
-                  rows={3}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none"
-                />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="mensaje-solicitud" className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1">
+                <MessageSquare size={13} /> Mensaje para el Administrador (opcional)
               </label>
-              <div className="flex gap-2 mt-4">
-                <button
-                  onClick={() => setSelectedEval(null)}
-                  className="flex-1 py-2 rounded-lg border border-slate-700 text-sm text-slate-400 hover:bg-slate-800 transition-colors"
-                >
-                  Cancelar
-                </button>
-                <button
-                  id="btn-confirmar-solicitud"
-                  onClick={handleSolicitar}
-                  disabled={isSending}
-                  className="flex-1 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
-                >
-                  {isSending ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} />}
-                  Enviar solicitud
-                </button>
-              </div>
+              <textarea
+                id="mensaje-solicitud"
+                rows={3}
+                placeholder="Ej: Necesito esta evaluación para aplicar diagnóstico al curso 2° Medio A..."
+                value={mensaje}
+                onChange={(e) => setMensaje(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 resize-none"
+              />
+            </div>
+
+            <div className="flex gap-3 mt-auto pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setSelectedEval(null)}
+                className="flex-1 py-2 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-sm font-semibold transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                id="btn-confirmar-solicitud"
+                onClick={handleSolicitar}
+                disabled={isSending}
+                className="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+              >
+                {isSending ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} />}
+                Enviar Solicitud
+              </button>
             </div>
           </div>
         )}
