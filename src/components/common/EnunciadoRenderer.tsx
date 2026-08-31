@@ -23,23 +23,54 @@ function sanitizeEnunciadoLine(line: string): string {
  * Esto evita que fragmentos de números extraídos del PDF aparezcan en líneas separadas.
  */
 function normalizeText(raw: string): string {
-  return raw
-    // Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
+  // 1. Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
+  let text = raw
     .replace(/FORMA\s+\d+\s*[|│▌]\s*\d{4}/gi, '')
     .replace(/www\.[a-z0-9.-]+\.[a-z]{2,}/gi, '')
-    // Limpiar cuadrados/caracteres de control que no son unicode válido
     .replace(/[\u25a1\u25aa\u25ab\u25fc\u25fd\ufffd]/g, '·')
-    // Eliminar líneas que son SOLO un número de página (ej. "- 3 -", "3", "4")
-    .replace(/^\s*-?\s*\d{1,3}\s*-?\s*$/gm, '')
-    // Normalizar múltiples \n\n+ en doble salto (párrafo)
-    .replace(/\n{3,}/g, '\n\n')
-    // Colapsar \n sueltos (no dobles) en espacio: une líneas del mismo bloque
-    .replace(/([^\n])\n([^\n])/g, '$1 $2')
-    // Repetir una vez más para capturar casos que quedaron
-    .replace(/([^\n])\n([^\n])/g, '$1 $2')
-    // Limpiar espacios múltiples
-    .replace(/ {2,}/g, ' ')
-    .trim();
+    .replace(/^\s*-?\s*\d{1,3}\s*-?\s*$/gm, '');
+
+  // 2. Si ya contiene formato estructurado (tablas |...|, párrafos dobles \n\n, encabezados #)
+  // procesar por bloques para no romper tablas
+  const lines = text.split('\n');
+  const result: string[] = [];
+  let buffer = '';
+
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i].trim();
+    if (!l) {
+      if (buffer) {
+        result.push(buffer);
+        buffer = '';
+      }
+      result.push('');
+      continue;
+    }
+
+    // Si es tabla, encabezado o separador, guardar directo
+    if (l.startsWith('|') || l.startsWith('#') || l.startsWith('$$') || l === '---') {
+      if (buffer) {
+        result.push(buffer);
+        buffer = '';
+      }
+      result.push(l);
+      continue;
+    }
+
+    if (!buffer) {
+      buffer = l;
+    } else {
+      if (/[.:?!]$/.test(buffer) && (l.startsWith('¿') || l.startsWith('Si ') || l.startsWith('Considere'))) {
+        result.push(buffer);
+        buffer = l;
+      } else {
+        buffer += ' ' + l;
+      }
+    }
+  }
+  if (buffer) result.push(buffer);
+
+  return result.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 /**
@@ -105,10 +136,17 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
 
   // Formatear negrita, cursiva y símbolos matemáticos
   const renderFormattedText = (raw: string, keyPrefix: string): React.ReactNode => {
-    // Limpiar notación de bloques $$...$$ o $...$
-    const clean = raw
+    // 1. Proteger montos monetarios (ej: $120.000, $25.000, $500, $1.000.000)
+    // para que el símbolo de peso no sea interpretado como delimitador LaTeX
+    let text = raw.replace(/\$(\s*\d[\d.,]*)/g, '§PESO§$1');
+
+    // 2. Limpiar notación de bloques $$...$$ o $...$
+    text = text
       .replace(/\$\$(.*?)\$\$/g, '$1')
-      .replace(/\$(.*?)\$/g, '$1')
+      .replace(/\$([^\$]+?)\$/g, '$1')
+      // Restaurar montos monetarios protegidos
+      .replace(/§PESO§/g, '$')
+      // Símbolos matemáticos
       .replace(/\\cdot/g, ' · ')
       .replace(/\\times/g, ' × ')
       .replace(/\\div/g, ' ÷ ')
@@ -116,10 +154,13 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
       .replace(/\\leq/g, ' ≤ ')
       .replace(/\\geq/g, ' ≥ ')
       .replace(/\\neq/g, ' ≠ ')
-      .replace(/\\approx/g, ' ≈ ');
+      .replace(/\\approx/g, ' ≈ ')
+      .replace(/\\left\(/g, '(')
+      .replace(/\\right\)/g, ')')
+      .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)');
 
-    // Separar por negrita **...**
-    const boldParts = clean.split(/(\*\*.*?\*\*)/g);
+    // 3. Separar por negrita **...**
+    const boldParts = text.split(/(\*\*.*?\*\*)/g);
 
     return (
       <span key={keyPrefix}>
