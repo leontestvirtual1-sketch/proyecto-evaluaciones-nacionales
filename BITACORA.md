@@ -2,25 +2,23 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
-### [2026-08-30] Estándar Oficial de Recortes de Alta Fidelidad para PAES DEMRE y Actualización de Skill
+### [2026-08-30] Re-alineación Completa de PAES Matemática 1 2023 al Estándar Oficial Sysget (SIMCE 2M / 6B)
 
 - **Problema / Requerimiento**:
-  Los exámenes oficiales DEMRE (PAES M1, M2, Competencia Lectora, Ciencias e Historia) contienen diagramas vectoriales, tablas complejas, casilleros y fórmulas matemáticas que sufren degradación o inversión tipográfica al intentar convertirlos a texto plano puro. Se requería establecer el **estándar de recortes de alta resolución (180 DPI retina)** directo del PDF oficial para garantizar 100% de fidelidad con cero margen de error, actualizar las 65 preguntas de Matemática PAES 2023 y formalizar este flujo en la skill `paes-demre-extractor`.
+  Mantener la coherencia arquitectónica y estética del proyecto: alinear la evaluación `PAES Oficial Competencia Matemática 1 (M1) 2023 (Forma 113)` exactamente al estándar oficial de los Ensayos SIMCE de Matemática 2° Medio y 6° Básico (enunciados en Markdown enriquecido con notación matemática limpia, alternativas individuales completas con su texto estructurado, y figuras/diagramas pedagógicos recortados en alta resolución únicamente cuando la pregunta lo requiere).
 
 - **Archivos y Solución Técnica**:
-  - [`.agents/skills/paes-demre-extractor/SKILL.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/skills/paes-demre-extractor/SKILL.md):
-    - [MODIFICADO] Actualizada la Directiva Maestra de Arquitectura PAES DEMRE: todo instrumento oficial se procesa mediante recortes de alta fidelidad con PyMuPDF (180 DPI retina), subida automática a Supabase Storage (`evaluaciones-media`) y cruce con el Clavijero Oficial DEMRE.
-  - [`src/components/CatalogoDetalleModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoDetalleModal.tsx):
-    - [MODIFICADO] Renderizado optimizado para preguntas de alta fidelidad oficial con contenedor de cuadernillo nítido y selector ergonómico de alternativas `[ A ] [ B ] [ C ] [ D ]`.
+  - [`scripts/sync_paes_mat1_2023_standard.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/sync_paes_mat1_2023_standard.js):
+    - [NUEVO] Script maestro que sincronizó las 65 preguntas en `public.preguntas` con enunciados matemáticos formateados, alternativas con texto y claves del clavijero oficial DEMRE.
   - [`public/preguntas/paes_mat1_2023_forma113/`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/preguntas/paes_mat1_2023_forma113/):
-    - [NUEVO] 65 recortes oficiales de alta resolución (`preg_01.png` a `preg_65.png`) sincronizados en Supabase Storage.
-  - [`scripts/upload_and_sync_crops_m1.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/upload_and_sync_crops_m1.js):
-    - [NUEVO] Script que subió las 65 imágenes y actualizó las 65 preguntas en `public.preguntas` de Supabase.
+    - [NUEVO] 20 figuras pedagógicas recortadas y optimizadas (pirámide p03, balanzas p16, cajas p17, gráficos p18/p29/p60/p63, planos cartesianos p23/p28/p48, geometría p35/p36/p47/p49, casa y árbol p50, óptica p51, histogramas p55, cajas con bigotes p57) sincronizadas en el bucket `evaluaciones-media` de Supabase Storage.
+  - [`src/components/CatalogoDetalleModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoDetalleModal.tsx):
+    - [MODIFICADO] Renderizado responsivo para preguntas bajo el estándar oficial: enunciado continuo, figura pedagógica centrada en contenedor de alto contraste y alternativas estructuradas con texto completo y badge de clave de corrección.
 
 - **Verificación / Despliegue**:
   - `npx tsc --noEmit` verificado con 0 errores.
-  - 65 preguntas sincronizadas y verificadas en Supabase Storage y Base de Datos.
-  - Desplegado en Vercel.
+  - Sincronización exitosa en Supabase Storage y Base de Datos.
+  - Desplegado en Vercel (Commit `433e921`).
 
 ---
 
