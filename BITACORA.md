@@ -2,7 +2,22 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
-### [2026-08-30] Corrección de Renderizado de Alternativas y Símbolos de Montos en Catálogo y Evaluaciones
+### [2026-08-30] Modal de Edición Rápida de Preguntas con Carga de Imágenes a Supabase Storage
+
+- **Problema / Requerimiento**:
+  Implementar una herramienta de gestión editorial y corrección directa para que el Administrador y Docentes puedan ajustar manualmente cualquier pregunta del catálogo o de sus evaluaciones: editar enunciados con fórmulas matemáticas en Markdown, modificar alternativas individuales y su clave oficial, y subir o reemplazar figuras pedagógicas directamente a Supabase Storage (`evaluaciones-media/`).
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/EditarPreguntaModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/EditarPreguntaModal.tsx):
+    - [NUEVO] Componente modal completo de edición con previsualización en vivo (toggle "Modo Edición" / "Vista Previa"), barra de atajos Markdown para fórmulas y tablas, gestor de subida de imágenes con selector de archivos que sube a Supabase Storage mediante `uploadPreguntaImage`, editor de alternativas dinámicas (A, B, C, D, E) con selector de clave correcta, y persistencia inmediata en la tabla `public.preguntas` en PostgreSQL.
+  - [`src/components/CatalogoDetalleModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoDetalleModal.tsx):
+    - [MODIFICADO] Incorporado botón `✏️ Editar` en la cabecera de cada pregunta del cuadernillo. Al guardar los cambios, actualiza el estado local de la evaluación en tiempo real sin recargar la página.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores TypeScript.
+  - Subido a `origin/main` (Commit `4f5cd75`) y desplegado en Vercel.
+
+---
 
 - **Problema / Requerimiento**:
   1. Corregir el parseo de alternativas en el modal de detalle del catálogo (`CatalogoDetalleModal.tsx`) donde las preguntas mostraban opciones vacías o se renderizaban como botones cuadrados de letra en lugar de desplegar el texto completo de las alternativas.
