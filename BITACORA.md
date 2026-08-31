@@ -2,6 +2,26 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-08-30] Creación de Skill Especializada: paes-demre-extractor y Sanitización Matemática DEMRE
+
+- **Problema / Requerimiento**:
+  Los instrumentos oficiales DEMRE (PAES M1, M2, Competencia Lectora, Ciencias e Historia) presentan particularidades complejas en su estructura de PDF (compilados con LaTeX y fuentes de kerning invertido que fragmentan montos monetarios, porcentajes y expresiones algebraicas en líneas separadas), además de contar con clavijeros oficiales específicos que definen ítems piloto y claves de calibración psicométrica. Se requería estandarizar esta extracción en una **skill formal del sistema** y corregir los datos de Matemática en Supabase.
+
+- **Archivos y Solución Técnica**:
+  - [`.agents/skills/paes-demre-extractor/SKILL.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/skills/paes-demre-extractor/SKILL.md):
+    - [NUEVO] Skill completa con especificación técnica, algoritmos de sanitización de LaTeX/PostScript DEMRE, parser de clavijeros oficiales DEMRE con distinción de ítems piloto, extractor de lecturas compartidas de Competencia Lectora, y matriz de mapeo curricular MINEDUC/DEMRE.
+  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx):
+    - [MODIFICADO] Implementado `normalizeText()` que colapsa saltos de línea internos en texto continuo y mantiene párrafos reales (`\n\n`), eliminando marcas de agua de página (`FORMA 113 | 2023`) y artefactos de extracción.
+  - [`scripts/clean_and_sync_paes_m1.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/clean_and_sync_paes_m1.js) y [`scripts/polish_math_enunciados.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/polish_math_enunciados.js):
+    - [NUEVO] Scripts de sanitización y sincronización que limpiaron los enunciados y alternativas de las 65 preguntas de Matemática PAES 2023 en Supabase.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores.
+  - Base de datos Supabase actualizada y sincronizada.
+  - Desplegado en Vercel.
+
+---
+
 ### [2026-08-30] Visualizador Completo de Contenidos de Catálogo: Cuadernillo, Preguntas y Pauta Oficial
 
 - **Problema / Requerimiento**:
