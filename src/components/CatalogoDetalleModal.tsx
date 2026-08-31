@@ -67,21 +67,30 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
 
         if (res.ok) {
           const data = await res.json();
-          const items: Pregunta[] = (data.preguntas || []).map((p: any) => ({
-            id: p.id,
-            asignaturaId: p.asignatura_id,
-            ejeTematicoId: p.eje_tematico_id,
-            habilidadId: p.habilidad_id,
-            tipo: p.tipo,
-            nivel: p.nivel,
-            dificultad: p.dificultad,
-            imagenUrl: p.imagen_url,
-            enunciado: p.enunciado,
-            alternativas: p.alternativas || [],
-            respuestaCorrecta: p.respuesta_correcta,
-            puntaje: p.puntaje || 1,
-            fuente: p.fuente,
-          }));
+          const items: Pregunta[] = (data.preguntas || []).map((p: any) => {
+            // Normalizar alternativas: Supabase JSONB puede llegar como string o array
+            let alts: any[] = [];
+            if (Array.isArray(p.alternativas)) {
+              alts = p.alternativas;
+            } else if (typeof p.alternativas === 'string' && p.alternativas.trim()) {
+              try { alts = JSON.parse(p.alternativas); } catch { alts = []; }
+            }
+            return {
+              id: p.id,
+              asignaturaId: p.asignatura_id,
+              ejeTematicoId: p.eje_tematico_id,
+              habilidadId: p.habilidad_id,
+              tipo: p.tipo,
+              nivel: p.nivel,
+              dificultad: p.dificultad,
+              imagenUrl: p.imagen_url,
+              enunciado: p.enunciado,
+              alternativas: alts,
+              respuestaCorrecta: p.respuesta_correcta,
+              puntaje: p.puntaje || 1,
+              fuente: p.fuente,
+            };
+          });
           setPreguntas(items);
         }
       } catch (err) {
@@ -370,36 +379,8 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                             )}
                           </div>
 
-                          {/* Si las alternativas son solo letras A, B, C, D (el texto está dentro de la imagen oficial) */}
-                          {p.alternativas.every(a => !a.texto || a.texto.startsWith('Opción ')) ? (
-                            <div className="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-md">
-                              {p.alternativas.map((alt) => {
-                                const isCorrect = alt.letra === p.respuestaCorrecta;
-                                const showCorrect = mostrarRespuestas && isCorrect;
-                                return (
-                                  <div
-                                    key={alt.letra}
-                                    className={`flex flex-col items-center justify-center py-2.5 px-3 rounded-xl border font-bold text-sm transition-all ${
-                                      showCorrect
-                                        ? 'bg-emerald-600/30 border-emerald-500 text-emerald-300 shadow-md shadow-emerald-600/20'
-                                        : 'bg-slate-900/60 border-slate-700 text-slate-300 hover:border-slate-500'
-                                    }`}
-                                  >
-                                    <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black ${
-                                      showCorrect ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-200'
-                                    }`}>
-                                      {alt.letra}
-                                    </span>
-                                    {showCorrect && (
-                                      <span className="text-[10px] text-emerald-400 mt-1 font-semibold flex items-center gap-0.5">
-                                        <CheckCircle2 size={10} /> Correcta
-                                      </span>
-                                    )}
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          ) : (
+                          {/* Siempre mostrar texto si alguna alternativa lo tiene */}
+                          {p.alternativas.some(a => a.texto && a.texto.trim().length > 0) ? (
                             /* Alternativas con texto detallado */
                             <div className="space-y-2">
                               {p.alternativas.map((alt, altIdx) => {
@@ -435,6 +416,35 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                                         size={16}
                                         className="text-emerald-400 shrink-0 mt-1"
                                       />
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            /* Solo letras — el contenido visual está en la imagen adjunta */
+                            <div className="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-md">
+                              {p.alternativas.map((alt) => {
+                                const isCorrect = alt.letra === p.respuestaCorrecta;
+                                const showCorrect = mostrarRespuestas && isCorrect;
+                                return (
+                                  <div
+                                    key={alt.letra}
+                                    className={`flex flex-col items-center justify-center py-2.5 px-3 rounded-xl border font-bold text-sm transition-all ${
+                                      showCorrect
+                                        ? 'bg-emerald-600/30 border-emerald-500 text-emerald-300 shadow-md shadow-emerald-600/20'
+                                        : 'bg-slate-900/60 border-slate-700 text-slate-300 hover:border-slate-500'
+                                    }`}
+                                  >
+                                    <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black ${
+                                      showCorrect ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-200'
+                                    }`}>
+                                      {alt.letra}
+                                    </span>
+                                    {showCorrect && (
+                                      <span className="text-[10px] text-emerald-400 mt-1 font-semibold flex items-center gap-0.5">
+                                        <CheckCircle2 size={10} /> Correcta
+                                      </span>
                                     )}
                                   </div>
                                 );
