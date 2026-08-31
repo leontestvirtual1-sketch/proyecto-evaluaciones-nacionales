@@ -2,22 +2,24 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
-### [2026-08-30] Creación de Skill Especializada: paes-demre-extractor y Sanitización Matemática DEMRE
+### [2026-08-30] Estándar Oficial de Recortes de Alta Fidelidad para PAES DEMRE y Actualización de Skill
 
 - **Problema / Requerimiento**:
-  Los instrumentos oficiales DEMRE (PAES M1, M2, Competencia Lectora, Ciencias e Historia) presentan particularidades complejas en su estructura de PDF (compilados con LaTeX y fuentes de kerning invertido que fragmentan montos monetarios, porcentajes y expresiones algebraicas en líneas separadas), además de contar con clavijeros oficiales específicos que definen ítems piloto y claves de calibración psicométrica. Se requería estandarizar esta extracción en una **skill formal del sistema** y corregir los datos de Matemática en Supabase.
+  Los exámenes oficiales DEMRE (PAES M1, M2, Competencia Lectora, Ciencias e Historia) contienen diagramas vectoriales, tablas complejas, casilleros y fórmulas matemáticas que sufren degradación o inversión tipográfica al intentar convertirlos a texto plano puro. Se requería establecer el **estándar de recortes de alta resolución (180 DPI retina)** directo del PDF oficial para garantizar 100% de fidelidad con cero margen de error, actualizar las 65 preguntas de Matemática PAES 2023 y formalizar este flujo en la skill `paes-demre-extractor`.
 
 - **Archivos y Solución Técnica**:
   - [`.agents/skills/paes-demre-extractor/SKILL.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.agents/skills/paes-demre-extractor/SKILL.md):
-    - [NUEVO] Skill completa con especificación técnica, algoritmos de sanitización de LaTeX/PostScript DEMRE, parser de clavijeros oficiales DEMRE con distinción de ítems piloto, extractor de lecturas compartidas de Competencia Lectora, y matriz de mapeo curricular MINEDUC/DEMRE.
-  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx):
-    - [MODIFICADO] Implementado `normalizeText()` que colapsa saltos de línea internos en texto continuo y mantiene párrafos reales (`\n\n`), eliminando marcas de agua de página (`FORMA 113 | 2023`) y artefactos de extracción.
-  - [`scripts/clean_and_sync_paes_m1.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/clean_and_sync_paes_m1.js) y [`scripts/polish_math_enunciados.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/polish_math_enunciados.js):
-    - [NUEVO] Scripts de sanitización y sincronización que limpiaron los enunciados y alternativas de las 65 preguntas de Matemática PAES 2023 en Supabase.
+    - [MODIFICADO] Actualizada la Directiva Maestra de Arquitectura PAES DEMRE: todo instrumento oficial se procesa mediante recortes de alta fidelidad con PyMuPDF (180 DPI retina), subida automática a Supabase Storage (`evaluaciones-media`) y cruce con el Clavijero Oficial DEMRE.
+  - [`src/components/CatalogoDetalleModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoDetalleModal.tsx):
+    - [MODIFICADO] Renderizado optimizado para preguntas de alta fidelidad oficial con contenedor de cuadernillo nítido y selector ergonómico de alternativas `[ A ] [ B ] [ C ] [ D ]`.
+  - [`public/preguntas/paes_mat1_2023_forma113/`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/public/preguntas/paes_mat1_2023_forma113/):
+    - [NUEVO] 65 recortes oficiales de alta resolución (`preg_01.png` a `preg_65.png`) sincronizados en Supabase Storage.
+  - [`scripts/upload_and_sync_crops_m1.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/upload_and_sync_crops_m1.js):
+    - [NUEVO] Script que subió las 65 imágenes y actualizó las 65 preguntas en `public.preguntas` de Supabase.
 
 - **Verificación / Despliegue**:
   - `npx tsc --noEmit` verificado con 0 errores.
-  - Base de datos Supabase actualizada y sincronizada.
+  - 65 preguntas sincronizadas y verificadas en Supabase Storage y Base de Datos.
   - Desplegado en Vercel.
 
 ---
