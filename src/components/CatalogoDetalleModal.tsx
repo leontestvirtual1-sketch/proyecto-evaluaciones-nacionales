@@ -342,14 +342,14 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                         </div>
                       )}
 
-                      {/* ─ Imagen Oficial de Alta Resolución / Cuadernillo DEMRE ─ */}
+                      {/* ─ Figura Pedagógica / Diagrama Matemático Adjunto ─ */}
                       {p.imagenUrl && (
-                        <div className="p-4 sm:p-5 flex justify-center bg-slate-950/30">
-                          <div className="bg-white rounded-xl shadow-lg border border-slate-300/80 p-3 sm:p-5 max-w-full overflow-x-auto flex justify-center">
+                        <div className="px-5 py-3 flex justify-center">
+                          <div className="bg-white rounded-xl shadow-md border border-slate-300 p-3 sm:p-4 max-w-md mx-auto flex justify-center">
                             <img
                               src={p.imagenUrl}
-                              alt={`Cuadernillo Oficial Pregunta ${idx + 1}`}
-                              className="max-h-[650px] w-auto max-w-full object-contain rounded-lg transition-transform hover:scale-[1.01]"
+                              alt={`Figura Pregunta ${idx + 1}`}
+                              className="max-h-60 w-auto max-w-full object-contain rounded"
                               loading="lazy"
                             />
                           </div>
