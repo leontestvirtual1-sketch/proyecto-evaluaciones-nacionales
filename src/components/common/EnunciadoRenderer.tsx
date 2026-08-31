@@ -27,8 +27,7 @@ function normalizeText(raw: string): string {
   let text = raw
     .replace(/FORMA\s+\d+\s*[|│▌]\s*\d{4}/gi, '')
     .replace(/www\.[a-z0-9.-]+\.[a-z]{2,}/gi, '')
-    .replace(/[\u25a1\u25aa\u25ab\u25fc\u25fd\ufffd]/g, '·')
-    .replace(/^\s*-?\s*\d{1,3}\s*-?\s*$/gm, '');
+    .replace(/[\u25a1\u25aa\u25ab\u25fc\u25fd\ufffd]/g, '·');
 
   // 2. Si ya contiene formato estructurado (tablas |...|, párrafos dobles \n\n, encabezados #)
   // procesar por bloques para no romper tablas
