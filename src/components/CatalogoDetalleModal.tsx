@@ -335,69 +335,112 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                         )}
                       </div>
 
-                      {/* ─ Enunciado ─ */}
-                      <div className="px-5 pt-4 pb-3 text-sm sm:text-[15px] text-slate-100 leading-relaxed">
-                        <EnunciadoRenderer content={p.enunciado} />
-                      </div>
-
-                      {/* ─ Imagen ─ */}
-                      {p.imagenUrl && (
-                        <div className="mx-5 mb-3 p-2 bg-slate-950/50 rounded-xl border border-slate-700/50 flex justify-center">
-                          <img
-                            src={p.imagenUrl}
-                            alt={`Figura Pregunta ${idx + 1}`}
-                            className="max-h-72 max-w-full rounded-lg object-contain bg-white/90 p-2"
-                          />
+                      {/* ─ Enunciado (si no es sólo un título genérico de recorte) ─ */}
+                      {p.enunciado && !p.enunciado.startsWith('Pregunta oficial #') && (
+                        <div className="px-5 pt-4 pb-3 text-sm sm:text-[15px] text-slate-100 leading-relaxed">
+                          <EnunciadoRenderer content={p.enunciado} />
                         </div>
                       )}
 
-                      {/* ─ Alternativas ─ */}
-                      {p.alternativas.length > 0 && (
-                        <div className="px-5 pb-4 space-y-2">
-                          <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1 pl-1">
-                            Alternativas
+                      {/* ─ Imagen Oficial de Alta Resolución / Cuadernillo DEMRE ─ */}
+                      {p.imagenUrl && (
+                        <div className="p-4 sm:p-5 flex justify-center bg-slate-950/30">
+                          <div className="bg-white rounded-xl shadow-lg border border-slate-300/80 p-3 sm:p-5 max-w-full overflow-x-auto flex justify-center">
+                            <img
+                              src={p.imagenUrl}
+                              alt={`Cuadernillo Oficial Pregunta ${idx + 1}`}
+                              className="max-h-[650px] w-auto max-w-full object-contain rounded-lg transition-transform hover:scale-[1.01]"
+                              loading="lazy"
+                            />
                           </div>
-                          {p.alternativas.map((alt, altIdx) => {
-                            const isCorrect = alt.letra === p.respuestaCorrecta;
-                            const showCorrect = mostrarRespuestas && isCorrect;
-                            return (
-                              <div
-                                key={alt.letra}
-                                className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
-                                  showCorrect
-                                    ? 'bg-emerald-900/25 border-emerald-500/50'
-                                    : 'bg-slate-900/40 border-slate-700/50'
-                                }`}
-                              >
-                                {/* Letra */}
-                                <span
-                                  className={`w-6 h-6 rounded-lg text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ${
-                                    showCorrect
-                                      ? 'bg-emerald-500 text-white shadow shadow-emerald-500/30'
-                                      : 'bg-slate-800 text-slate-300 border border-slate-600'
-                                  }`}
-                                >
-                                  {alt.letra || LETRAS[altIdx]}
-                                </span>
+                        </div>
+                      )}
 
-                                {/* Texto */}
-                                <div
-                                  className={`text-sm flex-1 leading-snug pt-0.5 ${
-                                    showCorrect ? 'text-emerald-100 font-medium' : 'text-slate-300'
-                                  }`}
-                                >
-                                  <EnunciadoRenderer content={alt.texto} />
-                                </div>
+                      {/* ─ Alternativas de Selección ─ */}
+                      {p.alternativas.length > 0 && (
+                        <div className="px-5 pb-5 pt-2">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                              {p.alternativas.some(a => a.texto && !a.texto.startsWith('Opción ')) ? 'Alternativas' : 'Marcar Respuesta Oficial'}
+                            </span>
+                            {mostrarRespuestas && p.respuestaCorrecta && (
+                              <span className="text-xs font-bold text-emerald-400">
+                                Clave Correcta: <strong className="text-white bg-emerald-600 px-2 py-0.5 rounded-md ml-1">{p.respuestaCorrecta}</strong>
+                              </span>
+                            )}
+                          </div>
 
-                                {showCorrect && (
-                                  <CheckCircle2
-                                    size={16}
-                                    className="text-emerald-400 shrink-0 mt-1"
-                                  />
-                                )}
-                              </div>
-                            );
-                          })}
+                          {/* Si las alternativas son solo letras A, B, C, D (el texto está dentro de la imagen oficial) */}
+                          {p.alternativas.every(a => !a.texto || a.texto.startsWith('Opción ')) ? (
+                            <div className="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-md">
+                              {p.alternativas.map((alt) => {
+                                const isCorrect = alt.letra === p.respuestaCorrecta;
+                                const showCorrect = mostrarRespuestas && isCorrect;
+                                return (
+                                  <div
+                                    key={alt.letra}
+                                    className={`flex flex-col items-center justify-center py-2.5 px-3 rounded-xl border font-bold text-sm transition-all ${
+                                      showCorrect
+                                        ? 'bg-emerald-600/30 border-emerald-500 text-emerald-300 shadow-md shadow-emerald-600/20'
+                                        : 'bg-slate-900/60 border-slate-700 text-slate-300 hover:border-slate-500'
+                                    }`}
+                                  >
+                                    <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black ${
+                                      showCorrect ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-200'
+                                    }`}>
+                                      {alt.letra}
+                                    </span>
+                                    {showCorrect && (
+                                      <span className="text-[10px] text-emerald-400 mt-1 font-semibold flex items-center gap-0.5">
+                                        <CheckCircle2 size={10} /> Correcta
+                                      </span>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            /* Alternativas con texto detallado */
+                            <div className="space-y-2">
+                              {p.alternativas.map((alt, altIdx) => {
+                                const isCorrect = alt.letra === p.respuestaCorrecta;
+                                const showCorrect = mostrarRespuestas && isCorrect;
+                                return (
+                                  <div
+                                    key={alt.letra}
+                                    className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
+                                      showCorrect
+                                        ? 'bg-emerald-900/25 border-emerald-500/50'
+                                        : 'bg-slate-900/40 border-slate-700/50'
+                                    }`}
+                                  >
+                                    <span
+                                      className={`w-6 h-6 rounded-lg text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ${
+                                        showCorrect
+                                          ? 'bg-emerald-500 text-white shadow shadow-emerald-500/30'
+                                          : 'bg-slate-800 text-slate-300 border border-slate-600'
+                                      }`}
+                                    >
+                                      {alt.letra || LETRAS[altIdx]}
+                                    </span>
+                                    <div
+                                      className={`text-sm flex-1 leading-snug pt-0.5 ${
+                                        showCorrect ? 'text-emerald-100 font-medium' : 'text-slate-300'
+                                      }`}
+                                    >
+                                      <EnunciadoRenderer content={alt.texto} />
+                                    </div>
+                                    {showCorrect && (
+                                      <CheckCircle2
+                                        size={16}
+                                        className="text-emerald-400 shrink-0 mt-1"
+                                      />
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
