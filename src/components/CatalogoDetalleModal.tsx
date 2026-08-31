@@ -8,11 +8,13 @@ import {
   KeyRound,
   Loader2,
   AlertCircle,
+  Edit3,
 } from 'lucide-react';
 import { EvaluacionCatalogo, Pregunta, Prueba } from '../types';
 import { getTipoEvaluacion } from './AdminCatalogoPanel';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
 import { PrintEvaluacionModal } from './PrintEvaluacionModal';
+import { EditarPreguntaModal } from './EditarPreguntaModal';
 
 interface CatalogoDetalleModalProps {
   isOpen: boolean;
@@ -32,6 +34,7 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [mostrarRespuestas, setMostrarRespuestas] = useState(false);
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+  const [preguntaEnEdicion, setPreguntaEnEdicion] = useState<Pregunta | null>(null);
 
   // Cerrar con tecla Escape
   const handleKeyDown = useCallback(
@@ -336,12 +339,23 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                           </div>
                         </div>
 
-                        {mostrarRespuestas && p.respuestaCorrecta && (
-                          <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full">
-                            <CheckCircle2 size={13} />
-                            Clave: {p.respuestaCorrecta}
-                          </span>
-                        )}
+                        <div className="flex items-center gap-2">
+                          {mostrarRespuestas && p.respuestaCorrecta && (
+                            <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-2.5 py-1 rounded-full">
+                              <CheckCircle2 size={13} />
+                              Clave: {p.respuestaCorrecta}
+                            </span>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => setPreguntaEnEdicion(p)}
+                            className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 hover:bg-indigo-600 border border-slate-700 hover:border-indigo-500 text-slate-300 hover:text-white rounded-lg text-xs font-bold transition-all shadow-sm"
+                            title="Editar enunciado, alternativas, imagen o clave de esta pregunta"
+                          >
+                            <Edit3 size={12} />
+                            <span>Editar</span>
+                          </button>
+                        </div>
                       </div>
 
                       {/* ─ Enunciado (si no es sólo un título genérico de recorte) ─ */}
@@ -541,6 +555,21 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
           prueba={pruebaData}
           preguntas={preguntas}
           onClose={() => setIsPrintModalOpen(false)}
+        />
+      )}
+
+      {/* Modal de Edición Rápida de Pregunta */}
+      {preguntaEnEdicion && (
+        <EditarPreguntaModal
+          isOpen={!!preguntaEnEdicion}
+          onClose={() => setPreguntaEnEdicion(null)}
+          pregunta={preguntaEnEdicion}
+          subfolder={evaluacion?.id?.replace(/^eval-/, '') || 'catalogo'}
+          onSaveSuccess={(actualizada) => {
+            setPreguntas((prev) =>
+              prev.map((item) => (item.id === actualizada.id ? actualizada : item))
+            );
+          }}
         />
       )}
     </>
