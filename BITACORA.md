@@ -2,7 +2,30 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
-### [2026-08-30] Re-alineación Completa de PAES Matemática 1 2023 al Estándar Oficial Sysget (SIMCE 2M / 6B)
+### [2026-08-30] Corrección de Renderizado de Alternativas y Símbolos de Montos en Catálogo y Evaluaciones
+
+- **Problema / Requerimiento**:
+  1. Corregir el parseo de alternativas en el modal de detalle del catálogo (`CatalogoDetalleModal.tsx`) donde las preguntas mostraban opciones vacías o se renderizaban como botones cuadrados de letra en lugar de desplegar el texto completo de las alternativas.
+  2. Proteger el símbolo de moneda (`$120.000`, `$25.000`, etc.) en `EnunciadoRenderer.tsx` para evitar que fuera interpretado erróneamente como delimitador de fórmulas matemáticas LaTeX inline.
+  3. Respetar tablas Markdown y encabezados en la función `normalizeText` sin colapsar las filas de tablas estructuradas.
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/CatalogoDetalleModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoDetalleModal.tsx):
+    - [MODIFICADO] Normalización defensiva de `p.alternativas` al recibir datos desde la API (manejo de formato array u objeto JSONB stringificado).
+    - [MODIFICADO] Corrección de la lógica de renderizado condicional: si cualquier alternativa contiene texto no vacío, se despliega en lista detallada con tarjeta enriquecida, letra destacada y contenido Markdown vía `EnunciadoRenderer`.
+  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx):
+    - [MODIFICADO] Protección de montos monetarios (`\$\d+[\d.,]*`) con token seguro temporal previo a la evaluación de delimitadores LaTeX `$formula$` y posterior restauración.
+    - [MODIFICADO] `normalizeText` modularizado para respetar bloques de tablas Markdown `| ... |`, encabezados `#` y separadores sin unir líneas indebidamente.
+  - [`scripts/sync_all_65_to_supabase.js`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/sync_all_65_to_supabase.js):
+    - [NUEVO] Script de sincronización masiva que actualizó las 65 preguntas oficiales de PAES Matemática 1 (Forma 113) en `public.preguntas` en Supabase con enunciados limpios, alternativas con texto y claves oficiales.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores TypeScript.
+  - `npm run build` completado exitosamente en 41.98s (`dist/` generado).
+  - Sincronización completa de las 65 preguntas en Supabase DB.
+  - Commits `5667d18` y `bca48e6` subidos a `origin/main` y desplegados automáticamente en Vercel.
+
+---
 
 - **Problema / Requerimiento**:
   Mantener la coherencia arquitectónica y estética del proyecto: alinear la evaluación `PAES Oficial Competencia Matemática 1 (M1) 2023 (Forma 113)` exactamente al estándar oficial de los Ensayos SIMCE de Matemática 2° Medio y 6° Básico (enunciados en Markdown enriquecido con notación matemática limpia, alternativas individuales completas con su texto estructurado, y figuras/diagramas pedagógicos recortados en alta resolución únicamente cuando la pregunta lo requiere).
