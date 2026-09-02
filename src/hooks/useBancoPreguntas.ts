@@ -88,10 +88,10 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
         const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
 
-        // Si no es admin: Premilitar consulta sus preguntas o asig-2; cualquier otro docente consulta ESTRICTAMENTE sus preguntas propias
+        // Si no es admin: consulta preguntas de su especialidad curricular (asignatura) o creadas por el docente
         if (user!.rol !== 'admin') {
-          if (isPremil) {
-            query = query.or(`propietario_id.eq.${user!.id},asignatura_id.eq.asig-2`);
+          if (teacherAsig) {
+            query = query.or(`propietario_id.eq.${user!.id},asignatura_id.eq.${teacherAsig}`);
           } else {
             query = query.eq('propietario_id', user!.id);
           }

@@ -74,7 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     { id: 'evaluaciones', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
     { id: 'cursos', label: 'Mis Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
     { id: 'alumnos', label: 'Mis Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
-    { id: 'banco-preguntas', label: 'Banco de mi Materia', icon: <Library className="w-4.5 h-4.5" /> },
+    { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
   ];
 
   const NAV_ITEMS_ALUMNO: NavItem[] = [

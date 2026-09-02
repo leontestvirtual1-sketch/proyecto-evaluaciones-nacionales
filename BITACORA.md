@@ -2,6 +2,24 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-02] Corrección y Unificación de Visibilidad del Banco de Preguntas
+
+- **Problema / Requerimiento**:
+  1. El Banco de Preguntas no era fácilmente localizable para usuarios con perfil docente debido a que la etiqueta en el menú lateral figuraba como "Banco de mi Materia".
+  2. En el hook `useBancoPreguntas.ts`, la consulta a Supabase para docentes con asignaturas distintas a Lenguaje 2° Medio restringía la búsqueda exclusivamente a `propietario_id = user.id`. Esto provocaba que las preguntas del catálogo oficial institucional (SIMCE, PAES, etc.) no se listaran (0 preguntas) para dichos docentes.
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx):
+    - [MODIFICADO] Unificada la nomenclatura del menú lateral a "Banco de Preguntas" tanto para administradores como para docentes.
+  - [`src/hooks/useBancoPreguntas.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/hooks/useBancoPreguntas.ts):
+    - [MODIFICADO] Actualizada la consulta Supabase para que los docentes consulten tanto las preguntas de su especialidad curricular/asignatura (`asignatura_id.eq.${teacherAsig}`) como las creadas por ellos mismos (`propietario_id.eq.${user.id}`).
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit` verificado con 0 errores TypeScript.
+  - Subido a GitHub `main` y desplegado automáticamente en Vercel.
+
+---
+
 ### [2026-08-30] Modal de Edición Rápida de Preguntas con Carga de Imágenes a Supabase Storage
 
 - **Problema / Requerimiento**:
