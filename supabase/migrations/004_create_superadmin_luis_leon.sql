@@ -51,7 +51,7 @@ INSERT INTO auth.users (
   'authenticated',
   'authenticated',
   'luis_leon_g@hotmail.com',
-  crypt('Saber_2026!', gen_salt('bf')),
+  crypt('REEMPLAZAR_CON_PASSWORD_SEGURO', gen_salt('bf')),
   NOW(),
   NOW(),
   NOW(),
