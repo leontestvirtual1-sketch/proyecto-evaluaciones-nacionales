@@ -9,7 +9,10 @@ import {
   Loader2,
   AlertCircle,
   Edit3,
+  ShieldAlert,
+  Lock,
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import { EvaluacionCatalogo, Pregunta, Prueba } from '../types';
 import { getTipoEvaluacion } from './AdminCatalogoPanel';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
@@ -29,6 +32,9 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
   evaluacion,
   authToken,
 }) => {
+  const { user } = useAuth();
+  const isDocenteOrAdmin = user?.rol === 'admin' || user?.rol === 'profesor';
+
   const [activeTab, setActiveTab] = useState<'cuadernillo' | 'pauta'>('cuadernillo');
   const [preguntas, setPreguntas] = useState<Pregunta[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -245,21 +251,25 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                   </span>
                 )}
               </button>
-              <button
-                onClick={() => setActiveTab('pauta')}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  activeTab === 'pauta'
-                    ? 'bg-indigo-600 text-white shadow'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <KeyRound size={13} />
-                Pauta Docente
-              </button>
+              {isDocenteOrAdmin && (
+                <button
+                  onClick={() => setActiveTab('pauta')}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    activeTab === 'pauta'
+                      ? 'bg-indigo-600 text-white shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                  title="Acceso reservado a docentes y UTP"
+                >
+                  <KeyRound size={13} />
+                  Pauta Docente
+                  <span className="text-[10px] opacity-75 font-normal ml-0.5">🔒</span>
+                </button>
+              )}
             </div>
 
             <div className="flex items-center gap-3">
-              {activeTab === 'cuadernillo' && (
+              {activeTab === 'cuadernillo' && isDocenteOrAdmin && (
                 <label className="flex items-center gap-2 text-xs font-semibold text-slate-300 cursor-pointer select-none">
                   <input
                     type="checkbox"
@@ -471,9 +481,39 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                   );
                 })}
               </div>
+            ) : !isDocenteOrAdmin ? (
+              /* ── BLOQUEO: USUARIO NO AUTORIZADO ─────────────────── */
+              <div className="max-w-md mx-auto my-20 p-6 bg-slate-800/90 border border-amber-500/30 rounded-2xl text-center shadow-xl">
+                <div className="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto mb-4 border border-amber-500/40">
+                  <Lock size={24} />
+                </div>
+                <h3 className="text-base font-bold text-white mb-2">Acceso Exclusivo para Docentes</h3>
+                <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                  Las pautas pedagógicas, clavijeros oficiales y solucionarios son confidenciales y de uso reservado para profesores y directivos UTP. Prohibida su divulgación según la Ley N° 17.336 de Propiedad Intelectual.
+                </p>
+                <button
+                  onClick={() => setActiveTab('cuadernillo')}
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl transition-all"
+                >
+                  Volver al Cuadernillo
+                </button>
+              </div>
             ) : (
               /* ── TAB: PAUTA DOCENTE ──────────────────────────────── */
               <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 space-y-4">
+                {/* Banner de Protección Legal y Confidencialidad */}
+                <div className="bg-amber-950/40 border border-amber-500/30 rounded-xl p-3.5 flex items-start sm:items-center gap-3 text-amber-300 text-xs shadow-sm">
+                  <ShieldAlert size={20} className="shrink-0 text-amber-400 mt-0.5 sm:mt-0" />
+                  <div className="leading-snug">
+                    <span className="font-bold uppercase tracking-wider text-amber-300">
+                      Material Pedagógico Confidencial:
+                    </span>
+                    <span className="text-amber-200/90 ml-1.5">
+                      Uso exclusivo de profesores de asignatura y equipo directivo UTP. Prohibida su reproducción, difusión o entrega a estudiantes antes del proceso formal de rendición (DEMRE / MINEDUC / Ley N° 17.336).
+                    </span>
+                  </div>
+                </div>
+
                 <div className="bg-slate-800/80 border border-slate-700 rounded-2xl overflow-hidden shadow-lg">
                   <div className="p-4 bg-gradient-to-r from-indigo-950/60 to-slate-800 border-b border-slate-700 flex items-center justify-between">
                     <div>
