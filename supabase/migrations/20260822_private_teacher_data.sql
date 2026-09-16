@@ -1,6 +1,8 @@
 -- Sysget Saber: aislamiento de datos por docente y establecimiento.
--- Ejecutar primero en Supabase SQL Editor sobre un proyecto de prueba y luego
--- en producción. No borra registros existentes.
+-- NOTA DE AUDITORÍA: Esta migración fue unificada y consolidada atómicamente junto a la 039 en:
+-- supabase/migrations/042_consolidate_rls_and_teacher_isolation.sql
+-- para garantizar ejecución secuencial determinista sin depender del orden lexicográfico.
+
 
 BEGIN;
 

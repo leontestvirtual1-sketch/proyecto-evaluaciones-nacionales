@@ -237,20 +237,26 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         count: counts[key] || 0
       };
     });
-  }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles, currentUser?.email, currentUser?.establecimiento]);
+  }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
 
   // Sincronizar nivelFilter:
   // - Para docente: si nivelFilter está vacío, asignar el nivel inicial correspondiente
+  //   obtenido de sus cursos reales o primer nivel disponible en sus preguntas
   // - Admin: puede ver "Todos los Cursos" o filtrar por nivel específico
   React.useEffect(() => {
     if (isDocente && !nivelFilter) {
-      if (docenteAsigId === 'asig-2' || (currentUser?.email || '').toLowerCase().includes('premil')) {
-        setNivelFilter('2° medio');
+      if (userCursos && userCursos.length > 0 && userCursos[0]?.nivel) {
+        setNivelFilter(normalizeNivel(userCursos[0].nivel));
       } else {
-        setNivelFilter('4° básico');
+        const firstPreguntaNivel = preguntas.find(p => p.asignaturaId === docenteAsigId)?.nivel;
+        if (firstPreguntaNivel) {
+          setNivelFilter(normalizeNivel(firstPreguntaNivel));
+        } else {
+          setNivelFilter('4° básico');
+        }
       }
     }
-  }, [isDocente, docenteAsigId, currentUser?.email]);
+  }, [isDocente, docenteAsigId, userCursos, preguntas, nivelFilter]);
 
   // Base de preguntas filtradas por ASIGNATURA, CURSO/NIVEL, ESTABLECIMIENTO y DOCENTE
   const basePreguntas = useMemo(() => {
@@ -270,12 +276,12 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       // 3. Establecimiento dinámico (Admin)
       let matchEstablecimiento = true;
       if (!isDocente && establecimientoFilter) {
-        const docForQ = docentesDisponibles.find(d => d.id === p.propietarioId || d.rawId === p.propietarioId || d.asigId === p.asignaturaId);
+        const docForQ = docentesDisponibles.find(d => 
+          Boolean(p.propietarioId && (d.id === p.propietarioId || d.rawId === p.propietarioId))
+        );
         matchEstablecimiento = Boolean(
           p.establecimiento === establecimientoFilter ||
-          (docForQ && docForQ.establecimiento === establecimientoFilter) ||
-          (establecimientoFilter === 'Colegio Mi Casa' && p.asignaturaId === 'asig-1') ||
-          (establecimientoFilter.includes('Premilitar') && p.asignaturaId === 'asig-2')
+          (docForQ && docForQ.establecimiento === establecimientoFilter)
         );
       }
 

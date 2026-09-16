@@ -115,12 +115,42 @@ CREATE TABLE IF NOT EXISTS public.perfiles (
   approval_token            TEXT,
   approval_token_expires_at TIMESTAMPTZ DEFAULT (NOW() + INTERVAL '72 hours'),
   fecha_registro            TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  es_super_admin            BOOLEAN NOT NULL DEFAULT FALSE,
   created_at                TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_perfiles_email ON public.perfiles(email);
 CREATE INDEX IF NOT EXISTS idx_perfiles_rbd ON public.perfiles(rbd);
 CREATE INDEX IF NOT EXISTS idx_perfiles_approval_token ON public.perfiles(approval_token) WHERE approval_token IS NOT NULL;
+
+-- Funciones auxiliares RLS para aislamiento por RBD y Superadmin
+CREATE OR REPLACE FUNCTION public.current_user_rbd()
+RETURNS TEXT
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT rbd FROM public.perfiles WHERE id = auth.uid()
+$$;
+
+CREATE OR REPLACE FUNCTION public.is_admin_of_rbd(target_rbd TEXT)
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.perfiles
+    WHERE id = auth.uid()
+      AND (
+        es_super_admin = TRUE
+        OR (rol = 'admin' AND rbd IS NOT DISTINCT FROM target_rbd)
+      )
+  )
+$$;
 
 ALTER TABLE public.perfiles ENABLE ROW LEVEL SECURITY;
 
@@ -129,10 +159,7 @@ CREATE POLICY "Perfiles lectura autorizada"
   ON public.perfiles FOR SELECT
   USING (
     auth.uid() = id 
-    OR EXISTS (
-      SELECT 1 FROM public.perfiles p_admin 
-      WHERE p_admin.id = auth.uid() AND p_admin.rol = 'admin'
-    )
+    OR public.is_admin_of_rbd(rbd)
   );
 
 DROP POLICY IF EXISTS "Perfiles actualizacion autorizada con control de atributos" ON public.perfiles;
@@ -169,7 +196,10 @@ CREATE TABLE IF NOT EXISTS public.cursos (
 
 ALTER TABLE public.cursos ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Lectura de cursos por establecimiento" ON public.cursos;
-CREATE POLICY "Lectura de cursos por establecimiento" ON public.cursos FOR SELECT USING (TRUE);
+DROP POLICY IF EXISTS "Cursos visibles al docente responsable o admin del RBD" ON public.cursos;
+CREATE POLICY "Cursos visibles al docente responsable o admin del RBD"
+  ON public.cursos FOR SELECT
+  USING (profesor_jefe_id = auth.uid() OR public.is_admin_of_rbd(rbd));
 
 -- 6. TABLA: EVALUACIONES Y ENSAYOS
 CREATE TABLE IF NOT EXISTS public.evaluaciones (
@@ -192,7 +222,16 @@ CREATE TABLE IF NOT EXISTS public.evaluaciones (
 
 ALTER TABLE public.evaluaciones ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Lectura de evaluaciones autorizadas" ON public.evaluaciones;
-CREATE POLICY "Lectura de evaluaciones autorizadas" ON public.evaluaciones FOR SELECT USING (TRUE);
+DROP POLICY IF EXISTS "Evaluaciones visibles al autor o admin del RBD" ON public.evaluaciones;
+CREATE POLICY "Evaluaciones visibles al autor o admin del RBD"
+  ON public.evaluaciones FOR SELECT
+  USING (
+    profesor_id = auth.uid()
+    OR EXISTS (
+      SELECT 1 FROM public.cursos c
+      WHERE c.id = curso_id AND public.is_admin_of_rbd(c.rbd)
+    )
+  );
 
 -- 7. TABLA: RENDICIONES DE ALUMNOS
 CREATE TABLE IF NOT EXISTS public.rendiciones (
@@ -213,7 +252,19 @@ CREATE TABLE IF NOT EXISTS public.rendiciones (
 
 ALTER TABLE public.rendiciones ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Lectura de rendiciones propias o de docente" ON public.rendiciones;
-CREATE POLICY "Lectura de rendiciones propias o de docente" ON public.rendiciones FOR SELECT USING (TRUE);
+DROP POLICY IF EXISTS "Rendiciones visibles por relacion academica" ON public.rendiciones;
+CREATE POLICY "Rendiciones visibles por relacion academica"
+  ON public.rendiciones FOR SELECT
+  USING (
+    alumno_id = auth.uid()
+    OR EXISTS (
+      SELECT 1
+      FROM public.evaluaciones e
+      JOIN public.cursos c ON c.id = e.curso_id
+      WHERE e.id = prueba_id
+        AND (c.profesor_jefe_id = auth.uid() OR public.is_admin_of_rbd(c.rbd))
+    )
+  );
 
 -- 8. TABLA: BANCO DE PREGUNTAS
 CREATE TABLE IF NOT EXISTS public.preguntas (

@@ -45,21 +45,12 @@ WHERE NOT EXISTS (SELECT 1 FROM public.evaluaciones e WHERE e.id = r.prueba_id);
 SELECT COUNT(*) AS evaluaciones_sin_curso FROM public.evaluaciones WHERE curso_id IS NULL;
 
 -- ============================================================
--- BLOQUE 2: CONTENCIÓN (ejecutar solo si diagnóstico muestra políticas abiertas)
+-- BLOQUE 2: CONTENCIÓN Y CIERRE ATÓMICO (CONSOLIDADO EN MIGRACIÓN 042)
+-- NOTA DE AUDITORÍA: El bloque de contención fue unificado en la migración
+-- 042_consolidate_rls_and_teacher_isolation.sql para garantizar atomicidad:
+-- dropear políticas abiertas Y crear inmediatamente las políticas sustitutas
+-- dentro del mismo BEGIN/COMMIT sin ventanas de bloqueo.
 -- ============================================================
-BEGIN;
+-- Para aplicar contención y aislamiento definitivo, ejecutar el archivo:
+-- supabase/migrations/042_consolidate_rls_and_teacher_isolation.sql
 
-DROP POLICY IF EXISTS "Lectura de cursos por establecimiento" ON public.cursos;
-DROP POLICY IF EXISTS "Todos los cursos" ON public.cursos;
-DROP POLICY IF EXISTS "cursos_open" ON public.cursos;
-
-DROP POLICY IF EXISTS "Lectura de evaluaciones autorizadas" ON public.evaluaciones;
-DROP POLICY IF EXISTS "Todos las evaluaciones" ON public.evaluaciones;
-DROP POLICY IF EXISTS "evaluaciones_open" ON public.evaluaciones;
-
-ALTER TABLE public.perfiles ADD COLUMN IF NOT EXISTS es_super_admin BOOLEAN NOT NULL DEFAULT FALSE;
-
-UPDATE public.perfiles SET es_super_admin = TRUE
-WHERE email = 'leontestvirtual1@gmail.com' AND es_super_admin = FALSE;
-
-COMMIT;

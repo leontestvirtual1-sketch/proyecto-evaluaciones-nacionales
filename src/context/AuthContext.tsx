@@ -35,7 +35,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<{ error: string | null }>;
   register: (data: RegisterData) => Promise<RegisterResult>;
   logout: () => void;
-  switchRole: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar' | 'demo' | 'prod') => void;
+  switchRole: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'demo' | 'prod') => void;
   switchToDocente: (docenteId: string) => void;
   approveUser: (userId: string, nuevoPlan?: UserPlan) => Promise<{ error: string | null }>;
   approveUserByToken: (token: string) => Promise<TokenApprovalResult>;
@@ -574,7 +574,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   }, []);
 
-  const switchRole = useCallback((role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar' | 'demo' | 'prod') => {
+  const switchRole = useCallback((role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'demo' | 'prod') => {
     if (role === 'admin') {
       if (extra === 'prod') {
         // Volver a vista admin de producción: restaurar el perfil base guardado

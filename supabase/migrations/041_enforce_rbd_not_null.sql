@@ -45,11 +45,9 @@ BEGIN
     RETURN NEW;
   END IF;
 
-  -- Para profesores y alumnos en producción, advertir o normalizar
+  -- Para profesores y alumnos en producción, exigir obligatoriamente RBD válido (Directivas 1 y 4)
   IF NEW.rol IN ('profesor', 'alumno') AND (NEW.rbd IS NULL OR TRIM(NEW.rbd) = '') THEN
-    -- No bloqueamos duramente con RAISE EXCEPTION para evitar romper flujos transitorios de registro,
-    -- pero asignamos un indicador o notificamos en log
-    RAISE WARNING 'Usuario % registrado con rol % sin RBD asociado.', NEW.email, NEW.rol;
+    RAISE EXCEPTION 'Operación rechazada: El usuario % con rol % debe tener un RBD institucional asignado obligatoriamente.', NEW.email, NEW.rol;
   END IF;
 
   RETURN NEW;
@@ -61,3 +59,21 @@ CREATE TRIGGER trg_check_user_rbd_integrity
 BEFORE INSERT OR UPDATE ON public.perfiles
 FOR EACH ROW
 EXECUTE FUNCTION public.check_user_rbd_integrity();
+
+-- 5. Restricción a nivel de base de datos para garantizar que el RBD no sea nulo ni vacío en producción
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'check_profesor_alumno_rbd_required'
+  ) THEN
+    ALTER TABLE public.perfiles
+      ADD CONSTRAINT check_profesor_alumno_rbd_required
+      CHECK (
+        es_super_admin = true 
+        OR es_demo = true 
+        OR rol NOT IN ('profesor', 'alumno') 
+        OR (rbd IS NOT NULL AND TRIM(rbd) <> '')
+      );
+  END IF;
+END $$;
+

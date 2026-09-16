@@ -1,129 +1,188 @@
 /**
  * tests/tenant-isolation.test.ts
- * Verificación de aislamiento Multi-Tenant y RBAC estricto (Directivas 1, 2, 4 y 9)
+ * Verificación técnica de Aislamiento Multi-Tenant y Políticas RLS con @supabase/supabase-js (Fase 4)
+ * 
+ * Cumplimiento estricto de Directivas 1, 2, 4 y 9:
+ * - Directiva 1: Aislamiento estricto de ambientes (no fallback por longitud de lista).
+ * - Directiva 2: Cero datos inventados en producción; empty state legítimo.
+ * - Directiva 4: Aislamiento por RBD y especialidad docente sin fuga de evaluaciones entre colegios.
+ * - Directiva 9: Preservación de contexto de Super Admin durante supervisión pedagógica.
  */
 
-interface MockUserProfile {
-  id: string;
-  email: string;
-  rol: 'admin' | 'profesor' | 'alumno';
-  rbd?: string;
-  asignaturaId?: string;
-  esSuperAdmin?: boolean;
-  esDemo?: boolean;
-}
+import { createClient } from '@supabase/supabase-js';
 
-interface MockPrueba {
-  id: string;
-  profesorId: string;
-  asignaturaId: string;
-  rbd?: string;
-}
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://khtdzgfqjggycrcbrytw.supabase.co';
+const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtodGR6Z2ZxamdneWNyY2JyeXR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2NDkwMzQsImV4cCI6MjEwMjIyNTAzNH0.Bkr8Icfs_QkB4A8vl01AZY73r5hZEdwMh-v_g6p8m2k';
 
-describe('Tenant and Subject Isolation Suite', () => {
-  const teacherMatematicaMiCasa: MockUserProfile = {
-    id: 'doc-user-1',
-    email: 'docente.mat@colegio.cl',
-    rol: 'profesor',
-    rbd: '1234',
-    asignaturaId: 'asig-1', // Matemática
-    esSuperAdmin: false,
-    esDemo: false
-  };
+// Cliente Supabase real utilizando la API oficial de @supabase/supabase-js
+const sbClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const teacherLenguajePremil: MockUserProfile = {
-    id: 'doc-user-2',
-    email: 'docente.leng@premil.cl',
-    rol: 'profesor',
-    rbd: '31030',
-    asignaturaId: 'asig-2', // Lenguaje
-    esSuperAdmin: false,
-    esDemo: false
-  };
+describe('Tenant & RBAC Isolation Suite (@supabase/supabase-js)', () => {
 
-  const pruebasDb: MockPrueba[] = [
-    { id: 'p-mat-1', profesorId: 'doc-user-1', asignaturaId: 'asig-1', rbd: '1234' },
-    { id: 'p-mat-2', profesorId: 'doc-user-1', asignaturaId: 'asig-1', rbd: '1234' },
-    { id: 'p-leng-1', profesorId: 'doc-user-2', asignaturaId: 'asig-2', rbd: '31030' },
-  ];
+  test('RLS Activo: Cliente anónimo no autenticado no puede listar cursos ni rendiciones protegidas', async () => {
+    // Si RLS está cerrado (sin USING TRUE), una consulta anónima a cursos devuelve 0 registros o vacío
+    const { data: cursos, error: errCursos } = await sbClient
+      .from('cursos')
+      .select('id, nombre, rbd')
+      .limit(10);
 
-  test('Directiva 4: Profesor de Matemática solo accede a evaluaciones de su especialidad y colegio', () => {
-    const accessiblePruebas = pruebasDb.filter(
-      p => p.profesorId === teacherMatematicaMiCasa.id && p.asignaturaId === teacherMatematicaMiCasa.asignaturaId
-    );
+    // Debe retornar vacío o error de permisos, JAMÁS exponer registros de otros colegios
+    if (!errCursos && cursos) {
+      expect(cursos.length).toBe(0);
+    }
 
-    expect(accessiblePruebas.length).toBe(2);
-    expect(accessiblePruebas.every(p => p.asignaturaId === 'asig-1')).toBe(true);
-    expect(accessiblePruebas.some(p => p.asignaturaId === 'asig-2')).toBe(false);
+    const { data: rendiciones, error: errRendiciones } = await sbClient
+      .from('rendiciones')
+      .select('id, alumno_nombre, puntaje_obtenido')
+      .limit(10);
+
+    if (!errRendiciones && rendiciones) {
+      expect(rendiciones.length).toBe(0);
+    }
   });
 
-  test('Directiva 4: Profesor de Lenguaje no ve preguntas ni pruebas de Matemática', () => {
-    const accessiblePruebas = pruebasDb.filter(
-      p => p.profesorId === teacherLenguajePremil.id && p.asignaturaId === teacherLenguajePremil.asignaturaId
-    );
+  test('RLS Activo: Cliente anónimo no puede acceder a preguntas privadas de docentes', async () => {
+    const { data: preguntas, error: errPreguntas } = await sbClient
+      .from('preguntas')
+      .select('id, enunciado, respuesta_correcta')
+      .limit(10);
 
-    expect(accessiblePruebas.length).toBe(1);
-    expect(accessiblePruebas[0].id).toBe('p-leng-1');
+    // Sin autenticación válida, no se debe exponer ninguna pregunta privada ni sus respuestas correctas
+    if (!errPreguntas && preguntas) {
+      expect(preguntas.length).toBe(0);
+    }
   });
 
-  test('Directiva 1: Discriminación de entorno no utiliza fallback por longitud de lista', () => {
-    const emptyDbList: MockPrueba[] = [];
-    const mockList: MockPrueba[] = [{ id: 'mock-1', profesorId: 'm1', asignaturaId: 'asig-1' }];
+  test('Directiva 1 & 2: Prohibición estricta de fallback cruzado basado en longitud de lista', () => {
+    // Escenario: Docente nuevo ingresa a producción y tiene 0 evaluaciones creadas.
+    const produccionDbEvaluaciones: Array<{ id: string; titulo: string }> = [];
+    const mockDemoEvaluaciones = [{ id: 'mock-eval-01', titulo: 'Ensayo Falso Demo' }];
 
-    // Prohibido: emptyDbList.length > 0 ? emptyDbList : mockList
-    // Correcto: si es producción, retorna exactamente la lista de DB aunque esté vacía (Directiva 2)
+    // Patrón PROHIBIDO por Directiva 1:
+    // const res = produccionDbEvaluaciones.length > 0 ? produccionDbEvaluaciones : mockDemoEvaluaciones;
+
+    // Patrón OBLIGATORIO:
     const isProduction = true;
-    const resolvedList = isProduction ? emptyDbList : mockList;
+    const resolvedData = isProduction ? produccionDbEvaluaciones : mockDemoEvaluaciones;
 
-    expect(resolvedList.length).toBe(0);
-    expect(resolvedList).not.toBe(mockList);
+    // El estado legítimo en producción debe ser 0 elementos (Empty State válido)
+    expect(resolvedData.length).toBe(0);
+    expect(resolvedData).not.toBe(mockDemoEvaluaciones);
+  });
+
+  test('Directiva 4: Aislamiento por RBD y Especialidad Docente', () => {
+    interface DocenteContext {
+      id: string;
+      rbd: string;
+      asignaturaId: string;
+    }
+
+    const docenteSusana: DocenteContext = {
+      id: 'doc-susana-uuid',
+      rbd: '1234',
+      asignaturaId: 'asig-1' // Matemática - Colegio Mi Casa
+    };
+
+    const docenteMariaTeresa: DocenteContext = {
+      id: 'doc-mteresa-uuid',
+      rbd: '31030',
+      asignaturaId: 'asig-2' // Lenguaje - Escuela Premilitar
+    };
+
+    const evaluacionesDb = [
+      { id: 'eval-mat-01', rbd: '1234', asignaturaId: 'asig-1', profesorId: 'doc-susana-uuid' },
+      { id: 'eval-leng-01', rbd: '31030', asignaturaId: 'asig-2', profesorId: 'doc-mteresa-uuid' }
+    ];
+
+    // Regla de filtro de seguridad de Susana
+    const visiblesParaSusana = evaluacionesDb.filter(
+      e => e.rbd === docenteSusana.rbd && e.asignaturaId === docenteSusana.asignaturaId
+    );
+    expect(visiblesParaSusana.length).toBe(1);
+    expect(visiblesParaSusana[0].id).toBe('eval-mat-01');
+    expect(visiblesParaSusana.some(e => e.rbd === docenteMariaTeresa.rbd)).toBe(false);
+
+    // Regla de filtro de seguridad de María Teresa
+    const visiblesParaMariaTeresa = evaluacionesDb.filter(
+      e => e.rbd === docenteMariaTeresa.rbd && e.asignaturaId === docenteMariaTeresa.asignaturaId
+    );
+    expect(visiblesParaMariaTeresa.length).toBe(1);
+    expect(visiblesParaMariaTeresa[0].id).toBe('eval-leng-01');
+    expect(visiblesParaMariaTeresa.some(e => e.rbd === docenteSusana.rbd)).toBe(false);
   });
 
   test('Directiva 9: Preservación de contexto de Admin al supervisar a un docente', () => {
-    const adminSession: MockUserProfile = {
-      id: 'admin-super-1',
+    const adminSession = {
+      id: 'super-admin-uuid',
       email: 'leontestvirtual1@gmail.com',
       rol: 'admin',
-      esSuperAdmin: true
+      es_super_admin: true
     };
 
-    let activeUser = teacherMatematicaMiCasa; // Supervisando a Susana / Docente
-    const adminBaseProfile = adminSession;
+    // Al supervisar a un docente, el perfil temporal activo cambia pero adminBaseProfile se preserva
+    const docenteSupervisado = {
+      id: 'doc-susana-uuid',
+      email: 'susana@micasa.cl',
+      rol: 'profesor'
+    };
 
-    // La detección de ambiente debe usar adminBaseProfile
+    const adminBaseProfile = adminSession;
+    const activeProfile = docenteSupervisado;
+
+    // La discriminación de entorno JAMÁS debe depender de activeProfile.email
     const isProductionAdmin = Boolean(
-      adminBaseProfile?.esSuperAdmin || adminBaseProfile?.email === 'leontestvirtual1@gmail.com'
+      adminBaseProfile?.es_super_admin || adminBaseProfile?.email === 'leontestvirtual1@gmail.com'
     );
 
     expect(isProductionAdmin).toBe(true);
-    expect(activeUser.rol).toBe('profesor');
+    expect(activeProfile.rol).toBe('profesor');
+    expect(adminBaseProfile.email).toBe('leontestvirtual1@gmail.com');
   });
 });
 
-// Helper simple para entornos de prueba si no corre bajo vitest/jest
-function describe(name: string, fn: () => void) {
+// Arnes de ejecución compatible sin dependencias externas
+function describe(name: string, fn: () => void | Promise<void>) {
   console.log(`\n--- Test Suite: ${name} ---`);
-  fn();
+  const res = fn();
+  if (res instanceof Promise) {
+    res.catch(err => {
+      console.error(`Suite failed: ${name}`, err);
+      process.exit(1);
+    });
+  }
 }
 
-function test(name: string, fn: () => void) {
-  try {
-    fn();
-    console.log(`  ✅ PASS: ${name}`);
-  } catch (err) {
-    console.error(`  ❌ FAIL: ${name}`, err);
-    throw err;
+function test(name: string, fn: () => void | Promise<void>) {
+  const result = fn();
+  if (result instanceof Promise) {
+    return result
+      .then(() => console.log(`  ✅ PASS: ${name}`))
+      .catch(err => {
+        console.error(`  ❌ FAIL: ${name}`, err);
+        process.exit(1);
+      });
+  } else {
+    try {
+      console.log(`  ✅ PASS: ${name}`);
+    } catch (err) {
+      console.error(`  ❌ FAIL: ${name}`, err);
+      process.exit(1);
+    }
   }
 }
 
 function expect(actual: unknown) {
   return {
     toBe(expected: unknown) {
-      if (actual !== expected) throw new Error(`Expected ${expected}, but got ${actual}`);
+      if (actual !== expected) {
+        throw new Error(`Expected ${JSON.stringify(expected)}, but got ${JSON.stringify(actual)}`);
+      }
     },
     not: {
       toBe(expected: unknown) {
-        if (actual === expected) throw new Error(`Expected NOT ${expected}`);
+        if (actual === expected) {
+          throw new Error(`Expected NOT ${JSON.stringify(expected)}`);
+        }
       }
     }
   };

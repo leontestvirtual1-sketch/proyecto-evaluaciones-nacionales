@@ -14,7 +14,7 @@ import {
 
 interface NavbarProps {
   user: UserProfile;
-  onRoleChange: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar') => void;
+  onRoleChange: (role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje') => void;
   onGoToLanding?: () => void;
   onLogout?: () => void;
   darkMode: boolean;
