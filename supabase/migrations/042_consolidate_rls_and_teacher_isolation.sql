@@ -109,6 +109,8 @@ ALTER TABLE public.perfiles ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Lectura de cursos por establecimiento" ON public.cursos;
 DROP POLICY IF EXISTS "Todos los cursos" ON public.cursos;
 DROP POLICY IF EXISTS "cursos_open" ON public.cursos;
+DROP POLICY IF EXISTS "Profesores crean y editan cursos" ON public.cursos;
+DROP POLICY IF EXISTS "Profesores leen cursos de su establecimiento" ON public.cursos;
 DROP POLICY IF EXISTS "Cursos visibles al docente responsable o admin del RBD" ON public.cursos;
 DROP POLICY IF EXISTS "Cursos creados por responsable o admin del RBD" ON public.cursos;
 DROP POLICY IF EXISTS "Cursos modificados por responsable o admin del RBD" ON public.cursos;
@@ -148,6 +150,7 @@ DROP POLICY IF EXISTS "Todos las evaluaciones" ON public.evaluaciones;
 DROP POLICY IF EXISTS "evaluaciones_open" ON public.evaluaciones;
 DROP POLICY IF EXISTS "Evaluaciones visibles al autor o admin del RBD" ON public.evaluaciones;
 DROP POLICY IF EXISTS "Evaluaciones gestionadas por autor o admin del RBD" ON public.evaluaciones;
+DROP POLICY IF EXISTS "Evaluaciones gestionadas por su docente o admin" ON public.evaluaciones;
 
 CREATE POLICY "Evaluaciones visibles al autor o admin del RBD"
   ON public.evaluaciones FOR SELECT
@@ -177,6 +180,12 @@ DROP POLICY IF EXISTS "rendiciones_open" ON public.rendiciones;
 DROP POLICY IF EXISTS "Todos las rendiciones" ON public.rendiciones;
 DROP POLICY IF EXISTS "Rendiciones visibles por relacion academica" ON public.rendiciones;
 DROP POLICY IF EXISTS "Permitir insercion rendiciones" ON public.rendiciones;
+DROP POLICY IF EXISTS "Rendiciones insertables por alumno o sistema" ON public.rendiciones;
+DROP POLICY IF EXISTS "Profesores ven rendiciones de sus pruebas" ON public.rendiciones;
+DROP POLICY IF EXISTS "rendiciones_select_estricto" ON public.rendiciones;
+DROP POLICY IF EXISTS "rendiciones_insert_admin_only" ON public.rendiciones;
+DROP POLICY IF EXISTS "rendiciones_update_admin_only" ON public.rendiciones;
+DROP POLICY IF EXISTS "rendiciones_delete_admin_only" ON public.rendiciones;
 
 CREATE POLICY "Rendiciones visibles por relacion academica"
   ON public.rendiciones FOR SELECT
@@ -206,6 +215,11 @@ DROP POLICY IF EXISTS "Preguntas privadas del propietario" ON public.preguntas;
 DROP POLICY IF EXISTS "Creacion de preguntas propias" ON public.preguntas;
 DROP POLICY IF EXISTS "Edicion de preguntas propias" ON public.preguntas;
 DROP POLICY IF EXISTS "Eliminacion de preguntas propias" ON public.preguntas;
+DROP POLICY IF EXISTS "preguntas_select_policy" ON public.preguntas;
+DROP POLICY IF EXISTS "preguntas_select_estricto" ON public.preguntas;
+DROP POLICY IF EXISTS "preguntas_insert_policy" ON public.preguntas;
+DROP POLICY IF EXISTS "preguntas_update_policy" ON public.preguntas;
+DROP POLICY IF EXISTS "preguntas_delete_policy" ON public.preguntas;
 
 CREATE POLICY "Preguntas privadas del propietario"
   ON public.preguntas FOR SELECT
@@ -271,6 +285,7 @@ CREATE POLICY "Matriculas eliminadas por responsable o admin"
 -- ==============================================================================
 DROP POLICY IF EXISTS "Perfiles lectura autorizada" ON public.perfiles;
 DROP POLICY IF EXISTS "Perfiles visibles segun pertenencia academica" ON public.perfiles;
+DROP POLICY IF EXISTS "perfiles_select_estricto" ON public.perfiles;
 
 CREATE POLICY "Perfiles visibles segun pertenencia academica"
   ON public.perfiles FOR SELECT
