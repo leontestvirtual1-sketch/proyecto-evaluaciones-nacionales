@@ -83,10 +83,7 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
       try {
         let query = supabase.from('preguntas').select('*');
 
-        const userEmail = (user!.email || '').toLowerCase();
-        const isPremil = userEmail.includes('premil') || userEmail.includes('mariateresa') || user!.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
-        const isSusana = userEmail.includes('susana') || userEmail.includes('nentitasusana') || user!.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
-        const teacherAsig = user!.asignaturaId || (isPremil ? 'asig-2' : isSusana ? 'asig-1' : '');
+        const teacherAsig = user!.asignaturaId || '';
 
         // Si no es admin: consulta preguntas de su especialidad curricular (asignatura) o creadas por el docente
         if (user!.rol !== 'admin') {

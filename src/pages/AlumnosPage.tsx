@@ -378,7 +378,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
         `)
         .eq('rol', 'alumno');
 
-      const isSuperAdmin = currentUser.email === 'leontestvirtual1@gmail.com';
+      const isSuperAdmin = !!currentUser.esSuperAdmin;
       if (!isSuperAdmin) {
         if (currentUser.rbd) {
           query = query.eq('rbd', currentUser.rbd);

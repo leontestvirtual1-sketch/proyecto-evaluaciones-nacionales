@@ -32,9 +32,7 @@ import {
   reporteCursoMock,
   reporteCienciasMock,
   reporteLenguajeMock,
-  reporteLenguajeDemoMock,
-  reportePremilitarRealMock,
-  currentUserProfesorPremilitar
+  reporteLenguajeDemoMock
 } from './data/mockData';
 import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } from './types';
 
@@ -125,7 +123,6 @@ function MainAppContent({
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -149,17 +146,22 @@ function MainAppContent({
   const getReporteForPrueba = (pruebaId: string): ReporteTabuladoCurso => {
     const prueba = pruebas.find(p => p.id === pruebaId);
 
-    // 1. Entorno de Producción: Escuela Premilitar Héroes de la Concepción (2° Medio)
-    if (
-      academicData.isProduction ||
-      pruebaId.startsWith('prueba-len2m') ||
-      (prueba && (prueba.cursoNombre?.includes('2° Medio') || prueba.nivel?.includes('2° Medio') || prueba.id?.startsWith('prueba-len2m')))
-    ) {
+    // 1. Entorno de Producción: reporte legítimo vacío (Directiva 1 y 2)
+    if (academicData.isProduction) {
       return {
-        ...reportePremilitarRealMock,
+        ...reporteCursoMock,
         pruebaId: prueba?.id || pruebaId,
-        pruebaTitulo: prueba?.titulo || reportePremilitarRealMock.pruebaTitulo,
-        cursoNombre: prueba?.cursoNombre || '2° Medio',
+        pruebaTitulo: prueba?.titulo || 'Evaluación',
+        cursoNombre: prueba?.cursoNombre || 'Curso',
+        totalAlumnosRendidos: 0,
+        totalAlumnosMatriculados: 0,
+        promedioPorcentajeLogro: 0,
+        promedioEscalaNacional: 0,
+        desgloseEjes: [],
+        desgloseHabilidades: [],
+        preguntasMasFalladas: [],
+        planAccionReforzamiento: [],
+        rendiciones: []
       };
     }
 

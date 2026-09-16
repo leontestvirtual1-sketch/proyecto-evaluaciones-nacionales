@@ -35,6 +35,8 @@ export interface UserProfile {
   diasRestantesTrial?: number; // Días restantes de prueba calculados
   fechaRegistro?: string;      // Fecha en que se registró la cuenta
   approvalToken?: string;      // Token de aprobación directa de 1-clic desde correo
+  esSuperAdmin?: boolean;      // Super Administrador sin restricción de RBD
+  esDemo?: boolean;            // Pertenece al entorno simulado de demostración
 }
 
 
@@ -103,6 +105,7 @@ export interface Curso {
   nivel: string;
   profesorId: string;
   establecimiento: string;
+  rbd?: string;
   anio: number;
   codigoInvitacion: string;
 }

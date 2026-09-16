@@ -92,11 +92,8 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   onUpdatePregunta,
   onDeletePregunta,
 }) => {
-  const userEmail = (currentUser?.email || '').toLowerCase();
-  const isPremilTeacher = userEmail.includes('premil') || userEmail.includes('mariateresa') || currentUser?.id === '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18';
-  const isSusanaTeacher = userEmail.includes('susana') || userEmail.includes('nentitasusana') || currentUser?.id === 'e14d8a54-fe01-4a6b-a22d-8f8e00000001';
   const isDocente = currentUser?.rol === 'profesor';
-  const docenteAsigId = currentUser?.asignaturaId || (isPremilTeacher ? 'asig-2' : isSusanaTeacher ? 'asig-1' : '');
+  const docenteAsigId = currentUser?.asignaturaId || '';
 
   // Restringir asignaturas para docente
   const availableAsignaturas = isDocente
@@ -128,45 +125,15 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   // Catálogo 100% dinámico de docentes para filtros de Admin
   const docentesDisponibles = useMemo(() => {
     const list = docentes && docentes.length > 0 ? docentes : [];
-    const map = new Map<string, { id: string; rawId?: string; nombre: string; asignatura: string; asigId: string; establecimiento: string; email: string }>();
-
-    // Base inicial de producción
-    map.set('mariateresa', {
-      id: 'mariateresa',
-      nombre: 'María Teresa González',
-      asignatura: 'Lengua y Literatura',
-      asigId: 'asig-2',
-      establecimiento: 'Escuela Premilitar Héroes de la Concepción',
-      email: 'mariateresa.gonzalez@premil.cl'
-    });
-    map.set('susana', {
-      id: 'susana',
-      nombre: 'Susana Angélica Pizarro Valenzuela',
-      asignatura: 'Matemática',
-      asigId: 'asig-1',
-      establecimiento: 'Colegio Mi Casa',
-      email: 'nentitasusana@hotmail.com'
-    });
-
-    list.forEach(d => {
-      const emailLower = (d.email || '').toLowerCase();
-      const isSusana = emailLower.includes('susana') || (d.nombre && d.nombre.toLowerCase().includes('susana'));
-      const isPremil = emailLower.includes('premil') || emailLower.includes('mariateresa');
-      const keyId = isSusana ? 'susana' : isPremil ? 'mariateresa' : d.id;
-
-      const docEntry = {
-        id: keyId,
-        rawId: d.id,
-        nombre: `${d.nombre} ${d.apellido || ''}`.trim(),
-        asignatura: d.asignaturaNombre || (isSusana ? 'Matemática' : isPremil ? 'Lengua y Literatura' : 'Especialidad'),
-        asigId: d.asignaturaId || (isSusana ? 'asig-1' : isPremil ? 'asig-2' : ''),
-        establecimiento: d.establecimiento || (isSusana ? 'Colegio Mi Casa' : isPremil ? 'Escuela Premilitar Héroes de la Concepción' : ''),
-        email: d.email || ''
-      };
-      map.set(keyId, docEntry);
-    });
-
-    return Array.from(map.values());
+    return list.map(d => ({
+      id: d.id,
+      rawId: d.id,
+      nombre: `${d.nombre} ${d.apellido || ''}`.trim(),
+      asignatura: d.asignaturaNombre || 'Especialidad',
+      asigId: d.asignaturaId || '',
+      establecimiento: d.establecimiento || '',
+      email: d.email || ''
+    }));
   }, [docentes]);
 
   // Catálogo 100% dinámico de establecimientos para filtros de Admin
@@ -211,9 +178,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         const docForQ = docentesDisponibles.find(d => d.id === p.propietarioId || d.rawId === p.propietarioId || d.asigId === p.asignaturaId);
         matchEstablecimiento = Boolean(
           p.establecimiento === establecimientoFilter ||
-          (docForQ && docForQ.establecimiento === establecimientoFilter) ||
-          (establecimientoFilter === 'Colegio Mi Casa' && p.asignaturaId === 'asig-1') ||
-          (establecimientoFilter.includes('Premilitar') && p.asignaturaId === 'asig-2')
+          (docForQ && docForQ.establecimiento === establecimientoFilter)
         );
       }
 
@@ -240,14 +205,6 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       const norm = normalizeNivel(c.nivel || c.nombre);
       if (norm) activeKeys.add(norm);
     });
-
-    // Si está filtrado por Susana o Colegio Mi Casa, garantizar sus 3 niveles
-    const isUserSusana = (currentUser?.email || '').toLowerCase().includes('susana') || (currentUser?.establecimiento || '').toLowerCase().includes('mi casa');
-    if (selectedDoc?.id === 'susana' || establecimientoFilter === 'Colegio Mi Casa' || isUserSusana || (asignaturaFilter === 'asig-1' && !isDocente)) {
-      activeKeys.add('4° básico');
-      activeKeys.add('6° básico');
-      activeKeys.add('8° básico');
-    }
 
     // Añadir niveles donde haya preguntas con los filtros activos
     Object.keys(counts).forEach(k => {

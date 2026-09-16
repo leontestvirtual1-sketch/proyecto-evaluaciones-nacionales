@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint .",
+    "lint": "eslint src/ tests/",
+    "test": "npx tsx tests/tenant-isolation.test.ts && npx tsx tests/grade-evaluation.test.ts",
     "preview": "vite preview",
     "storage:migrate": "node scripts/migrate-images-to-storage.js"
   },
@@ -21,15 +22,18 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^22.10.2",
     "@types/nodemailer": "^8.0.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "eslint": "^10.10.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
+    "typescript-eslint": "^8.70.0",
     "vite": "^6.0.5"
   }
 }

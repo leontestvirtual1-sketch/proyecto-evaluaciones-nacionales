@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { establecimientosCatalog, currentUserProfesorPremilitar, currentUserProfesorMiCasa } from '../data/mockData';
+import { establecimientosCatalog } from '../data/mockData';
 import { UserProfile } from '../types';
 import {
   LayoutDashboard,
@@ -46,12 +46,14 @@ interface NavItem {
 
 export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSandboxMode = false }) => {
   const { user, usuarios, docentesReales, adminBaseProfile, logout, switchRole, switchToDocente } = useAuth();
-  const [expandedRbd, setExpandedRbd] = useState<string | null>('31030');
+  const [expandedRbd, setExpandedRbd] = useState<string | null>(null);
   
   const pendientesCount = usuarios.filter(u => u.estado === 'pendiente_aprobacion').length;
 
-  const isProductionAdmin = !isSandboxMode && (user?.email === 'leontestvirtual1@gmail.com' || adminBaseProfile?.email === 'leontestvirtual1@gmail.com');
-  const isSupervisingDocente = user?.rol === 'profesor' && adminBaseProfile?.email === 'leontestvirtual1@gmail.com';
+  // Directiva 2: isProductionAdmin e isSupervisingDocente se determinan por columnas DB
+  // es_super_admin y esDemo — sin comparaciones de email hardcodeadas.
+  const isProductionAdmin = !isSandboxMode && (user?.esSuperAdmin || adminBaseProfile?.esSuperAdmin);
+  const isSupervisingDocente = user?.rol === 'profesor' && (adminBaseProfile?.esSuperAdmin ?? false);
 
   const NAV_ITEMS_ADMIN: NavItem[] = [
     { id: 'dashboard', label: 'Dashboard General', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
@@ -82,8 +84,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
   ];
 
   const isRealAdmin = !isSandboxMode 
-    ? (user?.email === 'leontestvirtual1@gmail.com' || (user?.rol === 'admin' && !user?.email?.includes('premil') && !user?.email?.includes('susana') && !user?.email?.includes('mi casa')))
-    : (user?.rol === 'admin' || user?.email === 'admin@sysget.cl' || user?.email === 'admin@escuelademo.cl');
+    ? (user?.rol === 'admin' || isProductionAdmin)
+    : (user?.rol === 'admin' || user?.esDemo === true);
 
   let items: NavItem[];
   if (isRealAdmin) {
@@ -116,11 +118,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
   };
 
   const listaDocentes: UserProfile[] = [];
-  listaDocentes.push(currentUserProfesorPremilitar);
-  listaDocentes.push(currentUserProfesorMiCasa);
 
   (docentesReales || []).forEach(d => {
-    const idx = listaDocentes.findIndex(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id);
+    const idx = listaDocentes.findIndex(x => (d.email && x.email.toLowerCase() === d.email.toLowerCase()) || x.id === d.id);
     if (idx >= 0) {
       listaDocentes[idx] = { ...listaDocentes[idx], ...d };
     } else {

@@ -71,9 +71,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ error: 'Evaluación no encontrada en el sistema.' });
     }
 
-    const preguntaIds: string[] = Array.isArray(evaluacion.pregunta_ids)
-      ? evaluacion.pregunta_ids
-      : (typeof evaluacion.pregunta_ids === 'string' ? JSON.parse(evaluacion.pregunta_ids || '[]') : []);
+    // CORRECCIÓN (Auditoría 2026-09-16): columna real es 'preguntas_ids' (plural)
+    const preguntaIds: string[] = Array.isArray(evaluacion.preguntas_ids)
+      ? evaluacion.preguntas_ids
+      : (typeof evaluacion.preguntas_ids === 'string' ? JSON.parse(evaluacion.preguntas_ids || '[]') : []);
 
     if (preguntaIds.length === 0) {
       return res.status(400).json({ error: 'La evaluación no contiene preguntas asociadas.' });
@@ -128,7 +129,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const rendicionId = `rend-${Date.now()}`;
     const rendicionPayload: any = {
       id: rendicionId,
-      evaluacion_id: pruebaId,
+      // CORRECCIÓN (Auditoría 2026-09-16): columna real es 'prueba_id', no 'evaluacion_id'
+      prueba_id: pruebaId,
       alumno_id: finalAlumnoId,
       alumno_nombre: alumnoNombre || 'Estudiante',
       alumno_rut: alumnoRut || '',
@@ -137,8 +139,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       puntaje_maximo: puntajeMaximo,
       porcentaje_logro: porcentajeLogro,
       puntaje_escala_nacional: puntajeEscalaNacional,
-      respuestas: respuestasDetalladas,
-      estado: tieneDesarrolloPendiente ? 'pendiente_revision' : 'completada'
+      // CORRECCIÓN: columna real es 'respuestas_json'; estados válidos: 'en_progreso'|'enviada'|'corregida'
+      respuestas_json: respuestasDetalladas,
+      estado: tieneDesarrolloPendiente ? 'enviada' : 'corregida'
     };
 
     // 4. Guardar en la tabla public.rendiciones con service_role
@@ -146,8 +149,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .from('rendiciones')
       .upsert(rendicionPayload, { onConflict: 'id' });
 
+    // CORRECCIÓN (Auditoría 2026-09-16): propagar error real en lugar de console.warn silencioso.
+    // El console.warn previo devolvía 200 OK aunque la rendición no se guardara,
+    // causando que el alumno viera un puntaje que nunca quedó persistido en DB.
     if (insertErr) {
-      console.warn('Advertencia al insertar rendición en tabla rendiciones:', insertErr.message);
+      console.error('Error al persistir rendición en tabla rendiciones:', insertErr.message, insertErr);
+      return res.status(500).json({
+        error: 'La evaluación fue calificada pero no pudo guardarse en la base de datos.',
+        detail: insertErr.message
+      });
     }
 
     return res.status(200).json({

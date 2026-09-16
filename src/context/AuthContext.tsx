@@ -6,8 +6,6 @@ import {
   currentUserProfesor,
   currentUserProfesorCiencias,
   currentUserProfesorLenguaje,
-  currentUserProfesorPremilitar,
-  currentUserProfesorMiCasa,
   currentUserAlumno,
   usuariosRegistradosMock
 } from '../data/mockData';
@@ -70,45 +68,20 @@ export interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Perfiles de usuarios oficiales sin credenciales — solo para restaurar sesión en RAM
-// cuando Supabase Auth ya la validó previamente.
-const DEMO_USERS: Record<string, UserProfile> = {
-  'leontestvirtual1@gmail.com':       currentUserAdmin,
-  'mariateresa.gonzalez@premil.cl':    currentUserProfesorPremilitar,
-  'luis.leon@premil.cl':              currentUserProfesorPremilitar,
-  'nentitasusana@hotmail.com':        currentUserProfesorMiCasa,
-  'admin@sysget.cl':                  currentUserAdminDemo,
-};
-
-/** Correos específicos de docentes de producción que nunca deben asumir rol de admin */
-export const PROFESSOR_EMAILS_ONLY = new Set([
-  'mariateresa.gonzalez@premil.cl',
-  'luis.leon@premil.cl',
-  'nentitasusana@hotmail.com',
-]);
-
-/** No hay inferencia por patrones — siempre retorna null */
-function inferUserFromEmail(_email: string): UserProfile | null {
-  return null;
-}
-
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [adminBaseProfile, setAdminBaseProfile] = useState<UserProfile | null>(null);
   const [usuarios, setUsuarios] = useState<UserProfile[]>([]);
-  const [docentesReales, setDocentesReales] = useState<UserProfile[]>([
-    currentUserProfesorPremilitar,
-    currentUserProfesorMiCasa,
-  ]);
+  const [docentesReales, setDocentesReales] = useState<UserProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOnlineSupabase, setIsOnlineSupabase] = useState(false);
 
-  const PRODUCTION_ADMIN_EMAIL = 'leontestvirtual1@gmail.com';
+  // esSuperAdmin y esDemo se determinan exclusivamente por columnas DB (es_super_admin, es_demo).
+  // No se usa ningún email hardcodeado para inferir roles (Directiva 2, Paso 2.3).
 
   /** Carga los docentes reales desde Supabase para el Admin de Producción (excluyendo cuentas demo) */
   const loadDocentesReales = useCallback(async () => {
-    const defaultDocentes = [currentUserProfesorPremilitar, currentUserProfesorMiCasa];
     try {
       const { data, error } = await supabase
         .from('perfiles')
@@ -117,9 +90,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!error && data && data.length > 0) {
         const dbDocentes: UserProfile[] = data
           .filter((p: Record<string, unknown>) => {
-            const email = ((p.email as string) || '').toLowerCase();
-            const est = ((p.establecimiento as string) || '').toLowerCase();
-            return !email.endsWith('@demo.cl') && !email.endsWith('@escuelademo.cl') && !est.includes('demo');
+            // Filtrar cuentas demo usando la columna canónica es_demo (Directiva 2, Paso 3.4)
+            return p.es_demo !== true;
           })
           .map((p: Record<string, unknown>) => ({
             id: p.id as string,
@@ -138,30 +110,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             estado: ((p.estado as string) || 'activo') as UserEstado,
             plan: ((p.plan as string) || 'trial') as UserPlan,
             logoUrl: (p.logo_url as string) || undefined,
+            esSuperAdmin: false,
+            esDemo: false
           }));
 
-        // Combinar datos asegurando que no se pierdan los perfiles oficiales
-        const mapByEmail = new Map<string, UserProfile>();
-        defaultDocentes.forEach(d => mapByEmail.set(d.email.toLowerCase(), d));
-        dbDocentes.forEach(d => mapByEmail.set(d.email.toLowerCase(), d));
-
-        setDocentesReales(Array.from(mapByEmail.values()));
+        setDocentesReales(dbDocentes);
       } else {
-        setDocentesReales(defaultDocentes);
+        setDocentesReales([]);
       }
     } catch {
-      setDocentesReales(defaultDocentes);
+      setDocentesReales([]);
     }
   }, []);
 
   /** Carga todos los usuarios registrados reales desde Supabase para el Admin */
   const loadUsuariosReales = useCallback(async () => {
-    const baseProductionUsers: UserProfile[] = [
-      currentUserAdmin,
-      currentUserProfesorPremilitar,
-      currentUserProfesorMiCasa,
-    ];
-
     try {
       const { data, error } = await supabase
         .from('perfiles')
@@ -216,12 +179,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
 
       const userMap = new Map<string, UserProfile>();
-      // 1. Inicializar con usuarios de demo para pestaña Demo
+      // 1. Inicializar con usuarios demo (solo para pestaña Demo/Sandbox)
       usuariosRegistradosMock.forEach(u => userMap.set(u.email.toLowerCase(), u));
-      // 2. Fusionar perfiles base de producción
-      baseProductionUsers.forEach(u => userMap.set(u.email.toLowerCase(), u));
+      // 2. Inicializar con el admin de producción base
+      userMap.set(currentUserAdmin.email.toLowerCase(), currentUserAdmin);
 
-      // 3. Fusionar datos directos de Supabase
+      // 3. Fusionar datos directos de Supabase — fuente de verdad (Directiva 3)
       if (!error && data && data.length > 0) {
         data.forEach((p: Record<string, unknown>) => {
           const mapped = mapRow(p);
@@ -233,9 +196,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       setUsuarios(Array.from(userMap.values()));
     } catch {
+      // Offline fallback mínimo — solo el admin base, sin perfiles hardcodeados de colegios
       const fallbackMap = new Map<string, UserProfile>();
       usuariosRegistradosMock.forEach(u => fallbackMap.set(u.email.toLowerCase(), u));
-      baseProductionUsers.forEach(u => fallbackMap.set(u.email.toLowerCase(), u));
+      fallbackMap.set(currentUserAdmin.email.toLowerCase(), currentUserAdmin);
       setUsuarios(Array.from(fallbackMap.values()));
     }
   }, []);
@@ -260,55 +224,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
             // Restaurar sesión solo si la cuenta está activa o es admin
             if (estado === 'activo' || profile.rol === 'admin' || profile.rol === 'superadmin') {
-              const emailLower = email.toLowerCase();
-              const isPremil = emailLower === 'mariateresa.gonzalez@premil.cl' || emailLower === 'luis.leon@premil.cl';
-              const isKnownTeacher = PROFESSOR_EMAILS_ONLY.has(emailLower);
-              const resolvedRole: UserRole = isKnownTeacher ? 'profesor' : ((profile.rol as UserRole) || 'profesor');
+              const resolvedRole: UserRole = (profile.rol as UserRole) || 'profesor';
               const restoredUser: UserProfile = {
                 id: profile.id,
-                rut: profile.rut || '18.359.422-2',
-                nombre: profile.nombre || 'María Teresa',
-                apellido: profile.apellido || 'González',
+                rut: profile.rut || '',
+                nombre: profile.nombre || '',
+                apellido: profile.apellido || '',
+                apellidoPaterno: profile.apellido_paterno || undefined,
+                apellidoMaterno: profile.apellido_materno || undefined,
                 email: email,
                 rol: resolvedRole,
-                establecimiento: profile.establecimiento || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : APP_CONFIG.nombreEstablecimiento),
-                rbd: profile.rbd || (isPremil ? '31030' : undefined),
-                asignaturaId: profile.asignatura_id || (isPremil ? 'asig-2' : undefined),
-                asignaturaNombre: profile.asignatura_nombre || (isPremil ? 'Lenguaje y Comunicación' : undefined),
-                cargo: profile.cargo || (isPremil ? 'Docente de Lenguaje y Comunicación' : undefined),
+                establecimiento: profile.establecimiento || APP_CONFIG.nombreEstablecimiento,
+                rbd: profile.rbd || undefined,
+                asignaturaId: profile.asignatura_id || undefined,
+                asignaturaNombre: profile.asignatura_nombre || undefined,
+                cargo: profile.cargo || undefined,
                 estado: estado,
                 plan: (profile.plan as UserPlan) || 'trial',
-                diasRestantesTrial: profile.dias_restantes_trial ?? 30
+                diasRestantesTrial: profile.dias_restantes_trial ?? 30,
+                logoUrl: profile.logo_url || undefined,
+                // Directiva 2 — sin inferencia por email: solo columnas DB
+                esSuperAdmin: Boolean(profile.es_super_admin || profile.rol === 'superadmin'),
+                esDemo: Boolean(profile.es_demo)
               };
               setUser(restoredUser);
               localStorage.setItem('sysget_session_email', email);
             }
           } else {
-            // No hay perfil en tabla → crear uno básico y restaurar sesión
-            // Esto ocurre cuando el admin real no insertó su perfil previamente
-            const emailLC = email.toLowerCase();
-            const demoMatch = DEMO_USERS[emailLC];
-            if (demoMatch) {
-              setUser({ ...demoMatch, id: session.user.id, email });
-              localStorage.setItem('sysget_session_email', email);
-            }
+            // Sin perfil en tabla: dejar sin sesión para que el usuario vuelva a hacer login
+            console.warn('[AuthContext] Usuario autenticado en Supabase Auth sin perfil en tabla perfiles. ID:', session.user.id);
           }
         } else {
-          // Sin sesión Supabase — intentar restaurar desde localStorage
-          const savedEmail = localStorage.getItem('sysget_session_email');
-          if (savedEmail) {
-            const demoUser = DEMO_USERS[savedEmail.toLowerCase()];
-            if (demoUser) setUser({ ...demoUser, email: savedEmail });
-          }
+          // Sin sesión Supabase activa — limpiar estado local
+          localStorage.removeItem('sysget_session_email');
         }
       } catch (err) {
-        console.warn('Supabase local session check offline, using mock auth fallback.');
-        // Intentar restaurar desde localStorage
-        const savedEmail = localStorage.getItem('sysget_session_email');
-        if (savedEmail) {
-          const demoUser = DEMO_USERS[savedEmail.toLowerCase()];
-          if (demoUser) setUser({ ...demoUser, email: savedEmail });
-        }
+        console.warn('[AuthContext] Sin conexión a Supabase. El usuario deberá autenticarse cuando haya red.');
+        // No restaurar sesión desde localStorage sin validación de Supabase (seguridad)
       } finally {
         setIsLoading(false);
       }
@@ -358,24 +310,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
 
           setAdminBaseProfile(null);
-          const isPremil = cleanEmail === 'mariateresa.gonzalez@premil.cl' || cleanEmail === 'luis.leon@premil.cl';
-          const isKnownTeacher = PROFESSOR_EMAILS_ONLY.has(cleanEmail);
-          const resolvedRole: UserRole = isKnownTeacher ? 'profesor' : ((profile.rol as UserRole) || 'profesor');
+          const resolvedRole: UserRole = (profile.rol as UserRole) || 'profesor';
           const loggedUser: UserProfile = {
             id: profile.id,
             rut: profile.rut || '',
             nombre: profile.nombre || '',
             apellido: profile.apellido || '',
+            apellidoPaterno: profile.apellido_paterno || undefined,
+            apellidoMaterno: profile.apellido_materno || undefined,
             email: data.user.email || cleanEmail,
             rol: resolvedRole,
-            establecimiento: profile.establecimiento || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : APP_CONFIG.nombreEstablecimiento),
-            rbd: profile.rbd || (isPremil ? '31030' : undefined),
-            asignaturaId: profile.asignatura_id || (isPremil ? 'asig-2' : undefined),
-            asignaturaNombre: profile.asignatura_nombre || (isPremil ? 'Lenguaje y Comunicación' : undefined),
-            cargo: profile.cargo || (isPremil ? 'Docente de Lenguaje y Comunicación' : undefined),
+            establecimiento: profile.establecimiento || APP_CONFIG.nombreEstablecimiento,
+            rbd: profile.rbd || undefined,
+            asignaturaId: profile.asignatura_id || undefined,
+            asignaturaNombre: profile.asignatura_nombre || undefined,
+            cargo: profile.cargo || undefined,
             estado: estado,
             plan: (profile.plan as UserPlan) || 'trial',
-            diasRestantesTrial: profile.dias_restantes_trial ?? 30
+            diasRestantesTrial: profile.dias_restantes_trial ?? 30,
+            logoUrl: profile.logo_url || undefined,
+            // Directiva 2 — sin inferencia por email: solo columnas DB
+            esSuperAdmin: Boolean(profile.es_super_admin || profile.rol === 'superadmin'),
+            esDemo: Boolean(profile.es_demo)
           };
           setUser(loggedUser);
           localStorage.setItem('sysget_session_email', cleanEmail);
@@ -384,15 +340,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return { error: null };
 
         } else {
-          // Supabase autenticado pero sin perfil en tabla — puede ser admin sin perfil creado
-          const demoFallback = DEMO_USERS[cleanEmail];
-          if (demoFallback) {
-            setUser({ ...demoFallback, id: data.user.id, email: cleanEmail });
-            localStorage.setItem('sysget_session_email', cleanEmail);
-            loadUsuariosReales();
-            loadDocentesReales();
-            return { error: null };
-          }
+          // Supabase autenticado pero sin perfil en tabla
           await supabase.auth.signOut();
           return { error: 'No se encontró un perfil asociado a este correo. Contacta al administrador.' };
         }
@@ -628,11 +576,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const switchRole = useCallback((role: UserRole, extra?: 'ciencias' | 'matematica' | 'lenguaje' | 'premilitar' | 'demo' | 'prod') => {
     if (role === 'admin') {
-      const savedEmail = localStorage.getItem('sysget_session_email')?.toLowerCase();
-      if (extra === 'prod' || (!extra && savedEmail === 'leontestvirtual1@gmail.com')) {
+      if (extra === 'prod') {
+        // Volver a vista admin de producción: restaurar el perfil base guardado
         setUser(adminBaseProfile || currentUserAdmin);
       } else {
-        // En cualquier flujo de demostración, sandbox o switch a demo, asignar siempre el admin de prueba
+        // Demo/Sandbox: usar siempre el admin de prueba del Liceo Bicentenario
         setUser(currentUserAdminDemo);
       }
     } else if (role === 'profesor') {
@@ -645,15 +593,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           } else if (extra === 'ciencias') {
             localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-3') || null;
           } else if (extra === 'lenguaje') {
-            localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-2' && p.email !== 'luis.leon@premil.cl') || null;
+            localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-2') || null;
           }
         }
-      } catch (e) {}
+      } catch (_e) {}
 
-      if (extra === 'premilitar') {
-        // María Teresa González — SOLO accesible desde admin de producción
-        setUser(currentUserProfesorPremilitar);
-      } else if (extra === 'matematica') {
+      // 'premilitar' ya no es un extra válido — los docentes reales inician sesión directamente
+      if (extra === 'matematica') {
         setUser(localProf || currentUserProfesor);
       } else if (extra === 'ciencias') {
         setUser(localProf || currentUserProfesorCiencias);
@@ -665,7 +611,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       setUser(currentUserAlumno);
     }
-  }, []);
+  }, [adminBaseProfile]);
 
   /** Cambia la vista al perfil de un docente real (supervisión por Admin Producción) */
   const switchToDocente = useCallback((docenteIdOrKey: string) => {
@@ -675,18 +621,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Pool consolidado de búsqueda
     const pool: UserProfile[] = [
       ...docentesReales,
-      ...usuarios.filter(u => u.rol === 'profesor'),
-      currentUserProfesorPremilitar,
-      currentUserProfesorMiCasa
+      ...usuarios.filter(u => u.rol === 'profesor')
     ];
 
     const docente = pool.find(d =>
       d.id === docenteIdOrKey ||
       (d.email && d.email.toLowerCase().trim() === searchKey) ||
       (d.rut && d.rut.toLowerCase().trim() === searchKey) ||
-      (`${d.nombre} ${d.apellido}`).toLowerCase().trim().includes(searchKey) ||
-      (searchKey.includes('susana') && (d.email?.toLowerCase().includes('susana') || d.nombre?.toLowerCase().includes('susana'))) ||
-      (searchKey.includes('maria') && (d.email?.toLowerCase().includes('premil') || d.nombre?.toLowerCase().includes('maria')))
+      (`${d.nombre} ${d.apellido}`).toLowerCase().trim().includes(searchKey)
     );
 
     if (docente) {

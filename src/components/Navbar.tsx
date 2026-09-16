@@ -1,5 +1,4 @@
 import { UserProfile, UserRole } from '../types';
-import { establecimientosCatalog } from '../data/mockData';
 import {
   GraduationCap,
   BookOpen,
@@ -30,10 +29,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   darkMode,
   onToggleDarkMode
 }) => {
-  const isPremil = user.establecimiento?.toLowerCase().includes('premilitar') || user.rbd === '31030' || (user.email || '').toLowerCase().includes('premil');
-  const schoolLogo = (isPremil ? '/logos/escuela-premilitar.png' : user.logoUrl) || establecimientosCatalog.find(
-    e => (user.rbd && e.rbd === user.rbd) || e.nombre.toLowerCase().includes(user.establecimiento.toLowerCase())
-  )?.logoUrl;
+  // Logo dinámico: primero usa logoUrl del perfil (desde perfiles.logo_url via Supabase)
+  const schoolLogo = user.logoUrl;
 
   return (
     <header className="sticky top-0 z-40 glass-nav border-b border-slate-200 dark:border-slate-800">
@@ -82,9 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     alt="Logo" 
                     className="w-5 h-5 object-contain rounded shrink-0"
                     onError={(e) => {
-                      if (isPremil) {
-                        e.currentTarget.src = '/logos/escuela-premilitar.png';
-                      }
+                      e.currentTarget.style.display = 'none';
                     }}
                   />
                 ) : (
@@ -96,9 +91,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Fast Role Switcher ONLY for Demo Supervisor session OR Return button for Production Admin */}
             {(() => {
-              const sessionEmail = localStorage.getItem('sysget_session_email')?.toLowerCase() || '';
-              const isProductionAdmin = sessionEmail === 'leontestvirtual1@gmail.com' || user.email === 'leontestvirtual1@gmail.com';
-              const isDemoAdmin = sessionEmail === 'admin@sysget.cl' || user.email === 'admin@sysget.cl';
+              // Directiva 2: isProductionAdmin y isDemoAdmin se determinan exclusivamente
+              // por columnas DB es_super_admin y es_demo — sin comparaciones de email.
+              const isProductionAdmin = user.esSuperAdmin;
+              const isDemoAdmin = user.esDemo;
 
               if (isProductionAdmin) {
                 // Para Admin de Producción: solo mostrar botón volver si está supervisando a un docente

@@ -35,8 +35,6 @@ import {
   AlumnoAlertaCritica,
   preguntasMock,
   establecimientosCatalog,
-  currentUserProfesorPremilitar,
-  currentUserProfesorMiCasa
 } from '../data/mockData';
 import { SandboxBeacon } from './SandboxBeacon';
 import { SimceHistoricoPremilSection } from './SimceHistoricoPremilSection';
@@ -94,16 +92,14 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const [selectedPruebaForPrint, setSelectedPruebaForPrint] = useState<Prueba | null>(null);
 
   const isAdmin = profesor.rol === 'admin';
-  const isProductionAdmin = isAdmin && !isSandboxMode && profesor.email === 'leontestvirtual1@gmail.com';
+  const isProductionAdmin = isAdmin && !isSandboxMode && !!profesor.esSuperAdmin;
   const isLenguaje = profesor.asignaturaId === 'asig-2' || (profesor.asignaturaNombre || '').toLowerCase().includes('lenguaje');
   const isCiencias = profesor.asignaturaId === 'asig-3' || (profesor.asignaturaNombre || '').toLowerCase().includes('ciencia');
   const isMatematica = !isAdmin && !isLenguaje && !isCiencias;
 
   // Agrupación dinámica de colegios y sus docentes en producción
   const isUserDemo = (u: UserProfile) => {
-    const email = (u.email || '').toLowerCase();
-    const est = (u.establecimiento || '').toLowerCase();
-    return email.endsWith('@demo.cl') || email.endsWith('@escuelademo.cl') || email.endsWith('@sysget.cl') || est.includes('demo') || est.includes('bicentenario');
+    return u.esDemo === true;
   };
 
   const colegiosList = useMemo(() => {
@@ -123,8 +119,6 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
     });
 
     const listaDocentes: UserProfile[] = [];
-    listaDocentes.push(currentUserProfesorPremilitar);
-    listaDocentes.push(currentUserProfesorMiCasa);
 
     (docentesReales || []).forEach(d => {
       const idx = listaDocentes.findIndex(x => x.email.toLowerCase() === d.email.toLowerCase() || x.id === d.id);

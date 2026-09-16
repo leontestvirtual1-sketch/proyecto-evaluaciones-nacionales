@@ -51,14 +51,7 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   // Encontrar el establecimiento actual y su logo oficial dinámicamente
   const establecimientoActual = React.useMemo(() => {
     const establecimientoNombre = prueba?.establecimiento || user?.establecimiento || nombreEstablecimientoActivo || '';
-    const userEmail = (user?.email || '').toLowerCase();
-    const isPremil = establecimientoNombre.toLowerCase().includes('premilitar') || 
-                     user?.rbd === '31030' || 
-                     userEmail.includes('premil') ||
-                     userEmail.includes('mariateresa') ||
-                     (prueba?.titulo && (prueba.titulo.toLowerCase().includes('2° medio') || prueba.titulo.toLowerCase().includes('lengua')));
-
-    const rbd = user?.rbd || (isPremil ? '31030' : (establecimientoNombre.toLowerCase().includes('premilitar') ? '31030' : '1234'));
+    const rbd = user?.rbd || '';
     
     const matched = establecimientosCatalog.find(
       e => (rbd && e.rbd === rbd) || 
@@ -68,17 +61,15 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
     if (matched) {
       return {
         ...matched,
-        logoUrl: matched.logoUrl || (isPremil ? '/logos/escuela-premilitar.png' : user?.logoUrl || undefined)
+        logoUrl: matched.logoUrl || user?.logoUrl || undefined
       };
     }
 
-    const isMiCasa = establecimientoNombre.toLowerCase().includes('mi casa') || rbd === '1234' || userEmail.includes('susana');
-
     return {
-      nombre: establecimientoNombre || (isPremil ? 'Escuela Premilitar Héroes de la Concepción' : (isMiCasa ? 'Colegio Mi Casa' : (isProduction ? 'Colegio Mi Casa' : 'Liceo Bicentenario Los Andes'))),
-      rbd: rbd,
-      logoUrl: isPremil ? '/logos/escuela-premilitar.png' : (isMiCasa ? '/logos/colegio-mi-casa.png' : user?.logoUrl || undefined),
-      lema: isPremil ? 'Ad Altiora, Et Meliora, Semper' : (isMiCasa ? 'Formando el Futuro' : 'Excelencia y Futuro')
+      nombre: establecimientoNombre || (isProduction ? 'Establecimiento Educacional' : 'Liceo Bicentenario Los Andes'),
+      rbd: rbd || (isProduction ? '' : '1234'),
+      logoUrl: user?.logoUrl || undefined,
+      lema: isProduction ? '' : 'Excelencia y Futuro'
     };
   }, [prueba, user, nombreEstablecimientoActivo, isProduction]);
 
@@ -162,8 +153,11 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
       return bySubject.slice(0, prueba.totalPreguntas || 30);
     }
     
+    if (isProduction) {
+      return [];
+    }
     return allOfficial.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
-  }, [prueba, preguntas]);
+  }, [prueba, preguntas, isProduction]);
 
   // If none matched, fallback to all provided questions up to totalPreguntas
   const itemsToPrint: Pregunta[] = preguntasDeLaPrueba.length > 0

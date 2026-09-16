@@ -27,13 +27,18 @@ function mapRowToPrueba(row: any): Prueba {
     codigoPublico: row.codigo_acceso || row.codigo_publico || 'EVAL-001',
     duracionMinutos: Number(row.tiempo_limite) || Number(row.duracion_minutos) || 60,
     creadoEn: row.created_at ? new Date(row.created_at).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
-    preguntasIds: Array.isArray(row.pregunta_ids) ? row.pregunta_ids : Array.isArray(row.preguntas_ids) ? row.preguntas_ids : [],
-    totalPreguntas: Number(row.total_preguntas) || (Array.isArray(row.pregunta_ids) ? row.pregunta_ids.length : 30),
+    // CORRECCIÓN (Auditoría 2026-09-16): columna real es 'preguntas_ids' (plural).
+    // Se conserva fallback a 'pregunta_ids' solo para compatibilidad con filas antiguas en DB.
+    preguntasIds: Array.isArray(row.preguntas_ids) ? row.preguntas_ids : Array.isArray(row.pregunta_ids) ? row.pregunta_ids : [],
+    totalPreguntas: Number(row.total_preguntas) || (Array.isArray(row.preguntas_ids) ? row.preguntas_ids.length : Array.isArray(row.pregunta_ids) ? row.pregunta_ids.length : 30),
     estado: row.estado === 'activa' || row.estado === 'finalizada' ? row.estado : 'borrador',
   };
 }
 
-function mapPruebaToRow(p: Prueba, userId: string, establecimiento: string): Record<string, any> {
+// CORRECCIÓN (Auditoría 2026-09-16):
+// - 'pregunta_ids' → 'preguntas_ids' (nombre real de columna en tabla evaluaciones)
+// - Eliminado campo 'establecimiento' que no existe en la tabla evaluaciones
+function mapPruebaToRow(p: Prueba, userId: string): Record<string, any> {
   return {
     id: p.id,
     titulo: p.titulo,
@@ -45,8 +50,7 @@ function mapPruebaToRow(p: Prueba, userId: string, establecimiento: string): Rec
     estado: p.estado,
     tiempo_limite: p.duracionMinutos,
     codigo_acceso: p.codigoPublico,
-    pregunta_ids: p.preguntasIds || [],
-    establecimiento: establecimiento,
+    preguntas_ids: p.preguntasIds || [],
     updated_at: new Date().toISOString(),
   };
 }
@@ -82,31 +86,20 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         let query = supabase.from('evaluaciones').select('*');
 
         const isValidUUID = (id?: string) => Boolean(id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id));
-        const email = (currentUser!.email || '').toLowerCase();
-        const isPremilitarTeacher = email.includes('premil.cl') || email.includes('mariateresa');
-        const isSusanaTeacher = email.includes('susana') || email.includes('nentitasusana');
         const isAdmin = currentUser!.rol === 'admin';
-        const teacherAsig = currentUser!.asignaturaId || (isPremilitarTeacher ? 'asig-2' : isSusanaTeacher ? 'asig-1' : '');
 
         if (!isAdmin) {
-          if (isValidUUID(currentUser!.id)) {
-            // Aislamiento estricto (Directivas 1, 2 y 4): cada docente real solo ve sus evaluaciones asignadas/creadas
-            query = query.eq('profesor_id', currentUser!.id);
-          } else {
-            query = query.eq('profesor_id', currentUser!.id);
-          }
+          // Aislamiento estricto (Directivas 1 y 4): cada docente solo ve sus evaluaciones
+          query = query.eq('profesor_id', currentUser!.id);
         }
 
         const { data, error } = await query.order('created_at', { ascending: false });
 
         if (error) {
-          console.warn('[useEvaluaciones] Error al consultar Supabase:', error.message);
+          console.error('[useEvaluaciones] Error al consultar Supabase:', error.message);
           if (isMounted) {
-            if (isPremilitarTeacher || isAdmin) {
-              setPruebas([pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock]);
-            } else {
-              setPruebas([]);
-            }
+            // Directiva 2: estado vacío legítimo en caso de error, no fallback a mocks
+            setPruebas([]);
             setIsLoading(false);
           }
           return;
@@ -115,66 +108,13 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
         if (data && data.length > 0) {
           if (isMounted) {
             const dbPruebas = data.map(mapRowToPrueba);
-            // Si es docente de Lenguaje o María Teresa, asegurar que las 3 oficiales estén completas con sus 30 preguntas
-            if (isPremilitarTeacher) {
-              const officialMap = new Map<string, Prueba>();
-              [pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock].forEach(p => officialMap.set(p.id, p));
-              
-              const merged = dbPruebas.map(p => {
-                const official = officialMap.get(p.id);
-                if (official) {
-                  return {
-                    ...official,
-                    ...p,
-                    // Si la DB tiene menos de 30 preguntasIds, preservar las 30 oficiales
-                    preguntasIds: (p.preguntasIds && p.preguntasIds.length >= 30) ? p.preguntasIds : official.preguntasIds,
-                    totalPreguntas: official.totalPreguntas
-                  };
-                }
-                return p;
-              });
-
-              // Asegurar que las que no vinieron en DB se agreguen
-              officialMap.forEach((off, id) => {
-                if (!merged.some(m => m.id === id)) {
-                  merged.push(off);
-                }
-              });
-
-              setPruebas(merged);
-            } else {
-              setPruebas(dbPruebas);
-            }
+            setPruebas(dbPruebas);
             setIsLoading(false);
           }
           return;
         }
 
-        // Si la tabla en Supabase está vacía o sin filas para este docente:
-        if (isPremilitarTeacher || isAdmin) {
-          const premilitarPruebas = [
-            { ...pruebaLenguaje2MMock, profesorId: currentUser!.id },
-            { ...pruebaLenguaje2MJunioMock, profesorId: currentUser!.id },
-            { ...pruebaLenguaje2MAbrilMock, profesorId: currentUser!.id }
-          ];
-
-          if (isMounted) {
-            setPruebas(premilitarPruebas);
-            setIsLoading(false);
-          }
-
-          try {
-            const rows = premilitarPruebas.map(p =>
-              mapPruebaToRow(p, currentUser!.id, currentUser!.establecimiento || 'Escuela Premilitar Héroes de la Concepción')
-            );
-            await supabase.from('evaluaciones').upsert(rows, { onConflict: 'id' });
-          } catch (err) {
-            console.error('[useEvaluaciones] Error auto-seeding evaluaciones Premilitar:', err);
-          }
-          return;
-        }
-
-        // Para cualquier otro docente nuevo de producción: parte en 0 legítimo (Directiva 2)
+        // Directiva 2: estado vacío legítimo en producción. No auto-seed de mocks.
         if (isMounted) {
           setPruebas([]);
           setIsLoading(false);
@@ -182,12 +122,8 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
       } catch (err) {
         console.error('[useEvaluaciones] Error general al cargar evaluaciones:', err);
         if (isMounted) {
-          const email = (currentUser!.email || '').toLowerCase();
-          if (email.includes('premil.cl') || email.includes('mariateresa') || currentUser!.rol === 'admin') {
-            setPruebas([pruebaLenguaje2MMock, pruebaLenguaje2MJunioMock, pruebaLenguaje2MAbrilMock]);
-          } else {
-            setPruebas([]);
-          }
+          // Directiva 2: estado vacío real en error, no fallback a mocks
+          setPruebas([]);
           setIsLoading(false);
         }
       }
@@ -208,11 +144,7 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
       if (isSandboxMode || !currentUser) return;
 
       try {
-        const row = mapPruebaToRow(
-          nuevaPrueba,
-          currentUser.id,
-          currentUser.establecimiento || 'Establecimiento'
-        );
+        const row = mapPruebaToRow(nuevaPrueba, currentUser.id);
         const { error } = await supabase.from('evaluaciones').upsert(row, { onConflict: 'id' });
         if (error) {
           console.error('[useEvaluaciones] Error guardando evaluación en Supabase:', error.message);

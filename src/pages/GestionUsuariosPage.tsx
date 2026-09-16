@@ -151,11 +151,13 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
     showToast('Enlace de aprobación directa copiado al portapapeles.');
   };
 
-  const isProductionAdmin = !isSandboxMode && user?.email === 'leontestvirtual1@gmail.com';
+  // Directiva 2: isProductionAdmin determinado por columna DB es_super_admin — sin email hardcodeado.
+  const isProductionAdmin = !isSandboxMode && user?.esSuperAdmin;
   const [entornoTab, setEntornoTab] = useState<'produccion' | 'catalogo' | 'demo'>('produccion');
 
   // Clasificador estricto de usuario Demo vs Producción
   const isUserDemo = (u: UserProfile) => {
+    if (u.esDemo !== undefined) return u.esDemo;
     const email = (u.email || '').toLowerCase();
     const est = (u.establecimiento || '').toLowerCase();
     return email.endsWith('@demo.cl') || email.endsWith('@escuelademo.cl') || email.endsWith('@sysget.cl') || est.includes('demo') || est.includes('bicentenario');

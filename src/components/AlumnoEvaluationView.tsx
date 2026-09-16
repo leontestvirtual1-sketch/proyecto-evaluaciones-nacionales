@@ -25,6 +25,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [tiempoExpirado, setTiempoExpirado] = useState<boolean>(false);
   const [completedRendicion, setCompletedRendicion] = useState<RendicionPrueba | null>(null);
+  const [syncWarning, setSyncWarning] = useState<string | null>(null);
 
   const handleSubmitEvaluation = React.useCallback(async (porTiempo = false) => {
     setIsSubmitting(true);
@@ -52,9 +53,14 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
           onFinish(data.rendicion);
           return;
         }
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        console.error('Error reportado por /api/grade-evaluation:', errData.error);
+        setSyncWarning('Hubo un problema al registrar la evaluación en el servidor central. Avisa a tu docente antes de salir.');
       }
     } catch (apiErr) {
       console.warn('Fallo llamada /api/grade-evaluation, aplicando fallback local:', apiErr);
+      setSyncWarning('Sin conexión directa con el servidor. La evaluación se calculó localmente pero no pudo ser guardada en la base de datos central.');
     }
 
     // Fallback local (modo demo o sin conexión)
@@ -153,8 +159,17 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
             {prueba.titulo}
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Tus respuestas fueron enviadas al profesor <strong>María González</strong> para la tabulación del grupo curso.
+            Tus respuestas fueron registradas para la tabulación de resultados del grupo curso.
           </p>
+
+          {syncWarning && (
+            <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-700 dark:text-amber-300 text-xs text-left flex items-start gap-2 mt-3">
+              <span className="text-base leading-none">⚠️</span>
+              <div>
+                <strong>Aviso de sincronización:</strong> {syncWarning}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Score Cards */}
