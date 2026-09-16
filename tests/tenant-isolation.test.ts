@@ -11,11 +11,18 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://khtdzgfqjggycrcbrytw.supabase.co';
-const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtodGR6Z2ZxamdneWNyY2JyeXR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2NDkwMzQsImV4cCI6MjEwMjIyNTAzNH0.Bkr8Icfs_QkB4A8vl01AZY73r5hZEdwMh-v_g6p8m2k';
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error('❌ Variables de entorno requeridas: VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY');
+  process.exit(1);
+}
 
 // Cliente Supabase real utilizando la API oficial de @supabase/supabase-js
-const sbClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// (SUPABASE_URL y SUPABASE_ANON_KEY ya validados arriba via process.exit)
+const sbClient = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
+
 
 describe('Tenant & RBAC Isolation Suite (@supabase/supabase-js)', () => {
 
