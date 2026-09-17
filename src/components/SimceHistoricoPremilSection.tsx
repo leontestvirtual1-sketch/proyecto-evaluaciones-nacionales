@@ -11,8 +11,7 @@ import {
   Tooltip,
   CartesianGrid,
   ReferenceLine,
-  Legend,
-  Cell
+  Legend
 } from 'recharts';
 import {
   TrendingUp,
@@ -36,11 +35,25 @@ import {
 
 type TabId = 'tendencia' | 'niveles' | 'sexo';
 
+interface TooltipPayloadItem {
+  dataKey?: string;
+  value?: number;
+  name?: string;
+  fill?: string;
+  color?: string;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: TooltipPayloadItem[];
+  label?: string;
+}
+
 // ─── Tooltip personalizado ───────────────────────────────────────────
-const CustomTooltipTendencia = ({ active, payload, label }: any) => {
+const CustomTooltipTendencia = ({ active, payload, label }: CustomTooltipProps) => {
   if (!active || !payload?.length) return null;
-  const colegio = payload.find((p: any) => p.dataKey === 'puntajeColegio');
-  const gse = payload.find((p: any) => p.dataKey === 'puntajeNacionalGSE');
+  const colegio = payload.find(p => p.dataKey === 'puntajeColegio');
+  const gse = payload.find(p => p.dataKey === 'puntajeNacionalGSE');
   return (
     <div className="bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs shadow-xl">
       <p className="font-bold text-white mb-2">{label}</p>
@@ -50,7 +63,7 @@ const CustomTooltipTendencia = ({ active, payload, label }: any) => {
       {gse && (
         <p className="text-slate-400">🇨🇱 GSE Medio Bajo: <strong>{gse.value} pts</strong></p>
       )}
-      {colegio && gse && (
+      {colegio && gse && colegio.value !== undefined && gse.value !== undefined && (
         <p className={`mt-1.5 font-bold ${colegio.value >= gse.value ? 'text-emerald-400' : 'text-rose-400'}`}>
           Brecha: {colegio.value - gse.value > 0 ? '+' : ''}{colegio.value - gse.value} pts
         </p>
@@ -59,12 +72,12 @@ const CustomTooltipTendencia = ({ active, payload, label }: any) => {
   );
 };
 
-const CustomTooltipNiveles = ({ active, payload, label }: any) => {
+const CustomTooltipNiveles = ({ active, payload, label }: CustomTooltipProps) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs shadow-xl">
       <p className="font-bold text-white mb-2">{label}</p>
-      {payload.map((p: any) => (
+      {payload.map(p => (
         <p key={p.dataKey} style={{ color: p.fill || p.color }}>
           {p.name}: <strong>{p.value}%</strong>
         </p>

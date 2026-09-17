@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { UserProfile, RendicionPrueba } from '../types';
 import {
   User,
-  Mail,
-  GraduationCap,
   Building2,
   Award,
   BookOpen,
-  CheckCircle2,
   Moon,
   Sun,
   Save,

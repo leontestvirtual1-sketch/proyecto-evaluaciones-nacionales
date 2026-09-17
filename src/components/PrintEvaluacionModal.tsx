@@ -6,21 +6,15 @@ import {
   CheckSquare,
   KeyRound,
   X,
-  School,
-  Sparkles,
-  Download,
-  CheckCircle2,
-  Users,
-  UserCheck,
-  User
+  Users
 } from 'lucide-react';
 import { Prueba, Pregunta, AlumnoBasico } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
 import { establecimientosCatalog, preguntasMock } from '../data/mockData';
-import { preguntasLenguaje2MMock, pruebaLenguaje2MMock } from '../data/len2mQuestionsMock';
-import { preguntasLenguaje2MJunioMock, pruebaLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
-import { preguntasLenguaje2MAbrilMock, pruebaLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
-import { preguntasMatematica6BMock, pruebaMatematica6BMock } from '../data/mat6bQuestionsMock';
+import { preguntasLenguaje2MMock } from '../data/len2mQuestionsMock';
+import { preguntasLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
+import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
+import { preguntasMatematica6BMock } from '../data/mat6bQuestionsMock';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { getSequentialPrintTitle } from '../utils/printUtils';

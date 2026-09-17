@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth, RegisterData } from '../context/AuthContext';
-import { GraduationCap, Mail, Lock, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck, Clock, Copy, Check, ExternalLink } from 'lucide-react';
+import { GraduationCap, Mail, Lock, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { UserRole } from '../types';
 import { asignaturasMock } from '../data/mockData';
 import { DocenteFormFields, DocenteFormData } from '../components/DocenteFormFields';

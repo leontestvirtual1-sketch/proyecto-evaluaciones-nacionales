@@ -21,17 +21,46 @@ BEGIN;
 -- La política anterior tenía OR auth.uid() IS NULL que permitía a cualquier
 -- request anónimo insertar rendiciones. Se elimina esa cláusula.
 -- service_role tiene BYPASSRLS y no necesita esta excepción.
+-- V-02 (Doubt-Driven): Permitir inserción al alumno O al docente/admin responsable
+-- para soportar digitación de hojas físicas OMR en educación básica.
 
 DROP POLICY IF EXISTS "Rendiciones insertables por alumno o sistema" ON public.rendiciones;
+DROP POLICY IF EXISTS "Rendiciones insertables por alumno autenticado" ON public.rendiciones;
+DROP POLICY IF EXISTS "Rendiciones insertables por alumno o docente responsable" ON public.rendiciones;
 
-CREATE POLICY "Rendiciones insertables por alumno autenticado"
+CREATE POLICY "Rendiciones insertables por alumno o docente responsable"
   ON public.rendiciones FOR INSERT
-  WITH CHECK (alumno_id = auth.uid());
+  WITH CHECK (
+    alumno_id = auth.uid()
+    OR EXISTS (
+      SELECT 1
+      FROM public.evaluaciones e
+      JOIN public.cursos c ON c.id = e.curso_id
+      WHERE e.id = prueba_id
+        AND (e.profesor_id = auth.uid() OR c.profesor_jefe_id = auth.uid() OR public.is_admin_of_rbd(c.rbd))
+    )
+  );
 
--- UPDATE y DELETE: solo docente responsable o admin del RBD (mantenemos los
--- que 042 no definió explícitamente para completar el CRUD)
+-- V-01 (Doubt-Driven): Asegurar que el profesor autor de la prueba (e.profesor_id)
+-- pueda SELECT, UPDATE y calificar rendiciones aunque no sea el profesor jefe del curso.
+DROP POLICY IF EXISTS "Rendiciones visibles por relacion academica" ON public.rendiciones;
+
+CREATE POLICY "Rendiciones visibles por relacion academica"
+  ON public.rendiciones FOR SELECT
+  USING (
+    alumno_id = auth.uid()
+    OR EXISTS (
+      SELECT 1
+      FROM public.evaluaciones e
+      JOIN public.cursos c ON c.id = e.curso_id
+      WHERE e.id = prueba_id
+        AND (e.profesor_id = auth.uid() OR c.profesor_jefe_id = auth.uid() OR public.is_admin_of_rbd(c.rbd))
+    )
+  );
+
 DROP POLICY IF EXISTS "Rendiciones actualizables por sistema" ON public.rendiciones;
 DROP POLICY IF EXISTS "Rendiciones eliminables por admin del RBD" ON public.rendiciones;
+DROP POLICY IF EXISTS "Rendiciones actualizables por docente o admin" ON public.rendiciones;
 
 CREATE POLICY "Rendiciones actualizables por docente o admin"
   ON public.rendiciones FOR UPDATE
@@ -41,7 +70,7 @@ CREATE POLICY "Rendiciones actualizables por docente o admin"
       FROM public.evaluaciones e
       JOIN public.cursos c ON c.id = e.curso_id
       WHERE e.id = prueba_id
-        AND (c.profesor_jefe_id = auth.uid() OR public.is_admin_of_rbd(c.rbd))
+        AND (e.profesor_id = auth.uid() OR c.profesor_jefe_id = auth.uid() OR public.is_admin_of_rbd(c.rbd))
     )
   );
 
@@ -86,15 +115,17 @@ CREATE POLICY "Preguntas privadas del propietario"
     OR public.is_admin_of_rbd(rbd)
   );
 
--- Las políticas de INSERT/UPDATE/DELETE ya están correctas en 042 (propietario_id = auth.uid()).
--- Al insertar, propagar rbd automáticamente desde el perfil del docente:
+-- V-03 (Doubt-Driven): Al insertar preguntas, propagar rbd obligatoriamente
 DROP POLICY IF EXISTS "Creacion de preguntas propias" ON public.preguntas;
 
 CREATE POLICY "Creacion de preguntas propias"
   ON public.preguntas FOR INSERT
   WITH CHECK (
     propietario_id = auth.uid()
-    AND rbd IS NOT DISTINCT FROM public.current_user_rbd()
+    AND (
+      public.is_admin_of_rbd(NULL) -- Super Admin global
+      OR (rbd IS NOT NULL AND rbd = public.current_user_rbd())
+    )
   );
 
 -- ==============================================================================

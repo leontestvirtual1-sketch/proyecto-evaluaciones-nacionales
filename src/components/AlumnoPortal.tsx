@@ -8,11 +8,7 @@ import {
   KeyRound,
   Sparkles,
   Award,
-  Flame,
-  ArrowRight,
-  Brain,
-  Target,
-  RotateCcw
+  Flame
 } from 'lucide-react';
 import { SandboxBeacon } from './SandboxBeacon';
 import { MiniSIMCERunner } from './MiniSIMCERunner';

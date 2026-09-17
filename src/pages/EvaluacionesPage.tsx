@@ -18,7 +18,6 @@ import {
   X,
   HelpCircle,
   FileCheck,
-  Camera,
   BookMarked
 } from 'lucide-react';
 import { UserProfile, RendicionPrueba } from '../types';

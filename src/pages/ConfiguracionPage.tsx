@@ -9,7 +9,6 @@ import {
   Sliders,
   Cloud,
   User,
-  Shield,
   Save,
   Check,
   Sparkles,
@@ -18,7 +17,6 @@ import {
   Database,
   Key,
   Server,
-  Lock,
   Globe,
   Award,
   RefreshCw,
@@ -26,9 +24,7 @@ import {
   AlertCircle,
   BookOpen,
   PlusCircle,
-  Trash2,
-  Layers,
-  GraduationCap
+  Trash2
 } from 'lucide-react';
 
 interface ConfiguracionPageProps {
@@ -73,7 +69,6 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
   const [localAsignaturas, setLocalAsignaturas] = useState<Asignatura[]>(asignaturas);
   const [newCodigo, setNewCodigo] = useState('');
   const [newNombre, setNewNombre] = useState('');
-  const [newIcono, setNewIcono] = useState('📚');
   const [isAddingAsig, setIsAddingAsig] = useState(false);
 
   // Evaluation params
@@ -86,7 +81,7 @@ export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
   const [nombre, setNombre] = useState(user.nombre);
   const [apellido, setApellido] = useState(user.apellido);
   const [email, setEmail] = useState(user.email);
-  const [rut, setRut] = useState(user.rut);
+  const [rut] = useState(user.rut);
 
   const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
   const [feedbackMessage, setFeedbackMessage] = useState<string>('¡Configuración guardada exitosamente en el sistema!');

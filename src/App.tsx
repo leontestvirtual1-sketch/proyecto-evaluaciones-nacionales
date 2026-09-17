@@ -25,13 +25,9 @@ import {
   asignaturasMock,
   ejesTematicosMock,
   habilidadesMock,
-  preguntasMock,
-  cursosMock,
-  pruebasMock,
   rendicionesMock,
   reporteCursoMock,
   reporteCienciasMock,
-  reporteLenguajeMock,
   reporteLenguajeDemoMock
 } from './data/mockData';
 import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } from './types';

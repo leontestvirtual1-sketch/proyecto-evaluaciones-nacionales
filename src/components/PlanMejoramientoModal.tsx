@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import {
   X,
   FileCheck2,
-  TrendingUp,
   Target,
   Calendar,
-  AlertTriangle,
   Download,
   CheckCircle2,
   Sparkles,
-  School,
-  FileText
+  School
 } from 'lucide-react';
 import { APP_CONFIG } from '../config/appConfig';
 

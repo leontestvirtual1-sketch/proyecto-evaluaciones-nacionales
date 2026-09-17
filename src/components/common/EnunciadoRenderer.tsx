@@ -24,7 +24,7 @@ function sanitizeEnunciadoLine(line: string): string {
  */
 function normalizeText(raw: string): string {
   // 1. Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
-  let text = raw
+  const text = raw
     .replace(/FORMA\s+\d+\s*[|│▌]\s*\d{4}/gi, '')
     .replace(/www\.[a-z0-9.-]+\.[a-z]{2,}/gi, '')
     .replace(/[\u25a1\u25aa\u25ab\u25fc\u25fd\ufffd]/g, '·');
@@ -93,9 +93,6 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
     : 'text-slate-800 dark:text-slate-200';
   const boldClass = forceLightMode
     ? 'font-bold text-black'
-    : 'font-bold text-slate-900 dark:text-white';
-  const headingClass = forceLightMode
-    ? 'font-black text-black'
     : 'font-bold text-slate-900 dark:text-white';
 
   // Renderizar texto inline (negrita, cursiva, latex básico, imágenes inline)

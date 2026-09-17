@@ -13,7 +13,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { EvaluacionCatalogo, Pregunta, Prueba } from '../types';
+import { EvaluacionCatalogo, Pregunta, Prueba, Alternativa } from '../types';
 import { getTipoEvaluacion } from './AdminCatalogoPanel';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
 import { PrintEvaluacionModal } from './PrintEvaluacionModal';
@@ -76,11 +76,11 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
 
         if (res.ok) {
           const data = await res.json();
-          const items: Pregunta[] = (data.preguntas || []).map((p: any) => {
+          const items: Pregunta[] = (data.preguntas || []).map((p: Record<string, unknown>) => {
             // Normalizar alternativas: Supabase JSONB puede llegar como string o array
-            let alts: any[] = [];
+            let alts: Alternativa[] = [];
             if (Array.isArray(p.alternativas)) {
-              alts = p.alternativas;
+              alts = p.alternativas as Alternativa[];
             } else if (typeof p.alternativas === 'string' && p.alternativas.trim()) {
               try { alts = JSON.parse(p.alternativas); } catch { alts = []; }
             }
@@ -305,9 +305,6 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
               /* ── TAB: CUADERNILLO ────────────────────────────────── */
               <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 space-y-5">
                 {preguntas.map((p, idx) => {
-                  const altCorrectaIdx = p.alternativas.findIndex(
-                    (a) => a.letra === p.respuestaCorrecta
-                  );
                   return (
                     <div
                       key={p.id}

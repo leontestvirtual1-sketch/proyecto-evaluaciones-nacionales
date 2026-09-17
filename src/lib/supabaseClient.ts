@@ -37,9 +37,9 @@ export async function testSupabaseConnection(): Promise<{ ok: boolean; message: 
       return { ok: false, message: error.message, latencyMs };
     }
     return { ok: true, message: `Conexión activa a PostgreSQL (${count ?? 4} asignaturas registradas)`, latencyMs };
-  } catch (err: any) {
+  } catch (err: unknown) {
     const latencyMs = Math.round(performance.now() - start);
-    return { ok: false, message: err?.message || 'Error de red al conectar', latencyMs };
+    return { ok: false, message: err instanceof Error ? err.message : 'Error de red al conectar', latencyMs };
   }
 }
 

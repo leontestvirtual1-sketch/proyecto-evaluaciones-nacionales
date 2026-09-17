@@ -18,7 +18,7 @@ export function getSequentialPrintTitle(baseTitle: string): string {
       return baseTitle;
     }
     return `${baseTitle} (${count})`;
-  } catch (e) {
+  } catch {
     return baseTitle;
   }
 }

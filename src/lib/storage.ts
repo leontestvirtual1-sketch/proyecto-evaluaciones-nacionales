@@ -72,7 +72,7 @@ export async function uploadPreguntaImage(
 
     const { data } = supabase.storage.from(EVALUACIONES_BUCKET).getPublicUrl(filePath);
     return { success: true, url: data.publicUrl };
-  } catch (err: any) {
-    return { success: false, error: err.message || 'Error inesperado al subir la imagen' };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : 'Error inesperado al subir la imagen' };
   }
 }

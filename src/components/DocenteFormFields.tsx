@@ -58,7 +58,7 @@ export const COMUNAS_REGION_METROPOLITANA = [
   'Isla de Maipo',
   'Padre Hurtado',
   'Peñaflor'
-].sort((a, b) => a.localeCompare('es'));
+].sort((a, b) => a.localeCompare(b, 'es'));
 
 export interface DocenteFormData {
   rut: string;

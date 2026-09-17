@@ -258,7 +258,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // Sin sesión Supabase activa — limpiar estado local
           localStorage.removeItem('sysget_session_email');
         }
-      } catch (err) {
+      } catch {
         console.warn('[AuthContext] Sin conexión a Supabase. El usuario deberá autenticarse cuando haya red.');
         // No restaurar sesión desde localStorage sin validación de Supabase (seguridad)
       } finally {
@@ -431,8 +431,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         needsAdminApproval: true,
         approvalToken: resData.approvalToken
       };
-    } catch (err: any) {
-      return { error: err.message || 'Error de conexión con el servidor' };
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error de conexión con el servidor';
+      return { error: msg };
     }
   }, [fetchUsers]);
 
@@ -484,7 +485,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           message: resData.message || 'El enlace de aprobación es inválido o la cuenta ya fue activada previamente.'
         };
       }
-    } catch (e: any) {
+    } catch {
       return {
         success: false,
         message: 'Error al conectar con el servidor de aprobación.'
@@ -557,7 +558,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       return { error: null };
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error llamando a set-password API:', err);
       return { error: 'Error de conexión al actualizar la contraseña.' };
     }
@@ -566,7 +567,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = useCallback(async () => {
     try {
       await supabase.auth.signOut();
-    } catch (e) {
+    } catch {
       // ignore
     }
     localStorage.removeItem('sysget_session_email');
@@ -596,7 +597,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-2') || null;
           }
         }
-      } catch (_e) {}
+      } catch {}
 
       // 'premilitar' ya no es un extra válido — los docentes reales inician sesión directamente
       if (extra === 'matematica') {

@@ -77,26 +77,26 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
 
       const catData = catRes.ok ? await catRes.json() : { evaluaciones: [] };
       setCatalogo(
-        (catData.evaluaciones || []).map((e: any) => ({
-          id: e.id,
-          titulo: e.titulo,
-          descripcion: e.descripcion,
-          asignaturaId: e.asignatura_id,
-          nivel: e.nivel,
-          precioCLP: e.precio_clp ?? 0,
-          descripcionCatalogo: e.descripcion_catalogo,
-          totalPreguntas: e.total_preguntas ?? (Array.isArray(e.pregunta_ids) ? e.pregunta_ids.length : 0),
+        (catData.evaluaciones || []).map((e: Record<string, unknown>) => ({
+          id: String(e.id || ''),
+          titulo: String(e.titulo || ''),
+          descripcion: String(e.descripcion || ''),
+          asignaturaId: String(e.asignatura_id || ''),
+          nivel: String(e.nivel || ''),
+          precioCLP: (e.precio_clp as number) ?? 0,
+          descripcionCatalogo: e.descripcion_catalogo as string | undefined,
+          totalPreguntas: (e.total_preguntas as number) ?? (Array.isArray(e.pregunta_ids) ? e.pregunta_ids.length : 0),
         }))
       );
 
       const solRows = solRes.data || [];
       setMisSolicitudes(
-        solRows.map((s: any) => ({
-          id: s.id,
-          evaluacionId: s.evaluacion_id,
-          estado: s.estado,
-          createdAt: s.created_at,
-          mensaje: s.mensaje,
+        solRows.map((s: Record<string, unknown>) => ({
+          id: String(s.id || ''),
+          evaluacionId: String(s.evaluacion_id || ''),
+          estado: (s.estado as "pendiente" | "aprobada" | "rechazada") || "pendiente",
+          createdAt: String(s.created_at || ''),
+          mensaje: s.mensaje as string | undefined,
           establecimiento: currentUser.establecimiento || "",
           profesorId: currentUser.id,
         }))
@@ -118,7 +118,7 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
 
   const getSolicitudEstado = (evalId: string): "ninguna" | "pendiente" | "aprobada" | "rechazada" => {
     const sol = misSolicitudes.find((s) => s.evaluacionId === evalId);
-    return sol ? (sol.estado as any) : "ninguna";
+    return sol ? sol.estado : "ninguna";
   };
 
   const handleSolicitar = async () => {
@@ -156,8 +156,9 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
       ]);
       setSelectedEval(null);
       setMensaje("");
-    } catch (e: any) {
-      showToast("err", e.message || "No se pudo enviar la solicitud");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "No se pudo enviar la solicitud";
+      showToast("err", msg);
     } finally {
       setIsSending(false);
     }

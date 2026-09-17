@@ -5,7 +5,6 @@ import {
   Search,
   Upload,
   MoreVertical,
-  Mail,
   Edit2,
   Trash2,
   UserCheck,
@@ -20,7 +19,7 @@ import {
 import { UserProfile } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
 import { parseAlumnosCSV, csvAlumnosToProfiles } from '../utils/csvParser';
-import { CursoItem, useCursos } from '../hooks/useCursos';
+import { useCursos } from '../hooks/useCursos';
 import { supabase } from '../lib/supabaseClient';
 
 // Extendemos localmente con cursoId para el filtro
@@ -172,7 +171,6 @@ const AlumnoCargaMasivaModal: React.FC<CSVModalProps> = ({ isOpen, onClose, onIm
   const [preview, setPreview] = useState<AlumnoConCurso[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [fileName, setFileName] = useState('');
-  const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
@@ -357,7 +355,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     if (isSandboxMode) return getInitialDemoAlumnos();
     return [];
   });
-  const [isLoadingProd, setIsLoadingProd] = useState<boolean>(!isSandboxMode);
+  const [_isLoadingProd, setIsLoadingProd] = useState<boolean>(!isSandboxMode);
   const [search, setSearch] = useState('');
   const [cursoFilter, setCursoFilter] = useState('');
   const [formModalOpen, setFormModalOpen] = useState(false);
@@ -400,14 +398,14 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
         .select('alumno_id, curso_id');
 
       const matriculaMap = new Map<string, string>();
-      (matriculasRows || []).forEach((m: any) => {
+      (matriculasRows || []).forEach((m: { alumno_id: string; curso_id: string }) => {
         matriculaMap.set(m.alumno_id, m.curso_id);
       });
 
       const cursosMap = new Map<string, string>();
       cursosFromHook.forEach(c => cursosMap.set(c.id, c.nombre));
 
-      const alumnosList: AlumnoConCurso[] = (perfilesRows || []).map((p: any) => {
+      const alumnosList: AlumnoConCurso[] = (perfilesRows || []).map((p: Record<string, string>) => {
         const cId = matriculaMap.get(p.id);
         return {
           id: p.id,

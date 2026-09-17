@@ -1,11 +1,8 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { Prueba, UserProfile } from '../types';
 import {
   pruebasMock,
-  pruebaLenguaje2MMock,
-  pruebaLenguaje2MJunioMock,
-  pruebaLenguaje2MAbrilMock,
 } from '../data/mockData';
 
 interface UseEvaluacionesProps {
@@ -13,24 +10,29 @@ interface UseEvaluacionesProps {
   isSandboxMode?: boolean;
 }
 
-function mapRowToPrueba(row: any): Prueba {
+function mapRowToPrueba(row: Record<string, unknown>): Prueba {
+  const preguntasIdsArray = Array.isArray(row.preguntas_ids)
+    ? (row.preguntas_ids as string[])
+    : Array.isArray(row.pregunta_ids)
+      ? (row.pregunta_ids as string[])
+      : [];
   return {
-    id: row.id,
-    titulo: row.titulo || 'Sin título',
-    descripcion: row.descripcion || '',
-    asignaturaId: row.asignatura_id || 'asig-1',
-    asignaturaNombre: row.asignatura_nombre || (row.asignatura_id === 'asig-2' ? 'Lengua y Literatura' : row.asignatura_id === 'asig-3' ? 'Ciencias Naturales' : 'Matemática'),
-    nivel: row.nivel || '2° Medio',
-    profesorId: row.profesor_id || '',
-    cursoId: row.curso_id || '',
-    cursoNombre: row.curso_nombre || 'Curso General',
-    codigoPublico: row.codigo_acceso || row.codigo_publico || 'EVAL-001',
+    id: String(row.id || ''),
+    titulo: String(row.titulo || 'Sin título'),
+    descripcion: String(row.descripcion || ''),
+    asignaturaId: String(row.asignatura_id || 'asig-1'),
+    asignaturaNombre: String(row.asignatura_nombre || (row.asignatura_id === 'asig-2' ? 'Lengua y Literatura' : row.asignatura_id === 'asig-3' ? 'Ciencias Naturales' : 'Matemática')),
+    nivel: String(row.nivel || '2° Medio'),
+    profesorId: String(row.profesor_id || ''),
+    cursoId: String(row.curso_id || ''),
+    cursoNombre: String(row.curso_nombre || 'Curso General'),
+    codigoPublico: String(row.codigo_acceso || row.codigo_publico || 'EVAL-001'),
     duracionMinutos: Number(row.tiempo_limite) || Number(row.duracion_minutos) || 60,
-    creadoEn: row.created_at ? new Date(row.created_at).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
+    creadoEn: row.created_at ? new Date(String(row.created_at)).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
     // CORRECCIÓN (Auditoría 2026-09-16): columna real es 'preguntas_ids' (plural).
     // Se conserva fallback a 'pregunta_ids' solo para compatibilidad con filas antiguas en DB.
-    preguntasIds: Array.isArray(row.preguntas_ids) ? row.preguntas_ids : Array.isArray(row.pregunta_ids) ? row.pregunta_ids : [],
-    totalPreguntas: Number(row.total_preguntas) || (Array.isArray(row.preguntas_ids) ? row.preguntas_ids.length : Array.isArray(row.pregunta_ids) ? row.pregunta_ids.length : 30),
+    preguntasIds: preguntasIdsArray,
+    totalPreguntas: Number(row.total_preguntas) || (preguntasIdsArray.length > 0 ? preguntasIdsArray.length : 30),
     estado: row.estado === 'activa' || row.estado === 'finalizada' ? row.estado : 'borrador',
   };
 }
@@ -38,7 +40,7 @@ function mapRowToPrueba(row: any): Prueba {
 // CORRECCIÓN (Auditoría 2026-09-16):
 // - 'pregunta_ids' → 'preguntas_ids' (nombre real de columna en tabla evaluaciones)
 // - Eliminado campo 'establecimiento' que no existe en la tabla evaluaciones
-function mapPruebaToRow(p: Prueba, userId: string): Record<string, any> {
+function mapPruebaToRow(p: Prueba, userId: string): Record<string, unknown> {
   return {
     id: p.id,
     titulo: p.titulo,
@@ -58,7 +60,6 @@ function mapPruebaToRow(p: Prueba, userId: string): Record<string, any> {
 export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvaluacionesProps) {
   const [pruebas, setPruebas] = useState<Prueba[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const isSeededRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (!currentUser) {
@@ -84,8 +85,6 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
     async function loadPruebas() {
       try {
         let query = supabase.from('evaluaciones').select('*');
-
-        const isValidUUID = (id?: string) => Boolean(id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id));
         const isAdmin = currentUser!.rol === 'admin';
 
         if (!isAdmin) {

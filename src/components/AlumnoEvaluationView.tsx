@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Prueba, Pregunta, UserProfile, RendicionPrueba } from '../types';
-import { Clock, CheckCircle2, AlertCircle, ArrowRight, ArrowLeft, Send, Sparkles, Award } from 'lucide-react';
+import { Clock, CheckCircle2, ArrowRight, ArrowLeft, Send } from 'lucide-react';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
 import { resolveImageUrl } from '../lib/storage';
 
@@ -23,7 +23,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
   const [respuestas, setRespuestas] = useState<Record<string, string>>({});
   const [tiempoRestante, setTiempoRestante] = useState<number>(prueba.duracionMinutos * 60);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [tiempoExpirado, setTiempoExpirado] = useState<boolean>(false);
+  const [_tiempoExpirado, setTiempoExpirado] = useState<boolean>(false);
   const [completedRendicion, setCompletedRendicion] = useState<RendicionPrueba | null>(null);
   const [syncWarning, setSyncWarning] = useState<string | null>(null);
 

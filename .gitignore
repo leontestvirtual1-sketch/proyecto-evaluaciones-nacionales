@@ -68,5 +68,7 @@ scratch/
 
 .vercel
 supabase/.temp/
+eslint_report.json
+.testsprite/
 
 

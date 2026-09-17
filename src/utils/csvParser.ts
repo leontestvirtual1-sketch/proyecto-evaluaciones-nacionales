@@ -34,7 +34,7 @@ export function parseAlumnosCSV(raw: string): { rows: CSVAlumno[]; errors: strin
     const cols = lines[i].split(sep).map(c => c.trim());
     const row: Partial<CSVAlumno> = {};
     headers.forEach((h, idx) => {
-      (row as any)[h] = cols[idx] || '';
+      (row as Record<string, string>)[h] = cols[idx] || '';
     });
 
     if (!row.rut || !row.nombre || !row.apellido || !row.email) {

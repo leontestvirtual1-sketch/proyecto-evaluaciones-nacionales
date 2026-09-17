@@ -438,7 +438,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
               </div>
 
               <div className="space-y-3">
-                {pruebas.map((p: any) => (
+                {pruebas.map((p: Prueba) => (
                   <div key={p.id} className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
@@ -623,7 +623,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800/60">
-                      {mapaCalorCursosMock.map((c: any) => (
+                      {mapaCalorCursosMock.map((c) => (
                         <tr key={c.cursoId} className="hover:bg-slate-800/40 transition-colors">
                           <td className="py-3 px-3">
                             <div className="font-bold text-white">{c.cursoNombre}</div>
@@ -856,7 +856,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                   <YAxis type="category" dataKey="name" stroke="#cbd5e1" fontSize={11} width={130} />
                   <Tooltip
                     contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', fontSize: '11px' }}
-                    formatter={(val: any) => [`${val}% de logro`, 'Rendimiento']}
+                    formatter={(val: unknown) => [`${val}% de logro`, 'Rendimiento']}
                   />
                   <Bar dataKey="logro" radius={[0, 8, 8, 0]}>
                     {ejesChartData.map((entry, index) => (

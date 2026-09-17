@@ -3,15 +3,11 @@ import {
   Clock,
   CheckCircle2,
   XCircle,
-  Award,
   ArrowRight,
   ArrowLeft,
   RotateCcw,
   Sparkles,
-  BookOpen,
-  HelpCircle,
-  Check,
-  AlertCircle
+  Check
 } from 'lucide-react';
 import { preguntasMock } from '../data/mockData';
 import { Pregunta } from '../types';
@@ -23,7 +19,7 @@ interface MiniSIMCERunnerProps {
 }
 
 export const MiniSIMCERunner: React.FC<MiniSIMCERunnerProps> = ({
-  onFinish,
+  onFinish: _onFinish,
   onViewPlan
 }) => {
   const [selectedSubject, setSelectedSubject] = useState<'matematica' | 'ciencias'>('matematica');

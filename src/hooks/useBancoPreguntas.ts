@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { Pregunta, UserProfile } from '../types';
 import {
@@ -14,28 +14,28 @@ interface UseBancoPreguntasProps {
 }
 
 // Convertidor de base de datos (snake_case) a modelo TypeScript (camelCase)
-export function mapRowToPregunta(row: any): Pregunta {
+export function mapRowToPregunta(row: Record<string, unknown>): Pregunta {
   return {
-    id: row.id,
-    propietarioId: row.propietario_id || undefined,
-    asignaturaId: row.asignatura_id || '',
-    ejeTematicoId: row.eje_tematico_id || '',
-    habilidadId: row.habilidad_id || '',
-    tipo: row.tipo || 'seleccion_multiple',
-    nivel: row.nivel || '2° medio',
-    dificultad: row.dificultad || 'media',
-    enunciado: row.enunciado || '',
-    imagenUrl: row.imagen_url || undefined,
-    tablaMarkdown: row.tabla_markdown || undefined,
-    alternativas: Array.isArray(row.alternativas) ? row.alternativas : [],
-    respuestaCorrecta: row.respuesta_correcta ?? null,
+    id: String(row.id || ''),
+    propietarioId: (row.propietario_id as string) || undefined,
+    asignaturaId: String(row.asignatura_id || ''),
+    ejeTematicoId: String(row.eje_tematico_id || ''),
+    habilidadId: String(row.habilidad_id || ''),
+    tipo: (row.tipo as Pregunta['tipo']) || 'seleccion_multiple',
+    nivel: String(row.nivel || '2° medio'),
+    dificultad: (row.dificultad as Pregunta['dificultad']) || 'media',
+    enunciado: String(row.enunciado || ''),
+    imagenUrl: (row.imagen_url as string) || undefined,
+    tablaMarkdown: (row.tabla_markdown as string) || undefined,
+    alternativas: Array.isArray(row.alternativas) ? (row.alternativas as Pregunta['alternativas']) : [],
+    respuestaCorrecta: (row.respuesta_correcta as string | null) ?? null,
     puntaje: Number(row.puntaje) || 1,
-    fuente: row.fuente || 'Creada por docente',
+    fuente: String(row.fuente || 'Creada por docente'),
   };
 }
 
 // Convertidor de modelo TypeScript (camelCase) a base de datos (snake_case)
-export function mapPreguntaToRow(p: Pregunta, userId: string): Record<string, any> {
+export function mapPreguntaToRow(p: Pregunta, userId: string): Record<string, unknown> {
   return {
     id: p.id,
     propietario_id: userId,
@@ -176,9 +176,10 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         // Confirmado en Supabase → actualizar estado en React
         setPreguntas(prev => [fullPregunta, ...prev.filter(item => item.id !== fullPregunta.id)]);
         return { success: true };
-      } catch (err: any) {
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Sin conexión';
         console.error('[useBancoPreguntas] Excepción al agregar pregunta:', err);
-        return { success: false, error: `Error inesperado: ${err?.message || 'Sin conexión'}` };
+        return { success: false, error: `Error inesperado: ${msg}` };
       }
     },
     [user, isSandboxMode]
@@ -206,9 +207,10 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
 
         setPreguntas(prev => prev.map(item => (item.id === p.id ? p : item)));
         return { success: true };
-      } catch (err: any) {
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Sin conexión';
         console.error('[useBancoPreguntas] Excepción al actualizar pregunta:', err);
-        return { success: false, error: `Error inesperado: ${err?.message || 'Sin conexión'}` };
+        return { success: false, error: `Error inesperado: ${msg}` };
       }
     },
     [user, isSandboxMode]
@@ -235,9 +237,10 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
 
         setPreguntas(prev => prev.filter(item => item.id !== id));
         return { success: true };
-      } catch (err: any) {
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Sin conexión';
         console.error('[useBancoPreguntas] Excepción al eliminar pregunta:', err);
-        return { success: false, error: `Error inesperado: ${err?.message || 'Sin conexión'}` };
+        return { success: false, error: `Error inesperado: ${msg}` };
       }
     },
     [user, isSandboxMode]

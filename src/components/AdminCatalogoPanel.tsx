@@ -8,18 +8,13 @@ import {
   Clock,
   Loader2,
   RefreshCw,
-  ToggleLeft,
   ToggleRight,
   Tag,
-  AlertCircle,
   Send,
-  Filter,
-  Sparkles,
   Edit3,
   DollarSign,
   X,
   Save,
-  Check,
   Eye
 } from "lucide-react";
 import { CatalogoDetalleModal } from "./CatalogoDetalleModal";
@@ -119,33 +114,33 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       const catData = catRes.ok ? await catRes.json() : { evaluaciones: [] };
 
       setSolicitudes(
-        (solData.solicitudes || []).map((s: any) => ({
-          id: s.id,
-          evaluacionId: s.evaluacion_id,
-          evaluacionTitulo: s.evaluaciones?.titulo,
-          asignatura: s.evaluaciones?.asignatura_id,
-          profesorId: s.profesor_id,
-          docenteNombre: s.perfiles ? `${s.perfiles.nombre} ${s.perfiles.apellido}`.trim() : "",
-          docenteEmail: s.perfiles?.email,
-          establecimiento: s.perfiles?.establecimiento || s.establecimiento,
-          rbd: s.perfiles?.rbd || s.rbd,
-          mensaje: s.mensaje,
-          estado: s.estado,
-          createdAt: s.created_at,
+        (solData.solicitudes || []).map((s: Record<string, unknown>) => ({
+          id: s.id as string,
+          evaluacionId: (s.evaluacion_id as string),
+          evaluacionTitulo: (s.evaluaciones as Record<string, string>)?.titulo,
+          asignatura: (s.evaluaciones as Record<string, string>)?.asignatura_id,
+          profesorId: s.profesor_id as string,
+          docenteNombre: s.perfiles ? `${(s.perfiles as Record<string, string>).nombre} ${(s.perfiles as Record<string, string>).apellido}`.trim() : "",
+          docenteEmail: (s.perfiles as Record<string, string>)?.email,
+          establecimiento: (s.perfiles as Record<string, string>)?.establecimiento || (s.establecimiento as string),
+          rbd: (s.perfiles as Record<string, string>)?.rbd || (s.rbd as string),
+          mensaje: s.mensaje as string,
+          estado: s.estado as string,
+          createdAt: s.created_at as string,
         }))
       );
 
       // Evaluaciones en catálogo (para gestión)
       setEvalsSinAsignar(
-        (catData.evaluaciones || []).map((e: any) => ({
-          id: e.id,
-          titulo: e.titulo,
-          descripcion: e.descripcion,
-          asignaturaId: e.asignatura_id,
-          nivel: e.nivel,
-          precioCLP: e.precio_clp ?? 0,
-          descripcionCatalogo: e.descripcion_catalogo || "",
-          totalPreguntas: e.total_preguntas ?? 0,
+        (catData.evaluaciones || []).map((e: Record<string, unknown>) => ({
+          id: e.id as string,
+          titulo: e.titulo as string,
+          descripcion: e.descripcion as string,
+          asignaturaId: e.asignatura_id as string,
+          nivel: e.nivel as string,
+          precioCLP: (e.precio_clp as number) ?? 0,
+          descripcionCatalogo: (e.descripcion_catalogo as string) || "",
+          totalPreguntas: (e.total_preguntas as number) ?? 0,
         }))
       );
     } catch (e) {
@@ -175,8 +170,9 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       setSolicitudes((prev) =>
         prev.map((s) => (s.id === sol.id ? { ...s, estado: "aprobada" } : s))
       );
-    } catch (e: any) {
-      showToast("err", e.message || "No se pudo aprobar la solicitud");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "No se pudo aprobar la solicitud";
+      showToast("err", msg);
     } finally {
       setIsProcessing(null);
     }
@@ -199,8 +195,9 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       setSolicitudes((prev) =>
         prev.map((s) => (s.id === sol.id ? { ...s, estado: "rechazada" } : s))
       );
-    } catch (e: any) {
-      showToast("err", e.message || "No se pudo rechazar la solicitud");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "No se pudo rechazar la solicitud";
+      showToast("err", msg);
     } finally {
       setIsProcessing(null);
     }
@@ -222,8 +219,9 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       if (!esCatalogo) {
         setEvalsSinAsignar((prev) => prev.filter((e) => e.id !== ev.id));
       }
-    } catch (e: any) {
-      showToast("err", e.message || "No se pudo modificar el catálogo");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "No se pudo modificar el catálogo";
+      showToast("err", msg);
     } finally {
       setIsProcessing(null);
     }
@@ -264,8 +262,9 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
         )
       );
       setEditingEval(null);
-    } catch (e: any) {
-      showToast("err", e.message || "Error al actualizar precio");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Error al actualizar precio";
+      showToast("err", msg);
     } finally {
       setIsSavingPrice(false);
     }

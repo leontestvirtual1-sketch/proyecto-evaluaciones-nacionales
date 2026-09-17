@@ -7,7 +7,6 @@ import {
   BookOpen,
   PlusCircle,
   Users,
-  KeyRound,
   Edit2,
   Trash2,
   MoreVertical,
@@ -190,7 +189,7 @@ interface CursosPageProps {
 
 export const CursosPage: React.FC<CursosPageProps> = ({ currentUser, isSandboxMode = false }) => {
   const colegioNombre = currentUser?.establecimiento || APP_CONFIG.nombreEstablecimiento;
-  const { cursos, isLoading, saveCurso, deleteCurso, regenCodigo } = useCursos({
+  const { cursos, isLoading: _isLoading, saveCurso, deleteCurso, regenCodigo } = useCursos({
     currentUser,
     isSandboxMode,
   });

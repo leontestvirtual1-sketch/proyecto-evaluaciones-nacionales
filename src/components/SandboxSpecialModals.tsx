@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import {
   X,
   Sparkles,
-  UserCheck,
   Brain,
-  Layers,
-  BookOpen,
   CheckCircle2,
   AlertTriangle,
-  Download,
   Calendar,
-  ArrowRight,
   ShieldCheck,
-  Award,
   Printer
 } from 'lucide-react';
 import { planReforzamientoMartinSepulveda, evaluacionEscrituraIAMock } from '../data/mockData';

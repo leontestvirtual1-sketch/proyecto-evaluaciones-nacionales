@@ -71,8 +71,8 @@ const crearReporteVacio = (user: UserProfile): ReporteTabuladoCurso => ({
   rendiciones: [],
 });
 
-/** Crea un objeto SeguimientoDocente para un docente */
-const crearSeguimientoVacio = (user: UserProfile): SeguimientoDocente => ({
+/** Crea un objeto SeguimientoDocente para un docente (reservada para uso futuro) */
+const _crearSeguimientoVacio = (user: UserProfile): SeguimientoDocente => ({
   profesorId: user.id,
   profesorNombre: `${user.nombre} ${user.apellido}`,
   profesorEmail: user.email,

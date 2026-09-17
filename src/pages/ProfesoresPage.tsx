@@ -5,22 +5,17 @@ import {
   Search,
   MoreVertical,
   Mail,
-  BookOpen,
   Edit2,
   Trash2,
-  UserCheck,
-  UserX,
   Key,
   Lock,
   Eye,
   EyeOff,
   Check,
-  Sparkles,
-  ShieldCheck,
   X
 } from 'lucide-react';
 import { UserProfile, Asignatura } from '../types';
-import { asignaturasMock, cursosMock, demoProfesoresMock } from '../data/mockData';
+import { asignaturasMock, demoProfesoresMock } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 
@@ -143,9 +138,10 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, profesor, onClose
             </button>
             <button
               type="submit"
-              className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 shadow-md shadow-amber-600/20 transition-all"
+              disabled={isSaving}
+              className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 disabled:opacity-50 shadow-md shadow-amber-600/20 transition-all"
             >
-              Actualizar Contraseña
+              {isSaving ? 'Actualizando...' : 'Actualizar Contraseña'}
             </button>
           </div>
         </form>
@@ -172,7 +168,7 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
   onSave,
   editProfesor,
   asignaturas = asignaturasMock,
-  onNavigateToConfig
+  onNavigateToConfig: _onNavigateToConfig
 }) => {
   const [form, setForm] = useState<DocenteFormData>({
     rut: '',
@@ -283,8 +279,9 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
         plan: 'trial'
       }, tempPassword);
       onClose();
-    } catch (err: any) {
-      setError(err.message || 'Ocurrió un error al registrar el docente.');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Ocurrió un error al registrar el docente.';
+      setError(msg);
     } finally {
       setIsSaving(false);
     }
@@ -388,7 +385,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
   asignaturas = asignaturasMock,
   onNavigateToConfig
 }) => {
-  const { user, docentesReales, loadDocentesReales, setUserPassword } = useAuth();
+  const { docentesReales, loadDocentesReales, setUserPassword } = useAuth();
   const { isProduction } = useAcademicData();
   const isDemo = !isProduction;
   const storageKey = isDemo ? 'sysget_demo_profesores_list' : 'sysget_prod_profesores_list';
@@ -473,9 +470,10 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
         });
 
         showToast(`✅ Docente ${prof.nombre} ${prof.apellido} registrado y activado exitosamente en Supabase.`);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error guardando docente:', err);
-        showToast(`⚠️ Error: ${err.message}`);
+        const msg = err instanceof Error ? err.message : String(err);
+        showToast(`⚠️ Error: ${msg}`);
         throw err;
       }
     } else if (isDemo) {
@@ -506,8 +504,9 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
         if (loadDocentesReales) await loadDocentesReales();
         setProfesores(prev => prev.filter(item => item.id !== id));
         if (p) showToast(`✅ Docente ${p.nombre} ${p.apellido} suspendido en Supabase.`);
-      } catch (err: any) {
-        showToast(`⚠️ Error al eliminar: ${err.message}`);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        showToast(`⚠️ Error al eliminar: ${msg}`);
       }
     } else {
       setProfesores(prev => {

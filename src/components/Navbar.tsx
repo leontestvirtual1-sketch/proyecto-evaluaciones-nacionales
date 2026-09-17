@@ -1,14 +1,11 @@
 import { UserProfile, UserRole } from '../types';
 import {
   GraduationCap,
-  BookOpen,
-  UserCheck,
   Moon,
   Sun,
   School,
   Sparkles,
   Home,
-  ShieldAlert,
   LogOut
 } from 'lucide-react';
 

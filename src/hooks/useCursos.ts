@@ -25,21 +25,21 @@ function generateCode(): string {
   return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
 }
 
-function mapRowToCurso(row: any): CursoItem {
+function mapRowToCurso(row: Record<string, unknown>): CursoItem {
   return {
-    id: row.id,
-    nombre: row.nombre || '',
-    nivel: row.nivel || '',
+    id: (row.id as string) ?? '',
+    nombre: (row.nombre as string) || '',
+    nivel: (row.nivel as string) || '',
     anio: Number(row.anio) || new Date().getFullYear(),
-    codigoInvitacion: row.codigo_invitacion || generateCode(),
+    codigoInvitacion: (row.codigo_invitacion as string) || generateCode(),
     totalAlumnos: Number(row.total_alumnos) || 0,
-    establecimiento: row.establecimiento || '',
-    profesorJefeId: row.profesor_jefe_id || undefined,
-    rbd: row.rbd || undefined,
+    establecimiento: (row.establecimiento as string) || '',
+    profesorJefeId: (row.profesor_jefe_id as string) || undefined,
+    rbd: (row.rbd as string) || undefined,
   };
 }
 
-function mapCursoToRow(c: CursoItem, userId: string, rbd?: string): Record<string, any> {
+function mapCursoToRow(c: CursoItem, userId: string, rbd?: string): Record<string, unknown> {
   return {
     id: c.id,
     nombre: c.nombre,

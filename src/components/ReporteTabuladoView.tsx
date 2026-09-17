@@ -23,17 +23,22 @@ interface ReporteTabuladoViewProps {
   onBack: () => void;
 }
 
-export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = ({
+export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = React.memo(({
   reporte,
   onBack
 }) => {
   const [activeTab, setActiveTab] = useState<'resumen' | 'alumnos' | 'ejes' | 'plan'>('plan');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const rendicionesFiltradas = reporte.rendiciones.filter(r =>
-    r.alumnoNombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    r.alumnoRut.includes(searchTerm)
-  );
+  // Optimización de rendimiento: useMemo para evitar re-filtrar nóminas grandes en cada re-render o cambio de pestaña
+  const rendicionesFiltradas = React.useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    if (!query) return reporte.rendiciones;
+    return reporte.rendiciones.filter(r =>
+      r.alumnoNombre.toLowerCase().includes(query) ||
+      r.alumnoRut.includes(query)
+    );
+  }, [reporte.rendiciones, searchTerm]);
 
   return (
     <div className="printable-paper-canvas space-y-6 animate-fade-in print:p-4 print:bg-white print:text-black">
@@ -352,4 +357,4 @@ export const ReporteTabuladoView: React.FC<ReporteTabuladoViewProps> = ({
       )}
     </div>
   );
-};
+});

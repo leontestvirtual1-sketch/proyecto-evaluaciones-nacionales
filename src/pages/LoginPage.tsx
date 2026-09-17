@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { GraduationCap, Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles } from 'lucide-react';
+import { GraduationCap, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 interface LoginPageProps {
   onGoToRegister: () => void;
@@ -27,8 +27,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
       if (res?.error) {
         setError(res.error);
       }
-    } catch (err: any) {
-      setError(err?.message || 'Error al conectar con el servidor.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error al conectar con el servidor.');
     } finally {
       setIsSubmitting(false);
     }

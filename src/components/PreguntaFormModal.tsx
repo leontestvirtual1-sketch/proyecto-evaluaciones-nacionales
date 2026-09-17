@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Pregunta, Asignatura, EjeTematico, Habilidad, TipoPregunta, DificultadPregunta, Alternativa } from '../types';
-import { X, HelpCircle, CheckCircle2, Plus, Trash2, BookOpen, Layers, Sparkles } from 'lucide-react';
+import { X, HelpCircle, CheckCircle2 } from 'lucide-react';
 
 interface PreguntaFormModalProps {
   isOpen: boolean;

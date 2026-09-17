@@ -5,17 +5,10 @@ import {
   ShieldCheck,
   BarChart3,
   BookOpen,
-  Users,
-  Layers,
-  ArrowRight,
   CheckCircle2,
   Lock,
-  Award,
   Zap,
-  Globe2,
-  Building2,
-  ChevronRight,
-  Check
+  ChevronRight
 } from 'lucide-react';
 import { UserRole } from '../types';
 

@@ -194,9 +194,9 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
         onSaveSuccess(preguntaActualizada);
         onClose();
       }, 700);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error guardando pregunta:', err);
-      setErrorMsg(err.message || 'Error al guardar los cambios en la base de datos.');
+      setErrorMsg(err instanceof Error ? err.message : 'Error al guardar los cambios en la base de datos.');
     } finally {
       setIsSaving(false);
     }

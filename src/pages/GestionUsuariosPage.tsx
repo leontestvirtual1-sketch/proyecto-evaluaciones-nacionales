@@ -7,7 +7,6 @@ import {
   Clock,
   CheckCircle2,
   XCircle,
-  AlertCircle,
   Sparkles,
   Building2,
   Mail,
@@ -15,15 +14,11 @@ import {
   Check,
   CreditCard,
   Search,
-  Filter,
-  ArrowUpRight,
   Send,
-  Calendar,
   Lock,
   KeyRound,
   Eye,
   EyeOff,
-  ChevronDown,
   RefreshCw,
   Smartphone,
   Monitor,
@@ -32,12 +27,16 @@ import {
 import { AdminCatalogoPanel } from '../components/AdminCatalogoPanel';
 
 export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isSandboxMode = false }) => {
-  const { user, usuarios, approveUser, rejectOrSuspendUser, changeUserPlan, setUserPassword, loadUsuariosReales } = useAuth();
+  const { user, usuarios, changeUserPlan, setUserPassword, loadUsuariosReales } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [estadoFilter, setEstadoFilter] = useState<'todos' | UserEstado>('todos');
-  const [copiedTokenId, setCopiedTokenId] = useState<string | null>(null);
   const [successToast, setSuccessToast] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleChangePlan = async (u: UserProfile, newPlan: UserPlan) => {
+    await changeUserPlan(u.id, newPlan);
+    showToast(`Plan de ${u.nombre} actualizado a "${newPlan.toUpperCase()}".`);
+  };
 
   // Estados para Modal de Envío de Correo Real
   const [selectedUserForEmailModal, setSelectedUserForEmailModal] = useState<UserProfile | null>(null);
@@ -112,43 +111,15 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
         });
         setSelectedUserForEmailModal(null);
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
+      const errorMsg = e instanceof Error ? e.message : 'Error de conexión desconocido.';
       setEmailSendResult({
         success: false,
-        errorMsg: `Error de conexión: ${e.message}`
+        errorMsg: `Error de conexión: ${errorMsg}`
       });
     } finally {
       setIsSendingEmail(false);
     }
-  };
-
-  const handleApprove = async (u: UserProfile) => {
-    await approveUser(u.id, 'trial');
-    showToast(`¡Cuenta de ${u.nombre} ${u.apellido} (${u.establecimiento}) aprobada con 30 días de prueba!`);
-  };
-
-  const handleSuspend = async (u: UserProfile) => {
-    await rejectOrSuspendUser(u.id, 'suspendido');
-    showToast(`La cuenta de ${u.nombre} ha sido suspendida.`);
-  };
-
-  const handleReactivate = async (u: UserProfile) => {
-    await approveUser(u.id, u.plan || 'trial');
-    showToast(`La cuenta de ${u.nombre} ha sido reactivada.`);
-  };
-
-  const handleChangePlan = async (u: UserProfile, newPlan: UserPlan) => {
-    await changeUserPlan(u.id, newPlan);
-    showToast(`Plan de ${u.nombre} actualizado a "${newPlan.toUpperCase()}".`);
-  };
-
-  const handleCopyLink = (u: UserProfile) => {
-    if (!u.approvalToken) return;
-    const url = `${window.location.origin}/?approve_token=${u.approvalToken}`;
-    navigator.clipboard.writeText(url);
-    setCopiedTokenId(u.id);
-    setTimeout(() => setCopiedTokenId(null), 2500);
-    showToast('Enlace de aprobación directa copiado al portapapeles.');
   };
 
   // Directiva 2: isProductionAdmin determinado por columna DB es_super_admin — sin email hardcodeado.
@@ -188,7 +159,6 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   const total = baseUsersList.length;
   const pendientes = baseUsersList.filter(u => u.estado === 'pendiente_aprobacion').length;
   const activosTrial = baseUsersList.filter(u => u.estado === 'activo' && u.plan === 'trial').length;
-  const cuentasFree = baseUsersList.filter(u => u.estado === 'activo' && u.plan === 'free').length;
   const institucional = baseUsersList.filter(u => u.estado === 'activo' && (u.plan === 'institucional' || u.plan === 'pro')).length;
 
   const calcularDiasRestantesTrial = (u: UserProfile): number => {
@@ -455,7 +425,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           ).map(tab => (
             <button
               key={tab.id}
-              onClick={() => setEstadoFilter(tab.id as any)}
+              onClick={() => setEstadoFilter(tab.id as 'todos' | UserEstado)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 estadoFilter === tab.id
                   ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-bold'

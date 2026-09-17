@@ -1,4 +1,4 @@
-import { Pregunta, EjeTematico, Prueba, AlumnoBasico, Curso, ReporteTabuladoCurso } from '../types';
+import { Pregunta, EjeTematico, Prueba, AlumnoBasico, Curso } from '../types';
 
 export const ejesTematicosLenguaje2MMock: EjeTematico[] = [
   { id: 'eje-len-2m-1', codigo: 'LEN-LIT-2M', nombre: 'Lectura de Textos Literarios (Narrativa y Epistolar)', asignaturaId: 'asig-2' },

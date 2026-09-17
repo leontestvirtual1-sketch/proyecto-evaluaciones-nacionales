@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src/ tests/",
-    "test": "npx tsx tests/tenant-isolation.test.ts && npx tsx tests/grade-evaluation.test.ts",
+    "test": "npx tsx --env-file=.env.local tests/tenant-isolation.test.ts && npx tsx tests/grade-evaluation.test.ts && npx tsx tests/pedagogical-scoring.test.ts",
     "preview": "vite preview",
     "storage:migrate": "node scripts/migrate-images-to-storage.js",
     "archify": "node .agents/skills/archify/bin/archify.mjs"

@@ -3,21 +3,13 @@ import {
   GraduationCap,
   BookOpen,
   Award,
-  Users,
   Search,
-  Filter,
   CheckCircle2,
   AlertTriangle,
   Clock,
-  TrendingUp,
-  Brain,
-  FileCheck2,
-  ChevronRight,
   Eye,
   Sparkles,
   BarChart3,
-  Target,
-  ArrowUpRight
 } from 'lucide-react';
 import { SeguimientoDocente } from '../types';
 import { useAcademicData } from '../context/AcademicDataContext';
@@ -58,7 +50,7 @@ export const SeguimientoDocenteCard: React.FC<SeguimientoDocenteCardProps> = ({
 
   // Summary Metrics
   const totalEvaluaciones = docentes.reduce((acc, d) => acc + d.totalEvaluacionesCreadas, 0);
-  const totalAlumnosEvaluados = docentes.reduce((acc, d) => acc + d.totalAlumnosEvaluados, 0);
+  const _totalAlumnosEvaluados = docentes.reduce((acc, d) => acc + d.totalAlumnosEvaluados, 0);
   const promedioCobertura = Math.round(
     docentes.reduce((acc, d) => acc + d.coberturaCurricularPorcentaje, 0) / docentes.length
   );

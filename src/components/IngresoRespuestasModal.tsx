@@ -2,19 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {
   CheckCircle2,
   X,
-  Upload,
   Camera,
   ArrowRight,
-  ArrowLeft,
-  Sparkles,
-  Award,
-  AlertCircle,
   FileCheck,
   User,
-  Image as ImageIcon,
   Trash2,
-  Save,
-  Clock
+  Save
 } from 'lucide-react';
 import { Prueba, Pregunta, AlumnoBasico, RendicionPrueba, RespuestaAlumno } from '../types';
 
@@ -62,17 +55,21 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
   const [fotoEvidencia, setFotoEvidencia] = useState<string | null>(null);
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
 
-  // Filter questions of this test strictly by preguntasIds
-  const preguntasDeLaPrueba = React.useMemo(() => {
+  // Determina las preguntas de la prueba usando preguntasIds como fuente primaria;
+  // si no existen, filtra por asignatura. Un solo nivel de lógica sin cascadas.
+  const itemsToEvaluate = React.useMemo(() => {
     if (!prueba) return [];
-    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+    if (prueba.preguntasIds?.length) {
       const byId = new Map(preguntas.map(p => [p.id, p]));
-      const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
-      if (list.length > 0) return list;
+      return prueba.preguntasIds.flatMap(id => {
+        const p = byId.get(id);
+        return p ? [p] : [];
+      });
     }
-    return preguntas.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
+    return preguntas
+      .filter(p => p.asignaturaId === prueba.asignaturaId)
+      .slice(0, prueba.totalPreguntas ?? 30);
   }, [prueba, preguntas]);
-  const itemsToEvaluate = preguntasDeLaPrueba.length > 0 ? preguntasDeLaPrueba : preguntas.slice(0, prueba?.totalPreguntas || 30);
 
   // Reset or initialize answers when student changes
   useEffect(() => {
@@ -103,25 +100,19 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
     }
   };
 
-  // Calculate live results
-  let correctas = 0;
-  let respondidas = 0;
+  // Cálculo declarativo de resultados en vivo — sin mutación de variables externas
   const respuestasArray: RespuestaAlumno[] = itemsToEvaluate.map(p => {
-    const dada = respuestasMarcadas[p.id] || '';
-    if (dada) respondidas++;
-    const esCorrecta = dada !== '' && (dada.toUpperCase() === (p.respuestaCorrecta || 'A').toUpperCase());
-    if (esCorrecta) correctas++;
-    return {
-      preguntaId: p.id,
-      respuestaDada: dada,
-      esCorrecta,
-      tiempoSegundos: 45
-    };
+    const dada = respuestasMarcadas[p.id] ?? '';
+    const esCorrecta = dada !== '' && dada.toUpperCase() === (p.respuestaCorrecta ?? 'A').toUpperCase();
+    return { preguntaId: p.id, respuestaDada: dada, esCorrecta, tiempoSegundos: 45 };
   });
 
   const totalPreguntas = itemsToEvaluate.length;
+  const respondidas = respuestasArray.filter(r => r.respuestaDada !== '').length;
+  const correctas = respuestasArray.filter(r => r.esCorrecta).length;
   const porcentajeLogro = totalPreguntas > 0 ? Math.round((correctas / totalPreguntas) * 100) : 0;
-  const puntajeSimceEstimado = Math.round(180 + (porcentajeLogro * 1.5)); // Rango ~180 a 330 SIMCE
+  // Rango estimado SIMCE ~180 a 330 (interpolación lineal)
+  const puntajeSimceEstimado = Math.round(180 + porcentajeLogro * 1.5);
 
   const handleSave = (goToNext: boolean = false) => {
     if (!alumnoActual) return;

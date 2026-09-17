@@ -1,17 +1,14 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Pregunta,
   Asignatura,
   EjeTematico,
   Habilidad,
-  TipoPregunta,
-  DificultadPregunta,
   UserProfile
 } from '../types';
 import { PreguntaFormModal } from '../components/PreguntaFormModal';
 import { EnunciadoRenderer } from '../components/common/EnunciadoRenderer';
 import { resolveImageUrl } from '../lib/storage';
-import { useAcademicData } from '../context/AcademicDataContext';
 import { useCursos } from '../hooks/useCursos';
 import {
   Library,
@@ -20,13 +17,11 @@ import {
   Filter,
   CheckCircle2,
   HelpCircle,
-  Layers,
   Sparkles,
   Edit2,
   Trash2,
   Copy,
   GraduationCap,
-  Award,
   Lock,
   AlertCircle,
   Loader2
@@ -647,7 +642,6 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             const eje = ejes.find(e => e.id === pregunta.ejeTematicoId);
             const hab = habilidades.find(h => h.id === pregunta.habilidadId);
             const asig = asignaturas.find(a => a.id === pregunta.asignaturaId);
-            const isMatematica = pregunta.asignaturaId === 'asig-1';
 
             const difColor =
               pregunta.dificultad === 'baja'
