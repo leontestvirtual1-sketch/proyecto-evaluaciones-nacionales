@@ -35,6 +35,8 @@ dist-ssr
 .agents/
 .agents/*
 .antigravityignore
+skills-lock.json
+
 
 # Internal Project Documentation & Requirements
 BITACORA.md

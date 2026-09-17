@@ -9,7 +9,8 @@
     "lint": "eslint src/ tests/",
     "test": "npx tsx tests/tenant-isolation.test.ts && npx tsx tests/grade-evaluation.test.ts",
     "preview": "vite preview",
-    "storage:migrate": "node scripts/migrate-images-to-storage.js"
+    "storage:migrate": "node scripts/migrate-images-to-storage.js",
+    "archify": "node .agents/skills/archify/bin/archify.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

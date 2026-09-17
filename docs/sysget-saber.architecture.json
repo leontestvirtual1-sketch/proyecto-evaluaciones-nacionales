@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura de Sistema — Sysget Saber",
+    "output": "docs/sysget-saber-architecture.html",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "full-architecture",
+        "label": "Flujo Principal",
+        "focus": ["users", "spa", "vercel-edge", "supabase-auth", "supabase-db"],
+        "note": "Ruta principal desde los usuarios escolares hasta la persistencia con aislamiento RLS."
+      },
+      {
+        "id": "auth-isolation",
+        "label": "Aislamiento y Roles",
+        "focus": ["users", "spa", "isolation-router", "api-serverless", "supabase-auth", "supabase-db"],
+        "note": "Control de acceso estricto RBAC por RBD, especialidad y separacion radical Demo vs Produccion."
+      },
+      {
+        "id": "evaluations-printing",
+        "label": "Evaluaciones y OMR",
+        "focus": ["spa", "print-engine", "supabase-db", "supabase-storage"],
+        "note": "Generacion dinamica de cuadernillos SIMCE/PAES y hojas de respuesta OMR de 1 pagina."
+      },
+      {
+        "id": "admin-notifications",
+        "label": "Provisioning y Notificaciones",
+        "focus": ["users", "api-serverless", "smtp-mailer"],
+        "note": "Creacion de cuentas docentes y envio automatico de accesos institucionales via SMTP."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "users",
+      "type": "external",
+      "label": "Comunidad Escolar",
+      "sublabel": "Admin UTP / Docentes / Alumnos",
+      "pos": [40, 260],
+      "size": [160, 60]
+    },
+    {
+      "id": "spa",
+      "type": "frontend",
+      "brand": "react",
+      "label": "Sysget Saber SPA",
+      "sublabel": "React 18 + Vite + TS",
+      "tag": "Cliente Web",
+      "pos": [280, 260],
+      "size": [160, 60]
+    },
+    {
+      "id": "isolation-router",
+      "type": "security",
+      "label": "Aislamiento Entornos",
+      "sublabel": "Demo vs Produccion",
+      "tag": "Regla Anti-Fallback",
+      "pos": [280, 100],
+      "size": [160, 60]
+    },
+    {
+      "id": "print-engine",
+      "type": "frontend",
+      "label": "Motor de Impresion",
+      "sublabel": "Cuadernillos & OMR 1-Pag",
+      "tag": "@media print",
+      "pos": [280, 420],
+      "size": [160, 60]
+    },
+    {
+      "id": "vercel-edge",
+      "type": "cloud",
+      "brand": "vercel",
+      "label": "Plataforma Vercel",
+      "sublabel": "Hosting & Edge CDN",
+      "pos": [540, 260],
+      "size": [160, 60]
+    },
+    {
+      "id": "api-serverless",
+      "type": "backend",
+      "label": "API Serverless",
+      "sublabel": "Node.js /api/users",
+      "tag": "Gestion de Usuarios",
+      "pos": [540, 100],
+      "size": [160, 60]
+    },
+    {
+      "id": "smtp-mailer",
+      "type": "messagebus",
+      "label": "Servidor SMTP",
+      "sublabel": "Google SMTP :465",
+      "tag": "Envio Credenciales",
+      "pos": [800, 100],
+      "size": [160, 60]
+    },
+    {
+      "id": "supabase-auth",
+      "type": "security",
+      "brand": "supabase",
+      "label": "Supabase Auth",
+      "sublabel": "JWT & Sesion RBAC",
+      "tag": "Identidad Segura",
+      "pos": [800, 260],
+      "size": [160, 60]
+    },
+    {
+      "id": "supabase-db",
+      "type": "database",
+      "brand": "postgresql",
+      "label": "PostgreSQL DB",
+      "sublabel": "Multi-Tenant + RLS",
+      "tag": "Esquema Aislado RBD",
+      "pos": [1060, 260],
+      "size": [160, 60]
+    },
+    {
+      "id": "supabase-storage",
+      "type": "cloud",
+      "brand": "supabase",
+      "label": "Supabase Storage",
+      "sublabel": "PDFs e Imagenes SIMCE",
+      "tag": "Assets Evaluaciones",
+      "pos": [1060, 420],
+      "size": [160, 60]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Infraestructura Cloud Vercel",
+      "wraps": ["vercel-edge", "api-serverless"]
+    },
+    {
+      "kind": "security-group",
+      "label": "Plataforma de Datos Supabase (RLS)",
+      "wraps": ["supabase-auth", "supabase-db", "supabase-storage"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "users-to-spa",
+      "from": "users",
+      "to": "spa",
+      "label": "HTTPS Web",
+      "variant": "emphasis"
+    },
+    {
+      "id": "spa-to-isolation",
+      "from": "spa",
+      "to": "isolation-router",
+      "label": "Control RBAC",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "spa-to-print",
+      "from": "spa",
+      "to": "print-engine",
+      "label": "Cuadernillos",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 30
+    },
+    {
+      "id": "spa-to-edge",
+      "from": "spa",
+      "to": "vercel-edge",
+      "label": "Vite SPA"
+    },
+    {
+      "id": "edge-to-api",
+      "from": "vercel-edge",
+      "to": "api-serverless",
+      "label": "Rutas API",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "api-to-smtp",
+      "from": "api-serverless",
+      "to": "smtp-mailer",
+      "label": "Envio Mail",
+      "variant": "dashed"
+    },
+    {
+      "id": "api-to-auth",
+      "from": "api-serverless",
+      "to": "supabase-auth",
+      "label": "Service Key",
+      "variant": "security",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "edge-to-auth",
+      "from": "vercel-edge",
+      "to": "supabase-auth",
+      "label": "Sesion JWT"
+    },
+    {
+      "id": "auth-to-db",
+      "from": "supabase-auth",
+      "to": "supabase-db",
+      "label": "Politicas RLS",
+      "variant": "security"
+    },
+    {
+      "id": "db-to-storage",
+      "from": "supabase-db",
+      "to": "supabase-storage",
+      "label": "Archivos OMR",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 30
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Frontend Escolar",
+      "items": [
+        "React 18 + Vite con Tailwind CSS y Recharts para analitica SIMCE",
+        "Motor de impresion continuo en 1 pagina para hojas OMR y cuadernillos",
+        "Aislamiento estricto de contextos: Demo Liceo Bicentenario vs Produccion"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Capa Backend y Edge",
+      "items": [
+        "Despliegue continuo en Vercel con red de distribucion Edge global",
+        "Endpoints Serverless /api/users para administracion segura de usuarios",
+        "Despacho automatico de correos de bienvenida via Google SMTP :465"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Seguridad y Datos Supabase",
+      "items": [
+        "PostgreSQL con Row Level Security (RLS) por establecimiento educativo (RBD)",
+        "Aislamiento riguroso por especialidad docente (Lenguaje, Matematica, Ciencias)",
+        "Sesion de supervision UTP blindada con opcion de retorno seguro a admin"
+      ]
+    }
+  ]
+}

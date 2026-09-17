@@ -17,7 +17,6 @@ import {
   Clock
 } from 'lucide-react';
 import { Prueba, Pregunta, AlumnoBasico, RendicionPrueba, RespuestaAlumno } from '../types';
-import { alumnosMock } from '../data/mockData';
 
 interface IngresoRespuestasModalProps {
   isOpen: boolean;
@@ -32,15 +31,33 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
   isOpen,
   prueba,
   preguntas,
-  alumnos = alumnosMock,
+  alumnos = [],
   onClose,
   onSaveRendicion
 }) => {
-  // Filter course students
-  const alumnosDelCurso = alumnos.filter(a => !prueba?.cursoId || a.cursoId === prueba.cursoId || a.cursoNombre === prueba.cursoNombre);
-  const listaAlumnos = alumnosDelCurso.length > 0 ? alumnosDelCurso : alumnos;
+  // Directiva 1: Filtrado estricto por curso sin fallback cruzado a otros cursos o alumnosMock
+  const listaAlumnos = React.useMemo(() => {
+    if (!prueba?.cursoId && !prueba?.cursoNombre) return alumnos;
+    return alumnos.filter(a =>
+      (prueba.cursoId && a.cursoId === prueba.cursoId) ||
+      (prueba.cursoNombre && a.cursoNombre === prueba.cursoNombre)
+    );
+  }, [alumnos, prueba?.cursoId, prueba?.cursoNombre]);
 
-  const [selectedAlumnoId, setSelectedAlumnoId] = useState<string>(listaAlumnos[0]?.id || '');
+  const [selectedAlumnoId, setSelectedAlumnoId] = useState<string>('');
+
+  useEffect(() => {
+    if (listaAlumnos.length > 0) {
+      if (!selectedAlumnoId || !listaAlumnos.some(a => a.id === selectedAlumnoId)) {
+        setSelectedAlumnoId(listaAlumnos[0].id);
+      }
+    } else {
+      setSelectedAlumnoId('');
+    }
+  }, [listaAlumnos, selectedAlumnoId]);
+
+  const alumnoActual = listaAlumnos.find(a => a.id === selectedAlumnoId) || listaAlumnos[0] || null;
+
   const [respuestasMarcadas, setRespuestasMarcadas] = useState<Record<string, string>>({});
   const [fotoEvidencia, setFotoEvidencia] = useState<string | null>(null);
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
@@ -56,8 +73,6 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
     return preguntas.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
   }, [prueba, preguntas]);
   const itemsToEvaluate = preguntasDeLaPrueba.length > 0 ? preguntasDeLaPrueba : preguntas.slice(0, prueba?.totalPreguntas || 30);
-
-  const alumnoActual = listaAlumnos.find(a => a.id === selectedAlumnoId) || listaAlumnos[0];
 
   // Reset or initialize answers when student changes
   useEffect(() => {
@@ -198,20 +213,26 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
                 <span>1. Seleccionar Estudiante</span>
                 <span className="text-[10px] text-indigo-500 font-mono font-bold">
-                  {listaAlumnos.findIndex(a => a.id === selectedAlumnoId) + 1} de {listaAlumnos.length}
+                  {listaAlumnos.length > 0 ? `${listaAlumnos.findIndex(a => a.id === selectedAlumnoId) + 1} de ${listaAlumnos.length}` : '0 estudiantes'}
                 </span>
               </label>
-              <select
-                value={selectedAlumnoId}
-                onChange={e => setSelectedAlumnoId(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/20"
-              >
-                {listaAlumnos.map((a, idx) => (
-                  <option key={a.id} value={a.id}>
-                    N° {a.numeroDeLista || idx + 1} • {a.nombre} {a.apellido} ({a.rut})
-                  </option>
-                ))}
-              </select>
+              {listaAlumnos.length > 0 ? (
+                <select
+                  value={selectedAlumnoId}
+                  onChange={e => setSelectedAlumnoId(e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/20"
+                >
+                  {listaAlumnos.map((a, idx) => (
+                    <option key={a.id} value={a.id}>
+                      N° {a.numeroDeLista || idx + 1} • {a.nombre} {a.apellido} ({a.rut})
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-700 dark:text-amber-400 text-xs">
+                  No hay estudiantes registrados en este curso aún.
+                </div>
+              )}
             </div>
 
             {/* Student Card Summary */}
@@ -384,7 +405,7 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
                 <button
                   type="button"
                   onClick={() => handleSave(false)}
-                  disabled={respondidas === 0}
+                  disabled={respondidas === 0 || !alumnoActual}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm transition-all"
                 >
                   <Save className="w-4 h-4 text-indigo-500" />
@@ -394,7 +415,7 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
                 <button
                   type="button"
                   onClick={() => handleSave(true)}
-                  disabled={respondidas === 0}
+                  disabled={respondidas === 0 || !alumnoActual}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-600/20 transition-all hover:scale-105 active:scale-95"
                 >
                   <span>Guardar y Siguiente Alumno</span>

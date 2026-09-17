@@ -775,7 +775,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
           )}
 
           {/* Narrative callout for Science */}
-          {isCiencias && (
+          {!isProduction && isCiencias && (
             <div className="p-6 rounded-3xl bg-gradient-to-r from-sky-950/40 via-slate-900 to-indigo-950/30 border border-sky-500/30 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
                 <div className="p-3 rounded-2xl bg-sky-600/20 border border-sky-500/30 text-sky-400 flex items-center justify-center">
@@ -805,7 +805,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
           )}
 
           {/* Narrative callout for Language */}
-          {isLenguaje && (
+          {!isProduction && isLenguaje && (
             <div className="p-6 rounded-3xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/30 border border-purple-500/30 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
                 <div className="p-3 rounded-2xl bg-purple-600/20 border border-purple-500/30 text-purple-400 flex items-center justify-center">

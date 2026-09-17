@@ -24,8 +24,7 @@ import { asignaturasMock, cursosMock, demoProfesoresMock } from '../data/mockDat
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 
-const STORAGE_KEY_PROFESORES = 'sysget_profesores_list';
-// SEGURIDAD: STORAGE_KEY_PASSWORDS eliminada — las contraseñas nunca se almacenan en localStorage (S-01).
+// SEGURIDAD: STORAGE_KEY_PASSWORDS y STORAGE_KEY_PROFESORES eliminadas (Directiva 1 y S-01).
 
 interface PasswordModalProps {
   isOpen: boolean;

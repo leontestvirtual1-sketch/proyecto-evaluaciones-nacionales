@@ -146,11 +146,9 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
           p => p.profesorId === activeUser.id || (activeUser.asignaturaId && p.asignaturaId === activeUser.asignaturaId)
         );
 
-        const teacherCursos = cursosMock.filter(c =>
-          c.profesorId === activeUser.id ||
-          (activeUser.rbd && c.rbd === activeUser.rbd) ||
-          (activeUser.establecimiento && c.establecimiento?.toLowerCase() === activeUser.establecimiento.toLowerCase())
-        );
+        // Directivas 1 y 2: En producción, nunca inyectar cursosMock.
+        // Los cursos de producción provienen exclusivamente de useCursos() / Supabase con RLS.
+        const teacherCursos: Curso[] = [];
 
         const docSeguimiento: SeguimientoDocente = {
           profesorId: activeUser.id,
@@ -225,11 +223,9 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         };
       });
 
-      // Directiva 2: cursos de producción sin filtrar por RBD hardcodeado.
-      // En producción, el Super Admin ve todos los cursos no-demo via RLS.
-      const prodCursos = cursosMock.filter(c =>
-        c.establecimiento && !c.establecimiento.toLowerCase().includes('bicentenario')
-      );
+      // Directivas 1 y 2: En producción, nunca inyectar cursosMock.
+      // El Super Admin supervisa cursos reales desde useCursos() / Supabase con RLS.
+      const prodCursos: Curso[] = [];
 
       return {
         isProduction: true,

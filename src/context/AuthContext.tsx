@@ -586,7 +586,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else if (role === 'profesor') {
       let localProf: UserProfile | null = null;
       try {
-        const stored = JSON.parse(localStorage.getItem('sysget_profesores_list') || '[]');
+        const stored = JSON.parse(localStorage.getItem('sysget_demo_profesores_list') || '[]');
         if (Array.isArray(stored)) {
           if (extra === 'matematica') {
             localProf = stored.find((p: UserProfile) => p.asignaturaId === 'asig-1') || null;
