@@ -869,6 +869,24 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                 </BarChart>
               </ResponsiveContainer>
             </div>
+
+            {/* Tabla accesible oculta visualmente — datos completos para lectores de pantalla y tests */}
+            <table className="sr-only" aria-label="Logro Curricular por Eje Temático">
+              <thead>
+                <tr>
+                  <th scope="col">Eje Curricular</th>
+                  <th scope="col">Rendimiento</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(reporteActivo?.desgloseEjes || []).map((eje) => (
+                  <tr key={eje.ejeId || eje.nombre}>
+                    <td>{eje.nombre}</td>
+                    <td>{eje.porcentajeLogro}% de logro</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
