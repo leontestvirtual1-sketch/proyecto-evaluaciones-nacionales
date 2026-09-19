@@ -178,7 +178,9 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
                       }`}>
                         {alt.letra}
                       </span>
-                      <span className="pt-0.5">{alt.texto}</span>
+                      <span className="pt-0.5">
+                        <EnunciadoRenderer content={alt.texto} inline={true} />
+                      </span>
                       {alt.es_correcta && (
                         <span className="ml-auto text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400">
                           ✓ Correcta

@@ -288,7 +288,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
                       {alt.letra}
                     </span>
                     <span className="text-sm font-medium pt-0.5">
-                      {alt.texto}
+                      <EnunciadoRenderer content={alt.texto} inline={true} />
                     </span>
                   </button>
                 );

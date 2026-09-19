@@ -462,7 +462,9 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                                   <span className="w-4 h-4 rounded-full border border-black font-bold flex items-center justify-center text-[9px] flex-shrink-0 bg-white">
                                     {alt.letra}
                                   </span>
-                                  <span className="text-slate-900 leading-tight">{alt.texto}</span>
+                                  <span className="text-slate-900 leading-tight">
+                                    <EnunciadoRenderer content={alt.texto} forceLightMode={true} inline={true} />
+                                  </span>
                                 </div>
                               ))}
                             </div>

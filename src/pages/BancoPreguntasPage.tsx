@@ -777,7 +777,9 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                           }`}>
                             {alt.letra}
                           </span>
-                          <span className="truncate">{alt.texto}</span>
+                          <span className="truncate">
+                            <EnunciadoRenderer content={alt.texto} inline={true} />
+                          </span>
                           {alt.es_correcta && (
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 ml-auto shrink-0" />
                           )}

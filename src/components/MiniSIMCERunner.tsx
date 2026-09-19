@@ -207,7 +207,9 @@ export const MiniSIMCERunner: React.FC<MiniSIMCERunnerProps> = ({
                         >
                           {alt.letra}
                         </div>
-                        <span className="text-sm font-medium">{alt.texto}</span>
+                        <span className="text-sm font-medium">
+                          <EnunciadoRenderer content={alt.texto} inline={true} />
+                        </span>
                       </div>
                       {isSelected && <Check className="w-5 h-5 text-indigo-400 flex-shrink-0" />}
                     </button>

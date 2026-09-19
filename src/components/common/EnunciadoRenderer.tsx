@@ -24,6 +24,28 @@ interface EnunciadoRendererProps {
   className?: string;
   forceLightMode?: boolean;
   stripLeadingNumber?: boolean;
+  inline?: boolean;
+}
+
+/**
+ * Sanitiza caracteres propietarios del bloque Private Use Area (PUA) de Unicode (\uF000-\uF0FF),
+ * típicamente introducidos por la fuente Symbol / Wingdings al extraer texto desde PDFs del DEMRE / MINEDUC.
+ */
+function cleanSymbolFont(text: string): string {
+  if (!text) return text;
+  return text
+    .replace(/[\uF028\uF0E6\uF0E7\uF0E8]/g, '(')
+    .replace(/[\uF029\uF0F6\uF0F7\uF0F8]/g, ')')
+    .replace(/\uF02B/g, '+')
+    .replace(/[\uF02D\u2013\u2014]/g, '-')
+    .replace(/\uF03D/g, '=')
+    .replace(/\uF05B/g, '[')
+    .replace(/\uF05D/g, ']')
+    .replace(/\uF070/g, 'π')
+    .replace(/\uF0B3/g, '≥')
+    .replace(/\uF0A3/g, '≤')
+    .replace(/\uF0B9/g, '≠')
+    .replace(/[\uF0B7\uF0D7]/g, '·');
 }
 
 /**
@@ -35,14 +57,17 @@ function sanitizeEnunciadoLine(line: string): string {
 }
 
 /**
- * Limpia artefactos de marcas de agua del PDF ("FORMA 113 | 2023", URLs, etc.)
- * y normaliza el texto para renderizado: convierte \n sueltos en espacios
- * y \n\n en separadores de párrafo real.
+ * Limpia artefactos de marcas de agua del PDF ("FORMA 113 | 2023", URLs, etc.),
+ * caracteres propietarios Symbol Font y normaliza el texto para renderizado:
+ * convierte \n sueltos en espacios y \n\n en separadores de párrafo real.
  * Esto evita que fragmentos de números extraídos del PDF aparezcan en líneas separadas.
  */
 function normalizeText(raw: string): string {
-  // 1. Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
-  const text = raw
+  // 1. Limpieza de fuentes propietarias Symbol PUA
+  let text = cleanSymbolFont(raw);
+
+  // 2. Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
+  text = text
     .replace(/FORMA\s+\d+\s*[|│▌]\s*\d{4}/gi, '')
     .replace(/www\.[a-z0-9.-]+\.[a-z]{2,}/gi, '')
     .replace(/[\u25a1\u25aa\u25ab\u25fc\u25fd\ufffd]/g, '·');
@@ -103,6 +128,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
   className = '',
   forceLightMode = false,
   stripLeadingNumber = true,
+  inline = false,
 }) => {
   if (!content) return null;
 
@@ -150,9 +176,18 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
 
   // Formatear negrita, cursiva y fórmulas matemáticas (KaTeX)
   const renderFormattedText = (raw: string, keyPrefix: string): React.ReactNode => {
-    // 0. Proteger montos monetarios (ej: $120.000, $25.000, $500, $1.000.000)
-    // para que el símbolo de peso no sea interpretado como delimitador LaTeX
-    let text = raw.replace(/\$(\s*\d[\d.,]*)/g, '§PESO§$1');
+    // 0. Proteger montos monetarios (ej: $120.000, $25.000, $1.000.000, $500)
+    // NOTA: El regex anterior /\$(\s*\d[\d.,]*)/ era demasiado agresivo: consumía
+    // el '$' de abre de expresiones LaTeX como $0{,}25$ (notación decimal con coma),
+    // dejando '{,}25$' con un '$' huérfano que emparejaba con el siguiente delimitador
+    // y generaba garbage KaTeX. Ahora usamos dos regexes específicos:
+    //
+    //  (a) Formato miles chileno: $120.000, $1.000.000  (\d{1,3} + grupos de .\d{3})
+    //  (b) Entero suelto: $500, $5  (solo dígitos sin '{' '\' ni ',' inmediatamente
+    //      después, que indicarían expresión LaTeX como $0{,}25$ o $\frac)
+    let text = raw
+      .replace(/\$(\d{1,3}(?:\.\d{3})+)/g, '§PESO§$1')   // (a) $120.000, $25.000
+      .replace(/\$(\d+)(?=[\s\.,;:?!)]|$)/g, '§PESO§$1'); // (b) $500, $5 (no seguido de LaTeX)
 
     // 1. Extraer y renderizar con KaTeX real los bloques $$...$$ y $...$ restantes
     //    (los montos ya están protegidos con §PESO§ y no calzan con estos patrones)
@@ -246,6 +281,14 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
   // Normalizar texto para corregir artefactos de extracción PDF
   // (une \n simples como espacios, mantiene \n\n como separadores de párrafo)
   const normalizedContent = normalizeText(content);
+
+  // Modo inline compacto para alternativas u opciones cortas
+  if (inline) {
+    const singleLine = normalizedContent.replace(/\n+/g, ' ').trim();
+    const formatted = stripLeadingNumber ? sanitizeEnunciadoLine(singleLine) : singleLine;
+    return <span className={`inline-block ${className}`}>{renderInline(formatted)}</span>;
+  }
+
   const lines = normalizedContent.split('\n');
   const blocks: React.ReactNode[] = [];
   let i = 0;
