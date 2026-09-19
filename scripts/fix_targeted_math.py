@@ -13,6 +13,22 @@ with open('.env.local', 'r', encoding='utf-8') as f:
 
 sb = create_client(env['VITE_SUPABASE_URL'], env['SUPABASE_SERVICE_ROLE_KEY'])
 
+# Q24
+q24 = {
+    'enunciado': (
+        "La expresión $(a + 1)^2 + (a + 1)(a - 3)$ se factoriza como el producto de dos factores, "
+        "tal que uno de ellos es $(a + 1)$.\n\n"
+        "¿Cuál de las siguientes expresiones corresponde al otro factor de la expresión?"
+    ),
+    'alternativas': [
+        {'letra': 'A', 'texto': '$(a^2 + 3a - 2)$', 'es_correcta': False},
+        {'letra': 'B', 'texto': '$(a - 2)$', 'es_correcta': False},
+        {'letra': 'C', 'texto': '$(a^2 - a - 2)$', 'es_correcta': False},
+        {'letra': 'D', 'texto': '$(2a - 2)$', 'es_correcta': True}
+    ],
+    'respuesta_correcta': 'D'
+}
+
 # Q29
 q29 = {
     'enunciado': (
@@ -67,7 +83,7 @@ q59 = {
     'respuesta_correcta': 'D'
 }
 
-for q_id, q_data in [('preg-paes-m1-23-29', q29), ('preg-paes-m1-23-52', q52), ('preg-paes-m1-23-59', q59)]:
+for q_id, q_data in [('preg-paes-m1-23-24', q24), ('preg-paes-m1-23-29', q29), ('preg-paes-m1-23-52', q52), ('preg-paes-m1-23-59', q59)]:
     sb.from_('preguntas').update({
         'enunciado': q_data['enunciado'],
         'alternativas': q_data['alternativas'],
