@@ -64,6 +64,7 @@ supabase/migrations/
 test_*.mjs
 test_*.js
 scratch/
+scratch_reportes/
 *.zip
 
 .vercel

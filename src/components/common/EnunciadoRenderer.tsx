@@ -1,5 +1,23 @@
 import React from 'react';
+import katex from 'katex';
 import { resolveImageUrl } from '../../lib/storage';
+
+/**
+ * Intenta renderizar una expresión LaTeX con KaTeX. Si KaTeX lanza un error de sintaxis
+ * (fórmula mal formada, típico en datos extraídos de PDF), retorna el texto original sin
+ * romper el render de toda la pregunta.
+ */
+function renderKatex(expr: string, displayMode: boolean): string {
+  try {
+    return katex.renderToString(expr, {
+      throwOnError: false,
+      displayMode,
+      strict: 'ignore',
+    });
+  } catch {
+    return expr;
+  }
+}
 
 interface EnunciadoRendererProps {
   content?: string;
@@ -130,19 +148,30 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
     return parts.length > 0 ? parts : renderFormattedText(text, 'txt-0');
   };
 
-  // Formatear negrita, cursiva y símbolos matemáticos
+  // Formatear negrita, cursiva y fórmulas matemáticas (KaTeX)
   const renderFormattedText = (raw: string, keyPrefix: string): React.ReactNode => {
-    // 1. Proteger montos monetarios (ej: $120.000, $25.000, $500, $1.000.000)
+    // 0. Proteger montos monetarios (ej: $120.000, $25.000, $500, $1.000.000)
     // para que el símbolo de peso no sea interpretado como delimitador LaTeX
     let text = raw.replace(/\$(\s*\d[\d.,]*)/g, '§PESO§$1');
 
-    // 2. Limpiar notación de bloques $$...$$ o $...$
+    // 1. Extraer y renderizar con KaTeX real los bloques $$...$$ y $...$ restantes
+    //    (los montos ya están protegidos con §PESO§ y no calzan con estos patrones)
+    const mathPlaceholders: string[] = [];
+    text = text.replace(/\$\$(.+?)\$\$/g, (_m, expr) => {
+      const html = renderKatex(expr.trim(), true);
+      mathPlaceholders.push(html);
+      return `§MATH${mathPlaceholders.length - 1}§`;
+    });
+    text = text.replace(/\$([^$]+?)\$/g, (_m, expr) => {
+      const html = renderKatex(expr.trim(), false);
+      mathPlaceholders.push(html);
+      return `§MATH${mathPlaceholders.length - 1}§`;
+    });
+
+    // 2. Restaurar montos monetarios protegidos y limpiar símbolos LaTeX sueltos
+    //    que puedan quedar fuera de delimitadores $ (contenido legado sin $)
     text = text
-      .replace(/\$\$(.*?)\$\$/g, '$1')
-      .replace(/\$([^\$]+?)\$/g, '$1')
-      // Restaurar montos monetarios protegidos
       .replace(/§PESO§/g, '$')
-      // Símbolos matemáticos
       .replace(/\\cdot/g, ' · ')
       .replace(/\\times/g, ' × ')
       .replace(/\\div/g, ' ÷ ')
@@ -155,40 +184,64 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
       .replace(/\\right\)/g, ')')
       .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)');
 
-    // 3. Separar por negrita **...**
-    const boldParts = text.split(/(\*\*.*?\*\*)/g);
+    // 3. Separar primero por los placeholders de fórmulas KaTeX ya renderizadas
+    const mathParts = text.split(/(§MATH\d+§)/g);
+
+    const renderNonMathSegment = (segment: string, segKey: string): React.ReactNode => {
+      // Negrita **...**
+      const boldParts = segment.split(/(\*\*.*?\*\*)/g);
+      return (
+        <span key={segKey}>
+          {boldParts.map((part, pIdx) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              const inner = part.slice(2, -2);
+              return (
+                <strong key={`${segKey}-b-${pIdx}`} className={boldClass}>
+                  {inner}
+                </strong>
+              );
+            }
+            // Cursiva *...*
+            const italicParts = part.split(/(\*.*?\*)/g);
+            return (
+              <span key={`${segKey}-p-${pIdx}`}>
+                {italicParts.map((sub, sIdx) => {
+                  if (sub.startsWith('*') && sub.endsWith('*') && sub.length > 2) {
+                    return (
+                      <em key={`${segKey}-i-${sIdx}`} className="italic">
+                        {sub.slice(1, -1)}
+                      </em>
+                    );
+                  }
+                  return sub;
+                })}
+              </span>
+            );
+          })}
+        </span>
+      );
+    };
 
     return (
       <span key={keyPrefix}>
-        {boldParts.map((part, pIdx) => {
-          if (part.startsWith('**') && part.endsWith('**')) {
-            const inner = part.slice(2, -2);
+        {mathParts.map((part, idx) => {
+          const mathMatch = part.match(/^§MATH(\d+)§$/);
+          if (mathMatch) {
+            const html = mathPlaceholders[Number(mathMatch[1])];
             return (
-              <strong key={`${keyPrefix}-b-${pIdx}`} className={boldClass}>
-                {inner}
-              </strong>
+              <span
+                key={`${keyPrefix}-math-${idx}`}
+                className="katex-inline"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
             );
           }
-          // Cursiva *...*
-          const italicParts = part.split(/(\*.*?\*)/g);
-          return (
-            <span key={`${keyPrefix}-p-${pIdx}`}>
-              {italicParts.map((sub, sIdx) => {
-                if (sub.startsWith('*') && sub.endsWith('*') && sub.length > 2) {
-                  return (
-                    <em key={`${keyPrefix}-i-${sIdx}`} className="italic">
-                      {sub.slice(1, -1)}
-                    </em>
-                  );
-                }
-                return sub;
-              })}
-            </span>
-          );
+          return renderNonMathSegment(part, `${keyPrefix}-seg-${idx}`);
         })}
       </span>
     );
   };
+
 
   // Normalizar texto para corregir artefactos de extracción PDF
   // (une \n simples como espacios, mantiene \n\n como separadores de párrafo)
