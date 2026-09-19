@@ -743,11 +743,11 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
                 {/* Enunciado con soporte Markdown, tablas, figuras y fórmulas */}
                 <div className="text-sm text-slate-900 dark:text-white leading-relaxed">
-                  <EnunciadoRenderer content={pregunta.enunciado} />
+                  <EnunciadoRenderer content={pregunta.enunciado} imagenUrl={pregunta.imagenUrl} />
                 </div>
 
-                {/* Optional Image */}
-                {pregunta.imagenUrl && (
+                {/* Optional Image (solo si no está insertada inline con [IMAGEN] o Markdown) */}
+                {pregunta.imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(pregunta.enunciado || '') || pregunta.enunciado?.includes('![')) && (
                   <div className="p-3 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm max-w-md my-2">
                     <img
                       src={resolveImageUrl(pregunta.imagenUrl)}

@@ -25,6 +25,7 @@ interface EnunciadoRendererProps {
   forceLightMode?: boolean;
   stripLeadingNumber?: boolean;
   inline?: boolean;
+  imagenUrl?: string;
 }
 
 /**
@@ -89,8 +90,15 @@ function normalizeText(raw: string): string {
       continue;
     }
 
-    // Si es tabla, encabezado o separador, guardar directo
-    if (l.startsWith('|') || l.startsWith('#') || l.startsWith('$$') || l === '---') {
+    // Si es tabla, encabezado, separador o bloque de imagen, guardar directo
+    if (
+      l.startsWith('|') ||
+      l.startsWith('#') ||
+      l.startsWith('$$') ||
+      l === '---' ||
+      l.startsWith('![') ||
+      /^\[(IMAGEN|FIGURA)\]$/i.test(l)
+    ) {
       if (buffer) {
         result.push(buffer);
         buffer = '';
@@ -129,6 +137,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
   forceLightMode = false,
   stripLeadingNumber = true,
   inline = false,
+  imagenUrl = '',
 }) => {
   if (!content) return null;
 
@@ -310,6 +319,48 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
       );
       i++;
       continue;
+    }
+
+    // Inserción de imagen pedagógica mediante etiqueta [IMAGEN] o [FIGURA]
+    if (/^\[(IMAGEN|FIGURA)\]$/i.test(trimmed) && imagenUrl) {
+      const src = resolveImageUrl(imagenUrl);
+      blocks.push(
+        <div key={`img-tag-${i}`} className="flex justify-center py-2.5 my-2">
+          <div className={`rounded-xl shadow-md border p-2.5 max-w-md mx-auto ${forceLightMode ? 'bg-white border-slate-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'}`}>
+            <img
+              src={src}
+              alt="Figura pedagógica"
+              className="max-h-56 w-auto object-contain rounded"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    // Inserción de imagen Markdown standalone: ![alt](url)
+    if (trimmed.startsWith('![') && trimmed.endsWith(')')) {
+      const match = trimmed.match(/^!\[(.*?)\]\((.*?)\)$/);
+      if (match) {
+        const alt = match[1];
+        const src = resolveImageUrl(match[2]);
+        blocks.push(
+          <div key={`img-md-${i}`} className="flex justify-center py-2.5 my-2">
+            <div className={`rounded-xl shadow-md border p-2.5 max-w-md mx-auto ${forceLightMode ? 'bg-white border-slate-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'}`}>
+              <img
+                src={src}
+                alt={alt || 'Figura pedagógica'}
+                className="max-h-56 w-auto object-contain rounded"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        );
+        i++;
+        continue;
+      }
     }
 
     // Encabezados

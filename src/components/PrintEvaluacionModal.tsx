@@ -436,12 +436,12 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
                               {idx + 1}
                             </span>
                             <div className="flex-1 text-xs leading-snug">
-                              <EnunciadoRenderer content={preg.enunciado} forceLightMode={true} />
+                              <EnunciadoRenderer content={preg.enunciado} forceLightMode={true} imagenUrl={preg.imagenUrl} />
                             </div>
                           </div>
 
-                          {/* Figure / Image if exists */}
-                          {preg.imagenUrl && (
+                          {/* Figure / Image if exists (solo si no está insertada inline con [IMAGEN] o Markdown) */}
+                          {preg.imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(preg.enunciado || '') || preg.enunciado?.includes('![')) && (
                             <div className="my-1.5 flex justify-center page-break-inside-avoid">
                               <img
                                 src={resolveImageUrl(preg.imagenUrl)}

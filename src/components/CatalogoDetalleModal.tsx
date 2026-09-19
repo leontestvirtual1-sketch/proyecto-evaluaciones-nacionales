@@ -368,12 +368,12 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                       {/* ─ Enunciado (si no es sólo un título genérico de recorte) ─ */}
                       {p.enunciado && !p.enunciado.startsWith('Pregunta oficial #') && (
                         <div className="px-5 pt-4 pb-3 text-sm sm:text-[15px] text-slate-100 leading-relaxed">
-                          <EnunciadoRenderer content={p.enunciado} />
+                          <EnunciadoRenderer content={p.enunciado} imagenUrl={p.imagenUrl} />
                         </div>
                       )}
 
-                      {/* ─ Figura Pedagógica / Diagrama Matemático Adjunto ─ */}
-                      {p.imagenUrl && (
+                      {/* ─ Figura Pedagógica / Diagrama Matemático Adjunto (solo si no está inline) ─ */}
+                      {p.imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(p.enunciado || '') || p.enunciado?.includes('![')) && (
                         <div className="px-5 py-3 flex justify-center">
                           <div className="bg-white rounded-xl shadow-md border border-slate-300 p-3 sm:p-4 max-w-md mx-auto flex justify-center">
                             <img

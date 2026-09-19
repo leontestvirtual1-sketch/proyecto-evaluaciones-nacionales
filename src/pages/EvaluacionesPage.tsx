@@ -146,11 +146,11 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
 
                 {/* Enunciado con EnunciadoRenderer */}
                 <div className="text-sm font-semibold text-slate-900 dark:text-white leading-relaxed">
-                  <EnunciadoRenderer content={preg.enunciado} />
+                  <EnunciadoRenderer content={preg.enunciado} imagenUrl={preg.imagenUrl} />
                 </div>
 
-                {/* Imagen/Figura si existe */}
-                {preg.imagenUrl && (
+                {/* Imagen/Figura si existe (solo si no está insertada inline con [IMAGEN] o Markdown) */}
+                {preg.imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(preg.enunciado || '') || preg.enunciado?.includes('![')) && (
                   <div className="p-3 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm max-w-md my-2">
                     <img
                       src={resolveImageUrl(preg.imagenUrl)}

@@ -289,11 +289,11 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
 
               {/* Enunciado */}
               <div className="text-sm text-slate-100 leading-relaxed">
-                <EnunciadoRenderer content={enunciado} />
+                <EnunciadoRenderer content={enunciado} imagenUrl={imagenUrl} />
               </div>
 
-              {/* Imagen */}
-              {imagenUrl && (
+              {/* Imagen (solo si no está insertada inline con [IMAGEN] o Markdown) */}
+              {imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(enunciado || '') || enunciado?.includes('![')) && (
                 <div className="flex justify-center py-2">
                   <div className="bg-white rounded-xl shadow-md border border-slate-300 p-3 max-w-md mx-auto">
                     <img
@@ -380,6 +380,14 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
                       title="Insertar Tabla Markdown"
                     >
                       Tabla
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => insertSnippet('\n\n[IMAGEN]\n\n')}
+                      className="px-2 py-0.5 rounded bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 text-[11px] font-bold border border-indigo-700/60"
+                      title="Insertar la figura adjunta en esta posición exacta del texto"
+                    >
+                      [IMAGEN]
                     </button>
                   </div>
                 </div>

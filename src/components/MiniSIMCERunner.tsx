@@ -12,6 +12,7 @@ import {
 import { preguntasMock } from '../data/mockData';
 import { Pregunta } from '../types';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
+import { resolveImageUrl } from '../lib/storage';
 
 interface MiniSIMCERunnerProps {
   onFinish?: () => void;
@@ -179,8 +180,17 @@ export const MiniSIMCERunner: React.FC<MiniSIMCERunnerProps> = ({
                   </span>
                 </div>
                 <div className="text-base sm:text-lg font-bold text-white leading-relaxed">
-                  <EnunciadoRenderer content={currentQ.enunciado} />
+                  <EnunciadoRenderer content={currentQ.enunciado} imagenUrl={currentQ.imagenUrl} />
                 </div>
+                {currentQ.imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(currentQ.enunciado || '') || currentQ.enunciado?.includes('![')) && (
+                  <div className="p-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm my-3 max-w-md mx-auto">
+                    <img
+                      src={resolveImageUrl(currentQ.imagenUrl)}
+                      alt={`Figura Pregunta N° ${currentIdx + 1}`}
+                      className="max-h-72 w-auto object-contain rounded-xl"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Alternatives List */}

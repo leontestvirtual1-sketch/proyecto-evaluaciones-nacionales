@@ -249,10 +249,10 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
               Pregunta N° {currentIdx + 1}
             </span>
             <div className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white leading-relaxed">
-              <EnunciadoRenderer content={preguntaActual.enunciado} />
+              <EnunciadoRenderer content={preguntaActual.enunciado} imagenUrl={preguntaActual.imagenUrl} />
             </div>
 
-            {preguntaActual.imagenUrl && (
+            {preguntaActual.imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(preguntaActual.enunciado || '') || preguntaActual.enunciado?.includes('![')) && (
               <div className="p-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm my-3">
                 <img
                   src={resolveImageUrl(preguntaActual.imagenUrl)}
