@@ -265,35 +265,71 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
 
           {/* Alternatives or Textarea */}
           {preguntaActual.tipo === 'seleccion_multiple' ? (
-            <div className="space-y-3">
-              {preguntaActual.alternativas.map((alt) => {
-                const isSelected = respuestas[preguntaActual.id] === alt.letra;
-                return (
-                  <button
-                    key={alt.letra}
-                    onClick={() => handleSelectRespuesta(alt.letra)}
-                    className={`w-full p-4 rounded-xl border text-left transition-all flex items-start gap-3.5 ${
-                      isSelected
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-600/20'
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-indigo-400'
-                    }`}
-                  >
-                    <span
-                      className={`w-7 h-7 rounded-lg font-extrabold text-xs flex items-center justify-center flex-shrink-0 ${
-                        isSelected
-                          ? 'bg-white text-indigo-600'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
-                      }`}
-                    >
-                      {alt.letra}
-                    </span>
-                    <span className="text-sm font-medium pt-0.5">
-                      <EnunciadoRenderer content={alt.texto} inline={true} />
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+            preguntaActual.alternativas.every(a => a.texto?.trim().startsWith('!['))
+              ? (
+                /* Alternativas gráficas — grilla 2×2 como en PDF original */
+                <div className="grid grid-cols-2 gap-3">
+                  {preguntaActual.alternativas.map((alt) => {
+                    const isSelected = respuestas[preguntaActual.id] === alt.letra;
+                    return (
+                      <button
+                        key={alt.letra}
+                        onClick={() => handleSelectRespuesta(alt.letra)}
+                        className={`relative p-3 rounded-xl border transition-all flex flex-col items-center ${
+                          isSelected
+                            ? 'bg-indigo-600/20 border-indigo-500 shadow-md shadow-indigo-600/20'
+                            : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:border-indigo-400'
+                        }`}
+                      >
+                        <span
+                          className={`absolute top-2 left-2 w-5 h-5 rounded-md font-extrabold text-[11px] flex items-center justify-center flex-shrink-0 z-10 ${
+                            isSelected
+                              ? 'bg-indigo-600 text-white'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          {alt.letra}
+                        </span>
+                        <div className="w-full mt-1">
+                          <EnunciadoRenderer content={alt.texto} />
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )
+              : (
+                /* Alternativas de texto — lista vertical */
+                <div className="space-y-3">
+                  {preguntaActual.alternativas.map((alt) => {
+                    const isSelected = respuestas[preguntaActual.id] === alt.letra;
+                    return (
+                      <button
+                        key={alt.letra}
+                        onClick={() => handleSelectRespuesta(alt.letra)}
+                        className={`w-full p-4 rounded-xl border text-left transition-all flex items-start gap-3.5 ${
+                          isSelected
+                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-600/20'
+                            : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-indigo-400'
+                        }`}
+                      >
+                        <span
+                          className={`w-7 h-7 rounded-lg font-extrabold text-xs flex items-center justify-center flex-shrink-0 ${
+                            isSelected
+                              ? 'bg-white text-indigo-600'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          {alt.letra}
+                        </span>
+                        <span className="text-sm font-medium pt-0.5">
+                          <EnunciadoRenderer content={alt.texto} inline={true} />
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )
           ) : (
             <div className="space-y-2">
               <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">

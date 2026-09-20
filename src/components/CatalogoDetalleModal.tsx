@@ -402,46 +402,89 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
 
                           {/* Siempre mostrar texto si alguna alternativa lo tiene */}
                           {p.alternativas.some(a => a.texto && a.texto.trim().length > 0) ? (
-                            /* Alternativas con texto detallado */
-                            <div className="space-y-2">
-                              {p.alternativas.map((alt, altIdx) => {
-                                const isCorrect = alt.letra === p.respuestaCorrecta;
-                                const showCorrect = mostrarRespuestas && isCorrect;
-                                return (
-                                  <div
-                                    key={alt.letra}
-                                    className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
-                                      showCorrect
-                                        ? 'bg-emerald-900/25 border-emerald-500/50'
-                                        : 'bg-slate-900/40 border-slate-700/50'
-                                    }`}
-                                  >
-                                    <span
-                                      className={`w-6 h-6 rounded-lg text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ${
-                                        showCorrect
-                                          ? 'bg-emerald-500 text-white shadow shadow-emerald-500/30'
-                                          : 'bg-slate-800 text-slate-300 border border-slate-600'
-                                      }`}
-                                    >
-                                      {alt.letra || LETRAS[altIdx]}
-                                    </span>
-                                    <div
-                                      className={`text-sm flex-1 leading-snug pt-0.5 ${
-                                        showCorrect ? 'text-emerald-100 font-medium' : 'text-slate-300'
-                                      }`}
-                                    >
-                                      <EnunciadoRenderer content={alt.texto} />
-                                    </div>
-                                    {showCorrect && (
-                                      <CheckCircle2
-                                        size={16}
-                                        className="text-emerald-400 shrink-0 mt-1"
-                                      />
-                                    )}
-                                  </div>
-                                );
-                              })}
-                            </div>
+                            // Detectar si TODAS son imágenes → grilla 2×2 fiel al PDF original
+                            p.alternativas.every(a => a.texto?.trim().startsWith('!['))
+                              ? (
+                                /* Alternativas gráficas — grilla 2×2 */
+                                <div className="grid grid-cols-2 gap-3">
+                                  {p.alternativas.map((alt, altIdx) => {
+                                    const isCorrect = alt.letra === p.respuestaCorrecta;
+                                    const showCorrect = mostrarRespuestas && isCorrect;
+                                    return (
+                                      <div
+                                        key={alt.letra}
+                                        className={`relative flex flex-col items-center rounded-xl border p-2 transition-all ${
+                                          showCorrect
+                                            ? 'bg-emerald-900/25 border-emerald-500/50 shadow shadow-emerald-500/20'
+                                            : 'bg-slate-900/40 border-slate-700/50'
+                                        }`}
+                                      >
+                                        {/* Badge de letra superpuesto */}
+                                        <span
+                                          className={`absolute top-2 left-2 w-5 h-5 rounded-md text-[11px] font-black flex items-center justify-center z-10 ${
+                                            showCorrect
+                                              ? 'bg-emerald-500 text-white shadow shadow-emerald-500/30'
+                                              : 'bg-slate-800 text-slate-300 border border-slate-600'
+                                          }`}
+                                        >
+                                          {alt.letra || LETRAS[altIdx]}
+                                        </span>
+                                        {/* Imagen del plano cartesiano */}
+                                        <div className="w-full mt-1">
+                                          <EnunciadoRenderer content={alt.texto} />
+                                        </div>
+                                        {showCorrect && (
+                                          <span className="flex items-center gap-1 text-[10px] text-emerald-400 font-semibold mt-1">
+                                            <CheckCircle2 size={11} /> Correcta
+                                          </span>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )
+                              : (
+                                /* Alternativas con texto — lista vertical */
+                                <div className="space-y-2">
+                                  {p.alternativas.map((alt, altIdx) => {
+                                    const isCorrect = alt.letra === p.respuestaCorrecta;
+                                    const showCorrect = mostrarRespuestas && isCorrect;
+                                    return (
+                                      <div
+                                        key={alt.letra}
+                                        className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
+                                          showCorrect
+                                            ? 'bg-emerald-900/25 border-emerald-500/50'
+                                            : 'bg-slate-900/40 border-slate-700/50'
+                                        }`}
+                                      >
+                                        <span
+                                          className={`w-6 h-6 rounded-lg text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ${
+                                            showCorrect
+                                              ? 'bg-emerald-500 text-white shadow shadow-emerald-500/30'
+                                              : 'bg-slate-800 text-slate-300 border border-slate-600'
+                                          }`}
+                                        >
+                                          {alt.letra || LETRAS[altIdx]}
+                                        </span>
+                                        <div
+                                          className={`text-sm flex-1 leading-snug pt-0.5 ${
+                                            showCorrect ? 'text-emerald-100 font-medium' : 'text-slate-300'
+                                          }`}
+                                        >
+                                          <EnunciadoRenderer content={alt.texto} />
+                                        </div>
+                                        {showCorrect && (
+                                          <CheckCircle2
+                                            size={16}
+                                            className="text-emerald-400 shrink-0 mt-1"
+                                          />
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )
                           ) : (
                             /* Solo letras — el contenido visual está en la imagen adjunta */
                             <div className="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-md">
