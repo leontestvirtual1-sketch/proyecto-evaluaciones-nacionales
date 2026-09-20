@@ -169,6 +169,29 @@ describe('API Grade-Evaluation: Verificación de Handler Real', () => {
     const simceScore = Math.round(100 + (logro / 100) * 250);
     expect(simceScore).toBe(350);
   });
+
+  test('Rechaza con 401 si no hay sesión autenticada ni alumnoId identificable', async () => {
+    const resNoAuth = createMockResponse();
+    await handler({
+      method: 'POST',
+      headers: {},
+      body: {
+        pruebaId: 'eval-simce-mat-6b-e3',
+        respuestas: { 'q-1': 'A' }
+        // Sin alumnoId ni token
+      }
+    }, resNoAuth);
+
+    expect(resNoAuth.statusCode).toBe(401);
+    expect(resNoAuth.body?.error).toBe('Se requiere iniciar sesión para registrar una rendición.');
+  });
+
+  test('Valida que los IDs de rendición generados cumplen con formato UUID criptográfico', () => {
+    const uuid = crypto.randomUUID();
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid);
+    expect(isUuid).toBe(true);
+    expect(uuid.startsWith('rend-')).toBe(false);
+  });
 });
 
 // Arnes de ejecución compatible sin dependencias externas

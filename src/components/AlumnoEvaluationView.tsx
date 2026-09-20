@@ -3,6 +3,7 @@ import { Prueba, Pregunta, UserProfile, RendicionPrueba } from '../types';
 import { Clock, CheckCircle2, ArrowRight, ArrowLeft, Send } from 'lucide-react';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
 import { resolveImageUrl } from '../lib/storage';
+import { supabase } from '../lib/supabaseClient';
 
 interface AlumnoEvaluationViewProps {
   prueba: Prueba;
@@ -32,10 +33,19 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
     if (porTiempo) setTiempoExpirado(true);
 
     try {
-      // 1. Intentar calificar en el servidor seguro (service_role)
+      // 1. Obtener token de sesión para autenticación en backend seguro
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      // 2. Calificar en el servidor seguro (service_role)
       const res = await fetch('/api/grade-evaluation', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           pruebaId: prueba.id,
           alumnoId: alumno.id,
@@ -56,14 +66,20 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
       } else {
         const errData = await res.json().catch(() => ({}));
         console.error('Error reportado por /api/grade-evaluation:', errData.error);
-        setSyncWarning('Hubo un problema al registrar la evaluación en el servidor central. Avisa a tu docente antes de salir.');
+        setSyncWarning(errData.error || 'Hubo un problema al registrar la evaluación en el servidor central. Avisa a tu docente.');
       }
     } catch (apiErr) {
-      console.warn('Fallo llamada /api/grade-evaluation, aplicando fallback local:', apiErr);
-      setSyncWarning('Sin conexión directa con el servidor. La evaluación se calculó localmente pero no pudo ser guardada en la base de datos central.');
+      console.warn('Fallo llamada /api/grade-evaluation:', apiErr);
+      setSyncWarning('Sin conexión directa con el servidor seguro.');
     }
 
-    // Fallback local (modo demo o sin conexión)
+    // Fallback local: Estrictamente restringido a modo demostración (Directivas 1 y 2 / Fase 3 Auditoría)
+    // En producción nunca calificar localmente con claves inexistentes para no falsear el resultado
+    const esDemo = Boolean(alumno.id?.startsWith('demo-') || (prueba as any).es_demo);
+    if (!esDemo) {
+      setIsSubmitting(false);
+      return;
+    }
     let puntajeObtenido = 0;
     let puntajeMaximo = 0;
 

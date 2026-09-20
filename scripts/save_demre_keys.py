@@ -1,0 +1,43 @@
+import sys
+import pymupdf
+import re
+import json
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+# 1. Claves oficiales y pilotos desde DEMRE
+claves_demre = {
+    1: "C", 2: "D", 3: "C", 4: "A", 5: "A", 6: "C", 7: "D", 8: "B", 9: "C", 10: "C",
+    11: "D", 12: "D", 13: "C", 14: "D", 15: "B", 16: "D", 17: "B", 18: "C", 19: "B", 20: "D",
+    21: "C", 22: "A", 23: "C", 24: "C", 25: "B", 26: "A", 27: "C", 28: "B", 29: "A", 30: "B",
+    31: "C", 32: "A", 33: "D", 34: "D", 35: "D", 36: "A", 37: "B", 38: "B", 39: "D", 40: "A",
+    41: "B", 42: "A", 43: "B", 44: "B", 45: "A", 46: "D", 47: "C", 48: "B", 49: "C", 50: "A",
+    51: "B", 52: "A", 53: "A", 54: "D", 55: "C", 56: "A", 57: "A", 58: "D", 59: "D", 60: "C",
+    61: "B", 62: "A", 63: "C", 64: "C", 65: "B"
+}
+pilotos = {10, 22, 23, 52, 58}
+
+# Tabla de transformación P -> PAES oficial
+tabla_paes = {
+    0: 100, 1: 158, 2: 179, 3: 200, 4: 220, 5: 240, 6: 258, 7: 274, 8: 288, 9: 303,
+    10: 318, 11: 335, 12: 351, 13: 365, 14: 377, 15: 386, 16: 396, 17: 408, 18: 422, 19: 437,
+    20: 453, 21: 465, 22: 475, 23: 483, 24: 491, 25: 499, 26: 510, 27: 523, 28: 538, 29: 553,
+    30: 566, 31: 575, 32: 583, 33: 590, 34: 598, 35: 608, 36: 621, 37: 636, 38: 652, 39: 665,
+    40: 676, 41: 685, 42: 693, 43: 703, 44: 716, 45: 732, 46: 748, 47: 763, 48: 777, 49: 790,
+    50: 803, 51: 818, 52: 836, 53: 855, 54: 874, 55: 893, 56: 914, 57: 936, 58: 961, 59: 988,
+    60: 1000
+}
+
+# Guardar tabla oficial
+with open(r"scripts\data\claves_oficiales\paes_lectora_2026_f101_tabla.json", "w", encoding="utf-8") as f:
+    json.dump({
+        "evaluacion_id": "eval-paes-lect-2026-f103",
+        "fuente": "DEMRE — PAES Competencia Lectora Forma 101 Invierno 2026",
+        "total_preguntas": 65,
+        "preguntas_puntuables": 60,
+        "preguntas_piloto": list(pilotos),
+        "claves": claves_demre,
+        "tabla_transformacion_paes": tabla_paes
+    }, f, indent=2, ensure_ascii=False)
+
+print("Tabla oficial DEMRE guardada.")

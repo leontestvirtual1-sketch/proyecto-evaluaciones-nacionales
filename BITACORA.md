@@ -2,6 +2,48 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-20] Auditoría de Integridad: Fases 2.7, 2.8 y 3 (PAES Lectora 2026 Forma 101, SIMCE Mat 6B E3 y Hardening Calificación)
+
+- **Problema / Requerimiento**:
+  1. **Fase 2.8**: En SIMCE Matemática 6° Básico Ensayo 3 (`eval-simce-mat-6b-e3`), las 35 preguntas sumaban 58 puntos con puntajes arbitrarios (1, 2, 3), en contradicción con la tabla de especificaciones oficial MINEDUC que asigna exactamente 2 puntos por ítem (70 puntos totales).
+  2. **Fase 2.7**: En PAES Competencia Lectora 2026 (`eval-paes-lect-2026-f103`), el instrumento correspondía a la Forma 101 Invierno (no Forma 103). Además, las alternativas D de las preguntas de cierre de bloque (Q08, Q17, Q26, Q37, Q47, Q55) se habían tragado la lectura completa subsiguiente (hasta 8.481 caracteres por alternativa) y 31 preguntas contenían pies de página `FORMA 101 - 2026`.
+  3. **Fase 3**: En `api/grade-evaluation.ts`, existían fallbacks con JWT sintéticos y caída a clave anónima; permitía doble envío sin control; usaba identificadores basados en `Date.now()`; permitía calificación local con claves que viajaban al navegador; y no aplicaba la tabla oficial DEMRE de transformación de puntajes.
+
+- **Archivos y Solución Técnica**:
+  - **Fase 2.8 (SIMCE Matemática 6B E3)**:
+    - [`supabase/migrations/053_fix_mat6b_e3_puntajes.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/053_fix_mat6b_e3_puntajes.sql): Migración SQL que fija `puntaje = 2` para las 35 preguntas (`preg-mat6b-e3-%`) y asegura `total_preguntas = 35` en `evaluaciones`.
+    - [`scripts/apply_migration_053.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/apply_migration_053.mjs): Aplicación verificada en Supabase resultando en exactamente 70 puntos totales.
+  - **Fase 2.7 (PAES Competencia Lectora 2026 Forma 101)**:
+    - [`scripts/read_clavijero_invierno.py`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/read_clavijero_invierno.py) y [`scripts/save_demre_keys.py`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/save_demre_keys.py): Extracción del clavijero oficial DEMRE y almacenamiento de la tabla oficial de transformación P (0-60) a PAES (100-1000) en [`scripts/data/claves_oficiales/paes_lectora_2026_f101_tabla.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/paes_lectora_2026_f101_tabla.json).
+    - [`scripts/build_clean_paes_lectora_dataset.py`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/build_clean_paes_lectora_dataset.py): Extracción automatizada limpia desde el PDF oficial, eliminando pies de página y separando el texto de las lecturas para formatear los enunciados según el skill `eval-markdown-formatter` (primera pregunta con texto completo y separador `---`, preguntas siguientes con `Lectura N (Continuación)`).
+    - [`scripts/data/paes_lect_2026_reales_65.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/paes_lect_2026_reales_65.json): Dataset verificado con 0 alternativas largas (>250 chars), 0 pies de página y claves DEMRE 100% coincidentes.
+    - [`supabase/migrations/054_clean_paes_lect_2026_forma101.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/054_clean_paes_lect_2026_forma101.sql): Migración declarativa SQL para actualizar cabecera y las 65 preguntas.
+    - [`scripts/apply_migration_054.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/apply_migration_054.mjs): Ejecución en Supabase con verificación post-migración ([`scripts/verify_paes_lect_post_migration.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/verify_paes_lect_post_migration.mjs)).
+  - **Fase 3 (Seguridad de Calificación)**:
+    - [`api/grade-evaluation.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/grade-evaluation.ts):
+      - Eliminación absoluta de claves sintéticas y fallbacks de service_role.
+      - Validación temprana de payload (400 Bad Request) y CORS con regex segura para localhost.
+      - Prevención de doble envío mediante chequeo en tabla `rendiciones` (409 Conflict si ya existe).
+      - Reemplazo de `rend-${Date.now()}` por UUIDs criptográficos (`crypto.randomUUID()`).
+      - Integración de la tabla oficial de transformación DEMRE para PAES Competencia Lectora Invierno.
+      - Eliminación de `tiempoSegundos: 45` fijo; ahora respeta tiempos reales por pregunta.
+      - Eliminación de `detail: err.message` para evitar filtraciones de internals.
+    - [`src/components/AlumnoEvaluationView.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AlumnoEvaluationView.tsx):
+      - Envío de token de sesión (`Authorization: Bearer`) al invocar `/api/grade-evaluation`.
+      - Aislamiento estricto del fallback local: restringido exclusivamente a modo demo (`esDemo`), impidiendo en producción falsas calificaciones locales.
+    - [`tests/grade-evaluation.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/grade-evaluation.test.ts):
+      - Pruebas adicionales para rechazo 401 sin sesión/identificación y validación de formato UUID.
+    - [`package.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/package.json): Incorporación de `--env-file=.env.local` al runner de test de calificación.
+
+- **Verificación / Despliegue**:
+  - Supabase DB:
+    - `eval-simce-mat-6b-e3`: 35 preguntas con puntaje 2 (total 70 puntos).
+    - `eval-paes-lect-2026-f103`: 65 preguntas depuradas, 0 alternativas > 250 chars, distribución balanceada: A:16, B:16, C:18, D:15.
+  - `npm test`: 4 suites pasando al 100% (Tenant Isolation, Evaluaciones Catálogo, Grade-Evaluation con UUID/401/CORS, Scoring Pedagógico).
+  - TypeScript: 0 errores de compilación.
+
+---
+
 ### [2026-09-20] Auditoría de Integridad: Fase 2 (Reconstrucción Fiel SIMCE Matemática 2° Medio Ensayo 3)
 
 - **Problema / Requerimiento**:
