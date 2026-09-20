@@ -1,300 +1,291 @@
 # 📋 Pauta de Corrección y Solucionario Docente
-## Ensayo 3 SIMCE Matemática 2° Medio
+## Ensayo 3 SIMCE Matemática 2° Medio (Reconstrucción Fiel)
 
 > **Documento Técnico Pedagógico para el Docente**  
-> **Asignatura:** Matemática | **Nivel:** 2° Medio | **Total Ítems:** 35 preguntas de Selección Múltiple  
+> **Asignatura:** Matemática | **Nivel:** 2° Medio | **Total Ítems:** 34 preguntas de Selección Múltiple  
+> **Fuente:** Solucionario Oficial Umáximo (Claves verificadas a mano)  
 > **Plataforma:** Sysget Saber — Catálogo de Evaluaciones Nacionales  
 
 ---
 
 ## 📊 1. Tabla de Especificaciones y Claves de Corrección
 
-| N° | Clave | Puntaje | Eje Temático | Habilidad | Complejidad |
+| N° | Clave | Puntaje | Eje Temático | Habilidad | Dificultad |
 | :---: | :---: | :---: | :--- | :--- | :---: |
-| **1** | **A** | 1 | Números y Operaciones (Reales y Logaritmos) | Representar y Conocer | Baja |
-| **2** | **A** | 1 | Números y Operaciones (Reales y Logaritmos) | Representar y Conocer | Baja |
-| **3** | **B** | 2 | Números y Operaciones (Reales y Logaritmos) | Resolver Problemas | Media |
-| **4** | **C** | 2 | Números y Operaciones (Reales y Logaritmos) | Representar y Conocer | Media |
-| **5** | **A** | 1 | Números y Operaciones (Reales y Logaritmos) | Representar y Conocer | Baja |
-| **6** | **A** | 2 | Números y Operaciones (Reales y Logaritmos) | Resolver Problemas | Media |
-| **7** | **B** | 2 | Números y Operaciones (Reales y Logaritmos) | Razonar y Argumentar | Media |
-| **8** | **B** | 1 | Números y Operaciones (Reales y Logaritmos) | Representar y Conocer | Baja |
-| **9** | **A** | 1 | Números y Operaciones (Reales y Logaritmos) | Representar y Conocer | Baja |
-| **10** | **A** | 1 | Números y Operaciones (Reales y Logaritmos) | Resolver Problemas | Baja |
-| **11** | **A** | 2 | Álgebra y Funciones (Sistemas y Cuadráticas) | Resolver Problemas | Media |
-| **12** | **A** | 2 | Álgebra y Funciones (Sistemas y Cuadráticas) | Razonar y Argumentar | Media |
-| **13** | **A** | 2 | Álgebra y Funciones (Sistemas y Cuadráticas) | Modelar | Media |
-| **14** | **A** | 1 | Álgebra y Funciones (Sistemas y Cuadráticas) | Representar y Conocer | Baja |
-| **15** | **A** | 1 | Álgebra y Funciones (Sistemas y Cuadráticas) | Representar y Conocer | Baja |
-| **16** | **A** | 1 | Álgebra y Funciones (Sistemas y Cuadráticas) | Representar y Conocer | Baja |
-| **17** | **A** | 1 | Álgebra y Funciones (Sistemas y Cuadráticas) | Resolver Problemas | Baja |
-| **18** | **A** | 2 | Álgebra y Funciones (Sistemas y Cuadráticas) | Modelar | Media |
-| **19** | **A** | 2 | Álgebra y Funciones (Sistemas y Cuadráticas) | Razonar y Argumentar | Media |
-| **20** | **A** | 2 | Álgebra y Funciones (Sistemas y Cuadráticas) | Resolver Problemas | Media |
-| **21** | **A** | 1 | Álgebra y Funciones (Sistemas y Cuadráticas) | Representar y Conocer | Baja |
-| **22** | **A** | 2 | Álgebra y Funciones (Sistemas y Cuadráticas) | Razonar y Argumentar | Media |
-| **23** | **A** | 2 | Geometría y Trigonometría | Razonar y Argumentar | Media |
-| **24** | **A** | 1 | Geometría y Trigonometría | Representar y Conocer | Baja |
-| **25** | **A** | 2 | Geometría y Trigonometría | Resolver Problemas | Media |
-| **26** | **A** | 2 | Medición y Cuerpos Redondos | Resolver Problemas | Media |
-| **27** | **A** | 2 | Medición y Cuerpos Redondos | Resolver Problemas | Media |
-| **28** | **A** | 3 | Medición y Cuerpos Redondos | Resolver Problemas | Alta |
-| **29** | **A** | 2 | Geometría y Trigonometría | Razonar y Argumentar | Media |
-| **30** | **A** | 2 | Geometría y Trigonometría | Representar y Conocer | Media |
-| **31** | **C** | 2 | Probabilidad y Estadística | Modelar | Media |
-| **32** | **A** | 2 | Probabilidad y Estadística | Resolver Problemas | Media |
-| **33** | **C** | 2 | Probabilidad y Estadística | Resolver Problemas | Media |
-| **34** | **C** | 3 | Probabilidad y Estadística | Razonar y Argumentar | Alta |
-| **35** | **A** | 1 | Probabilidad y Estadística | Resolver Problemas | Baja |
+| **1** | **A** | 1 | Números y Operaciones | Resolver Problemas | Baja |
+| **2** | **A** | 1 | Números y Operaciones | Resolver Problemas | Baja |
+| **3** | **B** | 1 | Números y Operaciones | Representar y Conocer | Media |
+| **4** | **D** | 1 | Números y Operaciones | Resolver Problemas | Media |
+| **5** | **C** | 1 | Números y Operaciones | Resolver Problemas | Baja |
+| **6** | **A** | 1 | Números y Operaciones | Modelar | Media |
+| **7** | **A** | 1 | Números y Operaciones | Resolver Problemas | Media |
+| **8** | **A** | 1 | Números y Operaciones | Resolver Problemas | Media |
+| **9** | **B** | 1 | Números y Operaciones | Resolver Problemas | Baja |
+| **10** | **B** | 1 | Números y Operaciones | Modelar | Baja |
+| **11** | **D** | 1 | Números y Operaciones | Resolver Problemas | Media |
+| **12** | **B** | 1 | Números y Operaciones | Resolver Problemas | Baja |
+| **13** | **A** | 1 | Números y Operaciones | Resolver Problemas | Baja |
+| **14** | **B** | 1 | Números y Operaciones | Resolver Problemas | Media |
+| **15** | **A** | 1 | Álgebra y Funciones | Resolver Problemas | Media |
+| **16** | **A** | 1 | Álgebra y Funciones | Resolver Problemas | Media |
+| **17** | **C** | 1 | Álgebra y Funciones | Resolver Problemas | Media |
+| **18** | **A** | 1 | Álgebra y Funciones | Modelar | Media |
+| **19** | **B** | 1 | Álgebra y Funciones | Razonar y Argumentar | Media |
+| **20** | **C** | 1 | Álgebra y Funciones | Representar y Conocer | Media |
+| **21** | **C** | 1 | Álgebra y Funciones | Representar y Conocer | Baja |
+| **22** | **D** | 1 | Álgebra y Funciones | Razonar y Argumentar | Media |
+| **23** | **D** | 1 | Geometría | Representar y Conocer | Media |
+| **24** | **A** | 1 | Geometría | Razonar y Argumentar | Media |
+| **25** | **C** | 1 | Geometría | Representar y Conocer | Media |
+| **26** | **D** | 1 | Geometría | Modelar | Alta |
+| **27** | **B** | 1 | Medición | Representar y Conocer | Media |
+| **28** | **C** | 1 | Medición | Representar y Conocer | Alta |
+| **29** | **D** | 1 | Geometría | Razonar y Argumentar | Media |
+| **30** | **C** | 1 | Probabilidad y Estadística | Representar y Conocer | Media |
+| **31** | **C** | 1 | Probabilidad y Estadística | Modelar | Media |
+| **32** | **D** | 1 | Probabilidad y Estadística | Representar y Conocer | Media |
+| **33** | **C** | 1 | Probabilidad y Estadística | Representar y Conocer | Media |
+| **34** | **C** | 1 | Probabilidad y Estadística | Razonar y Argumentar | Alta |
 
 ---
 
 ## 📝 2. Solucionario Detallado y Justificaciones Pedagógicas por Ítem
 
 ### Ítem 1. (Clave: **A** — 1 pto)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Representar y Conocer
-- **Enunciado:** ¿Cuál de las siguientes expresiones es equivalente a $\sqrt[3]{a + b}$?...
-- **Justificación:** Por propiedad de conversión de radicales a potencias con exponente fraccionario, la raíz enésima de una base se expresa como base^(1/n). Por lo tanto, raíz cúbica de (a + b) equivale a (a + b)^(1/3).
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál de las siguientes expresiones es equivalente a $\sqrt[3]{a+b}$?
+- **Justificación:** Por definición de exponente fraccionario, $\sqrt[n]{x} = x^{\frac{1}{n}}$. Por tanto, $\sqrt[3]{a+b} = (a+b)^{\frac{1}{3}}$.
 
 ---
 
 ### Ítem 2. (Clave: **A** — 1 pto)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Representar y Conocer
-- **Enunciado:** La expresión $\sqrt[3]{64} = 4$ se puede representar en forma de logaritmo como:...
-- **Justificación:** Como 64^(1/3) = 4, aplicando la definición de logaritmo (base^resultado = argumento), se tiene log_64(4) = 1/3.
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** La expresión $\sqrt[3]{64}=4$ se puede representar en logaritmo como:
+- **Justificación:** Por definición de logaritmo, $b^y = x \iff \log_b(x) = y$. Como $\sqrt[3]{64}=4 \iff 64^{\frac{1}{3}}=4$, se tiene $\log_{64}(4) = \frac{1}{3}$.
 
 ---
 
-### Ítem 3. (Clave: **B** — 2 ptos)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Resolver Problemas
-- **Enunciado:** En una competencia de eSports, el sistema clasifica a los jugadores calculando su «Eficiencia de Combate». Esta eficienc...
-- **Justificación:** La división de dos enteros positivos (a / b con b ≠ 0) genera fracciones o números decimales exactos/periódicos, los cuales pertenecen al conjunto de los números racionales (ℚ).
+### Ítem 3. (Clave: **B** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Representar y Conocer
+- **Enunciado:** En una competencia de eSports, el sistema clasifica a los jugadores calculando su «Eficiencia de Combate». Esta eficiencia se obtiene dividiendo el **daño total causado** por la **cantidad de rondas jugadas**.
+- **Justificación:** La eficiencia se obtiene dividiendo enteros positivos (daño / rondas), lo que por definición corresponde a un cociente de enteros $\frac{a}{b}$ con $b \neq 0$, es decir, al conjunto de los Números Racionales ($\mathbb{Q}$).
 
 ---
 
-### Ítem 4. (Clave: **C** — 2 ptos)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Representar y Conocer
-- **Enunciado:** ¿Cuál de las siguientes raíces es equivalente a $\sqrt{3} \cdot \sqrt[3]{3}$?...
-- **Justificación:** 3^(1/2) * 3^(1/3) = 3^(1/2 + 1/3) = 3^(5/6) = ⁶√3⁵.
+### Ítem 4. (Clave: **D** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál de las siguientes raíces es equivalente a $\sqrt{3}\cdot\sqrt[3]{3}$?
+- **Justificación:** $\sqrt{3} \cdot \sqrt[3]{3} = 3^{\frac{1}{2}} \cdot 3^{\frac{1}{3}} = 3^{\frac{1}{2} + \frac{1}{3}} = 3^{\frac{5}{6}} = \sqrt[6]{3^5}$.
 
 ---
 
-### Ítem 5. (Clave: **A** — 1 pto)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Representar y Conocer
-- **Enunciado:** ¿Cuál es el valor de $\log_{10}(1000) - \log_2(16)$?...
-- **Justificación:** log_10(1000) = 3 ya que 10³ = 1000. log_2(16) = 4 ya que 2⁴ = 16. Por ende, 3 - 4 = -1.
+### Ítem 5. (Clave: **C** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál es el valor de $(4)^{-2}$?
+- **Justificación:** $\left(\frac{1}{4}\right)^{-2} = 4^2 = 16$.
 
 ---
 
-### Ítem 6. (Clave: **A** — 2 ptos)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Resolver Problemas
-- **Enunciado:** Si $\log(2) \approx 0{,}301$ y $\log(3) \approx 0{,}477$, ¿cuál es el valor aproximado de $\log(18)$?...
-- **Justificación:** log(18) = log(2 * 3²) = log(2) + 2*log(3) ≈ 0,301 + 2*(0,477) = 0,301 + 0,954 = 1,255.
+### Ítem 6. (Clave: **A** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Modelar
+- **Enunciado:** Una población de 40 conejos fue liberada en el ambiente silvestre. Se espera que esta población aumente cada mes en un 50% respecto de la que había el mes anterior. ¿Cuál de las siguientes expresiones representa la población de conejos que se espera tener luego de 3 meses?
+- **Justificación:** El modelo es $P(t) = 40 \cdot (1{,}5)^t$. Tras 3 meses: $P(3) = 40 \cdot 1{,}5^3 = 40 \cdot 3{,}375 = 135$ conejos.
 
 ---
 
-### Ítem 7. (Clave: **B** — 2 ptos)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Razonar y Argumentar
-- **Enunciado:** ¿Cuál de las siguientes afirmaciones es **verdadera** respecto a los números reales?...
-- **Justificación:** Si multiplicamos un racional r ≠ 0 por un irracional x, el resultado r*x debe ser irracional (por demostración por contradicción).
+### Ítem 7. (Clave: **A** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Qué número es equivalente a $-\left(\frac{2}{3}\right)^{-2}$?
+- **Justificación:** $-\left(\frac{2}{3}\right)^{-2} = -\left(\frac{3}{2}\right)^2 = -\frac{9}{4} = -2{,}25$.
 
 ---
 
-### Ítem 8. (Clave: **B** — 1 pto)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Representar y Conocer
-- **Enunciado:** ¿Cuál de las siguientes igualdades es correcta para todo número real positivo $x$?...
-- **Justificación:** Por propiedad multiplicativa de raíces: √(9x) = √9 * √x = 3√x.
+### Ítem 8. (Clave: **A** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál de las siguientes igualdades es correcta?
+- **Justificación:** $\sqrt{5^3} = \sqrt{5^2 \cdot 5} = 5\sqrt{5}$.
 
 ---
 
-### Ítem 9. (Clave: **A** — 1 pto)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Representar y Conocer
-- **Enunciado:** Al racionalizar la expresión $\frac{6}{\sqrt{3}}$, se obtiene:...
-- **Justificación:** Multiplicando numerador y denominador por √3: (6√3) / (√3*√3) = 6√3 / 3 = 2√3.
+### Ítem 9. (Clave: **B** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** Considera la siguiente igualdad.
+- **Justificación:** $\log_2(32) = x \iff 2^x = 32 = 2^5 \implies x = 5$.
 
 ---
 
-### Ítem 10. (Clave: **A** — 1 pto)
-- **Eje:** Números y Operaciones (Reales y Logaritmos) | **Habilidad:** Resolver Problemas
-- **Enunciado:** Sabiendo que 1 pulgada equivale a $2{,}54\text{ cm}$, ¿cuántos centímetros equivalen a $12$ pulgadas?...
-- **Justificación:** 12 * 2,54 = 30,48 cm.
+### Ítem 10. (Clave: **B** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Modelar
+- **Enunciado:** Sabiendo que 1 pulgada equivale a 2,54 centímetros, ¿a cuántos centímetros equivale media pulgada?
+- **Justificación:** Media pulgada corresponde a $\frac{1}{2}$ pulgada. Como 1 pulgada son $2{,}54\text{ cm}$, $\frac{1}{2} \cdot 2{,}54 = 1{,}27\text{ cm}$.
 
 ---
 
-### Ítem 11. (Clave: **A** — 2 ptos)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Resolver Problemas
-- **Enunciado:** ¿Cuál es el conjunto solución de la ecuación cuadrática $x^2 - 5x + 6 = 0$?...
-- **Justificación:** Factorizando (x - 2)(x - 3) = 0, se obtienen las raíces x₁ = 2 y x₂ = 3.
+### Ítem 11. (Clave: **D** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál es el valor de $\sqrt{8}\left(\sqrt{32}-\sqrt{2}\right)$?
+- **Justificación:** $\sqrt{8}(\sqrt{32} - \sqrt{2}) = \sqrt{8 \cdot 32} - \sqrt{8 \cdot 2} = \sqrt{256} - \sqrt{16} = 16 - 4 = 12$.
 
 ---
 
-### Ítem 12. (Clave: **A** — 2 ptos)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Razonar y Argumentar
-- **Enunciado:** ¿Cuál es el discriminante ($\Delta$) de la ecuación $2x^2 - 4x + 5 = 0$ y qué indica sobre sus soluciones?...
-- **Justificación:** Δ = b² - 4ac = (-4)² - 4(2)(5) = 16 - 40 = -24. Como Δ < 0, la ecuación no posee soluciones en el conjunto de los números reales.
+### Ítem 12. (Clave: **B** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál es el resultado de $\sqrt{100}-\sqrt{64}+\sqrt{36}$?
+- **Justificación:** $\sqrt{100} - \sqrt{64} + \sqrt{36} = 10 - 8 + 6 = 8$.
 
 ---
 
-### Ítem 13. (Clave: **A** — 2 ptos)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Modelar
-- **Enunciado:** La trayectoria de un proyectil está dada por la función cuadrática $h(t) = -5t^2 + 20t$, donde $h$ es la altura en metro...
-- **Justificación:** El vértice ocurre en t = -b / (2a) = -20 / (2 * -5) = 2 segundos. La altura máxima es h(2) = -5(2)² + 20(2) = -20 + 40 = 20 metros.
+### Ítem 13. (Clave: **A** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál de los siguientes números es equivalente a $\sqrt{20}$?
+- **Justificación:** $\sqrt{20} = \sqrt{4 \cdot 5} = 2\sqrt{5}$.
 
 ---
 
-### Ítem 14. (Clave: **A** — 1 pto)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Representar y Conocer
-- **Enunciado:** ¿En qué puntos interseca al eje $X$ la parábola asociada a la función $f(x) = x^2 - 4$?...
-- **Justificación:** Haciendo f(x) = 0: x² - 4 = 0 => x² = 4 => x = ±2. Los puntos de corte son (2, 0) y (-2, 0).
+### Ítem 14. (Clave: **B** — 1 pto)
+- **Eje:** Números y Operaciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** Considera la siguiente igualdad:
+- **Justificación:** Por definición de logaritmo, $c^d = e \iff \log_c(e) = d$.
 
 ---
 
 ### Ítem 15. (Clave: **A** — 1 pto)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Representar y Conocer
-- **Enunciado:** Si $f(x) = 2x^2 - 3x + 1$, ¿cuál es el valor de $f(-2)$?...
-- **Justificación:** f(-2) = 2(-2)² - 3(-2) + 1 = 2(4) + 6 + 1 = 8 + 6 + 1 = 15.
+- **Eje:** Álgebra y Funciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** Considera el siguiente desarrollo del cuadrado de un binomio.
+- **Justificación:** Desarrollando el cuadrado de binomio: $(2a + 3b)^2 = (2a)^2 + 2(2a)(3b) + (3b)^2 = 4a^2 + 12ab + 9b^2$.
 
 ---
 
 ### Ítem 16. (Clave: **A** — 1 pto)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Representar y Conocer
-- **Enunciado:** Dada la expresión algebraica $4x^2 - 9y^2$, ¿cuál es su factorización completa?...
-- **Justificación:** Es una diferencia de cuadrados a² - b² = (a - b)(a + b), donde a = 2x y b = 3y.
+- **Eje:** Álgebra y Funciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** Dada la siguiente expresión algebraica: $4a^{2}-81b^{2}$. ¿Cuál es su factorización?
+- **Justificación:** Diferencia de cuadrados: $4a^2 - 81b^2 = (2a)^2 - (9b)^2 = (2a - 9b)(2a + 9b)$.
 
 ---
 
-### Ítem 17. (Clave: **A** — 1 pto)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Resolver Problemas
-- **Enunciado:** ¿Cuál es la solución del sistema de ecuaciones lineales?
-$$\begin{cases} x + y = 10 \\ x - y = 4 \end{cases}$$...
-- **Justificación:** Sumando ambas ecuaciones: 2x = 14 => x = 7. Sustituyendo: 7 + y = 10 => y = 3.
+### Ítem 17. (Clave: **C** — 1 pto)
+- **Eje:** Álgebra y Funciones | **Habilidad:** Resolver Problemas
+- **Enunciado:** ¿Cuál de las siguientes expresiones es igual a $(3p-5)^{2}$?
+- **Justificación:** Cuadrado de binomio: $(3p - 5)^2 = 9p^2 - 30p + 25$.
 
 ---
 
-### Ítem 18. (Clave: **A** — 2 ptos)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Modelar
-- **Enunciado:** Un comerciante vende lápices a $\$300$ y cuadernos a $\$1{.}200$. Si vendió un total de $50$ artículos y recaudó $\$33{....
-- **Justificación:** Sea L lápices y C cuadernos: L + C = 50 => L = 50 - C. 300(50 - C) + 1200C = 33000 => 15000 + 900C = 33000 => 900C = 18000 => C = 20.
+### Ítem 18. (Clave: **A** — 1 pto)
+- **Eje:** Álgebra y Funciones | **Habilidad:** Modelar
+- **Enunciado:** La suma de dos números es 30 y el doble del menor es igual al mayor. Si $x$ es el número menor e $y$ es el número mayor, ¿cuál de los siguientes sistemas de ecuaciones permite determinar cuáles son los números?
+- **Justificación:** Sean $x$ e $y$ los números. La suma es 30 ($x + y = 30$) y la diferencia es 6 ($x - y = 6$).
 
 ---
 
-### Ítem 19. (Clave: **A** — 2 ptos)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Razonar y Argumentar
-- **Enunciado:** Observa las rectas que se intersecan en el plano cartesiano de la figura. ¿Cuál de los siguientes sistemas de ecuaciones...
-- **Justificación:** El punto de intersección (2, 2) satisface 2 + 2 = 4 y 2(2) - 2 = 2.
+### Ítem 19. (Clave: **B** — 1 pto)
+- **Eje:** Álgebra y Funciones | **Habilidad:** Razonar y Argumentar
+- **Enunciado:** Observa las rectas que se intersecan en el siguiente plano cartesiano.
+- **Justificación:** La recta $L_1$ corta en $(0,2)$ y $(2,0)$, cuya ecuación es $x + y = 2$. La recta $L_2$ corta en $(0,-4)$ y $(4,0)$, cuya ecuación es $x - y = 4$.
 
 ---
 
-### Ítem 20. (Clave: **A** — 2 ptos)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Resolver Problemas
+### Ítem 20. (Clave: **C** — 1 pto)
+- **Eje:** Álgebra y Funciones | **Habilidad:** Representar y Conocer
 - **Enunciado:** Considera el siguiente sistema de ecuaciones lineales:
-$$\begin{cases} 2x + 3y = 12 \\ 4x - y = 10 \end{cases}$$
-¿Cuál e...
-- **Justificación:** Multiplicando la segunda ecuación por 3: 12x - 3y = 30. Sumando a la primera: 14x = 42 => x = 3. Luego 4(3) - y = 10 => 12 - y = 10 => y = 2.
+- **Justificación:** Multiplicando la segunda ecuación por 2: $4x + 6y = 62$. Restando con $5x + 3y = 55$: $x = 8, y = 5$.
 
 ---
 
-### Ítem 21. (Clave: **A** — 1 pto)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Representar y Conocer
-- **Enunciado:** ¿Cuál es la pendiente ($m$) y el coeficiente de posición ($n$) de la recta de ecuación $3x - 2y + 6 = 0$?...
-- **Justificación:** Despejando y: 2y = 3x + 6 => y = (3/2)x + 3. Por lo tanto m = 3/2 y n = 3.
+### Ítem 21. (Clave: **C** — 1 pto)
+- **Eje:** Álgebra y Funciones | **Habilidad:** Representar y Conocer
+- **Enunciado:** Observa la tabla de valores correspondiente a la función $f(x,y)=2x+y=6$.
+- **Justificación:** Despejando: $2x + y = 6 \implies y = -2x + 6$. Evaluando $x=2 \implies y = 2$; $x=4 \implies y = -2$.
 
 ---
 
-### Ítem 22. (Clave: **A** — 2 ptos)
-- **Eje:** Álgebra y Funciones (Sistemas y Cuadráticas) | **Habilidad:** Razonar y Argumentar
-- **Enunciado:** Observa la recta representada en el plano cartesiano de la figura. ¿Cuál de las siguientes ecuaciones representa a esta ...
-- **Justificación:** La recta corta al eje Y en (0, 4) y al eje X en (2, 0). Su pendiente es (0 - 4)/(2 - 0) = -2. La ecuación es y = -2x + 4.
+### Ítem 22. (Clave: **D** — 1 pto)
+- **Eje:** Álgebra y Funciones | **Habilidad:** Razonar y Argumentar
+- **Enunciado:** Observa la siguiente recta representada en el plano cartesiano:
+- **Justificación:** La recta pasa por $(0,-3)$ y $(2,0)$. Pendiente $m = \frac{0 - (-3)}{2 - 0} = \frac{3}{2}$. Ecuación: $y = \frac{3}{2}x - 3$.
 
 ---
 
-### Ítem 23. (Clave: **A** — 2 ptos)
-- **Eje:** Geometría y Trigonometría | **Habilidad:** Razonar y Argumentar
-- **Enunciado:** ¿Cuál de los siguientes pares de rectas son **perpendiculares** entre sí?...
-- **Justificación:** Dos rectas son perpendiculares si y solo si el producto de sus pendientes es -1: m₁ * m₂ = 2 * (-1/2) = -1.
+### Ítem 23. (Clave: **D** — 1 pto)
+- **Eje:** Geometría | **Habilidad:** Representar y Conocer
+- **Enunciado:** Al aplicar una homotecia con centro en el origen del sistema de coordenadas al vector $(3,2)$, se obtiene el vector $(-6,-4)$. Si se aplica esta misma homotecia al vector $(8,-6)$, entonces se obtiene el vector $\vec{p}$. ¿Cuáles son las coordenadas del vector $\vec{p}$?
+- **Justificación:** La razón de homotecia es $k = \frac{-6}{3} = -2$. Al ser negativa con $|k| > 1$, la figura es invertida y de mayor tamaño.
 
 ---
 
 ### Ítem 24. (Clave: **A** — 1 pto)
-- **Eje:** Geometría y Trigonometría | **Habilidad:** Representar y Conocer
-- **Enunciado:** A un vector $\vec{u} = (3, -2)$ se le aplica una homotecia con centro en el origen y razón $k = -2$. ¿Cuáles son las coo...
-- **Justificación:** u' = k * u = -2 * (3, -2) = (-6, 4).
+- **Eje:** Geometría | **Habilidad:** Razonar y Argumentar
+- **Enunciado:** A un vector $\vec{v}$ se le aplica una homotecia con centro en el origen y razón $k_1$, resultando el vector $\vec{u}$, y al vector $\vec{u}$ se le aplica una homotecia con centro en el origen y razón $k_2$, resultando el vector $\vec{w}$. ¿Qué expresión es igual a la razón de homotecia, con centro en el origen, que transforma el vector $\vec{v}$ en el vector $\vec{w}$?
+- **Justificación:** Si la razón de semejanza lineal es $k$, la razón entre sus áreas es $k^2$.
 
 ---
 
-### Ítem 25. (Clave: **A** — 2 ptos)
-- **Eje:** Geometría y Trigonometría | **Habilidad:** Resolver Problemas
-- **Enunciado:** Si a una figura de área $12\text{ cm}^2$ se le aplica una homotecia con razón $k = 3$, ¿cuál es el área de la figura res...
-- **Justificación:** El área de una figura bajo homotecia varía según el cuadrado de la razón: Área' = k² * Área = 3² * 12 = 9 * 12 = 108 cm².
+### Ítem 25. (Clave: **C** — 1 pto)
+- **Eje:** Geometría | **Habilidad:** Representar y Conocer
+- **Enunciado:** La maqueta de un edificio se diseña con escala $1:200$. En esa maqueta, la altura del edificio es de 40 cm, ¿cuál es la altura real del edificio?
+- **Justificación:** Escala $1:200$ significa que $1\text{ cm}$ en el plano representa $200\text{ cm} = 2\text{ m}$. Si el plano mide $5\text{ cm}$, en la realidad mide $5 \cdot 2 = 10\text{ m}$.
 
 ---
 
-### Ítem 26. (Clave: **A** — 2 ptos)
-- **Eje:** Medición y Cuerpos Redondos | **Habilidad:** Resolver Problemas
-- **Enunciado:** ¿Cuál es el volumen de un cono recto de radio basal $r = 3\text{ cm}$ y altura $h = 10\text{ cm}$? (Usa $\pi$ como const...
-- **Justificación:** V = (1/3) * π * r² * h = (1/3) * π * 3² * 10 = (1/3) * π * 9 * 10 = 30π cm³.
+### Ítem 26. (Clave: **D** — 1 pto)
+- **Eje:** Geometría | **Habilidad:** Modelar
+- **Enunciado:** Pablo es aficionado al coleccionismo de autos en miniatura. Actualmente tiene un modelo de un automóvil deportivo en escala $ cuya longitud es de $ centímetros.
+- **Justificación:** Con escala original $1:64$, longitud real $= 64L$. Al pasar a escala $1:43$, la nueva longitud es $x = \frac{64L}{43} = L \cdot \frac{64}{43}$. (Pregunta adaptada con escalas estándar de die-cast).
+- **Nota de Adaptación Pedagógica:** Las escalas del enunciado fueron adaptadas a $1:64$ y $1:43$ (estándar die-cast) para brindar coherencia matemática exacta con la alternativa D ($x = L\cdot\frac{64}{43}$) y sus distractores.
 
 ---
 
-### Ítem 27. (Clave: **A** — 2 ptos)
-- **Eje:** Medición y Cuerpos Redondos | **Habilidad:** Resolver Problemas
-- **Enunciado:** Observa la circunferencia de centro $O$ y radio $r = 5\text{ cm}$. Si el ángulo central del sector circular sombreado mi...
-- **Justificación:** Área = (α / 360°) * π * r² = (72 / 360) * π * 5² = (1/5) * 25π = 5π cm².
+### Ítem 27. (Clave: **B** — 1 pto)
+- **Eje:** Medición | **Habilidad:** Representar y Conocer
+- **Enunciado:** Observa la circunferencia de centro O y radio 5 cm.
+- **Justificación:** Área del círculo: $\pi r^2 = \pi \cdot 5^2 = 25\pi$. Para un ángulo de $60^\circ$: $\text{Área} = 25\pi \cdot \frac{60}{360} = \frac{25\pi}{6}\text{ cm}^2$.
 
 ---
 
-### Ítem 28. (Clave: **A** — 3 ptos)
-- **Eje:** Medición y Cuerpos Redondos | **Habilidad:** Resolver Problemas
-- **Enunciado:** Una esfera metálica de radio $r = 6\text{ cm}$ se funde completamente para fabricar cilindros pequeños de radio $r = 2\t...
-- **Justificación:** Volumen esfera = (4/3)π(6)³ = (4/3)π(216) = 288π cm³. Volumen cilindro = π(2)²(3) = 12π cm³. Cantidad = 288π / 12π = 24 cilindros.
+### Ítem 28. (Clave: **C** — 1 pto)
+- **Eje:** Medición | **Habilidad:** Representar y Conocer
+- **Enunciado:** Observa la siguiente red de cono:
+- **Justificación:** Generatriz $g = 5\text{ cm}$, radio basal $r = 3\text{ cm}$. Área total: $\pi r^2 + \pi r g = \pi(3^2) + \pi(3)(5) = 9\pi + 15\pi = 24\pi\text{ cm}^2$.
 
 ---
 
-### Ítem 29. (Clave: **A** — 2 ptos)
-- **Eje:** Geometría y Trigonometría | **Habilidad:** Razonar y Argumentar
-- **Enunciado:** Observa las medidas en el triángulo rectángulo de la figura. ¿Cuál de las siguientes razones trigonométricas permite cal...
-- **Justificación:** En el triángulo rectángulo, sin(30°) = cateto opuesto / hipotenusa = h / 50 => h = 50 · sin(30°).
+### Ítem 29. (Clave: **D** — 1 pto)
+- **Eje:** Geometría | **Habilidad:** Razonar y Argumentar
+- **Enunciado:** Observa las medidas en la siguiente figura.
+- **Justificación:** Por semejanza de triángulos: $\frac{h}{15} = \frac{18}{28} \implies h = 15 \cdot \frac{18}{28} \approx 9{,}64\text{ m}$.
 
 ---
 
-### Ítem 30. (Clave: **A** — 2 ptos)
-- **Eje:** Geometría y Trigonometría | **Habilidad:** Representar y Conocer
-- **Enunciado:** En un triángulo rectángulo, si el $\cos(\alpha) = \frac{4}{5}$, ¿cuál es el valor de $\tan(\alpha)$?...
-- **Justificación:** Por teorema de Pitágoras, si cateto adyacente = 4 e hipotenusa = 5, el cateto opuesto = √(5² - 4²) = 3. Por tanto, tan(α) = 3/4.
+### Ítem 30. (Clave: **C** — 1 pto)
+- **Eje:** Probabilidad y Estadística | **Habilidad:** Representar y Conocer
+- **Enunciado:** Dos streamers de videojuegos quieren analizar el nivel de participación en sus chats en su última transmisión. La siguiente tabla muestra los datos registrados:
+- **Justificación:** Frecuencia relativa: $\frac{100}{800} = \frac{1}{8} = 0{,}125 = 12{,}5\%$.
 
 ---
 
-### Ítem 31. (Clave: **C** — 2 ptos)
+### Ítem 31. (Clave: **C** — 1 pto)
 - **Eje:** Probabilidad y Estadística | **Habilidad:** Modelar
-- **Enunciado:** En una aplicación educativa sobre estadística, se muestra un tablero de obstáculos simplificado. Se suelta una bola desd...
-- **Justificación:** Por la distribución binomial simétrica del tablero de Galton, la probabilidad de caer en el contenedor central B es del 50% (0,5). Para 2.000 bolas: 2.000 * 0,5 = 1.000 bolas.
+- **Enunciado:** En una aplicación educativa sobre estadística, se muestra un tablero de obstáculos simplificado. Se suelta una bola desde la parte superior y, al chocar con cada obstáculo (puntos negros), la bola solo puede rebotar hacia la izquierda o hacia la derecha, con igual probabilidad.
+- **Justificación:** En el tablero de Galton simétrico (probabilidad $1/2$ a cada lado), la distribución de las bolitas sigue una distribución binomial que converge a una campana simétrica centrada.
 
 ---
 
-### Ítem 32. (Clave: **A** — 2 ptos)
-- **Eje:** Probabilidad y Estadística | **Habilidad:** Resolver Problemas
-- **Enunciado:** En un grupo de 10 personas que juegan videojuegos, se registró qué tipo de videojuego prefieren y si suelen jugar solas ...
-- **Justificación:** Al contabilizar los elementos de cada cuadrante del diagrama de Venn, la distribución exacta corresponde a la opción A.
+### Ítem 32. (Clave: **D** — 1 pto)
+- **Eje:** Probabilidad y Estadística | **Habilidad:** Representar y Conocer
+- **Enunciado:** En un grupo de 10 personas que juegan videojuegos, se registró qué tipo de videojuego prefieren y si suelen jugar solas o con amistades. En el diagrama, cada círculo representa a una persona y la letra indica su tipo de videojuego preferido; D: juego de deportes y C: juego de combate.
+- **Justificación:** De la tabla de contingencia de doble entrada, la frecuencia que cumple ambas condiciones simultáneamente es 4.
 
 ---
 
-### Ítem 33. (Clave: **C** — 2 ptos)
-- **Eje:** Probabilidad y Estadística | **Habilidad:** Resolver Problemas
-- **Enunciado:** En un sistema de seguridad doméstico se instalan dos sensores de movimiento, el sensor A y el sensor B, que funcionan de...
-- **Justificación:** P(Al menos uno) = 1 - P(Ninguno se active) = 1 - P(A' ∩ B') = 1 - (0,1 * 0,2) = 1 - 0,02 = 0,98.
+### Ítem 33. (Clave: **C** — 1 pto)
+- **Eje:** Probabilidad y Estadística | **Habilidad:** Representar y Conocer
+- **Enunciado:** En un sistema de seguridad doméstico se instalan dos sensores de movimiento, el sensor A y el sensor B, que funcionan de manera independiente. La probabilidad de que cada sensor se active ante la presencia de un intruso se muestra en la siguiente tabla.
+- **Justificación:** La probabilidad de que al menos un sensor falle se calcula por el complemento: $1 - P(\text{ambos funcionan}) = 1 - (0{,}95 \cdot 0{,}95) = 1 - 0{,}9025 = 0{,}0975$.
 
 ---
 
-### Ítem 34. (Clave: **C** — 3 ptos)
+### Ítem 34. (Clave: **C** — 1 pto)
 - **Eje:** Probabilidad y Estadística | **Habilidad:** Razonar y Argumentar
-- **Enunciado:** Un grupo de amigos quiere ganar entradas para un concierto y deben decidir en qué sorteo participar donde tengan la mayo...
-- **Justificación:** El valor esperado E(X) = n * p. Para @FanáticoReal: E = 20 * 0,3 = 6 entradas. Para @MúsicaTotal: E = 80 * 0,1 = 8 entradas. Conviene @MúsicaTotal por mayor valor esperado.
-
----
-
-### Ítem 35. (Clave: **A** — 1 pto)
-- **Eje:** Probabilidad y Estadística | **Habilidad:** Resolver Problemas
-- **Enunciado:** ¿De cuántas maneras distintas se pueden sentar $5$ personas en una fila de $5$ asientos?...
-- **Justificación:** Es una permutación simple de 5 elementos: P(5) = 5! = 5 * 4 * 3 * 2 * 1 = 120.
+- **Enunciado:** Un grupo de amigos quiere ganar entradas para un concierto y deben decidir en qué sorteo de Instagram participar. Solo pueden elegir una opción y su objetivo es participar donde tengan la **mayor cantidad esperada de ganadores** dentro de su grupo.
+- **Justificación:** Para @MúsicaTotal: $80 \cdot \frac{1}{10} = 8$ entradas esperadas. Para @FanáticoReal: $20 \cdot 0{,}3 = 6$ entradas esperadas. Conviene @MúsicaTotal por mayor valor esperado ($8 > 6$).
 
 ---

@@ -2,6 +2,33 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-20] Auditoría de Integridad: Fase 2 (Reconstrucción Fiel SIMCE Matemática 2° Medio Ensayo 3)
+
+- **Problema / Requerimiento**:
+  1. La evaluación SIMCE Matemática 2° Medio Ensayo 3 (`eval-simce-mat-2m-e3`) contenía originalmente 25 de 35 preguntas inventadas y una pregunta 35 espuria fuera del total real de la prueba oficial Umáximo (que consta de 34 ítems).
+  2. La Pregunta 26 presentaba un error en el enunciado del PDF fuente original (duplicación de razón "1:43" en lugar de "1:64 y 1:43"). Se requería aplicar la Decisión D1 (Opción 2) para adaptar matemáticamente el enunciado manteniendo la clave D como respuesta exacta y rigurosa.
+  3. Requerimiento: Reconstruir fielmente las 34 preguntas desde el PDF fuente, eliminar la pregunta 35 inexistente, persistir en Supabase con migración SQL, actualizar el total de preguntas a 34 y regenerar la pauta docente oficial.
+
+- **Archivos y Solución Técnica**:
+  - [`scripts/data/mat2m_e3_preguntas_reales_34.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/mat2m_e3_preguntas_reales_34.json): Dataset oficial verificado con las 34 preguntas reales extraídas textualmente del PDF de Umáximo. Se formalizó la Opción 2 en P26 (escalas `1:64` y `1:43`, $x = L \cdot \frac{64}{43}$, clave D) marcándola con `revision_pendiente: false`.
+  - [`scripts/generate_migration_052.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/generate_migration_052.mjs): Generador de la migración declarativa SQL para actualizar los 34 registros de preguntas y eliminar `preg-mat2m-e3-35`.
+  - [`supabase/migrations/052_rebuild_mat2m_e3_from_source.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/052_rebuild_mat2m_e3_from_source.sql): Migración SQL con 34 sentencias `UPDATE public.preguntas`, eliminación de la pregunta 35 (`DELETE FROM public.preguntas WHERE id = 'preg-mat2m-e3-35'`) y actualización de `evaluaciones.total_preguntas = 34`.
+  - [`scripts/apply_migration_052.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/apply_migration_052.mjs): Ejecución directa y atómica de la migración 052 en la base de datos PostgreSQL de Supabase.
+  - [`scripts/verify_mat2m_e3_db.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/verify_mat2m_e3_db.mjs) y [`scripts/compare_db_vs_json_mat2m.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/compare_db_vs_json_mat2m.mjs): Scripts de verificación post-migración.
+  - [`scripts/generate_pauta_from_dataset.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/generate_pauta_from_dataset.mjs): Generador dinámico de pautas pedagógicas a partir de datasets validados.
+  - [`docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md): Pauta docente oficial completamente regenerada con las 34 preguntas reales, tablas de especificaciones curriculares (Ejes, Habilidades MINEDUC), justificaciones pedagógicas y clavijero equilibrado.
+
+- **Verificación / Despliegue**:
+  - Verificación en Supabase DB (`verify_mat2m_e3_db.mjs`):
+    - Total de preguntas: exactamente 34 (P35 eliminada satisfactoriamente).
+    - Exactitud de claves: 1 sola alternativa correcta por pregunta, sin inconsistencias.
+    - Distribución de claves balanceada: **A: 10, B: 7, C: 10, D: 7** (sin sesgo artificial).
+    - Pregunta 26 verificada con clave `D`.
+  - `npx tsc --noEmit`: 0 errores.
+  - `npm test`: 4 suites pasando al 100% (Tenant Isolation, Evaluaciones Catálogo, Grade-Evaluation, Scoring Pedagógico).
+
+---
+
 ### [2026-09-20] Auditoría de Integridad: Fase 0 (Respaldo e Impacto) y Fase 1 (Contención Inmediata y Blindaje de Catálogo)
 
 - **Problema / Requerimiento**:

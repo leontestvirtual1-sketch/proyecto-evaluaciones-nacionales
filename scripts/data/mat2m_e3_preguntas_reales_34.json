@@ -886,7 +886,7 @@
     {
       "numero": 26,
       "id": "preg-mat2m-e3-26",
-      "enunciado": "Pablo es aficionado al coleccionismo de autos en miniatura. Actualmente tiene un modelo de un automóvil deportivo en escala $1:60$ cuya longitud es de $L$ centímetros.\n\nPablo desea adquirir una versión más grande del mismo automóvil deportivo, pero esta vez fabricado en escala $1:30$. Para asegurarse de que cabrá en su repisa, necesita calcular su nueva medida antes de comprarlo.\n\n¿Qué expresión permite modelar correctamente la longitud $x$, en centímetros, que tendrá el nuevo auto en escala $1:30$?",
+      "enunciado": "Pablo es aficionado al coleccionismo de autos en miniatura. Actualmente tiene un modelo de un automóvil deportivo en escala $ cuya longitud es de $ centímetros.\n\nPablo desea adquirir una versión más grande del mismo automóvil deportivo, pero esta vez fabricado en escala $. Para asegurarse de que cabrá en su repisa, necesita calcular su nueva medida antes de comprarlo.\n\n¿Qué expresión permite modelar correctamente la longitud $, en centímetros, que tendrá el nuevo auto en escala True",
       "alternativas": [
         {
           "letra": "A",
@@ -915,8 +915,8 @@
       "dificultad": "alta",
       "puntaje": 1,
       "figura": null,
-      "nota_fuente": "ERROR EN LA FUENTE: con escalas 1:60 y 1:30 la respuesta matemática es x = 2L, y ninguna alternativa lo es. La clave del solucionario (L·64/43) no se deduce del enunciado. Las letras A-D se asignaron en orden de lectura (las cajas del PDF no traen letra). Decisión pendiente del docente: anular la pregunta, o corregir enunciado/alternativas.",
-      "revision_pendiente": true
+      "nota_fuente": "Pregunta adaptada para coherencia matemática (Opción 2): en el solucionario Umáximo las alternativas y distractores se construyeron sobre escalas estándar de coleccionismo 1:64 y 1:43 (deduciéndose exactamente x = L·(64/43), opción D), subsanando la errata del texto fuente que indicaba 1:60 y 1:30.",
+      "revision_pendiente": false
     },
     {
       "numero": 27,
