@@ -10,11 +10,7 @@ import {
 } from 'lucide-react';
 import { Prueba, Pregunta, AlumnoBasico } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
-import { establecimientosCatalog, preguntasMock } from '../data/mockData';
-import { preguntasLenguaje2MMock } from '../data/len2mQuestionsMock';
-import { preguntasLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
-import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
-import { preguntasMatematica6BMock } from '../data/mat6bQuestionsMock';
+import { establecimientosCatalog } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { useAcademicData } from '../context/AcademicDataContext';
 import { getSequentialPrintTitle } from '../utils/printUtils';

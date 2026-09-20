@@ -78,9 +78,11 @@ for (const p of data.preguntas) {
   const eje = EJES[p.eje_tematico_id] || p.eje_tematico_id;
   const hab = HABS[p.habilidad_id] || p.habilidad_id;
   const dif = p.dificultad.charAt(0).toUpperCase() + p.dificultad.slice(1);
-  lines.push(`| **${p.numero}** | **${p.respuesta_correcta}** | 1 | ${eje} | ${hab} | ${dif} |`);
+  lines.push(`| **${p.numero}** | **${p.respuesta_correcta}** | 2 | ${eje} | ${hab} | ${dif} |`);
 }
 
+lines.push('');
+lines.push('**Puntaje Total:** 68 puntos (34 preguntas × 2 puntos).');
 lines.push('');
 lines.push('---');
 lines.push('');
@@ -92,7 +94,7 @@ for (const p of data.preguntas) {
   const hab = HABS[p.habilidad_id] || p.habilidad_id;
   const just = JUSTIFICACIONES[p.numero] || 'Resolución conforme al procedimiento algebraico estándar.';
   
-  lines.push(`### Ítem ${p.numero}. (Clave: **${p.respuesta_correcta}** — 1 pto)`);
+  lines.push(`### Ítem ${p.numero}. (Clave: **${p.respuesta_correcta}** — 2 pts)`);
   lines.push(`- **Eje:** ${eje} | **Habilidad:** ${hab}`);
   lines.push(`- **Enunciado:** ${p.enunciado.split('\n')[0]}`);
   lines.push(`- **Justificación:** ${just}`);

@@ -2,6 +2,64 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-20] Fase 2: Reconstrucción Íntegra de Contenido — SIMCE Matemática 2° Medio Ensayo 3 (34 Preguntas Reales, Solucionario Oficial y Pauta Docente)
+
+- **Problema / Requerimiento**:
+  1. **Contenido inventado en BD**: En `eval-simce-mat-2m-e3`, 25 de las 35 preguntas en base de datos estaban inventadas o eran incoherentes con sus figuras, 28 de 35 claves eran "A" (80% sesgo artificial), y existía una pregunta 35 (`preg-mat2m-e3-35`, permutaciones $5!$) que no existía en el solucionario fuente oficial de Umáximo.
+  2. **Decisiones de negocio aprobadas**:
+     - **D1 (P26)**: Adaptar enunciado manteniendo escalas $1:64$ y $1:43$ (estándar die-cast), clave D ($x = L \cdot \frac{64}{43}$) y marcar explícitamente como adaptada en el campo `fuente`.
+     - **D2 (Puntaje)**: Asignar 2 puntos por pregunta para un total de 68 puntos (34 preguntas × 2 pts).
+     - **D5 (Estrategia)**: UPDATE directo en Supabase validado tras confirmar cero rendiciones en la base de datos (Fase 0.3).
+
+- **Archivos y Solución Técnica**:
+  - [`scripts/rebuild_mat2m_e3_from_source.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/rebuild_mat2m_e3_from_source.mjs):
+    - Elimina `preg-mat2m-e3-35` de `public.preguntas`.
+    - Realiza upsert por lotes de las 34 preguntas reales desde [`scripts/data/mat2m_e3_preguntas_reales_34.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/mat2m_e3_preguntas_reales_34.json).
+    - Asigna `asignatura_id: 'asig-1'` (Matemática), `puntaje: 2`, imágenes mapeadas desde bucket `evaluaciones-media/simce_mat_2m_e3/`.
+    - Actualiza `public.evaluaciones` fijando `total_preguntas = 34`, `estado = 'activa'`, `es_catalogo = true` y sellando `verificada_at` con timestamp actual.
+  - [`scripts/data/claves_oficiales/simce_mat_2m_e3.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/simce_mat_2m_e3.json):
+    - Ajuste de `puntaje_esperado: 68` para alineación completa con el Quality Gate.
+  - [`scripts/generate_pauta_from_dataset.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/generate_pauta_from_dataset.mjs) y [`docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md):
+    - Regeneración automatizada de la pauta docente completa: tabla de especificaciones (34 ítems a 2 pts = 68 pts) y solucionario detallado con justificaciones algebraicas paso a paso y nota pedagógica sobre la adaptación de P26.
+
+- **Verificación / Despliegue**:
+  - `node scripts/rebuild_mat2m_e3_from_source.mjs`: 34/34 preguntas OK, 0 errores, P35 eliminada.
+  - `node scripts/verify_mat2m_e3_db.mjs`: 34 preguntas íntegras, distribución balanceada `{ A: 10, B: 7, C: 10, D: 7 }`, 1 clave correcta por fila.
+  - `npm run verify:content`: **7/7 PASS (0 errores, 0 advertencias)**.
+  - `npm test`: **5/5 test suites pasando al 100%**.
+
+
+- **Problema / Requerimiento**:
+  1. **Migración 055 (Bloqueo Estructural de Publicación)**: Necesidad de columnas `verificada_at` y `verificada_por` en `public.evaluaciones` para condicionar la publicación en el catálogo institucional solo a evaluaciones que hayan superado el Quality Gate de Integridad.
+  2. **Auditoría de Aislamiento Autenticado (Claude - Fase 0.5)**: Verificación en caliente del aislamiento real entre colegios (RBD 1234 y RBD 31030) con usuarios y sesiones reales. La prueba reveló 4 vulnerabilidades/inconsistencias críticas:
+     - **Escalada de privilegios en `perfiles`**: Cualquier docente autenticado podía modificar su propia fila a `es_super_admin: true`, `rol: 'admin'`, o cambiar de `rbd`.
+     - **Regresión al crear preguntas sin RBD**: Fallaba con violación de RLS por falta de estampado automático del autor y tenant.
+     - **Inconsistencia de esquema en `evaluaciones`**: La tabla carecía de columna directa `rbd` para indexación y consulta directa por colegio.
+     - **Filtro de rutas en Storage**: `evaluaciones-media` permitía escrituras en cualquier ruta si el usuario estaba autenticado, en lugar de restringir a `uploads/<rbd>/*`.
+
+- **Archivos y Solución Técnica**:
+  - [`supabase/migrations/055_add_verificada_at_to_evaluaciones.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/055_add_verificada_at_to_evaluaciones.sql):
+    - Agrega `verificada_at` y `verificada_por` a `evaluaciones`. Marcado verificado para las evaluaciones auditadas (SIMCE Mat 2M E3 y PAES Lectora Invierno 2026).
+  - [`supabase/migrations/056_security_and_tenant_hardening.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/056_security_and_tenant_hardening.sql):
+    - **Trigger `trg_perfiles_security`**: Rechaza cualquier `UPDATE` de usuarios regulares sobre columnas críticas (`es_super_admin`, `rol`, `rbd`, `estado`, `plan`).
+    - **Trigger `trg_stamp_pregunta_tenant`**: Asigna automáticamente `propietario_id := auth.uid()` y `rbd := current_user_rbd()` en `public.preguntas` antes de evaluar RLS.
+    - **Columna `rbd` en `public.evaluaciones`**: Agregada con índice y trigger `trg_stamp_evaluacion_tenant` para sincronización automática desde `cursos` y usuario.
+    - **Política de Storage por Tenant**: Política RLS en `storage.objects` que restringe las subidas exclusivamente a `uploads/<tu_rbd>/*`.
+  - [`tests/tenant-isolation.authenticated.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/tenant-isolation.authenticated.test.ts):
+    - Suite de 18 pruebas automatizadas autenticadas (lectura entre RBDs, escalada de perfil, escritura cruzada, auto-estampado, anon y storage).
+  - [`package.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/package.json):
+    - Script `npm run test:tenant-auth` para ejecución continua de aislamiento autenticado.
+
+- **Verificación / Despliegue**:
+  - `npx tsx --env-file=.env.test.local tests/tenant-isolation.authenticated.test.ts`: **18/18 PASS (100% OK, 0 fallidas)**.
+  - `npm test`: **5/5 suites pasando en verde (Tenant Isolation, Catálogo, Grade-Evaluation, Scoring Pedagógico, Content Integrity)**.
+  - `npm run verify:content`: **7/7 verificaciones superadas**.
+  - `npx tsc --noEmit`: 0 errores de compilación.
+  - `npm run lint`: 0 errores.
+  - `npm run build`: Compilación limpia de producción con Vite.
+
+---
+
 ### [2026-09-20] Auditoría de Integridad: Fases 2.7, 2.8 y 3 (PAES Lectora 2026 Forma 101, SIMCE Mat 6B E3 y Hardening Calificación)
 
 - **Problema / Requerimiento**:

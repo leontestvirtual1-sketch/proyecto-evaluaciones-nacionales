@@ -13,9 +13,15 @@ function renderKatex(expr: string, displayMode: boolean): string {
       throwOnError: false,
       displayMode,
       strict: 'ignore',
+      trust: false,
     });
   } catch {
-    return expr;
+    return expr
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 }
 

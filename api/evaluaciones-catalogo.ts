@@ -16,8 +16,18 @@ import nodemailer from "nodemailer";
 type VercelRequest = any;
 type VercelResponse = any;
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "leontestvirtual1@gmail.com";
-const CC_EMAIL = process.env.CC_EMAIL || "luisleong.premil@gmail.com";
+function escapeHtml(str: any): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "";
+const CC_EMAIL = process.env.CC_EMAIL || "";
 const SMTP_USER = process.env.SMTP_USER || "";
 const SMTP_PASS = process.env.SMTP_PASS || "";
 const APP_URL = process.env.APP_URL || "https://sysget-saber.vercel.app";
@@ -108,12 +118,12 @@ function emailSolicitudAdmin(opts: {
           <table width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border:1px solid #334155;border-radius:12px;margin-bottom:24px;">
             <tr><td style="padding:20px 24px;">
               <table width="100%" cellpadding="0" cellspacing="0">
-                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;width:160px;">DOCENTE</td><td style="padding:5px 0;color:#f1f5f9;font-size:14px;">${opts.docenteNombre}</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">CORREO</td><td style="padding:5px 0;color:#818cf8;font-size:14px;">${opts.docenteEmail}</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">ESTABLECIMIENTO</td><td style="padding:5px 0;color:#f1f5f9;font-size:14px;">${opts.establecimiento}</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">EVALUACIÓN</td><td style="padding:5px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${opts.evaluacionTitulo}</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">ASIGNATURA</td><td style="padding:5px 0;color:#f1f5f9;font-size:14px;">${opts.asignatura}</td></tr>
-                ${opts.mensaje ? `<tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">MENSAJE</td><td style="padding:5px 0;color:#94a3b8;font-size:13px;font-style:italic;">"${opts.mensaje}"</td></tr>` : ""}
+                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;width:160px;">DOCENTE</td><td style="padding:5px 0;color:#f1f5f9;font-size:14px;">${escapeHtml(opts.docenteNombre)}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">CORREO</td><td style="padding:5px 0;color:#818cf8;font-size:14px;">${escapeHtml(opts.docenteEmail)}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">ESTABLECIMIENTO</td><td style="padding:5px 0;color:#f1f5f9;font-size:14px;">${escapeHtml(opts.establecimiento)}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">EVALUACIÓN</td><td style="padding:5px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${escapeHtml(opts.evaluacionTitulo)}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">ASIGNATURA</td><td style="padding:5px 0;color:#f1f5f9;font-size:14px;">${escapeHtml(opts.asignatura)}</td></tr>
+                ${opts.mensaje ? `<tr><td style="padding:5px 0;color:#64748b;font-size:12px;font-weight:600;">MENSAJE</td><td style="padding:5px 0;color:#94a3b8;font-size:13px;font-style:italic;">"${escapeHtml(opts.mensaje)}"</td></tr>` : ""}
               </table>
             </td></tr>
           </table>
@@ -153,10 +163,10 @@ function emailAprobacionDocente(opts: {
           <p style="margin:6px 0 0;color:#d1fae5;font-size:13px;">Evaluación del Catálogo SIMCE — Sysget Saber</p>
         </td></tr>
         <tr><td style="padding:36px 40px;">
-          <p style="margin:0 0 16px;color:#f1f5f9;font-size:16px;">Hola, <strong>${opts.docenteNombre}</strong> 👋</p>
+          <p style="margin:0 0 16px;color:#f1f5f9;font-size:16px;">Hola, <strong>${escapeHtml(opts.docenteNombre)}</strong> 👋</p>
           <p style="margin:0 0 24px;color:#94a3b8;font-size:14px;line-height:1.6;">
-            Tu solicitud de acceso a la evaluación <strong style="color:#e2e8f0;">"${opts.evaluacionTitulo}"</strong> 
-            (${opts.asignatura}) ha sido <strong style="color:#10b981;">aprobada</strong>. 
+            Tu solicitud de acceso a la evaluación <strong style="color:#e2e8f0;">"${escapeHtml(opts.evaluacionTitulo)}"</strong> 
+            (${escapeHtml(opts.asignatura)}) ha sido <strong style="color:#10b981;">aprobada</strong>. 
             Ya puedes encontrarla en tu panel de evaluaciones.
           </p>
           <table width="100%" cellpadding="0" cellspacing="0">
@@ -207,6 +217,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           "id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas"
         )
         .eq("es_catalogo", true)
+        .not("verificada_at", "is", null)
         .order("created_at", { ascending: false });
 
       if (asignatura_id) {

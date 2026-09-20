@@ -37,6 +37,7 @@ interface PruebaFacsimilModalProps {
   isOpen: boolean;
   prueba: Prueba | null;
   preguntas: Pregunta[];
+  isProduction?: boolean;
   onClose: () => void;
 }
 
@@ -44,6 +45,7 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
   isOpen,
   prueba,
   preguntas,
+  isProduction = false,
   onClose
 }) => {
   if (!isOpen || !prueba) return null;
@@ -53,34 +55,42 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
     if (!prueba) return [];
 
     const byId = new Map<string, Pregunta>();
-    [
-      ...preguntasLenguaje2MMock,
-      ...preguntasLenguaje2MJunioMock,
-      ...preguntasLenguaje2MAbrilMock,
-      ...preguntasMatematica6BMock
-    ].forEach(p => byId.set(p.id, p));
+    // Solo cargar mocks en modo desarrollo/demo (Directivas 1 y 2)
+    if (!isProduction) {
+      [
+        ...preguntasLenguaje2MMock,
+        ...preguntasLenguaje2MJunioMock,
+        ...preguntasLenguaje2MAbrilMock,
+        ...preguntasMatematica6BMock
+      ].forEach(p => byId.set(p.id, p));
+    }
     (preguntas || []).forEach(p => byId.set(p.id, p));
 
-    if (prueba.id === 'prueba-len2m-101' || prueba.id?.startsWith('prueba-len2m-101') || (prueba.titulo.includes('Agosto 2026') && prueba.nivel === '2° Medio')) {
-      return preguntasLenguaje2MMock.map(p => byId.get(p.id) || p);
-    }
-    if (prueba.id === 'prueba-len2m-jun-101' || prueba.id?.startsWith('prueba-len2m-jun') || (prueba.titulo.includes('Junio 2026') && prueba.nivel === '2° Medio')) {
-      return preguntasLenguaje2MJunioMock.map(p => byId.get(p.id) || p);
-    }
-    if (prueba.id === 'prueba-len2m-abr-101' || prueba.id?.startsWith('prueba-len2m-abr') || (prueba.titulo.includes('Abril 2026') && prueba.nivel === '2° Medio')) {
-      return preguntasLenguaje2MAbrilMock.map(p => byId.get(p.id) || p);
-    }
-    if (prueba.id === 'eval-simce-mat-6b-e3' || prueba.id?.startsWith('eval-simce-mat-6b')) {
-      return preguntasMatematica6BMock.map(p => byId.get(p.id) || p);
-    }
-
+    // Si tiene preguntasIds explícitas en BD, mapearlas en orden estricto
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
       const list = prueba.preguntasIds.map(id => byId.get(id)).filter((p): p is Pregunta => Boolean(p));
       if (list.length > 0) return list;
     }
-    // Fallback only if no preguntasIds
-    return preguntas.filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
-  }, [prueba, preguntas]);
+
+    // En modo local demo sin BD, permitir mapeo por conveniencia
+    if (!isProduction) {
+      if (prueba.id === 'prueba-len2m-101' || prueba.id?.startsWith('prueba-len2m-101') || (prueba.titulo.includes('Agosto 2026') && prueba.nivel === '2° Medio')) {
+        return preguntasLenguaje2MMock.map(p => byId.get(p.id) || p);
+      }
+      if (prueba.id === 'prueba-len2m-jun-101' || prueba.id?.startsWith('prueba-len2m-jun') || (prueba.titulo.includes('Junio 2026') && prueba.nivel === '2° Medio')) {
+        return preguntasLenguaje2MJunioMock.map(p => byId.get(p.id) || p);
+      }
+      if (prueba.id === 'prueba-len2m-abr-101' || prueba.id?.startsWith('prueba-len2m-abr') || (prueba.titulo.includes('Abril 2026') && prueba.nivel === '2° Medio')) {
+        return preguntasLenguaje2MAbrilMock.map(p => byId.get(p.id) || p);
+      }
+      if (prueba.id === 'eval-simce-mat-6b-e3' || prueba.id?.startsWith('eval-simce-mat-6b')) {
+        return preguntasMatematica6BMock.map(p => byId.get(p.id) || p);
+      }
+    }
+
+    // Filtrar por asignatura de la prueba
+    return (preguntas || []).filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
+  }, [prueba, preguntas, isProduction]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto">

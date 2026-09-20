@@ -4,9 +4,9 @@ import nodemailer from 'nodemailer';
 type VercelRequest = any;
 type VercelResponse = any;
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'leontestvirtual1@gmail.com';
-const CC_EMAIL = process.env.CC_EMAIL || 'luisleong.premil@gmail.com';
-const ADMIN_NAME = process.env.ADMIN_NAME || 'Luis Andrés León González';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || '';
+const CC_EMAIL = process.env.CC_EMAIL || '';
+const ADMIN_NAME = process.env.ADMIN_NAME || 'Administrador Sysget Saber';
 const APP_URL = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
@@ -31,9 +31,10 @@ function escapeHtml(str: any): string {
 const ALLOWED_ORIGIN = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS restringido
+  // CORS seguro con regex estricta para localhost (Phase 3.4)
   const origin = req.headers?.origin || '';
-  const isAllowed = origin === ALLOWED_ORIGIN || origin.startsWith('http://localhost');
+  const isLocalhost = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+  const isAllowed = origin === ALLOWED_ORIGIN || isLocalhost;
   res.setHeader('Access-Control-Allow-Origin', isAllowed ? origin : ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-notify-secret');

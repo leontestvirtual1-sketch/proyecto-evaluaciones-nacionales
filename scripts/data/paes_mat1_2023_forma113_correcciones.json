@@ -126,6 +126,30 @@
     "respuesta_correcta": "A"
   },
 
+  "47": {
+    "enunciado": "¿Cuál de las siguientes imágenes tiene más de dos ejes de simetría?",
+    "alternativas": [
+      { "letra": "A", "texto": "![Figura opción A](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_mat1_2023_forma113/figura_p47_opcion_a.png)", "es_correcta": false },
+      { "letra": "B", "texto": "![Figura opción B](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_mat1_2023_forma113/figura_p47_opcion_b.png)", "es_correcta": false },
+      { "letra": "C", "texto": "![Figura opción C](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_mat1_2023_forma113/figura_p47_opcion_c.png)", "es_correcta": true },
+      { "letra": "D", "texto": "![Figura opción D](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_mat1_2023_forma113/figura_p47_opcion_d.png)", "es_correcta": false }
+    ],
+    "respuesta_correcta": "C",
+    "_nota": "Alternativas son figuras geométricas sin texto textual. Clave DEMRE=C. Las imágenes deben ser recortadas del PDF si no existen en Storage."
+  },
+
+  "49": {
+    "enunciado": "¿En cuál de los siguientes cuadriláteros las rectas punteadas corresponden a sus ejes de simetría?",
+    "alternativas": [
+      { "letra": "A", "texto": "Deltoide", "es_correcta": false },
+      { "letra": "B", "texto": "Romboide", "es_correcta": false },
+      { "letra": "C", "texto": "Rectángulo", "es_correcta": false },
+      { "letra": "D", "texto": "Rombo", "es_correcta": true }
+    ],
+    "respuesta_correcta": "D",
+    "_nota": "El PDF muestra las figuras junto con el nombre del cuadrilátero. Clave oficial DEMRE=D (Rombo)."
+  },
+
   "65": {
     "enunciado": "Si se lanzan tres monedas, ¿cuál es la probabilidad de obtener al menos un sello?",
     "alternativas": [

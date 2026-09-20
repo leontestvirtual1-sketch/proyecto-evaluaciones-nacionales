@@ -138,6 +138,20 @@ npm audit --audit-level=high   # 0 vulnerabilidades high/critical
 
 ---
 
+---
+
+## 📑 Bloque 7: Integridad de Contenido Oficial (mapeado a Directiva 12)
+
+| Restricción | Umbral Obligatorio |
+|---|---|
+| Preguntas inventadas o no trazables a la fuente oficial | **0 (Prohibido absolutamente)** |
+| Discrepancia con clavijero oficial DEMRE / Umáximo | **0 discrepancias** |
+| Errores en `npm run verify:content` | **0 errores** (bloquea commit y publicación) |
+| Archivos PDF o datos personales en `public/` | **0** |
+| Sesgo crítico en distribución de claves | Ninguna letra puede superar el 60% (con ≥20 preguntas) |
+
+---
+
 ## ✅ Checklist de Auditoría Pre-Commit
 
 Antes de cualquier commit en `main`:
@@ -147,5 +161,6 @@ Antes de cualquier commit en `main`:
 - [ ] Sin fallback cruzado de datos (Directiva 1)
 - [ ] Sin datos Mock inyectados en rutas de producción (Directiva 2)
 - [ ] Sin secretos hardcodeados (Directiva 10)
+- [ ] `npm run verify:content` → 0 errores
 - [ ] Tests existentes siguen pasando al 100%
 - [ ] `BITACORA.md` actualizada con la tarea completada

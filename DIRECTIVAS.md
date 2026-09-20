@@ -190,3 +190,21 @@ El perfil de Susana Angélica (Colegio Mi Casa) se encuentra en **proceso de pob
    - Sincronizar catálogo base en `src/data/mockData.ts` preservando `imagenUrl`.
 5. **Paso 5 — Verificación del Motor de Impresión (`eval-cuadernillo-generator`)**:
    - Validar en `PrintEvaluacionModal.tsx` con `@media print`: membrete institucional dinámico (Logo, RBD, Lema), sin hojas en blanco y salida completa de Cuadernillo, Hoja OMR y Pauta Docente.
+
+---
+
+## 12. 🎯 Directiva de Integridad de Contenido y Fidelidad Absoluta a la Fuente (Zero-Hallucination Policy)
+> **Principio**: *Prohibición estricta y absoluta de inventar o redactar preguntas artificiales para evaluaciones oficiales (SIMCE, PAES o ministeriales). Toda pregunta, enunciado, alternativa y clave debe provenir de su fuente oficial verificable con trazabilidad completa.*
+> *Establecida: 2026-09-20 — origen: Plan de Acción de Auditoría de Integridad*
+
+### Reglas Mandatorias de Contenido:
+1. **Fidelidad Textual a la Fuente**:
+   - Todo ítem debe ser transcrito textualmente desde el PDF / instrumento oficial.
+   - Prohibido rellenar ensayos incompletos con preguntas redactadas por modelos de IA.
+   - Si una prueba oficial tiene 34 preguntas (ej. SIMCE Mat 2M E3), la evaluación debe tener exactamente 34 preguntas; está estrictamente prohibido inventar una pregunta 35.
+2. **Clavijero Oficial Obligatorio**:
+   - Cada evaluación debe contar con su archivo de claves oficial en `scripts/data/claves_oficiales/<evaluacion>.json`.
+   - La distribución de claves debe ser natural y equilibrada (ninguna letra puede superar el 60% de frecuencia).
+3. **Quality Gate Pre-Publicación (`npm run verify:content`)**:
+   - Ninguna evaluación puede publicarse o permanecer como `es_catalogo = TRUE` sin pasar con 0 errores el comando `npm run verify:content`.
+   - Discrepancia con la fuente implica el retiro inmediato del catálogo a estado `borrador`.
