@@ -1,0 +1,1202 @@
+{
+  "_meta": {
+    "fuente": "Solucionario Umáximo 'Ensayo 3 SIMCE Matemática II° Medio' (PDF de 16 páginas, evaluaciones_fuente/2_medio/ensayo_3_simce_matematica_2m.pdf)",
+    "total_preguntas": 34,
+    "claves_verificadas": "Las 34 claves del solucionario fueron re-resueltas a mano; todas correctas salvo P26 (error de la fuente).",
+    "puntaje": "El solucionario no informa puntajes. Se dejó 1 pto por pregunta (decisión pendiente del docente).",
+    "eje_tematico_id / habilidad_id": "Asignados por criterio; ajustar si se dispone de tabla de especificación oficial.",
+    "figuras": "Campo 'figura' = nombre de PNG ya existente en el bucket evaluaciones-media/simce_mat_2m_e3/. Debe abrirse cada PNG y confirmar que corresponde a la figura del PDF antes de publicar."
+  },
+  "preguntas": [
+    {
+      "numero": 1,
+      "id": "preg-mat2m-e3-01",
+      "enunciado": "¿Cuál de las siguientes expresiones es equivalente a $\\sqrt[3]{a+b}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$(a+b)^{\\frac{1}{3}}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$(a+b)^{3}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$a^{\\frac{1}{3}}+b^{\\frac{1}{3}}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\frac{1}{3}(a+b)$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 2,
+      "id": "preg-mat2m-e3-02",
+      "enunciado": "La expresión $\\sqrt[3]{64}=4$ se puede representar en logaritmo como:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\log_{64}(4)=\\frac{1}{3}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$\\log_{64}(3)=4$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\log_{4}(8)=\\frac{1}{3}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\log_{4}\\left(\\frac{1}{3}\\right)=64$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": "En el PDF la alternativa B está incompleta ('log64 = 4'); se completó como log_64(3)=4 (distractor). Confirmar contra la página 1 del PDF.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 3,
+      "id": "preg-mat2m-e3-03",
+      "enunciado": "En una competencia de eSports, el sistema clasifica a los jugadores calculando su «Eficiencia de Combate». Esta eficiencia se obtiene dividiendo el **daño total causado** por la **cantidad de rondas jugadas**.\n\nConsidera que ambos datos son siempre números enteros positivos y observa el siguiente ejemplo de un jugador:\n\n| Daño total | Rondas | Eficiencia de combate |\n| :---: | :---: | :---: |\n| 20 | 6 | 3,333... |\n\n¿Qué conjunto numérico es el adecuado para expresar **todos** los posibles resultados de la «Eficiencia de Combate»?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Números naturales ($\\mathbb{N}$).",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Números racionales ($\\mathbb{Q}$).",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Números irracionales ($\\mathbb{I}$).",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Números enteros ($\\mathbb{Z}$).",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 4,
+      "id": "preg-mat2m-e3-04",
+      "enunciado": "¿Cuál de las siguientes raíces es equivalente a $\\sqrt{3}\\cdot\\sqrt[3]{3}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\sqrt[5]{3}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$\\sqrt[5]{3^{2}}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\sqrt[6]{3}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\sqrt[6]{3^{5}}$",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 5,
+      "id": "preg-mat2m-e3-05",
+      "enunciado": "¿Cuál es el valor de $(4)^{-2}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$-16$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$-8$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\frac{1}{16}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "$\\frac{1}{8}$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 6,
+      "id": "preg-mat2m-e3-06",
+      "enunciado": "Una población de 40 conejos fue liberada en el ambiente silvestre. Se espera que esta población aumente cada mes en un 50% respecto de la que había el mes anterior. ¿Cuál de las siguientes expresiones representa la población de conejos que se espera tener luego de 3 meses?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$40\\cdot 1{,}5^{3}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$(40\\cdot 1{,}5)^{3}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$40\\cdot 1{,}5\\cdot 3$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$40+1{,}5\\cdot 3$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-4",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 7,
+      "id": "preg-mat2m-e3-07",
+      "enunciado": "¿Qué número es equivalente a $-\\left(\\frac{2}{3}\\right)^{-2}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$-\\frac{9}{4}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$-\\frac{4}{9}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\frac{4}{9}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$4$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": "Confirmar la alternativa D ('4') contra la página 3 del PDF; la extracción de texto la muestra así.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 8,
+      "id": "preg-mat2m-e3-08",
+      "enunciado": "¿Cuál de las siguientes igualdades es correcta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\sqrt[4]{5^{2}}=\\sqrt{5}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$5\\sqrt{2}=\\sqrt{10}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\sqrt[4]{\\sqrt{5}}=\\sqrt[6]{5}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\sqrt{5}+\\sqrt{2}=\\sqrt{7}$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": "La alternativa C se lee ambigua en la extracción de texto; verificar visualmente en la página 4 del PDF.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 9,
+      "id": "preg-mat2m-e3-09",
+      "enunciado": "Considera la siguiente igualdad.\n\n$$\\log_{2}32=x$$\n\n¿Cuál es el valor de $x$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$4$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$5$",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "$16$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$64$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 10,
+      "id": "preg-mat2m-e3-10",
+      "enunciado": "Sabiendo que 1 pulgada equivale a 2,54 centímetros, ¿a cuántos centímetros equivale media pulgada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "0,5 cm",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "1,27 cm",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "2,04 cm",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "5,08 cm",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-4",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 11,
+      "id": "preg-mat2m-e3-11",
+      "enunciado": "¿Cuál es el valor de $\\sqrt{8}\\left(\\sqrt{32}-\\sqrt{2}\\right)$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\sqrt{240}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$60$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$8\\sqrt{2}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$12$",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 12,
+      "id": "preg-mat2m-e3-12",
+      "enunciado": "¿Cuál es el resultado de $\\sqrt{100}-\\sqrt{64}+\\sqrt{36}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$0$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$8$",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "$12$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$36$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 13,
+      "id": "preg-mat2m-e3-13",
+      "enunciado": "¿Cuál de los siguientes números es equivalente a $\\sqrt{20}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$2\\sqrt{5}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$5\\sqrt{2}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$10$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$40$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 14,
+      "id": "preg-mat2m-e3-14",
+      "enunciado": "Considera la siguiente igualdad:\n\n$$c^{d}=e$$\n\n¿Cuál de las siguientes alternativas es correcta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\log_{c}d=e$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$\\log_{c}e=d$",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "$\\log_{d}c=e$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\log_{d}e=c$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "eje_tematico_id": "eje-mat-1",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 15,
+      "id": "preg-mat2m-e3-15",
+      "enunciado": "Considera el siguiente desarrollo del cuadrado de un binomio.\n\n$$(2a+\\underline{\\quad\\quad})^{2}=4a^{2}+16a+16$$\n\n¿Qué expresión debe ir en el espacio en blanco de la igualdad?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$4$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$4a$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$8$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$8a$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 16,
+      "id": "preg-mat2m-e3-16",
+      "enunciado": "Dada la siguiente expresión algebraica: $4a^{2}-81b^{2}$. ¿Cuál es su factorización?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$(2a+9b)(2a-9b)$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$(2a-9b)(2a-9b)$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$(4a-81b)(4a-81b)$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$(4a+81b)(4a-81b)$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 17,
+      "id": "preg-mat2m-e3-17",
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a $(3p-5)^{2}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$6p-10$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$9p^{2}-25$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$9p^{2}-30p+25$",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "$6p^{2}-15p+10$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-2",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 18,
+      "id": "preg-mat2m-e3-18",
+      "enunciado": "La suma de dos números es 30 y el doble del menor es igual al mayor. Si $x$ es el número menor e $y$ es el número mayor, ¿cuál de los siguientes sistemas de ecuaciones permite determinar cuáles son los números?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\begin{cases} x+y=30 \\\\ 2x=y \\end{cases}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$\\begin{cases} x+y=30 \\\\ x=3y \\end{cases}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\begin{cases} x-y=30 \\\\ 2x=y \\end{cases}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\begin{cases} x-y=20 \\\\ x=2y \\end{cases}$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-4",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 19,
+      "id": "preg-mat2m-e3-19",
+      "enunciado": "Observa las rectas que se intersecan en el siguiente plano cartesiano.\n\n¿Cuál de los siguientes sistemas de ecuaciones está representado por estas rectas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\begin{cases} x+y=2 \\\\ x+y=4 \\end{cases}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$\\begin{cases} x+y=2 \\\\ x-y=4 \\end{cases}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "$\\begin{cases} x+y=4 \\\\ x+y=0 \\end{cases}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\begin{cases} x+y=4 \\\\ x-y=2 \\end{cases}$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-3",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": "p19_plano_rectas.png",
+      "nota_fuente": "Figura: rectas por (0,2)-(2,0) y (0,-4)-(4,0); se cortan en (3,-1). Verificar que el PNG existente sea esta figura.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 20,
+      "id": "preg-mat2m-e3-20",
+      "enunciado": "Considera el siguiente sistema de ecuaciones lineales:\n\n$$5x+3y=55$$\n$$2x+3y=31$$\n\n¿Cuál es el valor de $x$ e $y$ que satisface el sistema anterior?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$x=32,\\ y=-35$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$x=11,\\ y=3$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$x=8,\\ y=5$",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "$x=5,\\ y=10$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 21,
+      "id": "preg-mat2m-e3-21",
+      "enunciado": "Observa la tabla de valores correspondiente a la función $f(x,y)=2x+y=6$.\n\n| x | y |\n| :---: | :---: |\n| 0 | 6 |\n| 2 | 2 |\n| ? | 0 |\n\n¿Cuál es el valor faltante en la columna $x$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$0$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$3$",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "$4$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "baja",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 22,
+      "id": "preg-mat2m-e3-22",
+      "enunciado": "Observa la siguiente recta representada en el plano cartesiano:\n\n¿Cuál de las siguientes ecuaciones representa a esta recta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$y=\\frac{2}{3}x+2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$y=-\\frac{2}{3}x-3$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$y=-\\frac{3}{2}x+2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$y=\\frac{3}{2}x-3$",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "eje_tematico_id": "eje-mat-2",
+      "habilidad_id": "hab-mat-3",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": "p22_recta_plano.png",
+      "nota_fuente": "Figura: recta que corta el eje X en 2 y el eje Y en -3.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 23,
+      "id": "preg-mat2m-e3-23",
+      "enunciado": "Al aplicar una homotecia con centro en el origen del sistema de coordenadas al vector $(3,2)$, se obtiene el vector $(-6,-4)$. Si se aplica esta misma homotecia al vector $(8,-6)$, entonces se obtiene el vector $\\vec{p}$. ¿Cuáles son las coordenadas del vector $\\vec{p}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$(17,0)$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$(-1,-12)$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$(-4,3)$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$(-16,12)$",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "eje_tematico_id": "eje-mat-3",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 24,
+      "id": "preg-mat2m-e3-24",
+      "enunciado": "A un vector $\\vec{v}$ se le aplica una homotecia con centro en el origen y razón $k_1$, resultando el vector $\\vec{u}$, y al vector $\\vec{u}$ se le aplica una homotecia con centro en el origen y razón $k_2$, resultando el vector $\\vec{w}$. ¿Qué expresión es igual a la razón de homotecia, con centro en el origen, que transforma el vector $\\vec{v}$ en el vector $\\vec{w}$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$k_1\\cdot k_2$",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "$k_1 : k_2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$k_2 : k_1$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$k_1+k_2$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "eje_tematico_id": "eje-mat-3",
+      "habilidad_id": "hab-mat-3",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 25,
+      "id": "preg-mat2m-e3-25",
+      "enunciado": "La maqueta de un edificio se diseña con escala $1:200$. En esa maqueta, la altura del edificio es de 40 cm, ¿cuál es la altura real del edificio?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "5 metros",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "16 metros",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "80 metros",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "160 metros",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-3",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 26,
+      "id": "preg-mat2m-e3-26",
+      "enunciado": "Pablo es aficionado al coleccionismo de autos en miniatura. Actualmente tiene un modelo de un automóvil deportivo en escala $1:60$ cuya longitud es de $L$ centímetros.\n\nPablo desea adquirir una versión más grande del mismo automóvil deportivo, pero esta vez fabricado en escala $1:30$. Para asegurarse de que cabrá en su repisa, necesita calcular su nueva medida antes de comprarlo.\n\n¿Qué expresión permite modelar correctamente la longitud $x$, en centímetros, que tendrá el nuevo auto en escala $1:30$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$x=L+21$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$x=L\\cdot\\frac{43}{64}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$x=L\\cdot(64\\cdot 43)$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$x=L\\cdot\\frac{64}{43}$",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "eje_tematico_id": "eje-mat-3",
+      "habilidad_id": "hab-mat-4",
+      "dificultad": "alta",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": "ERROR EN LA FUENTE: con escalas 1:60 y 1:30 la respuesta matemática es x = 2L, y ninguna alternativa lo es. La clave del solucionario (L·64/43) no se deduce del enunciado. Las letras A-D se asignaron en orden de lectura (las cajas del PDF no traen letra). Decisión pendiente del docente: anular la pregunta, o corregir enunciado/alternativas.",
+      "revision_pendiente": true
+    },
+    {
+      "numero": 27,
+      "id": "preg-mat2m-e3-27",
+      "enunciado": "Observa la circunferencia de centro O y radio 5 cm.\n\n¿Cuál es el área del sector circular gris?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\frac{10}{6}\\pi\\ \\text{cm}^2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$\\frac{25}{6}\\pi\\ \\text{cm}^2$",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "$\\frac{25}{3}\\pi\\ \\text{cm}^2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\frac{25}{60}\\pi\\ \\text{cm}^2$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "eje_tematico_id": "eje-mat-4",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": "p27_circulo_sector.png",
+      "nota_fuente": "Figura: sector gris de 60 grados, radio 5 cm.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 28,
+      "id": "preg-mat2m-e3-28",
+      "enunciado": "Observa la siguiente red de cono:\n\n¿Cuál es el área de su superficie?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$20\\pi\\ \\text{cm}^2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$30\\pi\\ \\text{cm}^2$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$34\\pi\\ \\text{cm}^2$",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "$68\\pi\\ \\text{cm}^2$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-4",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "alta",
+      "puntaje": 1,
+      "figura": "p28_figura_geometria.png",
+      "nota_fuente": "Figura: generatriz 15 cm y circunferencia base con radio 2 cm. La figura dibuja el sector como 90 grados, lo que no cierra con la base (arco 7,5 pi vs perimetro 4 pi); la clave 34 pi usa A = pi r (r+g) con r=2, g=15. Inconsistencia menor de la fuente.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 29,
+      "id": "preg-mat2m-e3-29",
+      "enunciado": "Observa las medidas en la siguiente figura.\n\n¿Cuál de las siguientes igualdades permite calcular correctamente el valor de $h$?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\frac{h}{15}=\\frac{10}{28}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$\\frac{h}{15}=\\frac{10}{18}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\frac{h}{15}=\\frac{18}{10}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "$\\frac{h}{15}=\\frac{18}{28}$",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "eje_tematico_id": "eje-mat-3",
+      "habilidad_id": "hab-mat-3",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": "p29_triangulo_trig.png",
+      "nota_fuente": "Figura: triangulo rectangulo de cateto vertical 15; base 10 + 18; altura h sobre el punto que divide 10 y 18. Verificar que el PNG existente sea ESTE triangulo.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 30,
+      "id": "preg-mat2m-e3-30",
+      "enunciado": "Dos streamers de videojuegos quieren analizar el nivel de participación en sus chats en su última transmisión. La siguiente tabla muestra los datos registrados:\n\n| Canal | Total de espectadores | Espectadores que comentaron |\n| :--- | :---: | :---: |\n| Pax gameplays | 800 | 100 |\n| Ninja gamer | 300 | 150 |\n\n¿Qué expresión representa la frecuencia relativa de los espectadores que comentaron en relación al total de espectadores **del canal “Pax gameplays”**?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$\\frac{100}{900}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$\\frac{100}{250}$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$\\frac{100}{800}$",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "$\\frac{250}{1100}$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-5",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 31,
+      "id": "preg-mat2m-e3-31",
+      "enunciado": "En una aplicación educativa sobre estadística, se muestra un tablero de obstáculos simplificado. Se suelta una bola desde la parte superior y, al chocar con cada obstáculo (puntos negros), la bola solo puede rebotar hacia la izquierda o hacia la derecha, con igual probabilidad.\n\nSi se simula el lanzamiento de $2\\,000$ bolas, ¿cuál es la mejor estimación de la cantidad de bolas que caerán en el **Contenedor B**?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "250 bolas",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "500 bolas",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "1 000 bolas",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "1 500 bolas",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-5",
+      "habilidad_id": "hab-mat-4",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": "p31_tablero_galton.png",
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 32,
+      "id": "preg-mat2m-e3-32",
+      "enunciado": "En un grupo de 10 personas que juegan videojuegos, se registró qué tipo de videojuego prefieren y si suelen jugar solas o con amistades. En el diagrama, cada círculo representa a una persona y la letra indica su tipo de videojuego preferido; D: juego de deportes y C: juego de combate.\n\n¿Cuál tabla de doble entrada representa estos datos correctamente?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "| Con quién juega | Deportes | Combate |\n| :--- | :---: | :---: |\n| En solitario | 5 | 5 |\n| En equipo | 5 | 5 |",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "| Con quién juega | Deportes | Combate |\n| :--- | :---: | :---: |\n| En solitario | 1 | 3 |\n| En equipo | 4 | 2 |",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "| Con quién juega | Deportes | Combate |\n| :--- | :---: | :---: |\n| En solitario | 2 | 4 |\n| En equipo | 3 | 1 |",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "| Con quién juega | Deportes | Combate |\n| :--- | :---: | :---: |\n| En solitario | 4 | 2 |\n| En equipo | 1 | 3 |",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "eje_tematico_id": "eje-mat-5",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": "p32_diagrama_videojuegos.png",
+      "nota_fuente": "Diagrama: En solitario D,D,C,D,C,D (D=4, C=2). En equipo C,C,C,D (D=1, C=3). Las alternativas son tablas; si el renderer no muestra bien tablas dentro de alternativas, usar el formato 'En solitario: Deportes 4, Combate 2 | En equipo: Deportes 1, Combate 3'.",
+      "revision_pendiente": false
+    },
+    {
+      "numero": 33,
+      "id": "preg-mat2m-e3-33",
+      "enunciado": "En un sistema de seguridad doméstico se instalan dos sensores de movimiento, el sensor A y el sensor B, que funcionan de manera independiente. La probabilidad de que cada sensor se active ante la presencia de un intruso se muestra en la siguiente tabla.\n\n| Sensor | Probabilidad de activación |\n| :---: | :---: |\n| A | 0,9 |\n| B | 0,8 |\n\nEl sistema dispara la alerta general si **al menos uno** de los sensores se activa.\n\nSi entra un intruso, ¿cuál es la probabilidad de que se dispare la alerta general?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$0{,}10$",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "$0{,}72$",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "$0{,}98$",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "$1{,}70$",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-5",
+      "habilidad_id": "hab-mat-1",
+      "dificultad": "media",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    },
+    {
+      "numero": 34,
+      "id": "preg-mat2m-e3-34",
+      "enunciado": "Un grupo de amigos quiere ganar entradas para un concierto y deben decidir en qué sorteo de Instagram participar. Solo pueden elegir una opción y su objetivo es participar donde tengan la **mayor cantidad esperada de ganadores** dentro de su grupo.\n\nLa siguiente tabla muestra las condiciones de dos cuentas que realizan sorteos.\n\n| Cuenta de red social | Entradas que sortea | Probabilidad de ganar por entrada |\n| :--- | :---: | :---: |\n| @MúsicaTotal | 80 | $\\frac{1}{10}$ |\n| @FanáticoReal | 20 | 0,3 |\n\nConsiderando la **frecuencia esperada** de los resultados, ¿qué argumento es correcto respecto al proveedor que conviene elegir?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La de @FanáticoReal, porque la probabilidad 0,3 es mucho más alta que la probabilidad $\\frac{1}{10}$.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Cualquiera de las dos, porque al ser un sorteo aleatorio no se pueden usar los números para saber qué pasará realmente.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "La de @MúsicaTotal, porque se espera que el grupo obtenga alrededor de 8 entradas, superando las 6 que se esperan de @FanáticoReal.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "La de @MúsicaTotal, porque al sortear 4 veces más entradas, asegura matemáticamente que el grupo ganará el cuádruple de premios.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "eje_tematico_id": "eje-mat-5",
+      "habilidad_id": "hab-mat-3",
+      "dificultad": "alta",
+      "puntaje": 1,
+      "figura": null,
+      "nota_fuente": null,
+      "revision_pendiente": false
+    }
+  ]
+}

@@ -180,8 +180,8 @@ function emailAprobacionDocente(opts: {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const origin = req.headers?.origin || "";
-  const isAllowed =
-    origin === ALLOWED_ORIGIN || origin.startsWith("http://localhost");
+  const isLocalhost = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+  const isAllowed = origin === ALLOWED_ORIGIN || isLocalhost;
   res.setHeader(
     "Access-Control-Allow-Origin",
     isAllowed ? origin : ALLOWED_ORIGIN
@@ -223,7 +223,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // ── GET: Preguntas de una evaluación de catálogo ────────────────────────
     if (req.method === "GET" && action === "preguntas") {
-      const { evaluacion_id } = req.query || {};
+      // Exigir autenticación activa (Directiva 4 y Plan de Acción Fase 1.2)
+      const { user, error: authErr } = await getAuthUser(req);
+      if (authErr || !user) {
+        return res.status(401).json({ error: "No autorizado: se requiere sesión activa." });
+      }
+
+      const { evaluacion_id, include_key } = req.query || {};
       if (!evaluacion_id) return res.status(400).json({ error: "evaluacion_id requerido." });
 
       const EVAL_PREGUNTA_PREFIX: Record<string, string> = {
@@ -240,14 +246,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       };
 
       const prefix = EVAL_PREGUNTA_PREFIX[evaluacion_id as string];
-      let query = sbAdmin.from("preguntas").select("*").order("id");
-      if (prefix) {
-        query = query.ilike("id", prefix);
-      } else {
-        query = query.or(`fuente.ilike.%${evaluacion_id}%,id.ilike.%${evaluacion_id}%`);
+      if (!prefix) {
+        return res.status(404).json({ error: "Evaluación no encontrada en el catálogo." });
       }
 
+      // Claves solo accesibles para rol admin con include_key explícito
+      let allowKeys = false;
+      if (include_key === "1" || include_key === "true") {
+        const { data: perfil } = await sbAdmin
+          .from("perfiles")
+          .select("rol")
+          .eq("id", user.id)
+          .maybeSingle();
+        if (perfil?.rol === "admin") {
+          allowKeys = true;
+        }
+      }
+
+      const query = allowKeys
+        ? sbAdmin
+            .from("preguntas")
+            .select(
+              "id, enunciado, alternativas, respuesta_correcta, eje_tematico_id, habilidad_id, dificultad, puntaje, imagen_url, tipo, nivel, fuente, created_at, updated_at"
+            )
+            .ilike("id", prefix)
+            .order("id")
+        : sbAdmin
+            .from("preguntas")
+            .select(
+              "id, enunciado, alternativas, eje_tematico_id, habilidad_id, dificultad, puntaje, imagen_url, tipo, nivel, fuente, created_at, updated_at"
+            )
+            .ilike("id", prefix)
+            .order("id");
+
       const { data, error } = await query;
+
       if (error) {
         console.error("Error fetching preguntas:", error);
         return res.status(500).json({ error: "Error al cargar preguntas." });
@@ -255,15 +288,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       const ORDER = ['A', 'B', 'C', 'D', 'E'];
       const preguntasSanitizadas = (data || []).map((p: any) => {
-        if (Array.isArray(p.alternativas)) {
-          p.alternativas.sort((a: any, b: any) => {
+        const pClean = { ...p };
+        if (!allowKeys) {
+          delete pClean.respuesta_correcta;
+        }
+        if (Array.isArray(pClean.alternativas)) {
+          const sorted = [...pClean.alternativas].sort((a: any, b: any) => {
             const ia = ORDER.indexOf(a.letra?.toUpperCase() || '');
             const ib = ORDER.indexOf(b.letra?.toUpperCase() || '');
             if (ia !== -1 && ib !== -1) return ia - ib;
             return (a.letra || '').localeCompare(b.letra || '');
           });
+
+          pClean.alternativas = allowKeys
+            ? sorted
+            : sorted.map((a: any) => {
+                const { es_correcta, ...safeAlt } = a;
+                return safeAlt;
+              });
         }
-        return p;
+        return pClean;
       });
 
       return res.status(200).json({ preguntas: preguntasSanitizadas });

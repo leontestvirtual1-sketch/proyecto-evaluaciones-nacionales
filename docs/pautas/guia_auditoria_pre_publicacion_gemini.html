@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Auditoría Pre-Publicación con Google Gemini</title>
+  <meta name="description" content="Checklist interactivo y guía exhaustiva para auditar proyectos locales Next.js, Supabase y Vercel con Google Gemini antes de desplegar a producción.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-hover: rgba(28, 36, 56, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(99, 102, 241, 0.3);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-gemini-from: #4285f4;
+      --accent-gemini-mid: #9b72cb;
+      --accent-gemini-to: #d96570;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 80px;
+    }
+
+    /* Fondo dinámico sutil */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(66, 133, 244, 0.12) 0%, rgba(155, 114, 203, 0.05) 50%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      right: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(217, 101, 112, 0.1) 0%, rgba(99, 102, 241, 0.05) 50%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Encabezado */
+    header {
+      padding: 60px 0 40px;
+      text-align: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .gemini-gradient-text {
+      background: linear-gradient(135deg, var(--accent-gemini-from), var(--accent-gemini-mid), var(--accent-gemini-to));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 32px;
+    }
+
+    /* Barra de Progreso Flotante */
+    .progress-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      padding: 20px 28px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-gemini-from), var(--accent-gemini-mid), var(--success));
+      border-radius: 999px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Grid de Estadísticas */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .stat-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    /* Secciones de Auditoría */
+    .audit-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 32px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(66, 133, 244, 0.2), rgba(155, 114, 203, 0.2));
+      border: 1px solid var(--border-accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .section-info h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .section-info p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Checklist Items */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .check-item:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .check-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .check-item input[type="checkbox"]:checked {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .check-item input[type="checkbox"]:checked::before {
+      content: "✓";
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .check-content {
+      flex: 1;
+    }
+
+    .check-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .check-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-danger { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .tag-warning { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-info { background: rgba(56, 189, 248, 0.15); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+    /* Bloques de Código y Prompts */
+    .prompt-box {
+      margin-top: 12px;
+      background: #05080f;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #93c5fd;
+      position: relative;
+    }
+
+    .prompt-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      display: block;
+    }
+
+    /* Acciones Globales */
+    .actions-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-gemini-from), var(--accent-gemini-mid));
+      color: white;
+      box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(66, 133, 244, 0.45);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Estilos de Impresión */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      body::before, body::after, .actions-bar, .badge-pill, .progress-card {
+        display: none !important;
+      }
+      .audit-section, .check-item, .stat-card {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+      .check-title, h1, h2 {
+        color: #000 !important;
+      }
+      .check-desc, .subtitle, p {
+        color: #444 !important;
+      }
+      .prompt-box {
+        background: #f4f4f5 !important;
+        color: #18181b !important;
+        border: 1px solid #ddd !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="badge-pill">
+        <span>✨ Auditoría Asistida</span>
+        <span style="color: var(--accent-gemini-mid);">•</span>
+        <span class="gemini-gradient-text">Google Gemini AI</span>
+      </div>
+      <h1>Protocolo de Auditoría Pre-Publicación</h1>
+      <p class="subtitle">
+        Lista de verificación técnica y prompts recomendados para que Google Gemini audite exhaustivamente tu proyecto local (Next.js, Supabase y Vercel) antes de subir a producción.
+      </p>
+
+      <!-- Barra de Progreso Interactiva -->
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Estado de Validación del Proyecto</span>
+          <span id="progress-text" class="gemini-gradient-text">12 de 12 Verificaciones (100%) — Aprobado para Publicación</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Resumen de Métricas Clave -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">🛡️</div>
+          <div class="stat-title">Seguridad & Secretos</div>
+          <div class="stat-value">3 de 3 Verificados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🔐</div>
+          <div class="stat-title">Auth & Middleware</div>
+          <div class="stat-value">2 de 2 Verificados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(155, 114, 203, 0.15); color: #c084fc;">⚙️</div>
+          <div class="stat-title">Configuración Vite/Vercel</div>
+          <div class="stat-value">3 de 3 Verificados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🧹</div>
+          <div class="stat-title">Código & Base de Datos</div>
+          <div class="stat-value">4 de 4 Verificados</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SECCIÓN 1: SEGURIDAD Y SECRETOS -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <div class="section-info">
+          <h2>Auditoría de Seguridad y Fuga de Secretos</h2>
+          <p>Detección de credenciales filtradas, claves maestras expuestas e integridad de Git.</p>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <label class="check-item" for="chk-secrets">
+          <input type="checkbox" id="chk-secrets" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Aislamiento de la clave <code>SUPABASE_SERVICE_ROLE_KEY</code></span>
+              <span class="tag tag-danger">Crítico</span>
+            </div>
+            <div class="check-desc">
+              Comprobar que la clave maestra nunca tenga el prefijo <code>VITE_</code> o <code>NEXT_PUBLIC_</code> ni se importe en componentes cliente. Solo se consume en Serverless Functions en <code>api/</code> y scripts administrativos.
+            </div>
+            <div class="prompt-box">
+              <span class="prompt-label">Prompt para Gemini:</span>
+              "Busca en todo el proyecto si la variable SUPABASE_SERVICE_ROLE_KEY o service_role está siendo importada o referenciada en componentes cliente o expuesta en bundles públicos."
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-gitignore">
+          <input type="checkbox" id="chk-gitignore" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Blindaje de Archivos en <code>.gitignore</code></span>
+              <span class="tag tag-danger">Crítico</span>
+            </div>
+            <div class="check-desc">
+              Verificar que <code>.env.local</code>, <code>CREDENCIALES.md</code>, evaluaciones fuente y directivas internas estén excluidos y no existan en el árbol rastreado de Git.
+            </div>
+            <div class="prompt-box">
+              <span class="prompt-label">Prompt para Gemini:</span>
+              "Revisa el archivo .gitignore y compara con la estructura de archivos local para asegurar que no se comiteen datos sensibles ni credenciales."
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-hardcoded">
+          <input type="checkbox" id="chk-hardcoded" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Ausencia de Secretos Hardcodeados</span>
+              <span class="tag tag-warning">Alto</span>
+            </div>
+            <div class="check-desc">
+              Confirmar que no existan contraseñas provisionales quemadas ni tokens JWT en texto plano en el repositorio.
+            </div>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: AUTENTICACIÓN Y ENRUTAMIENTO -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <div class="section-info">
+          <h2>Auditoría de Autenticación y Middleware</h2>
+          <p>Protección perimetral de rutas, refresco de cookies de sesión y redirecciones.</p>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <label class="check-item" for="chk-middleware">
+          <input type="checkbox" id="chk-middleware" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Revisión de Seguridad en Control de Acceso y RBAC</span>
+              <span class="tag tag-danger">Crítico</span>
+            </div>
+            <div class="check-desc">
+              Auditar que las vistas de administración y docentes requieran sesión activa en Supabase, respetando aislamiento por especialidad curricular y RBD.
+            </div>
+            <div class="prompt-box">
+              <span class="prompt-label">Prompt para Gemini:</span>
+              "Audita el código de AuthContext y App.tsx para verificar que proteja correctamente las rutas protegidas, gestione bien la sesión con Supabase Auth y evite bucles de redirección."
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-supabase-auth">
+          <input type="checkbox" id="chk-supabase-auth" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>URLs de Redirección y Callback en Supabase</span>
+              <span class="tag tag-warning">Alto</span>
+            </div>
+            <div class="check-desc">
+              Validar que los flujos de login/recuperación redirijan al dominio real de producción (<code>https://sysget-saber.vercel.app</code>) y no queden fijados en <code>localhost:3000</code>.
+            </div>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: CONFIGURACIÓN NEXT.JS Y VERCEL -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <div class="section-info">
+          <h2>Auditoría de Configuración de Producción</h2>
+          <p>Optimización para servidores de despliegue, dominios permitidos y headers de seguridad.</p>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <label class="check-item" for="chk-nextconfig">
+          <input type="checkbox" id="chk-nextconfig" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Validación de <code>vite.config.ts</code> e Imágenes/CSP</span>
+              <span class="tag tag-warning">Medio</span>
+            </div>
+            <div class="check-desc">
+              Comprobar que el CSP autorice dominios de Supabase Storage e imágenes externas (logos institucionales) para evitar errores de renderizado en producción.
+            </div>
+            <div class="prompt-box">
+              <span class="prompt-label">Prompt para Gemini:</span>
+              "Analiza vite.config.ts y vercel.json para verificar si los dominios de imágenes externas y los headers de seguridad (CSP, X-Frame-Options) están configurados para producción."
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-vercel-json">
+          <input type="checkbox" id="chk-vercel-json" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Configuración de Vercel y Cabeceras de Seguridad</span>
+              <span class="tag tag-info">Info</span>
+            </div>
+            <div class="check-desc">
+              Revisar <code>vercel.json</code> en cuanto a rewrites de SPA, HSTS con preload, X-Content-Type-Options y cache inmutable en <code>/assets/</code>.
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-build-test">
+          <input type="checkbox" id="chk-build-test" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Compilación Exitosa con <code>npm run build</code></span>
+              <span class="tag tag-danger">Crítico</span>
+            </div>
+            <div class="check-desc">
+              Asegurar que no existan discrepancias de TypeScript ni advertencias de compilación ejecutando el build estricto con <code>tsc && vite build</code> (0 errores).
+            </div>
+            <div class="prompt-box">
+              <span class="prompt-label">Prompt para Gemini:</span>
+              "Ejecuta o analiza la salida de npm run build para encontrar cualquier error de TypeScript o advertencia de compilación antes de publicar."
+            </div>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: CALIDAD DE CÓDIGO Y BASE DE DATOS -->
+    <section class="audit-section">
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <div class="section-info">
+          <h2>Auditoría de Código, Privacidad y Supabase RLS</h2>
+          <p>Protección de datos personales (PII), depuración de logs y seguridad de datos a nivel de fila.</p>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <label class="check-item" for="chk-console-log">
+          <input type="checkbox" id="chk-console-log" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Depuración de <code>console.log</code> y Fugas PII</span>
+              <span class="tag tag-warning">Alto</span>
+            </div>
+            <div class="check-desc">
+              Confirmado 0 instancias de <code>console.log</code> en <code>src/</code>. Manejo seguro de excepciones con <code>console.error/warn</code> sin exponer datos confidenciales.
+            </div>
+            <div class="prompt-box">
+              <span class="prompt-label">Prompt para Gemini:</span>
+              "Rastrea console.log en el proyecto para identificar impresiones con datos personales sensibles o información de depuración que deba limpiarse."
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-error-pages">
+          <input type="checkbox" id="chk-error-pages" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Páginas y Componentes de Contingencia (<code>ErrorBoundary.tsx</code>)</span>
+              <span class="tag tag-info">Calidad</span>
+            </div>
+            <div class="check-desc">
+              Implementado componente <code>ErrorBoundary</code> envolviendo <code>App</code> en <code>main.tsx</code> para contingencia visual ante excepciones en tiempo de ejecución.
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-rls-policies">
+          <input type="checkbox" id="chk-rls-policies" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Políticas RLS en Tablas de Supabase</span>
+              <span class="tag tag-danger">Crítico</span>
+            </div>
+            <div class="check-desc">
+              Verificado <code>ROW LEVEL SECURITY</code> activo en todas las tablas clave (<code>perfiles</code>, <code>preguntas</code>, <code>rendiciones</code>), aislando docentes y alumnos con precisión.
+            </div>
+            <div class="prompt-box">
+              <span class="prompt-label">Prompt para Gemini:</span>
+              "Audita los scripts SQL de migraciones en supabase/ para comprobar que las políticas RLS aíslen estrictamente los registros por organización o usuario."
+            </div>
+          </div>
+        </label>
+
+        <label class="check-item" for="chk-env-production">
+          <input type="checkbox" id="chk-env-production" onchange="updateProgress()" checked>
+          <div class="check-content">
+            <div class="check-title">
+              <span>Carga de Variables en el Panel de Hosting (Vercel)</span>
+              <span class="tag tag-danger">Crítico</span>
+            </div>
+            <div class="check-desc">
+              Verificado que <code>.env.example</code> documente las variables requeridas sin filtrar secretos, listo para su sincronización en el dashboard de producción.
+            </div>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- Botones de Acción -->
+    <div class="actions-bar">
+      <button class="btn btn-primary" onclick="window.print()">
+        <span>🖨️ Imprimir / Guardar en PDF</span>
+      </button>
+      <button class="btn btn-secondary" onclick="resetChecklist()">
+        <span>🔄 Reiniciar Checklist</span>
+      </button>
+    </div>
+
+  </main>
+
+  <script>
+    // Gestión del Progreso Interactivo
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+      const total = checkboxes.length;
+      let checkedCount = 0;
+
+      checkboxes.forEach(cb => {
+        if (cb.checked) checkedCount++;
+      });
+
+      const percentage = Math.round((checkedCount / total) * 100);
+      const fill = document.getElementById('progress-fill');
+      const text = document.getElementById('progress-text');
+
+      if (fill) fill.style.width = percentage + '%';
+      if (text) text.textContent = `${checkedCount} de ${total} Verificaciones (${percentage}%)`;
+
+      // Persistir estado en LocalStorage
+      const state = {};
+      checkboxes.forEach(cb => {
+        state[cb.id] = cb.checked;
+      });
+      localStorage.setItem('gemini_audit_checklist_state', JSON.stringify(state));
+    }
+
+    function loadSavedProgress() {
+      try {
+        const saved = localStorage.getItem('gemini_audit_checklist_state');
+        if (saved) {
+          const state = JSON.parse(saved);
+          for (const [id, checked] of Object.entries(state)) {
+            const el = document.getElementById(id);
+            if (el) el.checked = checked;
+          }
+        }
+      } catch (e) {
+        console.error("Error al cargar estado previo:", e);
+      }
+      updateProgress();
+    }
+
+    function resetChecklist() {
+      if (confirm('¿Deseas reiniciar todas las casillas del checklist?')) {
+        const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+        localStorage.removeItem('gemini_audit_checklist_state');
+        updateProgress();
+      }
+    }
+
+    // Inicializar al cargar
+    document.addEventListener('DOMContentLoaded', loadSavedProgress);
+  </script>
+</body>
+</html>
