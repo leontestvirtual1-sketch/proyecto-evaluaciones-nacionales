@@ -761,7 +761,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                 {pregunta.tipo === 'seleccion_multiple' && (
                   <div className="space-y-1.5 pt-1">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {pregunta.alternativas.map(alt => (
+                      {[...pregunta.alternativas].sort((a, b) => (a.letra || '').localeCompare(b.letra || '')).map(alt => (
                         <div
                           key={alt.letra}
                           className={`p-2.5 rounded-xl border text-xs flex items-center gap-2 ${

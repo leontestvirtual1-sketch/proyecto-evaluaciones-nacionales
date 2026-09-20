@@ -387,11 +387,19 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                       )}
 
                       {/* ─ Alternativas de Selección ─ */}
-                      {p.alternativas.length > 0 && (
+                      {p.alternativas.length > 0 && (() => {
+                        const altsOrdenadas = [...p.alternativas].sort((a, b) => {
+                          const ia = LETRAS.indexOf(a.letra);
+                          const ib = LETRAS.indexOf(b.letra);
+                          if (ia !== -1 && ib !== -1) return ia - ib;
+                          return (a.letra || '').localeCompare(b.letra || '');
+                        });
+
+                        return (
                         <div className="px-5 pb-5 pt-2">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                              {p.alternativas.some(a => a.texto && !a.texto.startsWith('Opción ')) ? 'Alternativas' : 'Marcar Respuesta Oficial'}
+                              {altsOrdenadas.some(a => a.texto && !a.texto.startsWith('Opción ')) ? 'Alternativas' : 'Marcar Respuesta Oficial'}
                             </span>
                             {mostrarRespuestas && p.respuestaCorrecta && (
                               <span className="text-xs font-bold text-emerald-400">
@@ -401,13 +409,13 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                           </div>
 
                           {/* Siempre mostrar texto si alguna alternativa lo tiene */}
-                          {p.alternativas.some(a => a.texto && a.texto.trim().length > 0) ? (
+                          {altsOrdenadas.some(a => a.texto && a.texto.trim().length > 0) ? (
                             // Detectar si TODAS son imágenes → grilla 2×2 fiel al PDF original
-                            p.alternativas.every(a => a.texto?.trim().startsWith('!['))
+                            altsOrdenadas.every(a => a.texto?.trim().startsWith('!['))
                               ? (
                                 /* Alternativas gráficas — grilla 2×2 */
                                 <div className="grid grid-cols-2 gap-3">
-                                  {p.alternativas.map((alt, altIdx) => {
+                                  {altsOrdenadas.map((alt, altIdx) => {
                                     const isCorrect = alt.letra === p.respuestaCorrecta;
                                     const showCorrect = mostrarRespuestas && isCorrect;
                                     return (
@@ -446,7 +454,7 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                               : (
                                 /* Alternativas con texto — lista vertical */
                                 <div className="space-y-2">
-                                  {p.alternativas.map((alt, altIdx) => {
+                                  {altsOrdenadas.map((alt, altIdx) => {
                                     const isCorrect = alt.letra === p.respuestaCorrecta;
                                     const showCorrect = mostrarRespuestas && isCorrect;
                                     return (
@@ -488,7 +496,7 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                           ) : (
                             /* Solo letras — el contenido visual está en la imagen adjunta */
                             <div className="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-md">
-                              {p.alternativas.map((alt) => {
+                              {altsOrdenadas.map((alt) => {
                                 const isCorrect = alt.letra === p.respuestaCorrecta;
                                 const showCorrect = mostrarRespuestas && isCorrect;
                                 return (
@@ -516,7 +524,8 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                             </div>
                           )}
                         </div>
-                      )}
+                        );
+                      })()}
                     </div>
                   );
                 })}

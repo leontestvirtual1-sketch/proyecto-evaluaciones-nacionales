@@ -162,7 +162,7 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
 
                 {/* Alternativas */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                  {preg.alternativas.map(alt => (
+                  {[...preg.alternativas].sort((a, b) => (a.letra || '').localeCompare(b.letra || '')).map(alt => (
                     <div
                       key={alt.letra}
                       className={`p-3 rounded-xl border text-xs flex items-start gap-2.5 transition-all ${

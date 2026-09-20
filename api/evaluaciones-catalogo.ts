@@ -252,7 +252,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.error("Error fetching preguntas:", error);
         return res.status(500).json({ error: "Error al cargar preguntas." });
       }
-      return res.status(200).json({ preguntas: data || [] });
+
+      const ORDER = ['A', 'B', 'C', 'D', 'E'];
+      const preguntasSanitizadas = (data || []).map((p: any) => {
+        if (Array.isArray(p.alternativas)) {
+          p.alternativas.sort((a: any, b: any) => {
+            const ia = ORDER.indexOf(a.letra?.toUpperCase() || '');
+            const ib = ORDER.indexOf(b.letra?.toUpperCase() || '');
+            if (ia !== -1 && ib !== -1) return ia - ib;
+            return (a.letra || '').localeCompare(b.letra || '');
+          });
+        }
+        return p;
+      });
+
+      return res.status(200).json({ preguntas: preguntasSanitizadas });
     }
 
     // ── GET: Lista de solicitudes (solo admin) ──────────────────────────────

@@ -264,12 +264,20 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
           </div>
 
           {/* Alternatives or Textarea */}
-          {preguntaActual.tipo === 'seleccion_multiple' ? (
-            preguntaActual.alternativas.every(a => a.texto?.trim().startsWith('!['))
+          {preguntaActual.tipo === 'seleccion_multiple' ? (() => {
+            const ORDER = ['A', 'B', 'C', 'D', 'E'];
+            const altsOrdenadas = [...preguntaActual.alternativas].sort((a, b) => {
+              const ia = ORDER.indexOf(a.letra?.toUpperCase() || '');
+              const ib = ORDER.indexOf(b.letra?.toUpperCase() || '');
+              if (ia !== -1 && ib !== -1) return ia - ib;
+              return (a.letra || '').localeCompare(b.letra || '');
+            });
+
+            return altsOrdenadas.every(a => a.texto?.trim().startsWith('!['))
               ? (
                 /* Alternativas gráficas — grilla 2×2 como en PDF original */
                 <div className="grid grid-cols-2 gap-3">
-                  {preguntaActual.alternativas.map((alt) => {
+                  {altsOrdenadas.map((alt) => {
                     const isSelected = respuestas[preguntaActual.id] === alt.letra;
                     return (
                       <button
@@ -301,7 +309,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
               : (
                 /* Alternativas de texto — lista vertical */
                 <div className="space-y-3">
-                  {preguntaActual.alternativas.map((alt) => {
+                  {altsOrdenadas.map((alt) => {
                     const isSelected = respuestas[preguntaActual.id] === alt.letra;
                     return (
                       <button
@@ -329,8 +337,8 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
                     );
                   })}
                 </div>
-              )
-          ) : (
+              );
+          })() : (
             <div className="space-y-2">
               <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                 Respuesta Escrita / Justificación
