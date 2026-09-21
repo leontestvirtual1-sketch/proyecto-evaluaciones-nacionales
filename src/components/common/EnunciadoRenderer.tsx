@@ -1,20 +1,22 @@
 import React from 'react';
 import katex from 'katex';
+import DOMPurify from 'dompurify';
 import { resolveImageUrl } from '../../lib/storage';
 
 /**
- * Intenta renderizar una expresión LaTeX con KaTeX. Si KaTeX lanza un error de sintaxis
- * (fórmula mal formada, típico en datos extraídos de PDF), retorna el texto original sin
- * romper el render de toda la pregunta.
+ * Intenta renderizar una expresión LaTeX con KaTeX de forma segura.
+ * Aplica trust: false y sanitiza la salida con DOMPurify para blindar contra XSS (Fase 3.5).
  */
 function renderKatex(expr: string, displayMode: boolean): string {
   try {
-    return katex.renderToString(expr, {
+    const rawHtml = katex.renderToString(expr, {
       throwOnError: false,
       displayMode,
       strict: 'ignore',
       trust: false,
     });
+    // DOMPurify sanitiza tanto en navegador como SSR (fallback si window es undefined)
+    return typeof window !== 'undefined' ? DOMPurify.sanitize(rawHtml) : rawHtml;
   } catch {
     return expr
       .replace(/&/g, '&amp;')
@@ -278,11 +280,12 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
           const mathMatch = part.match(/^§MATH(\d+)§$/);
           if (mathMatch) {
             const html = mathPlaceholders[Number(mathMatch[1])];
+            const safeHtml = typeof window !== 'undefined' ? DOMPurify.sanitize(html) : html;
             return (
               <span
                 key={`${keyPrefix}-math-${idx}`}
                 className="katex-inline"
-                dangerouslySetInnerHTML={{ __html: html }}
+                dangerouslySetInnerHTML={{ __html: safeHtml }}
               />
             );
           }

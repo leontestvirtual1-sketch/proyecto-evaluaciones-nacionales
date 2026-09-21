@@ -2,6 +2,27 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Fase 3.5: Endurecimiento de CSP (Content Security Policy) y Renderizado Seguro KaTeX + DOMPurify
+
+- **Problema / Requerimiento**:
+  1. **Política CSP con 'unsafe-inline' en scripts**: `vercel.json` incluía `'unsafe-inline'` en la directiva `script-src`, debilitando las defensas del navegador ante posibles inyecciones XSS.
+  2. **Renderizado de fórmulas matemáticas con `dangerouslySetInnerHTML`**: El componente `EnunciadoRenderer.tsx` generaba HTML matemático mediante KaTeX e inyectaba el resultado en el DOM sin sanitización complementaria de defensa en profundidad.
+
+- **Archivos y Solución Técnica**:
+  - [`vercel.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/vercel.json):
+    - Removido `'unsafe-inline'` de la directiva `script-src` de `Content-Security-Policy`. La aplicación es una SPA moderna que carga exclusivamente bundles modulares (`script-src 'self'`), manteniendo `style-src 'self' 'unsafe-inline'` para Tailwind y estilos de KaTeX.
+  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx):
+    - KaTeX configurado con `trust: false` para desactivar comandos con efectos colaterales (como `\href`, `\url`, etc.).
+    - Integrado `DOMPurify.sanitize(...)` tanto en el helper de renderizado `renderKatex` como en el nodo inline que consume `dangerouslySetInnerHTML`.
+  - [`package.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/package.json):
+    - Incorporadas dependencias `dompurify` y `@types/dompurify`.
+  - [`tests/csp-and-rendering.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/csp-and-rendering.test.ts):
+    - 5 pruebas unitarias automatizadas que comprueban: presencia de CSP en `vercel.json` sin `unsafe-inline` en scripts, KaTeX con `trust: false`, descarte de esquemas maliciosos por DOMPurify y verificación estática de código.
+
+- **Verificación / Despliegue**:
+  - `npm test`: **9/9 test suites pasando al 100% (43 tests PASS)**.
+  - `npm run build`: **✓ built in 20.35s** (0 errores TypeScript, 0 advertencias).
+
 ### [2026-09-21] Fase 3.4: Blindaje Estricto de CORS y Restricción de Localhost en Producción
 
 - **Problema / Requerimiento**:
