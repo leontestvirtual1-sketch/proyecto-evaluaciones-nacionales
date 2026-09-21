@@ -7,7 +7,6 @@ import {
   Search,
   Users,
   Clock,
-  Sparkles,
   CreditCard,
   CheckCircle2,
   XCircle,
@@ -83,14 +82,12 @@ export const AdminColegiosPanel: React.FC<AdminColegiosPanelProps> = ({
       const suspendidos = userGroup.filter(u => u.estado === 'suspendido').length;
       const pendientes = userGroup.filter(u => u.estado === 'pendiente_aprobacion').length;
 
-      let estadoGlobal: 'activo' | 'suspendido' | 'parcial' = 'activo';
-      if (suspendidos === userGroup.length) {
-        estadoGlobal = 'suspendido';
-      } else if (activos === userGroup.length) {
-        estadoGlobal = 'activo';
-      } else {
-        estadoGlobal = 'parcial';
-      }
+      const estadoGlobal: 'activo' | 'suspendido' | 'parcial' =
+        suspendidos === userGroup.length
+          ? 'suspendido'
+          : activos === userGroup.length
+          ? 'activo'
+          : 'parcial';
 
       let planPredominante: UserPlan = 'trial';
       if (userGroup.some(u => u.plan === 'institucional')) {
@@ -259,13 +256,13 @@ export const AdminColegiosPanel: React.FC<AdminColegiosPanelProps> = ({
 
         <div className="flex items-center gap-1.5 w-full sm:w-auto">
           {[
-            { id: 'todos', label: `Todos (${totalColegios})` },
-            { id: 'activo', label: `Activos (${activosColegios})` },
-            { id: 'suspendido', label: `Desactivados (${suspendidosColegios})` },
+            { id: 'todos' as const, label: `Todos (${totalColegios})` },
+            { id: 'activo' as const, label: `Activos (${activosColegios})` },
+            { id: 'suspendido' as const, label: `Desactivados (${suspendidosColegios})` },
           ].map(tab => (
             <button
               key={tab.id}
-              onClick={() => setFilterEstado(tab.id as any)}
+              onClick={() => setFilterEstado(tab.id)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                 filterEstado === tab.id
                   ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 font-bold'

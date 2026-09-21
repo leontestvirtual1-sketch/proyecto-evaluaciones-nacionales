@@ -135,7 +135,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const mapRow = (p: Record<string, unknown>): UserProfile => {
         const createdAt = (p.created_at || p.creado_en || p.fecha_registro) as string | undefined;
-        const diasRestantes = calcularDiasRestantes(p as any);
+        const diasRestantes = calcularDiasRestantes(p as Parameters<typeof calcularDiasRestantes>[0]);
         const fechaRegStr = createdAt
           ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
           : undefined;

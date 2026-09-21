@@ -1,4 +1,4 @@
-import { UserProfile, UserEstado, UserPlan } from '../types';
+import { UserProfile, UserPlan } from '../types';
 
 /**
  * Calcula de manera uniforme y precisa los días restantes de prueba (Trial) de un usuario.

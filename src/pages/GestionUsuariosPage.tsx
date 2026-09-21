@@ -24,8 +24,7 @@ import {
   Monitor,
   BookMarked,
   Power,
-  PowerOff,
-  AlertTriangle
+  PowerOff
 } from 'lucide-react';
 import { AdminCatalogoPanel } from '../components/AdminCatalogoPanel';
 import { AdminColegiosPanel } from '../components/AdminColegiosPanel';
