@@ -81,7 +81,9 @@ async function verifyEvaluation(manifestPath) {
   const prefixMap = {
     'eval-simce-mat-2m-e3': 'preg-mat2m-e3-%',
     'eval-paes-lect-2026-f103': 'preg-paes-lec-26-%',
-    'eval-simce-mat-6b-e3': 'preg-mat6b-e3-%'
+    'eval-simce-mat-6b-e3': 'preg-mat6b-e3-%',
+    'eval-paes-mat1-2023-f113': 'preg-paes-m1-23-%',
+    'eval-diag-ciu-3m-2026': 'preg-ciu3m-diag-%'
   };
 
   const prefix = prefixMap[manifest.evaluacion_id];
@@ -141,16 +143,21 @@ async function verifyEvaluation(manifestPath) {
       reportFail(`Pregunta ${p.id} (Q${qNum}) clave DB '${claveReal}' no coincide con oficial '${claveEsperada}'`);
     }
 
-    // Texto prohibido
-    const textoCompleto = `${p.enunciado || ''} ${(p.alternativas || []).map(a => a.texto).join(' ')}`;
-    if (/umaximo\.com/i.test(textoCompleto)) {
+    // Texto prohibido (solo en texto visible, excluyendo URLs de markdown ![img](...))
+    const textoAlternativas = (p.alternativas || []).map(a => (a.texto || '').replace(/!\[.*?\]\(.*?\)/g, '')).join(' ');
+    const textoVisible = `${(p.enunciado || '').replace(/!\[.*?\]\(.*?\)/g, '')} ${textoAlternativas}`;
+
+    if (/umaximo\.com/i.test(textoVisible)) {
       reportFail(`Pregunta ${p.id} contiene marca de agua 'umaximo.com'`);
     }
-    if (/[\uF000-\uF0FF]/.test(textoCompleto)) {
+    if (/[\uF000-\uF0FF]/.test(textoVisible)) {
       reportFail(`Pregunta ${p.id} contiene caracteres corruptos PUA (Private Use Area)`);
     }
-    if (/FORMA\s*101\s*[-–—]\s*2026/i.test(textoCompleto)) {
+    if (/FORMA\s*101\s*[-–—]\s*2026/i.test(textoVisible)) {
       reportFail(`Pregunta ${p.id} contiene pie de página sin limpiar 'FORMA 101 - 2026'`);
+    }
+    if (/FORMA\s*113\s*[-–—]\s*2023/i.test(textoVisible)) {
+      reportFail(`Pregunta ${p.id} contiene pie de página sin limpiar 'FORMA 113 - 2023'`);
     }
 
     // Alternativas excesivamente largas
@@ -185,7 +192,6 @@ async function verifyEvaluation(manifestPath) {
 }
 
 // 5.2 — Verificar que las imagen_url absolutas responden 200 (HEAD request)
-async function verifyImageUrls(evaluacion_id: string): Promise<void>;
 async function verifyImageUrls(evaluacion_id) {
   // Solo imágenes con URL absoluta (https://...)
   const { data: pregs, error } = await supabase

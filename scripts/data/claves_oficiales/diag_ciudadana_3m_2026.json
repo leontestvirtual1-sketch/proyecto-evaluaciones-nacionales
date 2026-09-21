@@ -1,0 +1,14 @@
+{
+  "evaluacion_id": "eval-diag-ciu-3m-2026",
+  "fuente": "Umáximo — Prueba Diagnóstica Todos los OAs Educación Ciudadana III° Medio 2026",
+  "sha256_pdf": "cee60117749a7742ed62a7604215a04961c8aad5d55f3d14cba6de7d5a8cb1fb",
+  "n_preguntas": 25,
+  "puntaje_esperado": 49,
+  "claves": {
+    "1": "C", "2": "C", "3": "C", "4": "B", "5": "D",
+    "6": "C", "7": "D", "8": "B", "9": "D", "10": "B",
+    "11": "C", "12": "A", "13": "A", "14": "A", "15": "D",
+    "16": "B", "17": "B", "18": "D", "19": "C", "20": "A",
+    "21": "A", "22": "D", "23": "C", "24": "D", "25": "C"
+  }
+}

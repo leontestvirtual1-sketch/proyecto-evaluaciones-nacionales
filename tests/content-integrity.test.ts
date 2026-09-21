@@ -241,6 +241,91 @@ describe('PAES Competencia Lectora 2026 Forma 101 Invierno', () => {
   });
 });
 
+describe('PAES Matemática 1 (M1) 2023 Forma 113', () => {
+  const manifest = loadManifest('paes_mat1_2023_f113.json');
+
+  it('evaluacion_id = eval-paes-mat1-2023-f113', () => {
+    expect(manifest.evaluacion_id).toBe('eval-paes-mat1-2023-f113');
+  });
+
+  it('tiene exactamente 65 preguntas', () => {
+    expect(manifest.n_preguntas).toBe(65);
+    expect(Object.keys(manifest.claves).length).toBe(65);
+  });
+
+  it('60 puntuables y 5 piloto', () => {
+    expect(manifest.preguntas_puntuables).toBe(60);
+    expect(Array.isArray(manifest.preguntas_piloto)).toBe(true);
+    expect(manifest.preguntas_piloto.length).toBe(5);
+  });
+
+  it('los números piloto están en rango 1–65', () => {
+    for (const num of manifest.preguntas_piloto as number[]) {
+      expect(num).toBeGreaterThanOrEqual(1);
+      expect(num).toBeLessThanOrEqual(65);
+    }
+  });
+
+  it('claves secuenciales 1–65 completas', () => {
+    for (let i = 1; i <= 65; i++) {
+      expect(manifest.claves[String(i)], `Falta clave pregunta ${i}`).toBeDefined();
+    }
+  });
+
+  it('todas las claves son A/B/C/D', () => {
+    const validas = new Set(['A', 'B', 'C', 'D']);
+    for (const [num, letra] of Object.entries(manifest.claves as Record<string, string>)) {
+      if (!validas.has(letra)) {
+        throw new Error(`Clave inválida '${letra}' en pregunta ${num}`);
+      }
+    }
+  });
+
+  it('ninguna clave supera 60% de frecuencia', () => {
+    checkKeyDistribution(manifest.claves, 65, 60);
+  });
+
+  it('puntaje esperado = 132 pts', () => {
+    expect(manifest.puntaje_esperado).toBe(132);
+  });
+});
+
+describe('Prueba Diagnóstica Educación Ciudadana 3° Medio 2026', () => {
+  const manifest = loadManifest('diag_ciudadana_3m_2026.json');
+
+  it('evaluacion_id = eval-diag-ciu-3m-2026', () => {
+    expect(manifest.evaluacion_id).toBe('eval-diag-ciu-3m-2026');
+  });
+
+  it('tiene exactamente 25 preguntas', () => {
+    expect(manifest.n_preguntas).toBe(25);
+    expect(Object.keys(manifest.claves).length).toBe(25);
+  });
+
+  it('claves secuenciales 1–25 completas', () => {
+    for (let i = 1; i <= 25; i++) {
+      expect(manifest.claves[String(i)], `Falta clave pregunta ${i}`).toBeDefined();
+    }
+  });
+
+  it('todas las claves son A/B/C/D', () => {
+    const validas = new Set(['A', 'B', 'C', 'D']);
+    for (const [num, letra] of Object.entries(manifest.claves as Record<string, string>)) {
+      if (!validas.has(letra)) {
+        throw new Error(`Clave inválida '${letra}' en pregunta ${num}`);
+      }
+    }
+  });
+
+  it('ninguna clave supera 60% de frecuencia', () => {
+    checkKeyDistribution(manifest.claves, 25, 60);
+  });
+
+  it('puntaje esperado = 49 pts', () => {
+    expect(manifest.puntaje_esperado).toBe(49);
+  });
+});
+
 describe('Higiene del directorio public/', () => {
   it('no contiene archivos PDF', () => {
     const publicDir = path.resolve('public');
