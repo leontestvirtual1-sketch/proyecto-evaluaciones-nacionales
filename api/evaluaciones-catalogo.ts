@@ -25,13 +25,10 @@ const SMTP_PASS = process.env.SMTP_PASS || "";
 const APP_URL = process.env.APP_URL || "https://sysget-saber.vercel.app";
 const ALLOWED_ORIGIN = APP_URL;
 
-const SUPABASE_URL =
-  process.env.VITE_SUPABASE_URL ||
-  process.env.SUPABASE_URL ||
-  "https://khtdzgfqjggycrcbrytw.supabase.co";
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "";
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
-const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY || "dummy-key-for-test-init");
 
 // ── Auth helpers ─────────────────────────────────────────────────────────────
 

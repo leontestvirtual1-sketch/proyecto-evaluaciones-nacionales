@@ -2,6 +2,38 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Fase 5: Compuertas de Calidad y Tests de Integridad Oficial (Quality Gates)
+
+- **Problema / Requerimiento**:
+  1. **Prevención de regresiones de contenido**: Evitar de forma sistemática y automatizada la reaparición de preguntas inventadas, claves sesgadas (>60% en una sola letra), textos con marcas de extracción (`FORMA \d+`, `umaximo.com`), caracteres PUA corruptos o alternativas desbordadas (>300 caracteres).
+  2. **Trazabilidad y validación de fuentes oficiales**: Contar con manifiestos JSON versionados en el repositorio que definan unívocamente para cada evaluación: SHA-256 del PDF de origen, cantidad exacta de ítems, clavijero oficial y suma de puntaje esperado.
+  3. **Verificación de recursos e higiene de archivos**: Comprobar mediante peticiones HTTP `HEAD` la disponibilidad de todas las figuras asociadas y garantizar que el directorio público `public/` esté 100% libre de documentos PDF o solucionarios confidenciales.
+
+- **Archivos y Solución Técnica**:
+  - **5.1 — Manifiestos de claves oficiales versionadas**:
+    - [`scripts/data/claves_oficiales/simce_mat_2m_e3.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/simce_mat_2m_e3.json): 34 preguntas reales, SHA-256 oficial, puntaje total de 68 pts (2 pts c/u).
+    - [`scripts/data/claves_oficiales/simce_mat_6b_e3.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/simce_mat_6b_e3.json): 35 preguntas reales, SHA-256 de instrumento y tabla de especificación, puntaje total de 70 pts (2 pts c/u).
+    - [`scripts/data/claves_oficiales/paes_lectora_2026_f101.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/paes_lectora_2026_f101.json): 65 preguntas oficiales (60 puntuables y 5 piloto), claves DEMRE Invierno.
+  - **5.2 — Quality gate automatizado**:
+    - [`scripts/verify_evaluations_integrity.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/verify_evaluations_integrity.mjs):
+      - Integrado mapeo `eval-simce-mat-6b-e3` a `preg-mat6b-e3-%`.
+      - Implementada función `verifyImageUrls()` con HEAD checks asíncronos para garantizar que todas las imágenes CDN responden HTTP 200.
+      - Detección estricta de textos espurios y caracteres corruptos.
+  - **5.3 — Suite de pruebas unitarias**:
+    - [`tests/content-integrity.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/content-integrity.test.ts):
+      - Reescrito con patrón tsx-compatible nativo.
+      - **23/23 tests pasando** cubriendo manifiestos, SIMCE Mat 2M, SIMCE Mat 6B, PAES Lectora e higiene en `public/`.
+  - **5.4 — Bloqueo estructural de publicación**:
+    - Persistido y auditado filtro `verificada_at IS NOT NULL` y `es_catalogo = true` en API y catálogo docente.
+  - **5.5 — Contratos de integridad**:
+    - [`CONSTRAINTS.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/CONSTRAINTS.md): Bloque 7 "Integridad de Contenido Oficial".
+    - [`DIRECTIVAS.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/DIRECTIVAS.md): Directiva 12 "Fidelidad Absoluta a la Fuente".
+
+- **Verificación / Despliegue**:
+  - `npm run verify:content`: **10/10 verificaciones de contenido superadas (0 errores, 0 advertencias)**.
+  - `npm test`: **9/9 test suites pasando al 100% (66 tests PASS: Tenant, Catálogo, Grade-Evaluation, Scoring, Content Integrity 23/23, Student Runner, Email, CORS, CSP)**.
+  - `npx tsc --noEmit`: **0 errores de compilación TypeScript**.
+
 ### [2026-09-21] Fase 4: Higiene del Repositorio y Secretos
 
 - **Problema / Requerimiento**: Eliminar datos sensibles hardcodeados del código de aplicación, auditar migraciones históricas, corregir `.gitignore` y documentar decisiones de diseño sobre credenciales.

@@ -75,7 +75,7 @@ OBLIGATORIO:
 ### Directiva 9 — Sesión de Admin preservada
 ```
 PROHIBIDO:
-  const isProduction = currentUser.email === 'leontestvirtual1@gmail.com';
+  const isProduction = currentUser.email === 'admin@ejemplo-colegio.cl';
 
 OBLIGATORIO:
   const isProduction = adminBaseProfile?.es_super_admin

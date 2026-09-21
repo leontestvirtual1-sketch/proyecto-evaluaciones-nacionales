@@ -2907,7 +2907,7 @@ export const preguntasMock: Pregunta[] = [
 
     respuestaCorrecta: 'B',
 
-    puntaje: 1,
+    puntaje: 5,
 
     fuente: 'Ensayo 3 SIMCE Ciencias Naturales 6° Básico'
 

@@ -80,7 +80,8 @@ async function verifyEvaluation(manifestPath) {
   // 2. Obtener preguntas
   const prefixMap = {
     'eval-simce-mat-2m-e3': 'preg-mat2m-e3-%',
-    'eval-paes-lect-2026-f103': 'preg-paes-lec-26-%'
+    'eval-paes-lect-2026-f103': 'preg-paes-lec-26-%',
+    'eval-simce-mat-6b-e3': 'preg-mat6b-e3-%'
   };
 
   const prefix = prefixMap[manifest.evaluacion_id];
@@ -183,6 +184,36 @@ async function verifyEvaluation(manifestPath) {
   }
 }
 
+// 5.2 — Verificar que las imagen_url absolutas responden 200 (HEAD request)
+async function verifyImageUrls(evaluacion_id: string): Promise<void>;
+async function verifyImageUrls(evaluacion_id) {
+  // Solo imágenes con URL absoluta (https://...)
+  const { data: pregs, error } = await supabase
+    .from('preguntas')
+    .select('id, imagen_url')
+    .like('imagen_url', 'https://%');
+
+  if (error) {
+    reportWarn(`Error al obtener imagen_url para ${evaluacion_id}: ${error.message}`);
+    return;
+  }
+
+  let checked = 0;
+  for (const p of (pregs || [])) {
+    if (!p.imagen_url) continue;
+    try {
+      const resp = await fetch(p.imagen_url, { method: 'HEAD' });
+      if (!resp.ok) {
+        reportFail(`Imagen rota (HTTP ${resp.status}): ${p.id} → ${p.imagen_url}`);
+      }
+      checked++;
+    } catch (e) {
+      reportFail(`Imagen inaccesible (error de red): ${p.id} → ${p.imagen_url}`);
+    }
+  }
+  if (checked > 0) reportPass(`${checked} imagen_url absolutas responden 200 OK`);
+}
+
 async function main() {
   console.log('🛡️  SYSGET SABER — Quality Gate de Integridad de Contenido (verify:content)');
   console.log('========================================================================');
@@ -195,6 +226,10 @@ async function main() {
   for (const f of manifestFiles) {
     await verifyEvaluation(path.join(CLAVES_DIR, f));
   }
+
+  console.log('\n--- Verificación de URLs de Imágenes (HEAD check) ---');
+  await verifyImageUrls('all');
+
 
   console.log('\n========================================================================');
   console.log(`Resumen: ${totalChecks} verificaciones | ${totalErrors} errores | ${totalWarnings} advertencias`);

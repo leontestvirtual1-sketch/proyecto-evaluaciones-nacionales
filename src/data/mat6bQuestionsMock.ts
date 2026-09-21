@@ -41,7 +41,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "3 000 000", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -60,7 +60,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "600 000", es_correcta: false }
     ],
     respuestaCorrecta: 'B',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -79,7 +79,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "Puerto Montt", es_correcta: true }
     ],
     respuestaCorrecta: 'D',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -156,7 +156,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "4,60 kg", es_correcta: false }
     ],
     respuestaCorrecta: 'A',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -194,7 +194,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "2 2/3", es_correcta: false }
     ],
     respuestaCorrecta: 'A',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -214,7 +214,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "50%", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -233,7 +233,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "3 004 567 809", es_correcta: false }
     ],
     respuestaCorrecta: 'B',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -290,7 +290,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "600", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -328,7 +328,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "23", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -503,7 +503,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "(6, 3)", es_correcta: true }
     ],
     respuestaCorrecta: 'D',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -541,7 +541,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "Cuadrícula D", es_correcta: false }
     ],
     respuestaCorrecta: 'A',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -579,7 +579,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "Dos triángulos son congruentes si sus tres ángulos interiores son respectivamente iguales.", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 3,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -598,7 +598,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "35 000 m", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -657,7 +657,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "525", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -676,7 +676,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "El valor 5,8 se encuentra en el centro de las notas ordenadas de menor a mayor.", es_correcta: false }
     ],
     respuestaCorrecta: 'C',
-    puntaje: 3,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
   {
@@ -696,7 +696,7 @@ export const preguntasMatematica6BMock: Pregunta[] = [
       { letra: 'D', texto: "T", es_correcta: false }
     ],
     respuestaCorrecta: 'B',
-    puntaje: 1,
+    puntaje: 2,
     fuente: 'Ensayo 3 SIMCE Matemática 6° Básico'
   },
 ];

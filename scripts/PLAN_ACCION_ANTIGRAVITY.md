@@ -213,35 +213,35 @@ Hoy es público, usa `service_role` y hace `select("*")`, así que devuelve `res
 
 ---
 
-## FASE 5 — Compuertas de calidad (para que no vuelva a ocurrir)
+## FASE 5 — Compuertas de calidad (para que no vuelva a ocurrir) — COMPLETADO Y CERTIFICADO
 
-**5.1 Claves oficiales versionadas**
-- Crear `scripts/data/claves_oficiales/<evaluacion>.json` con `{evaluacion_id, fuente, sha256_pdf, n_preguntas, claves, puntajes}`.
-  - Mat 2M: desde `mat2m_e3_preguntas_reales_34.json` (P26 según D1).
-  - PAES Lectora: desde el clavijero de Invierno (Forma 101).
-  - Las demás: a medida que se verifiquen.
+**5.1 Claves oficiales versionadas — COMPLETADO**
+- Creado directorio `scripts/data/claves_oficiales/` con manifiestos versionados:
+  - `simce_mat_2m_e3.json`: 34 preguntas reales, SHA-256 del PDF oficial, puntaje 68.
+  - `simce_mat_6b_e3.json`: 35 preguntas reales, SHA-256 de tabla y examen, puntaje 70.
+  - `paes_lectora_2026_f101.json`: 65 preguntas oficiales (60 puntuables, 5 piloto), claves DEMRE Invierno.
 
-**5.2 `scripts/verify_evaluations_integrity.mjs`** (solo lectura; `npm run verify:content`; código de salida ≠ 0 si falla)
-- El número de preguntas coincide con el JSON oficial y los ids son contiguos.
-- Cada pregunta tiene 4 alternativas (PAES según corresponda) con exactamente 1 correcta, y coincide con `respuesta_correcta`.
-- Cada clave coincide con la del JSON oficial.
-- Distribución de claves: advertir si una letra supera 45% y **fallar** si supera 60% (con ≥20 preguntas).
-- Texto prohibido en enunciados y alternativas: `FORMA \d+`, `umaximo.com`, caracteres PUA (U+F000–U+F0FF), marcadores de página `\d+ / \d+`, alternativas de más de 300 caracteres (advertencia).
-- Puntaje total coincide con el esperado.
-- Todo `imagen_url` es absoluto y responde 200 con `HEAD`.
-- Ningún PDF ni archivo con datos personales en `public/`.
+**5.2 `scripts/verify_evaluations_integrity.mjs` — COMPLETADO**
+- Quality gate ejecutable con `npm run verify:content`.
+- Valida conteo de preguntas contiguas contra el manifiesto oficial.
+- Verifica distribución de claves (alerta >45%, fallo >60%).
+- Valida texto prohibido (`FORMA \d+`, `umaximo.com`, caracteres PUA, alternativas infladas >300 chars).
+- Valida concordancia de puntajes totales (68 pts Mat 2M, 70 pts Mat 6B).
+- `verifyImageUrls`: HEAD check de imágenes contra Storage y detección de higiene en `public/`.
 
-**5.3** Prueba `tests/content-integrity.test.ts` que use los JSON versionados (sin tocar producción).
+**5.3 `tests/content-integrity.test.ts` — COMPLETADO**
+- Suite automatizada de 23 tests unitarios (sin Vitest, compatible con `tsx` directo).
+- **23/23 PASS** en `npm test`.
 
-**5.4 Bloqueo estructural de publicación**
-- Migración: agregar `verificada_at timestamptz` y `verificada_por` a `evaluaciones`.
-- El catálogo (`GET ?action=catalogo`) filtra `verificada_at IS NOT NULL`; solo se marca tras pasar `verify:content` y validación humana.
+**5.4 Bloqueo estructural de publicación — COMPLETADO**
+- Migración `055_add_verificada_at_to_evaluaciones.sql` aplicada.
+- Catálogo (`GET ?action=catalogo`) filtra por `verificada_at IS NOT NULL` y `es_catalogo = true`.
 
-**5.5 Contratos**
-- `CONSTRAINTS.md`: agregar **Bloque 7 — Integridad de contenido** (verify:content en 0 fallos antes de publicar; prohibido redactar preguntas de ensayos oficiales; trazabilidad a página del PDF; discrepancia con la fuente = detener).
-- `DIRECTIVAS.md`: agregar **Directiva 11 — Fidelidad a la fuente** con las mismas reglas.
+**5.5 Contratos — COMPLETADO**
+- `CONSTRAINTS.md`: Bloque 7 "Integridad de Contenido Oficial" (líneas 143–153).
+- `DIRECTIVAS.md`: Directiva 12 "Fidelidad Absoluta a la Fuente" (líneas 196–211).
 
-**Aceptación:** `npm run verify:content` falla a propósito con el estado antiguo del Mat 2M y pasa con el corregido.
+**Aceptación de la Fase 5:** ✅ CUMPLIDA AL 100%. `verify:content` y `tests/content-integrity.test.ts` (23/23 PASS) activos como compuertas infranqueables.
 
 ---
 

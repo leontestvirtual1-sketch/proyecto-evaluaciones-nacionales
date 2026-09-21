@@ -113,47 +113,48 @@ describe('API Grade-Evaluation: Verificación de Handler Real', () => {
     }
   });
 
-  test('Valida contrato de esquema: columnas reales DB (prueba_id, respuestas_json, estado)', () => {
-    // Verificación directa de los identificadores de columnas que el handler arma para la DB
+  test('Valida contrato de esquema: columnas reales DB (prueba_id, respuestas, puntaje_total, estado)', () => {
     const mockSubmission = {
-      pruebaId: 'eval-simce-mat-4b',
-      alumnoId: 'usr-alumno-01',
+      pruebaId: 'eval-simce-mat-6b-e3',
+      alumnoId: 'e14d8a54-fe01-4a6b-a22d-8f85c288465a',
       alumnoNombre: 'Estudiante Test',
       alumnoRut: '22.333.444-5',
       respuestas: { 'q-1': 'A', 'q-2': 'B' }
     };
 
-    // Estructura esperada por la tabla public.rendiciones de Supabase
+    // Estructura real de la tabla public.rendiciones de Supabase
     const requiredDbColumns = [
       'id',
       'prueba_id',      // NO evaluacion_id
       'alumno_id',
-      'alumno_nombre',
-      'fecha_rendicion',
-      'puntaje_obtenido',
-      'puntaje_maximo',
+      'respuestas',     // JSONB con metadata y respuestasDetalladas
+      'puntaje_total',  // INTEGER
+      'puntaje_maximo', // INTEGER
       'porcentaje_logro',
-      'puntaje_escala_nacional',
-      'respuestas_json', // NO respuestas
-      'estado'          // 'enviada' | 'corregida' | 'en_progreso'
+      'estado',         // 'en_progreso' | 'completada' | 'abandonada'
+      'inicio_at',
+      'fin_at'
     ];
 
-    const forbiddenLegacyColumns = ['evaluacion_id', 'respuestas'];
+    const forbiddenLegacyColumns = ['evaluacion_id'];
 
-    // El payload generado por api/grade-evaluation.ts usa prueba_id y respuestas_json:
     const mockProcessedRendicion: Record<string, unknown> = {
-      id: `rend-${Date.now()}`,
+      id: crypto.randomUUID(),
       prueba_id: mockSubmission.pruebaId,
       alumno_id: mockSubmission.alumnoId,
-      alumno_nombre: mockSubmission.alumnoNombre,
-      alumno_rut: mockSubmission.alumnoRut,
-      fecha_rendicion: new Date().toISOString(),
-      puntaje_obtenido: 2,
+      respuestas: {
+        alumnoNombre: mockSubmission.alumnoNombre,
+        alumnoRut: mockSubmission.alumnoRut,
+        puntajeEscalaNacional: 350,
+        tipoEscala: 'Estimación Nacional',
+        respuestasDetalladas: [{ preguntaId: 'q-1', respuestaDada: 'A', esCorrecta: true }]
+      },
+      puntaje_total: 2,
       puntaje_maximo: 2,
       porcentaje_logro: 100,
-      puntaje_escala_nacional: 350,
-      respuestas_json: [{ preguntaId: 'q-1', respuestaDada: 'A', esCorrecta: true }],
-      estado: 'corregida'
+      estado: 'completada',
+      inicio_at: new Date().toISOString(),
+      fin_at: new Date().toISOString()
     };
 
     requiredDbColumns.forEach(col => {
