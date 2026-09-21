@@ -75,6 +75,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
 
     // Fallback local: Estrictamente restringido a modo demostración (Directivas 1 y 2 / Fase 3 Auditoría)
     // En producción nunca calificar localmente para no falsear el resultado
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const esDemo = Boolean(alumno.id?.startsWith('demo-') || (prueba as any).es_demo);
     if (!esDemo) {
       setIsSubmitting(false);

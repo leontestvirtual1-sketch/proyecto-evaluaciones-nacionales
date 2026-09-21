@@ -13,6 +13,7 @@
  * Uso mínimo de fixtures: en staging crear 2 docentes (A y B) y 1 curso, 1 evaluación
  * y 1 pregunta del colegio B (ver PLAN_FASE0, paso 0.5).
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from '@supabase/supabase-js';
 
 const env = process.env;

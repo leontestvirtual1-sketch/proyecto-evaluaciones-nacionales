@@ -8,6 +8,7 @@
  * 3. Las llamadas a la API de catálogo sin rol admin no expongan claves de respuesta.
  * 4. Los identificadores de rendición cumplan con el formato criptográfico UUID v4.
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Pregunta, Prueba } from '../src/types';
 

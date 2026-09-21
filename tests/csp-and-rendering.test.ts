@@ -13,6 +13,7 @@ test('--- Test Suite: Verificación de CSP y Renderizado Seguro (Fase 3.5) ---',
     const config = JSON.parse(content);
 
     const headersList = config.headers?.[0]?.headers || [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cspHeader = headersList.find((h: any) => h.key === 'Content-Security-Policy');
 
     assert.ok(cspHeader, 'Content-Security-Policy debe estar presente en headers');
@@ -29,7 +30,7 @@ test('--- Test Suite: Verificación de CSP y Renderizado Seguro (Fase 3.5) ---',
   await t.test('KaTeX con trust: false desactiva comandos con efectos colaterales', () => {
     // Probar con un comando peligroso (\href con javascript:)
     const dangerousLatex = '\\href{javascript:alert(1)}{Hacked}';
-    let rendered = '';
+    let rendered: string;
     try {
       rendered = katex.renderToString(dangerousLatex, {
         throwOnError: false,
