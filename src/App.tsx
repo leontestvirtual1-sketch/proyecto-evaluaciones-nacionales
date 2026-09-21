@@ -35,6 +35,8 @@ import { Prueba, RendicionPrueba, Pregunta, ReporteTabuladoCurso, Asignatura } f
 import { SandboxBanner } from './components/SandboxBanner';
 import { useBancoPreguntas } from './hooks/useBancoPreguntas';
 import { useEvaluaciones } from './hooks/useEvaluaciones';
+import { CuentaCaducadaBloqueo } from './components/CuentaCaducadaBloqueo';
+import { isUserExpiredOrBlocked } from './utils/userAccess';
 
 function MainAppContent({
   isSandboxMode,
@@ -221,6 +223,20 @@ function MainAppContent({
       return <RegisterPage onGoToLogin={() => setAuthView('login')} />;
     }
     return <LoginPage onGoToRegister={() => setAuthView('register')} />;
+  }
+
+  // Verificación estricta de cuenta caducada (0 días restantes de prueba) o desactivada
+  const accessCheck = isUserExpiredOrBlocked(user);
+  if (accessCheck.isBlocked && !user.esSuperAdmin && (user.rol as string) !== 'superadmin') {
+    return (
+      <CuentaCaducadaBloqueo
+        user={user}
+        reason={accessCheck.reason}
+        title={accessCheck.title}
+        message={accessCheck.message}
+        onLogout={logout}
+      />
+    );
   }
 
   const handleToggleDarkMode = () => {

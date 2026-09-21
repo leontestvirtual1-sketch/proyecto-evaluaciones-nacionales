@@ -622,15 +622,61 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json({ success: true });
       }
 
-      // ── ACCIÓN: SUSPENDER POR USER ID ──
-      if (action === 'suspend') {
-        const { userId, estado } = body;
+      // ── ACCIÓN: SUSPENDER O ACTUALIZAR ESTADO DE USUARIO (ACTIVAR / DESACTIVAR) ──
+      if (action === 'suspend' || action === 'update-status') {
+        const { userId, estado, diasRestantesTrial, plan } = body;
         if (!userId) return res.status(400).json({ error: 'userId requerido' });
 
-        await sbAdmin.from('perfiles').update({
-          activo: false,
-          estado: estado || 'suspendido'
-        }).eq('id', userId);
+        const nuevoEstado = estado || 'suspendido';
+        const isActivo = nuevoEstado === 'activo';
+        const updateData: Record<string, unknown> = {
+          activo: isActivo,
+          estado: nuevoEstado
+        };
+        if (diasRestantesTrial !== undefined) {
+          updateData.dias_restantes_trial = diasRestantesTrial;
+        } else if (isActivo) {
+          updateData.dias_restantes_trial = 30;
+        }
+        if (plan) {
+          updateData.plan = plan;
+        }
+
+        await sbAdmin.from('perfiles').update(updateData).eq('id', userId);
+        return res.status(200).json({ success: true });
+      }
+
+      // ── ACCIÓN: GESTIÓN DE COLEGIO COMPLETO (ACTIVAR / DESACTIVAR EN BLOQUE) ──
+      if (action === 'toggle-colegio') {
+        const { rbd, establecimiento, estado, plan } = body;
+        if (!rbd && !establecimiento) {
+          return res.status(400).json({ error: 'RBD o establecimiento requerido' });
+        }
+
+        const nuevoEstado = estado || 'suspendido';
+        const isActivo = nuevoEstado === 'activo';
+        const updateData: Record<string, unknown> = {
+          activo: isActivo,
+          estado: nuevoEstado
+        };
+        if (isActivo) {
+          updateData.dias_restantes_trial = 30;
+        }
+        if (plan) {
+          updateData.plan = plan;
+        }
+
+        let q = sbAdmin.from('perfiles').update(updateData);
+        if (rbd) {
+          q = q.eq('rbd', rbd);
+        } else if (establecimiento) {
+          q = q.eq('establecimiento', establecimiento);
+        }
+        const { error: batchErr } = await q;
+        if (batchErr) {
+          console.error('[toggle-colegio] Error:', batchErr);
+          return res.status(500).json({ error: batchErr.message });
+        }
 
         return res.status(200).json({ success: true });
       }

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { UserProfile } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
+import { isUserExpiredOrBlocked } from '../utils/userAccess';
 
 export interface CursoItem {
   id: string;
@@ -167,6 +168,16 @@ export function useCursos({ currentUser, isSandboxMode = false }: UseCursosProps
   // Guardar curso (Crear o Editar)
   const saveCurso = useCallback(
     async (c: CursoItem) => {
+      // Bloqueo estricto: no permitir crear ni editar cursos si la cuenta expiró o está desactivada
+      if (currentUser) {
+        const check = isUserExpiredOrBlocked(currentUser);
+        if (check.isBlocked && !currentUser.esSuperAdmin && (currentUser.rol as string) !== 'superadmin') {
+          console.warn('[useCursos] Acción bloqueada: cuenta caducada o inactiva.');
+          alert('Tu período de prueba ha expirado o tu cuenta se encuentra desactivada. No es posible crear ni modificar cursos.');
+          return;
+        }
+      }
+
       setCursos(prev => {
         const exists = prev.find(p => p.id === c.id);
         return exists ? prev.map(p => (p.id === c.id ? c : p)) : [c, ...prev];

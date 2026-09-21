@@ -22,12 +22,27 @@ import {
   RefreshCw,
   Smartphone,
   Monitor,
-  BookMarked
+  BookMarked,
+  Power,
+  PowerOff,
+  AlertTriangle
 } from 'lucide-react';
 import { AdminCatalogoPanel } from '../components/AdminCatalogoPanel';
+import { AdminColegiosPanel } from '../components/AdminColegiosPanel';
+import { calcularDiasRestantes } from '../utils/userAccess';
 
 export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isSandboxMode = false }) => {
-  const { user, usuarios, changeUserPlan, setUserPassword, loadUsuariosReales } = useAuth();
+  const {
+    user,
+    usuarios,
+    changeUserPlan,
+    setUserPassword,
+    loadUsuariosReales,
+    approveUser,
+    rejectOrSuspendUser,
+    setUserEstado,
+    setColegioEstado
+  } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [estadoFilter, setEstadoFilter] = useState<'todos' | UserEstado>('todos');
   const [successToast, setSuccessToast] = useState<string | null>(null);
@@ -124,7 +139,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
 
   // Directiva 2: isProductionAdmin determinado por columna DB es_super_admin — sin email hardcodeado.
   const isProductionAdmin = !isSandboxMode && user?.esSuperAdmin;
-  const [entornoTab, setEntornoTab] = useState<'produccion' | 'catalogo' | 'demo'>('produccion');
+  const [entornoTab, setEntornoTab] = useState<'produccion' | 'colegios' | 'catalogo' | 'demo'>('produccion');
 
   // Clasificador estricto de usuario Demo vs Producción
   const isUserDemo = (u: UserProfile) => {
@@ -162,18 +177,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
   const institucional = baseUsersList.filter(u => u.estado === 'activo' && (u.plan === 'institucional' || u.plan === 'pro')).length;
 
   const calcularDiasRestantesTrial = (u: UserProfile): number => {
-    if (u.fechaRegistro) {
-      const regDate = new Date(u.fechaRegistro);
-      if (!isNaN(regDate.getTime())) {
-        const diffMs = Date.now() - regDate.getTime();
-        const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
-        return Math.max(0, Math.min(30, 30 - diffDays));
-      }
-    }
-    if (u.diasRestantesTrial !== undefined) {
-      return Math.max(0, Math.min(30, u.diasRestantesTrial));
-    }
-    return 30;
+    return calcularDiasRestantes(u);
   };
 
   return (
@@ -313,7 +317,19 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                 : 'bg-slate-950/60 text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
-            <span>🏢 Cuentas de Producción Real ({prodUsersList.length})</span>
+            <span>🏢 Cuentas ({prodUsersList.length})</span>
+          </button>
+
+          <button
+            onClick={() => setEntornoTab('colegios')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              entornoTab === 'colegios'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-500/20'
+                : 'bg-slate-950/60 text-slate-400 hover:text-white border border-slate-800'
+            }`}
+          >
+            <Building2 className="w-3.5 h-3.5" />
+            <span>🏫 Colegios & Establecimientos</span>
           </button>
 
           <button
@@ -325,7 +341,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
             }`}
           >
             <BookMarked className="w-3.5 h-3.5" />
-            <span>📚 Catálogo de Evaluaciones & Solicitudes</span>
+            <span>📚 Catálogo de Evaluaciones</span>
           </button>
 
           <button
@@ -345,6 +361,16 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
         <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">
           <AdminCatalogoPanel onToast={showToast} />
         </div>
+      ) : entornoTab === 'colegios' ? (
+        <AdminColegiosPanel
+          usuarios={prodUsersList}
+          onToggleColegio={setColegioEstado}
+          onViewColegioUsers={(colegioNombre) => {
+            setSearchTerm(colegioNombre);
+            setEntornoTab('produccion');
+          }}
+          onToast={showToast}
+        />
       ) : (
         <>
 
@@ -511,24 +537,27 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                         {u.plan === 'trial' && (() => {
                           const diasFinal = calcularDiasRestantesTrial(u);
                           const pct = Math.round((diasFinal / 30) * 100);
+                          const isCaducado = diasFinal <= 0;
                           return (
                             <div className="flex flex-col gap-1 mt-1">
                               <span className={`text-[10px] font-bold px-2 py-0.5 rounded border inline-flex items-center gap-1 w-fit ${
-                                diasFinal <= 5 
-                                  ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' 
-                                  : diasFinal <= 15
-                                    ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
-                                    : 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
+                                isCaducado
+                                  ? 'bg-rose-500/20 text-rose-300 border-rose-500/40 font-black'
+                                  : diasFinal <= 5 
+                                    ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' 
+                                    : diasFinal <= 15
+                                      ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                                      : 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
                               }`}>
                                 <Clock className="w-2.5 h-2.5" />
-                                {diasFinal} días restantes ({pct}%)
+                                {isCaducado ? 'CADUCADA (0 días)' : `${diasFinal} días restantes (${pct}%)`}
                               </span>
                               <div className="w-28 bg-slate-800 rounded-full h-1.5 overflow-hidden">
                                 <div
                                   className={`h-full rounded-full transition-all ${
-                                    diasFinal <= 5 ? 'bg-rose-500' : diasFinal <= 15 ? 'bg-amber-500' : 'bg-indigo-500'
+                                    isCaducado ? 'bg-rose-500' : diasFinal <= 5 ? 'bg-rose-500' : diasFinal <= 15 ? 'bg-amber-500' : 'bg-indigo-500'
                                   }`}
-                                  style={{ width: `${pct}%` }}
+                                  style={{ width: `${Math.max(4, pct)}%` }}
                                 />
                               </div>
                             </div>
@@ -566,14 +595,88 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                       {u.estado === 'suspendido' && (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-300 border border-rose-500/30">
                           <XCircle className="w-3 h-3" />
-                          Suspendido
+                          Desactivado
+                        </span>
+                      )}
+                      {u.estado === 'rechazado' && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-800 text-slate-400 border border-slate-700">
+                          <XCircle className="w-3 h-3" />
+                          Rechazado
                         </span>
                       )}
                     </td>
 
                     {/* Acciones */}
                     <td className="py-3.5 px-4 text-right">
-                      <div className="flex items-center justify-end gap-1.5">
+                      <div className="flex items-center justify-end gap-1.5 flex-wrap">
+                        {/* Botón Desactivar / Activar Usuario */}
+                        {u.estado === 'activo' && (
+                          <button
+                            onClick={async () => {
+                              await setUserEstado(u.id, 'suspendido');
+                              showToast(`🚫 Cuenta de ${u.nombre} ${u.apellido} desactivada.`);
+                            }}
+                            title="Desactivar cuenta (bloquear acceso a la plataforma)"
+                            className="p-1.5 bg-rose-500/10 hover:bg-rose-600 text-rose-300 hover:text-white rounded-lg border border-rose-500/30 transition-all flex items-center gap-1"
+                          >
+                            <PowerOff className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+
+                        {u.estado === 'suspendido' && (
+                          <button
+                            onClick={async () => {
+                              await setUserEstado(u.id, 'activo', 30);
+                              showToast(`✅ Cuenta de ${u.nombre} ${u.apellido} reactivada con 30 días.`);
+                            }}
+                            title="Activar cuenta (reactivar acceso con 30 días de prueba)"
+                            className="p-1.5 bg-emerald-500/10 hover:bg-emerald-600 text-emerald-300 hover:text-white rounded-lg border border-emerald-500/30 transition-all flex items-center gap-1"
+                          >
+                            <Power className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+
+                        {u.estado === 'pendiente_aprobacion' && (
+                          <>
+                            <button
+                              onClick={async () => {
+                                await approveUser(u.id, u.plan || 'trial');
+                                showToast(`✅ Solicitud de ${u.nombre} aprobada.`);
+                              }}
+                              title="Aprobar solicitud de acceso"
+                              className="p-1.5 bg-emerald-500/10 hover:bg-emerald-600 text-emerald-300 hover:text-white rounded-lg border border-emerald-500/30 transition-all"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              onClick={async () => {
+                                await rejectOrSuspendUser(u.id, 'rechazado');
+                                showToast(`❌ Solicitud de ${u.nombre} rechazada.`);
+                              }}
+                              title="Rechazar solicitud"
+                              className="p-1.5 bg-rose-500/10 hover:bg-rose-600 text-rose-300 hover:text-white rounded-lg border border-rose-500/30 transition-all"
+                            >
+                              <XCircle className="w-3.5 h-3.5" />
+                            </button>
+                          </>
+                        )}
+
+                        {/* Botón Renovar +30 días si el trial caducó */}
+                        {u.plan === 'trial' && calcularDiasRestantesTrial(u) <= 0 && u.estado === 'activo' && (
+                          <button
+                            onClick={async () => {
+                              await setUserEstado(u.id, 'activo', 30);
+                              showToast(`🎉 Se han renovado 30 días de prueba para ${u.nombre}.`);
+                            }}
+                            title="Renovar período de prueba (+30 días)"
+                            className="px-2 py-1 bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 font-black rounded-lg border border-amber-500/40 text-[10px] flex items-center gap-1 transition-all"
+                          >
+                            <Clock className="w-3 h-3" />
+                            +30d
+                          </button>
+                        )}
+
+                        {/* Password Modal */}
                         <button
                           onClick={() => {
                             setSelectedUserForPassword(u);

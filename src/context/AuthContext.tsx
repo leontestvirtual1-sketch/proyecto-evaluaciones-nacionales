@@ -11,6 +11,7 @@ import {
 } from '../data/mockData';
 import { supabase } from '../lib/supabaseClient';
 import { APP_CONFIG } from '../config/appConfig';
+import { calcularDiasRestantes } from '../utils/userAccess';
 
 export interface RegisterResult {
   error: string | null;
@@ -40,6 +41,8 @@ interface AuthContextType {
   approveUser: (userId: string, nuevoPlan?: UserPlan) => Promise<{ error: string | null }>;
   approveUserByToken: (token: string) => Promise<TokenApprovalResult>;
   rejectOrSuspendUser: (userId: string, nuevoEstado: 'suspendido' | 'rechazado') => Promise<{ error: string | null }>;
+  setUserEstado: (userId: string, nuevoEstado: UserEstado, diasTrial?: number) => Promise<{ error: string | null }>;
+  setColegioEstado: (colegioFilter: { rbd?: string; establecimiento?: string }, nuevoEstado: UserEstado, nuevoPlan?: UserPlan) => Promise<{ error: string | null }>;
   changeUserPlan: (userId: string, nuevoPlan: UserPlan) => Promise<{ error: string | null }>;
   setUserPassword: (userId: string, email: string, newPassword: string) => Promise<{ error: string | null }>;
   loadDocentesReales: () => Promise<void>;
@@ -132,17 +135,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const mapRow = (p: Record<string, unknown>): UserProfile => {
         const createdAt = (p.created_at || p.creado_en || p.fecha_registro) as string | undefined;
-        let diasRestantes = 30;
-        if (createdAt) {
-          const createdDate = new Date(createdAt);
-          if (!isNaN(createdDate.getTime())) {
-            const diffMs = Date.now() - createdDate.getTime();
-            const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
-            diasRestantes = Math.max(0, Math.min(30, 30 - diffDays));
-          }
-        } else if (p.dias_restantes_trial !== undefined) {
-          diasRestantes = Math.max(0, Math.min(30, p.dias_restantes_trial as number));
-        }
+        const diasRestantes = calcularDiasRestantes(p as any);
         const fechaRegStr = createdAt
           ? new Date(createdAt).toISOString().replace('T', ' ').slice(0, 16)
           : undefined;
@@ -222,8 +215,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
           if (profile) {
             const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
-            // Restaurar sesión solo si la cuenta está activa o es admin
-            if (estado === 'activo' || profile.rol === 'admin' || profile.rol === 'superadmin') {
+            const diasRestantes = calcularDiasRestantes(profile);
+            // Restaurar sesión para que la app evalúe si puede navegar o debe mostrar CuentaCaducadaBloqueo
+            if (estado === 'activo' || estado === 'suspendido' || profile.rol === 'admin' || profile.rol === 'superadmin') {
               const resolvedRole: UserRole = (profile.rol as UserRole) || 'profesor';
               const restoredUser: UserProfile = {
                 id: profile.id,
@@ -241,7 +235,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 cargo: profile.cargo || undefined,
                 estado: estado,
                 plan: (profile.plan as UserPlan) || 'trial',
-                diasRestantesTrial: profile.dias_restantes_trial ?? 30,
+                diasRestantesTrial: diasRestantes,
                 logoUrl: profile.logo_url || undefined,
                 // Directiva 2 — sin inferencia por email: solo columnas DB
                 esSuperAdmin: Boolean(profile.es_super_admin || profile.rol === 'superadmin'),
@@ -293,6 +287,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         if (profile) {
           const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
+          const plan: UserPlan = (profile.plan as UserPlan) || 'trial';
+          const diasRestantes = calcularDiasRestantes(profile);
+          const esSuperAdmin = Boolean(profile.es_super_admin || profile.rol === 'superadmin');
 
           if (estado === 'pendiente_aprobacion') {
             await supabase.auth.signOut();
@@ -302,11 +299,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
           if (estado === 'suspendido') {
             await supabase.auth.signOut();
-            return { error: 'Esta cuenta ha sido suspendida temporalmente. Contacta a soporte@sysget.cl para regularizar tu plan.' };
+            return { error: 'Esta cuenta o colegio ha sido desactivada temporalmente por el Administrador. Contacta a soporte@sysget.cl para reactivar tu acceso.' };
           }
           if (estado === 'rechazado') {
             await supabase.auth.signOut();
             return { error: 'Tu solicitud de acceso no fue aprobada por el administrador.' };
+          }
+
+          // Bloqueo estricto de acceso si el período Trial caducó (0 días restantes)
+          if (!esSuperAdmin && plan === 'trial' && diasRestantes <= 0) {
+            await supabase.auth.signOut();
+            return {
+              error: 'Tu período de prueba institucional de 30 días ha expirado (0 días restantes). El acceso a la plataforma está bloqueado. Contacta a soporte@sysget.cl para activar tu suscripción institucional.'
+            };
           }
 
           setAdminBaseProfile(null);
@@ -326,11 +331,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             asignaturaNombre: profile.asignatura_nombre || undefined,
             cargo: profile.cargo || undefined,
             estado: estado,
-            plan: (profile.plan as UserPlan) || 'trial',
-            diasRestantesTrial: profile.dias_restantes_trial ?? 30,
+            plan: plan,
+            diasRestantesTrial: diasRestantes,
             logoUrl: profile.logo_url || undefined,
             // Directiva 2 — sin inferencia por email: solo columnas DB
-            esSuperAdmin: Boolean(profile.es_super_admin || profile.rol === 'superadmin'),
+            esSuperAdmin: esSuperAdmin,
             esDemo: Boolean(profile.es_demo)
           };
           setUser(loggedUser);
@@ -517,6 +522,129 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { error: null };
   }, [authenticatedFetch, fetchUsers]);
 
+  /** Activa o desactiva (suspende) un usuario individualmente */
+  const setUserEstado = useCallback(async (userId: string, nuevoEstado: UserEstado, diasTrial?: number) => {
+    try {
+      await authenticatedFetch('/api/users?action=update-status', {
+        method: 'POST',
+        body: JSON.stringify({ userId, estado: nuevoEstado, diasRestantesTrial: diasTrial })
+      });
+      if (isOnlineSupabase) {
+        const updateData: Record<string, unknown> = {
+          estado: nuevoEstado,
+          activo: nuevoEstado === 'activo'
+        };
+        if (diasTrial !== undefined) {
+          updateData.dias_restantes_trial = diasTrial;
+        } else if (nuevoEstado === 'activo') {
+          updateData.dias_restantes_trial = 30;
+        }
+        await supabase.from('perfiles').update(updateData).eq('id', userId);
+      }
+    } catch (e) {
+      console.warn('[setUserEstado] Error actualizando estado:', e);
+    }
+
+    setUsuarios(prev => prev.map(u => {
+      if (u.id === userId) {
+        return {
+          ...u,
+          estado: nuevoEstado,
+          ...(diasTrial !== undefined ? { diasRestantesTrial: diasTrial } : nuevoEstado === 'activo' ? { diasRestantesTrial: 30 } : {})
+        };
+      }
+      return u;
+    }));
+
+    setUser(prev => {
+      if (prev && prev.id === userId) {
+        return {
+          ...prev,
+          estado: nuevoEstado,
+          ...(diasTrial !== undefined ? { diasRestantesTrial: diasTrial } : nuevoEstado === 'activo' ? { diasRestantesTrial: 30 } : {})
+        };
+      }
+      return prev;
+    });
+
+    return { error: null };
+  }, [authenticatedFetch, isOnlineSupabase]);
+
+  /** Activa o desactiva todas las cuentas de un colegio completo en bloque */
+  const setColegioEstado = useCallback(async (
+    colegioFilter: { rbd?: string; establecimiento?: string },
+    nuevoEstado: UserEstado,
+    nuevoPlan?: UserPlan
+  ) => {
+    try {
+      await authenticatedFetch('/api/users?action=toggle-colegio', {
+        method: 'POST',
+        body: JSON.stringify({
+          rbd: colegioFilter.rbd,
+          establecimiento: colegioFilter.establecimiento,
+          estado: nuevoEstado,
+          plan: nuevoPlan
+        })
+      });
+
+      if (isOnlineSupabase) {
+        const updateData: Record<string, unknown> = {
+          estado: nuevoEstado,
+          activo: nuevoEstado === 'activo'
+        };
+        if (nuevoEstado === 'activo') {
+          updateData.dias_restantes_trial = 30;
+        }
+        if (nuevoPlan) {
+          updateData.plan = nuevoPlan;
+        }
+        let q = supabase.from('perfiles').update(updateData);
+        if (colegioFilter.rbd) {
+          q = q.eq('rbd', colegioFilter.rbd);
+        } else if (colegioFilter.establecimiento) {
+          q = q.eq('establecimiento', colegioFilter.establecimiento);
+        }
+        await q;
+      }
+    } catch (e) {
+      console.warn('[setColegioEstado] Error actualizando estado de colegio:', e);
+    }
+
+    // Actualizar en el estado local de todos los usuarios del colegio
+    setUsuarios(prev => prev.map(u => {
+      const matchRbd = colegioFilter.rbd && u.rbd && u.rbd === colegioFilter.rbd;
+      const matchName = colegioFilter.establecimiento && u.establecimiento.toLowerCase().trim() === colegioFilter.establecimiento.toLowerCase().trim();
+      if (matchRbd || matchName) {
+        return {
+          ...u,
+          estado: nuevoEstado,
+          ...(nuevoPlan ? { plan: nuevoPlan } : {}),
+          ...(nuevoEstado === 'activo' ? { diasRestantesTrial: 30 } : {})
+        };
+      }
+      return u;
+    }));
+
+    // Actualizar usuario en sesión si pertenece al colegio afectado
+    setUser(prev => {
+      if (prev) {
+        const matchRbd = colegioFilter.rbd && prev.rbd && prev.rbd === colegioFilter.rbd;
+        const matchName = colegioFilter.establecimiento && prev.establecimiento.toLowerCase().trim() === colegioFilter.establecimiento.toLowerCase().trim();
+        if (matchRbd || matchName) {
+          return {
+            ...prev,
+            estado: nuevoEstado,
+            ...(nuevoPlan ? { plan: nuevoPlan } : {}),
+            ...(nuevoEstado === 'activo' ? { diasRestantesTrial: 30 } : {})
+          };
+        }
+      }
+      return prev;
+    });
+
+    return { error: null };
+  }, [authenticatedFetch, isOnlineSupabase]);
+
   const changeUserPlan = useCallback(async (userId: string, nuevoPlan: UserPlan) => {
     try {
       if (isOnlineSupabase) {
@@ -663,6 +791,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       approveUser,
       approveUserByToken,
       rejectOrSuspendUser,
+      setUserEstado,
+      setColegioEstado,
       changeUserPlan,
       setUserPassword,
       loadDocentesReales,
