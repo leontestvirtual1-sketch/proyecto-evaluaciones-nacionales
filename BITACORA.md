@@ -2,6 +2,53 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Consola Administrativa Centralizada: Visualización, Filtros y Creación de Cuentas Directivas (Director, Jefes UTP y Docentes)
+
+- **Problema / Requerimiento**:
+  1. **Visualización de roles directivos**: Como Super Admin en el panel de `Gestión de Usuarios`, las cuentas de Director General y Jefes de UTP (ej. `director@premil.cl`, `utp.ciencias@premil.cl`) se mostraban genéricamente con la etiqueta `Profesor • Sin asignar`, debido a que en Postgres el constraint enum de `public.perfiles.rol` solo admite (`'profesor'`, `'alumno'`, `'admin'`). No existía distinción visual de sus cargos directivos ni áreas asignadas.
+  2. **Consola unificada de creación**: Permitir al Admin registrar nuevos directivos y coordinadores académicos (ej. Jefe de UTP Lenguaje, Jefe de UTP Matemática, Director General) directamente desde la consola administrativa de usuarios, sin necesidad de ejecutar scripts manuales en terminal, asociándolos a su colegio, especialidad, contraseña inicial y plan institucional.
+  3. **Filtros rápidos por rol**: Facilitar la búsqueda y segmentación de directivos, UTPs y docentes con contadores dinámicos y búsqueda enriquecida por cargo y especialidad.
+
+- **Archivos y Solución Técnica**:
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - GET `/api/users`: Resuelve dinámicamente el rol `director` o `utp` a partir del campo `cargo` o `rol` del perfil.
+    - POST `/api/users?action=admin-create`: Mapea el rol en `public.perfiles` a `'profesor'` para cumplir el constraint de Postgres, persistiendo `cargo` (ej. "Director General", "Jefe de UTP Lenguaje") y asignando plan `institucional` por defecto.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx):
+    - Incorporada la función `createUsuarioDirecto` al contexto autenticado con token Bearer JWT de administrador para aprovisionamiento seguro de cuentas.
+  - [`src/pages/GestionUsuariosPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/GestionUsuariosPage.tsx):
+    - **Visualizador con insignias enriquecidas**: Muestra badges oficiales: 👑 `Director(a)` (violeta), 📋 `Jefe(a) UTP` (cyan/esmeralda), 🎓 `Docente` (azul) y 🛡️ `Super Admin` (ámbar), acompañados de su cargo específico.
+    - **Barra de filtro por rol**: Selector rápido con contadores dinámicos: `Todos`, `👑 Directores`, `📋 Jefes UTP`, `🎓 Docentes` y `🛡️ Admins`.
+    - **Búsqueda extendida**: Permite buscar por cargo (ej. "UTP", "Director"), asignatura ("Lenguaje", "Matemática"), colegio o RUT.
+    - **Modal de Creación "➕ Nuevo Usuario / Directivo"**: Formulario interactivo con selección de perfil directivo, asignación de especialidad curricular, vinculación a colegio oficial (RBD), asignación de contraseña inicial y activación instantánea en Supabase Auth y base de datos.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit`: **0 errores de compilación TypeScript**.
+  - `npm run build`: **✓ Built exitoso en 17.96s (2269 módulos transformados)**.
+  - Cuentas de producción activas verificadas en Supabase (`director@premil.cl`, `utp.ciencias@premil.cl`).
+
+### [2026-09-21] Arquitectura Comercial Multi-Tenant: Cuadro de Mando del Director, Panel Jefe UTP y Registro Dual B2B/B2C
+
+- **Problema / Requerimiento**:
+  1. **Comercialización Dual de Sysget Saber**: Soportar dos modelos de negocio sin alterar la funcionalidad existente ni romper el aislamiento:
+     - **B2B (Colegios / Sostenedores)**: Perfiles de Director (cuadro de mando ejecutivo integral con seguimiento de aula, SIMCE y PAES) y Jefe UTP (supervisión pedagógica acotada a los departamentos asignados a su jefatura: docentes, cobertura y alertas tempranas).
+     - **B2C (Profesores Independientes / Particulares)**: Permite que docentes y tutores contraten la plataforma de forma autónoma sin pertenecer a un colegio ni requerir código RBD, manteniendo banco y evaluaciones privadas.
+     - **Super Admin**: Supervisión transversal e intacta sobre todos los colegios y perfiles.
+  2. **Zero Regression**: Mantener intacto el aislamiento y comportamiento actual para Admin, Profesores de Asignatura (Matemática, Lenguaje, Ciencias) y Alumnos.
+
+- **Archivos y Solución Técnica**:
+  - [`src/types/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts): Expandido `UserRole` (`'director' | 'utp'`), creado `TipoCuenta = 'colegio' | 'profesor_independiente'`, y extendidos `UserProfile` (`tipoCuenta`, `departamentosSupervisados`) y `Prueba` (`tipoEvaluacion?: 'aula' | 'simce' | 'paes'`).
+  - [`src/components/DirectorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/DirectorDashboard.tsx) (Nuevo): Cuadro de mando ejecutivo institucional con membrete, 4 KPIs estratégicos y 4 pestañas especializadas (Visión Integral con Recharts, Evaluaciones de Aula, Ensayos SIMCE y Ensayos PAES).
+  - [`src/components/UtpDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/UtpDashboard.tsx) (Nuevo): Panel de supervisión técnica pedagógica acotado a los departamentos supervisados (`user.departamentosSupervisados`), con 4 KPIs de área, acompañamiento docente directo (`switchToDocente`), cobertura curricular MINEDUC y alertas pedagógicas tempranas.
+  - [`src/pages/RegisterPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx): Selector de contratación dual ("Represento a un Colegio" con RBD obligatorio vs "Profesor Independiente" sin RBD) y selección de cargo.
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): Actualizado `RegisterData` y `switchRole` para admitir perfiles de Director y UTP.
+  - [`src/components/Navbar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Navbar.tsx) y [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx): Botones demo `🏛️ Director` y `📋 UTP`, y menús de navegación adaptados por rol.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): Enrutamiento al `DirectorDashboard` y `UtpDashboard`, y apertura de visualización de docentes para directivos y UTP.
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): Perfiles demo `currentUserDirector` (Director General) y `currentUserJefeUtp` (Jefa UTP de Área) y prueba demo PAES M1.
+
+- **Verificación / Despliegue**:
+  - `npm run build`: **✓ Built exitoso en producción (Vite + TypeScript sin errores, 2269 módulos transformados)**.
+  - 0 regresiones en vistas existentes (`admin`, `profesor`, `alumno`).
+
 ### [2026-09-21] Aislamiento Estricto del Perfil Docente: Preguntas Creadas y Asignación de Evaluaciones de Catálogo
 
 - **Problema / Requerimiento**:
@@ -2910,3 +2957,29 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
 - **Verificación / Despliegue**:
   - Inspección del directorio global: `Get-ChildItem -Path "$env:USERPROFILE\.gemini\config\skills"` confirmó los 25 skills junto a `rare-ui`.
   - Compilación TypeScript: `npx tsc --noEmit` completada con 0 errores (código de salida 0).
+
+---
+
+### [2026-09-21] Modelo Comercial Multi-Tenant, Dashboards Directivos/UTP y Cuentas de Producción
+
+- **Problema / Requerimiento**:
+  1. Habilitar la arquitectura comercial dual (Colegios B2B vs Docentes Independientes B2C) sin impacto ni regresiones en la funcionalidad existente.
+  2. Implementar los cuadros de mando especializados para **Director** (cobertura curricular por nivel, evolución SIMCE/PAES y evaluaciones docentes) y **Jefe UTP** (supervisión de departamentos asignados, acompañamiento de aula y alertas pedagógicas).
+  3. Crear y aprovisionar las cuentas reales en Supabase Auth y `public.perfiles` para que puedan autenticarse directamente desde el formulario de inicio de sesión en `http://localhost:3001` o producción.
+- **Archivos y Soluciúón Técnica**:
+  - [`src/types/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts): [MODIFICADO] Expandido `UserRole` para soportar `'director'` y `'utp'`, `TipoCuenta` (`'colegio'` | `'profesor_independiente'`), `departamentosSupervisados` y `tipoEvaluacion`.
+  - [`src/components/DirectorDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/DirectorDashboard.tsx): [NUEVO] Dashboard ejecutivo con 4 KPIs institucionales, gráficos de cumplimiento curricular por nivel y progresión histórica de puntajes SIMCE y PAES.
+  - [`src/components/UtpDashboard.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/UtpDashboard.tsx): [NUEVO] Dashboard de supervisión técnico-pedagógica acotada a asignaturas a cargo, acompañamiento docente directo (`switchToDocente`), cobertura de ejes temáticos y alertas de rezago.
+  - [`src/components/Navbar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Navbar.tsx) y [`src/components/Sidebar.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/Sidebar.tsx): [MODIFICADO] Integrados botones de conmutación rápida en el entorno demo (`🏛️ Director`, `📋 UTP`) y menús de navegación lateral contextuales para cada rol.
+  - [`src/pages/RegisterPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/RegisterPage.tsx): [MODIFICADO] Selector de registro comercial dual (Colegio B2B con validación RBD MINEDUC vs Profesor Particular B2C con aislamiento privado).
+  - [`src/context/AuthContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AuthContext.tsx): [MODIFICADO] Lógica robusta de resolución de rol para `director` y `utp` a partir de `rol` o `cargo` en la base de datos Supabase, mapeo de departamentos supervisados y filtrado de directivos en listas docentes.
+  - [`scripts/create_director_and_utp_accounts.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/create_director_and_utp_accounts.mjs): [NUEVO] Script automatizado de aprovisionamiento de cuentas reales en Supabase Auth y `public.perfiles`.
+  - [`BITACORA.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/BITACORA.md): [MODIFICADO] Registro de la tarea según estándar `task-summary-format`.
+- **Verificación / Despliegue**:
+  - Cuentas creadas y verificadas en Supabase Auth y `public.perfiles`:
+    - **Director**: `director@premil.cl` / `Director2026!` (Escuela Premilitar Héroes de la Concepción, RBD 31030).
+    - **Jefe UTP**: `utp.ciencias@premil.cl` / `Utp2026!` (Supervisión Matemática y Ciencias Naturales).
+  - Verificación de login: Script automatizado probó ambas credenciales contra Supabase (`signInWithPassword`), autenticación exitosa (código 200).
+  - Compilación TypeScript: `npx tsc --noEmit` completada con 0 errores (código 0).
+  - Build de Producción: `npm run build` completado exitosamente en 19.27s (código 0, 2269 módulos empaquetados).
+

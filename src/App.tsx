@@ -6,6 +6,8 @@ import { AcademicDataProvider, useAcademicData } from './context/AcademicDataCon
 import { Navbar } from './components/Navbar';
 import { Sidebar, PageId } from './components/Sidebar';
 import { ProfesorDashboard } from './components/ProfesorDashboard';
+import { DirectorDashboard } from './components/DirectorDashboard';
+import { UtpDashboard } from './components/UtpDashboard';
 import { ReporteTabuladoView } from './components/ReporteTabuladoView';
 import { EvaluacionGeneratorModal } from './components/EvaluacionGeneratorModal';
 import { AlumnoPortal } from './components/AlumnoPortal';
@@ -321,8 +323,8 @@ function MainAppContent({
 
   // Render active content area
   const renderMainContent = () => {
-    // Admin and Profesor share the same staff view
-    if (user.rol === 'profesor' || user.rol === 'admin') {
+    // Admin, Director, UTP and Profesor share the staff view
+    if (user.rol === 'profesor' || user.rol === 'admin' || user.rol === 'director' || user.rol === 'utp') {
       // ── DATA ISOLATION: sourced exclusively from AcademicDataContext ──
       // getDashboardData() has been REMOVED. All data filtering is centralized
       // in AcademicDataProvider to prevent Demo/Production bleed.
@@ -341,8 +343,8 @@ function MainAppContent({
 
       switch (activePage) {
         case 'profesores':
-          // RBAC: solo admin puede acceder a Gestión de Profesores
-          if (user.rol !== 'admin') {
+          // RBAC: admin, director y utp pueden acceder al listado del equipo docente
+          if (user.rol === 'profesor') {
             return (
               <ProfesorDashboard
                 profesor={user}
@@ -437,6 +439,26 @@ function MainAppContent({
 
         case 'dashboard':
         default: {
+          if (user.rol === 'director') {
+            return (
+              <DirectorDashboard
+                director={user}
+                pruebas={dashboardPruebas}
+                onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
+                onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
+              />
+            );
+          }
+          if (user.rol === 'utp') {
+            return (
+              <UtpDashboard
+                utp={user}
+                pruebas={dashboardPruebas}
+                onNavigateToEvaluaciones={() => setActivePage('evaluaciones')}
+                onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
+              />
+            );
+          }
           return (
             <ProfesorDashboard
               profesor={user}

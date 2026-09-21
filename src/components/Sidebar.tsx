@@ -79,6 +79,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
   ];
 
+  const NAV_ITEMS_DIRECTOR: NavItem[] = [
+    { id: 'dashboard', label: 'Cuadro de Mando', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Evaluaciones & Ensayos', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'cursos', label: 'Cursos del Colegio', icon: <Layers className="w-4.5 h-4.5" /> },
+    { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
+    { id: 'profesores', label: 'Cuerpo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+  ];
+
+  const NAV_ITEMS_UTP: NavItem[] = [
+    { id: 'dashboard', label: 'Dashboard UTP', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Evaluaciones del Área', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'cursos', label: 'Cursos Asignados', icon: <Layers className="w-4.5 h-4.5" /> },
+    { id: 'alumnos', label: 'Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
+    { id: 'profesores', label: 'Docentes Supervisados', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+    { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
+  ];
+
   const NAV_ITEMS_ALUMNO: NavItem[] = [
     { id: 'dashboard', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
   ];
@@ -90,6 +107,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
   let items: NavItem[];
   if (isRealAdmin) {
     items = NAV_ITEMS_ADMIN;
+  } else if (user?.rol === 'director') {
+    items = NAV_ITEMS_DIRECTOR;
+  } else if (user?.rol === 'utp') {
+    items = NAV_ITEMS_UTP;
   } else if (user?.rol === 'profesor') {
     items = NAV_ITEMS_PROFESOR;
   } else {
@@ -189,11 +210,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
               <span className={`inline-block px-1.5 py-0.5 text-[10px] font-bold rounded-md capitalize ${
                 user?.rol === 'admin'
                   ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                  : user?.rol === 'director'
+                  ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                  : user?.rol === 'utp'
+                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                   : user?.rol === 'profesor'
                   ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
                   : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
               }`}>
-                {user?.rol === 'admin' ? '👑 Admin UTP' : user?.rol === 'profesor' ? 'Docente' : 'Alumno'}
+                {user?.rol === 'admin'
+                  ? '👑 Admin UTP'
+                  : user?.rol === 'director'
+                  ? '🏛️ Director'
+                  : user?.rol === 'utp'
+                  ? '📋 Jefe UTP'
+                  : user?.rol === 'profesor'
+                  ? 'Docente'
+                  : 'Alumno'}
               </span>
               {user?.asignaturaNombre && (
                 <span className="inline-block px-1.5 py-0.5 bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[10px] font-bold rounded-md truncate max-w-[110px]">

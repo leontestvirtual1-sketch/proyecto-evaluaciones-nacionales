@@ -139,7 +139,44 @@ export const currentUserAdminDemo: UserProfile = {
   plan: 'trial'
 };
 
+/** Usuario Director de Establecimiento */
+export const currentUserDirector: UserProfile = {
+  id: 'dir-31030-0000-0000-0000-000000000001',
+  rut: '12.890.123-4',
+  nombre: 'Eduardo',
+  apellido: 'Valenzuela Bravo',
+  email: 'director@premil.cl',
+  rol: 'director',
+  establecimiento: 'Escuela Premilitar Héroes de la Concepción',
+  rbd: '31030',
+  comuna: 'La Granja, Región Metropolitana',
+  dependencia: 'Particular Subvencionado',
+  logoUrl: '/logos/escuela-premilitar.png',
+  cargo: 'Director General',
+  estado: 'activo',
+  plan: 'institucional',
+  tipoCuenta: 'colegio',
+  fechaRegistro: '2026-08-01 08:30'
+};
 
+/** Usuario Jefe de UTP (Área Ciencias / Matemática) */
+export const currentUserJefeUtp: UserProfile = {
+  id: 'utp-31030-0000-0000-0000-000000000002',
+  rut: '15.678.901-2',
+  nombre: 'Claudia',
+  apellido: 'Soto Navarrete',
+  email: 'utp.ciencias@premil.cl',
+  rol: 'utp',
+  establecimiento: 'Escuela Premilitar Héroes de la Concepción',
+  rbd: '31030',
+  logoUrl: '/logos/escuela-premilitar.png',
+  cargo: 'Jefa de UTP de Área',
+  estado: 'activo',
+  plan: 'institucional',
+  tipoCuenta: 'colegio',
+  departamentosSupervisados: ['asig-1', 'asig-3'], // Supervisa Matemática y Ciencias Naturales
+  fechaRegistro: '2026-08-05 10:00'
+};
 
 export const currentUserProfesor: UserProfile = {
   id: '00000000-0000-0000-0000-000000000001',
@@ -3124,7 +3161,26 @@ export const pruebasMock: Prueba[] = [
     creadoEn: '2026-08-10',
     preguntasIds: ['preg-1', 'preg-2', 'preg-3'],
     totalPreguntas: 3,
-    estado: 'activa'
+    estado: 'activa',
+    tipoEvaluacion: 'aula'
+  },
+  {
+    id: 'prueba-paes-m1-2026',
+    titulo: 'Ensayo Oficial PAES Competencia Matemática 1 (M1) — Admisión 2026',
+    descripcion: 'Instrumento modelo DEMRE para 4° Medio: Números, Álgebra y Funciones, Geometría, Probabilidad y Estadística.',
+    asignaturaId: 'asig-1',
+    asignaturaNombre: 'Matemática',
+    nivel: '4° Medio',
+    profesorId: currentUserProfesor.id,
+    cursoId: 'curso-4m',
+    cursoNombre: '4° Medio A',
+    codigoPublico: 'PAES-M1-2026',
+    duracionMinutos: 140,
+    creadoEn: '2026-08-20',
+    preguntasIds: ['preg-1', 'preg-2', 'preg-3'],
+    totalPreguntas: 65,
+    estado: 'activa',
+    tipoEvaluacion: 'paes'
   }
 ];
 

@@ -24,8 +24,17 @@ import {
   Monitor,
   BookMarked,
   Power,
-  PowerOff
+  PowerOff,
+  UserPlus,
+  GraduationCap,
+  X,
+  Hash,
+  MapPin,
+  BookOpen,
+  AlertCircle
 } from 'lucide-react';
+import { asignaturasMock, establecimientosCatalog } from '../data/mockData';
+import { COMUNAS_REGION_METROPOLITANA } from '../components/DocenteFormFields';
 import { AdminCatalogoPanel } from '../components/AdminCatalogoPanel';
 import { AdminColegiosPanel } from '../components/AdminColegiosPanel';
 import { calcularDiasRestantes } from '../utils/userAccess';
@@ -36,6 +45,7 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
     usuarios,
     changeUserPlan,
     setUserPassword,
+    createUsuarioDirecto,
     loadUsuariosReales,
     approveUser,
     rejectOrSuspendUser,
@@ -157,23 +167,130 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
     ? (entornoTab === 'produccion' ? prodUsersList : demoUsersList)
     : demoUsersList;
 
-  // Filtrado
+  // Estados para Filtro de Rol
+  const [rolFilter, setRolFilter] = useState<'todos' | 'director' | 'utp' | 'profesor' | 'admin'>('todos');
+
+  // Estados para Modal de Creación de Usuario / Directivo
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [newUserData, setNewUserData] = useState({
+    tipoRol: 'utp' as 'director' | 'utp' | 'profesor',
+    nombre: '',
+    apellidoPaterno: '',
+    apellidoMaterno: '',
+    rut: '',
+    email: '',
+    telefono: '',
+    establecimiento: 'Escuela Premilitar Héroes de la Concepción',
+    rbd: '31030',
+    comuna: 'La Granja',
+    dependencia: 'Particular Subvencionado',
+    asignaturaId: 'asig-1',
+    asignaturaNombre: 'Matemática',
+    cargo: 'Jefe de UTP Matemática',
+    plan: 'institucional' as UserPlan,
+    tempPassword: 'Sysget2026!'
+  });
+  const [isCreatingUser, setIsCreatingUser] = useState(false);
+  const [createUserError, setCreateUserError] = useState<string | null>(null);
+
+  const getEffectiveRole = (u: UserProfile): 'director' | 'utp' | 'admin' | 'profesor' | 'alumno' => {
+    if (u.rol === 'admin' || u.esSuperAdmin) return 'admin';
+    const cargoLower = (u.cargo || '').toLowerCase();
+    if (u.rol === 'director' || cargoLower.includes('director')) return 'director';
+    if (u.rol === 'utp' || cargoLower.includes('utp') || cargoLower.includes('jefe')) return 'utp';
+    return (u.rol as 'profesor' | 'alumno') || 'profesor';
+  };
+
+  const handleCreateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateUserError(null);
+    setIsCreatingUser(true);
+    try {
+      if (!newUserData.email || !newUserData.nombre || !newUserData.apellidoPaterno) {
+        throw new Error('Nombre, apellido paterno y correo electrónico son obligatorios.');
+      }
+      const fullApellido = `${newUserData.apellidoPaterno} ${newUserData.apellidoMaterno}`.trim();
+
+      const res = await createUsuarioDirecto({
+        rol: newUserData.tipoRol,
+        nombre: newUserData.nombre.trim(),
+        apellido: fullApellido,
+        apellidoPaterno: newUserData.apellidoPaterno.trim(),
+        apellidoMaterno: newUserData.apellidoMaterno.trim(),
+        rut: newUserData.rut.trim(),
+        email: newUserData.email.toLowerCase().trim(),
+        telefono: newUserData.telefono.trim(),
+        establecimiento: newUserData.establecimiento,
+        rbd: newUserData.rbd,
+        comuna: newUserData.comuna,
+        dependencia: newUserData.dependencia,
+        asignaturaId: newUserData.tipoRol !== 'director' ? newUserData.asignaturaId : undefined,
+        asignaturaNombre: newUserData.tipoRol !== 'director' ? newUserData.asignaturaNombre : undefined,
+        cargo: newUserData.cargo.trim(),
+        plan: newUserData.plan,
+        tempPassword: newUserData.tempPassword
+      });
+
+      if (res.error) {
+        throw new Error(res.error);
+      }
+
+      showToast(`✅ ${newUserData.tipoRol === 'director' ? 'Director(a)' : newUserData.tipoRol === 'utp' ? 'Jefe(a) de UTP' : 'Docente'} ${newUserData.nombre} registrado y activado exitosamente en Supabase.`);
+      setIsCreateModalOpen(false);
+      setNewUserData({
+        tipoRol: 'utp',
+        nombre: '',
+        apellidoPaterno: '',
+        apellidoMaterno: '',
+        rut: '',
+        email: '',
+        telefono: '',
+        establecimiento: 'Escuela Premilitar Héroes de la Concepción',
+        rbd: '31030',
+        comuna: 'La Granja',
+        dependencia: 'Particular Subvencionado',
+        asignaturaId: 'asig-1',
+        asignaturaNombre: 'Matemática',
+        cargo: 'Jefe de UTP Matemática',
+        plan: 'institucional',
+        tempPassword: 'Sysget2026!'
+      });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setCreateUserError(msg);
+    } finally {
+      setIsCreatingUser(false);
+    }
+  };
+
+  // Filtrado enriquecido (incluye rol efectivo, cargo, asignatura y RUT)
   const filteredUsers = baseUsersList.filter(u => {
+    const effRole = getEffectiveRole(u);
+    const searchLower = searchTerm.toLowerCase();
     const matchesSearch =
-      u.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      u.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      u.establecimiento.toLowerCase().includes(searchTerm.toLowerCase());
+      u.nombre.toLowerCase().includes(searchLower) ||
+      u.apellido.toLowerCase().includes(searchLower) ||
+      u.email.toLowerCase().includes(searchLower) ||
+      u.establecimiento.toLowerCase().includes(searchLower) ||
+      (u.cargo || '').toLowerCase().includes(searchLower) ||
+      (u.asignaturaNombre || '').toLowerCase().includes(searchLower) ||
+      (u.rut || '').toLowerCase().includes(searchLower) ||
+      effRole.toLowerCase().includes(searchLower);
 
     const matchesEstado = estadoFilter === 'todos' || u.estado === estadoFilter;
-    return matchesSearch && matchesEstado;
+    const matchesRol = rolFilter === 'todos' || effRole === rolFilter;
+    return matchesSearch && matchesEstado && matchesRol;
   });
 
-  // Métricas
+  // Métricas y conteos
   const total = baseUsersList.length;
   const pendientes = baseUsersList.filter(u => u.estado === 'pendiente_aprobacion').length;
   const activosTrial = baseUsersList.filter(u => u.estado === 'activo' && u.plan === 'trial').length;
   const institucional = baseUsersList.filter(u => u.estado === 'activo' && (u.plan === 'institucional' || u.plan === 'pro')).length;
+  const directoresCount = baseUsersList.filter(u => getEffectiveRole(u) === 'director').length;
+  const utpCount = baseUsersList.filter(u => getEffectiveRole(u) === 'utp').length;
+  const profesoresCount = baseUsersList.filter(u => getEffectiveRole(u) === 'profesor').length;
+  const adminsCount = baseUsersList.filter(u => getEffectiveRole(u) === 'admin').length;
 
   const calcularDiasRestantesTrial = (u: UserProfile): number => {
     return calcularDiasRestantes(u);
@@ -284,7 +401,15 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={() => setIsCreateModalOpen(true)}
+            className="px-3.5 py-1.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md shadow-indigo-600/30 transition-all hover:scale-105 active:scale-95"
+          >
+            <UserPlus className="w-3.5 h-3.5" />
+            <span>➕ Nuevo Usuario / Directivo</span>
+          </button>
+
           <button
             onClick={async () => {
               setIsRefreshing(true);
@@ -412,49 +537,79 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
         </div>
       </div>
 
-      {/* Barra de Búsqueda, Filtros y Sincronización */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-900/40 p-4 border border-slate-800 rounded-2xl">
-        <div className="flex items-center gap-2 w-full sm:w-auto flex-1 max-w-md">
-          <div className="relative w-full">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              placeholder="Buscar por nombre, email o colegio..."
-              className="w-full pl-9 pr-3 py-2 text-xs bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 transition-colors"
-            />
+      {/* Barra de Búsqueda y Filtros Duales (Estado + Rol) */}
+      <div className="space-y-3 bg-slate-900/40 p-4 border border-slate-800 rounded-2xl">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2 w-full sm:w-auto flex-1 max-w-lg">
+            <div className="relative w-full">
+              <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                placeholder="Buscar por nombre, correo, cargo (ej. UTP, Director), especialidad o colegio..."
+                className="w-full pl-9 pr-3 py-2 text-xs bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-500"
+              />
+            </div>
+
+            <button
+              onClick={() => {
+                setIsRefreshing(true);
+                window.location.reload();
+              }}
+              title="Sincronizar usuarios desde Supabase en tiempo real"
+              className="p-2 bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 rounded-xl transition-all flex items-center gap-1 shrink-0"
+            >
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-indigo-400' : ''}`} />
+            </button>
           </div>
 
-          <button
-            onClick={() => {
-              setIsRefreshing(true);
-              window.location.reload();
-            }}
-            title="Sincronizar usuarios desde Supabase en tiempo real"
-            className="p-2 bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 rounded-xl transition-all flex items-center gap-1 shrink-0"
-          >
-            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-indigo-400' : ''}`} />
-          </button>
+          {/* Filtro de Estado */}
+          <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+            {(
+              [
+                { id: 'todos', label: 'Todos los estados' },
+                { id: 'pendiente_aprobacion', label: `Pendientes (${pendientes})` },
+                { id: 'activo', label: 'Activos' },
+                { id: 'suspendido', label: 'Suspendidos' },
+              ] as const
+            ).map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setEstadoFilter(tab.id as 'todos' | UserEstado)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+                  estadoFilter === tab.id
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-bold'
+                    : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Filtro de Estado */}
-        <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+        {/* Barra de Filtro de Roles Directivos y Docentes */}
+        <div className="flex items-center gap-2 pt-2 border-t border-slate-800/80 overflow-x-auto">
+          <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap mr-1 flex items-center gap-1">
+            <Users className="w-3.5 h-3.5 text-indigo-400" /> Rol:
+          </span>
           {(
             [
-              { id: 'todos', label: 'Todos' },
-              { id: 'pendiente_aprobacion', label: `Pendientes (${pendientes})` },
-              { id: 'activo', label: 'Activos' },
-              { id: 'suspendido', label: 'Suspendidos' },
+              { id: 'todos', label: `Todos los Roles (${total})`, activeClass: 'bg-indigo-600 text-white shadow-indigo-600/30' },
+              { id: 'director', label: `👑 Directores (${directoresCount})`, activeClass: 'bg-violet-600 text-white shadow-violet-600/30' },
+              { id: 'utp', label: `📋 Jefes UTP (${utpCount})`, activeClass: 'bg-cyan-600 text-white shadow-cyan-600/30' },
+              { id: 'profesor', label: `🎓 Docentes (${profesoresCount})`, activeClass: 'bg-indigo-600 text-white shadow-indigo-600/30' },
+              { id: 'admin', label: `🛡️ Admins (${adminsCount})`, activeClass: 'bg-amber-600 text-white shadow-amber-600/30' },
             ] as const
           ).map(tab => (
             <button
               key={tab.id}
-              onClick={() => setEstadoFilter(tab.id as 'todos' | UserEstado)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                estadoFilter === tab.id
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-bold'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              onClick={() => setRolFilter(tab.id as typeof rolFilter)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                rolFilter === tab.id
+                  ? `${tab.activeClass || 'bg-indigo-600 text-white shadow-md'} font-bold shadow`
+                  : 'bg-slate-950/80 text-slate-400 hover:text-white border border-slate-800/80'
               }`}
             >
               {tab.label}
@@ -495,13 +650,59 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
 
                     {/* Establecimiento & Rol */}
                     <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-1.5 text-xs text-slate-200">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-200 mb-1">
                         <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                         <span className="truncate max-w-[200px] font-semibold">{u.establecimiento}</span>
                       </div>
-                      <div className="text-[11px] text-indigo-400 font-medium">
-                        {u.rol === 'admin' ? 'Admin' : `Profesor • ${u.asignaturaNombre || 'Sin asignar'}`}
-                      </div>
+                      {(() => {
+                        const effRole = getEffectiveRole(u);
+                        if (effRole === 'admin') {
+                          return (
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                                <ShieldCheck className="w-3 h-3 text-amber-400" /> Super Admin
+                              </span>
+                              <span className="text-[11px] text-amber-400/80 font-mono text-[10px]">
+                                {u.cargo || 'Super Administrador'}
+                              </span>
+                            </div>
+                          );
+                        }
+                        if (effRole === 'director') {
+                          return (
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-violet-500/20 text-violet-300 border border-violet-500/40">
+                                👑 Director(a)
+                              </span>
+                              <span className="text-[11px] text-slate-300 font-medium">
+                                {u.cargo || 'Director General'}
+                              </span>
+                            </div>
+                          );
+                        }
+                        if (effRole === 'utp') {
+                          return (
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                                📋 Jefe(a) UTP
+                              </span>
+                              <span className="text-[11px] text-cyan-400 font-medium">
+                                {u.cargo || (u.asignaturaNombre ? `UTP ${u.asignaturaNombre}` : 'Coordinación UTP')}
+                              </span>
+                            </div>
+                          );
+                        }
+                        return (
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
+                              🎓 Docente
+                            </span>
+                            <span className="text-[11px] text-slate-400 font-medium">
+                              {u.asignaturaNombre || u.cargo || 'Sin asignar'}
+                            </span>
+                          </div>
+                        );
+                      })()}
                     </td>
 
                     {/* Email, Teléfono y Registro */}
@@ -1034,6 +1235,367 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Creación de Usuario / Directivo */}
+      {isCreateModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto animate-fade-in">
+          <div className="bg-slate-900 border border-slate-700/80 rounded-3xl shadow-2xl w-full max-w-2xl p-6 space-y-5 my-8">
+            {/* Header del Modal */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-gradient-to-br from-indigo-500/20 to-violet-500/20 text-indigo-400 border border-indigo-500/30 rounded-2xl">
+                  <UserPlus className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                    <span>Registrar Nuevo Usuario / Directivo</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-mono">
+                      Supabase Activo
+                    </span>
+                  </h2>
+                  <p className="text-xs text-slate-400">
+                    Crea credenciales reales en Supabase Auth y activa el perfil en base de datos.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsCreateModalOpen(false)}
+                className="text-slate-400 hover:text-white p-1 rounded-xl hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Error Alert */}
+            {createUserError && (
+              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+                <span>{createUserError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleCreateUser} className="space-y-4 text-xs">
+              {/* Selector de Rol / Cargo */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold text-slate-300 uppercase tracking-wide">
+                  1. Tipo de Perfil / Rol <span className="text-rose-400">*</span>
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setNewUserData(prev => ({
+                        ...prev,
+                        tipoRol: 'director',
+                        cargo: 'Director General',
+                        plan: 'institucional'
+                      }));
+                    }}
+                    className={`p-3 rounded-2xl border text-left transition-all ${
+                      newUserData.tipoRol === 'director'
+                        ? 'bg-violet-950/40 border-violet-500 text-white shadow-lg shadow-violet-500/20 ring-1 ring-violet-500'
+                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="text-base mb-1">👑</div>
+                    <div className="font-bold text-xs text-white">Director(a)</div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">Mando Global Colegio</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setNewUserData(prev => ({
+                        ...prev,
+                        tipoRol: 'utp',
+                        cargo: `Jefe de UTP ${prev.asignaturaNombre || 'Matemática'}`,
+                        plan: 'institucional'
+                      }));
+                    }}
+                    className={`p-3 rounded-2xl border text-left transition-all ${
+                      newUserData.tipoRol === 'utp'
+                        ? 'bg-cyan-950/40 border-cyan-500 text-white shadow-lg shadow-cyan-500/20 ring-1 ring-cyan-500'
+                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="text-base mb-1">📋</div>
+                    <div className="font-bold text-xs text-white">Jefe(a) de UTP</div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">Área / Curricular</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setNewUserData(prev => ({
+                        ...prev,
+                        tipoRol: 'profesor',
+                        cargo: `Docente de ${prev.asignaturaNombre || 'Matemática'}`,
+                        plan: 'trial'
+                      }));
+                    }}
+                    className={`p-3 rounded-2xl border text-left transition-all ${
+                      newUserData.tipoRol === 'profesor'
+                        ? 'bg-indigo-950/40 border-indigo-500 text-white shadow-lg shadow-indigo-500/20 ring-1 ring-indigo-500'
+                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="text-base mb-1">🎓</div>
+                    <div className="font-bold text-xs text-white">Docente de Aula</div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">Ensayos y Cursos</div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Fila: Especialidad/Área (si es UTP o Profesor) + Cargo Detallado */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-slate-950/50 rounded-2xl border border-slate-800">
+                {newUserData.tipoRol !== 'director' ? (
+                  <div>
+                    <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1 flex items-center gap-1">
+                      <BookOpen className="w-3 h-3 text-indigo-400" /> Especialidad / Área <span className="text-rose-400">*</span>
+                    </label>
+                    <select
+                      value={newUserData.asignaturaId}
+                      onChange={e => {
+                        const asig = asignaturasMock.find(a => a.id === e.target.value);
+                        const asigNom = asig?.nombre || 'Matemática';
+                        setNewUserData(prev => ({
+                          ...prev,
+                          asignaturaId: e.target.value,
+                          asignaturaNombre: asigNom,
+                          cargo: prev.tipoRol === 'utp' ? `Jefe de UTP ${asigNom}` : `Docente de ${asigNom}`
+                        }));
+                      }}
+                      className="w-full px-3 py-2 bg-slate-900 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs font-semibold"
+                    >
+                      {asignaturasMock.map(asig => (
+                        <option key={asig.id} value={asig.id}>{asig.nombre} ({asig.codigo})</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                      Ámbito Directivo
+                    </label>
+                    <input
+                      type="text"
+                      disabled
+                      value="Dirección y Rectoría Institucional"
+                      className="w-full px-3 py-2 bg-slate-950 text-slate-400 border border-slate-800 rounded-xl text-xs font-medium"
+                    />
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                    Cargo Oficial Visible <span className="text-rose-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newUserData.cargo}
+                    onChange={e => setNewUserData(prev => ({ ...prev, cargo: e.target.value }))}
+                    placeholder="ej. Jefe de UTP Lenguaje, Director General"
+                    className="w-full px-3 py-2 bg-slate-900 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs"
+                  />
+                </div>
+              </div>
+
+              {/* Datos Personales: Nombre, Apellidos, RUT */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold text-slate-300 uppercase tracking-wide">
+                  2. Datos Personales
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <div>
+                    <label className="block text-[10px] text-slate-400 mb-0.5">Nombre <span className="text-rose-400">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={newUserData.nombre}
+                      onChange={e => setNewUserData(prev => ({ ...prev, nombre: e.target.value }))}
+                      placeholder="ej. Marcela"
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-slate-400 mb-0.5">Apellido Paterno <span className="text-rose-400">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={newUserData.apellidoPaterno}
+                      onChange={e => setNewUserData(prev => ({ ...prev, apellidoPaterno: e.target.value }))}
+                      placeholder="ej. Morales"
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-slate-400 mb-0.5">Apellido Materno</label>
+                    <input
+                      type="text"
+                      value={newUserData.apellidoMaterno}
+                      onChange={e => setNewUserData(prev => ({ ...prev, apellidoMaterno: e.target.value }))}
+                      placeholder="ej. Rojas"
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                  <div>
+                    <label className="block text-[10px] text-slate-400 mb-0.5">RUT Chileno <span className="text-rose-400">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={newUserData.rut}
+                      onChange={e => setNewUserData(prev => ({ ...prev, rut: e.target.value }))}
+                      placeholder="ej. 14.234.567-8"
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-slate-400 mb-0.5">Correo Electrónico <span className="text-rose-400">*</span></label>
+                    <input
+                      type="email"
+                      required
+                      value={newUserData.email}
+                      onChange={e => setNewUserData(prev => ({ ...prev, email: e.target.value }))}
+                      placeholder="ej. utp.lenguaje@premil.cl"
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-slate-400 mb-0.5">Teléfono Celular</label>
+                    <input
+                      type="tel"
+                      value={newUserData.telefono}
+                      onChange={e => setNewUserData(prev => ({ ...prev, telefono: e.target.value }))}
+                      placeholder="+56 9 9123 4567"
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs font-mono"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Colegio y RBD */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold text-slate-300 uppercase tracking-wide">
+                  3. Establecimiento Educacional
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <div className="sm:col-span-2">
+                    <label className="block text-[10px] text-slate-400 mb-0.5">Colegio Oficial</label>
+                    <select
+                      value={newUserData.rbd}
+                      onChange={e => {
+                        const selected = establecimientosCatalog.find(est => est.rbd === e.target.value);
+                        if (selected) {
+                          setNewUserData(prev => ({
+                            ...prev,
+                            rbd: selected.rbd,
+                            establecimiento: selected.nombre,
+                            comuna: selected.comuna,
+                            dependencia: selected.dependencia
+                          }));
+                        }
+                      }}
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs"
+                    >
+                      {establecimientosCatalog.map(est => (
+                        <option key={est.rbd} value={est.rbd}>{est.nombre} (RBD {est.rbd})</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-slate-400 mb-0.5">RBD</label>
+                    <input
+                      type="text"
+                      required
+                      value={newUserData.rbd}
+                      onChange={e => setNewUserData(prev => ({ ...prev, rbd: e.target.value }))}
+                      placeholder="31030"
+                      className="w-full px-3 py-2 bg-slate-950 text-white border border-slate-700 rounded-xl outline-none focus:border-indigo-500 text-xs font-mono"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Credenciales y Plan */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-indigo-950/20 border border-indigo-900/40 rounded-2xl">
+                <div>
+                  <label className="block text-[10px] font-bold text-indigo-300 uppercase tracking-wide mb-1 flex items-center gap-1">
+                    <Lock className="w-3 h-3 text-indigo-400" /> Contraseña Inicial de Acceso
+                  </label>
+                  <div className="flex items-center gap-1.5">
+                    <input
+                      type="text"
+                      required
+                      value={newUserData.tempPassword}
+                      onChange={e => setNewUserData(prev => ({ ...prev, tempPassword: e.target.value }))}
+                      placeholder="Sysget2026!"
+                      className="flex-1 px-3 py-1.5 bg-slate-950 text-emerald-300 border border-indigo-500/40 rounded-xl text-xs font-mono font-bold outline-none focus:border-indigo-400"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setNewUserData(prev => ({ ...prev, tempPassword: `Saber_${Math.floor(1000 + Math.random() * 9000)}!` }))}
+                      title="Generar contraseña aleatoria"
+                      className="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-indigo-300 rounded-xl text-[11px] font-semibold border border-indigo-800/40"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-1">Podrá cambiarla en cualquier momento.</p>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-indigo-300 uppercase tracking-wide mb-1 flex items-center gap-1">
+                    <CreditCard className="w-3 h-3 text-indigo-400" /> Plan Asignado
+                  </label>
+                  <select
+                    value={newUserData.plan}
+                    onChange={e => setNewUserData(prev => ({ ...prev, plan: e.target.value as UserPlan }))}
+                    className="w-full px-3 py-1.5 bg-slate-950 text-white border border-indigo-500/40 rounded-xl text-xs font-semibold outline-none focus:border-indigo-400"
+                  >
+                    <option value="institucional">Institucional ($99.990) - Recomendado Directivos</option>
+                    <option value="trial">Trial (30 días de prueba)</option>
+                    <option value="pro">Pro ($59.990)</option>
+                    <option value="free">Free ($0)</option>
+                  </select>
+                  <p className="text-[10px] text-slate-400 mt-1">El usuario se creará con estado Activo de inmediato.</p>
+                </div>
+              </div>
+
+              {/* Botones de Acción */}
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setIsCreateModalOpen(false)}
+                  className="px-4 py-2 text-xs text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition-all font-semibold"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={isCreatingUser}
+                  className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600 hover:from-indigo-500 hover:to-violet-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+                >
+                  {isCreatingUser ? (
+                    <>
+                      <Clock className="w-4 h-4 animate-spin" />
+                      <span>Creando en Supabase...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-4 h-4" />
+                      <span>Crear y Activar Cuenta</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

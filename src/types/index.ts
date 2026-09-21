@@ -1,6 +1,7 @@
-export type UserRole = 'admin' | 'profesor' | 'alumno';
+export type UserRole = 'admin' | 'director' | 'utp' | 'profesor' | 'alumno';
 export type UserEstado = 'pendiente_aprobacion' | 'activo' | 'suspendido' | 'rechazado';
 export type UserPlan = 'trial' | 'free' | 'pro' | 'institucional';
+export type TipoCuenta = 'colegio' | 'profesor_independiente';
 
 export interface EstablecimientoInfo {
   rbd: string;
@@ -37,6 +38,8 @@ export interface UserProfile {
   approvalToken?: string;      // Token de aprobación directa de 1-clic desde correo
   esSuperAdmin?: boolean;      // Super Administrador sin restricción de RBD
   esDemo?: boolean;            // Pertenece al entorno simulado de demostración
+  tipoCuenta?: TipoCuenta;     // 'colegio' | 'profesor_independiente'
+  departamentosSupervisados?: string[]; // IDs de asignaturas supervisadas (para Jefes UTP)
 }
 
 
@@ -127,6 +130,7 @@ export interface Prueba {
   preguntasIds: string[];
   totalPreguntas: number;
   estado: 'borrador' | 'activa' | 'finalizada';
+  tipoEvaluacion?: 'aula' | 'simce' | 'paes';
   esCatalogo?: boolean;
   precioCLP?: number;
   descripcionCatalogo?: string;

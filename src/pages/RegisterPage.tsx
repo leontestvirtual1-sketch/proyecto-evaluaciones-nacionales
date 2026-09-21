@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { useAuth, RegisterData } from '../context/AuthContext';
-import { GraduationCap, Mail, Lock, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { UserRole } from '../types';
+import {
+  GraduationCap,
+  Mail,
+  Lock,
+  ArrowRight,
+  ArrowLeft,
+  CheckCircle2,
+  ShieldCheck,
+  Building2,
+  UserCheck,
+  Sparkles,
+  School,
+  Layers
+} from 'lucide-react';
+import { UserRole, TipoCuenta } from '../types';
 import { asignaturasMock } from '../data/mockData';
 import { DocenteFormFields, DocenteFormData, RutValidationStatus } from '../components/DocenteFormFields';
 import { validarRutChileno, validarRBD, normalizarRBD } from '../utils/chileValidators';
@@ -12,6 +25,10 @@ interface RegisterPageProps {
 
 export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
   const { register, isLoading } = useAuth();
+  
+  // Modelo de contratación: Colegio (B2B) o Profesor Independiente (B2C)
+  const [tipoCuenta, setTipoCuenta] = useState<TipoCuenta>('colegio');
+
   const [form, setForm] = useState<RegisterData>({
     rut: '',
     nombre: '',
@@ -26,13 +43,40 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
     rbd: '',
     asignaturaId: 'asig-1',
     asignaturaNombre: 'Matemática',
+    tipoCuenta: 'colegio',
+    cargo: 'Docente de Asignatura'
   });
+
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [registeredSuccess, setRegisteredSuccess] = useState(false);
   const [rutStatus, setRutStatus] = useState<RutValidationStatus | null>(null);
 
-  const handleFieldChange = (field: keyof DocenteFormData | 'password' | 'rol', value: string) => {
+  const handleTipoCuentaChange = (nuevoTipo: TipoCuenta) => {
+    setTipoCuenta(nuevoTipo);
+    setForm(prev => {
+      if (nuevoTipo === 'profesor_independiente') {
+        return {
+          ...prev,
+          tipoCuenta: 'profesor_independiente',
+          rol: 'profesor',
+          establecimiento: prev.establecimiento || 'Docente Independiente / Particular',
+          rbd: 'PARTICULAR',
+          cargo: 'Profesor Particular / Independiente'
+        };
+      } else {
+        return {
+          ...prev,
+          tipoCuenta: 'colegio',
+          rbd: prev.rbd === 'PARTICULAR' ? '' : prev.rbd,
+          establecimiento: prev.establecimiento === 'Docente Independiente / Particular' ? '' : prev.establecimiento,
+          cargo: 'Docente de Asignatura'
+        };
+      }
+    });
+  };
+
+  const handleFieldChange = (field: keyof DocenteFormData | 'password' | 'rol' | 'cargo', value: string) => {
     setForm(prev => {
       const updated = { ...prev, [field]: value };
       if (field === 'apellidoPaterno' || field === 'apellidoMaterno') {
@@ -47,12 +91,19 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
     setError('');
 
     if (rutStatus?.expired) {
-      setError(rutStatus.message || 'El usuario asociado a este RUT ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar tu acceso o contratar una licencia institucional.');
+      setError(rutStatus.message || 'El usuario asociado a este RUT ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar tu acceso o contratar una licencia.');
       return;
     }
 
-    if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.apellidoMaterno || !form.email || !form.password || !form.establecimiento || !form.rbd) {
-      setError('Por favor completa todos los campos obligatorios (Nombres, Apellido Paterno, Apellido Materno, RUT, Email, Establecimiento, RBD y Contraseña).');
+    const isIndependiente = tipoCuenta === 'profesor_independiente';
+
+    if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.apellidoMaterno || !form.email || !form.password) {
+      setError('Por favor completa todos tus datos personales obligatorios (Nombres, Apellidos, RUT, Email y Contraseña).');
+      return;
+    }
+
+    if (!isIndependiente && (!form.establecimiento || !form.rbd)) {
+      setError('Para cuentas de colegio, el Establecimiento y su código oficial RBD son obligatorios.');
       return;
     }
 
@@ -72,8 +123,8 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
       return;
     }
 
-    // Validar RBD chileno
-    if (!validarRBD(form.rbd || '')) {
+    // Validar RBD chileno solo para colegios
+    if (!isIndependiente && !validarRBD(form.rbd || '')) {
       setError('El RBD ingresado no es válido. Debe ser el código numérico oficial MINEDUC de tu establecimiento.');
       return;
     }
@@ -89,7 +140,9 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
 
     const res = await register({
       ...form,
-      rbd: normalizarRBD(form.rbd || ''),
+      tipoCuenta,
+      rbd: isIndependiente ? 'PARTICULAR' : normalizarRBD(form.rbd || ''),
+      establecimiento: isIndependiente ? (form.establecimiento || 'Docente Independiente') : form.establecimiento,
       apellido: `${form.apellidoPaterno} ${form.apellidoMaterno}`.trim()
     });
 
@@ -100,8 +153,10 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
     }
   };
 
-  const roles: { value: UserRole; label: string; desc: string }[] = [
-    { value: 'profesor', label: 'Profesor / Docente', desc: 'Crea y gestiona evaluaciones' },
+  const rolesColegio: { value: UserRole; label: string; desc: string }[] = [
+    { value: 'profesor', label: 'Profesor / Docente', desc: 'Crea evaluaciones de aula, SIMCE y PAES' },
+    { value: 'director', label: 'Director / Directivo', desc: 'Cuadro de mando ejecutivo y cobertura' },
+    { value: 'utp', label: 'Jefe de UTP', desc: 'Supervisión pedagógica por departamento' },
     { value: 'alumno', label: 'Estudiante', desc: 'Rinde evaluaciones asignadas' },
   ];
 
@@ -112,7 +167,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative w-full max-w-lg space-y-6 animate-fade-in">
+      <div className="relative w-full max-w-xl space-y-6 animate-fade-in my-8">
         {/* Logo */}
         <div className="text-center space-y-2">
           <div className="inline-flex p-3.5 bg-indigo-600 rounded-2xl shadow-xl shadow-indigo-600/30">
@@ -149,10 +204,12 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                   <div>
                     <div className="text-xs font-semibold text-white flex items-center gap-1.5">
                       <Mail className="w-3.5 h-3.5 text-indigo-400" />
-                      Notificación Enviada al Administrador
+                      Notificación de Cuenta {tipoCuenta === 'colegio' ? 'Institucional' : 'Independiente'}
                     </div>
                     <p className="text-[11px] text-slate-400 mt-0.5">
-                      Se ha notificado al equipo de Administración y UTP de <strong>Sysget Saber</strong> con los datos de tu establecimiento y especialidad.
+                      {tipoCuenta === 'colegio'
+                        ? 'Se ha registrado tu solicitud asociada a tu establecimiento educativo con rol de ' + form.rol + '.'
+                        : 'Se ha creado tu perfil como Profesor Independiente con aislamiento privado de evaluaciones.'}
                     </p>
                   </div>
                 </div>
@@ -164,10 +221,10 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                   <div>
                     <div className="text-xs font-semibold text-white flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                      Activación de Acceso Institucional (Trial 30 Días)
+                      Activación de Acceso (Trial 30 Días)
                     </div>
                     <p className="text-[11px] text-slate-400 mt-0.5">
-                      Una vez validada la solicitud desde el panel institucional o mediante el correo de autorización, podrás iniciar sesión inmediatamente con tu correo y contraseña.
+                      Una vez validada la solicitud o mediante el correo de bienvenida, podrás iniciar sesión inmediatamente con tu correo y contraseña.
                     </p>
                   </div>
                 </div>
@@ -186,36 +243,95 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
             /* Formulario de Registro */
             <>
               <div>
-                <h2 className="text-xl font-bold text-white">Crear Cuenta Institucional</h2>
-                <p className="text-xs text-slate-400 mt-0.5">Acceso con 30 días de prueba gratuita para tu establecimiento</p>
+                <h2 className="text-xl font-bold text-white">Comenzar con Sysget Saber</h2>
+                <p className="text-xs text-slate-400 mt-0.5">Prueba gratuita de 30 días para colegios y docentes independientes</p>
+              </div>
+
+              {/* ── Selector B2B (Colegio) vs B2C (Profesor Independiente) ── */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                  ¿Cómo utilizarás la plataforma?
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => handleTipoCuentaChange('colegio')}
+                    className={`p-3.5 rounded-xl border text-left transition-all relative ${
+                      tipoCuenta === 'colegio'
+                        ? 'bg-indigo-950/60 border-indigo-500 text-white shadow-lg ring-1 ring-indigo-500'
+                        : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className={`p-2 rounded-lg ${tipoCuenta === 'colegio' ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-400'}`}>
+                        <School className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">Represento a un Colegio</div>
+                        <div className="text-[11px] text-slate-400">Colegios, Liceos (B2B con RBD)</div>
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleTipoCuentaChange('profesor_independiente')}
+                    className={`p-3.5 rounded-xl border text-left transition-all relative ${
+                      tipoCuenta === 'profesor_independiente'
+                        ? 'bg-indigo-950/60 border-indigo-500 text-white shadow-lg ring-1 ring-indigo-500'
+                        : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className={`p-2 rounded-lg ${tipoCuenta === 'profesor_independiente' ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-400'}`}>
+                        <UserCheck className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">Profesor Independiente</div>
+                        <div className="text-[11px] text-slate-400">Docente particular (B2C)</div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Rol */}
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                    Tipo de Cuenta
-                  </label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {roles.map(r => (
-                      <button
-                        key={r.value}
-                        type="button"
-                        onClick={() => handleFieldChange('rol', r.value)}
-                        className={`p-3 rounded-xl border text-left transition-all ${
-                          form.rol === r.value
-                            ? 'bg-indigo-600 border-indigo-600 text-white shadow-md'
-                            : 'bg-slate-950 border-slate-700 text-slate-300 hover:border-indigo-500/50'
-                        }`}
-                      >
-                        <div className="text-xs font-bold">{r.label}</div>
-                        <div className={`text-[11px] mt-0.5 ${form.rol === r.value ? 'text-indigo-200' : 'text-slate-500'}`}>
-                          {r.desc}
-                        </div>
-                      </button>
-                    ))}
+                {/* Si es colegio: Selección de Rol dentro del establecimiento */}
+                {tipoCuenta === 'colegio' && (
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                      Tu Cargo en el Colegio
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {rolesColegio.map(r => (
+                        <button
+                          key={r.value}
+                          type="button"
+                          onClick={() => {
+                            handleFieldChange('rol', r.value);
+                            if (r.value === 'director') {
+                              handleFieldChange('cargo', 'Director / Directivo');
+                            } else if (r.value === 'utp') {
+                              handleFieldChange('cargo', 'Jefe de UTP');
+                            } else if (r.value === 'profesor') {
+                              handleFieldChange('cargo', 'Docente de Asignatura');
+                            }
+                          }}
+                          className={`p-2.5 rounded-xl border text-left transition-all ${
+                            form.rol === r.value
+                              ? 'bg-indigo-600 border-indigo-600 text-white shadow-md'
+                              : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-indigo-500/50'
+                          }`}
+                        >
+                          <div className="text-xs font-bold">{r.label}</div>
+                          <div className={`text-[10px] mt-0.5 line-clamp-1 ${form.rol === r.value ? 'text-indigo-200' : 'text-slate-500'}`}>
+                            {r.desc}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Campos Unificados del Docente */}
                 <DocenteFormFields
@@ -227,8 +343,10 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                     apellido: form.apellido,
                     email: form.email,
                     telefono: form.telefono || '',
-                    establecimiento: form.establecimiento,
-                    rbd: form.rbd || '',
+                    establecimiento: tipoCuenta === 'profesor_independiente' 
+                      ? (form.establecimiento || 'Docente Independiente / Particular')
+                      : form.establecimiento,
+                    rbd: tipoCuenta === 'profesor_independiente' ? 'PARTICULAR' : (form.rbd || ''),
                     comuna: form.comuna || '',
                     dependencia: form.dependencia || '',
                     asignaturaId: form.asignaturaId || 'asig-1',
@@ -288,7 +406,9 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                     <span className="text-rose-200">Período de Prueba Finalizado</span>
                   ) : (
                     <>
-                      <span>Solicitar Acceso Gratuito (30 Días)</span>
+                      <span>
+                        {tipoCuenta === 'colegio' ? 'Solicitar Acceso Institucional (30 Días)' : 'Crear Cuenta de Docente (30 Días)'}
+                      </span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -310,4 +430,3 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
     </div>
   );
 };
-

@@ -191,6 +191,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           diasRestantes = Math.max(0, Math.min(30, p.dias_restantes_trial));
         }
 
+        let resolvedRol = p.rol || 'profesor';
+        const cargoLower = (p.cargo || '').toLowerCase();
+        if (p.rol === 'director' || cargoLower.includes('director')) {
+          resolvedRol = 'director';
+        } else if (p.rol === 'utp' || cargoLower.includes('utp') || cargoLower.includes('jefe')) {
+          resolvedRol = 'utp';
+        }
+
         return {
           id: p.id,
           rut: p.rut || '12.345.678-9',
@@ -199,11 +207,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           apellidoPaterno: p.apellido_paterno || undefined,
           apellidoMaterno: p.apellido_materno || undefined,
           email: p.email || '',
-          rol: p.rol || 'profesor',
+          rol: resolvedRol,
           establecimiento: p.establecimiento || 'Establecimiento',
           rbd: p.rbd || '',
           asignaturaId: p.asignatura_id || undefined,
-          asignaturaNombre: p.asignatura_nombre || (p.rol === 'profesor' ? 'Matemática' : undefined),
+          asignaturaNombre: p.asignatura_nombre || (resolvedRol === 'profesor' ? 'Matemática' : undefined),
           cargo: p.cargo || undefined,
           estado: userEstado,
           plan: p.plan || 'trial',
@@ -328,6 +336,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }
         }
 
+        const isDirector = rol === 'director' || (cargo || '').toLowerCase().includes('director');
+        const isUtp = rol === 'utp' || (cargo || '').toLowerCase().includes('utp') || (cargo || '').toLowerCase().includes('jefe');
+
+        let dbRol = 'profesor';
+        if (rol === 'admin') dbRol = 'admin';
+        else if (rol === 'alumno') dbRol = 'alumno';
+        else dbRol = 'profesor'; // director y utp usan 'profesor' en Postgres para satisfacer el check constraint
+
+        let defaultCargo = 'Docente';
+        if (isDirector) defaultCargo = 'Director General';
+        else if (isUtp) defaultCargo = asignaturaNombre ? `Jefe de UTP ${asignaturaNombre}` : 'Jefe de UTP';
+        else if (asignaturaNombre) defaultCargo = `Docente de ${asignaturaNombre}`;
+
         // 3. Insertar o actualizar perfil activo en tabla public.perfiles
         const profilePayload: any = {
           id: authUserId,
@@ -335,17 +356,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           nombre: (nombre || '').trim(),
           apellido: fullApellido,
           email: cleanEmail,
-          rol: rol || 'profesor',
+          rol: dbRol,
           establecimiento: cleanEstablecimiento || 'Establecimiento Educacional',
           rbd: cleanRbd || null,
           comuna: cleanComuna || null,
           dependencia: cleanDependencia || null,
           asignatura_id: asignaturaId || null,
           asignatura_nombre: asignaturaNombre || null,
-          cargo: cargo || (asignaturaNombre ? `Docente de ${asignaturaNombre}` : 'Docente'),
+          cargo: cargo || defaultCargo,
           estado: 'activo',
           activo: true,
-          plan: 'trial',
+          plan: body.plan || (isDirector || isUtp ? 'institucional' : 'trial'),
           dias_restantes_trial: 30,
           approval_token: null,
           fecha_registro: new Date().toISOString()

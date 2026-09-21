@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { UserProfile, UserRole, UserEstado, UserPlan } from '../types';
+import { UserProfile, UserRole, UserEstado, UserPlan, TipoCuenta } from '../types';
 import {
   currentUserAdmin,
   currentUserAdminDemo,
+  currentUserDirector,
+  currentUserJefeUtp,
   currentUserProfesor,
   currentUserProfesorCiencias,
   currentUserProfesorLenguaje,
@@ -45,6 +47,7 @@ interface AuthContextType {
   setColegioEstado: (colegioFilter: { rbd?: string; establecimiento?: string }, nuevoEstado: UserEstado, nuevoPlan?: UserPlan) => Promise<{ error: string | null }>;
   changeUserPlan: (userId: string, nuevoPlan: UserPlan) => Promise<{ error: string | null }>;
   setUserPassword: (userId: string, email: string, newPassword: string) => Promise<{ error: string | null }>;
+  createUsuarioDirecto: (userData: Partial<UserProfile> & { tempPassword?: string }) => Promise<{ error: string | null; user?: UserProfile }>;
   loadDocentesReales: () => Promise<void>;
   loadUsuariosReales: () => Promise<void>;
   // ID del admin real que inició sesión (para poder volver desde vista de docente)
@@ -67,6 +70,8 @@ export interface RegisterData {
   dependencia?: string;
   asignaturaId?: string;
   asignaturaNombre?: string;
+  tipoCuenta?: TipoCuenta;
+  cargo?: string;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -94,7 +99,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const dbDocentes: UserProfile[] = data
           .filter((p: Record<string, unknown>) => {
             // Filtrar cuentas demo usando la columna canónica es_demo (Directiva 2, Paso 3.4)
-            return p.es_demo !== true;
+            const cargoStr = String(p.cargo || '').toLowerCase();
+            const rolStr = String(p.rol || '').toLowerCase();
+            return p.es_demo !== true && !cargoStr.includes('director') && !cargoStr.includes('utp') && !cargoStr.includes('jefe') && rolStr !== 'director' && rolStr !== 'utp';
           })
           .map((p: Record<string, unknown>) => ({
             id: p.id as string,
@@ -147,6 +154,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           userEstado = 'pendiente_aprobacion';
         }
 
+        let userRole: UserRole = ((p.rol as string) || 'profesor') as UserRole;
+        const cargoStr = String(p.cargo || '').toLowerCase();
+        if (p.rol === 'director' || cargoStr.includes('director')) {
+          userRole = 'director';
+        } else if (p.rol === 'utp' || cargoStr.includes('utp') || cargoStr.includes('jefe')) {
+          userRole = 'utp';
+        }
+
         return {
           id: p.id as string,
           rut: (p.rut as string) || '',
@@ -156,12 +171,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           apellidoMaterno: (p.apellido_materno as string) || undefined,
           email: (p.email as string) || '',
           telefono: (p.telefono as string) || undefined,
-          rol: ((p.rol as string) || 'profesor') as UserRole,
+          rol: userRole,
           establecimiento: (p.establecimiento as string) || '',
           rbd: (p.rbd as string) || undefined,
           asignaturaId: (p.asignatura_id as string) || undefined,
           asignaturaNombre: (p.asignatura_nombre as string) || undefined,
           cargo: (p.cargo as string) || undefined,
+          tipoCuenta: 'colegio',
+          departamentosSupervisados: userRole === 'utp' ? ['asig-1', 'asig-3'] : undefined,
           estado: userEstado,
           plan: ((p.plan as string) || 'trial') as UserPlan,
           logoUrl: (p.logo_url as string) || undefined,
@@ -217,8 +234,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const estado: UserEstado = (profile.estado as UserEstado) || 'activo';
             const diasRestantes = calcularDiasRestantes(profile);
             // Restaurar sesión para que la app evalúe si puede navegar o debe mostrar CuentaCaducadaBloqueo
-            if (estado === 'activo' || estado === 'suspendido' || profile.rol === 'admin' || profile.rol === 'superadmin') {
-              const resolvedRole: UserRole = (profile.rol as UserRole) || 'profesor';
+            if (estado === 'activo' || estado === 'suspendido' || profile.rol === 'admin' || profile.rol === 'superadmin' || profile.rol === 'director' || profile.rol === 'utp' || String(profile.cargo || '').toLowerCase().includes('director') || String(profile.cargo || '').toLowerCase().includes('utp')) {
+              let resolvedRole: UserRole = (profile.rol as UserRole) || 'profesor';
+              const cargoStr = String(profile.cargo || '').toLowerCase();
+              if (profile.rol === 'director' || cargoStr.includes('director')) {
+                resolvedRole = 'director';
+              } else if (profile.rol === 'utp' || cargoStr.includes('utp') || cargoStr.includes('jefe')) {
+                resolvedRole = 'utp';
+              }
+
               const restoredUser: UserProfile = {
                 id: profile.id,
                 rut: profile.rut || '',
@@ -233,6 +257,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 asignaturaId: profile.asignatura_id || undefined,
                 asignaturaNombre: profile.asignatura_nombre || undefined,
                 cargo: profile.cargo || undefined,
+                tipoCuenta: 'colegio',
+                departamentosSupervisados: resolvedRole === 'utp' ? ['asig-1', 'asig-3'] : undefined,
                 estado: estado,
                 plan: (profile.plan as UserPlan) || 'trial',
                 diasRestantesTrial: diasRestantes,
@@ -315,7 +341,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
 
           setAdminBaseProfile(null);
-          const resolvedRole: UserRole = (profile.rol as UserRole) || 'profesor';
+          let resolvedRole: UserRole = (profile.rol as UserRole) || 'profesor';
+          const cargoStr = String(profile.cargo || '').toLowerCase();
+          if (profile.rol === 'director' || cargoStr.includes('director')) {
+            resolvedRole = 'director';
+          } else if (profile.rol === 'utp' || cargoStr.includes('utp') || cargoStr.includes('jefe')) {
+            resolvedRole = 'utp';
+          }
+
           const loggedUser: UserProfile = {
             id: profile.id,
             rut: profile.rut || '',
@@ -330,6 +363,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             asignaturaId: profile.asignatura_id || undefined,
             asignaturaNombre: profile.asignatura_nombre || undefined,
             cargo: profile.cargo || undefined,
+            tipoCuenta: 'colegio',
+            departamentosSupervisados: resolvedRole === 'utp' ? ['asig-1', 'asig-3'] : undefined,
             estado: estado,
             plan: plan,
             diasRestantesTrial: diasRestantes,
@@ -692,6 +727,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [authenticatedFetch]);
 
+  /**
+   * Crea un nuevo usuario (Docente, Jefe UTP o Director) directamente desde la consola Admin.
+   * Requiere sesión de administrador autenticado (JWT).
+   */
+  const createUsuarioDirecto = useCallback(async (userData: Partial<UserProfile> & { tempPassword?: string }): Promise<{ error: string | null; user?: UserProfile }> => {
+    try {
+      const res = await authenticatedFetch('/api/users?action=admin-create', {
+        method: 'POST',
+        body: JSON.stringify(userData)
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.error) {
+        return { error: data.error || 'Error al crear usuario en el servidor.' };
+      }
+
+      await loadUsuariosReales();
+      await loadDocentesReales();
+      return { error: null, user: data.user };
+    } catch (err: unknown) {
+      console.error('Error creando usuario:', err);
+      const msg = err instanceof Error ? err.message : 'Error de conexión al crear usuario.';
+      return { error: msg };
+    }
+  }, [authenticatedFetch, loadUsuariosReales, loadDocentesReales]);
+
   const logout = useCallback(async () => {
     try {
       await supabase.auth.signOut();
@@ -712,6 +773,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Demo/Sandbox: usar siempre el admin de prueba del Liceo Bicentenario
         setUser(currentUserAdminDemo);
       }
+    } else if (role === 'director') {
+      setUser(currentUserDirector);
+    } else if (role === 'utp') {
+      setUser(currentUserJefeUtp);
     } else if (role === 'profesor') {
       let localProf: UserProfile | null = null;
       try {
@@ -795,6 +860,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setColegioEstado,
       changeUserPlan,
       setUserPassword,
+      createUsuarioDirecto,
       loadDocentesReales,
       loadUsuariosReales
     }}>

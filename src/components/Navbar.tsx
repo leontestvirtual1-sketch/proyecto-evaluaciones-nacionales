@@ -125,7 +125,31 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }`}
                       title="Administrador General / UTP Demo"
                     >
-                      <span>👑 Admin UTP</span>
+                      <span>👑 Admin</span>
+                    </button>
+
+                    <button
+                      onClick={() => onRoleChange('director')}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
+                        user.rol === 'director'
+                          ? 'bg-blue-600 text-white shadow-sm font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="Ver vista como Director (Cuadro de Mando Ejecutivo)"
+                    >
+                      <span>🏛️ Director</span>
+                    </button>
+
+                    <button
+                      onClick={() => onRoleChange('utp')}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
+                        user.rol === 'utp'
+                          ? 'bg-teal-600 text-white shadow-sm font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="Ver vista como Jefe UTP (Supervisión Pedagógica y Docentes)"
+                    >
+                      <span>📋 UTP</span>
                     </button>
 
                     <button
