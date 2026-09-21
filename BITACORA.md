@@ -2,6 +2,24 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Aislamiento Estricto del Perfil Docente: Preguntas Creadas y Asignación de Evaluaciones de Catálogo
+
+- **Problema / Requerimiento**:
+  1. **Visualización de preguntas en el perfil**: El docente debe ver en su Banco de Preguntas **únicamente las preguntas creadas y cargadas por él/ella** (`propietario_id = user.id`), no todas las preguntas de la asignatura en el catálogo nacional. Anteriormente, un docente de básica con especialidad Matemática veía más de 135 preguntas de 2° y 4° Medio (PAES M1, SIMCE 2M).
+  2. **Asociación de evaluaciones de catálogo**: Las evaluaciones que están en el catálogo nacional **solo deben quedar asociadas al perfil del docente en el momento en que sean asignadas a ese docente** (creadas con `profesor_id = teacher.id` tras asignación administrativa o solicitud aprobada), permitiendo que una misma evaluación se asigne a múltiples docentes según su especialidad.
+  3. **Limpieza de cursos no generados**: Se depuraron de la base de datos de producción los 3 cursos de básica (`curso-mc-4b`, `curso-mc-6b`, `curso-mc-8b`) que habían sido inyectados por una migración de seed antigua con 0 estudiantes.
+
+- **Archivos y Solución Técnica**:
+  - [`src/hooks/useBancoPreguntas.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/hooks/useBancoPreguntas.ts): Modificada la consulta en Supabase para docentes no administradores (`user.rol !== 'admin'`), pasando de `query.or(propietario_id.eq, asignatura_id.eq)` a `query.eq('propietario_id', user.id)`. Ahora el banco privado del docente solo lista sus preguntas creadas/cargadas.
+  - [`src/context/AcademicDataContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AcademicDataContext.tsx): Modificado el filtro en `teacherPruebas`, eliminando el fallback por asignatura (`|| (activeUser.asignaturaId && p.asignaturaId === activeUser.asignaturaId)`). Ahora el docente solo ve en su dashboard y lista de evaluaciones las pruebas asignadas explícitamente a su perfil (`p.profesorId === activeUser.id`).
+  - **Base de Datos (Supabase)**: Eliminados de la tabla `public.cursos` los registros residuales sin uso `curso-mc-4b`, `curso-mc-6b` y `curso-mc-8b`.
+
+- **Verificación / Despliegue**:
+  - `npm test`: **9/9 suites de prueba en verde (80 tests PASS)**.
+  - `npm run lint`: **0 errores ni advertencias en ESLint**.
+  - `npm run build`: **✓ Built exitoso en producción (Vite + TypeScript sin errores)**.
+  - Push exitoso a `main` en GitHub (`1a0a7eb`).
+
 ### [2026-09-21] Desvinculación de Marcas de Terceros (Umáximo y DEMRE) para Habilitar Ensamble Modular
 
 - **Problema / Requerimiento**:
