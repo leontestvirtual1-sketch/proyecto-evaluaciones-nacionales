@@ -2,6 +2,36 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Fase 3.3: Sanitización y Blindaje de Correos Electrónicos (XSS & CRLF Injection)
+
+- **Problema / Requerimiento**:
+  1. **Inyección HTML / XSS en correos**: Varios puntos de envío de emails interpolaban campos provistos por usuarios (`nombre`, `apellido`, `establecimiento`, `rbd`, `asignaturaNombre`, `customMessage`) sin escapar caracteres especiales HTML, exponiendo a clientes de correo y administradores a inyección de código y defacement.
+  2. **Falta de módulo canónico común**: Existían funciones `escapeHtml` duplicadas e inconsistentes en handlers de `api/`, mientras que en la Edge Function de Supabase (`supabase/functions/notify-admin/index.ts`) no existía ningún saneamiento.
+  3. **Riesgo de Open Relay en `api/users.ts`**: La acción `send-email` / `send-welcome-email` no validaba rol administrativo (`requireAdmin`), lo que permitía a terceros enviar correos no autorizados mediante la API.
+  4. **CRLF Header Injection en Subject**: Caracteres `\r\n` en el asunto del correo podían permitir desbordamiento o inyección de cabeceras SMTP (ej. `Bcc:` fraudulento).
+
+- **Archivos y Solución Técnica**:
+  - [`api/_utils.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/_utils.ts):
+    - Creado módulo común con función canónica `escapeHtml(str: unknown): string` que neutraliza `&`, `<`, `>`, `"`, y `'`.
+  - [`api/notify-admin.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/notify-admin.ts):
+    - Migrado a `escapeHtml` desde `api/_utils.ts`.
+  - [`api/evaluaciones-catalogo.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/evaluaciones-catalogo.ts):
+    - Migrado a `escapeHtml` desde `api/_utils.ts`.
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - Migrado a `escapeHtml` centralizado.
+    - Blindada la acción `send-email` y `send-welcome-email` con compuerta de acceso `await requireAdmin(req)` devolviendo 403 si no es admin.
+    - Sanitizados todos los campos interpolados en plantilla (`safeNombre`, `safeEstablecimiento`, `safeTo`, `safePlan`, `safeTempPassword`, `safeCustomMessage`).
+    - Eliminados caracteres `[\r\n]` en el `subject` para prevenir CRLF header injection.
+  - [`supabase/functions/notify-admin/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/functions/notify-admin/index.ts):
+    - Incorporada función `escapeHtml` y saneados todos los campos de usuario (`fullName`, `safeRut`, `safeEmail`, `safeEstablecimiento`, `safeRbd`, `safeAsignatura`, `safeToken`).
+    - Prevención de CRLF header injection en asunto.
+  - [`tests/email-security.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/email-security.test.ts):
+    - Suite de 7 pruebas unitarias automatizadas que comprueban neutralización de tags `<script>`, escapado de comillas, atributos de evento, resiliencia a tipos no-string, prevención de CRLF y compuerta RBAC admin para envío de correos.
+
+- **Verificación / Despliegue**:
+  - `npm test`: **7/7 test suites pasando al 100% (31 tests PASS)**.
+  - `npm run build`: **✓ built in 20.35s** (0 errores TypeScript, 0 advertencias).
+
 ### [2026-09-21] Fase 3.2: Seguridad del Cliente Alumno e Invariante de Aislamiento de Claves
 
 - **Problema / Requerimiento**:

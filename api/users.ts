@@ -6,15 +6,7 @@ import crypto from 'crypto';
 type VercelRequest = any;
 type VercelResponse = any;
 
-function escapeHtml(str: any): string {
-  if (typeof str !== 'string') return '';
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+import { escapeHtml } from './_utils';
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || '';
 const CC_EMAIL = process.env.CC_EMAIL || '';
@@ -30,7 +22,7 @@ if (!SUPABASE_SERVICE_ROLE_KEY) {
   console.warn('⚠️ [SEGURIDAD] SUPABASE_SERVICE_ROLE_KEY no está configurada en las variables de entorno.');
 }
 
-const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY || 'dummy-key-for-test-init');
 
 // NOTA: Los tokens de aprobación se almacenan en Supabase (columna approval_token).
 // No se hardcodean datos de usuario en memoria.
@@ -678,12 +670,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json({ success: true, message: 'Contraseña actualizada con éxito.' });
       }
 
-      // ── ACCIÓN: ENVIAR CORREO REAL AL USUARIO ──
+      // ── ACCIÓN: ENVIAR CORREO REAL AL USUARIO (Solo Admin - Directiva 3.3) ──
       if (action === 'send-email' || action === 'send-welcome-email') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) {
+          return res.status(403).json({ error: authCheck.error });
+        }
+
         const { to, subject, nombre, establecimiento, plan, customMessage, tempPassword } = body;
         if (!to) return res.status(400).json({ error: 'Dirección de correo destinatario requerida.' });
 
-        const emailSubject = subject || `✨ ¡Tu acceso a Sysget Saber ha sido activado! — ${establecimiento || 'Sysget Saber'}`;
+        const cleanEstablecimiento = (establecimiento || 'Sysget Saber').replace(/[\r\n]/g, '').trim();
+        const emailSubject = subject
+          ? String(subject).replace(/[\r\n]/g, '').trim()
+          : `✨ ¡Tu acceso a Sysget Saber ha sido activado! — ${cleanEstablecimiento}`;
+
+        const safeTo = escapeHtml(to);
+        const safeNombre = escapeHtml(nombre) || 'Docente';
+        const safeEstablecimiento = escapeHtml(establecimiento) || 'tu establecimiento';
+        const safePlan = escapeHtml(plan ? plan.toUpperCase() : 'TRIAL (30 DÍAS GRATIS)');
+        const safeTempPassword = escapeHtml(tempPassword);
+        const safeCustomMessage = customMessage ? escapeHtml(customMessage).replace(/\n/g, '<br/>') : '';
 
         const htmlContent = `
 <!DOCTYPE html>
@@ -709,18 +716,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       <p>Plataforma de Diagnóstico y Ensayos SIMCE / PAES</p>
     </div>
     <div class="content">
-      <p>Hola <strong>${nombre || 'Docente'}</strong>,</p>
-      <p>Tu cuenta institucional para <strong>${establecimiento || 'tu establecimiento'}</strong> está oficialmente activa y lista para usar.</p>
+      <p>Hola <strong>${safeNombre}</strong>,</p>
+      <p>Tu cuenta institucional para <strong>${safeEstablecimiento}</strong> está oficialmente activa y lista para usar.</p>
 
       <div class="card">
         <div style="font-weight: bold; color: #818cf8; margin-bottom: 8px;">✨ Resumen de tu Cuenta:</div>
-        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Usuario:</strong> ${to}</div>
-        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Establecimiento:</strong> ${establecimiento || 'Establecimiento Registrado'}</div>
-        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Plan:</strong> ${plan ? plan.toUpperCase() : 'TRIAL (30 DÍAS GRATIS)'}</div>
-        ${tempPassword ? `<div style="font-size: 13px; color: #34d399; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #334155;">🔑 <strong>Contraseña inicial:</strong> <code style="background:#0f172a;padding:3px 8px;border-radius:6px;color:#a7f3d0;font-size:14px;">${tempPassword}</code></div>` : ''}
+        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Usuario:</strong> ${safeTo}</div>
+        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Establecimiento:</strong> ${safeEstablecimiento}</div>
+        <div style="font-size: 13px; color: #e2e8f0; margin-bottom: 4px;">• <strong>Plan:</strong> ${safePlan}</div>
+        ${safeTempPassword ? `<div style="font-size: 13px; color: #34d399; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #334155;">🔑 <strong>Contraseña inicial:</strong> <code style="background:#0f172a;padding:3px 8px;border-radius:6px;color:#a7f3d0;font-size:14px;">${safeTempPassword}</code></div>` : ''}
       </div>
 
-      ${customMessage ? `<div style="background:#1e1b4b;border-left:4px solid #6366f1;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px;color:#c7d2fe;">${customMessage.replace(/\n/g, '<br/>')}</div>` : ''}
+      ${safeCustomMessage ? `<div style="background:#1e1b4b;border-left:4px solid #6366f1;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px;color:#c7d2fe;">${safeCustomMessage}</div>` : ''}
 
       <p>Con tu acceso activo podrás:</p>
       <ul style="padding-left: 20px; font-size: 13px; color: #94a3b8;">

@@ -16,15 +16,7 @@ import nodemailer from "nodemailer";
 type VercelRequest = any;
 type VercelResponse = any;
 
-function escapeHtml(str: any): string {
-  if (typeof str !== 'string') return '';
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+import { escapeHtml } from './_utils';
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "";
 const CC_EMAIL = process.env.CC_EMAIL || "";

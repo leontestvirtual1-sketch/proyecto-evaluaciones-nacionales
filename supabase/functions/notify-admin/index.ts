@@ -7,9 +7,19 @@
 
 import nodemailer from 'npm:nodemailer@6.9.13';
 
-const ADMIN_EMAIL = 'leontestvirtual1@gmail.com';
-const ADMIN_NAME = 'Luis Andrés León González';
-const APP_URL = 'https://sysget-saber.vercel.app';
+const ADMIN_EMAIL = Deno.env.get('ADMIN_EMAIL') || 'leontestvirtual1@gmail.com';
+const ADMIN_NAME = Deno.env.get('ADMIN_NAME') || 'Luis Andrés León González';
+const APP_URL = Deno.env.get('APP_URL') || 'https://sysget-saber.vercel.app';
+
+function escapeHtml(str: unknown): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 Deno.serve(async (req: Request) => {
   // CORS para llamadas desde el frontend
@@ -43,8 +53,16 @@ Deno.serve(async (req: Request) => {
       approvalToken,
     } = body;
 
-    const approvalLink = `${APP_URL}?approve_token=${approvalToken}`;
-    const fullName = `${nombre} ${apellido}`;
+    const safeNombre = escapeHtml(nombre);
+    const safeApellido = escapeHtml(apellido);
+    const fullName = `${safeNombre} ${safeApellido}`.trim() || 'Nuevo Usuario';
+    const safeRut = escapeHtml(rut);
+    const safeEmail = escapeHtml(email);
+    const safeEstablecimiento = escapeHtml(establecimiento);
+    const safeRbd = escapeHtml(rbd);
+    const safeAsignatura = escapeHtml(asignaturaNombre);
+    const safeToken = encodeURIComponent(approvalToken || '');
+    const approvalLink = `${APP_URL}?approve_token=${safeToken}`;
     const rolLabel = rol === 'profesor' ? '👨‍🏫 Docente' : rol === 'admin' ? '🛡️ Administrador' : '👤 Alumno';
 
     // ── Plantilla HTML del correo ──────────────────────────────
@@ -89,24 +107,24 @@ Deno.serve(async (req: Request) => {
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">RUT</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rut}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${safeRut}</td>
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Correo</td>
-                      <td style="padding:6px 0;color:#818cf8;font-size:14px;">${email}</td>
+                      <td style="padding:6px 0;color:#818cf8;font-size:14px;">${safeEmail}</td>
                     </tr>
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Rol Solicitado</td>
                       <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${rolLabel}</td>
                     </tr>
-                    ${asignaturaNombre ? `
+                    ${safeAsignatura ? `
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Especialidad</td>
-                      <td style="padding:6px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${asignaturaNombre}</td>
+                      <td style="padding:6px 0;color:#a5b4fc;font-size:14px;font-weight:600;">${safeAsignatura}</td>
                     </tr>` : ''}
                     <tr>
                       <td style="padding:6px 0;color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;">Establecimiento</td>
-                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${establecimiento} ${rbd ? `<span style="color:#94a3b8;font-size:12px;">(RBD: ${rbd})</span>` : ''}</td>
+                      <td style="padding:6px 0;color:#f1f5f9;font-size:14px;">${safeEstablecimiento} ${safeRbd ? `<span style="color:#94a3b8;font-size:12px;">(RBD: ${safeRbd})</span>` : ''}</td>
                     </tr>
                   </table>
                 </td></tr>
@@ -165,10 +183,13 @@ Deno.serve(async (req: Request) => {
       },
     });
 
+    const cleanSubjectName = fullName.replace(/[\r\n]/g, '').trim();
+    const cleanSubjectEst = (safeEstablecimiento || 'Establecimiento').replace(/[\r\n]/g, '').trim();
+
     const info = await transporter.sendMail({
       from: `"Sysget Saber" <${SMTP_USER}>`,
       to: ADMIN_EMAIL,
-      subject: `🔔 Nueva solicitud de acceso: ${fullName} (${establecimiento})`,
+      subject: `🔔 Nueva solicitud de acceso: ${cleanSubjectName} (${cleanSubjectEst})`,
       html: htmlBody,
     });
 
