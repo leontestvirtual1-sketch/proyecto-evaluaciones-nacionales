@@ -13,6 +13,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabaseClient';
 import { EvaluacionCatalogo, Pregunta, Prueba, Alternativa } from '../types';
 import { getTipoEvaluacion } from './AdminCatalogoPanel';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
@@ -74,34 +75,65 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
           { headers }
         );
 
+        let rawList: Record<string, unknown>[] = [];
         if (res.ok) {
           const data = await res.json();
-          const items: Pregunta[] = (data.preguntas || []).map((p: Record<string, unknown>) => {
-            // Normalizar alternativas: Supabase JSONB puede llegar como string o array
-            let alts: Alternativa[] = [];
-            if (Array.isArray(p.alternativas)) {
-              alts = p.alternativas as Alternativa[];
-            } else if (typeof p.alternativas === 'string' && p.alternativas.trim()) {
-              try { alts = JSON.parse(p.alternativas); } catch { alts = []; }
-            }
-            return {
-              id: p.id,
-              asignaturaId: p.asignatura_id,
-              ejeTematicoId: p.eje_tematico_id,
-              habilidadId: p.habilidad_id,
-              tipo: p.tipo,
-              nivel: p.nivel,
-              dificultad: p.dificultad,
-              imagenUrl: p.imagen_url,
-              enunciado: p.enunciado,
-              alternativas: alts,
-              respuestaCorrecta: p.respuesta_correcta,
-              puntaje: p.puntaje || 1,
-              fuente: p.fuente,
-            };
-          });
-          setPreguntas(items);
+          rawList = data.preguntas || [];
         }
+
+        // Fallback robusto directo a Supabase
+        if (rawList.length === 0) {
+          const EVAL_PREGUNTA_PREFIX: Record<string, string> = {
+            'eval-paes-mat1-2023-f113': 'preg-paes-m1-23-%',
+            'eval-paes-lect-2026-f103': 'preg-paes-lec-26-%',
+            'eval-diag-ciu-3m-2026': 'preg-ciu3m-diag-%',
+            'diag_ciudadana_3m_2026': 'preg-ciu3m-diag-%',
+            'eval-simce-mat-6b-ensayo3': 'preg-mat6b-e3-%',
+            'eval-simce-mat-6b-e3': 'preg-mat6b-e3-%',
+            'eval-simce-mat-2m-ensayo3': 'preg-mat2m-e3-%',
+            'eval-simce-mat-2m-e3': 'preg-mat2m-e3-%',
+            'eval-simce-lect-2m-ensayo6': 'preg-len2m-e6-%',
+            'eval-simce-len-2m-e6': 'preg-len2m-e6-%',
+          };
+          const prefix = EVAL_PREGUNTA_PREFIX[evaluacion.id];
+          if (prefix) {
+            const { data: dbItems } = await supabase
+              .from('preguntas')
+              .select('*')
+              .like('id', prefix)
+              .order('id', { ascending: true });
+            if (dbItems && dbItems.length > 0) {
+              rawList = dbItems as unknown as Record<string, unknown>[];
+            }
+          }
+        }
+
+        const items: Pregunta[] = rawList.map((p: Record<string, unknown>) => {
+          // Normalizar alternativas: Supabase JSONB puede llegar como string o array
+          let alts: Alternativa[] = [];
+          if (Array.isArray(p.alternativas)) {
+            alts = p.alternativas as Alternativa[];
+          } else if (typeof p.alternativas === 'string' && p.alternativas.trim()) {
+            try { alts = JSON.parse(p.alternativas); } catch { alts = []; }
+          }
+          return {
+            id: String(p.id || ''),
+            asignaturaId: String(p.asignatura_id || ''),
+            ejeTematicoId: String(p.eje_tematico_id || ''),
+            habilidadId: String(p.habilidad_id || ''),
+            tipo: (p.tipo as Pregunta['tipo']) || 'seleccion_multiple',
+            nivel: String(p.nivel || ''),
+            dificultad: (p.dificultad as Pregunta['dificultad']) || 'media',
+            imagenUrl: p.imagen_url as string | undefined,
+            tablaMarkdown: p.tabla_markdown as string | undefined,
+            enunciado: String(p.enunciado || ''),
+            alternativas: alts,
+            respuestaCorrecta: (p.respuesta_correcta as string | null) ?? null,
+            puntaje: Number(p.puntaje) || 1,
+            fuente: String(p.fuente || ''),
+          };
+        });
+        setPreguntas(items);
       } catch (err) {
         console.error('Error cargando preguntas:', err);
       } finally {

@@ -76,8 +76,29 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
       ]);
 
       const catData = catRes.ok ? await catRes.json() : { evaluaciones: [] };
+      let evalRows = (catData.evaluaciones || []) as Record<string, unknown>[];
+
+      // Fallback directo a Supabase si el endpoint de API retornó vacío
+      if (evalRows.length === 0) {
+        let q = supabase
+          .from("evaluaciones")
+          .select("id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas")
+          .eq("es_catalogo", true)
+          .not("verificada_at", "is", null)
+          .order("created_at", { ascending: false });
+
+        if (currentUser.rol !== 'admin' && currentUser.asignaturaId) {
+          q = q.eq("asignatura_id", currentUser.asignaturaId);
+        }
+
+        const { data: directData } = await q;
+        if (directData && directData.length > 0) {
+          evalRows = directData as unknown as Record<string, unknown>[];
+        }
+      }
+
       setCatalogo(
-        (catData.evaluaciones || []).map((e: Record<string, unknown>) => ({
+        evalRows.map((e: Record<string, unknown>) => ({
           id: String(e.id || ''),
           titulo: String(e.titulo || ''),
           descripcion: String(e.descripcion || ''),
@@ -384,7 +405,11 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
                         <Eye size={13} />
                         <span className="hidden sm:inline">Ver Contenido</span>
                       </button>
-                      {estado === "aprobada" ? (
+                      {currentUser.rol === 'admin' ? (
+                        <span className="flex items-center gap-1 text-xs font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/30 px-3 py-1.5 rounded-lg">
+                          <CheckCircle2 size={13} /> Catálogo Oficial
+                        </span>
+                      ) : estado === "aprobada" ? (
                         <span className="flex items-center gap-1 text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-lg">
                           <CheckCircle2 size={14} /> En mis evaluaciones
                         </span>

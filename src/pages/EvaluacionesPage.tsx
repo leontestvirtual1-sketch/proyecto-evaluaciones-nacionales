@@ -326,8 +326,8 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
 
           <div className="flex items-center gap-2 flex-wrap justify-end">
-            {/* Catálogo de Evaluaciones: sólo visible para docentes en producción */}
-            {currentUser?.rol === 'profesor' && currentUser?.asignaturaId && !isSandboxMode && (
+            {/* Catálogo de Evaluaciones: visible para profesores y administradores */}
+            {(currentUser?.rol === 'profesor' || currentUser?.rol === 'admin') && !isSandboxMode && (
               <button
                 id="btn-catalogo-evaluaciones"
                 onClick={() => setCatalogoModalOpen(true)}

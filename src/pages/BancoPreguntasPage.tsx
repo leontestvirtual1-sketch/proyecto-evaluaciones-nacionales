@@ -218,20 +218,28 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       }
     }
 
-    return Array.from(activeKeys).map(key => {
-      const meta = LEVEL_METADATA[key] || {
-        label: key.charAt(0).toUpperCase() + key.slice(1),
-        icon: '📚',
-        sublabel: `Nivel ${key}`
-      };
-      return {
-        key,
-        label: meta.label,
-        icon: meta.icon,
-        sublabel: meta.sublabel,
-        count: counts[key] || 0
-      };
-    });
+    const NIVEL_ORDER: Record<string, number> = {
+      '1° básico': 1, '2° básico': 2, '3° básico': 3, '4° básico': 4,
+      '5° básico': 5, '6° básico': 6, '7° básico': 7, '8° básico': 8,
+      '1° medio': 9, '2° medio': 10, '3° medio': 11, '4° medio': 12,
+    };
+
+    return Array.from(activeKeys)
+      .map(key => {
+        const meta = LEVEL_METADATA[key] || {
+          label: key.charAt(0).toUpperCase() + key.slice(1),
+          icon: '📚',
+          sublabel: `Nivel ${key}`
+        };
+        return {
+          key,
+          label: meta.label,
+          icon: meta.icon,
+          sublabel: meta.sublabel,
+          count: counts[key] || 0
+        };
+      })
+      .sort((a, b) => (NIVEL_ORDER[a.key] || 99) - (NIVEL_ORDER[b.key] || 99));
   }, [preguntas, userCursos, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
 
   // Sincronizar nivelFilter:
@@ -294,6 +302,41 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     });
   }, [preguntas, isDocente, docenteAsigId, asignaturaFilter, nivelFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
 
+  // Total global que cumple con los filtros institucionales activos (sin limitar por nivel)
+  const totalPreguntasGlobal = useMemo(() => {
+    const selectedDoc = !isDocente && docenteFilter
+      ? docentesDisponibles.find(d => d.id === docenteFilter || (d.rawId && d.rawId === docenteFilter) || d.email.toLowerCase() === docenteFilter.toLowerCase())
+      : null;
+
+    return preguntas.filter(p => {
+      const matchAsig = isDocente
+        ? p.asignaturaId === docenteAsigId
+        : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
+
+      let matchEstablecimiento = true;
+      if (!isDocente && establecimientoFilter) {
+        const docForQ = docentesDisponibles.find(d => 
+          Boolean(p.propietarioId && (d.id === p.propietarioId || d.rawId === p.propietarioId))
+        );
+        matchEstablecimiento = Boolean(
+          p.establecimiento === establecimientoFilter ||
+          (docForQ && docForQ.establecimiento === establecimientoFilter)
+        );
+      }
+
+      let matchDocente = true;
+      if (!isDocente && docenteFilter && selectedDoc) {
+        matchDocente = Boolean(
+          p.propietarioId === selectedDoc.id ||
+          (selectedDoc.rawId && p.propietarioId === selectedDoc.rawId) ||
+          p.asignaturaId === selectedDoc.asigId
+        );
+      }
+
+      return matchAsig && matchEstablecimiento && matchDocente;
+    }).length;
+  }, [preguntas, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
+
   // Preguntas filtradas por los criterios secundarios (búsqueda, eje, habilidad, dificultad, tipo)
   const filtered = useMemo(() => {
     return basePreguntas.filter(p => {
@@ -329,15 +372,21 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     }
   };
 
-  // KPIs dinámicos calculados estrictamente para el Curso / Nivel seleccionado
-  const totalPreguntasNivel = basePreguntas.length;
-  const totalSeleccionMultiple = basePreguntas.filter(p => p.tipo === 'seleccion_multiple').length;
-  const totalDesarrollo = basePreguntas.filter(p => p.tipo === 'desarrollo').length;
-  const totalOficiales = basePreguntas.filter(
-    p =>
-      p.fuente.toLowerCase().includes('oficial') ||
-      p.fuente.toLowerCase().includes('liberada') ||
-      p.fuente.toLowerCase().includes('simce')
+  // Detección de filtros secundarios activos (búsqueda o filtros taxonómicos/pedagógicos)
+  const hasSecondaryFilters = Boolean(
+    search.trim() || ejeFilter || habilidadFilter || dificultadFilter || tipoFilter
+  );
+
+  // KPIs dinámicos: si hay filtros secundarios activos, reflejan fielmente las preguntas filtradas que se muestran
+  const activeDataset = hasSecondaryFilters ? filtered : basePreguntas;
+  const totalPreguntasNivel = activeDataset.length;
+  const totalSeleccionMultiple = activeDataset.filter(p => p.tipo === 'seleccion_multiple').length;
+  const totalDesarrollo = activeDataset.filter(p => p.tipo === 'desarrollo').length;
+  const totalOficiales = activeDataset.filter(
+    p => {
+      const f = (p.fuente || '').toLowerCase();
+      return f.includes('oficial') || f.includes('liberada') || f.includes('simce') || f.includes('paes') || f.includes('demre');
+    }
   ).length;
 
   return (
@@ -393,10 +442,6 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         <div className="flex flex-wrap items-center gap-2 pt-1">
           {nivelesDisponibles.map(lvl => {
             const isSelected = normalizeNivel(nivelFilter) === normalizeNivel(lvl.key);
-            const countForLvl = preguntas.filter(p => {
-              const matchAsig = isDocente ? p.asignaturaId === docenteAsigId : (!asignaturaFilter || p.asignaturaId === asignaturaFilter);
-              return matchAsig && normalizeNivel(p.nivel) === normalizeNivel(lvl.key);
-            }).length;
 
             return (
               <button
@@ -417,7 +462,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                 <span className={`px-1.5 py-0.2 rounded-md text-[10px] font-black ${
                   isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400'
                 }`}>
-                  {countForLvl}
+                  {lvl.count}
                 </span>
               </button>
             );
@@ -438,7 +483,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <span>🌐</span>
             <span>Todos los Cursos</span>
             <span className="px-1.5 py-0.2 rounded-md text-[10px] font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-              {isDocente ? preguntas.filter(p => p.asignaturaId === docenteAsigId).length : preguntas.length}
+              {totalPreguntasGlobal}
             </span>
           </button>
         </div>
@@ -624,6 +669,25 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <option value="seleccion_multiple">Selección Múltiple</option>
             <option value="desarrollo">Desarrollo</option>
           </select>
+        </div>
+      </div>
+
+      {/* Questions List Header */}
+      <div className="flex items-center justify-between px-1 text-xs text-slate-500 dark:text-slate-400 font-medium">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="font-bold text-slate-900 dark:text-white">
+            Mostrando {filtered.length} {filtered.length === 1 ? 'pregunta' : 'preguntas'}
+          </span>
+          {nivelFilter && (
+            <span className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded-md text-[11px] font-bold border border-indigo-500/20 uppercase">
+              {nivelFilter}
+            </span>
+          )}
+          {hasSecondaryFilters && (
+            <span className="text-[11px] text-amber-600 dark:text-amber-400 font-semibold">
+              (filtradas de {basePreguntas.length} del nivel)
+            </span>
+          )}
         </div>
       </div>
 

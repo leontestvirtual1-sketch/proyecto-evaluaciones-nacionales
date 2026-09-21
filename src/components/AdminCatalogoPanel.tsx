@@ -72,7 +72,7 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
   const [evalsSinAsignar, setEvalsSinAsignar] = useState<EvaluacionCatalogo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"solicitudes" | "catalogo">("solicitudes");
+  const [activeTab, setActiveTab] = useState<"solicitudes" | "catalogo">("catalogo");
   const [categoriaFiltro, setCategoriaFiltro] = useState<TipoCategoriaFiltro>("todos");
   const [toast, setToast] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
 
@@ -112,6 +112,21 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
 
       const solData = solRes.ok ? await solRes.json() : { solicitudes: [] };
       const catData = catRes.ok ? await catRes.json() : { evaluaciones: [] };
+      let evalRows = (catData.evaluaciones || []) as Record<string, unknown>[];
+
+      // Fallback directo a Supabase para garantizar visualización de catálogo
+      if (evalRows.length === 0) {
+        const { data: directEvals } = await supabase
+          .from("evaluaciones")
+          .select("id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas")
+          .eq("es_catalogo", true)
+          .not("verificada_at", "is", null)
+          .order("created_at", { ascending: false });
+
+        if (directEvals && directEvals.length > 0) {
+          evalRows = directEvals as unknown as Record<string, unknown>[];
+        }
+      }
 
       setSolicitudes(
         (solData.solicitudes || []).map((s: Record<string, unknown>) => ({
@@ -132,7 +147,7 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
 
       // Evaluaciones en catálogo (para gestión)
       setEvalsSinAsignar(
-        (catData.evaluaciones || []).map((e: Record<string, unknown>) => ({
+        evalRows.map((e: Record<string, unknown>) => ({
           id: e.id as string,
           titulo: e.titulo as string,
           descripcion: e.descripcion as string,
