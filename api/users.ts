@@ -44,6 +44,51 @@ async function requireAdmin(req: VercelRequest): Promise<{ ok: boolean; error?: 
   return { ok: true };
 }
 
+function getRutVariants(rawRut: string): { formatted: string; raw: string; clean: string; dash: string } {
+  const raw = (rawRut || '').trim();
+  const clean = raw.replace(/[\.\-\s]/g, '').toUpperCase();
+  if (clean.length < 2) {
+    return { formatted: raw, raw, clean, dash: raw };
+  }
+  const cuerpo = clean.slice(0, -1);
+  const dv = clean.slice(-1);
+  let formatted = '';
+  for (let i = cuerpo.length - 1, j = 0; i >= 0; i--, j++) {
+    if (j > 0 && j % 3 === 0) formatted = '.' + formatted;
+    formatted = cuerpo[i] + formatted;
+  }
+  return {
+    formatted: `${formatted}-${dv}`,
+    raw,
+    clean,
+    dash: `${cuerpo}-${dv}`
+  };
+}
+
+function checkProfileTrialExpired(p: {
+  fecha_registro?: string;
+  created_at?: string;
+  dias_restantes_trial?: number | null;
+  plan?: string | null;
+  estado?: string | null;
+}): { isExpired: boolean; diasRestantes: number } {
+  const createdAt = p.fecha_registro || p.created_at;
+  let diasRestantes = 30;
+  if (createdAt) {
+    const regDate = new Date(createdAt);
+    if (!isNaN(regDate.getTime())) {
+      const diffMs = Date.now() - regDate.getTime();
+      const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+      diasRestantes = Math.max(0, 30 - diffDays);
+    }
+  } else if (p.dias_restantes_trial !== undefined && p.dias_restantes_trial !== null) {
+    diasRestantes = Math.max(0, p.dias_restantes_trial);
+  }
+
+  const isExpired = (p.plan === 'trial' && diasRestantes <= 0) || p.estado === 'suspendido';
+  return { isExpired, diasRestantes };
+}
+
 const ALLOWED_ORIGIN = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -59,6 +104,49 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    // ── 0. Verificación pública de RUT (para formulario de registro previo a envío) ──
+    const actionQuery = (req.query?.action as string) || '';
+    if (actionQuery === 'check-rut' || (req.method === 'POST' && req.body?.action === 'check-rut')) {
+      const rawRut = (req.query?.rut as string) || (req.body?.rut as string) || '';
+      if (!rawRut.trim()) {
+        return res.status(400).json({ error: 'RUT es requerido.' });
+      }
+
+      const { formatted, raw, clean, dash } = getRutVariants(rawRut);
+      const { data: rutProfiles, error: qErr } = await sbAdmin
+        .from('perfiles')
+        .select('id, rut, nombre, apellido, email, estado, plan, dias_restantes_trial, fecha_registro, created_at')
+        .or(`rut.eq."${formatted}",rut.eq."${raw}",rut.eq."${clean}",rut.eq."${dash}"`)
+        .limit(1);
+
+      if (qErr) {
+        console.error('Error checking rut in perfiles:', qErr);
+        return res.status(500).json({ error: 'Error al verificar RUT en la base de datos.' });
+      }
+
+      const p = rutProfiles?.[0];
+      if (!p) {
+        return res.status(200).json({ exists: false, expired: false });
+      }
+
+      const { isExpired, diasRestantes } = checkProfileTrialExpired(p);
+
+      return res.status(200).json({
+        exists: true,
+        expired: isExpired,
+        diasRestantes,
+        estado: p.estado,
+        plan: p.plan,
+        nombre: p.nombre,
+        emailMasked: p.email ? p.email.replace(/(.{2})(.*)(@.*)/, '$1***$3') : undefined,
+        message: isExpired
+          ? `El usuario asociado al RUT ${p.rut || raw} ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar o contratar una licencia institucional.`
+          : p.estado === 'pendiente_aprobacion'
+          ? `El RUT ${p.rut || raw} ya tiene una solicitud pendiente de aprobación por el administrador.`
+          : `El RUT ${p.rut || raw} ya se encuentra registrado con una cuenta activa. Inicia sesión con tus credenciales.`
+      });
+    }
+
     // ── 1. GET: Listar usuarios — SOLO admins autenticados ──
     if (req.method === 'GET') {
       const authCheck = await requireAdmin(req);
@@ -68,8 +156,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       const { data: perfiles, error: pErr } = await sbAdmin
         .from('perfiles')
-        // Seleccionar solo campos mínimos — sin approval_token ni datos sensibles
-        .select('id, rut, nombre, apellido, apellido_paterno, apellido_materno, email, rol, establecimiento, rbd, asignatura_id, asignatura_nombre, cargo, estado, plan, dias_restantes_trial, fecha_registro, created_at, activo')
+        // Seleccionar solo campos mínimos existentes — sin approval_token ni datos sensibles
+        .select('id, rut, nombre, apellido, email, rol, establecimiento, rbd, asignatura_id, asignatura_nombre, cargo, estado, plan, dias_restantes_trial, fecha_registro, created_at, activo')
         .order('created_at', { ascending: false });
 
       if (pErr) {
@@ -246,8 +334,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           rut: rut ? rut.trim() : '',
           nombre: (nombre || '').trim(),
           apellido: fullApellido,
-          apellido_paterno: (apellidoPaterno || '').trim() || null,
-          apellido_materno: (apellidoMaterno || '').trim() || null,
           email: cleanEmail,
           rol: rol || 'profesor',
           establecimiento: cleanEstablecimiento || 'Establecimiento Educacional',
@@ -312,15 +398,49 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // S-09: Token criptográficamente seguro de 32 bytes (64 caracteres hexadecimales)
         const generatedToken = `tok-apr-${crypto.randomBytes(32).toString('hex')}`;
 
+        // 0. Pre-verificación por RUT: verificar si el RUT ya existe y si su período de prueba caducó
+        if (rut && rut.trim()) {
+          const { formatted, raw, clean, dash } = getRutVariants(rut);
+          const { data: rutProfiles } = await sbAdmin
+            .from('perfiles')
+            .select('id, rut, nombre, apellido, email, estado, plan, dias_restantes_trial, fecha_registro, created_at')
+            .or(`rut.eq."${formatted}",rut.eq."${raw}",rut.eq."${clean}",rut.eq."${dash}"`)
+            .limit(1);
+
+          const existingRutProfile = rutProfiles?.[0];
+          if (existingRutProfile) {
+            const { isExpired } = checkProfileTrialExpired(existingRutProfile);
+
+            if (isExpired) {
+              return res.status(409).json({
+                error: `El usuario asociado al RUT ${existingRutProfile.rut || raw} ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar tu acceso o contratar una licencia institucional.`
+              });
+            }
+
+            // Si el RUT ya existe y su cuenta está activa o registrada con otro email
+            if (existingRutProfile.email && existingRutProfile.email.toLowerCase() !== cleanEmail) {
+              return res.status(409).json({
+                error: `El RUT ${existingRutProfile.rut || raw} ya está registrado con la cuenta ${existingRutProfile.email}. Si necesitas recuperar tu acceso, inicia sesión o contacta al administrador.`
+              });
+            }
+          }
+        }
+
         // 1. Crear o sincronizar en Supabase Auth
         let authUserId = '';
         const { data: existingProfile } = await sbAdmin
           .from('perfiles')
-          .select('id')
+          .select('id, estado, plan, dias_restantes_trial, fecha_registro, created_at, rut')
           .eq('email', cleanEmail)
           .maybeSingle();
 
         if (existingProfile?.id) {
+          const { isExpired } = checkProfileTrialExpired(existingProfile);
+          if (isExpired) {
+            return res.status(409).json({
+              error: `La cuenta asociada a ${cleanEmail} ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar o contratar una licencia institucional.`
+            });
+          }
           authUserId = existingProfile.id;
           if (password) {
             await sbAdmin.auth.admin.updateUserById(authUserId, { password });
@@ -377,8 +497,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           rut: rut ? rut.trim() : '',
           nombre: (nombre || '').trim(),
           apellido: fullApellido,
-          apellido_paterno: (apellidoPaterno || '').trim() || null,
-          apellido_materno: (apellidoMaterno || '').trim() || null,
           email: cleanEmail,
           telefono: (telefono || '').trim() || null,
           rol: rol || 'profesor',

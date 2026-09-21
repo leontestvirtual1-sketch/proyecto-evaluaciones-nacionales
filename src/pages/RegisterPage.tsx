@@ -3,7 +3,7 @@ import { useAuth, RegisterData } from '../context/AuthContext';
 import { GraduationCap, Mail, Lock, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { UserRole } from '../types';
 import { asignaturasMock } from '../data/mockData';
-import { DocenteFormFields, DocenteFormData } from '../components/DocenteFormFields';
+import { DocenteFormFields, DocenteFormData, RutValidationStatus } from '../components/DocenteFormFields';
 import { validarRutChileno, validarRBD, normalizarRBD } from '../utils/chileValidators';
 
 interface RegisterPageProps {
@@ -30,6 +30,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [registeredSuccess, setRegisteredSuccess] = useState(false);
+  const [rutStatus, setRutStatus] = useState<RutValidationStatus | null>(null);
 
   const handleFieldChange = (field: keyof DocenteFormData | 'password' | 'rol', value: string) => {
     setForm(prev => {
@@ -44,6 +45,11 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (rutStatus?.expired) {
+      setError(rutStatus.message || 'El usuario asociado a este RUT ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar tu acceso o contratar una licencia institucional.');
+      return;
+    }
 
     if (!form.rut || !form.nombre || !form.apellidoPaterno || !form.apellidoMaterno || !form.email || !form.password || !form.establecimiento || !form.rbd) {
       setError('Por favor completa todos los campos obligatorios (Nombres, Apellido Paterno, Apellido Materno, RUT, Email, Establecimiento, RBD y Contraseña).');
@@ -229,6 +235,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                     asignaturaNombre: form.asignaturaNombre || 'Matemática'
                   }}
                   onChange={(field, val) => handleFieldChange(field, val)}
+                  onRutStatusChange={setRutStatus}
                   asignaturas={asignaturasMock}
                 />
 
@@ -272,11 +279,13 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
                 {/* Submit */}
                 <button
                   type="submit"
-                  disabled={isLoading}
-                  className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition-all active:scale-[0.98]"
+                  disabled={isLoading || rutStatus?.expired}
+                  className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition-all active:scale-[0.98]"
                 >
                   {isLoading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : rutStatus?.expired ? (
+                    <span className="text-rose-200">Período de Prueba Finalizado</span>
                   ) : (
                     <>
                       <span>Solicitar Acceso Gratuito (30 Días)</span>

@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { User, Mail, Building2, Hash, BookOpen, AlertCircle, CheckCircle2, MapPin, Phone } from 'lucide-react';
 import { Asignatura, EstablecimientoInfo } from '../types';
 import { asignaturasMock, establecimientosCatalog } from '../data/mockData';
 import { validarRutChileno, formatearRutChileno, validarRBD, normalizarRBD } from '../utils/chileValidators';
 import { supabase } from '../lib/supabaseClient';
+
+export interface RutValidationStatus {
+  exists?: boolean;
+  expired?: boolean;
+  message?: string;
+  loading?: boolean;
+}
 
 export const COMUNAS_REGION_METROPOLITANA = [
   'Santiago',
@@ -82,13 +89,15 @@ interface DocenteFormFieldsProps {
   onChange: (field: keyof DocenteFormData, value: string) => void;
   asignaturas?: Asignatura[];
   showCargoField?: boolean;
+  onRutStatusChange?: (status: RutValidationStatus | null) => void;
 }
 
 export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
   formData,
   onChange,
   asignaturas = asignaturasMock,
-  showCargoField = false
+  showCargoField = false,
+  onRutStatusChange
 }) => {
   const [establecimientosList, setEstablecimientosList] = useState<EstablecimientoInfo[]>(establecimientosCatalog);
   const [isCustomEstablecimiento, setIsCustomEstablecimiento] = useState(false);
@@ -156,15 +165,57 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
     }
   }, [formData.rbd, establecimientosList]);
 
+  const [rutStatus, setRutStatus] = useState<RutValidationStatus | null>(null);
+
+  const checkRutStatus = useCallback(async (rutValue: string) => {
+    const clean = rutValue.replace(/[\.\-\s]/g, '').trim();
+    if (clean.length < 7 || !validarRutChileno(rutValue)) {
+      setRutStatus(null);
+      onRutStatusChange?.(null);
+      return;
+    }
+
+    setRutStatus({ loading: true });
+    onRutStatusChange?.({ loading: true });
+
+    try {
+      const res = await fetch(`/api/users?action=check-rut&rut=${encodeURIComponent(rutValue.trim())}`);
+      if (res.ok) {
+        const data = await res.json();
+        const status: RutValidationStatus = {
+          exists: data.exists,
+          expired: data.expired,
+          message: data.message,
+          loading: false
+        };
+        setRutStatus(status);
+        onRutStatusChange?.(status);
+      } else {
+        setRutStatus(null);
+        onRutStatusChange?.(null);
+      }
+    } catch {
+      setRutStatus(null);
+      onRutStatusChange?.(null);
+    }
+  }, [onRutStatusChange]);
+
   const handleRutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawVal = e.target.value;
     onChange('rut', rawVal);
+    if (rutStatus && (rutStatus.exists || rutStatus.expired)) {
+      setRutStatus(null);
+      onRutStatusChange?.(null);
+    }
   };
 
   const handleRutBlur = () => {
     if (formData.rut.trim()) {
       const formatted = formatearRutChileno(formData.rut);
       onChange('rut', formatted);
+      if (validarRutChileno(formatted)) {
+        checkRutStatus(formatted);
+      }
     }
   };
 
@@ -266,14 +317,21 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
         <div>
           <label className="block text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-0.5 flex items-center justify-between">
             <span>RUT <span className="text-red-500">*</span></span>
-            {isRutValid === true && <span className="text-emerald-500 font-medium flex items-center gap-0.5 normal-case"><CheckCircle2 className="w-3 h-3" />OK</span>}
-            {isRutValid === false && <span className="text-rose-500 font-medium flex items-center gap-0.5 normal-case"><AlertCircle className="w-3 h-3" />Inválido</span>}
+            {rutStatus?.loading && <span className="text-indigo-400 font-medium text-[10px] animate-pulse normal-case">Verificando...</span>}
+            {!rutStatus?.loading && rutStatus?.expired && <span className="text-rose-500 font-bold flex items-center gap-0.5 normal-case"><AlertCircle className="w-3 h-3" />Caducado</span>}
+            {!rutStatus?.loading && !rutStatus?.expired && rutStatus?.exists && <span className="text-amber-500 font-bold flex items-center gap-0.5 normal-case"><AlertCircle className="w-3 h-3" />Ya registrado</span>}
+            {!rutStatus?.loading && !rutStatus?.exists && isRutValid === true && <span className="text-emerald-500 font-medium flex items-center gap-0.5 normal-case"><CheckCircle2 className="w-3 h-3" />OK</span>}
+            {!rutStatus?.loading && isRutValid === false && <span className="text-rose-500 font-medium flex items-center gap-0.5 normal-case"><AlertCircle className="w-3 h-3" />Inválido</span>}
           </label>
           <div className="relative">
             <input type="text" required value={formData.rut} onChange={handleRutChange} onBlur={handleRutBlur}
               placeholder="12.345.678-9"
               className={`w-full pl-7 pr-2 py-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white border ${
-                isRutValid === false ? 'border-rose-500 ring-1 ring-rose-500/20' : 'border-slate-300 dark:border-slate-700'
+                rutStatus?.expired || isRutValid === false
+                  ? 'border-rose-500 ring-1 ring-rose-500/20'
+                  : rutStatus?.exists
+                  ? 'border-amber-500 ring-1 ring-amber-500/20'
+                  : 'border-slate-300 dark:border-slate-700'
               } rounded-lg outline-none focus:ring-1 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all placeholder:text-slate-400`} />
             <Hash className="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" />
           </div>
@@ -311,6 +369,32 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Alerta si el RUT ya completó su período de prueba de 30 días */}
+      {rutStatus?.expired && (
+        <div className="p-2.5 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs text-rose-300 space-y-0.5 animate-fade-in">
+          <div className="flex items-center gap-1.5 font-bold text-rose-400">
+            <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+            <span>Período de prueba completado para este RUT</span>
+          </div>
+          <p className="text-[11px] text-rose-200/90 leading-relaxed pl-5">
+            {rutStatus.message || 'El usuario asociado a este RUT ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar o contratar tu licencia institucional.'}
+          </p>
+        </div>
+      )}
+
+      {/* Alerta si el RUT ya está registrado y activo */}
+      {!rutStatus?.expired && rutStatus?.exists && (
+        <div className="p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-300 space-y-0.5 animate-fade-in">
+          <div className="flex items-center gap-1.5 font-bold text-amber-400">
+            <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+            <span>RUT ya registrado en la plataforma</span>
+          </div>
+          <p className="text-[11px] text-amber-200/90 leading-relaxed pl-5">
+            {rutStatus.message || 'Este RUT ya cuenta con un usuario registrado. Inicia sesión con tus credenciales o solicita soporte.'}
+          </p>
+        </div>
+      )}
 
       {/* Fila 3: Colegio (3/5) + RBD (2/5) */}
       <div className="grid grid-cols-5 gap-2">
