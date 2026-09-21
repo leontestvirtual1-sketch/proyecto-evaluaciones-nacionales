@@ -3,7 +3,7 @@
 
 > **Documento Técnico Pedagógico para el Docente**  
 > **Asignatura:** Educación Ciudadana / Historia y Ciencias Sociales  
-> **Nivel:** III° Medio | **Total Ítems:** 25 preguntas de Selección Múltiple | **Puntaje Total:** 44 puntos  
+> **Nivel:** III° Medio | **Total Ítems:** 25 preguntas de Selección Múltiple | **Puntaje Total:** 49 puntos (100% conforme a tabla de especificación oficial)  
 > **Plataforma:** Sysget Saber — Catálogo de Evaluaciones Nacionales  
 
 ---

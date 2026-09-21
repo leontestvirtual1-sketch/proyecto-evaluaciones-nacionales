@@ -5,6 +5,11 @@
 > **Asignatura:** Lengua y Literatura | **Nivel:** 2° Medio | **Total Ítems:** 35 preguntas de Selección Múltiple  
 > **Plataforma:** Sysget Saber — Catálogo de Evaluaciones Nacionales  
 
+> [!CAUTION]
+> **EVALUACIÓN BLOQUEADA Y NO VERIFICADA EN CATÁLOGO**  
+> Esta evaluación fue retirada del catálogo oficial (`es_catalogo = false`, `estado = 'borrador'`, `verificada_at = NULL`) debido a que el 97% de sus alternativas en la base de datos previa correspondían arbitrariamente a la letra 'A' y el documento PDF fuente consiste en capturas sin texto seleccionable ni solucionario formal (Decisión D3 pendiente por parte de la administración).  
+> **No utilizar esta pauta para corrección ni emitir juicios pedagógicos hasta la digitalización del instrumento original.**
+
 ---
 
 ## 📊 1. Tabla de Especificaciones y Claves de Corrección

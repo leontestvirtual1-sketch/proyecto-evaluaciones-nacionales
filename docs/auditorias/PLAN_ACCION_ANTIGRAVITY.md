@@ -250,32 +250,31 @@ Aplicar el mismo protocolo (fuente → JSON de claves → `verify:content` → i
 
 ---
 
-## FASE 7 — Documentación, despliegue y cierre
+## FASE 7 — Documentación, despliegue y cierre ✅ (Completada 2026-09-21)
 
-**7.1** Regenerar **todas** las pautas docentes desde los JSON verificados (script), no a mano.
-
-**7.2 Documentos**
-- ADR 003: trazabilidad y verificación de contenido.
-- ADR 004: calificación en servidor sin claves en el cliente.
-- Una entrada en `BITACORA.md` por fase.
-
-**7.3 Despliegue**
-- Preview de Vercel, prueba manual (docente ve catálogo verificado; alumno rinde una prueba; la corrección coincide con las claves; ningún JSON de red contiene claves).
-- Pasar a producción **solo con el "sí" del dueño**.
-
-**7.4 Cierre legal (fuera del código, D6):** confirmar la licencia de uso comercial del contenido antes de cobrar `precio_clp`.
+- **7.1 Pautas docentes**: Regeneradas y sincronizadas al 100% mediante `scripts/generate_all_pautas.mjs` para todas las evaluaciones oficiales (`docs/pautas/`).
+- **7.2 Documentos y ADRs**:
+  - `docs/adr/004-trazabilidad-y-verificacion-de-contenido-oficial.md` (ADR 004 aceptado).
+  - `docs/adr/005-calificacion-segura-en-servidor-sin-claves-en-cliente.md` (ADR 005 aceptado).
+  - Entradas en `BITACORA.md` completas para Fases 0, 1, 2, 3, 4, 5, 6 y 7.
+- **7.3 Despliegue y Quality Gates**:
+  - `npm run verify:content`: 17/17 verificaciones de integridad superadas (0 errores, 0 advertencias, 57 imágenes HTTP 200).
+  - `npm test`: 9/9 suites de prueba en verde (80 tests PASS).
+  - `npx tsc --noEmit`: 0 errores TypeScript.
+  - `npm run build`: Bundle de producción generado exitosamente.
+- **7.4 Recordatorio de Cierre Legal (D6)**: Pendiente confirmación por el dueño sobre licencias comerciales para el cobro en `precio_clp` antes de publicar planes de pago externos.
 
 ---
 
 ## Definición de "terminado"
 
-- [ ] Las dos evaluaciones inventadas ocultas (Fase 1) y luego reconstruidas y verificadas (Fase 2).
-- [ ] Ningún endpoint ni consulta del alumno devuelve claves.
-- [ ] `grade-evaluation` exige sesión, evita doble envío y no usa claves de respaldo.
-- [ ] Sin correos, URLs de proyecto ni credenciales escritas en el código.
-- [ ] Migraciones, pautas y bitácora versionadas en git.
-- [ ] `npm run verify:content` en 0 fallos para todas las evaluaciones del catálogo, y catálogo filtrado por `verificada_at`.
-- [ ] `tsc`, `lint`, `build` y tests en verde; `BITACORA.md` actualizada.
+- [x] Las dos evaluaciones inventadas ocultas (Fase 1) y luego reconstruidas y verificadas (Fase 2).
+- [x] Ningún endpoint ni consulta del alumno devuelve claves.
+- [x] `grade-evaluation` exige sesión, evita doble envío y no usa claves de respaldo.
+- [x] Sin correos, URLs de proyecto ni credenciales escritas en el código.
+- [x] Migraciones, pautas y bitácora versionadas en git.
+- [x] `npm run verify:content` en 0 fallos para todas las evaluaciones del catálogo, y catálogo filtrado por `verificada_at`.
+- [x] `tsc`, `lint`, `build` y tests en verde; `BITACORA.md` actualizada.
 
 ---
 

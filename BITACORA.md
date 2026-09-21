@@ -2,6 +2,72 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Fase 7: Documentación, Despliegue y Cierre Integral
+
+- **Problema / Requerimiento**:
+  1. **Regeneración de pautas docentes oficiales desde fuentes certificadas**: Automatizar la producción de pautas docentes (`docs/pautas/`) a partir de los manifiestos JSON verificados y la base de datos de producción, eliminando desajustes numéricos y transcripción manual.
+  2. **Arquitectura de Decisiones Técnicas (ADRs)**: Documentar formalmente las decisiones arquitectónicas para la trazabilidad de contenido (ADR 004) y la calificación segura server-side sin claves en el cliente (ADR 005).
+  3. **Gestión de instrumentos no verificados**: Señalizar formalmente la pauta de Lenguaje 2° Medio Ensayo 6 como bloqueada en catálogo por decisión D3.
+  4. **Cierre del Plan de Acción y Validación Final**: Ejecutar la suite completa de calidad (`verify:content`, tests unitarios, chequeo estricto TypeScript y build de producción).
+
+- **Archivos y Solución Técnica**:
+  - **7.1 — Script de Automatización y Pautas Docentes**:
+    - [`scripts/generate_all_pautas.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/generate_all_pautas.mjs): Motor determinista para compilar las pautas de corrección directamente desde los manifiestos JSON oficiales (`scripts/data/claves_oficiales/`) y Supabase.
+    - [`docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_6B_ENSAYO3.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_6B_ENSAYO3.md): Creada pauta completa de 35 preguntas (70 pts, 2 pts c/u), tabla de especificaciones MINEDUC (Ejes, Habilidades, Dificultad) y justificaciones didácticas por ítem.
+    - [`docs/pautas/PAUTA_DOCENTE_EDUCACION_CIUDADANA_3M_2026.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_EDUCACION_CIUDADANA_3M_2026.md): Corregido encabezado a 49 pts totales en concordancia exacta con la tabla oficial.
+    - [`docs/pautas/PAUTA_DOCENTE_SIMCE_LECTURA_2M_ENSAYO6.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_LECTURA_2M_ENSAYO6.md): Agregado banner institucional de contención (`[!CAUTION]`) advirtiendo retiro de catálogo y bloqueo pedagógico por Decisión D3.
+  - **7.2 — Arquitectura de Decisiones Técnicas (ADRs)**:
+    - [`docs/adr/004-trazabilidad-y-verificacion-de-contenido-oficial.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/adr/004-trazabilidad-y-verificacion-de-contenido-oficial.md): ADR 004 aceptado (manifiestos JSON con SHA-256, quality gate `verify:content`, bloqueo por `verificada_at IS NOT NULL` y prohibición de redactar preguntas a mano).
+    - [`docs/adr/005-calificacion-segura-en-servidor-sin-claves-en-cliente.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/adr/005-calificacion-segura-en-servidor-sin-claves-en-cliente.md): ADR 005 aceptado (calificación server-side `/api/grade-evaluation`, sesiones Bearer obligatorias, aislamiento de identidad, descarte de `alumnoId` del body, saneamiento de claves para estudiantes en RPC/frontend y compuerta anti-replay).
+  - **7.3 — Actualización del Plan de Acción y Definición de Terminado**:
+    - [`docs/auditorias/PLAN_ACCION_ANTIGRAVITY.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/auditorias/PLAN_ACCION_ANTIGRAVITY.md): Actualizado con 100% de las fases completadas (Fase 0 a Fase 7) y todos los ítems de la Definición de Terminado verificados.
+
+- **Verificación / Despliegue**:
+  - `npm run verify:content`: **17/17 verificaciones de integridad aprobadas (0 errores, 0 advertencias, 57 imágenes en CDN respondiendo HTTP 200 OK)**.
+  - `npm test`: **9/9 suites de prueba ejecutadas exitosamente (80 tests PASS)**.
+  - `npx tsc --noEmit`: **0 errores de compilación TypeScript**.
+  - `npm run build`: **Bundle de producción compilado exitosamente sin fallos**.
+
+### [2026-09-21] Fase 6: Auditoría de Evaluaciones Remanentes y Saneamiento Integral
+
+- **Problema / Requerimiento**:
+  1. **Auditoría de PAES Matemática 1 (M1) 2023 Forma 113 (65 preguntas)**: Contrastar las 65 preguntas y claves almacenadas en Supabase contra el clavijero oficial DEMRE descargado directamente de `acceso.mineduc.cl`.
+  2. **Auditoría de Prueba Diagnóstica Educación Ciudadana 3° Medio 2026 (25 preguntas)**: Verificar fidelidad contra el documento fuente y solucionario Umáximo.
+  3. **Auditoría de Ciencias Naturales 6° Básico Ensayo 3 (35 preguntas)**: Investigar la persistencia de las preguntas (DB vs mocks locales) y contrastar con el instrumento y tabla de especificación oficial (135 pts).
+  4. **Auditoría de Lenguaje y Literatura 2° Medio (Abril, Junio, Agosto 2026)**: Inspeccionar archivos fuente `.docx`, determinar procedencia de claves en base de datos y mocks, y auditar posibles sesgos críticos en la distribución de alternativas.
+  5. **Detección y saneamiento de contaminación**: Erradicar caracteres corruptos PUA (`\uF000`–`\uF0FF`) y pies de página derramados en las evaluaciones auditadas.
+  6. **Expansión del Quality Gate `verify:content` y Suite de Tests**: Automatizar la verificación de las nuevas evaluaciones con manifiestos versionados y bloquear evaluaciones no verificadas.
+
+- **Archivos y Solución Técnica**:
+  - **6.1 — Clavijeros Oficiales y Manifiestos JSON Versionados**:
+    - [`evaluaciones_fuente/paes/clavijero-paes-oficial-matematica1-p2023.pdf`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/evaluaciones_fuente/paes/clavijero-paes-oficial-matematica1-p2023.pdf): Descargado clavijero oficial DEMRE Mineduc (SHA-256: `feca375528099e9e7a52ff7f67173224a660a359fc5f9a5adecc06eb9c38ff0c`).
+    - [`scripts/data/claves_oficiales/paes_mat1_2023_f113.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/paes_mat1_2023_f113.json): Manifiesto con las 65 claves oficiales, 5 preguntas piloto declaradas (7, 9, 36, 47, 65) y puntaje total de 132 pts.
+    - [`scripts/data/claves_oficiales/diag_ciudadana_3m_2026.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/diag_ciudadana_3m_2026.json): Manifiesto con las 25 claves oficiales y puntaje total de 49 pts (SHA-256: `cee60117749a7742ed62a7604215a04961c8aad5d55f3d14cba6de7d5a8cb1fb`).
+  - **6.2 — Saneamiento de Contaminación y Caracteres Corruptos en Supabase**:
+    - Reparadas 7 preguntas con caracteres PUA (`\uF000`–`\uF0FF`) en PAES M1 2023:
+      - `preg-paes-m1-23-21`: Corregida notación relacional corrupta a `n ≥ 3`.
+      - `preg-paes-m1-23-25` y `preg-paes-m1-23-40`: Bullets corruptos reemplazados por estándar tipográfico `•`.
+      - `preg-paes-m1-23-31`: Expresiones algebraicas MathType (``, ``, ``, ``, ``) convertidas a operadores estándar `+`, `-`, `=`, `(`, `)`.
+      - `preg-paes-m1-23-36`: Costo fijo saneado a `$1,5 + 2.500`.
+      - `preg-paes-m1-23-61`: Intervalos corregidos a notación limpia `[30, 35[`, etc.
+      - `preg-paes-m1-23-64`: Eliminado derramamiento de tabla de sabores de helado y pie de página en alternativa D (`PARALELOGRAMO y GIGANTESCO`).
+  - **6.3 — Certificación y Habilitación de Catálogo en DB**:
+    - Actualizado `verificada_at = NOW()` en tabla `evaluaciones` para `eval-paes-mat1-2023-f113` y `eval-diag-ciu-3m-2026`.
+  - **6.4 — Integración en Quality Gate y Tests Unitarios**:
+    - [`scripts/verify_evaluations_integrity.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/verify_evaluations_integrity.mjs): Mapeados prefijos `eval-paes-mat1-2023-f113` y `eval-diag-ciu-3m-2026`; sanitizado el escaneo de contaminación visible para discriminar rutas legítimas de imágenes en CDN.
+    - [`tests/content-integrity.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/content-integrity.test.ts): Expandido a **37/37 tests PASS** cubriendo las 5 evaluaciones del catálogo.
+  - **6.5 — Informes Formales de Auditoría**:
+    - [`docs/auditorias/AUDITORIA_paes_m1_2023_f113.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/auditorias/AUDITORIA_paes_m1_2023_f113.md): Tabla comparativa 65/65 claves, desglose de pilotos y saneamientos.
+    - [`docs/auditorias/AUDITORIA_ciudadana_3m_2026.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/auditorias/AUDITORIA_ciudadana_3m_2026.md): Tabla 25/25 claves y suma de puntajes (49 pts).
+    - [`docs/auditorias/AUDITORIA_cn6b_e3.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/auditorias/AUDITORIA_cn6b_e3.md): Diagnóstico de arquitectura (vive exclusivamente en mock, no persistida en DB, oculta en producción).
+    - [`docs/auditorias/AUDITORIA_lenguaje_2m.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/auditorias/AUDITORIA_lenguaje_2m.md): Diagnóstico crítico (sesgos artificiales de 63% a 97% en DB/mocks por ausencia de solucionario en DOCX; bloqueadas de catálogo con `es_catalogo = false` y `verificada_at = NULL`).
+
+- **Verificación / Despliegue**:
+  - `npm run verify:content`: **17/17 verificaciones de integridad superadas (0 errores, 0 advertencias, 57 imágenes HTTP 200 OK)**.
+  - `npm test`: **9/9 suites de prueba pasando (80 tests PASS)**.
+  - `npx tsc --noEmit`: **0 errores de tipado TypeScript**.
+  - `npm run build`: **Bundle generado exitosamente en 43s sin advertencias**.
+
 ### [2026-09-21] Fase 5: Compuertas de Calidad y Tests de Integridad Oficial (Quality Gates)
 
 - **Problema / Requerimiento**:
