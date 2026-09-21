@@ -179,7 +179,7 @@ export const PreguntaFormModal: React.FC<PreguntaFormModalProps> = ({
                 {editPregunta ? 'Editar Pregunta del Banco' : 'Crear Nueva Pregunta'}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Categorización por taxonomía curricular Mineduc / DEMRE
+                Categorización por taxonomía curricular MINEDUC / PAES
               </p>
             </div>
           </div>

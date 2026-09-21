@@ -1,4 +1,4 @@
-# 📋 Pauta de Corrección y Clavijero Oficial DEMRE
+# 📋 Pauta de Corrección y Clavijero Oficial PAES
 ## PAES Oficial Competencia Matemática 1 (M1) — Proceso 2023 (Forma 113)
 
 > **Documento Técnico Pedagógico para el Docente**  
@@ -8,9 +8,9 @@
 
 ---
 
-## 📊 1. Clavijero Oficial DEMRE y Tabla de Especificaciones
+## 📊 1. Clavijero Oficial PAES y Tabla de Especificaciones
 
-| N° | Clave | Tipo Ítem | Eje Temático | Habilidad DEMRE | Complejidad |
+| N° | Clave | Tipo Ítem | Eje Temático | Habilidad Evaluada | Complejidad |
 | :---: | :---: | :---: | :--- | :--- | :---: |
 | **1** | **B** | ⭐ Puntuable | Números y Operaciones | Representar | Baja |
 | **2** | **A** | ⭐ Puntuable | Números y Operaciones | Resolver Problemas | Baja |
@@ -80,10 +80,10 @@
 
 ---
 
-### 📌 Notas de Corrección y Transformación de Puntaje DEMRE
+### 📌 Notas de Corrección y Transformación de Puntaje PAES
 1. **Preguntas Piloto (Excluidas del Puntaje P)**: Los ítems **7, 9, 36, 47 y 65** son de carácter experimental para calibración psicométrica y no se contabilizan para el puntaje final.
 2. **Puntaje P (Respuestas Correctas)**: Se calcula sumando las respuestas correctas sobre las 60 preguntas puntuables (rango: 0 a 60).
-3. **Transformación a Escala PAES (100 a 1000 puntos)**: Se aplica la tabla de conversión oficial del DEMRE.
+3. **Transformación a Escala PAES (100 a 1000 puntos)**: Se aplica la tabla de conversión oficial de la escala PAES.
 
 ---
 

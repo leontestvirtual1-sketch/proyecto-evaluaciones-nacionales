@@ -63,7 +63,7 @@ const lines = [
   '',
   '> **Documento Técnico Pedagógico para el Docente**  ',
   '> **Asignatura:** Matemática | **Nivel:** 2° Medio | **Total Ítems:** 34 preguntas de Selección Múltiple  ',
-  '> **Fuente:** Solucionario Oficial Umáximo (Claves verificadas a mano)  ',
+  '> **Fuente:** Solucionario Oficial Verificado  ',
   '> **Plataforma:** Sysget Saber — Catálogo de Evaluaciones Nacionales  ',
   '',
   '---',

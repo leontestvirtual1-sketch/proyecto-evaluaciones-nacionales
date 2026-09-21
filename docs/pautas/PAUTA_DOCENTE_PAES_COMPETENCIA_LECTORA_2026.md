@@ -1,4 +1,4 @@
-# 📋 Pauta de Corrección y Clavijero Oficial DEMRE
+# 📋 Pauta de Corrección y Clavijero Oficial PAES
 ## PAES Oficial Competencia Lectora — Proceso 2026
 
 > **Documento Técnico Pedagógico para el Docente**  
@@ -8,9 +8,9 @@
 
 ---
 
-## 📊 1. Clavijero Oficial DEMRE y Tabla de Especificaciones
+## 📊 1. Clavijero Oficial PAES y Tabla de Especificaciones
 
-| N° | Clave | Tipo Ítem | Eje Temático | Habilidad DEMRE | Complejidad |
+| N° | Clave | Tipo Ítem | Eje Temático | Habilidad Lectora Evaluada | Complejidad |
 | :---: | :---: | :---: | :--- | :--- | :---: |
 | **1** | **C** | ⭐ Puntuable | Lectura y Comprensión de Textos | Localizar e Identificar Información | Baja |
 | **2** | **D** | ⭐ Puntuable | Lectura y Comprensión de Textos | Interpretar y Relacionar Ideas | Baja |
@@ -80,10 +80,10 @@
 
 ---
 
-### 📌 Notas de Corrección y Transformación de Puntaje DEMRE
+### 📌 Notas de Corrección y Transformación de Puntaje PAES
 1. **Preguntas Piloto (Excluidas del Puntaje P)**: Las preguntas marcadas con (*) son de carácter experimental para calibración psicométrica y no se contabilizan para el puntaje final.
 2. **Puntaje P (Respuestas Correctas)**: Se calcula sumando las respuestas correctas sobre las 60 preguntas puntuables (rango: 0 a 60).
-3. **Transformación a Escala PAES (100 a 1000 puntos)**: Se aplica la tabla de conversión oficial del DEMRE.
+3. **Transformación a Escala PAES (100 a 1000 puntos)**: Se aplica la tabla de conversión oficial de la escala PAES.
 
 ---
 

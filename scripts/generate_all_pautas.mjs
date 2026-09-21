@@ -101,7 +101,7 @@ async function generatePautaMat6b() {
     '',
     '> **Documento Técnico Pedagógico para el Docente**  ',
     '> **Asignatura:** Matemática | **Nivel:** 6° Básico | **Total Ítems:** 35 preguntas de Selección Múltiple  ',
-    '> **Puntaje Total:** 70 puntos (2 puntos por pregunta) | **Fuente:** Umáximo — Instrumento Oficial Verificado  ',
+    '> **Puntaje Total:** 70 puntos (2 puntos por pregunta) | **Fuente:** Instrumento Oficial Estandarizado  ',
     '> **Plataforma:** Sysget Saber — Catálogo de Evaluaciones Nacionales  ',
     '',
     '---',

@@ -2,6 +2,34 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Desvinculación de Marcas de Terceros (Umáximo y DEMRE) para Habilitar Ensamble Modular
+
+- **Problema / Requerimiento**:
+  1. **Neutralidad curricular y ensamble modular**: Los instrumentos y preguntas contenían referencias a proveedores o entidades evaluadoras externas ("Umáximo" y "DEMRE") en títulos, descripciones, pautas de corrección, manifiestos JSON y metadatos de base de datos (`fuente`).
+  2. **Interoperabilidad de evaluaciones afines**: La plataforma permite combinar o mezclar pruebas y preguntas del mismo nivel/curso y asignatura (ej. ensamblar dos formas PAES o ensayos SIMCE en un instrumento personalizado). Las referencias a marcas de terceros rompían la coherencia pedagógica y la neutralidad del banco curricular de Sysget Saber.
+
+- **Archivos y Solución Técnica**:
+  - **Base de Datos (Supabase)**:
+    - [`scripts/remove_third_party_brands.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/remove_third_party_brands.mjs): Script de saneamiento masivo ejecutado exitosamente:
+      - Tabla `evaluaciones`: Actualizadas descripciones y textos de catálogo en `eval-paes-lect-2026-f103`, `eval-paes-mat1-2023-f113` y `eval-simce-mat-2m-e3`, reemplazando "DEMRE" por terminología estandarizada "PAES Oficial" / "Escala Nacional PAES" y eliminando "(Umáximo)".
+      - Tabla `preguntas`: Actualizadas 99 preguntas en la columna `fuente` (65 de PAES Lectora 2026, 33 de SIMCE Mat 2M y 1 adaptada), estandarizándolas a la taxonomía curricular nacional.
+  - **Frontend UI**:
+    - [`src/components/PreguntaFormModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PreguntaFormModal.tsx): Actualizada taxonomía a `MINEDUC / PAES`.
+    - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx): Actualizada referencia a PDFs oficiales `MINEDUC / PAES`.
+    - [`src/components/CatalogoDetalleModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/CatalogoDetalleModal.tsx): Removida referencia a DEMRE en aviso de protección de material pedagógico.
+  - **Manifiestos JSON Oficiales**:
+    - [`scripts/data/claves_oficiales/simce_mat_6b_e3.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/simce_mat_6b_e3.json), [`simce_mat_2m_e3.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/simce_mat_2m_e3.json), [`diag_ciudadana_3m_2026.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/diag_ciudadana_3m_2026.json), [`paes_mat1_2023_f113.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/paes_mat1_2023_f113.json), [`paes_lectora_2026_f101.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/paes_lectora_2026_f101.json) y [`paes_lectora_2026_f101_tabla.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/paes_lectora_2026_f101_tabla.json): Depurados de prefijos "Umáximo —" y "DEMRE —".
+  - **Servidor y Pautas Docentes**:
+    - [`api/grade-evaluation.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/grade-evaluation.ts): Renombrado tipo `tipoEscala` de `'DEMRE Oficial'` a `'PAES Oficial'`.
+    - [`docs/pautas/PAUTA_DOCENTE_PAES_MATEMATICA1_2023_FORMA113.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_PAES_MATEMATICA1_2023_FORMA113.md), [`PAUTA_DOCENTE_PAES_COMPETENCIA_LECTORA_2026.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_PAES_COMPETENCIA_LECTORA_2026.md), [`PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_2M_ENSAYO3.md) y [`PAUTA_DOCENTE_SIMCE_MATEMATICA_6B_ENSAYO3.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/pautas/PAUTA_DOCENTE_SIMCE_MATEMATICA_6B_ENSAYO3.md): Saneadas y regeneradas sin marcas comerciales.
+
+- **Verificación / Despliegue**:
+  - `npm run verify:content`: **17/17 verificaciones de integridad aprobadas (0 errores, 0 advertencias, 57 imágenes HTTP 200 OK)**.
+  - `npm test`: **9/9 suites de prueba en verde (80 tests PASS)**.
+  - `npx tsc --noEmit`: **0 errores de compilación TypeScript**.
+  - `npm run build`: **✓ Built en 15.49s sin advertencias**.
+  - Escaneo estático: **0 menciones de "Umáximo" o "DEMRE" en `src/`, `api/`, `docs/pautas/`, `scripts/data/claves_oficiales/` y base de datos**.
+
 ### [2026-09-21] Fase 7: Documentación, Despliegue y Cierre Integral
 
 - **Problema / Requerimiento**:

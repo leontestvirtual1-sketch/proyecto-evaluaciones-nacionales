@@ -558,7 +558,7 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
                       Material Pedagógico Confidencial:
                     </span>
                     <span className="text-amber-200/90 ml-1.5">
-                      Uso exclusivo de profesores de asignatura y equipo directivo UTP. Prohibida su reproducción, difusión o entrega a estudiantes antes del proceso formal de rendición (DEMRE / MINEDUC / Ley N° 17.336).
+                      Uso exclusivo de profesores de asignatura y equipo directivo UTP. Prohibida su reproducción, difusión o entrega a estudiantes antes del proceso formal de rendición (MINEDUC / Ley N° 17.336).
                     </span>
                   </div>
                 </div>

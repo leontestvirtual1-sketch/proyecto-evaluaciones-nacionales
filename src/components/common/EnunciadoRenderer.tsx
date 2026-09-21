@@ -38,7 +38,7 @@ interface EnunciadoRendererProps {
 
 /**
  * Sanitiza caracteres propietarios del bloque Private Use Area (PUA) de Unicode (\uF000-\uF0FF),
- * típicamente introducidos por la fuente Symbol / Wingdings al extraer texto desde PDFs del DEMRE / MINEDUC.
+ * típicamente introducidos por la fuente Symbol / Wingdings al extraer texto desde PDFs oficiales MINEDUC / PAES.
  */
 function cleanSymbolFont(text: string): string {
   if (!text) return text;

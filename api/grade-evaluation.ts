@@ -175,7 +175,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let aciertosPuntuables = 0;
     let tieneDesarrolloPendiente = false;
 
-    // Preguntas piloto oficiales DEMRE PAES Lectora 2026 Forma 101
+    // Preguntas piloto oficiales PAES Lectora 2026 Forma 101
     const pilotosPaesLect2026 = new Set([
       'preg-paes-lec-26-10',
       'preg-paes-lec-26-22',
@@ -220,11 +220,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 9. Cálculo de Escala Nacional (Oficial vs Estimación)
     let puntajeEscalaNacional: number;
-    let tipoEscala: 'DEMRE Oficial' | 'Estimación Nacional';
+    let tipoEscala: 'PAES Oficial' | 'Estimación Nacional';
 
     if (pruebaId === 'eval-paes-lect-2026-f103' && TABLA_PAES_INV_2026[aciertosPuntuables] !== undefined) {
       puntajeEscalaNacional = TABLA_PAES_INV_2026[aciertosPuntuables];
-      tipoEscala = 'DEMRE Oficial';
+      tipoEscala = 'PAES Oficial';
     } else if (pruebaId.includes('paes')) {
       puntajeEscalaNacional = Math.round(100 + (porcentajeLogro / 100) * 900);
       tipoEscala = 'Estimación Nacional';
