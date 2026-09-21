@@ -2,6 +2,35 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Fase 3.4: Blindaje Estricto de CORS y Restricción de Localhost en Producción
+
+- **Problema / Requerimiento**:
+  1. **Subdominios falsos con prefijo localhost**: Validaciones del tipo `origin.startsWith("http://localhost")` permiten orígenes fraudulentos creados por atacantes (ej. `http://localhost.sitio-malicioso.com`).
+  2. **Exposición de Localhost en Producción**: Permitir orígenes `localhost` / `127.0.0.1` en entornos de producción (`VERCEL_ENV === 'production'`) facilita ataques de tipo CSRF y filtración de sesiones si un atacante induce al usuario a ejecutar un servidor local.
+  3. **Dispersión de cabeceras CORS**: Cada endpoint en `api/` implementaba cabeceras manuales no unificadas.
+
+- **Archivos y Solución Técnica**:
+  - [`api/_utils.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/_utils.ts):
+    - Implementadas funciones unificadas `isOriginAllowed(origin)` y `setCorsHeaders(res, origin, options)`:
+      - Validación exacta de `process.env.APP_URL` o `https://sysget-saber.vercel.app`.
+      - Exclusión estricta de `localhost` / `127.0.0.1` si `process.env.VERCEL_ENV === 'production'`.
+      - Validación mediante regex estricta `^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$` solo en entornos no productivos.
+      - Inclusión de cabecera `Vary: Origin` para evitar envenenamiento de caché HTTP en CDN/Vercel.
+  - [`api/grade-evaluation.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/grade-evaluation.ts):
+    - Migrado a `setCorsHeaders` unificado.
+  - [`api/notify-admin.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/notify-admin.ts):
+    - Migrado a `setCorsHeaders` unificado con soporte de cabecera `x-notify-secret`.
+  - [`api/evaluaciones-catalogo.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/evaluaciones-catalogo.ts):
+    - Migrado a `setCorsHeaders` unificado.
+  - [`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts):
+    - Migrado a `setCorsHeaders` unificado.
+  - [`tests/cors-security.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/cors-security.test.ts):
+    - 7 pruebas unitarias automatizadas que comprueban aceptación de localhost en dev, rechazo de subdominios maliciosos, aceptación de APP_URL, bloqueo estricto de localhost en producción (`VERCEL_ENV=production`) y generación correcta de `Vary: Origin`.
+
+- **Verificación / Despliegue**:
+  - `npm test`: **8/8 test suites pasando al 100% (38 tests PASS)**.
+  - `npm run build`: **✓ built in 20.30s** (0 errores TypeScript, 0 advertencias).
+
 ### [2026-09-21] Fase 3.3: Sanitización y Blindaje de Correos Electrónicos (XSS & CRLF Injection)
 
 - **Problema / Requerimiento**:

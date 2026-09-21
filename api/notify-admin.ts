@@ -18,19 +18,15 @@ const SMTP_PASS = process.env.SMTP_PASS || '';
  */
 const NOTIFY_SECRET = process.env.NOTIFY_SECRET || '';
 
-import { escapeHtml } from './_utils';
-
-const ALLOWED_ORIGIN = process.env.APP_URL || 'https://sysget-saber.vercel.app';
+import { escapeHtml, setCorsHeaders } from './_utils';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS seguro con regex estricta para localhost (Phase 3.4)
-  const origin = req.headers?.origin || '';
-  const isLocalhost = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
-  const isAllowed = origin === ALLOWED_ORIGIN || isLocalhost;
-  res.setHeader('Access-Control-Allow-Origin', isAllowed ? origin : ALLOWED_ORIGIN);
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-notify-secret');
-  res.setHeader('Vary', 'Origin');
+  // CORS seguro (Fase 3.4)
+  const origin = req.headers?.origin;
+  setCorsHeaders(res, origin, {
+    methods: 'POST, OPTIONS',
+    headers: 'Content-Type, Authorization, x-notify-secret'
+  });
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();

@@ -6,7 +6,7 @@ import crypto from 'crypto';
 type VercelRequest = any;
 type VercelResponse = any;
 
-import { escapeHtml } from './_utils';
+import { escapeHtml, setCorsHeaders } from './_utils';
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || '';
 const CC_EMAIL = process.env.CC_EMAIL || '';
@@ -51,14 +51,12 @@ async function requireAdmin(req: VercelRequest): Promise<{ ok: boolean; error?: 
 const ALLOWED_ORIGIN = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS seguro con regex estricta para localhost (Phase 3.4)
-  const origin = req.headers?.origin || '';
-  const isLocalhost = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
-  const isAllowed = origin === ALLOWED_ORIGIN || isLocalhost;
-  res.setHeader('Access-Control-Allow-Origin', isAllowed ? origin : ALLOWED_ORIGIN);
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Vary', 'Origin');
+  // CORS seguro (Fase 3.4)
+  const origin = req.headers?.origin;
+  setCorsHeaders(res, origin, {
+    methods: 'GET, POST, OPTIONS',
+    headers: 'Content-Type, Authorization'
+  });
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
