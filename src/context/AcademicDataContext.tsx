@@ -142,8 +142,9 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       // VISTA DOCENTE (Producción)
       // ──────────────────────────────────────────────────────────────────
       if (activeUser.rol === 'profesor') {
+        // Directiva: docente solo ve evaluaciones asignadas a su perfil (creadas por él o asignadas desde catálogo)
         const teacherPruebas = allPruebas.filter(
-          p => p.profesorId === activeUser.id || (activeUser.asignaturaId && p.asignaturaId === activeUser.asignaturaId)
+          p => p.profesorId === activeUser.id
         );
 
         // Directivas 1 y 2: En producción, nunca inyectar cursosMock.

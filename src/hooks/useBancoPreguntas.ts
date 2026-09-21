@@ -90,16 +90,9 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         const BANCO_DOCENTE_COLUMNS = 
           'id, propietario_id, asignatura_id, eje_tematico_id, habilidad_id, tipo, nivel, dificultad, enunciado, imagen_url, tabla_markdown, alternativas, respuesta_correcta, puntaje, fuente, rbd, created_at, updated_at';
         let query = supabase.from('preguntas').select(BANCO_DOCENTE_COLUMNS);
-
-        const teacherAsig = user!.asignaturaId || '';
-
-        // Si no es admin: consulta preguntas de su especialidad curricular (asignatura) o creadas por el docente
+        // Si no es admin: el docente en su perfil consulta únicamente las preguntas creadas y cargadas por él
         if (user!.rol !== 'admin') {
-          if (teacherAsig) {
-            query = query.or(`propietario_id.eq.${user!.id},asignatura_id.eq.${teacherAsig}`);
-          } else {
-            query = query.eq('propietario_id', user!.id);
-          }
+          query = query.eq('propietario_id', user!.id);
         }
 
         const { data, error } = await query.order('created_at', { ascending: false });
