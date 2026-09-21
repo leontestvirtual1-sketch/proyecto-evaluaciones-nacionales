@@ -113,6 +113,19 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       const solData = solRes.ok ? await solRes.json() : { solicitudes: [] };
       const catData = catRes.ok ? await catRes.json() : { evaluaciones: [] };
       let evalRows = (catData.evaluaciones || []) as Record<string, unknown>[];
+      let rawSolicitudes = (solData.solicitudes || []) as Record<string, unknown>[];
+
+      // Fallback directo a Supabase para garantizar visualización de solicitudes
+      if (rawSolicitudes.length === 0) {
+        const { data: directSols } = await supabase
+          .from("solicitudes_evaluacion")
+          .select("id, evaluacion_id, profesor_id, estado, created_at, mensaje, rbd, establecimiento, perfiles:profesor_id(nombre, apellido, email, establecimiento, rbd), evaluaciones:evaluacion_id(titulo, asignatura_id)")
+          .order("created_at", { ascending: false });
+
+        if (directSols && directSols.length > 0) {
+          rawSolicitudes = directSols as unknown as Record<string, unknown>[];
+        }
+      }
 
       // Fallback directo a Supabase para garantizar visualización de catálogo
       if (evalRows.length === 0) {
@@ -129,13 +142,13 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       }
 
       setSolicitudes(
-        (solData.solicitudes || []).map((s: Record<string, unknown>) => ({
+        rawSolicitudes.map((s: Record<string, unknown>) => ({
           id: s.id as string,
           evaluacionId: (s.evaluacion_id as string),
           evaluacionTitulo: (s.evaluaciones as Record<string, string>)?.titulo,
           asignatura: (s.evaluaciones as Record<string, string>)?.asignatura_id,
           profesorId: s.profesor_id as string,
-          docenteNombre: s.perfiles ? `${(s.perfiles as Record<string, string>).nombre} ${(s.perfiles as Record<string, string>).apellido}`.trim() : "",
+          docenteNombre: s.perfiles ? `${(s.perfiles as Record<string, string>).nombre || ""} ${(s.perfiles as Record<string, string>).apellido || ""}`.trim() : "",
           docenteEmail: (s.perfiles as Record<string, string>)?.email,
           establecimiento: (s.perfiles as Record<string, string>)?.establecimiento || (s.establecimiento as string),
           rbd: (s.perfiles as Record<string, string>)?.rbd || (s.rbd as string),
@@ -176,7 +189,12 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       const res = await fetch("/api/evaluaciones-catalogo?action=aprobar", {
         method: "POST",
         headers,
-        body: JSON.stringify({ solicitudId: sol.id }),
+        body: JSON.stringify({
+          solicitud_id: sol.id,
+          evaluacion_id: sol.evaluacionId,
+          profesor_id: sol.profesorId,
+          solicitudId: sol.id,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error al aprobar");
@@ -201,7 +219,11 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       const res = await fetch("/api/evaluaciones-catalogo?action=rechazar", {
         method: "POST",
         headers,
-        body: JSON.stringify({ solicitudId: sol.id, motivo }),
+        body: JSON.stringify({
+          solicitud_id: sol.id,
+          solicitudId: sol.id,
+          motivo,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error al rechazar");

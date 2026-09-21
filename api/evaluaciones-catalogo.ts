@@ -25,8 +25,8 @@ const SMTP_PASS = process.env.SMTP_PASS || "";
 const APP_URL = process.env.APP_URL || "https://sysget-saber.vercel.app";
 const ALLOWED_ORIGIN = APP_URL;
 
-const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "https://khtdzgfqjggycrcbrytw.supabase.co";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || "";
 
 const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY || "dummy-key-for-test-init");
 
@@ -392,7 +392,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const adminCheck = await requireAdmin(req);
         if (!adminCheck.ok) return res.status(403).json({ error: adminCheck.error });
 
-        const { solicitud_id, evaluacion_id, profesor_id, curso_id } = body;
+        const solicitud_id = body.solicitud_id || body.solicitudId;
+        let evaluacion_id = body.evaluacion_id || body.evaluacionId;
+        let profesor_id = body.profesor_id || body.profesorId;
+        const curso_id = body.curso_id || body.cursoId;
+
+        if (solicitud_id && (!evaluacion_id || !profesor_id)) {
+          const { data: solRow } = await sbAdmin
+            .from("solicitudes_evaluacion")
+            .select("evaluacion_id, profesor_id")
+            .eq("id", solicitud_id)
+            .maybeSingle();
+          if (solRow) {
+            evaluacion_id = evaluacion_id || solRow.evaluacion_id;
+            profesor_id = profesor_id || solRow.profesor_id;
+          }
+        }
+
         if (!solicitud_id || !evaluacion_id || !profesor_id)
           return res.status(400).json({ error: "Faltan campos requeridos." });
 
@@ -456,7 +472,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const adminCheck = await requireAdmin(req);
         if (!adminCheck.ok) return res.status(403).json({ error: adminCheck.error });
 
-        const { solicitud_id, motivo } = body;
+        const solicitud_id = body.solicitud_id || body.solicitudId;
+        const motivo = body.motivo;
         if (!solicitud_id) return res.status(400).json({ error: "solicitud_id requerido." });
 
         const { data: result, error: rpcErr } = await sbAdmin.rpc(
