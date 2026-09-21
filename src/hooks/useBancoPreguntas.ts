@@ -81,7 +81,15 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
 
     async function loadBanco() {
       try {
-        let query = supabase.from('preguntas').select('*');
+        // SEGURIDAD (Fase 3.2): Columnas explícitas para evitar arrastrar campos
+        // no deseados si el schema crece. respuesta_correcta se incluye aquí porque
+        // este hook es EXCLUSIVO del banco del DOCENTE.
+        // El alumno nunca llama a useBancoPreguntas: su path es
+        //   App.tsx getPreguntasForRunner() → sanitiza respuestaCorrecta: null
+        //   y en BD → RPC get_preguntas_evaluacion (migración 057).
+        const BANCO_DOCENTE_COLUMNS = 
+          'id, propietario_id, asignatura_id, eje_tematico_id, habilidad_id, tipo, nivel, dificultad, enunciado, imagen_url, tabla_markdown, alternativas, respuesta_correcta, puntaje, fuente, rbd, created_at, updated_at';
+        let query = supabase.from('preguntas').select(BANCO_DOCENTE_COLUMNS);
 
         const teacherAsig = user!.asignaturaId || '';
 
@@ -101,7 +109,8 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         }
 
         if (isMounted) {
-          const dbQuestions = data && data.length > 0 ? data.map(mapRowToPregunta) : [];
+          const rawRows = (data as unknown as Record<string, unknown>[] | null) || [];
+          const dbQuestions = rawRows.length > 0 ? rawRows.map(mapRowToPregunta) : [];
 
           // Enriquecedor de metadatos (imágenes oficiales y tablas formateadas)
           const imageMap = new Map<string, { imagenUrl?: string; tablaMarkdown?: string }>();

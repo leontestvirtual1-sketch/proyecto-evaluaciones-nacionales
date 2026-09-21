@@ -74,12 +74,17 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
     }
 
     // Fallback local: Estrictamente restringido a modo demostración (Directivas 1 y 2 / Fase 3 Auditoría)
-    // En producción nunca calificar localmente con claves inexistentes para no falsear el resultado
+    // En producción nunca calificar localmente para no falsear el resultado
     const esDemo = Boolean(alumno.id?.startsWith('demo-') || (prueba as any).es_demo);
     if (!esDemo) {
       setIsSubmitting(false);
       return;
     }
+
+    const duracionTotalSegundos = prueba.duracionMinutos * 60;
+    const tiempoUsadoTotal = Math.max(1, duracionTotalSegundos - tiempoRestante);
+    const tiempoPromedioPorItem = Math.max(1, Math.round(tiempoUsadoTotal / Math.max(1, preguntas.length)));
+
     let puntajeObtenido = 0;
     let puntajeMaximo = 0;
 
@@ -98,7 +103,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
         preguntaId: p.id,
         respuestaDada: respDada,
         esCorrecta,
-        tiempoSegundos: 45
+        tiempoSegundos: tiempoPromedioPorItem
       };
     });
 
@@ -106,7 +111,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
     const puntajeEscalaNacional = Math.round(100 + (porcentajeLogro / 100) * 250);
 
     const nuevaRendicion: RendicionPrueba = {
-      id: `rend-${Date.now()}`,
+      id: crypto.randomUUID(),
       pruebaId: prueba.id,
       alumnoId: alumno.id,
       alumnoNombre: `${alumno.nombre} ${alumno.apellido}`.trim(),
@@ -123,7 +128,7 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
     setCompletedRendicion(nuevaRendicion);
     setIsSubmitting(false);
     onFinish(nuevaRendicion);
-  }, [preguntas, respuestas, prueba.id, alumno, onFinish]);
+  }, [preguntas, respuestas, prueba.id, prueba.duracionMinutos, tiempoRestante, alumno, onFinish]);
 
   // F-04: Temporizador con bloqueo y envío automático al llegar a 0
   useEffect(() => {

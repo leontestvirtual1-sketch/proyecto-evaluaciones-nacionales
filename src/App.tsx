@@ -245,6 +245,8 @@ function MainAppContent({
   };
 
   const getPreguntasForRunner = (prueba: Prueba, banco: Pregunta[]): Pregunta[] => {
+    let rawList: Pregunta[] = [];
+
     // 1. Si la prueba especifica preguntasIds exactas, retornarlas en su orden
     if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
       const byId = new Map(banco.map(p => [p.id, p]));
@@ -252,39 +254,53 @@ function MainAppContent({
         .map(id => byId.get(id))
         .filter((p): p is Pregunta => Boolean(p));
       if (exactQuestions.length > 0) {
-        return exactQuestions;
+        rawList = exactQuestions;
       }
     }
 
-    // 2. Fallback por asignatura
-    let matched = banco.filter(p => p.asignaturaId === prueba.asignaturaId);
+    // 2. Fallback por asignatura si no hay preguntas explícitas
+    if (rawList.length === 0) {
+      let matched = banco.filter(p => p.asignaturaId === prueba.asignaturaId);
 
-    if (matched.length === 0) {
-      if (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')) {
-        matched = banco.filter(p => p.asignaturaId === 'asig-2');
-      } else if (prueba.asignaturaNombre.toLowerCase().includes('ciencia')) {
-        matched = banco.filter(p => p.asignaturaId === 'asig-3');
-      } else {
-        matched = banco.filter(p => p.asignaturaId === 'asig-1');
+      if (matched.length === 0) {
+        if (prueba.asignaturaNombre.toLowerCase().includes('lenguaje') || prueba.titulo.toLowerCase().includes('lectora')) {
+          matched = banco.filter(p => p.asignaturaId === 'asig-2');
+        } else if (prueba.asignaturaNombre.toLowerCase().includes('ciencia')) {
+          matched = banco.filter(p => p.asignaturaId === 'asig-3');
+        } else {
+          matched = banco.filter(p => p.asignaturaId === 'asig-1');
+        }
       }
+
+      if (matched.length === 0) {
+        matched = banco;
+      }
+
+      const targetCount = prueba.totalPreguntas || matched.length || 5;
+      const result: Pregunta[] = [];
+
+      for (let i = 0; i < targetCount; i++) {
+        const basePreg = matched[i % matched.length];
+        result.push({
+          ...basePreg,
+          id: `${basePreg.id}-idx-${i}`
+        });
+      }
+      rawList = result;
     }
 
-    if (matched.length === 0) {
-      matched = banco;
-    }
-
-    const targetCount = prueba.totalPreguntas || matched.length || 5;
-    const result: Pregunta[] = [];
-
-    for (let i = 0; i < targetCount; i++) {
-      const basePreg = matched[i % matched.length];
-      result.push({
-        ...basePreg,
-        id: `${basePreg.id}-idx-${i}`
-      });
-    }
-
-    return result;
+    // ── SEGURIDAD (Fase 3.2): Sanitización estricta para el estudiante ──
+    // Las claves de respuesta (respuestaCorrecta y alternativas[].es_correcta)
+    // NUNCA deben estar presentes en el árbol de componentes ni en memoria del alumno.
+    return rawList.map(p => ({
+      ...p,
+      respuestaCorrecta: null,
+      alternativas: p.alternativas.map(a => ({
+        letra: a.letra,
+        texto: a.texto,
+        es_correcta: false
+      }))
+    }));
   };
 
   // Render active content area

@@ -2,6 +2,105 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Fase 3.2: Seguridad del Cliente Alumno e Invariante de Aislamiento de Claves
+
+- **Problema / Requerimiento**:
+  1. **Filtración de claves en cliente**: Evitar que respuestas correctas (`respuestaCorrecta`, `es_correcta`) lleguen al navegador o runner del estudiante para prevenir trampas mediante inspección de Red o memoria DevTools.
+  2. **Fallback local inseguro**: Eliminar el fallback que calificaba en el navegador con claves locales en evaluaciones que no sean de tipo demo (`es_demo`).
+  3. **Columnas explícitas**: Evitar `select('*')` en `useBancoPreguntas.ts` y documentar el perímetro de seguridad del banco docente vs estudiante.
+  4. **Protección en Base de Datos**: Crear función RPC `get_preguntas_evaluacion` SECURITY DEFINER que devuelva las preguntas despojadas de claves para consumidores con rol alumno.
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/AlumnoEvaluationView.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AlumnoEvaluationView.tsx):
+    - Envío obligatorio de encabezado `Authorization: Bearer <sessionToken>` en la llamada de calificación hacia `/api/grade-evaluation`.
+    - Fallback de calificación en el cliente restringido estrictamente a evaluaciones demo (`if (!esDemo) return;`).
+    - Generación de identificador de rendición mediante `crypto.randomUUID()`.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx):
+    - Enriquecedor `getPreguntasForRunner()` sanitiza todas las preguntas antes de pasarlas a la vista del alumno: fuerza `respuestaCorrecta: null` y en cada alternativa `es_correcta: false`.
+  - [`src/hooks/useBancoPreguntas.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/hooks/useBancoPreguntas.ts):
+    - Reemplazado `select('*')` por lista explícita de columnas (`BANCO_DOCENTE_COLUMNS`). Documentado que este hook es de uso exclusivo para docentes y administradores.
+  - [`supabase/migrations/057_pregunta_sin_claves_para_alumno.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/057_pregunta_sin_claves_para_alumno.sql):
+    - Creada función RPC `get_preguntas_evaluacion(p_evaluacion_id UUID)` con `SECURITY DEFINER` y remoción deliberada de `respuesta_correcta` y flags `es_correcta` en el array de alternativas JSON.
+  - [`tests/student-runner-security.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/student-runner-security.test.ts):
+    - 5 tests unitarios de seguridad que verifican que el runner nunca recibe claves, las alternativas tienen `es_correcta=false`, se usan UUIDs criptográficos y se mantiene la defensa en profundidad.
+
+- **Verificación / Despliegue**:
+  - `npm test`: **5/5 test suites pasando al 100% (24 tests PASS)**.
+  - `npm run build`: **✓ built in 20.91s** (0 errores TypeScript, 0 warnings).
+
+### [2026-09-21] Fase 2.9: Corrección Puntaje preg-cn6b-35 y Fix de Imports PrintEvaluacionModal
+
+- **Problema / Requerimiento**:
+  1. **Puntaje incorrecto en preg-cn6b-35**: La pregunta 35 (Erosión terrestre — Razonamiento) tenía `puntaje: 1` por error tipográfico. La tabla oficial de la prueba `Ensayo 3 SIMCE Ciencias Naturales 6° Básico` (PDF fuente Umáximo) estipula 5 puntos para esa pregunta. El total del instrumento sumaba 131 pts en lugar de los 135 pts oficiales.
+  2. **Imports faltantes en PrintEvaluacionModal**: El componente `PrintEvaluacionModal.tsx` usaba en su `useMemo` las variables `preguntasLenguaje2MMock`, `preguntasLenguaje2MJunioMock`, `preguntasLenguaje2MAbrilMock`, `preguntasMatematica6BMock` y `preguntasMock` sin importarlas, causando errores TS2304 que impedían el build.
+
+- **Archivos y Solución Técnica**:
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): Corregido `puntaje: 1 → 5` en `preg-cn6b-35`. Total del instrumento ahora = **135 pts** (alineado con tabla oficial PDF).
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): Añadidos imports desde `../data/len2mQuestionsMock`, `../data/len2mJunioQuestionsMock`, `../data/len2mAbrilQuestionsMock`, `../data/mat6bQuestionsMock` y `../data/mockData` para las variables mock usadas en el useMemo de selección de preguntas.
+
+- **Verificación / Despliegue**:
+  - Script PowerShell de suma de puntajes CN6B confirma **total = 135 pts** (35 preguntas).
+  - `npm run build`: **✓ built in 32.33s** — sin errores TypeScript ni warnings.
+
+### [2026-09-20] Fase 3.1: Blindaje de Seguridad y Resiliencia en Backend de Calificación (`api/grade-evaluation.ts`)
+
+- **Problema / Requerimiento**:
+  1. **Fallo de esquema en base de datos**: El handler `api/grade-evaluation.ts` intentaba persistir columnas inexistentes (`alumno_nombre`, `alumno_rut`, `fecha_rendicion`, `respuestas_json`, `puntaje_obtenido`), lo que provocaba que Supabase Postgres rechazara el upsert con error de schema cache (`Could not find the 'alumno_nombre' column of 'rendiciones' in the schema cache`), devolviendo un 500 y dejando la tabla `rendiciones` vacía.
+  2. **Vulnerabilidad de suplantación (IDOR)**: Si no se validaba el token de sesión contra `auth.getUser(token)`, un atacante podía forjar cualquier `alumnoId` arbitrario en el body de la petición para rendir o sobreescribir evaluaciones en nombre de terceros.
+  3. **Rendición de evaluaciones en borrador**: Evaluaciones no aprobadas o en estado borrador (como `eval-simce-len-2m-e6`) no tenían compuerta que impidiera el envío de rendiciones por API.
+
+- **Archivos y Solución Técnica**:
+  - [`api/grade-evaluation.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/grade-evaluation.ts):
+    - **Alineación con esquema real**: Adaptado el payload a las columnas reales de `public.rendiciones` (`id`, `prueba_id`, `alumno_id`, `respuestas`, `puntaje_total`, `puntaje_maximo`, `porcentaje_logro`, `estado`, `inicio_at`, `fin_at`), almacenando los metadatos enriquecidos en `respuestas` JSONB.
+    - **Mitigación estricta de IDOR**: Derivación del estudiante directamente de `auth.getUser(token)` ignorando cualquier `alumnoId` provisto en el cuerpo cuando existe sesión. Si el token es inválido o expiró, retorna 401 inmediatamente.
+    - **Compuerta de Estado**: Bloqueo con 403 Forbidden si la evaluación no se encuentra en estado `activa`.
+    - **Sanitización XSS**: Limpieza de caracteres de escape `<>` y acotación de longitud en cadenas de texto enviadas por el cliente.
+    - **Calificación oficial vs estimada**: Etiquetado transparente de escala (`DEMRE Oficial` vs `Estimación Nacional`).
+  - [`tests/grade-evaluation.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/grade-evaluation.test.ts):
+    - Actualizado el contrato de prueba para validar el esquema real de base de datos.
+    - 7/7 tests unitarios pasando al 100%.
+
+- **Verificación / Despliegue**:
+  - `npm test`: **5/5 test suites passing (100%)**.
+  - `npm run verify:content`: **10/10 PASS**.
+  - Inserción y eliminación de rendición en `public.rendiciones` probada exitosamente contra Supabase en vivo sin errores de schema cache.
+  - `npm run build`: Compilación exitosa sin errores.
+
+
+### [2026-09-20] Fase 2.8: Auditoría, Solucionario y Certificación — SIMCE Matemática 6° Básico Ensayo 3 (70 Puntos Oficiales)
+
+- **Problema / Requerimiento**:
+  1. **Discrepancia en puntajes del mock**: En `src/data/mat6bQuestionsMock.ts`, las preguntas sumaban 58 puntos con ponderaciones dispares (1, 2 y 3 puntos), cuando la Tabla de Especificaciones oficial de Umáximo (`evaluaciones_fuente/Ensayo+3+SIMCE+Matemática+6°+Básico+(Tabla+de+especificación).pdf`) estipula 2 puntos por pregunta para un total de **70 puntos**.
+  2. **Verificación de Claves**: El instrumento fuente carecía de clavijero impreso. Se auditó y resolvió rigurosamente cada una de las 35 preguntas corroborando que los enunciados, alternativas y figuras (`public/preguntas/simce_mat_6b_e3/`) coinciden al 100% con el PDF oficial y presentan una distribución de respuestas equilibrada (`{C: 10, B: 11, D: 8, A: 6}`).
+
+- **Archivos y Solución Técnica**:
+  - [`src/data/mat6bQuestionsMock.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mat6bQuestionsMock.ts): Normalizado el puntaje de las 35 preguntas a 2 puntos exactos (suma = 70 pts).
+  - [`scripts/data/claves_oficiales/simce_mat_6b_e3.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/simce_mat_6b_e3.json): Creado manifiesto de integridad con SHA-256 oficial del PDF, 35 preguntas y suma esperada de 70 pts.
+  - [`scripts/verify_evaluations_integrity.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/verify_evaluations_integrity.mjs): Integrada evaluación `eval-simce-mat-6b-e3` al Quality Gate automatizado.
+  - [`tests/content-integrity.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/content-integrity.test.ts): Añadida prueba unitaria de integridad para SIMCE Mat 6B.
+  - **Certificación en BD**: Actualizado `verificada_at = NOW()` en `public.evaluaciones` para `eval-simce-mat-6b-e3`.
+
+- **Verificación / Despliegue**:
+  - `npm run verify:content`: **10/10 PASS (0 errores, 0 advertencias)**.
+  - `npm test`: **5/5 test suites pasando al 100%**.
+  - `npm run build`: Compilación Vite + TypeScript exitosa (código 0).
+
+
+### [2026-09-20] Auditoría de Contenido — SIMCE Ciencias Naturales 6° Básico (Ensayo 3, 135 Puntos Oficiales)
+
+- **Problema / Requerimiento**:
+  1. **Discrepancia en puntajes**: En `src/data/mockData.ts`, el bloque de Ciencias Naturales 6° Básico sumaba 131 puntos, mientras que la Tabla de Especificaciones oficial de Umáximo totaliza **135 puntos**.
+  2. **Causa raíz**: La pregunta 35 (`preg-cn6b-35`, Erosión terrestre / Razonamiento) registraba `puntaje: 1` por un error tipográfico en lugar de `puntaje: 5`.
+
+- **Archivos y Solución Técnica**:
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts): Corregido `puntaje: 1` a `puntaje: 5` en `preg-cn6b-35`. Total verificado en 135 puntos exactos.
+  - [`src/components/PrintEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/PrintEvaluacionModal.tsx): Corregidos imports faltantes de preguntas mock que provocaban errores de compilación TS2304.
+
+- **Verificación / Despliegue**:
+  - Suma de puntajes validada mediante script en 135 pts exactos.
+  - `npm run build`: `✓ built in 32.38s` sin errores.
+
+
 ### [2026-09-20] Fase 2.6: Diagnóstico Forense y Contención Estricta — SIMCE Lectura 2° Medio Ensayo 6 (Decisión D3: Opción A)
 
 - **Problema / Requerimiento**:
