@@ -18,7 +18,7 @@ const SMTP_PASS = process.env.SMTP_PASS || '';
  */
 const NOTIFY_SECRET = process.env.NOTIFY_SECRET || '';
 
-import { escapeHtml, setCorsHeaders } from './_utils';
+import { escapeHtml, setCorsHeaders } from './_utils.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS seguro (Fase 3.4)

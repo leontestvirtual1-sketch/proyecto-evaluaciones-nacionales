@@ -16,7 +16,7 @@ import nodemailer from "nodemailer";
 type VercelRequest = any;
 type VercelResponse = any;
 
-import { escapeHtml, setCorsHeaders } from './_utils';
+import { escapeHtml, setCorsHeaders } from './_utils.js';
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "";
 const CC_EMAIL = process.env.CC_EMAIL || "";

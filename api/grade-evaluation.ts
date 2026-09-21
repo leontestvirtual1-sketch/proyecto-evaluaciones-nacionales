@@ -17,7 +17,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import { setCorsHeaders } from './_utils';
+import { setCorsHeaders } from './_utils.js';
 
 type VercelRequest = any;
 type VercelResponse = any;
