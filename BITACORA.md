@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-20] Fase 2.6: Diagnóstico Forense y Contención Estricta — SIMCE Lectura 2° Medio Ensayo 6 (Decisión D3: Opción A)
+
+- **Problema / Requerimiento**:
+  1. **Auditoría de fuente (`ensayo_6_simce_lectura_2m.pdf`)**: El documento fuente consta de 4 capturas de pantalla de la interfaz de estudiante de Umáximo. El examen queda trunco en la pregunta 25 (faltan las preguntas 26 a 35) y no cuenta con solucionario ni clavijero oficial.
+  2. **Contenido espurio en BD**: En la migración histórica 035, se redactaron preguntas sintéticas donde 34 de 35 claves eran "A" (97% sesgo) y no coincidían con los textos reales de Umáximo.
+  3. **Decisión D3**: El sostenedor ratificó la **Opción A**: mantener la evaluación retirada del catálogo y en estado de borrador hasta que se suministre el PDF completo de 35 preguntas y su solucionario oficial.
+
+- **Archivos y Solución Técnica**:
+  - [`scripts/PLAN_ACCION_ANTIGRAVITY.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/PLAN_ACCION_ANTIGRAVITY.md):
+    - Ratificación formal de la Decisión D3 (Opción A) y definición del protocolo de reactivación futura.
+  - [`scratch/hide_len2m_e6.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scratch/hide_len2m_e6.mjs):
+    - Actualización directa en `public.evaluaciones` para `eval-simce-len-2m-e6`: `es_catalogo = false`, `estado = 'borrador'`, `verificada_at = null`.
+  - **Aislamiento en API**:
+    - Verificado que [`api/evaluaciones-catalogo.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/evaluaciones-catalogo.ts) filtra estrictamente por `not("verificada_at", "is", null)` y `eq("es_catalogo", true)`, imposibilitando el acceso público al instrumento no verificado.
+
+- **Verificación / Despliegue**:
+  - `node scratch/check_len2m_e6.mjs`: Estado confirmado en Supabase: `es_catalogo: false`, `estado: 'borrador'`, `verificada_at: null`.
+  - `npm run verify:content`: **7/7 PASS (0 errores, 0 advertencias)**.
+  - `npm test`: **5/5 test suites pasando al 100%**.
+
+
+
 ### [2026-09-20] Fase 2: Reconstrucción Íntegra de Contenido — SIMCE Matemática 2° Medio Ensayo 3 (34 Preguntas Reales, Solucionario Oficial y Pauta Docente)
 
 - **Problema / Requerimiento**:

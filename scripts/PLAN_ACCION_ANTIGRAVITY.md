@@ -116,13 +116,10 @@ Hoy es público, usa `service_role` y hace `select("*")`, así que devuelve `res
 - Revisar la función `admin_asignar_evaluacion_a_docente`: ¿clona preguntas o solo referencia ids?
 - Si clona: re-sincronizar o marcar las copias como desactualizadas y avisar al dueño.
 
-### 2.6 Lectura 2° Medio Ensayo 6 — **bloqueado por D3**
-- Hoy: 34 de 35 claves son "A", la pregunta 1 real ("¿por qué se suspendió la boda?") no coincide con la de la app, y la fuente son capturas sin clave.
-- Cuando el dueño entregue el solucionario con texto seleccionable:
-  - Extraer el texto verbatim (PyMuPDF) y construir el dataset con claves del solucionario.
-  - Comprobar el conteo real por lectura (la lectura 1 tiene 6 preguntas, no 7).
-  - Reemplazar el seed inventado, regenerar la pauta docente y aplicar el mismo protocolo que en 2.1–2.5.
-- Mientras tanto la evaluación queda oculta (Fase 1.1).
+### 2.6 Lectura 2° Medio Ensayo 6 — **DECISIÓN D3: OPCIÓN A RATIFICADA**
+- **Diagnóstico forense ejecutado**: `evaluaciones_fuente/2_medio/ensayo_6_simce_lectura_2m.pdf` contiene 4 capturas de pantalla de Umáximo que solo alcanzan hasta la pregunta 25 (faltan preguntas 26 a 35) y no incluye clavijero ni solucionario oficial.
+- **Contención en BD aplicada**: `eval-simce-len-2m-e6` fijada con `es_catalogo = false`, `estado = 'borrador'`, `verificada_at = null`. La API pública la excluye totalmente.
+- **Protocolo de reactivación**: La evaluación permanecerá oculta en estado borrador hasta que el sostenedor/docente provea el PDF completo con las 35 preguntas y su solucionario oficial correspondiente. En ese momento se ejecutará la extracción fiel, asignación de claves y pauta docente.
 
 ### 2.7 PAES Competencia Lectora 2026 — corregir rótulo y limpieza
 - **Rótulo:** el seed, el id (`eval-paes-lect-2026-f103`) y la carpeta `paes_lect_2026_forma103` dicen Forma 103 (regular), pero las preguntas y claves son de la **Forma 101 (Invierno)** (las claves coinciden 65/65 con el clavijero de Invierno y solo 16/65 con el de la Forma 103).
