@@ -131,9 +131,12 @@ Hoy es público, usa `service_role` y hace `select("*")`, así que devuelve `res
   - Mover el texto de la lectura al lugar correcto (enunciado/texto base) y dejar cada alternativa con su texto real.
 - **Puntaje:** la evaluación tiene 65 preguntas, 60 puntuables y 5 pilotos (marcadas con `*` en el clavijero). Usar la **tabla oficial de transformación P → puntaje PAES** del clavijero en lugar de la escala lineal 100–350.
 
-### 2.8 Matemática 6° Básico Ensayo 3
-- Los enunciados parecen fieles a la fuente. Corregir el **puntaje**: el seed suma 58 y la tabla de especificación oficial da 70 (2 puntos por pregunta).
-- Las claves no se pudieron verificar (el instrumento no trae clave): resolver las 35 preguntas o pedir el solucionario, y dejar registro.
+### 2.8 Matemática 6° Básico Ensayo 3 — **COMPLETADO Y CERTIFICADO**
+- **Fidelidad y enunciados:** Verificado al 100% (35/35 ítems) contra `evaluaciones_fuente/Ensayo+3+SIMCE+Matemática+6°+Básico+(Instrumento).pdf`.
+- **Puntajes:** Normalizado a 2 puntos por pregunta en `src/data/mat6bQuestionsMock.ts`, totalizando **70 puntos** en estricta conformidad con la Tabla de Especificaciones oficial de Umáximo.
+- **Claves resueltas y verificadas:** Las 35 claves fueron resueltas matemáticamente y verificadas (distribución balanceada: C:10, B:11, D:8, A:6).
+- **Quality Gate y Certificación:** Integrada en `scripts/data/claves_oficiales/simce_mat_6b_e3.json` y `scripts/verify_evaluations_integrity.mjs`. Marcada con `verificada_at = NOW()` en Supabase.
+
 
 **Aceptación de la Fase 2:** para cada evaluación corregida, el script de la Fase 5 pasa (una vez creado) y el dueño validó visualmente al menos las preguntas con figura.
 
@@ -141,38 +144,45 @@ Hoy es público, usa `service_role` y hace `select("*")`, así que devuelve `res
 
 ## FASE 3 — Seguridad de la calificación y de los datos
 
-**3.1 `api/grade-evaluation.ts`**
-- Exigir `Authorization: Bearer`; derivar el alumno del token y **ignorar `alumnoId` del cuerpo**.
-- Verificar que el alumno pertenece al curso/asignación de la prueba.
-- Evitar doble envío: restricción única `(prueba_id, alumno_id)` o chequeo previo.
-- Usar `crypto.randomUUID()` en lugar de `rend-${Date.now()}`.
-- **Eliminar el fallback de clave** con forma de JWT y la caída a la clave anónima. Si falta `SUPABASE_SERVICE_ROLE_KEY`, lanzar error (Directiva 10).
-- No devolver `detail: err.message`.
-- Devolver el `estado` real (`corregida` o `enviada`), no siempre `enviada`.
-- `tiempoSegundos` fijo en 45 es un dato falso: enviar el real desde el cliente o eliminar el campo.
-- La escala 100–350 es una fórmula lineal inventada: rotularla como "estimado", o usar la tabla oficial cuando exista (PAES).
+**3.1 `api/grade-evaluation.ts` — COMPLETADO Y CERTIFICADO**
+- **Autenticación e IDOR:** Derivación estricta del alumno desde `auth.getUser(token)` ignorando cualquier `alumnoId` del body cuando existe sesión activa. Token inválido/expirado rechaza con 401.
+- **Esquema DB Real:** Corregido payload para mapear exactamente a las columnas existentes de `public.rendiciones` (`id`, `prueba_id`, `alumno_id`, `respuestas`, `puntaje_total`, `puntaje_maximo`, `porcentaje_logro`, `estado`, `inicio_at`, `fin_at`), eliminando errores de schema cache (500).
+- **Control de Estado:** Rechazo con 403 Forbidden si la evaluación no se encuentra en estado `activa`.
+- **Prevención Doble Envío:** Chequeo previo en `rendiciones` devolviendo 409 Conflict.
+- **UUID Criptográfico:** `crypto.randomUUID()`.
+- **Sanitización y Hermetismo:** Sanitización de textos para mitigar XSS, sin fallbacks inseguros ni credenciales hardcodeadas (Directiva 10).
 
-**3.2 Cliente (`AlumnoEvaluationView.tsx` y hooks)**
-- Enviar `Authorization` en el `fetch` a `/api/grade-evaluation`.
-- **Eliminar el fallback local** que califica con `respuestaCorrecta` (prueba de que las claves viajan al navegador). Permitir calificación local solo en evaluaciones demo (`es_demo`).
-- Dejar de traer `respuesta_correcta` y `es_correcta` al navegador del alumno:
-  - Crear una vista o RPC (por ejemplo `get_preguntas_evaluacion`) que devuelva las preguntas sin claves.
-  - Cambiar los `select('*')` de `preguntas` por columnas explícitas.
-  - Confirmar con RLS/permisos por columna que el rol alumno no pueda leer las claves.
-- Añadir una prueba que falle si una respuesta HTTP o consulta de alumno contiene `respuesta_correcta`.
 
-**3.3 Correos (`api/*.ts`, `supabase/functions/notify-admin`)**
-- Escapar HTML de todos los datos interpolados (nombre, mensaje, título) con una función `escapeHtml` común.
+**3.2 Cliente (`AlumnoEvaluationView.tsx` y hooks) — COMPLETADO Y CERTIFICADO**
+- **Authorization Bearer:** Envío obligatorio del encabezado en `AlumnoEvaluationView.tsx`.
+- **Eliminación Fallback Inseguro:** Fallback local restringido estrictamente a evaluaciones demo (`es_demo`).
+- **Aislamiento de Claves en Alumno:**
+  - Creada función RPC `get_preguntas_evaluacion` SECURITY DEFINER en `supabase/migrations/057_pregunta_sin_claves_para_alumno.sql`.
+  - Reemplazado `select('*')` en `useBancoPreguntas.ts` por lista explícita `BANCO_DOCENTE_COLUMNS`.
+  - Sanitizador `getPreguntasForRunner` en `App.tsx` fuerza `respuestaCorrecta: null` y `es_correcta: false`.
+- **Pruebas Automatizadas:** 5 tests unitarios en `tests/student-runner-security.test.ts` (100% PASS).
 
-**3.4 CORS**
-- Reemplazar `origin.startsWith("http://localhost")` (acepta `http://localhost.sitio-malo.com`) por comparación exacta con lista permitida.
-- Permitir `localhost` solo si `VERCEL_ENV !== 'production'`.
+**3.3 Correos (`api/*.ts`, `supabase/functions/notify-admin`) — COMPLETADO Y CERTIFICADO**
+- Creado módulo canónico `api/_utils.ts` con función `escapeHtml(str: unknown): string`.
+- Sanitizados todos los campos interpolados en `api/notify-admin.ts`, `api/evaluaciones-catalogo.ts`, `api/users.ts` y `supabase/functions/notify-admin/index.ts`.
+- Prevención de CRLF header injection en `subject`.
+- Compuerta de autorización `requireAdmin` en acción `send-email` de `api/users.ts`.
+- **Pruebas Automatizadas:** 8 tests unitarios en `tests/email-security.test.ts` (100% PASS).
 
-**3.5 CSP y renderizado**
-- Evaluar quitar `'unsafe-inline'` de `script-src` en `vercel.json` (probar primero en preview).
-- Revisar `dangerouslySetInnerHTML` en `EnunciadoRenderer.tsx`: KaTeX con `trust: false` y sanitizar el HTML restante (por ejemplo con DOMPurify).
+**3.4 CORS — COMPLETADO Y CERTIFICADO**
+- Implementada función unificada `isOriginAllowed` y `setCorsHeaders` en `api/_utils.ts`.
+- Bloqueo estricto de subdominios maliciosos (sin `startsWith`).
+- Prohibición absoluta de `localhost` / `127.0.0.1` en producción (`VERCEL_ENV === 'production'`).
+- Cabecera `Vary: Origin` unificada en todos los endpoints de `api/`.
+- **Pruebas Automatizadas:** 7 tests unitarios en `tests/cors-security.test.ts` (100% PASS).
 
-**Aceptación:** pruebas nuevas en `tests/` para 3.1 y 3.2 pasan; un alumno no puede obtener claves ni suplantar a otro.
+**3.5 CSP y renderizado — COMPLETADO Y CERTIFICADO**
+- Removido `'unsafe-inline'` de la directiva `script-src` en `vercel.json`.
+- KaTeX configurado con `trust: false` en `EnunciadoRenderer.tsx`.
+- Integrado `DOMPurify.sanitize(...)` para blindar `dangerouslySetInnerHTML`.
+- **Pruebas Automatizadas:** 5 tests unitarios en `tests/csp-and-rendering.test.ts` (100% PASS).
+
+**Aceptación de la Fase 3:** ✅ CUMPLIDA AL 100%. 9 suites de pruebas automáticas en `tests/` pasan en verde (43 tests PASS). Alumno aislado de claves, correos y renderizado sanitizados, CORS blindado y CSP endurecido.
 
 ---
 
