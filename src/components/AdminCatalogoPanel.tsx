@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "../lib/supabaseClient";
-import { SolicitudEvaluacion, EvaluacionCatalogo } from "../types";
+import { SolicitudEvaluacion, EvaluacionCatalogo, EstadoSolicitud } from "../types";
 import {
   BookMarked,
   CheckCircle2,
@@ -153,7 +153,7 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
           establecimiento: (s.perfiles as Record<string, string>)?.establecimiento || (s.establecimiento as string),
           rbd: (s.perfiles as Record<string, string>)?.rbd || (s.rbd as string),
           mensaje: s.mensaje as string,
-          estado: s.estado as string,
+          estado: ((s.estado as EstadoSolicitud) || "pendiente"),
           createdAt: s.created_at as string,
         }))
       );
