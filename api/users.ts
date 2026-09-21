@@ -15,7 +15,10 @@ const APP_URL = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://khtdzgfqjggycrcbrytw.supabase.co';
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || '';
+if (!SUPABASE_URL) {
+  console.warn('⚠️ [SEGURIDAD] SUPABASE_URL no está configurada en las variables de entorno.');
+}
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 if (!SUPABASE_SERVICE_ROLE_KEY) {

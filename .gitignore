@@ -51,12 +51,13 @@ ciclo_evaluacion_simce.*
 public/ciclo_evaluacion_simce.*
 public/docs/
 
-# Legacy / Development Supabase migrations (schema_export_clean.sql remains official)
-supabase/migrations/
-!supabase/migrations/
-!supabase/migrations/20260822_private_teacher_data.sql
+# Supabase migrations: versionar todo (son idempotentes y auditables)
+# NOTA: Las migraciones 004/006/010 contienen correos de lookup (ver ADR-003);
+#       no contienen contraseñas ni tokens — ver docs/adr/ADR-003-*.md
+# supabase/migrations/ ya no se ignora (fue eliminada la exclusión anterior)
 
-# Scratch & ZIP Archives
+# Scratch & ZIP Archives (scripts de administración ad-hoc, no versionados)
+# Los scripts de producción/migración van en scripts/ (sí versionados)
 test_*.mjs
 test_*.js
 scratch/

@@ -2,7 +2,31 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-09-21] Fase 4: Higiene del Repositorio y Secretos
+
+- **Problema / Requerimiento**: Eliminar datos sensibles hardcodeados del código de aplicación, auditar migraciones históricas, corregir `.gitignore` y documentar decisiones de diseño sobre credenciales.
+
+- **Archivos y Solución Técnica**:
+  - **4.1 — URL Supabase hardcodeada eliminada** ([`api/users.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/users.ts) línea 18):
+    - Removido el fallback `'https://khtdzgfqjggycrcbrytw.supabase.co'` — ahora solo acepta `process.env.VITE_SUPABASE_URL` o `process.env.SUPABASE_URL`; string vacío falla explícitamente en producción.
+    - **Grep de verificación** en `api/*.ts`: 0 resultados de literales de proyecto/correos. ✅
+  - **4.2 — ADR de migraciones** ([`docs/adr/ADR-003-credentials-in-migrations-and-scripts.md`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/docs/adr/ADR-003-credentials-in-migrations-and-scripts.md)):
+    - Documentada la decisión de no reescribir las migraciones 004, 006, 010 (contienen correos de lookup, no contraseñas).
+    - Regla futura: nuevas migraciones deben usar `RAISE EXCEPTION` si no encuentran el admin (no `SELECT ... LIMIT 1` arbitrario).
+  - **4.3 — Auditoría de credenciales**:
+    - `git log --all --oneline -- ".env.local" "test_smtp.mjs"` → 2 commits de limpieza; ningún secreto real (password SMTP, service_role key) fue comprometido. **No se requiere rotación.** ✅
+    - `004_create_superadmin_luis_leon.sql`: usa `REEMPLAZAR_CON_PASSWORD_SEGURO` (placeholder, sin contraseña real). ✅
+  - **4.4 — `.gitignore`** ([`.gitignore`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.gitignore)):
+    - Eliminadas las dos líneas contradictorias `supabase/migrations/` + `!supabase/migrations/` que se anulaban mutuamente.
+    - Añadido comentario explicativo que referencia el ADR-003 para migraciones con correos de lookup.
+    - Documentada la distinción `scratch/` (ignorado) vs `scripts/` (versionado).
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit`: **0 errores** ✅
+  - `grep -r "khtdzgfqjggycrcbrytw|@gmail|@hotmail" api/`: **0 resultados** ✅
+
 ### [2026-09-21] Fase 3.5: Endurecimiento de CSP (Content Security Policy) y Renderizado Seguro KaTeX + DOMPurify
+
 
 - **Problema / Requerimiento**:
   1. **Política CSP con 'unsafe-inline' en scripts**: `vercel.json` incluía `'unsafe-inline'` en la directiva `script-src`, debilitando las defensas del navegador ante posibles inyecciones XSS.
