@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { Prueba, UserProfile } from '../types';
 import {
@@ -85,11 +85,15 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
     async function loadPruebas() {
       try {
         let query = supabase.from('evaluaciones').select('*');
-        const isAdmin = currentUser!.rol === 'admin';
+        const isAlumno = currentUser!.rol === 'alumno';
+        const isProfesor = currentUser!.rol === 'profesor';
 
-        if (!isAdmin) {
+        if (isProfesor) {
           // Aislamiento estricto (Directivas 1 y 4): cada docente solo ve sus evaluaciones
           query = query.eq('profesor_id', currentUser!.id);
+        } else if (isAlumno) {
+          // Para alumnos: solo evaluaciones activas permitidas por RLS
+          query = query.eq('estado', 'activa');
         }
 
         const { data, error } = await query.order('created_at', { ascending: false });

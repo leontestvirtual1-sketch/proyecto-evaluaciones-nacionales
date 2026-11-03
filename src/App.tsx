@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 // AcademicDataContext is the SINGLE source of truth for Demo vs Production data isolation.
 import { ShieldCheck } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -95,6 +95,12 @@ function MainAppContent({
         // Limpiar URL sin recargar
         window.history.replaceState({}, document.title, window.location.pathname);
       });
+    }
+
+    // Capturar código de evaluación asignada para alumnos (?codigo=... o ?code=...)
+    const code = params.get('codigo') || params.get('code');
+    if (code) {
+      sessionStorage.setItem('pending_eval_code', code.trim());
     }
   }, [approveUserByToken]);
 
@@ -497,10 +503,29 @@ function MainAppContent({
         );
       }
 
+      // Filtrar evaluaciones exclusivas para el alumno:
+      // Si viene con un código de acceso específico, mostrar solo esa prueba.
+      // Si es la alumna Florencia (o alumna particular), mostrar únicamente la prueba asignada.
+      const pendingCode = sessionStorage.getItem('pending_eval_code');
+      const pruebasParaAlumno = (() => {
+        const activas = pruebas.filter(p => p.estado === 'activa');
+        if (pendingCode) {
+          const match = activas.filter(
+            p => p.codigoPublico.toLowerCase() === pendingCode.toLowerCase() || p.id.toLowerCase() === pendingCode.toLowerCase()
+          );
+          if (match.length > 0) return match;
+        }
+        if (user.email === 'florenciaangelicaleonpizarro@gmail.com') {
+          const matchFlorencia = activas.filter(p => p.id === 'eval-simce-mat-2m-e3' || p.codigoPublico === 'SIMCE-2M-MAT-E3');
+          if (matchFlorencia.length > 0) return matchFlorencia;
+        }
+        return activas;
+      })();
+
       return (
         <AlumnoPortal
           alumno={user}
-          pruebasDisponibles={pruebas.filter(p => p.estado === 'activa')}
+          pruebasDisponibles={pruebasParaAlumno}
           historialRendiciones={rendiciones.filter(r => r.alumnoId === user.id)}
           onStartEvaluation={(prueba) => setActivePruebaForRunner(prueba)}
         />
@@ -510,8 +535,8 @@ function MainAppContent({
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex`}>
-      {/* Sidebar Navigation */}
-      <Sidebar
+      {/* Sidebar Navigation — oculto para rol alumno */}
+      {user.rol !== 'alumno' && (<Sidebar
         activePage={activePage}
         isSandboxMode={isSandboxMode}
         onNavigate={(page) => {
@@ -521,11 +546,28 @@ function MainAppContent({
           // Registrar en historial del navegador para que el botón atrás funcione dentro de la app
           window.history.pushState({ page }, '', window.location.pathname);
         }}
-      />
+      />)}
 
       {/* Main Container */}
-      <div className="flex-1 lg:pl-64 flex flex-col min-w-0">
+      <div className={`flex-1 ${user.rol !== 'alumno' ? 'lg:pl-64' : ''} flex flex-col min-w-0`}>
         <SandboxBanner isDemo={isSandboxMode} />
+        {/* Banner informativo si un docente/admin abre el enlace de un alumno */}
+        {user.rol !== 'alumno' && typeof window !== 'undefined' && sessionStorage.getItem('pending_eval_code') && (
+          <div className="bg-amber-600/90 text-white text-xs font-semibold px-4 py-2.5 flex items-center justify-between shadow-md">
+            <span>
+              ℹ️ Abriste un enlace de evaluación para alumnos (código: <strong>{sessionStorage.getItem('pending_eval_code')}</strong>). Tienes sesión activa como <strong>{user.nombre} ({user.rol})</strong>.
+            </span>
+            <button
+              onClick={async () => {
+                await logout();
+                setAuthView('login');
+              }}
+              className="ml-4 px-3 py-1 bg-white/20 hover:bg-white/30 rounded-lg text-white font-bold transition-all text-[11px] whitespace-nowrap"
+            >
+              Cerrar sesión e ingresar como alumno
+            </button>
+          </div>
+        )}
         <Navbar
           user={user}
           onRoleChange={(role, extra) => {
@@ -534,12 +576,12 @@ function MainAppContent({
             setActivePage('dashboard');
             switchRole(role, extra);
           }}
-          onGoToLanding={() => {
+          onGoToLanding={user.rol !== 'alumno' ? () => {
             if (isSandboxMode) {
               logout();
             }
             setShowLanding(true);
-          }}
+          } : undefined}
           onLogout={async () => {
             setIsSandboxMode(false);
             await logout();
