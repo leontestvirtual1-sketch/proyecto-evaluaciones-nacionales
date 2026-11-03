@@ -281,6 +281,57 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    
+    // 10.b Notificación automática al docente/administrador vía /api/notify-rendicion-docente
+    try {
+      const notifySecret = process.env.NOTIFY_SECRET;
+      if (notifySecret) {
+        let profesorEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || '';
+        let profesorNombre = 'Docente';
+
+        if (evaluacion.profesor_id) {
+          const { data: profPerfil } = await sbAdmin
+            .from('perfiles')
+            .select('email, nombre, apellido')
+            .eq('id', evaluacion.profesor_id)
+            .maybeSingle();
+
+          if (profPerfil?.email) {
+            profesorEmail = profPerfil.email;
+            profesorNombre = `${profPerfil.nombre || "" } ${profPerfil.apellido || ""}`.trim() || "Docente";
+          }
+        }
+
+        if (profesorEmail) {
+          fetch(`${APP_URL}/api/notify-rendicion-docente`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-notify-secret': notifySecret
+            },
+            body: JSON.stringify({
+              rendicionId,
+              pruebaId,
+              pruebaTitulo: evaluacion.titulo || 'Evaluación',
+              alumnoNombre: nombreLimpio,
+              alumnoRut: rutLimpio,
+              alumnoEmail: authenticatedUserEmail || '',
+              docenteEmail: profesorEmail,
+              docenteNombre: profesorNombre,
+              puntajeObtenido,
+              puntajeMaximo,
+              porcentajeLogro,
+              puntajeEscalaNacional,
+              respuestasDetalladas,
+              fechaRendicion: ahoraIso.replace('T', ' ').substring(0, 16)
+            })
+          }).catch(err => console.warn('[grade-evaluation] Error no bloqueante al notificar docente:', err));
+        }
+      }
+    } catch (notifyErr) {
+      console.warn('[grade-evaluation] No se pudo coordinar notificación a docente:', notifyErr);
+    }
+
     // 11. Respuesta enriquecida para el cliente (compatible con AlumnoEvaluationView y App)
     return res.status(200).json({
       success: true,

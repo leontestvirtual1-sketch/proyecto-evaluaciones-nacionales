@@ -18,9 +18,11 @@ import {
   X,
   HelpCircle,
   FileCheck,
-  BookMarked
+  BookMarked,
+  Mail
 } from 'lucide-react';
 import { UserProfile, RendicionPrueba } from '../types';
+import { EnviarEvaluacionModal } from '../components/EnviarEvaluacionModal';
 import { PrintEvaluacionModal } from '../components/PrintEvaluacionModal';
 import { IngresoRespuestasModal } from '../components/IngresoRespuestasModal';
 import { useAcademicData } from '../context/AcademicDataContext';
@@ -259,6 +261,8 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   const [respuestasModalOpen, setRespuestasModalOpen] = useState(false);
   const [selectedPruebaForRespuestas, setSelectedPruebaForRespuestas] = useState<Prueba | null>(null);
   const [catalogoModalOpen, setCatalogoModalOpen] = useState(false);
+  const [enviarModalOpen, setEnviarModalOpen] = useState(false);
+  const [selectedPruebaForEnviar, setSelectedPruebaForEnviar] = useState<Prueba | null>(null);
 
   const showToast = (msg: string) => {
 
@@ -552,7 +556,19 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {/* Enviar por Mail */}
+                    <button
+                      onClick={() => {
+                        setSelectedPruebaForEnviar(prueba);
+                        setEnviarModalOpen(true);
+                      }}
+                      className="flex items-center justify-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold py-2 rounded-xl shadow-sm transition-all"
+                      title="Enviar prueba por email a un alumno"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Enviar Mail</span>
+                    </button>
                     {/* Ver Facsímil */}
                     <button
                       onClick={() => handleOpenFacsimil(prueba)}
@@ -624,6 +640,17 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
       />
 
       {/* Catálogo SIMCE — solo docentes en producción */}
+      
+      {/* Enviar Evaluación por Correo Modal */}
+      <EnviarEvaluacionModal
+        isOpen={enviarModalOpen}
+        prueba={selectedPruebaForEnviar}
+        alumnos={alumnos}
+        onClose={() => { setEnviarModalOpen(false); setSelectedPruebaForEnviar(null); }}
+        onSuccess={(email) => {
+          showToast(`Evaluacion enviada con exito a ${email}`);
+        }}
+      />
       {currentUser && !isSandboxMode && (
         <CatalogoEvaluacionesModal
           isOpen={catalogoModalOpen}
