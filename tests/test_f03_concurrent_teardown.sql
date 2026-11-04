@@ -20,3 +20,4 @@ DELETE FROM auth.users WHERE id IN (
 );
 
 COMMIT;
+
