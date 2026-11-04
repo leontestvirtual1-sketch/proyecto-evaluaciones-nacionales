@@ -315,17 +315,17 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
       )}
 
       {/* Header Banner */}
-      <div className="glass-card p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-indigo-500/20 text-white relative overflow-hidden">
+      <div className="glass-card p-6 sm:p-8 bg-white border-slate-200 text-slate-900 relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-              <BookOpen className="w-3.5 h-3.5 mr-1.5 text-indigo-400" /> Gestión de Evaluaciones & Ensayos
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
+              <BookOpen className="w-3.5 h-3.5 mr-1.5 text-indigo-600" /> Catálogo y gestión de evaluaciones
             </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
               {currentUser?.rol === 'profesor' ? `Mis Evaluaciones — ${currentUser.asignaturaNombre || 'Especialidad'}` : 'Evaluaciones Creadas'}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
-              Crea, administra y distribuye pruebas estandarizadas nacionales y ensayos SIMCE. Obtén códigos de acceso directo para tus alumnos y analiza los resultados en tiempo real.
+            <p className="text-xs sm:text-sm text-slate-500 max-w-2xl">
+              Crea y distribuye evaluaciones, consulta su estado y revisa los reportes disponibles para tus cursos.
             </p>
           </div>
 

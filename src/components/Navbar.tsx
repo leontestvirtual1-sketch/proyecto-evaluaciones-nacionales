@@ -1,4 +1,6 @@
 import { UserProfile, UserRole } from '../types';
+import type { PageId } from './Sidebar';
+import { useState } from 'react';
 import {
   GraduationCap,
   Moon,
@@ -6,7 +8,9 @@ import {
   School,
   Sparkles,
   Home,
-  LogOut
+  LogOut,
+  Menu,
+  X
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -16,6 +20,8 @@ interface NavbarProps {
   onLogout?: () => void;
   darkMode: boolean;
   onToggleDarkMode: () => void;
+  activePage: PageId;
+  onNavigate: (page: PageId) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -24,10 +30,19 @@ export const Navbar: React.FC<NavbarProps> = ({
   onGoToLanding,
   onLogout,
   darkMode,
-  onToggleDarkMode
+  onToggleDarkMode,
+  activePage,
+  onNavigate
 }) => {
   // Logo dinámico: primero usa logoUrl del perfil (desde perfiles.logo_url via Supabase)
   const schoolLogo = user.logoUrl;
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const portalNavigation: { id: PageId; label: string }[] = [
+    { id: 'dashboard', label: 'Panel Principal' },
+    { id: 'evaluaciones', label: 'Catálogo de Evaluaciones' },
+    { id: 'monitoreo', label: 'Monitoreo' },
+    { id: 'resultados', label: 'Resultados y Métricas' },
+  ];
 
   return (
     <header className="sticky top-0 z-40 glass-nav border-b border-slate-200 dark:border-slate-800">
@@ -53,8 +68,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
+          {user.rol === 'admin' && (
+            <nav className="hidden xl:flex items-center gap-1" aria-label="Navegación principal">
+              {portalNavigation.map(item => <button key={item.id} onClick={() => onNavigate(item.id)} className={`rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${activePage === item.id ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-indigo-700'}`} aria-current={activePage === item.id ? 'page' : undefined}>{item.label}</button>)}
+            </nav>
+          )}
+
           {/* Right Actions */}
           <div className="flex items-center gap-2.5">
+            {user.rol === 'admin' && <button onClick={() => setMobileMenuOpen(open => !open)} className="xl:hidden rounded-lg border border-slate-200 p-2 text-slate-600 hover:bg-slate-50" aria-label={mobileMenuOpen ? 'Cerrar navegación' : 'Abrir navegación'} aria-expanded={mobileMenuOpen}>{mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}</button>}
             {/* Go to Landing button */}
             {onGoToLanding && (
               <button
@@ -238,6 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
       </div>
+      {user.rol === 'admin' && mobileMenuOpen && <nav className="absolute left-0 right-0 top-full border-b border-slate-200 bg-white p-3 shadow-lg xl:hidden" aria-label="Navegación principal móvil">{portalNavigation.map(item => <button key={item.id} onClick={() => { onNavigate(item.id); setMobileMenuOpen(false); }} className={`block min-h-11 w-full rounded-lg px-3 py-2 text-left text-sm font-semibold ${activePage === item.id ? 'bg-indigo-50 text-indigo-700' : 'text-slate-700 hover:bg-slate-50'}`} aria-current={activePage === item.id ? 'page' : undefined}>{item.label}</button>)}</nav>}
     </header>
   );
 };

@@ -9,6 +9,7 @@ import { ProfesorDashboard } from './components/ProfesorDashboard';
 import { DirectorDashboard } from './components/DirectorDashboard';
 import { UtpDashboard } from './components/UtpDashboard';
 import { ReporteTabuladoView } from './components/ReporteTabuladoView';
+import { StitchMonitoringPage, StitchPortalDashboard, StitchResultsPage } from './components/StitchPortalPages';
 import { EvaluacionGeneratorModal } from './components/EvaluacionGeneratorModal';
 import { AlumnoPortal } from './components/AlumnoPortal';
 import { AlumnoEvaluationView } from './components/AlumnoEvaluationView';
@@ -63,7 +64,7 @@ function MainAppContent({
     try {
       const saved = localStorage.getItem('sysget_active_page') as PageId | null;
       const validPages: PageId[] = [
-        'dashboard', 'evaluaciones', 'alumnos', 'profesores', 'cursos',
+        'dashboard', 'evaluaciones', 'monitoreo', 'resultados', 'alumnos', 'profesores', 'cursos',
         'banco-preguntas', 'usuarios', 'configuracion'
       ];
       return saved && validPages.includes(saved) ? saved : 'dashboard';
@@ -71,7 +72,7 @@ function MainAppContent({
       return 'dashboard';
     }
   });
-  const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   const [showLanding, setShowLanding] = useState<boolean>(true);
   const [tokenApprovalNotice, setTokenApprovalNotice] = useState<string | null>(null);
 
@@ -261,6 +262,9 @@ function MainAppContent({
     }
   };
 
+  const usePortalNavigation = user.rol === 'admin' &&
+    ['dashboard', 'evaluaciones', 'monitoreo', 'resultados'].includes(activePage);
+
   const handleCreatePrueba = (nuevaPrueba: Prueba) => {
     onCreatePrueba(nuevaPrueba);
   };
@@ -398,6 +402,19 @@ function MainAppContent({
       }
 
       switch (activePage) {
+        case 'monitoreo':
+          return <StitchMonitoringPage
+            pruebas={dashboardPruebas}
+            onOpenReport={(id) => setSelectedReportPruebaId(id)}
+            onNavigate={setActivePage}
+          />;
+        case 'resultados':
+          return <StitchResultsPage
+            pruebas={dashboardPruebas}
+            reporte={dashboardReporte}
+            onOpenReport={(id) => setSelectedReportPruebaId(id)}
+            onNavigate={setActivePage}
+          />;
         case 'profesores':
           // RBAC: admin, director y utp pueden acceder al listado del equipo docente
           if (user.rol === 'profesor') {
@@ -495,6 +512,17 @@ function MainAppContent({
 
         case 'dashboard':
         default: {
+          if (user.rol === 'admin') {
+            return <StitchPortalDashboard
+              user={user}
+              pruebas={dashboardPruebas}
+              cursos={academicData.cursos}
+              reporte={dashboardReporte}
+              onNavigate={setActivePage}
+              onOpenReport={(id) => setSelectedReportPruebaId(id)}
+              onCreateEvaluation={() => setIsGeneratorOpen(true)}
+            />;
+          }
           if (user.rol === 'director') {
             return (
               <DirectorDashboard
@@ -603,7 +631,7 @@ function MainAppContent({
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col`}>
+    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-[#faf8ff] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col`}>
       {/* Banner de aviso si un docente/admin tiene abierto un enlace con código de alumno */}
       {typeof window !== 'undefined' && sessionStorage.getItem('pending_eval_code') && user.rol !== 'alumno' && (
         <div className="bg-amber-950/90 border-b border-amber-500/40 px-4 py-2 text-xs text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-lg z-50">
@@ -642,7 +670,7 @@ function MainAppContent({
       )}
       <div className="flex-1 flex">
       {/* Sidebar Navigation — oculto para rol alumno */}
-      {user.rol !== 'alumno' && (<Sidebar
+      {user.rol !== 'alumno' && !usePortalNavigation && (<Sidebar
         activePage={activePage}
         isSandboxMode={isSandboxMode}
         onNavigate={(page) => {
@@ -655,7 +683,7 @@ function MainAppContent({
       />)}
 
       {/* Main Container */}
-      <div className={`flex-1 ${user.rol !== 'alumno' ? 'lg:pl-64' : ''} flex flex-col min-w-0`}>
+      <div className={`flex-1 ${user.rol !== 'alumno' && !usePortalNavigation ? 'lg:pl-64' : ''} flex flex-col min-w-0`}>
         <SandboxBanner isDemo={isSandboxMode} />
         {/* Banner informativo si un docente/admin abre el enlace de un alumno */}
         {user.rol !== 'alumno' && typeof window !== 'undefined' && sessionStorage.getItem('pending_eval_code') && (
@@ -676,6 +704,13 @@ function MainAppContent({
         )}
         <Navbar
           user={user}
+          activePage={activePage}
+          onNavigate={(page) => {
+            setSelectedReportPruebaId(null);
+            setActivePruebaForRunner(null);
+            setActivePage(page);
+            window.history.pushState({ page }, '', window.location.pathname);
+          }}
           onRoleChange={(role, extra) => {
             setSelectedReportPruebaId(null);
             setActivePruebaForRunner(null);
