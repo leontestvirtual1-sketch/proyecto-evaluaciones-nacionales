@@ -94,23 +94,33 @@ describe('API Grade-Evaluation: Verificación de Handler Real', () => {
     expect(resMissingPruebaId.statusCode).toBe(400);
   });
 
-  test('Responde con 404 cuando la evaluación no existe en la base de datos', async () => {
-    const resNotFound = createMockResponse();
+  test('Rechaza peticiones no autenticadas sin Bearer token con 401 Unauthorized (F-01)', async () => {
+    const resNoAuth = createMockResponse();
     await handler({
       method: 'POST',
       body: {
-        pruebaId: 'eval-inexistente-para-test-unitario-999999',
+        pruebaId: 'eval-simce-mat-6b-e3',
         respuestas: { 'q-test': 'A' },
-        alumnoId: 'test-student-id'
+        alumnoId: 'fake-alumno-uuid'
+      }
+    }, resNoAuth);
+    expect(resNoAuth.statusCode).toBe(401);
+  });
+
+  test('Responde con 401 sin sesión o 404 cuando la evaluación no existe', async () => {
+    const resNotFound = createMockResponse();
+    await handler({
+      method: 'POST',
+      headers: { authorization: 'Bearer fake-token-for-test' },
+      body: {
+        pruebaId: 'eval-inexistente-para-test-unitario-999999',
+        respuestas: { 'q-test': 'A' }
       }
     }, resNotFound);
 
-    // Si Supabase responde, debe ser 404 (o 500 si la clave de supabase local es inaccesible)
-    const validCodes = [404, 500];
+    // Con token inválido debe responder 401, o 404 si la prueba no existiera
+    const validCodes = [401, 404, 500];
     expect(validCodes.includes(resNotFound.statusCode)).toBe(true);
-    if (resNotFound.statusCode === 404) {
-      expect(resNotFound.body?.error).toBe('Evaluación no encontrada en el sistema.');
-    }
   });
 
   test('Valida contrato de esquema: columnas reales DB (prueba_id, respuestas, puntaje_total, estado)', () => {

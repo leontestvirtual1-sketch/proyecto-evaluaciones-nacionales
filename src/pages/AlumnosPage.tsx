@@ -363,6 +363,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
   const [editingAlumno, setEditingAlumno] = useState<AlumnoConCurso | null>(null);
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // ── MODO PRODUCCIÓN: Cargar alumnos directamente desde Supabase ──
   const loadAlumnosFromSupabase = useCallback(async () => {
@@ -478,35 +479,51 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
         };
 
         const { error: pErr } = await supabase.from('perfiles').upsert(perfilRow, { onConflict: 'id' });
-        if (pErr) console.error('Error guardando perfil de alumno:', pErr);
+        if (pErr) {
+          console.error('Error guardando perfil de alumno:', pErr);
+          setStatusMessage({ type: 'error', text: `Error al guardar alumno: ${pErr.message}` });
+          return; // No cerrar modal para no perder datos ingresados
+        }
 
         if (a.cursoId) {
           const { error: mErr } = await supabase.from('matriculas').upsert({
             alumno_id: alumnoId,
             curso_id: a.cursoId
           }, { onConflict: 'alumno_id,curso_id' });
-          if (mErr) console.warn('Error guardando matrícula:', mErr);
+          if (mErr) {
+            console.warn('Error guardando matrícula:', mErr);
+            setStatusMessage({ type: 'error', text: `Alumno guardado pero falló asignación de curso: ${mErr.message}` });
+            return;
+          }
         }
 
+        setStatusMessage({ type: 'success', text: `Alumno ${a.nombre} ${a.apellido} guardado con éxito.` });
         await loadAlumnosFromSupabase();
-      } catch (err) {
+        setEditingAlumno(null);
+      } catch (err: any) {
         console.error('Error guardando alumno en Supabase:', err);
+        setStatusMessage({ type: 'error', text: `Error inesperado: ${err?.message || 'Fallo de conexión'}` });
       }
     } else {
       setAlumnos(prev => {
         const exists = prev.find(p => p.id === a.id);
         return exists ? prev.map(p => p.id === a.id ? a : p) : [a, ...prev];
       });
+      setEditingAlumno(null);
+      setStatusMessage({ type: 'success', text: `Alumno ${a.nombre} guardado en demo.` });
     }
-    setEditingAlumno(null);
   };
 
   const handleImportCSV = async (nuevos: AlumnoConCurso[]) => {
     if (!isSandboxMode && currentUser) {
       try {
+        let guardados = 0;
+        let fallidos = 0;
+        const errores: string[] = [];
+
         for (const a of nuevos) {
           const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
-          await supabase.from('perfiles').upsert({
+          const { error: pErr } = await supabase.from('perfiles').upsert({
             id: alumnoId,
             rut: a.rut,
             nombre: a.nombre,
@@ -519,19 +536,37 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
             plan: 'trial'
           }, { onConflict: 'id' });
 
+          if (pErr) {
+            fallidos++;
+            errores.push(`${a.rut}: ${pErr.message}`);
+            continue;
+          }
+
           if (a.cursoId) {
-            await supabase.from('matriculas').upsert({
+            const { error: mErr } = await supabase.from('matriculas').upsert({
               alumno_id: alumnoId,
               curso_id: a.cursoId
             }, { onConflict: 'alumno_id,curso_id' });
+            if (mErr) console.warn('Aviso matrícula:', mErr.message);
           }
+          guardados++;
         }
         await loadAlumnosFromSupabase();
-      } catch (err) {
+        if (fallidos > 0) {
+          setStatusMessage({
+            type: 'error',
+            text: `Importación parcial: ${guardados} alumnos guardados, ${fallidos} fallaron (${errores.slice(0, 2).join(', ')})`
+          });
+        } else {
+          setStatusMessage({ type: 'success', text: `Se importaron ${guardados} alumnos exitosamente.` });
+        }
+      } catch (err: any) {
         console.error('Error importando CSV a Supabase:', err);
+        setStatusMessage({ type: 'error', text: `Error al importar CSV: ${err?.message || 'Error de red'}` });
       }
     } else {
       setAlumnos(prev => [...nuevos, ...prev]);
+      setStatusMessage({ type: 'success', text: `Se importaron ${nuevos.length} alumnos en modo demo.` });
     }
   };
 
@@ -544,20 +579,49 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
   const handleDelete = async (id: string) => {
     if (!isSandboxMode) {
       try {
-        await supabase.from('matriculas').delete().eq('alumno_id', id);
-        await supabase.from('perfiles').delete().eq('id', id);
+        const { error: mErr } = await supabase.from('matriculas').delete().eq('alumno_id', id);
+        if (mErr) console.warn('Aviso al eliminar matrícula:', mErr.message);
+
+        const { error: pErr } = await supabase.from('perfiles').delete().eq('id', id);
+        if (pErr) {
+          setStatusMessage({ type: 'error', text: `No se pudo eliminar el alumno: ${pErr.message}` });
+          return;
+        }
+        setStatusMessage({ type: 'success', text: 'Alumno eliminado correctamente.' });
         await loadAlumnosFromSupabase();
-      } catch (err) {
+      } catch (err: any) {
         console.error('Error eliminando alumno de Supabase:', err);
+        setStatusMessage({ type: 'error', text: `Error al eliminar: ${err?.message || 'Error de conexión'}` });
       }
     } else {
       setAlumnos(prev => prev.filter(a => a.id !== id));
+      setStatusMessage({ type: 'success', text: 'Alumno eliminado de la lista demo.' });
     }
     setActiveMenuId(null);
   };
 
   return (
     <div className="space-y-6 animate-fade-in text-left">
+      {/* Status banner */}
+      {statusMessage && (
+        <div
+          role="alert"
+          className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between ${
+            statusMessage.type === 'error'
+              ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+              : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+          }`}
+        >
+          <span>{statusMessage.text}</span>
+          <button
+            onClick={() => setStatusMessage(null)}
+            className="ml-3 text-xs opacity-70 hover:opacity-100"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>

@@ -1,3 +1,19 @@
+// Rate limiting simple en memoria por profesor (max 20 envíos por minuto)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(userId: string, limit = 20, windowMs = 60000): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(userId);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(userId, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  if (entry.count >= limit) {
+    return false;
+  }
+  entry.count++;
+  return true;
+}
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * api/send-evaluacion-alumno.ts
@@ -58,6 +74,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: 'Token de sesión inválido o expirado.' });
   }
 
+  // Verificar perfil y rol autorizado (F-03: Solo profesores o administradores autorizados)
+  const { data: emisorPerfil } = await sbAdmin
+    .from('perfiles')
+    .select('id, rol, rbd, es_super_admin, nombre, apellido, estado')
+    .eq('id', emisor.id)
+    .maybeSingle();
+
+  if (!emisorPerfil || (emisorPerfil.rol !== 'profesor' && emisorPerfil.rol !== 'admin')) {
+    return res.status(403).json({ error: 'Acceso denegado: solo docentes o administradores pueden enviar evaluaciones.' });
+  }
+
+  if (emisorPerfil.estado && emisorPerfil.estado !== 'activo') {
+    return res.status(403).json({ error: 'Acceso denegado: cuenta no activa.' });
+  }
+
+  if (!checkRateLimit(emisor.id, 25, 60000)) {
+    return res.status(429).json({ error: 'Has alcanzado el límite de envíos por minuto. Por favor espera un momento antes de continuar.' });
+  }
+
   // 4. Leer y validar body
   const {
     pruebaId,
@@ -79,10 +114,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'Formato de email del alumno inválido.' });
   }
 
-  // 5. Verificar que la evaluación existe y está activa
+  // 5. Verificar que la evaluación existe y está activa (y relación de propiedad)
   const { data: evaluacion, error: evalErr } = await sbAdmin
     .from('evaluaciones')
-    .select('id, titulo, estado, codigo_acceso, tiempo_limite')
+    .select('id, titulo, estado, codigo_acceso, tiempo_limite, profesor_id, rbd, es_catalogo')
     .eq('id', pruebaId)
     .maybeSingle();
 
@@ -91,6 +126,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   if (evaluacion.estado && evaluacion.estado !== 'activa') {
     return res.status(403).json({ error: 'Solo se pueden enviar evaluaciones con estado "activa".' });
+  }
+
+  // Comprobar que el emisor sea el autor, pertenezca al mismo RBD, o sea superadmin
+  const isAuthor = evaluacion.profesor_id === emisor.id;
+  const isSameRbd = emisorPerfil.rbd && evaluacion.rbd === emisorPerfil.rbd;
+  const isSuper = Boolean(emisorPerfil.es_super_admin);
+  const isCatalogo = Boolean(evaluacion.es_catalogo);
+
+  if (!isAuthor && !isSameRbd && !isSuper && !isCatalogo) {
+    return res.status(403).json({ error: 'No tienes autorización para distribuir esta evaluación.' });
   }
 
   // 6. Datos finales (usar los valores de DB como fuente de verdad)

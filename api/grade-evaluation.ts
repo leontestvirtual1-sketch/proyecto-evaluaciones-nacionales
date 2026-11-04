@@ -77,26 +77,61 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   });
 
   try {
-    // 4. Autenticación y derivación segura del estudiante
+    // 4. Autenticación y derivación segura del estudiante (F-01: Token obligatorio, derivación estricta)
     const authHeader = req.headers?.authorization || '';
     const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
 
-    let authenticatedUserId: string | null = null;
-    let authenticatedUserEmail: string | null = null;
-
-    if (token) {
-      const { data: { user }, error: authErr } = await sbAdmin.auth.getUser(token);
-      if (authErr || !user) {
-        return res.status(401).json({ error: 'Token de sesión inválido o expirado.' });
-      }
-      authenticatedUserId = user.id;
-      authenticatedUserEmail = user.email || null;
+    if (!token) {
+      return res.status(401).json({ error: 'Se requiere iniciar sesión para registrar una rendición.' });
     }
 
-    // Derivar alumno: si viene token, el alumno es el usuario autenticado (se ignora alumnoId del body para prevenir suplantación IDOR)
-    const finalAlumnoId = authenticatedUserId || (typeof alumnoId === 'string' && alumnoId.trim().length > 0 ? alumnoId.trim() : null);
-    if (!finalAlumnoId) {
-      return res.status(401).json({ error: 'Se requiere iniciar sesión para registrar una rendición.' });
+    const { data: { user }, error: authErr } = await sbAdmin.auth.getUser(token);
+    if (authErr || !user) {
+      return res.status(401).json({ error: 'Token de sesión inválido o expirado.' });
+    }
+
+    const { data: actorPerfil } = await sbAdmin
+      .from('perfiles')
+      .select('id, rol, rbd, es_super_admin, nombre, apellido, rut')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    if (!actorPerfil) {
+      return res.status(403).json({ error: 'Perfil de usuario no encontrado en la plataforma.' });
+    }
+
+    let finalAlumnoId: string;
+    let finalAlumnoNombre = `${actorPerfil.nombre || ''} ${actorPerfil.apellido || ''}`.trim() || user.email || 'Estudiante';
+    let finalAlumnoRut = actorPerfil.rut || (typeof alumnoRut === 'string' ? alumnoRut : '');
+
+    if (actorPerfil.rol === 'alumno') {
+      // Estudiante rindiendo: identidad fija e inmutable derivada del token de Auth (cero IDOR)
+      finalAlumnoId = user.id;
+    } else if (actorPerfil.rol === 'profesor' || actorPerfil.rol === 'admin') {
+      // Digitación docente / OMR: profesor o admin califica para un alumno específico
+      if (!alumnoId || typeof alumnoId !== 'string' || !alumnoId.trim()) {
+        return res.status(400).json({ error: 'Para digitación docente u OMR se requiere especificar el alumnoId del estudiante.' });
+      }
+      finalAlumnoId = alumnoId.trim();
+
+      if (!actorPerfil.es_super_admin) {
+        const { data: targetAlumno } = await sbAdmin
+          .from('perfiles')
+          .select('id, rbd, nombre, apellido, rut')
+          .eq('id', finalAlumnoId)
+          .maybeSingle();
+
+        if (!targetAlumno) {
+          return res.status(404).json({ error: 'El estudiante especificado no existe en el sistema.' });
+        }
+        if (targetAlumno.rbd && actorPerfil.rbd && targetAlumno.rbd !== actorPerfil.rbd) {
+          return res.status(403).json({ error: 'Acceso denegado: el estudiante pertenece a otro establecimiento escolar.' });
+        }
+        finalAlumnoNombre = `${targetAlumno.nombre || ''} ${targetAlumno.apellido || ''}`.trim() || finalAlumnoNombre;
+        finalAlumnoRut = targetAlumno.rut || finalAlumnoRut;
+      }
+    } else {
+      return res.status(403).json({ error: 'Rol no autorizado para calificar o registrar rendiciones.' });
     }
 
     // 5. Obtener la evaluación desde Supabase
@@ -238,7 +273,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const rendicionId = crypto.randomUUID();
     const ahoraIso = new Date().toISOString();
 
-    const nombreLimpio = sanitizeText(alumnoNombre || (authenticatedUserEmail ? authenticatedUserEmail.split('@')[0] : 'Estudiante'), 100);
+    const nombreLimpio = sanitizeText(finalAlumnoNombre, 100);
     const rutLimpio = sanitizeText(alumnoRut || '', 20);
 
     // 10. Persistir en la tabla public.rendiciones respetando el esquema real de Supabase
@@ -315,7 +350,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               pruebaTitulo: evaluacion.titulo || 'Evaluación',
               alumnoNombre: nombreLimpio,
               alumnoRut: rutLimpio,
-              alumnoEmail: authenticatedUserEmail || '',
+              alumnoEmail: user.email || '',
               docenteEmail: profesorEmail,
               docenteNombre: profesorNombre,
               puntajeObtenido,

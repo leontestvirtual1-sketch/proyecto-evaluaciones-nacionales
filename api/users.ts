@@ -24,7 +24,13 @@ const sbAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY || 'dummy-k
 // No se hardcodean datos de usuario en memoria.
 
 // ── Helper: Verificar JWT de Supabase y exigir rol admin ──────────────────
-async function requireAdmin(req: VercelRequest): Promise<{ ok: boolean; error?: string }> {
+async function requireAdmin(req: VercelRequest): Promise<{
+  ok: boolean;
+  error?: string;
+  userId?: string;
+  rbd?: string | null;
+  esSuperAdmin?: boolean;
+}> {
   const authHeader = req.headers?.authorization || '';
   const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
   if (!token) return { ok: false, error: 'No autorizado: se requiere token de sesión.' };
@@ -34,14 +40,22 @@ async function requireAdmin(req: VercelRequest): Promise<{ ok: boolean; error?: 
 
   const { data: perfil } = await sbAdmin
     .from('perfiles')
-    .select('rol')
+    .select('id, rol, rbd, es_super_admin, estado')
     .eq('id', user.id)
     .maybeSingle();
 
   if (perfil?.rol !== 'admin') {
     return { ok: false, error: 'Acceso denegado: se requiere rol de administrador.' };
   }
-  return { ok: true };
+  if (perfil.estado && perfil.estado !== 'activo') {
+    return { ok: false, error: 'Acceso denegado: cuenta no activa o suspendida.' };
+  }
+  return {
+    ok: true,
+    userId: user.id,
+    rbd: perfil.rbd || null,
+    esSuperAdmin: Boolean(perfil.es_super_admin)
+  };
 }
 
 function getRutVariants(rawRut: string): { formatted: string; raw: string; clean: string; dash: string } {
@@ -115,7 +129,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { formatted, raw, clean, dash } = getRutVariants(rawRut);
       const { data: rutProfiles, error: qErr } = await sbAdmin
         .from('perfiles')
-        .select('id, rut, nombre, apellido, email, estado, plan, dias_restantes_trial, fecha_registro, created_at')
+        .select('id')
         .or(`rut.eq."${formatted}",rut.eq."${raw}",rut.eq."${clean}",rut.eq."${dash}"`)
         .limit(1);
 
@@ -124,26 +138,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(500).json({ error: 'Error al verificar RUT en la base de datos.' });
       }
 
-      const p = rutProfiles?.[0];
-      if (!p) {
-        return res.status(200).json({ exists: false, expired: false });
-      }
-
-      const { isExpired, diasRestantes } = checkProfileTrialExpired(p);
-
+      const exists = Boolean(rutProfiles && rutProfiles.length > 0);
       return res.status(200).json({
-        exists: true,
-        expired: isExpired,
-        diasRestantes,
-        estado: p.estado,
-        plan: p.plan,
-        nombre: p.nombre,
-        emailMasked: p.email ? p.email.replace(/(.{2})(.*)(@.*)/, '$1***$3') : undefined,
-        message: isExpired
-          ? `El usuario asociado al RUT ${p.rut || raw} ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar o contratar una licencia institucional.`
-          : p.estado === 'pendiente_aprobacion'
-          ? `El RUT ${p.rut || raw} ya tiene una solicitud pendiente de aprobación por el administrador.`
-          : `El RUT ${p.rut || raw} ya se encuentra registrado con una cuenta activa. Inicia sesión con tus credenciales.`
+        exists,
+        message: exists
+          ? 'El RUT ingresado ya cuenta con un registro en la plataforma. Por favor inicia sesión o recupera tu contraseña.'
+          : undefined
       });
     }
 
@@ -154,11 +154,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(403).json({ error: authCheck.error });
       }
 
-      const { data: perfiles, error: pErr } = await sbAdmin
+      let q = sbAdmin
         .from('perfiles')
-        // Seleccionar solo campos mínimos existentes — sin approval_token ni datos sensibles
-        .select('id, rut, nombre, apellido, email, rol, establecimiento, rbd, asignatura_id, asignatura_nombre, cargo, estado, plan, dias_restantes_trial, fecha_registro, created_at, activo')
-        .order('created_at', { ascending: false });
+        .select('id, rut, nombre, apellido, email, rol, establecimiento, rbd, asignatura_id, asignatura_nombre, cargo, estado, plan, dias_restantes_trial, fecha_registro, created_at, activo');
+
+      // Aislamiento multi-tenant estricto: admins institucionales solo ven usuarios de su propio RBD
+      if (!authCheck.esSuperAdmin) {
+        if (!authCheck.rbd) {
+          return res.status(403).json({ error: 'Administrador sin RBD institucional configurado.' });
+        }
+        q = q.eq('rbd', authCheck.rbd);
+      }
+
+      const { data: perfiles, error: pErr } = await q.order('created_at', { ascending: false });
 
       if (pErr) {
         console.error('Error fetching perfiles from Supabase:', pErr);
@@ -230,7 +238,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const body = req.body || {};
 
       // Acciones que requieren admin autenticado
-      const ADMIN_ACTIONS = ['admin-create', 'approve-id', 'suspend', 'send-email', 'send-welcome-email', 'set-password'];
+      const ADMIN_ACTIONS = ['admin-create', 'approve-id', 'suspend', 'update-status', 'toggle-colegio', 'send-email', 'send-welcome-email', 'set-password'];
       if (ADMIN_ACTIONS.includes(action as string)) {
         const authCheck = await requireAdmin(req);
         if (!authCheck.ok) {
@@ -276,6 +284,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .maybeSingle();
 
         if (existingProfile?.id) {
+          // Verificar pertenencia al mismo tenant si el admin no es Super Admin
+          const { data: targetProfileData } = await sbAdmin
+            .from('perfiles')
+            .select('rbd')
+            .eq('id', existingProfile.id)
+            .maybeSingle();
+
+          const authCheck = await requireAdmin(req);
+          if (!authCheck.esSuperAdmin && targetProfileData?.rbd !== authCheck.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: no puedes modificar usuarios pertenecientes a otro establecimiento.' });
+          }
+
           authUserId = existingProfile.id;
           if (userPass) {
             await sbAdmin.auth.admin.updateUserById(authUserId, {
@@ -288,7 +308,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 rut,
                 rol: rol || 'profesor',
                 establecimiento,
-                rbd
+                rbd: authCheck.esSuperAdmin ? (rbd || targetProfileData?.rbd) : authCheck.rbd
               }
             });
           }
@@ -456,16 +476,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .maybeSingle();
 
         if (existingProfile?.id) {
-          const { isExpired } = checkProfileTrialExpired(existingProfile);
-          if (isExpired) {
-            return res.status(409).json({
-              error: `La cuenta asociada a ${cleanEmail} ya completó su período de prueba gratuita de 30 días. Comunícate con el administrador para renovar o contratar una licencia institucional.`
-            });
-          }
-          authUserId = existingProfile.id;
-          if (password) {
-            await sbAdmin.auth.admin.updateUserById(authUserId, { password });
-          }
+          return res.status(409).json({
+            error: `Ya existe una cuenta registrada con el correo ${cleanEmail}. Por favor inicia sesión o utiliza el enlace de recuperación de contraseña.`
+          });
         } else {
           // Generar contraseña temporal criptográfica si no viene una
           const fallbackPassword = `Saber_${crypto.randomBytes(8).toString('hex')}!`;
@@ -747,8 +760,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // ── ACCIÓN: APROBAR POR USER ID (DESDE PANEL ADMIN) ──
       if (action === 'approve-id') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) return res.status(403).json({ error: authCheck.error });
+
         const { userId, plan } = body;
         if (!userId) return res.status(400).json({ error: 'userId requerido' });
+
+        if (!authCheck.esSuperAdmin) {
+          const { data: targetProfile } = await sbAdmin
+            .from('perfiles')
+            .select('rbd')
+            .eq('id', userId)
+            .maybeSingle();
+          if (!targetProfile || targetProfile.rbd !== authCheck.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: no puedes gestionar usuarios de otro establecimiento.' });
+          }
+        }
 
         await sbAdmin.from('perfiles').update({
           activo: true,
@@ -763,8 +790,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // ── ACCIÓN: SUSPENDER O ACTUALIZAR ESTADO DE USUARIO (ACTIVAR / DESACTIVAR) ──
       if (action === 'suspend' || action === 'update-status') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) return res.status(403).json({ error: authCheck.error });
+
         const { userId, estado, diasRestantesTrial, plan } = body;
         if (!userId) return res.status(400).json({ error: 'userId requerido' });
+
+        if (!authCheck.esSuperAdmin) {
+          const { data: targetProfile } = await sbAdmin
+            .from('perfiles')
+            .select('rbd')
+            .eq('id', userId)
+            .maybeSingle();
+          if (!targetProfile || targetProfile.rbd !== authCheck.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: no puedes gestionar usuarios de otro establecimiento.' });
+          }
+        }
 
         const nuevoEstado = estado || 'suspendido';
         const isActivo = nuevoEstado === 'activo';
@@ -787,9 +828,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // ── ACCIÓN: GESTIÓN DE COLEGIO COMPLETO (ACTIVAR / DESACTIVAR EN BLOQUE) ──
       if (action === 'toggle-colegio') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) return res.status(403).json({ error: authCheck.error });
+
         const { rbd, establecimiento, estado, plan } = body;
         if (!rbd && !establecimiento) {
           return res.status(400).json({ error: 'RBD o establecimiento requerido' });
+        }
+
+        if (!authCheck.esSuperAdmin && rbd && rbd !== authCheck.rbd) {
+          return res.status(403).json({ error: 'Acceso denegado: solo puedes gestionar el establecimiento de tu propio RBD.' });
         }
 
         const nuevoEstado = estado || 'suspendido';
@@ -835,6 +883,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
         if (!userId) {
           return res.status(400).json({ error: 'userId es requerido.' });
+        }
+
+        if (!authCheck.esSuperAdmin) {
+          const { data: targetProfile } = await sbAdmin
+            .from('perfiles')
+            .select('rbd')
+            .eq('id', userId)
+            .maybeSingle();
+          if (!targetProfile || targetProfile.rbd !== authCheck.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: no puedes restablecer contraseñas de otro establecimiento.' });
+          }
         }
 
         const { error: updateAuthErr } = await sbAdmin.auth.admin.updateUserById(userId, {

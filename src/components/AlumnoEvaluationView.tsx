@@ -362,14 +362,20 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
               );
           })() : (
             <div className="space-y-2">
-              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+              <label
+                htmlFor={`pregunta-desarrollo-${preguntaActual.id}`}
+                className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider"
+              >
                 Respuesta Escrita / Justificación
               </label>
               <textarea
+                id={`pregunta-desarrollo-${preguntaActual.id}`}
+                name={`respuesta-desarrollo-${preguntaActual.id}`}
                 rows={5}
                 value={respuestas[preguntaActual.id] || ''}
                 onChange={(e) => handleSelectRespuesta(e.target.value)}
                 placeholder="Escribe tu procedimiento detallado aquí..."
+                aria-label={`Respuesta escrita para la pregunta ${currentIdx + 1}`}
                 className="w-full p-4 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none"
               />
             </div>

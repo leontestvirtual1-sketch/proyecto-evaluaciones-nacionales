@@ -44,16 +44,28 @@ async function getAuthUser(req: VercelRequest) {
   return { user, error: null };
 }
 
-async function requireAdmin(req: VercelRequest) {
+async function requireAdmin(req: VercelRequest): Promise<{
+  ok: boolean;
+  error?: string | null;
+  userId?: string;
+  rbd?: string | null;
+  esSuperAdmin?: boolean;
+}> {
   const { user, error } = await getAuthUser(req);
   if (error || !user) return { ok: false, error };
   const { data: perfil } = await sbAdmin
     .from("perfiles")
-    .select("rol")
+    .select("id, rol, rbd, es_super_admin, estado")
     .eq("id", user.id)
     .maybeSingle();
   if (perfil?.rol !== "admin") return { ok: false, error: "Se requiere rol admin." };
-  return { ok: true, userId: user.id };
+  if (perfil.estado && perfil.estado !== "activo") return { ok: false, error: "Cuenta no activa." };
+  return {
+    ok: true,
+    userId: user.id,
+    rbd: perfil.rbd || null,
+    esSuperAdmin: Boolean(perfil.es_super_admin)
+  };
 }
 
 // ── Email helper ─────────────────────────────────────────────────────────────
@@ -310,14 +322,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const adminCheck = await requireAdmin(req);
       if (!adminCheck.ok) return res.status(403).json({ error: adminCheck.error });
 
-      const { data, error } = await sbAdmin
+      let solQuery = sbAdmin
         .from("solicitudes_evaluacion")
         .select(`
           *,
           evaluaciones(titulo, asignatura_id, nivel),
           perfiles:profesor_id(nombre, apellido, email, establecimiento, rbd, asignatura_nombre)
-        `)
-        .order("created_at", { ascending: false });
+        `);
+
+      if (!adminCheck.esSuperAdmin) {
+        if (!adminCheck.rbd) return res.status(403).json({ error: "Admin sin RBD asignado." });
+        solQuery = solQuery.eq("rbd", adminCheck.rbd);
+      }
+
+      const { data, error } = await solQuery.order("created_at", { ascending: false });
 
       if (error) {
         return res.status(500).json({ error: "Error al cargar solicitudes." });
@@ -400,10 +418,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (solicitud_id && (!evaluacion_id || !profesor_id)) {
           const { data: solRow } = await sbAdmin
             .from("solicitudes_evaluacion")
-            .select("evaluacion_id, profesor_id")
+            .select("evaluacion_id, profesor_id, rbd")
             .eq("id", solicitud_id)
             .maybeSingle();
           if (solRow) {
+            if (!adminCheck.esSuperAdmin && solRow.rbd !== adminCheck.rbd) {
+              return res.status(403).json({ error: "Acceso denegado: no puedes aprobar solicitudes de otro establecimiento." });
+            }
             evaluacion_id = evaluacion_id || solRow.evaluacion_id;
             profesor_id = profesor_id || solRow.profesor_id;
           }
