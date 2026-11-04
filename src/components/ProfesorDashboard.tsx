@@ -93,6 +93,8 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
 
   const isAdmin = profesor.rol === 'admin';
   const isProductionAdmin = isAdmin && !isSandboxMode && !!profesor.esSuperAdmin;
+  const evaluacionesActivas = pruebas.filter(prueba => prueba.estado === 'activa').length;
+  const ejesCriticos = (reporteActivo.desgloseEjes || []).filter(eje => eje.estado === 'critico').length;
   const isLenguaje = profesor.asignaturaId === 'asig-2' || (profesor.asignaturaNombre || '').toLowerCase().includes('lenguaje');
   const isCiencias = profesor.asignaturaId === 'asig-3' || (profesor.asignaturaNombre || '').toLowerCase().includes('ciencia');
   const isMatematica = !isAdmin && !isLenguaje && !isCiencias;
@@ -255,35 +257,35 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
       {/* KPI Stat Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
-          title={isProductionAdmin ? 'Establecimientos Registrados' : isAdmin ? 'Promedio SIMCE Proyectado' : 'Logro Promedio Global'}
-          value={isProductionAdmin ? `${colegiosList.length} Colegio${colegiosList.length !== 1 ? 's' : ''}` : isAdmin ? '261 pts' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioPorcentajeLogro}%`)}
-          subtitle={isProductionAdmin ? (colegiosList.length === 1 ? colegiosList[0].nombre : `${colegiosList.length} Establecimientos en Red`) : isAdmin ? 'Meta 2026: 265 pts (+15 pts)' : (reporteActivo.totalAlumnosRendidos === 0 ? `Curso ${reporteActivo.cursoNombre} (Sin rendiciones)` : `Curso ${reporteActivo.cursoNombre}`)}
+          title={isProductionAdmin ? 'Establecimientos Registrados' : isAdmin ? 'Escala Nacional Promedio' : 'Logro Promedio Global'}
+          value={isProductionAdmin ? `${colegiosList.length} Colegio${colegiosList.length !== 1 ? 's' : ''}` : reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : isAdmin ? `${reporteActivo.promedioEscalaNacional} pts` : `${reporteActivo.promedioPorcentajeLogro}%`}
+          subtitle={isProductionAdmin ? (colegiosList.length === 1 ? colegiosList[0].nombre : `${colegiosList.length} Establecimientos en Red`) : isAdmin ? reporteActivo.pruebaTitulo : (reporteActivo.totalAlumnosRendidos === 0 ? `Curso ${reporteActivo.cursoNombre} (Sin rendiciones)` : `Curso ${reporteActivo.cursoNombre}`)}
           icon={<School className="w-5 h-5" />}
-          trend={{ text: isProductionAdmin ? `${totalDocentesProduccion} Docente${totalDocentesProduccion !== 1 ? 's' : ''} en Producción` : isAdmin ? '+12 pts vs 2024' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Esperando aplicación' : 'Alerta en Argumentación'), type: 'positive' }}
+          trend={{ text: isProductionAdmin ? `${totalDocentesProduccion} Docente${totalDocentesProduccion !== 1 ? 's' : ''} en Producción` : isAdmin ? (isSandboxMode ? 'Datos de demostración' : 'Sin rendiciones registradas') : (reporteActivo.totalAlumnosRendidos === 0 ? 'Esperando aplicación' : 'Resultados del curso'), type: 'positive' }}
           iconBgColor="bg-amber-500/10 text-amber-600 dark:text-amber-400"
         />
 
         <StatCard
-          title={isProductionAdmin ? 'Evaluaciones Cargadas' : isAdmin ? 'Brechas Críticas Detectadas' : 'Escala Nacional Promedio'}
-          value={isProductionAdmin ? `${pruebas.length} Evaluación${pruebas.length !== 1 ? 'es' : ''}` : isAdmin ? '4 Casos Severos' : (reporteActivo.totalAlumnosRendidos === 0 ? 'SIMCE 2026' : `${reporteActivo.promedioEscalaNacional} pts`)}
-          subtitle={isProductionAdmin ? 'Lengua y Literatura 2° Medio' : isAdmin ? '100% con plan autogenerado' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
+          title={isProductionAdmin ? 'Evaluaciones Cargadas' : isAdmin ? 'Ejes con Alerta Crítica' : 'Escala Nacional Promedio'}
+          value={isProductionAdmin ? `${pruebas.length} Evaluación${pruebas.length !== 1 ? 'es' : ''}` : isAdmin ? `${ejesCriticos}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioEscalaNacional} pts`)}
+          subtitle={isProductionAdmin ? 'Disponibles en producción' : isAdmin ? `Según el reporte: ${reporteActivo.pruebaTitulo}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
           icon={<BookOpen className="w-5 h-5" />}
-          trend={{ text: isProductionAdmin ? '35 preguntas liberadas' : isAdmin ? '8°B foco prioritario' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : '+15 pts vs anterior'), type: 'positive' }}
+          trend={{ text: isProductionAdmin ? 'Evaluaciones disponibles' : isAdmin ? (ejesCriticos > 0 ? 'Requieren atención pedagógica' : 'Sin ejes críticos registrados') : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : 'Resultados del reporte'), type: ejesCriticos > 0 ? 'negative' : 'positive' }}
           iconBgColor="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
         />
 
         <StatCard
-          title={isProductionAdmin ? 'Alumnos Matriculados' : isAdmin ? 'Cursos Diagnosticados' : 'Evaluaciones Activas'}
-          value={isProductionAdmin ? '0 Alumnos' : isAdmin ? '4 Cursos (6° a 8°)' : `${pruebas.length}`}
-          subtitle={isProductionAdmin ? 'En proceso de inicio de poblamiento' : isAdmin ? '116 alumnos evaluados' : 'Ensayo(s) preparado(s)'}
+          title={isProductionAdmin ? 'Alumnos Matriculados' : isAdmin ? 'Cursos Disponibles' : 'Evaluaciones Activas'}
+          value={isProductionAdmin ? '0 Alumnos' : isAdmin ? `${cursos.length}` : `${evaluacionesActivas}`}
+          subtitle={isProductionAdmin ? 'En proceso de inicio de poblamiento' : isAdmin ? `${alumnos.length} alumnos en el entorno actual` : 'En estado activo'}
           icon={<Users className="w-5 h-5" />}
           iconBgColor="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
         />
 
         <StatCard
-          title={isProductionAdmin ? 'Rendiciones Aplicadas' : isAdmin ? 'Planes Remediales Activos' : 'Alumnos Rendidos'}
-          value={isProductionAdmin ? '0 Rendiciones' : isAdmin ? '18 Planes' : `${reporteActivo.totalAlumnosRendidos} / ${reporteActivo.totalAlumnosMatriculados}`}
-          subtitle={isProductionAdmin ? 'Listo para aplicación e ingreso' : isAdmin ? 'Matemática y Ciencias' : (reporteActivo.totalAlumnosRendidos === 0 ? 'Inicio de ciclo de evaluación' : 'Avance de entrega')}
+          title={isProductionAdmin ? 'Rendiciones Aplicadas' : isAdmin ? 'Acciones de Reforzamiento' : 'Alumnos Rendidos'}
+          value={isProductionAdmin ? '0 Rendiciones' : isAdmin ? `${reporteActivo.planAccionReforzamiento.length}` : `${reporteActivo.totalAlumnosRendidos} / ${reporteActivo.totalAlumnosMatriculados}`}
+          subtitle={isProductionAdmin ? 'Listo para aplicación e ingreso' : isAdmin ? `En ${reporteActivo.pruebaTitulo}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Inicio de ciclo de evaluación' : 'Avance de entrega')}
           icon={<Award className="w-5 h-5" />}
           iconBgColor="bg-sky-500/10 text-sky-600 dark:text-sky-400"
         />
