@@ -57,7 +57,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // 2. Validación temprana de body (400 Bad Request)
-  const { pruebaId, alumnoId, alumnoNombre, alumnoRut, respuestas, tiemposPorPregunta } = req.body || {};
+  const { pruebaId, alumnoId, respuestas, tiemposPorPregunta } = req.body || {};
 
   if (!pruebaId || typeof pruebaId !== 'string' || !respuestas || typeof respuestas !== 'object') {
     return res.status(400).json({ error: 'Datos de rendición incompletos (pruebaId y respuestas requeridos).' });
@@ -158,6 +158,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(403).json({ error: 'Esta evaluación no se encuentra activa para su rendición.' });
     }
 
+    // Validar aislamiento multi-tenant para estudiantes (F-01)
+    if (actorPerfil.rol === 'alumno' && !actorPerfil.es_super_admin) {
+      if (!evaluacion.es_catalogo) {
+        if (!actorPerfil.rbd || !evaluacion.rbd || actorPerfil.rbd !== evaluacion.rbd) {
+          return res.status(403).json({ error: 'Acceso denegado: esta evaluación no pertenece a tu establecimiento escolar.' });
+        }
+      }
+    }
+
     // Validar relación docente/admin con la evaluación para digitación OMR (F-01)
     if (actorPerfil.rol === 'profesor' || (actorPerfil.rol === 'admin' && !actorPerfil.es_super_admin)) {
       const esAutor = evaluacion.profesor_id === actorPerfil.id || evaluacion.creado_por === actorPerfil.id;
@@ -166,6 +175,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (!esAutor && !esMismoRbd && !esCatalogo) {
         return res.status(403).json({ error: 'Acceso denegado: no tienes permisos sobre esta evaluación ni pertenece a tu establecimiento.' });
+      }
+
+      // Si la evaluación pertenece a un establecimiento específico y no es de catálogo, verificar estricta concordancia con actor
+      if (!esCatalogo && evaluacion.rbd && evaluacion.rbd !== actorPerfil.rbd) {
+        return res.status(403).json({ error: 'Acceso denegado: la evaluación pertenece a otro establecimiento escolar.' });
       }
     }
 

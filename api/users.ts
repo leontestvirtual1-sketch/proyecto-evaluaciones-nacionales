@@ -149,33 +149,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ valid: false, error: 'RUT chileno inválido.' });
       }
 
-      // Si la petición viene de un admin autenticado, se puede consultar duplicados dentro de su propio RBD
-      const authHeader = req.headers?.authorization || '';
-      if (authHeader.startsWith('Bearer ')) {
-        const authCheck = await requireAdmin(req);
-        if (authCheck.ok) {
-          const { formatted, raw, clean, dash } = getRutVariants(rawRut);
-          let q = sbAdmin
-            .from('perfiles')
-            .select('id, rbd')
-            .or(`rut.eq."${formatted}",rut.eq."${raw}",rut.eq."${clean}",rut.eq."${dash}"`)
-            .limit(1);
-
-          if (!authCheck.esSuperAdmin && authCheck.rbd) {
-            q = q.eq('rbd', authCheck.rbd);
-          }
-
-          const { data: rutProfiles } = await q;
-          const existsInTenant = Boolean(rutProfiles && rutProfiles.length > 0);
-          return res.status(200).json({
-            valid: true,
-            exists: existsInTenant,
-            message: existsInTenant ? 'El RUT ya se encuentra registrado en tu establecimiento.' : undefined
-          });
-        }
-      }
-
-      // Para usuarios públicos/anónimos, responder de forma uniforme sin enumeración
+      // F-04: Respuesta uniforme para todos los llamantes (sin consultar DB ni permitir enumeración de identidades)
       return res.status(200).json({
         valid: true,
         message: 'Formato de RUT válido.'
@@ -320,6 +294,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }
         }
 
+        // F-02: Forzar RBD institucional estricto para administradores de tenant
+        const cleanRbd = (!authCheck.esSuperAdmin && authCheck.rbd) ? authCheck.rbd : (rbd || '').trim();
         const cleanEmail = (email || '').toLowerCase().trim();
         if (!cleanEmail) {
           return res.status(400).json({ error: 'El correo electrónico es obligatorio.' });
@@ -358,15 +334,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             await sbAdmin.auth.admin.updateUserById(authUserId, {
               password: userPass,
               user_metadata: {
-                nombre,
-                apellido: fullApellido,
-                apellidoPaterno,
-                apellidoMaterno,
-                rut,
-                rol: rol || 'profesor',
-                establecimiento,
-                rbd: authCheck.esSuperAdmin ? (rbd || targetProfileData?.rbd) : authCheck.rbd
-              }
+              nombre,
+              apellido: fullApellido,
+              apellidoPaterno,
+              apellidoMaterno,
+              rut,
+              rol: rol || 'profesor',
+              establecimiento,
+              rbd: cleanRbd || null
+            }
             });
           }
         } else {
@@ -394,7 +370,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos con comuna y dependencia
-        const cleanRbd = (!authCheck.esSuperAdmin && authCheck.rbd) ? authCheck.rbd : (rbd || '').trim();
         const cleanEstablecimiento = (establecimiento || '').trim();
         const cleanComuna = (comuna || '').trim();
         const cleanDependencia = (dependencia || '').trim();
@@ -889,12 +864,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (!authCheck.ok) return res.status(403).json({ error: authCheck.error });
 
         const { rbd, establecimiento, estado, plan } = body;
-        if (!rbd && !establecimiento) {
-          return res.status(400).json({ error: 'RBD o establecimiento requerido' });
-        }
 
-        if (!authCheck.esSuperAdmin && rbd && rbd !== authCheck.rbd) {
-          return res.status(403).json({ error: 'Acceso denegado: solo puedes gestionar el establecimiento de tu propio RBD.' });
+        let targetRbd: string;
+        if (!authCheck.esSuperAdmin) {
+          if (!authCheck.rbd) {
+            return res.status(403).json({ error: 'Administrador institucional sin RBD configurado.' });
+          }
+          if (rbd && rbd.trim() !== authCheck.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: solo puedes gestionar el establecimiento de tu propio RBD.' });
+          }
+          targetRbd = authCheck.rbd;
+        } else {
+          targetRbd = (rbd || '').trim();
+          if (!targetRbd && !establecimiento) {
+            return res.status(400).json({ error: 'RBD o establecimiento requerido' });
+          }
         }
 
         const nuevoEstado = estado || 'suspendido';
@@ -911,9 +895,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         let q = sbAdmin.from('perfiles').update(updateData);
-        if (rbd) {
-          q = q.eq('rbd', rbd);
-        } else if (establecimiento) {
+        if (targetRbd) {
+          q = q.eq('rbd', targetRbd);
+        } else if (authCheck.esSuperAdmin && establecimiento) {
           q = q.eq('establecimiento', establecimiento);
         }
         const { error: batchErr } = await q;

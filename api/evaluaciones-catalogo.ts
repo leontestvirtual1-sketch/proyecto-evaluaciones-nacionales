@@ -433,11 +433,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(403).json({ error: "Acceso denegado: no puedes aprobar solicitudes de otro establecimiento." });
         }
 
-        evaluacion_id = evaluacion_id || solRow.evaluacion_id;
-        profesor_id = profesor_id || solRow.profesor_id;
+        // F-02: Forzar evaluacion_id y profesor_id desde la solicitud verificada de la BD (inmutable)
+        evaluacion_id = solRow.evaluacion_id;
+        profesor_id = solRow.profesor_id;
 
         if (!evaluacion_id || !profesor_id)
-          return res.status(400).json({ error: "Faltan campos requeridos." });
+          return res.status(400).json({ error: "La solicitud no contiene una evaluación o docente válido." });
+
+        // Verificar pertenencia del curso al mismo tenant si fue provisto
+        if (curso_id) {
+          const { data: cursoRow } = await sbAdmin
+            .from("cursos")
+            .select("rbd")
+            .eq("id", curso_id)
+            .maybeSingle();
+          if (!adminCheck.esSuperAdmin && cursoRow?.rbd && cursoRow.rbd !== adminCheck.rbd) {
+            return res.status(403).json({ error: "Acceso denegado: el curso especificado pertenece a otro establecimiento." });
+          }
+        }
 
         const { data: result, error: rpcErr } = await sbAdmin.rpc(
           "admin_asignar_evaluacion_a_docente",

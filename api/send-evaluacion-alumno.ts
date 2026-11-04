@@ -323,6 +323,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         alumno_email:   alumnoEmail,
         alumno_nombre:  alumnoNombre,
         docente_id:     emisor.id,
+        rbd:            emisorPerfil.rbd || evaluacion.rbd || null,
         sent_at:        new Date().toISOString(),
       });
     } catch (_logErr) {
