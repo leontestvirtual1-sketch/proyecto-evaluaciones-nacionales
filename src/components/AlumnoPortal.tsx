@@ -34,17 +34,22 @@ export const AlumnoPortal: React.FC<AlumnoPortalProps> = ({
 
   const handleJoinByCode = (e: React.FormEvent) => {
     e.preventDefault();
-      setErrorMsg('Código "' + codigoInput + '" no encontrado. Verifica que esté bien escrito o revisa el correo.');
-
     const cleanCode = codigoInput.trim().toLowerCase();
+    if (!cleanCode) return;
+
     const encontrada = pruebasDisponibles.find(
-      p => p.codigoPublico.toLowerCase() === cleanCode || p.id.toLowerCase() === cleanCode
+      p => p.codigoPublico?.toLowerCase() === cleanCode || p.id?.toLowerCase() === cleanCode
     );
 
     if (encontrada) {
+      setErrorMsg('');
       onStartEvaluation(encontrada);
     } else {
-      setErrorMsg('Código "' + codigoInput + '" no encontrado. Verifica que esté bien escrito o revisa el correo.');
+      if (alumno.email?.toLowerCase().trim() === 'florenciaangelicaleonpizarro@gmail.com') {
+        setErrorMsg('Código no disponible. Tu cuenta está asignada exclusivamente al ensayo PAES Competencia Matemática 1 (M1).');
+      } else {
+        setErrorMsg('Código "' + codigoInput + '" no encontrado. Verifica que esté bien escrito o revisa el correo.');
+      }
     }
   };
 

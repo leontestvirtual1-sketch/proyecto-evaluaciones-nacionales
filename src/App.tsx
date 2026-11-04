@@ -273,7 +273,25 @@ function MainAppContent({
     onUpdatePruebaEstado(pruebaId, nuevoEstado);
   };
 
+  const isPaesMat1 = (p: Prueba) => {
+    const id = (p.id || '').toLowerCase();
+    const code = (p.codigoPublico || '').toLowerCase();
+    const tit = (p.titulo || '').toLowerCase();
+    return (
+      id === 'eval-paes-mat1-2023-f113' ||
+      id === 'prueba-paes-m1-2026' ||
+      code === 'eval-001' ||
+      code === 'paes-m1-2026' ||
+      ((tit.includes('matemática 1') || tit.includes('matematica 1') || tit.includes('m1')) && tit.includes('paes'))
+    );
+  };
+
   const handleStartEvaluation = async (prueba: Prueba) => {
+    const isFlorencia = user?.email?.toLowerCase().trim() === 'florenciaangelicaleonpizarro@gmail.com';
+    if (isFlorencia && !isPaesMat1(prueba)) {
+      alert('Acceso restringido: Florencia León Pizarro tiene habilitado exclusivamente el ensayo PAES Competencia Matemática 1 (M1).');
+      return;
+    }
     setActivePruebaForRunner(prueba);
     setIsLoadingPreguntas(true);
     setActivePruebaPreguntas(null);
@@ -569,24 +587,20 @@ function MainAppContent({
       }
 
       // Filtrar evaluaciones exclusivas para el alumno:
-      // Si viene con un código de acceso específico, mostrar solo esa prueba.
-      // Si es la alumna Florencia (o alumna particular), mostrar únicamente la prueba asignada.
+      // Si es Florencia León Pizarro, restricción estricta: ÚNICAMENTE PAES Matemática 1 (M1).
+      const isFlorencia = user.email?.toLowerCase().trim() === 'florenciaangelicaleonpizarro@gmail.com';
       const pendingCode = sessionStorage.getItem('pending_eval_code');
       const pruebasParaAlumno = (() => {
         const activas = pruebas.filter(p => p.estado === 'activa');
+        if (isFlorencia) {
+          const matchFlorencia = activas.filter(isPaesMat1);
+          return matchFlorencia;
+        }
         if (pendingCode) {
           const match = activas.filter(
-            p => p.codigoPublico.toLowerCase() === pendingCode.toLowerCase() || p.id.toLowerCase() === pendingCode.toLowerCase()
+            p => p.codigoPublico?.toLowerCase() === pendingCode.toLowerCase() || p.id.toLowerCase() === pendingCode.toLowerCase()
           );
           if (match.length > 0) return match;
-        }
-        if (user.email === 'florenciaangelicaleonpizarro@gmail.com') {
-          // Florencia León Pizarro: Asignada a PAES Oficial Competencia Matemática 1 (M1)
-          const matchFlorencia = activas.filter(p => 
-            p.id === 'eval-paes-mat1-2023-f113' || 
-            p.codigoPublico?.toUpperCase() === 'EVAL-001'
-          );
-          if (matchFlorencia.length > 0) return matchFlorencia;
         }
         return activas;
       })();
