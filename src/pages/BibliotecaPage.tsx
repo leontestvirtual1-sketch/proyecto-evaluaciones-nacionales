@@ -204,12 +204,7 @@ export const BibliotecaPage: React.FC = () => {
   };
 
   const abrirCarpetaDriveOficial = () => {
-    setModalVisor({
-      titulo: 'Carpeta Oficial de Materiales PAES / DEMRE (Google Drive)',
-      embedUrl: `https://drive.google.com/embeddedfolderview?id=${DRIVE_FOLDER_ID}#grid`,
-      externalUrl: DRIVE_FOLDER_OFICIAL_URL,
-      tipo: 'drive_folder'
-    });
+    window.open(DRIVE_FOLDER_OFICIAL_URL, '_blank', 'noopener,noreferrer');
   };
 
   const renderBadgeTipo = (tipo: TipoMaterial) => {
@@ -265,9 +260,11 @@ export const BibliotecaPage: React.FC = () => {
             <button
               onClick={abrirCarpetaDriveOficial}
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all cursor-pointer"
+              title="Abrir carpeta de respaldo en Google Drive (nueva pestaña)"
             >
               <FolderOpen className="w-4 h-4" />
               <span>Carpeta Oficial Google Drive</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-80" />
             </button>
             <div className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
               <div className="text-xs text-slate-400 font-medium">Recursos Totales</div>
