@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   BookOpen,
   FileText,
@@ -14,8 +14,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Info,
-  CheckCircle2
+  Info
 } from 'lucide-react';
 import { MaterialEstudio, TipoMaterial, AsignaturaBiblioteca, ModalVisorData } from '../types/biblioteca';
 import bibliotecaDataRaw from '../data/biblioteca_paes.json';
@@ -546,30 +545,17 @@ export const BibliotecaPage: React.FC = () => {
       {/* Modal Visor Embebido */}
       {modalVisor && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-5xl h-[88vh] rounded-2xl flex flex-col shadow-2xl overflow-hidden">
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-5xl h-[90vh] rounded-2xl flex flex-col shadow-2xl overflow-hidden">
             {/* Header Modal */}
-            <div className="px-5 py-4 bg-slate-800/80 border-b border-slate-700/80 flex items-center justify-between gap-4">
+            <div className="px-5 py-3.5 bg-slate-800/95 border-b border-slate-700/80 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400">
+                <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 shrink-0">
                   <BookOpen className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-sm font-bold text-white truncate">{modalVisor.titulo}</h3>
                   <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
                     <span>Visor Integrado SysGet</span>
-                    {modalVisor.externalUrl && (
-                      <>
-                        <span>•</span>
-                        <a
-                          href={modalVisor.externalUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-indigo-400 hover:text-indigo-300 inline-flex items-center gap-1 font-semibold"
-                        >
-                          Abrir ventana completa <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </>
-                    )}
                   </p>
                 </div>
               </div>
@@ -580,10 +566,10 @@ export const BibliotecaPage: React.FC = () => {
                     href={modalVisor.externalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-300 transition-all"
-                    title="Abrir en pestaña externa"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-sm shadow-indigo-600/30 whitespace-nowrap"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <span>Abrir en Pestaña Nueva</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 )}
                 <button
@@ -595,6 +581,24 @@ export const BibliotecaPage: React.FC = () => {
                 </button>
               </div>
             </div>
+
+            {/* Sub-barra informativa para PDFs */}
+            {modalVisor.tipo === 'pdf' && modalVisor.externalUrl && (
+              <div className="bg-indigo-950/40 border-b border-indigo-900/40 px-5 py-2 flex items-center justify-between text-[11px] text-slate-300">
+                <span className="flex items-center gap-1.5 text-slate-300">
+                  <Info className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                  Visualizando mediante Google Docs Viewer.
+                </span>
+                <a
+                  href={modalVisor.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-400 hover:text-indigo-300 font-bold underline ml-2 whitespace-nowrap"
+                >
+                  Descargar o ver PDF directo ↗
+                </a>
+              </div>
+            )}
 
             {/* Contenido Iframe */}
             <div className="flex-1 bg-black relative">
@@ -612,4 +616,3 @@ export const BibliotecaPage: React.FC = () => {
     </div>
   );
 };
-
