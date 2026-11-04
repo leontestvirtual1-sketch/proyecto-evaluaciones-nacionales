@@ -89,27 +89,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(403).json({ error: 'Acceso denegado: cuenta no activa.' });
   }
 
-  // 3.1 Rate limiting persistente en BD (F-03: compartido entre instancias serverless, máx 25/min)
-  try {
-    const unMinutoAtrasIso = new Date(Date.now() - 60000).toISOString();
-    const { count: enviosRecientes, error: countErr } = await sbAdmin
-      .from('evaluacion_envios')
-      .select('id', { count: 'exact', head: true })
-      .eq('docente_id', emisor.id)
-      .gte('sent_at', unMinutoAtrasIso);
-
-    if (!countErr && typeof enviosRecientes === 'number' && enviosRecientes >= 25) {
-      return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
-    }
-  } catch (_rlErr) {
-    console.warn('[send-evaluacion-alumno] Aviso al consultar rate limit en BD:', _rlErr);
-  }
-
-  // Fallback complementario en memoria para ráfagas instantáneas
-  if (!checkRateLimit(emisor.id, 25, 60000)) {
-    return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
-  }
-
   // 4. Leer y validar body
   const {
     pruebaId,
@@ -155,7 +134,50 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(403).json({ error: 'No tienes autorización para distribuir esta evaluación.' });
   }
 
-  // 6. Datos finales (usar los valores de DB como fuente de verdad)
+  // 6. Rate limiting atómico con bloqueo transaccional en PostgreSQL (F-03: Fail-closed)
+  let reservaEnvioId: string | null = null;
+  try {
+    const { data: reserva, error: rpcErr } = await sbAdmin.rpc('reservar_cupo_envio_evaluacion', {
+      p_docente_id: emisor.id,
+      p_prueba_id: pruebaId,
+      p_alumno_email: alumnoEmail,
+      p_alumno_nombre: alumnoNombre,
+      p_rbd: emisorPerfil.rbd || evaluacion.rbd || null,
+      p_max_cupos: 25,
+      p_ventana_segundos: 60,
+    });
+
+    if (rpcErr) {
+      console.error('[send-evaluacion-alumno] Error en RPC reservar_cupo_envio_evaluacion:', rpcErr);
+      return res.status(503).json({ error: 'Servicio de control de envíos no disponible. Por favor reintente en unos instantes.' });
+    }
+
+    if (!reserva?.permitido) {
+      return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
+    }
+
+    reservaEnvioId = reserva.envio_id || null;
+  } catch (rlErr: any) {
+    console.error('[send-evaluacion-alumno] Excepción al reservar cupo en BD:', rlErr);
+    return res.status(503).json({ error: 'Error interno en la verificación de cuota de envíos.' });
+  }
+
+  // Fallback complementario en memoria para ráfagas instantáneas
+  if (!checkRateLimit(emisor.id, 25, 60000)) {
+    if (reservaEnvioId) {
+      try {
+        await sbAdmin.rpc('cancelar_reserva_envio_evaluacion', {
+          p_envio_id: reservaEnvioId,
+          p_docente_id: emisor.id,
+        });
+      } catch (_cancelErr) {
+        // silencioso
+      }
+    }
+    return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
+  }
+
+  // 7. Datos finales (usar los valores de DB como fuente de verdad)
   const safeAlumnoNombre    = escapeHtml(alumnoNombre);
   const safeAlumnoEmail     = escapeHtml(alumnoEmail);
   const safeTitulo          = escapeHtml(evaluacion.titulo || pruebaTitulo || 'Evaluación');
@@ -333,29 +355,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log('[send-evaluacion-alumno] Email enviado a alumno:', infoAlumno.messageId);
 
-    // 9. Registrar el envío en la tabla evaluacion_envios (opcional, no bloquea)
-    try {
-      await sbAdmin.from('evaluacion_envios').insert({
-        prueba_id:      pruebaId,
-        alumno_email:   alumnoEmail,
-        alumno_nombre:  alumnoNombre,
-        docente_id:     emisor.id,
-        rbd:            emisorPerfil.rbd || evaluacion.rbd || null,
-        sent_at:        new Date().toISOString(),
-      });
-    } catch (_logErr) {
-      // No crítico: el email ya fue enviado
-      console.warn('[send-evaluacion-alumno] No se pudo registrar envío en DB (tabla puede no existir):', _logErr);
-    }
-
     return res.status(200).json({
       success: true,
       messageId: infoAlumno.messageId,
       sentTo: alumnoEmail,
+      envioId: reservaEnvioId,
     });
 
   } catch (err: any) {
     console.error('[send-evaluacion-alumno] Error SMTP:', err);
+    // Si falló el envío del correo, cancelar la reserva atómica para devolver el cupo al docente
+    if (reservaEnvioId) {
+      try {
+        await sbAdmin.rpc('cancelar_reserva_envio_evaluacion', {
+          p_envio_id: reservaEnvioId,
+          p_docente_id: emisor.id,
+        });
+      } catch (_cancelErr) {
+        console.warn('[send-evaluacion-alumno] No se pudo cancelar reserva de envío fallido:', _cancelErr);
+      }
+    }
     return res.status(500).json({ error: 'Error al enviar el correo. Verifica la configuración SMTP.' });
   }
 }
