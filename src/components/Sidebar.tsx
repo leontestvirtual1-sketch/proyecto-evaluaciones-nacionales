@@ -17,7 +17,8 @@ import {
   UserCheck,
   School,
   Building2,
-  User
+  User,
+  BookMarked
 } from 'lucide-react';
 
 export type PageId =
@@ -27,6 +28,7 @@ export type PageId =
   | 'alumnos'
   | 'profesores'
   | 'banco-preguntas'
+  | 'biblioteca'
   | 'usuarios'
   | 'configuracion';
 
@@ -62,6 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
     { id: 'profesores', label: 'Equipo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
     { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
+    { id: 'biblioteca', label: 'Biblioteca Digital', icon: <BookMarked className="w-4.5 h-4.5" /> },
     {
       id: 'usuarios',
       label: 'Gestión de Usuarios',
@@ -77,6 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     { id: 'cursos', label: 'Mis Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
     { id: 'alumnos', label: 'Mis Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
     { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
+    { id: 'biblioteca', label: 'Biblioteca Digital', icon: <BookMarked className="w-4.5 h-4.5" /> },
   ];
 
   const NAV_ITEMS_DIRECTOR: NavItem[] = [
@@ -85,6 +89,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     { id: 'cursos', label: 'Cursos del Colegio', icon: <Layers className="w-4.5 h-4.5" /> },
     { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
     { id: 'profesores', label: 'Cuerpo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+    { id: 'biblioteca', label: 'Biblioteca Digital', icon: <BookMarked className="w-4.5 h-4.5" /> },
   ];
 
   const NAV_ITEMS_UTP: NavItem[] = [
@@ -94,6 +99,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
     { id: 'alumnos', label: 'Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
     { id: 'profesores', label: 'Docentes Supervisados', icon: <GraduationCap className="w-4.5 h-4.5" /> },
     { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
+    { id: 'biblioteca', label: 'Biblioteca Digital', icon: <BookMarked className="w-4.5 h-4.5" /> },
   ];
 
   const NAV_ITEMS_ALUMNO: NavItem[] = [
