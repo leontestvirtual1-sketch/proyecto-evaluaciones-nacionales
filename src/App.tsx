@@ -17,8 +17,10 @@ import { ProfesoresPage } from './pages/ProfesoresPage';
 import { AlumnosPage } from './pages/AlumnosPage';
 import { BancoPreguntasPage } from './pages/BancoPreguntasPage';
 import { CursosPage } from './pages/CursosPage';
-import { EvaluacionesPage } from './pages/EvaluacionesPage';
+import { EvaluacionesPage } from './pages/EvaluacionesPage';
+
 import { BibliotecaPage } from './pages/BibliotecaPage';
+import { DescargaDemrePage } from './pages/DescargaDemrePage';
 import { ConfiguracionPage } from './pages/ConfiguracionPage';
 import { GestionUsuariosPage } from './pages/GestionUsuariosPage';
 import { LoginPage } from './pages/LoginPage';
@@ -65,7 +67,7 @@ function MainAppContent({
       const saved = localStorage.getItem('sysget_active_page') as PageId | null;
       const validPages: PageId[] = [
         'dashboard', 'evaluaciones', 'alumnos', 'profesores', 'cursos',
-        'banco-preguntas', 'biblioteca', 'usuarios', 'configuracion'
+        'banco-preguntas', 'biblioteca', 'descarga-demre', 'usuarios', 'configuracion'
       ];
       return saved && validPages.includes(saved) ? saved : 'dashboard';
     } catch {
@@ -446,8 +448,11 @@ function MainAppContent({
           return <AlumnosPage currentUser={user} isSandboxMode={isSandboxMode} />;
         case 'cursos':
           return <CursosPage currentUser={user} isSandboxMode={isSandboxMode} />;
-        case 'biblioteca':
-          return <BibliotecaPage />;
+        case 'biblioteca':
+          return <BibliotecaPage />;
+        case 'descarga-demre':
+          return <DescargaDemrePage />;
+
         case 'banco-preguntas':
           return (
             <BancoPreguntasPage
