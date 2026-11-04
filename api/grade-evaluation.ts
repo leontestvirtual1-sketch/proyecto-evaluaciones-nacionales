@@ -101,12 +101,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     let finalAlumnoId: string;
-    let finalAlumnoNombre = `${actorPerfil.nombre || ''} ${actorPerfil.apellido || ''}`.trim() || user.email || 'Estudiante';
-    let finalAlumnoRut = actorPerfil.rut || (typeof alumnoRut === 'string' ? alumnoRut : '');
+    let finalAlumnoNombre = '';
+    let finalAlumnoRut = '';
 
     if (actorPerfil.rol === 'alumno') {
       // Estudiante rindiendo: identidad fija e inmutable derivada del token de Auth (cero IDOR)
       finalAlumnoId = user.id;
+      finalAlumnoNombre = `${actorPerfil.nombre || ''} ${actorPerfil.apellido || ''}`.trim() || user.email || 'Estudiante';
+      finalAlumnoRut = actorPerfil.rut || '';
     } else if (actorPerfil.rol === 'profesor' || actorPerfil.rol === 'admin') {
       // Digitación docente / OMR: profesor o admin califica para un alumno específico
       if (!alumnoId || typeof alumnoId !== 'string' || !alumnoId.trim()) {
@@ -114,22 +116,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
       finalAlumnoId = alumnoId.trim();
 
-      if (!actorPerfil.es_super_admin) {
-        const { data: targetAlumno } = await sbAdmin
-          .from('perfiles')
-          .select('id, rbd, nombre, apellido, rut')
-          .eq('id', finalAlumnoId)
-          .maybeSingle();
+      const { data: targetAlumno } = await sbAdmin
+        .from('perfiles')
+        .select('id, rbd, nombre, apellido, rut')
+        .eq('id', finalAlumnoId)
+        .maybeSingle();
 
-        if (!targetAlumno) {
-          return res.status(404).json({ error: 'El estudiante especificado no existe en el sistema.' });
+      if (!targetAlumno) {
+        return res.status(404).json({ error: 'El estudiante especificado no existe en el sistema.' });
+      }
+
+      // Verificación de tenant FAIL-CLOSED para administradores y docentes
+      if (!actorPerfil.es_super_admin) {
+        if (!actorPerfil.rbd || !targetAlumno.rbd) {
+          return res.status(403).json({ error: 'Acceso denegado: tanto el evaluador como el estudiante deben tener un establecimiento escolar asignado.' });
         }
-        if (targetAlumno.rbd && actorPerfil.rbd && targetAlumno.rbd !== actorPerfil.rbd) {
+        if (targetAlumno.rbd !== actorPerfil.rbd) {
           return res.status(403).json({ error: 'Acceso denegado: el estudiante pertenece a otro establecimiento escolar.' });
         }
-        finalAlumnoNombre = `${targetAlumno.nombre || ''} ${targetAlumno.apellido || ''}`.trim() || finalAlumnoNombre;
-        finalAlumnoRut = targetAlumno.rut || finalAlumnoRut;
       }
+
+      finalAlumnoNombre = `${targetAlumno.nombre || ''} ${targetAlumno.apellido || ''}`.trim() || 'Estudiante';
+      finalAlumnoRut = targetAlumno.rut || '';
     } else {
       return res.status(403).json({ error: 'Rol no autorizado para calificar o registrar rendiciones.' });
     }
@@ -148,6 +156,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Validar estado de la evaluación: no permitir rendir pruebas en borrador o inactivas
     if (evaluacion.estado && evaluacion.estado !== 'activa') {
       return res.status(403).json({ error: 'Esta evaluación no se encuentra activa para su rendición.' });
+    }
+
+    // Validar relación docente/admin con la evaluación para digitación OMR (F-01)
+    if (actorPerfil.rol === 'profesor' || (actorPerfil.rol === 'admin' && !actorPerfil.es_super_admin)) {
+      const esAutor = evaluacion.profesor_id === actorPerfil.id || evaluacion.creado_por === actorPerfil.id;
+      const esMismoRbd = Boolean(evaluacion.rbd && actorPerfil.rbd && evaluacion.rbd === actorPerfil.rbd);
+      const esCatalogo = Boolean(evaluacion.es_catalogo);
+
+      if (!esAutor && !esMismoRbd && !esCatalogo) {
+        return res.status(403).json({ error: 'Acceso denegado: no tienes permisos sobre esta evaluación ni pertenece a tu establecimiento.' });
+      }
     }
 
     // 6. Prevenir doble envío: verificar si ya existe una rendición finalizada
@@ -274,7 +293,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const ahoraIso = new Date().toISOString();
 
     const nombreLimpio = sanitizeText(finalAlumnoNombre, 100);
-    const rutLimpio = sanitizeText(alumnoRut || '', 20);
+    const rutLimpio = sanitizeText(finalAlumnoRut || '', 20);
 
     // 10. Persistir en la tabla public.rendiciones respetando el esquema real de Supabase
     // Columnas reales: id, prueba_id, alumno_id, respuestas, puntaje_total, puntaje_maximo, porcentaje_logro, estado, inicio_at, fin_at

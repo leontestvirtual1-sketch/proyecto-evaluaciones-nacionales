@@ -1,5 +1,5 @@
 -- Migración 060: Creación y blindaje RLS de evaluacion_envios y bloqueo estricto (FAIL-CLOSED)
--- Resuelve validación V-01 de la Auditoría de Seguridad
+-- Resuelve validación V-01 y hallazgo F-07 de la Auditoría de Seguridad (Aislamiento Multi-Tenant)
 
 BEGIN;
 
@@ -23,14 +23,13 @@ CREATE INDEX IF NOT EXISTS idx_eval_envios_rbd ON public.evaluacion_envios(rbd);
 ALTER TABLE public.evaluacion_envios ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.evaluacion_envios FORCE ROW LEVEL SECURITY;
 
--- 3. Políticas RLS
+-- 3. Políticas RLS (F-07: Aislamiento estricto por RBD usando is_admin_of_rbd, sin bypass global para admin institucional)
 DROP POLICY IF EXISTS "Docentes ven sus envios o del mismo RBD" ON public.evaluacion_envios;
 CREATE POLICY "Docentes ven sus envios o del mismo RBD"
   ON public.evaluacion_envios FOR SELECT
   USING (
     docente_id = auth.uid()
-    OR public.is_admin()
-    OR (rbd IS NOT NULL AND public.is_admin_of_rbd(rbd))
+    OR public.is_admin_of_rbd(rbd)
   );
 
 DROP POLICY IF EXISTS "Docentes insertan sus envios" ON public.evaluacion_envios;
@@ -38,7 +37,7 @@ CREATE POLICY "Docentes insertan sus envios"
   ON public.evaluacion_envios FOR INSERT
   WITH CHECK (
     docente_id = auth.uid()
-    OR public.is_admin()
+    OR public.is_admin_of_rbd(rbd)
   );
 
 -- 4. Revocar accesos anónimos
@@ -71,4 +70,3 @@ BEGIN
 END $$;
 
 COMMIT;
-

@@ -519,7 +519,9 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
       try {
         let guardados = 0;
         let fallidos = 0;
+        let matriculasFallidas = 0;
         const errores: string[] = [];
+        const erroresMatricula: string[] = [];
 
         for (const a of nuevos) {
           const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
@@ -547,15 +549,20 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
               alumno_id: alumnoId,
               curso_id: a.cursoId
             }, { onConflict: 'alumno_id,curso_id' });
-            if (mErr) console.warn('Aviso matrícula:', mErr.message);
+            if (mErr) {
+              console.warn('Aviso matrícula:', mErr.message);
+              matriculasFallidas++;
+              erroresMatricula.push(`${a.rut}: fallo asignación curso (${mErr.message})`);
+            }
           }
           guardados++;
         }
         await loadAlumnosFromSupabase();
-        if (fallidos > 0) {
+        if (fallidos > 0 || matriculasFallidas > 0) {
+          const totalErrores = [...errores, ...erroresMatricula];
           setStatusMessage({
             type: 'error',
-            text: `Importación parcial: ${guardados} alumnos guardados, ${fallidos} fallaron (${errores.slice(0, 2).join(', ')})`
+            text: `Importación parcial: ${guardados} perfiles creados, ${fallidos} perfiles fallaron, ${matriculasFallidas} asignaciones de curso fallaron. Detalle: ${totalErrores.slice(0, 2).join(' | ')}`
           });
         } else {
           setStatusMessage({ type: 'success', text: `Se importaron ${guardados} alumnos exitosamente.` });
@@ -580,7 +587,11 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     if (!isSandboxMode) {
       try {
         const { error: mErr } = await supabase.from('matriculas').delete().eq('alumno_id', id);
-        if (mErr) console.warn('Aviso al eliminar matrícula:', mErr.message);
+        if (mErr) {
+          console.error('Error al desmatricular:', mErr);
+          setStatusMessage({ type: 'error', text: `No se pudo desmatricular al alumno antes de su eliminación: ${mErr.message}` });
+          return;
+        }
 
         const { error: pErr } = await supabase.from('perfiles').delete().eq('id', id);
         if (pErr) {

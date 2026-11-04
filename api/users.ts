@@ -103,6 +103,24 @@ function checkProfileTrialExpired(p: {
   return { isExpired, diasRestantes };
 }
 
+function validarRutChileno(rut: string): boolean {
+  if (!rut) return false;
+  const clean = rut.replace(/[\.\-\s]/g, '').toUpperCase();
+  if (clean.length < 2) return false;
+  const cuerpo = clean.slice(0, -1);
+  const dv = clean.slice(-1);
+  if (!/^\d+$/.test(cuerpo)) return false;
+  let suma = 0;
+  let multiplicador = 2;
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo[i], 10) * multiplicador;
+    multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+  }
+  const dvEsperado = 11 - (suma % 11);
+  const dvCalculado = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : String(dvEsperado);
+  return dv === dvCalculado;
+}
+
 const ALLOWED_ORIGIN = process.env.APP_URL || 'https://sysget-saber.vercel.app';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -118,7 +136,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // ── 0. Verificación pública de RUT (para formulario de registro previo a envío) ──
+    // ── 0. Verificación de formato RUT (F-04: Cero enumeración pública de identidades) ──
     const actionQuery = (req.query?.action as string) || '';
     if (actionQuery === 'check-rut' || (req.method === 'POST' && req.body?.action === 'check-rut')) {
       const rawRut = (req.query?.rut as string) || (req.body?.rut as string) || '';
@@ -126,24 +144,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'RUT es requerido.' });
       }
 
-      const { formatted, raw, clean, dash } = getRutVariants(rawRut);
-      const { data: rutProfiles, error: qErr } = await sbAdmin
-        .from('perfiles')
-        .select('id')
-        .or(`rut.eq."${formatted}",rut.eq."${raw}",rut.eq."${clean}",rut.eq."${dash}"`)
-        .limit(1);
-
-      if (qErr) {
-        console.error('Error checking rut in perfiles:', qErr);
-        return res.status(500).json({ error: 'Error al verificar RUT en la base de datos.' });
+      const isValidFormat = validarRutChileno(rawRut);
+      if (!isValidFormat) {
+        return res.status(400).json({ valid: false, error: 'RUT chileno inválido.' });
       }
 
-      const exists = Boolean(rutProfiles && rutProfiles.length > 0);
+      // Si la petición viene de un admin autenticado, se puede consultar duplicados dentro de su propio RBD
+      const authHeader = req.headers?.authorization || '';
+      if (authHeader.startsWith('Bearer ')) {
+        const authCheck = await requireAdmin(req);
+        if (authCheck.ok) {
+          const { formatted, raw, clean, dash } = getRutVariants(rawRut);
+          let q = sbAdmin
+            .from('perfiles')
+            .select('id, rbd')
+            .or(`rut.eq."${formatted}",rut.eq."${raw}",rut.eq."${clean}",rut.eq."${dash}"`)
+            .limit(1);
+
+          if (!authCheck.esSuperAdmin && authCheck.rbd) {
+            q = q.eq('rbd', authCheck.rbd);
+          }
+
+          const { data: rutProfiles } = await q;
+          const existsInTenant = Boolean(rutProfiles && rutProfiles.length > 0);
+          return res.status(200).json({
+            valid: true,
+            exists: existsInTenant,
+            message: existsInTenant ? 'El RUT ya se encuentra registrado en tu establecimiento.' : undefined
+          });
+        }
+      }
+
+      // Para usuarios públicos/anónimos, responder de forma uniforme sin enumeración
       return res.status(200).json({
-        exists,
-        message: exists
-          ? 'El RUT ingresado ya cuenta con un registro en la plataforma. Por favor inicia sesión o recupera tu contraseña.'
-          : undefined
+        valid: true,
+        message: 'Formato de RUT válido.'
       });
     }
 
@@ -248,6 +283,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // ── ACCIÓN: CREACIÓN DIRECTA POR ADMINISTRADOR (DOCENTE ACTIVO INMEDIATO) ──
       if (action === 'admin-create') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) {
+          return res.status(403).json({ error: authCheck.error });
+        }
+
         const {
           rut,
           nombre,
@@ -266,6 +306,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           asignaturaNombre,
           cargo
         } = body;
+
+        // F-02: Blindaje multi-tenant estricto para administradores institucionales
+        if (!authCheck.esSuperAdmin) {
+          if (rol === 'admin') {
+            return res.status(403).json({ error: 'Acceso denegado: solo Super Administradores pueden otorgar roles administrativos.' });
+          }
+          if (!authCheck.rbd) {
+            return res.status(403).json({ error: 'Administrador institucional sin RBD configurado.' });
+          }
+          if (rbd && rbd.trim() !== authCheck.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: no puedes crear usuarios en un establecimiento escolar ajeno.' });
+          }
+        }
 
         const cleanEmail = (email || '').toLowerCase().trim();
         if (!cleanEmail) {
@@ -291,9 +344,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             .eq('id', existingProfile.id)
             .maybeSingle();
 
-          const authCheck = await requireAdmin(req);
-          if (!authCheck.esSuperAdmin && targetProfileData?.rbd !== authCheck.rbd) {
-            return res.status(403).json({ error: 'Acceso denegado: no puedes modificar usuarios pertenecientes a otro establecimiento.' });
+          if (!authCheck.esSuperAdmin) {
+            if (targetProfileData?.rbd !== authCheck.rbd) {
+              return res.status(403).json({ error: 'Acceso denegado: no puedes modificar usuarios pertenecientes a otro establecimiento.' });
+            }
+            if (rol === 'admin') {
+              return res.status(403).json({ error: 'Acceso denegado: no tienes permisos para asignar rol administrador.' });
+            }
           }
 
           authUserId = existingProfile.id;
@@ -337,7 +394,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos con comuna y dependencia
-        const cleanRbd = (rbd || '').trim();
+        const cleanRbd = (!authCheck.esSuperAdmin && authCheck.rbd) ? authCheck.rbd : (rbd || '').trim();
         const cleanEstablecimiento = (establecimiento || '').trim();
         const cleanComuna = (comuna || '').trim();
         const cleanDependencia = (dependencia || '').trim();

@@ -405,7 +405,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json(rpcResult);
       }
 
-      // ── Admin aprueba solicitud ───────────────────────────────────────────
+      // ── Admin aprueba solicitud (F-02: Aislamiento tenant verificado) ───────
       if (action === "aprobar") {
         const adminCheck = await requireAdmin(req);
         if (!adminCheck.ok) return res.status(403).json({ error: adminCheck.error });
@@ -415,22 +415,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         let profesor_id = body.profesor_id || body.profesorId;
         const curso_id = body.curso_id || body.cursoId;
 
-        if (solicitud_id && (!evaluacion_id || !profesor_id)) {
-          const { data: solRow } = await sbAdmin
-            .from("solicitudes_evaluacion")
-            .select("evaluacion_id, profesor_id, rbd")
-            .eq("id", solicitud_id)
-            .maybeSingle();
-          if (solRow) {
-            if (!adminCheck.esSuperAdmin && solRow.rbd !== adminCheck.rbd) {
-              return res.status(403).json({ error: "Acceso denegado: no puedes aprobar solicitudes de otro establecimiento." });
-            }
-            evaluacion_id = evaluacion_id || solRow.evaluacion_id;
-            profesor_id = profesor_id || solRow.profesor_id;
-          }
+        if (!solicitud_id) {
+          return res.status(400).json({ error: "solicitud_id es requerido." });
         }
 
-        if (!solicitud_id || !evaluacion_id || !profesor_id)
+        const { data: solRow } = await sbAdmin
+          .from("solicitudes_evaluacion")
+          .select("evaluacion_id, profesor_id, rbd")
+          .eq("id", solicitud_id)
+          .maybeSingle();
+
+        if (!solRow) {
+          return res.status(404).json({ error: "Solicitud no encontrada en el sistema." });
+        }
+
+        if (!adminCheck.esSuperAdmin && solRow.rbd !== adminCheck.rbd) {
+          return res.status(403).json({ error: "Acceso denegado: no puedes aprobar solicitudes de otro establecimiento." });
+        }
+
+        evaluacion_id = evaluacion_id || solRow.evaluacion_id;
+        profesor_id = profesor_id || solRow.profesor_id;
+
+        if (!evaluacion_id || !profesor_id)
           return res.status(400).json({ error: "Faltan campos requeridos." });
 
         const { data: result, error: rpcErr } = await sbAdmin.rpc(
@@ -488,7 +494,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json(rpcResult);
       }
 
-      // ── Admin rechaza solicitud ───────────────────────────────────────────
+      // ── Admin rechaza solicitud (F-02: Aislamiento tenant verificado) ───────
       if (action === "rechazar") {
         const adminCheck = await requireAdmin(req);
         if (!adminCheck.ok) return res.status(403).json({ error: adminCheck.error });
@@ -496,6 +502,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const solicitud_id = body.solicitud_id || body.solicitudId;
         const motivo = body.motivo;
         if (!solicitud_id) return res.status(400).json({ error: "solicitud_id requerido." });
+
+        const { data: solRow } = await sbAdmin
+          .from("solicitudes_evaluacion")
+          .select("rbd")
+          .eq("id", solicitud_id)
+          .maybeSingle();
+
+        if (!solRow) {
+          return res.status(404).json({ error: "Solicitud no encontrada en el sistema." });
+        }
+
+        if (!adminCheck.esSuperAdmin && solRow.rbd !== adminCheck.rbd) {
+          return res.status(403).json({ error: "Acceso denegado: no puedes gestionar solicitudes de otro establecimiento." });
+        }
 
         const { data: result, error: rpcErr } = await sbAdmin.rpc(
           "admin_rechazar_solicitud_evaluacion",
@@ -506,10 +526,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json(result);
       }
 
-      // ── Admin marca/desmarca evaluación como catálogo ─────────────────────
+      // ── Admin marca/desmarca evaluación como catálogo (Super Admin exclusivo) ───
       if (action === "marcar-catalogo") {
         const adminCheck = await requireAdmin(req);
         if (!adminCheck.ok) return res.status(403).json({ error: adminCheck.error });
+        if (!adminCheck.esSuperAdmin) {
+          return res.status(403).json({ error: "Acceso denegado: solo Super Administradores pueden gestionar el catálogo global de evaluaciones." });
+        }
 
         const {
           evaluacion_id,

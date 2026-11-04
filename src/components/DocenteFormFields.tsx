@@ -175,29 +175,15 @@ export const DocenteFormFields: React.FC<DocenteFormFieldsProps> = ({
       return;
     }
 
-    setRutStatus({ loading: true });
-    onRutStatusChange?.({ loading: true });
-
-    try {
-      const res = await fetch(`/api/users?action=check-rut&rut=${encodeURIComponent(rutValue.trim())}`);
-      if (res.ok) {
-        const data = await res.json();
-        const status: RutValidationStatus = {
-          exists: data.exists,
-          expired: data.expired,
-          message: data.message,
-          loading: false
-        };
-        setRutStatus(status);
-        onRutStatusChange?.(status);
-      } else {
-        setRutStatus(null);
-        onRutStatusChange?.(null);
-      }
-    } catch {
-      setRutStatus(null);
-      onRutStatusChange?.(null);
-    }
+    // F-04: Validación sintáctica estricta sin oráculo público de enumeración
+    const status: RutValidationStatus = {
+      exists: false,
+      expired: false,
+      message: undefined,
+      loading: false
+    };
+    setRutStatus(status);
+    onRutStatusChange?.(status);
   }, [onRutStatusChange]);
 
   const handleRutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
