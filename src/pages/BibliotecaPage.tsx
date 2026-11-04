@@ -189,9 +189,10 @@ export const BibliotecaPage: React.FC = () => {
 
     // 5. Presentaciones PPT / PPTX
     if (url.toLowerCase().match(/\.pptx?(\?.*)?$/)) {
+      const viewerUrl = url.includes('?') ? `${url}&v=sysget2` : `${url}?v=sysget2`;
       setModalVisor({
         titulo: m.titulo,
-        embedUrl: `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`,
+        embedUrl: `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(viewerUrl)}`,
         externalUrl: url,
         tipo: 'ppt'
       });
