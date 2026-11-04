@@ -103,12 +103,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let finalAlumnoId: string;
     let finalAlumnoNombre = '';
     let finalAlumnoRut = '';
+    let targetAlumnoRbd: string | null = null;
 
     if (actorPerfil.rol === 'alumno') {
       // Estudiante rindiendo: identidad fija e inmutable derivada del token de Auth (cero IDOR)
       finalAlumnoId = user.id;
       finalAlumnoNombre = `${actorPerfil.nombre || ''} ${actorPerfil.apellido || ''}`.trim() || user.email || 'Estudiante';
       finalAlumnoRut = actorPerfil.rut || '';
+      targetAlumnoRbd = actorPerfil.rbd || null;
     } else if (actorPerfil.rol === 'profesor' || actorPerfil.rol === 'admin') {
       // Digitación docente / OMR: profesor o admin califica para un alumno específico
       if (!alumnoId || typeof alumnoId !== 'string' || !alumnoId.trim()) {
@@ -125,6 +127,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!targetAlumno) {
         return res.status(404).json({ error: 'El estudiante especificado no existe en el sistema.' });
       }
+
+      targetAlumnoRbd = targetAlumno.rbd || null;
 
       // Verificación de tenant FAIL-CLOSED para administradores y docentes
       if (!actorPerfil.es_super_admin) {
@@ -169,17 +173,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Validar relación docente/admin con la evaluación para digitación OMR (F-01)
     if (actorPerfil.rol === 'profesor' || (actorPerfil.rol === 'admin' && !actorPerfil.es_super_admin)) {
-      const esAutor = evaluacion.profesor_id === actorPerfil.id || evaluacion.creado_por === actorPerfil.id;
-      const esMismoRbd = Boolean(evaluacion.rbd && actorPerfil.rbd && evaluacion.rbd === actorPerfil.rbd);
       const esCatalogo = Boolean(evaluacion.es_catalogo);
 
-      if (!esAutor && !esMismoRbd && !esCatalogo) {
-        return res.status(403).json({ error: 'Acceso denegado: no tienes permisos sobre esta evaluación ni pertenece a tu establecimiento.' });
-      }
-
-      // Si la evaluación pertenece a un establecimiento específico y no es de catálogo, verificar estricta concordancia con actor
-      if (!esCatalogo && evaluacion.rbd && evaluacion.rbd !== actorPerfil.rbd) {
-        return res.status(403).json({ error: 'Acceso denegado: la evaluación pertenece a otro establecimiento escolar.' });
+      if (!esCatalogo) {
+        // En evaluación institucional no-catálogo: OBLIGATORIEDAD estricta de los 3 RBDs (evaluador, alumno, evaluación)
+        if (!actorPerfil.rbd || !targetAlumnoRbd || !evaluacion.rbd) {
+          return res.status(403).json({ error: 'Acceso denegado: la evaluación, el docente evaluador y el estudiante deben tener un establecimiento escolar (RBD) asignado.' });
+        }
+        if (actorPerfil.rbd !== evaluacion.rbd || targetAlumnoRbd !== evaluacion.rbd || actorPerfil.rbd !== targetAlumnoRbd) {
+          return res.status(403).json({ error: 'Acceso denegado: el establecimiento de la evaluación, del docente y del estudiante no coinciden.' });
+        }
+      } else {
+        // En evaluación de catálogo oficial: verificar permisos del evaluador
+        const esAutor = evaluacion.profesor_id === actorPerfil.id || evaluacion.creado_por === actorPerfil.id;
+        const esMismoRbd = Boolean(evaluacion.rbd && actorPerfil.rbd && evaluacion.rbd === actorPerfil.rbd);
+        if (!esAutor && !esMismoRbd && !esCatalogo) {
+          return res.status(403).json({ error: 'Acceso denegado: no tienes permisos sobre esta evaluación.' });
+        }
       }
     }
 

@@ -1,9 +1,11 @@
 -- ==============================================================================
 -- Migración 061: Blindaje definitivo de evaluacion_envios y eliminación de recursión RLS
 -- Resuelve:
---   - F-08: Cross-tenant write en evaluacion_envios
+--   - F-08: Cross-tenant write en evaluacion_envios (calificación explícita de evaluacion_envios.rbd)
 --   - F-07: Eliminación de is_admin() global no acotado por tenant
+--   - F-03: Índice compuesto para soporte de rate limiting persistente en BD
 --   - Eliminación de políticas legacy recursivas en perfiles y cursos (001, 003, 011, 017)
+--   - Trazabilidad: Registro formal en supabase_migrations.schema_migrations
 -- ==============================================================================
 
 BEGIN;
@@ -73,30 +75,41 @@ CREATE POLICY "Docentes ven sus envios aislados"
   );
 
 -- INSERT (F-08): En caso de re-concesión de INSERT, prohíbe terminantemente inserciones cross-tenant.
+-- Calificación explícita de evaluacion_envios.rbd para evitar cualquier sombreado de variables con e.rbd
 CREATE POLICY "Docentes insertan sus envios aislados"
   ON public.evaluacion_envios FOR INSERT
   WITH CHECK (
     (
-      docente_id = auth.uid()
-      AND rbd IS NOT NULL
-      AND rbd = public.current_user_rbd()
+      evaluacion_envios.docente_id = auth.uid()
+      AND evaluacion_envios.rbd IS NOT NULL
+      AND evaluacion_envios.rbd = public.current_user_rbd()
       AND EXISTS (
         SELECT 1 FROM public.evaluaciones e
-        WHERE e.id = prueba_id
-          AND (e.rbd = public.current_user_rbd() OR e.es_catalogo = TRUE)
+        WHERE e.id = evaluacion_envios.prueba_id
+          AND (e.rbd = evaluacion_envios.rbd OR e.es_catalogo = TRUE)
       )
     )
     OR (
-      public.is_admin_of_rbd(rbd)
+      public.is_admin_of_rbd(evaluacion_envios.rbd)
+      AND evaluacion_envios.rbd IS NOT NULL
       AND EXISTS (
         SELECT 1 FROM public.evaluaciones e
-        WHERE e.id = prueba_id
-          AND (e.rbd = rbd OR e.es_catalogo = TRUE)
+        WHERE e.id = evaluacion_envios.prueba_id
+          AND (e.rbd = evaluacion_envios.rbd OR e.es_catalogo = TRUE)
       )
     )
   );
 
--- 4. Auditoría automática Fail-Closed: aborta si alguna tabla de public carece de RLS
+-- 4. Índice compuesto para soporte de rate limiting en backend
+CREATE INDEX IF NOT EXISTS idx_eval_envios_docente_sent_at 
+  ON public.evaluacion_envios(docente_id, sent_at);
+
+-- 5. Registro formal de migración para trazabilidad en Supabase
+INSERT INTO supabase_migrations.schema_migrations (version, name)
+VALUES ('061', 'harden_evaluacion_envios_rls')
+ON CONFLICT (version) DO NOTHING;
+
+-- 6. Auditoría automática Fail-Closed: aborta si alguna tabla de public carece de RLS
 DO $$
 DECLARE
   r RECORD;

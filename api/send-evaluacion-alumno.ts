@@ -89,8 +89,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(403).json({ error: 'Acceso denegado: cuenta no activa.' });
   }
 
+  // 3.1 Rate limiting persistente en BD (F-03: compartido entre instancias serverless, máx 25/min)
+  try {
+    const unMinutoAtrasIso = new Date(Date.now() - 60000).toISOString();
+    const { count: enviosRecientes, error: countErr } = await sbAdmin
+      .from('evaluacion_envios')
+      .select('id', { count: 'exact', head: true })
+      .eq('docente_id', emisor.id)
+      .gte('sent_at', unMinutoAtrasIso);
+
+    if (!countErr && typeof enviosRecientes === 'number' && enviosRecientes >= 25) {
+      return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
+    }
+  } catch (_rlErr) {
+    console.warn('[send-evaluacion-alumno] Aviso al consultar rate limit en BD:', _rlErr);
+  }
+
+  // Fallback complementario en memoria para ráfagas instantáneas
   if (!checkRateLimit(emisor.id, 25, 60000)) {
-    return res.status(429).json({ error: 'Has alcanzado el límite de envíos por minuto. Por favor espera un momento antes de continuar.' });
+    return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
   }
 
   // 4. Leer y validar body

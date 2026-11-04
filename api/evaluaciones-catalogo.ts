@@ -440,15 +440,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (!evaluacion_id || !profesor_id)
           return res.status(400).json({ error: "La solicitud no contiene una evaluación o docente válido." });
 
-        // Verificar pertenencia del curso al mismo tenant si fue provisto
+        // Verificar existencia y pertenencia del curso al mismo tenant si fue provisto (F-02)
         if (curso_id) {
-          const { data: cursoRow } = await sbAdmin
+          const { data: cursoRow, error: cursoErr } = await sbAdmin
             .from("cursos")
-            .select("rbd")
+            .select("id, rbd")
             .eq("id", curso_id)
             .maybeSingle();
-          if (!adminCheck.esSuperAdmin && cursoRow?.rbd && cursoRow.rbd !== adminCheck.rbd) {
-            return res.status(403).json({ error: "Acceso denegado: el curso especificado pertenece a otro establecimiento." });
+
+          if (cursoErr || !cursoRow) {
+            return res.status(404).json({ error: "El curso especificado no existe en el sistema." });
+          }
+
+          if (!adminCheck.esSuperAdmin) {
+            if (!cursoRow.rbd || cursoRow.rbd !== adminCheck.rbd) {
+              return res.status(403).json({ error: "Acceso denegado: el curso especificado debe tener RBD asignado y pertenecer a tu establecimiento escolar." });
+            }
           }
         }
 
