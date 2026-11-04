@@ -4,14 +4,14 @@
 -- P26 adaptada para coherencia matemática exacta con escalas 1:64 y 1:43 (x = L·64/43).
 -- Pregunta 35 eliminada (no existe en la fuente oficial).
 -- ==============================================================================
-BEGIN
+BEGIN;
 
 UPDATE public.evaluaciones
 SET descripcion = 'Ensayo 3 SIMCE Matemática 2° Medio (Umáximo). 34 preguntas de selección múltiple: Números y Operaciones, Álgebra, Geometría, Medición y Probabilidad y Estadística.',
     descripcion_catalogo = 'Ensayo de práctica SIMCE Matemática 2° Medio con 34 ítems de selección múltiple.',
     total_preguntas = 34,
     updated_at = NOW()
-WHERE id = 'eval-simce-mat-2m-e3'
+WHERE id = 'eval-simce-mat-2m-e3';
 
 -- P01: eje-mat-1 / hab-mat-2 / clave A
 UPDATE public.preguntas SET
@@ -24,7 +24,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-01'
+WHERE id = 'preg-mat2m-e3-01';
 
 -- P02: eje-mat-1 / hab-mat-2 / clave A
 UPDATE public.preguntas SET
@@ -37,7 +37,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-02'
+WHERE id = 'preg-mat2m-e3-02';
 
 -- P03: eje-mat-1 / hab-mat-1 / clave B
 UPDATE public.preguntas SET
@@ -58,7 +58,7 @@ Considera que ambos datos son siempre números enteros positivos y observa el si
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-03'
+WHERE id = 'preg-mat2m-e3-03';
 
 -- P04: eje-mat-1 / hab-mat-2 / clave D
 UPDATE public.preguntas SET
@@ -71,7 +71,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-04'
+WHERE id = 'preg-mat2m-e3-04';
 
 -- P05: eje-mat-1 / hab-mat-2 / clave C
 UPDATE public.preguntas SET
@@ -84,7 +84,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-05'
+WHERE id = 'preg-mat2m-e3-05';
 
 -- P06: eje-mat-1 / hab-mat-4 / clave A
 UPDATE public.preguntas SET
@@ -97,7 +97,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-06'
+WHERE id = 'preg-mat2m-e3-06';
 
 -- P07: eje-mat-1 / hab-mat-2 / clave A
 UPDATE public.preguntas SET
@@ -110,7 +110,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-07'
+WHERE id = 'preg-mat2m-e3-07';
 
 -- P08: eje-mat-1 / hab-mat-2 / clave A
 UPDATE public.preguntas SET
@@ -123,7 +123,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-08'
+WHERE id = 'preg-mat2m-e3-08';
 
 -- P09: eje-mat-1 / hab-mat-2 / clave B
 UPDATE public.preguntas SET
@@ -140,7 +140,7 @@ $$\log_{2}32=x$$
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-09'
+WHERE id = 'preg-mat2m-e3-09';
 
 -- P10: eje-mat-1 / hab-mat-4 / clave B
 UPDATE public.preguntas SET
@@ -153,7 +153,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-10'
+WHERE id = 'preg-mat2m-e3-10';
 
 -- P11: eje-mat-1 / hab-mat-2 / clave D
 UPDATE public.preguntas SET
@@ -166,7 +166,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-11'
+WHERE id = 'preg-mat2m-e3-11';
 
 -- P12: eje-mat-1 / hab-mat-2 / clave B
 UPDATE public.preguntas SET
@@ -179,7 +179,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-12'
+WHERE id = 'preg-mat2m-e3-12';
 
 -- P13: eje-mat-1 / hab-mat-2 / clave A
 UPDATE public.preguntas SET
@@ -192,7 +192,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-13'
+WHERE id = 'preg-mat2m-e3-13';
 
 -- P14: eje-mat-1 / hab-mat-2 / clave B
 UPDATE public.preguntas SET
@@ -209,7 +209,7 @@ $$c^{d}=e$$
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-14'
+WHERE id = 'preg-mat2m-e3-14';
 
 -- P15: eje-mat-2 / hab-mat-2 / clave A
 UPDATE public.preguntas SET
@@ -226,7 +226,7 @@ $$(2a+\underline{\quad\quad})^{2}=4a^{2}+16a+16$$
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-15'
+WHERE id = 'preg-mat2m-e3-15';
 
 -- P16: eje-mat-2 / hab-mat-2 / clave A
 UPDATE public.preguntas SET
@@ -239,7 +239,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-16'
+WHERE id = 'preg-mat2m-e3-16';
 
 -- P17: eje-mat-2 / hab-mat-2 / clave C
 UPDATE public.preguntas SET
@@ -252,7 +252,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-17'
+WHERE id = 'preg-mat2m-e3-17';
 
 -- P18: eje-mat-2 / hab-mat-4 / clave A
 UPDATE public.preguntas SET
@@ -265,7 +265,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-18'
+WHERE id = 'preg-mat2m-e3-18';
 
 -- P19: eje-mat-2 / hab-mat-3 / clave B
 UPDATE public.preguntas SET
@@ -280,7 +280,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/simce_mat_2m_e3/p19_plano_rectas.png',
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-19'
+WHERE id = 'preg-mat2m-e3-19';
 
 -- P20: eje-mat-2 / hab-mat-1 / clave C
 UPDATE public.preguntas SET
@@ -298,7 +298,7 @@ $$2x+3y=31$$
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-20'
+WHERE id = 'preg-mat2m-e3-20';
 
 -- P21: eje-mat-2 / hab-mat-1 / clave C
 UPDATE public.preguntas SET
@@ -319,7 +319,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-21'
+WHERE id = 'preg-mat2m-e3-21';
 
 -- P22: eje-mat-2 / hab-mat-3 / clave D
 UPDATE public.preguntas SET
@@ -334,7 +334,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/simce_mat_2m_e3/p22_recta_plano.png',
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-22'
+WHERE id = 'preg-mat2m-e3-22';
 
 -- P23: eje-mat-3 / hab-mat-1 / clave D
 UPDATE public.preguntas SET
@@ -347,7 +347,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-23'
+WHERE id = 'preg-mat2m-e3-23';
 
 -- P24: eje-mat-3 / hab-mat-3 / clave A
 UPDATE public.preguntas SET
@@ -360,7 +360,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-24'
+WHERE id = 'preg-mat2m-e3-24';
 
 -- P25: eje-mat-3 / hab-mat-1 / clave C
 UPDATE public.preguntas SET
@@ -373,7 +373,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-25'
+WHERE id = 'preg-mat2m-e3-25';
 
 -- P26: eje-mat-3 / hab-mat-4 / clave D
 UPDATE public.preguntas SET
@@ -390,7 +390,7 @@ Pablo desea adquirir una versión más grande del mismo automóvil deportivo, pe
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-26'
+WHERE id = 'preg-mat2m-e3-26';
 
 -- P27: eje-mat-4 / hab-mat-1 / clave B
 UPDATE public.preguntas SET
@@ -405,7 +405,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/simce_mat_2m_e3/p27_circulo_sector.png',
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-27'
+WHERE id = 'preg-mat2m-e3-27';
 
 -- P28: eje-mat-4 / hab-mat-1 / clave C
 UPDATE public.preguntas SET
@@ -420,7 +420,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/simce_mat_2m_e3/p28_figura_geometria.png',
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-28'
+WHERE id = 'preg-mat2m-e3-28';
 
 -- P29: eje-mat-3 / hab-mat-3 / clave D
 UPDATE public.preguntas SET
@@ -435,7 +435,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/simce_mat_2m_e3/p29_triangulo_trig.png',
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-29'
+WHERE id = 'preg-mat2m-e3-29';
 
 -- P30: eje-mat-5 / hab-mat-1 / clave C
 UPDATE public.preguntas SET
@@ -455,7 +455,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-30'
+WHERE id = 'preg-mat2m-e3-30';
 
 -- P31: eje-mat-5 / hab-mat-4 / clave C
 UPDATE public.preguntas SET
@@ -470,7 +470,7 @@ Si se simula el lanzamiento de $2\,000$ bolas, ¿cuál es la mejor estimación d
     puntaje = 1,
     imagen_url = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/simce_mat_2m_e3/p31_tablero_galton.png',
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-31'
+WHERE id = 'preg-mat2m-e3-31';
 
 -- P32: eje-mat-5 / hab-mat-1 / clave D
 UPDATE public.preguntas SET
@@ -485,7 +485,7 @@ UPDATE public.preguntas SET
     puntaje = 1,
     imagen_url = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/simce_mat_2m_e3/p32_diagrama_videojuegos.png',
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-32'
+WHERE id = 'preg-mat2m-e3-32';
 
 -- P33: eje-mat-5 / hab-mat-1 / clave C
 UPDATE public.preguntas SET
@@ -507,7 +507,7 @@ Si entra un intruso, ¿cuál es la probabilidad de que se dispare la alerta gene
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-33'
+WHERE id = 'preg-mat2m-e3-33';
 
 -- P34: eje-mat-5 / hab-mat-3 / clave C
 UPDATE public.preguntas SET
@@ -529,9 +529,9 @@ Considerando la **frecuencia esperada** de los resultados, ¿qué argumento es c
     puntaje = 1,
     imagen_url = NULL,
     updated_at = NOW()
-WHERE id = 'preg-mat2m-e3-34'
+WHERE id = 'preg-mat2m-e3-34';
 
 -- P35: Eliminación de pregunta inventada que no existe en el instrumento oficial
-DELETE FROM public.preguntas WHERE id = 'preg-mat2m-e3-35'
+DELETE FROM public.preguntas WHERE id = 'preg-mat2m-e3-35';
 
 COMMIT

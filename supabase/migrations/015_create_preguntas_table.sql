@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS public.preguntas CASCADE;
 -- ─────────────────────────────────────────────────────────────────────
 CREATE TABLE public.preguntas (
   id                  TEXT        PRIMARY KEY DEFAULT ('preg-' || uuid_generate_v4()::text),
-  propietario_id      UUID        NOT NULL REFERENCES public.perfiles(id) ON DELETE CASCADE,
+  propietario_id      UUID        REFERENCES public.perfiles(id) ON DELETE CASCADE,
   asignatura_id       TEXT        NOT NULL,
   eje_tematico_id     TEXT,
   habilidad_id        TEXT,

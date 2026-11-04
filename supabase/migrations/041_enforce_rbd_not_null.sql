@@ -23,7 +23,7 @@ WHERE (rbd IS NULL OR TRIM(rbd) = '')
 UPDATE public.cursos c
 SET rbd = p.rbd
 FROM public.perfiles p
-WHERE c.profesor_id = p.id
+WHERE (c.profesor_jefe_id = p.id OR c.establecimiento = p.establecimiento)
   AND (c.rbd IS NULL OR TRIM(c.rbd) = '')
   AND p.rbd IS NOT NULL;
 

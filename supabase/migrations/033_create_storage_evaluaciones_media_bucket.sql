@@ -48,4 +48,3 @@ USING (bucket_id = 'evaluaciones-media');
 -- 3. Función auxiliar para normalizar rutas de imágenes a Storage URL
 -- Si una imagen comienza con /preguntas/, se puede servir directamente desde el bucket
 -- o mantenerse compatible con el frontend mediante el CDN de Supabase.
-COMMENT ON TABLE storage.buckets IS 'Buckets de almacenamiento de activos multimedia de Sysget Saber';

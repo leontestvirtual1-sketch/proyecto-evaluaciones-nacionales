@@ -8,8 +8,28 @@ ALTER TABLE public.establecimientos ADD COLUMN IF NOT EXISTS logo_url TEXT;
 
 DO $$
 BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'rendiciones') THEN
+    DROP POLICY IF EXISTS "Profesores ven rendiciones de sus pruebas" ON public.rendiciones;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'respuestas_alumnos') THEN
+    DROP POLICY IF EXISTS "Profesores ven respuestas de sus pruebas" ON public.respuestas_alumnos;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'pruebas') THEN
+    DROP POLICY IF EXISTS "Alumnos ven pruebas activas" ON public.pruebas;
+    DROP POLICY IF EXISTS "Profesores gestionan sus pruebas" ON public.pruebas;
+    DROP POLICY IF EXISTS "Lectura de pruebas publicas o por perfil" ON public.pruebas;
+    DROP POLICY IF EXISTS "Insercion y actualizacion de pruebas por profesor o admin" ON public.pruebas;
+  END IF;
+END $$;
+
+ALTER TABLE IF EXISTS public.matriculas DROP CONSTRAINT IF EXISTS matriculas_curso_id_fkey;
+ALTER TABLE IF EXISTS public.pruebas DROP CONSTRAINT IF EXISTS pruebas_curso_id_fkey;
+ALTER TABLE IF EXISTS public.rendiciones DROP CONSTRAINT IF EXISTS rendiciones_curso_id_fkey;
+ALTER TABLE IF EXISTS public.rendiciones DROP CONSTRAINT IF EXISTS rendiciones_prueba_id_fkey;
+
+DO $$
+BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'matriculas' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
-    ALTER TABLE public.matriculas DROP CONSTRAINT IF EXISTS matriculas_curso_id_fkey;
     ALTER TABLE public.matriculas ALTER COLUMN curso_id TYPE TEXT;
   END IF;
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'rendiciones' AND column_name = 'prueba_id' AND data_type = 'uuid') THEN
@@ -133,7 +153,7 @@ VALUES
     'preg-mat-4b-01',
     (SELECT id FROM auth.users WHERE email = 'nentitasusana@hotmail.com' LIMIT 1),
     'asig-1', 'eje-mat-1', 'hab-mat-1',
-    'seleccion_multiple', '4° Básico', 'facil',
+    'seleccion_multiple', '4° Básico', 'baja',
     'En un huerto escolar se cosecharon 348 manzanas el lunes y 275 manzanas el martes. ¿Cuántas manzanas se cosecharon en total?',
     '[{"letra":"A","texto":"513 manzanas","es_correcta":false},{"letra":"B","texto":"623 manzanas","es_correcta":true},{"letra":"C","texto":"613 manzanas","es_correcta":false},{"letra":"D","texto":"723 manzanas","es_correcta":false}]'::jsonb,
     'B', 1, 'SIMCE Oficial Matemática 4° Básico', NOW(), NOW()
@@ -160,7 +180,7 @@ VALUES
     'preg-mat-4b-04',
     (SELECT id FROM auth.users WHERE email = 'nentitasusana@hotmail.com' LIMIT 1),
     'asig-1', 'eje-mat-3', 'hab-mat-1',
-    'seleccion_multiple', '4° Básico', 'facil',
+    'seleccion_multiple', '4° Básico', 'baja',
     '¿Cuál de las siguientes figuras geométricas tiene exactamente 4 lados de igual longitud y 4 ángulos rectos?',
     '[{"letra":"A","texto":"Rectángulo","es_correcta":false},{"letra":"B","texto":"Rombo","es_correcta":false},{"letra":"C","texto":"Cuadrado","es_correcta":true},{"letra":"D","texto":"Trapecio","es_correcta":false}]'::jsonb,
     'C', 1, 'SIMCE Oficial Matemática 4° Básico', NOW(), NOW()
