@@ -31,7 +31,7 @@ interface AlumnoFormModalProps {
   onClose: () => void;
   onSave: (a: AlumnoConCurso) => void;
   editAlumno?: AlumnoConCurso | null;
-  cursosDisponibles: { id: string; nombre: string }[];
+  cursosDisponibles: { id: string; nombre: string; rbd?: string; establecimiento?: string }[];
   establecimientoNombre: string;
 }
 
@@ -79,7 +79,8 @@ const AlumnoFormModal: React.FC<AlumnoFormModalProps> = ({
     onSave({
       id: editAlumno?.id || `alum-${Date.now()}`,
       ...form,
-      establecimiento: establecimientoNombre,
+      rbd: selectedCurso?.rbd || form.rbd,
+      establecimiento: selectedCurso?.establecimiento || form.establecimiento || establecimientoNombre,
       cursoNombre: selectedCurso ? selectedCurso.nombre : form.cursoNombre || ''
     } as AlumnoConCurso);
     onClose();
@@ -449,6 +450,8 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
       id: curso.id,
       nombre: curso.nombre,
       codigoInvitacion: curso.codigoInvitacion,
+      rbd: curso.rbd,
+      establecimiento: curso.establecimiento
     }));
   }, [cursosFromHook]);
   const puedeGestionarAlumnos = cursosDisponibles.length > 0;
@@ -465,6 +468,20 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     if (!isSandboxMode && currentUser) {
       try {
         const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
+        
+        // Resolver RBD de forma jerárquica obligatoria
+        const cursoAsignado = cursosFromHook.find(c => c.id === a.cursoId);
+        let rbdFinal = a.rbd || cursoAsignado?.rbd || currentUser.rbd;
+        let estabFinal = a.establecimiento || cursoAsignado?.establecimiento || colegioNombre;
+
+        if (!rbdFinal) {
+          if (estabFinal && estabFinal.toLowerCase().includes('mi casa')) {
+            rbdFinal = '12345';
+          } else {
+            rbdFinal = '31030';
+          }
+        }
+
         const perfilRow = {
           id: alumnoId,
           rut: a.rut,
@@ -472,8 +489,8 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
           apellido: a.apellido,
           email: a.email || `${a.rut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl`,
           rol: 'alumno',
-          establecimiento: a.establecimiento || colegioNombre,
-          rbd: currentUser.rbd || null,
+          establecimiento: estabFinal,
+          rbd: rbdFinal,
           estado: 'activo',
           plan: 'trial'
         };
@@ -525,6 +542,19 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
 
         for (const a of nuevos) {
           const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
+          
+          const cursoAsignado = cursosFromHook.find(c => c.id === a.cursoId);
+          let rbdFinal = a.rbd || cursoAsignado?.rbd || currentUser.rbd;
+          let estabFinal = a.establecimiento || cursoAsignado?.establecimiento || colegioNombre;
+
+          if (!rbdFinal) {
+            if (estabFinal && estabFinal.toLowerCase().includes('mi casa')) {
+              rbdFinal = '12345';
+            } else {
+              rbdFinal = '31030';
+            }
+          }
+
           const { error: pErr } = await supabase.from('perfiles').upsert({
             id: alumnoId,
             rut: a.rut,
@@ -532,8 +562,8 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
             apellido: a.apellido,
             email: a.email || `${a.rut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl`,
             rol: 'alumno',
-            establecimiento: a.establecimiento || colegioNombre,
-            rbd: currentUser.rbd || null,
+            establecimiento: estabFinal,
+            rbd: rbdFinal,
             estado: 'activo',
             plan: 'trial'
           }, { onConflict: 'id' });
