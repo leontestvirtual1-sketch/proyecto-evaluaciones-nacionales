@@ -27,7 +27,15 @@ BEGIN
   LIMIT 1;
 
   IF v_susana_id IS NULL THEN
-    RAISE EXCEPTION '❌ No se encontró el usuario nentitasusana@hotmail.com en auth.users. Créalo primero en Authentication > Users del dashboard de Supabase, luego ejecuta esta migración.';
+    v_susana_id := gen_random_uuid();
+    INSERT INTO auth.users (
+      instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+      raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+    ) VALUES (
+      '00000000-0000-0000-0000-000000000000', v_susana_id, 'authenticated', 'authenticated',
+      'nentitasusana@hotmail.com', crypt('Docente2026!', gen_salt('bf')), now(),
+      '{"provider":"email","providers":["email"]}', '{"nombre":"Susana","apellido":"Pizarro"}', now(), now()
+    );
   END IF;
 
   -- Insertar perfil completo de producción

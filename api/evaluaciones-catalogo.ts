@@ -207,7 +207,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       let query = sbAdmin
         .from("evaluaciones")
         .select(
-          "id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas"
+          "id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas, codigo_acceso, tiempo_limite, estado"
         )
         .eq("es_catalogo", true)
         .not("verificada_at", "is", null)

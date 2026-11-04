@@ -3,6 +3,35 @@
 -- Colegio Mi Casa (4° Básico, 8° Básico, 2° Medio) y Banco SIMCE Matemática
 -- ==============================================================================
 
+ALTER TABLE public.establecimientos ADD COLUMN IF NOT EXISTS lema TEXT;
+ALTER TABLE public.establecimientos ADD COLUMN IF NOT EXISTS logo_url TEXT;
+
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'matriculas' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.matriculas DROP CONSTRAINT IF EXISTS matriculas_curso_id_fkey;
+    ALTER TABLE public.matriculas ALTER COLUMN curso_id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'rendiciones' AND column_name = 'prueba_id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.rendiciones ALTER COLUMN prueba_id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'rendiciones' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.rendiciones ALTER COLUMN curso_id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'cursos' AND column_name = 'id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.cursos ALTER COLUMN id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.pruebas ALTER COLUMN id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'pruebas' AND column_name = 'curso_id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.pruebas ALTER COLUMN curso_id TYPE TEXT;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'preguntas' AND column_name = 'id' AND data_type = 'uuid') THEN
+    ALTER TABLE public.preguntas ALTER COLUMN id TYPE TEXT;
+  END IF;
+END $$;
+
 -- 1. Migración y Unificación de Superadmin a leontestvirtual1@gmail.com
 DO $$
 DECLARE

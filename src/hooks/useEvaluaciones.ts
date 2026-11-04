@@ -117,6 +117,27 @@ export function useEvaluaciones({ currentUser, isSandboxMode = false }: UseEvalu
           return;
         }
 
+        // Si es alumno y la consulta directa retorna vacia (por RLS), consultar catalogo publico activo
+        if (isAlumno) {
+          try {
+            const catRes = await fetch("/api/evaluaciones-catalogo?action=catalogo");
+            if (catRes.ok) {
+              const catData = await catRes.json();
+              if (catData?.evaluaciones && catData.evaluaciones.length > 0 && isMounted) {
+                const mappedCat = catData.evaluaciones.map((row: Record<string, unknown>) => mapRowToPrueba({
+                  ...row,
+                  estado: "activa"
+                }));
+                setPruebas(mappedCat);
+                setIsLoading(false);
+                return;
+              }
+            }
+          } catch (catErr) {
+            console.warn("[useEvaluaciones] Fallback catalogo alumno:", catErr);
+          }
+        }
+
         // Directiva 2: estado vacío legítimo en producción. No auto-seed de mocks.
         if (isMounted) {
           setPruebas([]);

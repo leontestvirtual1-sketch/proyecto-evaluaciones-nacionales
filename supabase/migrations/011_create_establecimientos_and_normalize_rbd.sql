@@ -61,6 +61,9 @@ UPDATE public.perfiles
 SET rbd = '99999'
 WHERE email = 'nentitasusana@hotmail.com' AND (rbd IS NULL OR rbd = '');
 
+-- Eliminar perfiles duplicados de prueba antiguos con el mismo RUT
+DELETE FROM public.perfiles WHERE email = 'luis_leon_g@hotmail.com';
+
 -- 6. Crear índice de unicidad para RUT (evitar duplicados reales)
 CREATE UNIQUE INDEX IF NOT EXISTS idx_perfiles_rut_unique
 ON public.perfiles (rut)

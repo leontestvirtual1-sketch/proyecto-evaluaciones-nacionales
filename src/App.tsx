@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 // AcademicDataContext is the SINGLE source of truth for Demo vs Production data isolation.
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, AlertTriangle } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AcademicDataProvider, useAcademicData } from './context/AcademicDataContext';
 import { Navbar } from './components/Navbar';
@@ -39,6 +39,7 @@ import { useBancoPreguntas } from './hooks/useBancoPreguntas';
 import { useEvaluaciones } from './hooks/useEvaluaciones';
 import { CuentaCaducadaBloqueo } from './components/CuentaCaducadaBloqueo';
 import { isUserExpiredOrBlocked } from './utils/userAccess';
+import { supabase } from './lib/supabaseClient';
 
 function MainAppContent({
   isSandboxMode,
@@ -101,6 +102,8 @@ function MainAppContent({
     const code = params.get('codigo') || params.get('code');
     if (code) {
       sessionStorage.setItem('pending_eval_code', code.trim());
+      setShowLanding(false);
+      setAuthView('login');
     }
   }, [approveUserByToken]);
 
@@ -147,6 +150,8 @@ function MainAppContent({
   // View States
   const [selectedReportPruebaId, setSelectedReportPruebaId] = useState<string | null>(null);
   const [activePruebaForRunner, setActivePruebaForRunner] = useState<Prueba | null>(null);
+  const [activePruebaPreguntas, setActivePruebaPreguntas] = useState<Pregunta[] | null>(null);
+  const [isLoadingPreguntas, setIsLoadingPreguntas] = useState<boolean>(false);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState<boolean>(false);
 
   const getReporteForPrueba = (pruebaId: string): ReporteTabuladoCurso => {
@@ -266,6 +271,51 @@ function MainAppContent({
 
   const handleUpdatePruebaEstado = (pruebaId: string, nuevoEstado: 'borrador' | 'activa' | 'finalizada') => {
     onUpdatePruebaEstado(pruebaId, nuevoEstado);
+  };
+
+  const handleStartEvaluation = async (prueba: Prueba) => {
+    setActivePruebaForRunner(prueba);
+    setIsLoadingPreguntas(true);
+    setActivePruebaPreguntas(null);
+
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+      const headers: Record<string, string> = {};
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      const res = await fetch(`/api/evaluaciones-catalogo?action=preguntas&evaluacion_id=${encodeURIComponent(prueba.id)}`, { headers });
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.preguntas && data.preguntas.length > 0) {
+          const mapped: Pregunta[] = data.preguntas.map((p: any) => ({
+            id: p.id,
+            asignaturaId: p.asignatura_id || prueba.asignaturaId,
+            ejeTematicoId: p.eje_tematico_id || '',
+            habilidadId: p.habilidad_id || '',
+            tipo: p.tipo || 'seleccion_multiple',
+            nivel: p.nivel || prueba.nivel,
+            dificultad: p.dificultad || 'media',
+            enunciado: p.enunciado || '',
+            imagenUrl: p.imagen_url || undefined,
+            tablaMarkdown: p.tabla_markdown || undefined,
+            alternativas: Array.isArray(p.alternativas) ? p.alternativas : [],
+            respuestaCorrecta: null,
+            puntaje: Number(p.puntaje) || 1,
+            fuente: p.fuente || 'DEMRE Oficial'
+          }));
+          setActivePruebaPreguntas(mapped);
+          setIsLoadingPreguntas(false);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('[handleStartEvaluation] Error cargando preguntas desde API:', err);
+    }
+
+    const fallback = getPreguntasForRunner(prueba, bancoPreguntas);
+    setActivePruebaPreguntas(fallback);
+    setIsLoadingPreguntas(false);
   };
 
   const getPreguntasForRunner = (prueba: Prueba, banco: Pregunta[]): Pregunta[] => {
@@ -481,13 +531,28 @@ function MainAppContent({
     } else {
       // Student View
       if (activePruebaForRunner) {
+        if (isLoadingPreguntas || !activePruebaPreguntas) {
+          return (
+            <div className="min-h-[60vh] flex flex-col items-center justify-center p-8 space-y-4">
+              <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+              <div className="text-center space-y-1">
+                <h3 className="text-lg font-bold text-white">Preparando tu evaluación...</h3>
+                <p className="text-sm text-slate-400">Cargando las preguntas oficiales de {activePruebaForRunner.titulo}</p>
+              </div>
+            </div>
+          );
+        }
+
         return (
           <AlumnoEvaluationView
             prueba={activePruebaForRunner}
-            preguntas={getPreguntasForRunner(activePruebaForRunner, bancoPreguntas)}
+            preguntas={activePruebaPreguntas}
             alumno={user}
             onFinish={handleFinishRendicion}
-            onCancel={() => setActivePruebaForRunner(null)}
+            onCancel={() => {
+              setActivePruebaForRunner(null);
+              setActivePruebaPreguntas(null);
+            }}
           />
         );
       }
@@ -516,7 +581,11 @@ function MainAppContent({
           if (match.length > 0) return match;
         }
         if (user.email === 'florenciaangelicaleonpizarro@gmail.com') {
-          const matchFlorencia = activas.filter(p => p.id === 'eval-simce-mat-2m-e3' || p.codigoPublico === 'SIMCE-2M-MAT-E3');
+          // Florencia León Pizarro: Asignada a PAES Oficial Competencia Matemática 1 (M1)
+          const matchFlorencia = activas.filter(p => 
+            p.id === 'eval-paes-mat1-2023-f113' || 
+            p.codigoPublico?.toUpperCase() === 'EVAL-001'
+          );
           if (matchFlorencia.length > 0) return matchFlorencia;
         }
         return activas;
@@ -527,14 +596,51 @@ function MainAppContent({
           alumno={user}
           pruebasDisponibles={pruebasParaAlumno}
           historialRendiciones={rendiciones.filter(r => r.alumnoId === user.id)}
-          onStartEvaluation={(prueba) => setActivePruebaForRunner(prueba)}
+          onStartEvaluation={handleStartEvaluation}
         />
       );
     }
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex`}>
+    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col`}>
+      {/* Banner de aviso si un docente/admin tiene abierto un enlace con código de alumno */}
+      {typeof window !== 'undefined' && sessionStorage.getItem('pending_eval_code') && user.rol !== 'alumno' && (
+        <div className="bg-amber-950/90 border-b border-amber-500/40 px-4 py-2 text-xs text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-lg z-50">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>
+              Enlace de evaluación para alumnos detectado (Código: <strong>{sessionStorage.getItem('pending_eval_code')}</strong>).
+              Tienes sesión abierta como <strong>{user.nombre} {user.apellido}</strong> ({user.rol}).
+            </span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => {
+                const pending = sessionStorage.getItem('pending_eval_code')?.toLowerCase();
+                const found = pruebas.find(p => p.codigoPublico?.toLowerCase() === pending || p.id.toLowerCase() === pending);
+                if (found) {
+                  handleStartEvaluation(found);
+                }
+              }}
+              className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg text-xs transition-colors"
+            >
+              Previsualizar como Alumno
+            </button>
+            <button
+              onClick={async () => {
+                await logout();
+                setShowLanding(false);
+                setAuthView('login');
+              }}
+              className="px-2.5 py-1 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-lg text-xs transition-colors"
+            >
+              Cerrar Sesión para Alumno
+            </button>
+          </div>
+        </div>
+      )}
+      <div className="flex-1 flex">
       {/* Sidebar Navigation — oculto para rol alumno */}
       {user.rol !== 'alumno' && (<Sidebar
         activePage={activePage}
@@ -636,6 +742,7 @@ function MainAppContent({
         bancoPreguntas={user?.rol === 'profesor' && user?.asignaturaId ? bancoPreguntas.filter(p => p.asignaturaId === user.asignaturaId) : bancoPreguntas}
         onCreatePrueba={handleCreatePrueba}
       />
+      </div>
     </div>
   );
 }

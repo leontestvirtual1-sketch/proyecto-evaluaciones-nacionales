@@ -8,6 +8,8 @@ interface LoginPageProps {
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
   const { login } = useAuth();
+  const pendingEvalCode = typeof window !== "undefined" ? sessionStorage.getItem("pending_eval_code") : null;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
@@ -60,6 +62,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister }) => {
 
         {/* Card */}
         <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-8 shadow-2xl space-y-6">
+          {pendingEvalCode && (
+            <div className="p-3.5 bg-indigo-950/70 border border-indigo-500/40 rounded-xl space-y-1">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-300">
+                <span>🎯</span>
+                <span>Evaluación Asignada</span>
+                <span className="ml-auto font-mono bg-indigo-900/80 px-2 py-0.5 rounded text-[11px] text-indigo-200 border border-indigo-700/50">
+                  {pendingEvalCode}
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300 leading-tight">
+                Ingresa con tu correo y contraseña para acceder directamente a tu evaluación.
+              </p>
+            </div>
+          )}
           <div>
             <h2 className="text-xl font-bold text-white">Iniciar Sesión</h2>
             <p className="text-xs text-slate-400 mt-0.5">Ingresa con tu cuenta institucional</p>
