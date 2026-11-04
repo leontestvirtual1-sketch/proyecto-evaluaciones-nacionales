@@ -247,7 +247,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const body = req.body || {};
 
       // Acciones que requieren admin autenticado
-      const ADMIN_ACTIONS = ['admin-create', 'approve-id', 'suspend', 'update-status', 'toggle-colegio', 'send-email', 'send-welcome-email', 'set-password'];
+      const ADMIN_ACTIONS = [
+        'admin-create',
+        'approve-id',
+        'suspend',
+        'update-status',
+        'toggle-colegio',
+        'send-email',
+        'send-welcome-email',
+        'set-password',
+        'delete-user',
+        'batch-create-alumnos'
+      ];
       if (ADMIN_ACTIONS.includes(action as string)) {
         const authCheck = await requireAdmin(req);
         if (!authCheck.ok) {
@@ -255,7 +266,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
       }
 
-      // ── ACCIÓN: CREACIÓN DIRECTA POR ADMINISTRADOR (DOCENTE ACTIVO INMEDIATO) ──
+      // ── ACCIÓN: CREACIÓN DIRECTA POR ADMINISTRADOR (DOCENTE / ALUMNO ACTIVO INMEDIATO) ──
       if (action === 'admin-create') {
         const authCheck = await requireAdmin(req);
         if (!authCheck.ok) {
@@ -263,6 +274,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         const {
+          id: providedId,
           rut,
           nombre,
           apellidoPaterno,
@@ -278,7 +290,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           dependencia,
           asignaturaId,
           asignaturaNombre,
-          cargo
+          cargo,
+          cursoId
         } = body;
 
         // F-02: Blindaje multi-tenant estricto para administradores institucionales
@@ -296,9 +309,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         // F-02: Forzar RBD institucional estricto para administradores de tenant
         const cleanRbd = (!authCheck.esSuperAdmin && authCheck.rbd) ? authCheck.rbd : (rbd || '').trim();
-        const cleanEmail = (email || '').toLowerCase().trim();
+        const cleanRut = (rut || '').trim();
+        const cleanEmail = (email || (cleanRut ? `${cleanRut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl` : '')).toLowerCase().trim();
         if (!cleanEmail) {
-          return res.status(400).json({ error: 'El correo electrónico es obligatorio.' });
+          return res.status(400).json({ error: 'El correo electrónico o RUT es obligatorio.' });
         }
 
         const fullApellido = `${apellidoPaterno || ''} ${apellidoMaterno || ''}`.trim() || apellido || '';
@@ -306,22 +320,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         // 1. Crear o sincronizar en Supabase Auth
         let authUserId = '';
-        const { data: existingProfile } = await sbAdmin
-          .from('perfiles')
-          .select('id')
-          .eq('email', cleanEmail)
-          .maybeSingle();
+        let existingProfile = null;
+
+        if (providedId && /^[0-9a-f-]{36}$/i.test(providedId)) {
+          const { data } = await sbAdmin.from('perfiles').select('id, rbd').eq('id', providedId).maybeSingle();
+          existingProfile = data;
+        }
+        if (!existingProfile && cleanEmail) {
+          const { data } = await sbAdmin.from('perfiles').select('id, rbd').eq('email', cleanEmail).maybeSingle();
+          existingProfile = data;
+        }
+        if (!existingProfile && cleanRut) {
+          const { data } = await sbAdmin.from('perfiles').select('id, rbd').eq('rut', cleanRut).maybeSingle();
+          existingProfile = data;
+        }
 
         if (existingProfile?.id) {
           // Verificar pertenencia al mismo tenant si el admin no es Super Admin
-          const { data: targetProfileData } = await sbAdmin
-            .from('perfiles')
-            .select('rbd')
-            .eq('id', existingProfile.id)
-            .maybeSingle();
-
           if (!authCheck.esSuperAdmin) {
-            if (targetProfileData?.rbd !== authCheck.rbd) {
+            if (existingProfile.rbd !== authCheck.rbd) {
               return res.status(403).json({ error: 'Acceso denegado: no puedes modificar usuarios pertenecientes a otro establecimiento.' });
             }
             if (rol === 'admin') {
@@ -331,19 +348,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
           authUserId = existingProfile.id;
           if (userPass) {
-            await sbAdmin.auth.admin.updateUserById(authUserId, {
-              password: userPass,
-              user_metadata: {
-              nombre,
-              apellido: fullApellido,
-              apellidoPaterno,
-              apellidoMaterno,
-              rut,
-              rol: rol || 'profesor',
-              establecimiento,
-              rbd: cleanRbd || null
+            try {
+              await sbAdmin.auth.admin.updateUserById(authUserId, {
+                password: userPass,
+                user_metadata: {
+                  nombre,
+                  apellido: fullApellido,
+                  apellidoPaterno,
+                  apellidoMaterno,
+                  rut: cleanRut,
+                  rol: rol || 'profesor',
+                  establecimiento,
+                  rbd: cleanRbd || null
+                }
+              });
+            } catch (authUpErr) {
+              console.warn('Aviso actualizando auth user:', authUpErr);
             }
-            });
           }
         } else {
           const { data: newAuthUser, error: authCreateErr } = await sbAdmin.auth.admin.createUser({
@@ -355,18 +376,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               apellido: fullApellido,
               apellidoPaterno,
               apellidoMaterno,
-              rut,
+              rut: cleanRut,
               rol: rol || 'profesor',
               establecimiento,
-              rbd
+              rbd: cleanRbd || null
             }
           });
 
           if (authCreateErr || !newAuthUser?.user) {
-            console.error('Error creating auth user in Supabase Auth:', authCreateErr);
-            return res.status(400).json({ error: authCreateErr?.message || 'Error al registrar credenciales en Supabase' });
+            const errMsg = authCreateErr?.message?.toLowerCase() || '';
+            if (errMsg.includes('already') || errMsg.includes('registered') || errMsg.includes('exists')) {
+              const { data: listData } = await sbAdmin.auth.admin.listUsers();
+              const existingUser = listData?.users?.find(u => u.email?.toLowerCase() === cleanEmail);
+              if (existingUser) {
+                authUserId = existingUser.id;
+              } else {
+                return res.status(400).json({ error: authCreateErr?.message || 'Error al registrar credenciales en Supabase' });
+              }
+            } else {
+              console.error('Error creating auth user in Supabase Auth:', authCreateErr);
+              return res.status(400).json({ error: authCreateErr?.message || 'Error al registrar credenciales en Supabase' });
+            }
+          } else {
+            authUserId = newAuthUser.user.id;
           }
-          authUserId = newAuthUser.user.id;
         }
 
         // 2. Si viene RBD y nombre de establecimiento, asegurar que exista en la tabla establecimientos con comuna y dependencia
@@ -399,12 +432,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         let defaultCargo = 'Docente';
         if (isDirector) defaultCargo = 'Director General';
         else if (isUtp) defaultCargo = asignaturaNombre ? `Jefe de UTP ${asignaturaNombre}` : 'Jefe de UTP';
+        else if (dbRol === 'alumno') defaultCargo = 'Estudiante';
         else if (asignaturaNombre) defaultCargo = `Docente de ${asignaturaNombre}`;
 
         // 3. Insertar o actualizar perfil activo en tabla public.perfiles
         const profilePayload: any = {
           id: authUserId,
-          rut: rut ? rut.trim() : '',
+          rut: cleanRut,
           nombre: (nombre || '').trim(),
           apellido: fullApellido,
           email: cleanEmail,
@@ -433,11 +467,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(500).json({ error: 'Error al registrar perfil: ' + upsertErr.message });
         }
 
+        // Matricular si viene cursoId
+        if (cursoId) {
+          const { error: matErr } = await sbAdmin.from('matriculas').upsert({
+            alumno_id: authUserId,
+            curso_id: cursoId
+          }, { onConflict: 'alumno_id,curso_id' });
+          if (matErr) {
+            console.warn('Advertencia al matricular alumno:', matErr);
+          }
+        }
+
+        const rolLabel = dbRol === 'alumno' ? 'Alumno' : dbRol === 'profesor' ? 'Docente' : 'Usuario';
         return res.status(200).json({
           success: true,
           user: profilePayload,
           temporaryPassword: userPass,
-          message: `Docente ${nombre} ${fullApellido} creado y activado exitosamente en Supabase.`
+          message: `${rolLabel} ${nombre} ${fullApellido} registrado y activado exitosamente en Supabase.`
         });
       }
 
@@ -907,6 +953,166 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         return res.status(200).json({ success: true });
+      }
+
+      // ── ACCIÓN: ELIMINAR USUARIO POR ADMINISTRADOR ──
+      if (action === 'delete-user') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) {
+          return res.status(403).json({ error: authCheck.error });
+        }
+
+        const { id } = body;
+        if (!id) return res.status(400).json({ error: 'ID de usuario requerido.' });
+
+        if (!authCheck.esSuperAdmin) {
+          const { data: targetProfile } = await sbAdmin
+            .from('perfiles')
+            .select('rbd')
+            .eq('id', id)
+            .maybeSingle();
+          if (targetProfile && targetProfile.rbd !== authCheck.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: no puedes eliminar usuarios de otro establecimiento.' });
+          }
+        }
+
+        // 1. Eliminar matrículas asociadas
+        await sbAdmin.from('matriculas').delete().eq('alumno_id', id);
+
+        // 2. Eliminar perfil
+        const { error: delPerErr } = await sbAdmin.from('perfiles').delete().eq('id', id);
+        if (delPerErr) {
+          console.error('Error eliminando perfil:', delPerErr);
+          return res.status(500).json({ error: `Error al eliminar perfil: ${delPerErr.message}` });
+        }
+
+        // 3. Eliminar usuario de Supabase Auth
+        try {
+          await sbAdmin.auth.admin.deleteUser(id);
+        } catch (authDelErr) {
+          console.warn('Aviso eliminando auth user:', authDelErr);
+        }
+
+        return res.status(200).json({ success: true, message: 'Usuario eliminado exitosamente.' });
+      }
+
+      // ── ACCIÓN: IMPORTACIÓN MASIVA DE ALUMNOS (CSV) ──
+      if (action === 'batch-create-alumnos') {
+        const authCheck = await requireAdmin(req);
+        if (!authCheck.ok) {
+          return res.status(403).json({ error: authCheck.error });
+        }
+
+        const { alumnos } = body;
+        if (!Array.isArray(alumnos) || alumnos.length === 0) {
+          return res.status(400).json({ error: 'Lista de alumnos requerida.' });
+        }
+
+        let guardados = 0;
+        let fallidos = 0;
+        const errores: string[] = [];
+
+        // Obtener lista existente de auth users para reuso rápido
+        const { data: listData } = await sbAdmin.auth.admin.listUsers();
+        const existingAuthUsers = listData?.users || [];
+
+        for (const a of alumnos) {
+          try {
+            const cleanRut = (a.rut || '').trim();
+            const cleanEmail = (a.email || (cleanRut ? `${cleanRut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl` : '')).toLowerCase().trim();
+            if (!cleanEmail) {
+              fallidos++;
+              errores.push(`${cleanRut || a.nombre || 'Alumno'}: email o RUT requerido`);
+              continue;
+            }
+
+            const cleanRbd = (!authCheck.esSuperAdmin && authCheck.rbd) ? authCheck.rbd : (a.rbd || '').trim();
+            if (!cleanRbd) {
+              fallidos++;
+              errores.push(`${cleanRut || cleanEmail}: RBD institucional obligatorio`);
+              continue;
+            }
+
+            const cleanEstab = (a.establecimiento || '').trim() || 'Establecimiento Educacional';
+            const userPass = a.tempPassword || 'AlumnoSaber2026!';
+            const fullApellido = `${a.apellidoPaterno || ''} ${a.apellidoMaterno || ''}`.trim() || a.apellido || '';
+
+            // Buscar si ya existe
+            let authUserId = '';
+            const { data: existP } = await sbAdmin
+              .from('perfiles')
+              .select('id')
+              .eq('email', cleanEmail)
+              .maybeSingle();
+
+            if (existP?.id) {
+              authUserId = existP.id;
+            } else {
+              const foundAuth = existingAuthUsers.find(u => u.email?.toLowerCase() === cleanEmail);
+              if (foundAuth) {
+                authUserId = foundAuth.id;
+              } else {
+                const { data: newAuth, error: authErr } = await sbAdmin.auth.admin.createUser({
+                  email: cleanEmail,
+                  password: userPass,
+                  email_confirm: true,
+                  user_metadata: {
+                    nombre: a.nombre,
+                    apellido: fullApellido,
+                    rut: cleanRut,
+                    rol: 'alumno',
+                    establecimiento: cleanEstab,
+                    rbd: cleanRbd
+                  }
+                });
+                if (authErr || !newAuth?.user) {
+                  throw new Error(authErr?.message || 'Error al crear usuario en Auth');
+                }
+                authUserId = newAuth.user.id;
+              }
+            }
+
+            // Upsert perfil
+            const { error: pErr } = await sbAdmin.from('perfiles').upsert({
+              id: authUserId,
+              rut: cleanRut,
+              nombre: (a.nombre || '').trim(),
+              apellido: fullApellido,
+              email: cleanEmail,
+              rol: 'alumno',
+              establecimiento: cleanEstab,
+              rbd: cleanRbd,
+              estado: 'activo',
+              activo: true,
+              plan: 'trial',
+              dias_restantes_trial: 30,
+              fecha_registro: new Date().toISOString()
+            }, { onConflict: 'id' });
+
+            if (pErr) throw pErr;
+
+            // Matricular si viene cursoId
+            if (a.cursoId) {
+              await sbAdmin.from('matriculas').upsert({
+                alumno_id: authUserId,
+                curso_id: a.cursoId
+              }, { onConflict: 'alumno_id,curso_id' });
+            }
+
+            guardados++;
+          } catch (err: any) {
+            fallidos++;
+            errores.push(`${a.rut || a.email || a.nombre}: ${err?.message || 'Error desconocido'}`);
+          }
+        }
+
+        return res.status(200).json({
+          success: true,
+          total: alumnos.length,
+          guardados,
+          fallidos,
+          errores
+        });
       }
 
       // ── ACCIÓN: SET-PASSWORD — solo admins autenticados (S-03: eliminado el reset público) ──

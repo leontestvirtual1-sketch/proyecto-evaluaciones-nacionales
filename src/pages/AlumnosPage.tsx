@@ -467,8 +467,6 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
   const handleSaveAlumno = async (a: AlumnoConCurso) => {
     if (!isSandboxMode && currentUser) {
       try {
-        const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
-        
         // Resolver RBD de forma jerárquica obligatoria
         const cursoAsignado = cursosFromHook.find(c => c.id === a.cursoId);
         let rbdFinal = a.rbd || cursoAsignado?.rbd || currentUser.rbd;
@@ -482,36 +480,32 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
           }
         }
 
-        const perfilRow = {
-          id: alumnoId,
-          rut: a.rut,
-          nombre: a.nombre,
-          apellido: a.apellido,
-          email: a.email || `${a.rut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl`,
-          rol: 'alumno',
-          establecimiento: estabFinal,
-          rbd: rbdFinal,
-          estado: 'activo',
-          plan: 'trial'
-        };
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token || '';
 
-        const { error: pErr } = await supabase.from('perfiles').upsert(perfilRow, { onConflict: 'id' });
-        if (pErr) {
-          console.error('Error guardando perfil de alumno:', pErr);
-          setStatusMessage({ type: 'error', text: `Error al guardar alumno: ${pErr.message}` });
-          return; // No cerrar modal para no perder datos ingresados
-        }
+        const resp = await fetch('/api/users?action=admin-create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({
+            id: a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : undefined,
+            rut: a.rut,
+            nombre: a.nombre,
+            apellido: a.apellido,
+            email: a.email || `${a.rut.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}@alumno.cl`,
+            rol: 'alumno',
+            establecimiento: estabFinal,
+            rbd: rbdFinal,
+            cursoId: a.cursoId,
+            tempPassword: 'AlumnoSaber2026!'
+          })
+        });
 
-        if (a.cursoId) {
-          const { error: mErr } = await supabase.from('matriculas').upsert({
-            alumno_id: alumnoId,
-            curso_id: a.cursoId
-          }, { onConflict: 'alumno_id,curso_id' });
-          if (mErr) {
-            console.warn('Error guardando matrícula:', mErr);
-            setStatusMessage({ type: 'error', text: `Alumno guardado pero falló asignación de curso: ${mErr.message}` });
-            return;
-          }
+        const data = await resp.json();
+        if (!resp.ok || data.error) {
+          throw new Error(data.error || 'Error al guardar alumno');
         }
 
         setStatusMessage({ type: 'success', text: `Alumno ${a.nombre} ${a.apellido} guardado con éxito.` });
@@ -519,7 +513,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
         setEditingAlumno(null);
       } catch (err: any) {
         console.error('Error guardando alumno en Supabase:', err);
-        setStatusMessage({ type: 'error', text: `Error inesperado: ${err?.message || 'Fallo de conexión'}` });
+        setStatusMessage({ type: 'error', text: `Error al guardar alumno: ${err?.message || 'Fallo de conexión'}` });
       }
     } else {
       setAlumnos(prev => {
@@ -534,15 +528,10 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
   const handleImportCSV = async (nuevos: AlumnoConCurso[]) => {
     if (!isSandboxMode && currentUser) {
       try {
-        let guardados = 0;
-        let fallidos = 0;
-        let matriculasFallidas = 0;
-        const errores: string[] = [];
-        const erroresMatricula: string[] = [];
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token || '';
 
-        for (const a of nuevos) {
-          const alumnoId = a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : crypto.randomUUID();
-          
+        const payloadAlumnos = nuevos.map(a => {
           const cursoAsignado = cursosFromHook.find(c => c.id === a.cursoId);
           let rbdFinal = a.rbd || cursoAsignado?.rbd || currentUser.rbd;
           let estabFinal = a.establecimiento || cursoAsignado?.establecimiento || colegioNombre;
@@ -555,8 +544,8 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
             }
           }
 
-          const { error: pErr } = await supabase.from('perfiles').upsert({
-            id: alumnoId,
+          return {
+            id: a.id && /^[0-9a-f-]{36}$/i.test(a.id) ? a.id : undefined,
             rut: a.rut,
             nombre: a.nombre,
             apellido: a.apellido,
@@ -564,38 +553,32 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
             rol: 'alumno',
             establecimiento: estabFinal,
             rbd: rbdFinal,
-            estado: 'activo',
-            plan: 'trial'
-          }, { onConflict: 'id' });
+            cursoId: a.cursoId
+          };
+        });
 
-          if (pErr) {
-            fallidos++;
-            errores.push(`${a.rut}: ${pErr.message}`);
-            continue;
-          }
+        const resp = await fetch('/api/users?action=batch-create-alumnos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({ alumnos: payloadAlumnos })
+        });
 
-          if (a.cursoId) {
-            const { error: mErr } = await supabase.from('matriculas').upsert({
-              alumno_id: alumnoId,
-              curso_id: a.cursoId
-            }, { onConflict: 'alumno_id,curso_id' });
-            if (mErr) {
-              console.warn('Aviso matrícula:', mErr.message);
-              matriculasFallidas++;
-              erroresMatricula.push(`${a.rut}: fallo asignación curso (${mErr.message})`);
-            }
-          }
-          guardados++;
+        const data = await resp.json();
+        if (!resp.ok || data.error) {
+          throw new Error(data.error || 'Error al importar alumnos');
         }
+
         await loadAlumnosFromSupabase();
-        if (fallidos > 0 || matriculasFallidas > 0) {
-          const totalErrores = [...errores, ...erroresMatricula];
+        if (data.fallidos > 0) {
           setStatusMessage({
             type: 'error',
-            text: `Importación parcial: ${guardados} perfiles creados, ${fallidos} perfiles fallaron, ${matriculasFallidas} asignaciones de curso fallaron. Detalle: ${totalErrores.slice(0, 2).join(' | ')}`
+            text: `Importación parcial: ${data.guardados} guardados, ${data.fallidos} fallidos. Detalle: ${(data.errores || []).slice(0, 2).join(' | ')}`
           });
         } else {
-          setStatusMessage({ type: 'success', text: `Se importaron ${guardados} alumnos exitosamente.` });
+          setStatusMessage({ type: 'success', text: `Se importaron ${data.guardados} alumnos exitosamente.` });
         }
       } catch (err: any) {
         console.error('Error importando CSV a Supabase:', err);
@@ -616,18 +599,23 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
   const handleDelete = async (id: string) => {
     if (!isSandboxMode) {
       try {
-        const { error: mErr } = await supabase.from('matriculas').delete().eq('alumno_id', id);
-        if (mErr) {
-          console.error('Error al desmatricular:', mErr);
-          setStatusMessage({ type: 'error', text: `No se pudo desmatricular al alumno antes de su eliminación: ${mErr.message}` });
-          return;
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token || '';
+
+        const resp = await fetch('/api/users?action=delete-user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({ id })
+        });
+
+        const data = await resp.json();
+        if (!resp.ok || data.error) {
+          throw new Error(data.error || 'No se pudo eliminar el alumno');
         }
 
-        const { error: pErr } = await supabase.from('perfiles').delete().eq('id', id);
-        if (pErr) {
-          setStatusMessage({ type: 'error', text: `No se pudo eliminar el alumno: ${pErr.message}` });
-          return;
-        }
         setStatusMessage({ type: 'success', text: 'Alumno eliminado correctamente.' });
         await loadAlumnosFromSupabase();
       } catch (err: any) {
