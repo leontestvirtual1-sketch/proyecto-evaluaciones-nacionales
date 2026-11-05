@@ -109,6 +109,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   const [habilidadFilter, setHabilidadFilter] = useState('');
   const [dificultadFilter, setDificultadFilter] = useState('');
   const [tipoFilter, setTipoFilter] = useState('');
+  const [fuenteFilter, setFuenteFilter] = useState('');
   // Nivel inicial: vacío (Todos) para admin; para docente se auto-seleccionará
   // el primer nivel disponible mediante el efecto de sincronización existente
   const [nivelFilter, setNivelFilter] = useState<string>('');
@@ -337,22 +338,51 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     }).length;
   }, [preguntas, isDocente, docenteAsigId, asignaturaFilter, establecimientoFilter, docenteFilter, docentesDisponibles]);
 
-  // Preguntas filtradas por los criterios secundarios (búsqueda, eje, habilidad, dificultad, tipo)
+  // Catálogo dinámico de fuentes e instrumentos presentes en basePreguntas
+  const fuentesDisponibles = useMemo(() => {
+    const map = new Map<string, number>();
+    basePreguntas.forEach(p => {
+      const f = (p.fuente || '').trim();
+      if (f) {
+        map.set(f, (map.get(f) || 0) + 1);
+      }
+    });
+    return Array.from(map.entries())
+      .map(([fuente, count]) => ({ fuente, count }))
+      .sort((a, b) => {
+        const aIsPaes = a.fuente.toLowerCase().includes('paes');
+        const bIsPaes = b.fuente.toLowerCase().includes('paes');
+        if (aIsPaes && !bIsPaes) return -1;
+        if (!aIsPaes && bIsPaes) return 1;
+        return a.fuente.localeCompare(b.fuente);
+      });
+  }, [basePreguntas]);
+
+  // Preguntas filtradas por los criterios secundarios (búsqueda, fuente, eje, habilidad, dificultad, tipo)
   const filtered = useMemo(() => {
-    return basePreguntas.filter(p => {
+    const list = basePreguntas.filter(p => {
+      const qNumMatch = p.id.match(/\d+$/);
+      const qNumStr = qNumMatch ? parseInt(qNumMatch[0], 10).toString() : '';
+
       const matchSearch =
         !search.trim() ||
         p.enunciado.toLowerCase().includes(search.toLowerCase()) ||
-        p.fuente.toLowerCase().includes(search.toLowerCase());
+        p.fuente.toLowerCase().includes(search.toLowerCase()) ||
+        p.id.toLowerCase().includes(search.toLowerCase()) ||
+        (search.trim().length <= 2 && qNumStr === search.trim());
 
+      const matchFuente = !fuenteFilter || p.fuente === fuenteFilter;
       const matchEje = !ejeFilter || p.ejeTematicoId === ejeFilter;
       const matchHab = !habilidadFilter || p.habilidadId === habilidadFilter;
       const matchDif = !dificultadFilter || p.dificultad === dificultadFilter;
       const matchTipo = !tipoFilter || p.tipo === tipoFilter;
 
-      return matchSearch && matchEje && matchHab && matchDif && matchTipo;
+      return matchSearch && matchFuente && matchEje && matchHab && matchDif && matchTipo;
     });
-  }, [basePreguntas, search, ejeFilter, habilidadFilter, dificultadFilter, tipoFilter]);
+
+    // Ordenar naturalmente por ID para que las preguntas queden en su orden estricto (1 a 65)
+    return list.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+  }, [basePreguntas, search, fuenteFilter, ejeFilter, habilidadFilter, dificultadFilter, tipoFilter]);
 
   const handleDuplicate = async (p: Pregunta) => {
     const duplicada: Pregunta = {
@@ -374,7 +404,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
   // Detección de filtros secundarios activos (búsqueda o filtros taxonómicos/pedagógicos)
   const hasSecondaryFilters = Boolean(
-    search.trim() || ejeFilter || habilidadFilter || dificultadFilter || tipoFilter
+    search.trim() || fuenteFilter || ejeFilter || habilidadFilter || dificultadFilter || tipoFilter
   );
 
   // KPIs dinámicos: si hay filtros secundarios activos, reflejan fielmente las preguntas filtradas que se muestran
@@ -670,6 +700,81 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <option value="desarrollo">Desarrollo</option>
           </select>
         </div>
+
+        {/* Fila de Filtro Rápido por Instrumento / Prueba Oficial y Año */}
+        {fuentesDisponibles.length > 0 && (
+          <div className="pt-2.5 border-t border-slate-200 dark:border-slate-800/80 space-y-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+              <span className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                <span>📑</span>
+                <span>Filtrar por Instrumento Oficial / Año (para comparar con Facsímil PDF):</span>
+              </span>
+              {fuenteFilter && (
+                <button
+                  onClick={() => setFuenteFilter('')}
+                  className="text-xs text-indigo-500 hover:text-indigo-400 underline font-semibold self-start sm:self-auto"
+                >
+                  ✕ Quitar filtro de prueba (ver todas)
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <button
+                onClick={() => setFuenteFilter('')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                  !fuenteFilter
+                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-800 shadow-sm'
+                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-400'
+                }`}
+              >
+                Todas las Fuentes ({basePreguntas.length})
+              </button>
+
+              {fuentesDisponibles.map(({ fuente, count }) => {
+                const isSelected = fuenteFilter === fuente;
+                const isPaes = fuente.toLowerCase().includes('paes');
+                const is2023 = fuente.includes('2023');
+
+                return (
+                  <button
+                    key={fuente}
+                    onClick={() => {
+                      if (isSelected) {
+                        setFuenteFilter('');
+                      } else {
+                        setFuenteFilter(fuente);
+                        // Auto-seleccionar 4° Medio si es prueba PAES y estamos en otro nivel
+                        if (isPaes && nivelFilter !== '4° medio' && nivelFilter !== '') {
+                          setNivelFilter('4° medio');
+                        }
+                      }
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
+                      isSelected
+                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20 scale-[1.02]'
+                        : is2023
+                        ? 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/20'
+                        : isPaes
+                        ? 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30 hover:bg-purple-500/20'
+                        : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                    }`}
+                  >
+                    <span>{isPaes ? '🎓' : '📄'}</span>
+                    <span>{fuente}</span>
+                    <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-black ${
+                      isSelected
+                        ? 'bg-white/20 text-white'
+                        : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                    }`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Questions List Header */}
@@ -714,6 +819,10 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                 ? 'bg-amber-500/10 text-amber-600 border-amber-500/20'
                 : 'bg-rose-500/10 text-rose-600 border-rose-500/20';
 
+            // Extraer número de pregunta oficial si el ID contiene terminación numérica (ej: preg-paes-lec-23-01 -> 1)
+            const numMatch = pregunta.id.match(/-(\d{1,3})$/);
+            const numeroOficial = numMatch ? parseInt(numMatch[1], 10) : index + 1;
+
             return (
               <div
                 key={pregunta.id}
@@ -724,8 +833,16 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                   <div className="flex flex-wrap items-center gap-2">
                     {/* Número secuencial claro y visible */}
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-black bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm">
-                      N° {index + 1}
+                      N° {numeroOficial}
                     </span>
+
+                    {/* Badge de Clave Oficial visible para cotejo contra clavijero/facsímil */}
+                    {pregunta.respuestaCorrecta && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shadow-sm">
+                        <span>✓ Clave Oficial:</span>
+                        <strong className="font-mono text-sm">{pregunta.respuestaCorrecta}</strong>
+                      </span>
+                    )}
 
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                       {asig?.nombre || 'General'}
