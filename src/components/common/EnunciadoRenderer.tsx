@@ -176,7 +176,7 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
           <img
             src={resolvedSrc}
             alt={alt || 'Figura'}
-            className="max-h-48 max-w-full rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900 object-contain inline-block p-1"
+            className="max-h-80 max-w-full rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900 object-contain inline-block p-1.5"
             loading="lazy"
           />
         </span>

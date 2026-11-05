@@ -929,11 +929,11 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
 
                 {/* Optional Image (solo si no está insertada inline con [IMAGEN] o Markdown) */}
                 {pregunta.imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(pregunta.enunciado || '') || pregunta.enunciado?.includes('![')) && (
-                  <div className="p-3 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm max-w-md my-2">
+                  <div className="p-3 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center overflow-hidden shadow-sm max-w-2xl my-3">
                     <img
                       src={resolveImageUrl(pregunta.imagenUrl)}
                       alt="Figura / Gráfico"
-                      className="max-h-60 w-auto object-contain rounded-lg"
+                      className="max-h-[500px] w-auto object-contain rounded-lg"
                     />
                   </div>
                 )}
