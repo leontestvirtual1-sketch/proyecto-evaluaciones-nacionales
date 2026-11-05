@@ -28,3 +28,4 @@ export interface ModalVisorDemreData {
   anio: number;
   materia: string;
 }
+

@@ -80,14 +80,16 @@ async function main() {
     let imgUrl = null;
     if (qNum === 1 || qNum === 3) {
       imgUrl = `${STORAGE_BASE}/figura_p04_guias_alimentarias_minsal.png`;
-    } else if (qNum === 8) {
-      imgUrl = `${STORAGE_BASE}/figura_p08_camara_oscura.png`;
+    } else if (qNum >= 8 && qNum <= 11) {
+      imgUrl = `${STORAGE_BASE}/figura_lectura2_timeline_fotografia.png`;
     } else if (qNum === 12) {
       imgUrl = `${STORAGE_BASE}/figura_p13_q12_cinematografia_movimiento.png`;
     } else if (qNum === 24) {
       imgUrl = `${STORAGE_BASE}/figura_p22_ilustracion_lectura4.png`;
     } else if (qNum === 33) {
       imgUrl = `${STORAGE_BASE}/figura_p26_almacigos_lectura5.png`;
+    } else if (qNum === 34) {
+      imgUrl = `${STORAGE_BASE}/figura_p27_trasplante_lectura5.png`;
     } else if (qNum === 59) {
       imgUrl = `${STORAGE_BASE}/figura_p42_ilustracion_lectura8.png`;
     }
