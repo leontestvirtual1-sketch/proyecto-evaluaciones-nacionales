@@ -37,182 +37,94 @@ const clavesDemre = {
 
 const preguntasPiloto = [1, 19, 26, 33, 37];
 
-// Tabla oficial de transformación (P 0..60 a Puntaje PAES 100..1000)
-const tablaTransformacion = {
-  0: 100, 1: 151, 2: 174, 3: 195, 4: 216, 5: 237, 6: 255, 7: 272, 8: 287, 9: 301,
-  10: 317, 11: 334, 12: 350, 13: 364, 14: 376, 15: 386, 16: 396, 17: 407, 18: 421, 19: 436,
-  20: 452, 21: 465, 22: 475, 23: 483, 24: 490, 25: 498, 26: 508, 27: 521, 28: 536, 29: 551,
-  30: 564, 31: 574, 32: 582, 33: 589, 34: 596, 35: 606, 36: 619, 37: 633, 38: 649, 39: 663,
-  40: 674, 41: 683, 42: 692, 43: 701, 44: 714, 45: 729, 46: 745, 47: 761, 48: 775, 49: 788,
-  50: 801, 51: 816, 52: 834, 53: 853, 54: 872, 55: 891, 56: 912, 57: 935, 58: 960, 59: 987,
-  60: 1000
+// Storage Base URL
+const STORAGE_BASE = 'https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103';
+
+// Mapeo de inicio de lecturas
+const lecturaInicio = {
+  1: 1,   // Lectura 1: Q1 a Q7
+  2: 8,   // Lectura 2: Q8 a Q16
+  3: 17,  // Lectura 3: Q17 a Q23
+  4: 24,  // Lectura 4: Q24 a Q32
+  5: 33,  // Lectura 5: Q33 a Q40
+  6: 41,  // Lectura 6: Q41 a Q49
+  7: 50,  // Lectura 7: Q50 a Q58
+  8: 59   // Lectura 8: Q59 a Q65
 };
 
-// 3. Subir imágenes a Supabase Storage
-async function uploadAllImages() {
-  console.log('📤 Subiendo figuras de PAES Lectora 2023 a Supabase Storage (bucket evaluaciones-media)...');
-  const imgDir = path.resolve(__dirname, '../public/preguntas/paes_lectora_2023_forma103');
-  const files = fs.readdirSync(imgDir);
-  const uploadedUrls = {};
-
-  for (const f of files) {
-    if (!f.endsWith('.png') && !f.endsWith('.jpg') && !f.endsWith('.jpeg')) continue;
-    const filePath = path.join(imgDir, f);
-    const fileBuffer = fs.readFileSync(filePath);
-    const storagePath = `paes_lectora_2023_forma103/${f}`;
-
-    const { error } = await supabase.storage
-      .from('evaluaciones-media')
-      .upload(storagePath, fileBuffer, {
-        contentType: 'image/png',
-        upsert: true
-      });
-
-    if (error) {
-      console.warn(`  ⚠️ Error al subir ${f}:`, error.message);
-    } else {
-      const { data: pubData } = supabase.storage.from('evaluaciones-media').getPublicUrl(storagePath);
-      uploadedUrls[f] = pubData.publicUrl;
-      console.log(`  ✅ ${f} -> ${pubData.publicUrl}`);
-    }
-  }
-
-  return uploadedUrls;
-}
-
-// 4. Guardar archivos de claves oficiales locales
-function saveClavesOficiales() {
-  const dir = path.resolve(__dirname, 'data/claves_oficiales');
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-
-  const officialData = {
-    evaluacion_id: 'eval-paes-lect-2023-f103',
-    fuente: 'DEMRE — PAES Oficial Competencia Lectora 2023 (Forma 103)',
-    n_preguntas: 65,
-    preguntas_puntuables: 60,
-    preguntas_piloto: preguntasPiloto,
-    puntaje_esperado: 65,
-    claves: clavesDemre
-  };
-
-  fs.writeFileSync(
-    path.join(dir, 'paes_lectora_2023_f103.json'),
-    JSON.stringify(officialData, null, 2),
-    'utf8'
-  );
-
-  fs.writeFileSync(
-    path.join(dir, 'paes_lectora_2023_f103_tabla.json'),
-    JSON.stringify({
-      evaluacion_id: 'eval-paes-lect-2023-f103',
-      tabla_transformacion: tablaTransformacion
-    }, null, 2),
-    'utf8'
-  );
-
-  console.log('📁 Archivos de claves y escala oficial guardados en scripts/data/claves_oficiales/');
-}
-
 async function main() {
-  console.log('🚀 Iniciando pipeline completo de importación PAES Oficial Competencia Lectora 2023 (Forma 103)...');
+  console.log('🚀 Actualizando preguntas de PAES Lectora 2023 con formato limpio (sin repetición innecesaria y con imágenes)...');
 
-  // Guardar pautas y clavijeros
-  saveClavesOficiales();
-
-  // Subir imágenes
-  const urls = await uploadAllImages();
-
-  // Obtener admin id
+  // Obtener admin ID
   const { data: users } = await supabase.auth.admin.listUsers();
   const admin = users?.users?.find(u => u.email === 'leontestvirtual1@gmail.com') || users?.users?.[0];
   const adminId = admin?.id;
-  console.log(`👤 Admin ID: ${adminId}`);
 
-  // Cargar preguntas parseadas
+  // Cargar lecturas y preguntas
   const parsedData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../scratch/paes_lectora_2023_parsed.json'), 'utf8'));
   const lecturasMap = {};
   parsedData.lecturas.forEach(l => {
     lecturasMap[l.numero] = l.texto;
   });
 
-  // Generar IDs de preguntas
-  const preguntaIds = [];
-  for (let i = 1; i <= 65; i++) {
-    preguntaIds.push(`preg-paes-lec-23-${String(i).padStart(2, '0')}`);
-  }
-
-  // 1. Upsert en tabla evaluaciones
-  const evaluacion = {
-    id: 'eval-paes-lect-2023-f103',
-    titulo: 'PAES Oficial Competencia Lectora — Proceso 2023 (Forma 103)',
-    descripcion: 'Evaluación oficial DEMRE de Competencia Lectora aplicada en el Proceso de Admisión 2023 (Forma 103). Incluye 65 preguntas de selección múltiple (60 válidas y 5 piloto de calibración) sobre 8 lecturas literarias y no literarias, evaluando Localizar, Interpretar y Evaluar información.',
-    asignatura_id: 'asig-2',
-    nivel: '4° Medio',
-    tiempo_limite: 150,
-    estado: 'activa',
-    es_catalogo: true,
-    precio_clp: 0,
-    descripcion_catalogo: 'Prueba oficial DEMRE PAES Competencia Lectora 2023 (Forma 103) completa con 65 ítems, escala oficial DEMRE de 100 a 1000 puntos y pauta docente con justificación curricular.',
-    profesor_id: null,
-    total_preguntas: 65,
-    pregunta_ids: preguntaIds,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  };
-
-  const { error: evErr } = await supabase.from('evaluaciones').upsert(evaluacion, { onConflict: 'id' });
-  if (evErr) {
-    console.error('❌ Error guardando evaluación:', evErr.message);
-  } else {
-    console.log(`✅ Evaluación oficial guardada en catálogo: ${evaluacion.titulo}`);
-  }
-
-  // 2. Preparar preguntas para inserción
-  const preguntasToInsert = [];
+  const updates = [];
 
   for (const p of parsedData.preguntas) {
     const qNum = p.numero;
     const numStr = String(qNum).padStart(2, '0');
     const id = `preg-paes-lec-23-${numStr}`;
     const clave = clavesDemre[qNum];
+    const esInicioLectura = (lecturaInicio[p.lectura_num] === qNum);
 
-    // Asignar imagen_url según corresponda
+    // 1. Imagen según pregunta
     let imgUrl = null;
-    if (qNum === 3) {
-      imgUrl = urls['figura_p04_guias_alimentarias_minsal.png'] || null;
+    if (qNum === 1 || qNum === 3) {
+      imgUrl = `${STORAGE_BASE}/figura_p04_guias_alimentarias_minsal.png`;
+    } else if (qNum === 8) {
+      imgUrl = `${STORAGE_BASE}/figura_p08_camara_oscura.png`;
     } else if (qNum === 12) {
-      imgUrl = urls['figura_p13_q12_cinematografia_movimiento.png'] || null;
+      imgUrl = `${STORAGE_BASE}/figura_p13_q12_cinematografia_movimiento.png`;
+    } else if (qNum === 24) {
+      imgUrl = `${STORAGE_BASE}/figura_p22_ilustracion_lectura4.png`;
+    } else if (qNum === 33) {
+      imgUrl = `${STORAGE_BASE}/figura_p26_almacigos_lectura5.png`;
+    } else if (qNum === 59) {
+      imgUrl = `${STORAGE_BASE}/figura_p42_ilustracion_lectura8.png`;
     }
 
-    // Clasificar habilidad según texto de pregunta
-    const enuncLower = p.enunciado.toLowerCase();
-    let habId = 'hab-lec-2'; // Default: Interpretar e Integrar
-    if (enuncLower.includes('se afirma') || enuncLower.includes('de acuerdo con') || enuncLower.includes('según el') || enuncLower.includes('en el texto se') || enuncLower.includes('cuál de los siguientes')) {
-      habId = 'hab-lec-1'; // Localizar
-    } else if (enuncLower.includes('función') || enuncLower.includes('propósito') || enuncLower.includes('tono') || enuncLower.includes('calificar') || enuncLower.includes('credibilidad') || enuncLower.includes('con qué objetivo') || enuncLower.includes('se concluye')) {
-      habId = 'hab-lec-3'; // Reflexionar y Evaluar
+    // 2. Construcción del Enunciado:
+    // - Si es la PRIMERA pregunta de la lectura (Q1, Q8, Q17, Q24, Q33, Q41, Q50, Q59):
+    //   Lleva el encabezado y el texto completo de la lectura, seguido de la pregunta.
+    // - Si es una pregunta subsiguiente (Q2, Q3, etc.):
+    //   Solo lleva el indicador de continuación y la pregunta en negrita para NO repetir el párrafo largo.
+    let enunciado;
+    if (esInicioLectura) {
+      const textoLectura = lecturasMap[p.lectura_num] || '';
+      const rango = parsedData.lecturas.find(l => l.numero === p.lectura_num)?.preguntas_rango || '';
+      enunciado = `### LECTURA ${p.lectura_num} (Preguntas ${rango})\n\n${textoLectura}\n\n---\n\n**${qNum}. ${p.enunciado}**`;
+    } else {
+      enunciado = `Lectura ${p.lectura_num} (Continuación):\n\n**${qNum}. ${p.enunciado}**`;
     }
 
-    // Clasificar eje temático:
-    // Lecturas 3 (cuento) y 7 (crítica/arte) -> Literatura y Contexto (eje-lec-2)
-    // Lecturas 1, 2, 4, 5, 6, 8 (expositivas/informativas) -> Comprensión de Textos (eje-lec-1)
-    const ejeId = (p.lectura_num === 3 || p.lectura_num === 7) ? 'eje-lec-2' : 'eje-lec-1';
-
-    // Construir enunciado enriquecido con el texto de la lectura
-    const textoLectura = lecturasMap[p.lectura_num] || '';
-    
-    // Crear enunciado legible y completo
-    const enunciadoCompleto = `### Lectura ${p.lectura_num} (Preguntas ${parsedData.lecturas.find(l => l.numero === p.lectura_num)?.preguntas_rango || ''})\n\n${textoLectura}\n\n---\n\n**Pregunta ${qNum}.** ${p.enunciado}`;
-
-    // Asegurar alternativas con clave exacta
+    // 3. Alternativas limpias con clave oficial
     const alternativas = p.alternativas.map(alt => ({
       letra: alt.letra,
       texto: alt.texto,
       es_correcta: alt.letra === clave
     }));
 
-    preguntasToInsert.push({
-      id: id,
+    // 4. Eje y Habilidad
+    const ejeId = (p.lectura_num === 3 || p.lectura_num === 7) ? 'eje-lec-2' : 'eje-lec-1';
+    const enuncLower = p.enunciado.toLowerCase();
+    let habId = 'hab-lec-2';
+    if (enuncLower.includes('se afirma') || enuncLower.includes('de acuerdo con') || enuncLower.includes('según el') || enuncLower.includes('en el texto se') || enuncLower.includes('cuál de los siguientes')) {
+      habId = 'hab-lec-1';
+    } else if (enuncLower.includes('función') || enuncLower.includes('propósito') || enuncLower.includes('tono') || enuncLower.includes('calificar') || enuncLower.includes('credibilidad') || enuncLower.includes('con qué objetivo') || enuncLower.includes('se concluye')) {
+      habId = 'hab-lec-3';
+    }
+
+    updates.push({
+      id,
       propietario_id: adminId,
       asignatura_id: 'asig-2',
       eje_tematico_id: ejeId,
@@ -220,37 +132,31 @@ async function main() {
       tipo: 'seleccion_multiple',
       nivel: '4° Medio',
       dificultad: p.es_piloto ? 'alta' : (qNum % 3 === 0 ? 'alta' : qNum % 2 === 0 ? 'media' : 'baja'),
-      enunciado: enunciadoCompleto,
+      enunciado,
       imagen_url: imgUrl,
-      alternativas: alternativas,
+      alternativas,
       respuesta_correcta: clave,
       puntaje: 1,
       fuente: 'PAES Oficial Competencia Lectora 2023 (Forma 103)',
-      created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     });
   }
 
-  // 3. Inserción por lotes en Supabase
-  console.log(`\n📦 Insertando ${preguntasToInsert.length} preguntas en public.preguntas (lotes de 15)...`);
-  let totalExito = 0;
-
-  for (let i = 0; i < preguntasToInsert.length; i += 15) {
-    const batch = preguntasToInsert.slice(i, i + 15);
-    const { error: insErr } = await supabase.from('preguntas').upsert(batch, { onConflict: 'id' });
-
-    if (insErr) {
-      console.error(`  ❌ Error en lote ${i / 15 + 1}:`, insErr.message);
+  console.log(`📦 Actualizando ${updates.length} preguntas en Supabase...`);
+  for (let i = 0; i < updates.length; i += 15) {
+    const batch = updates.slice(i, i + 15);
+    const { error } = await supabase.from('preguntas').upsert(batch, { onConflict: 'id' });
+    if (error) {
+      console.error(`  ❌ Error en lote ${i/15 + 1}:`, error.message);
     } else {
-      totalExito += batch.length;
-      console.log(`  ✅ Lote ${i / 15 + 1} insertado (${totalExito}/${preguntasToInsert.length} preguntas sincronizadas)`);
+      console.log(`  ✅ Lote ${i/15 + 1} actualizado (${Math.min(i + 15, updates.length)}/${updates.length})`);
     }
   }
 
-  console.log('\n🎉 ¡PAES Oficial Competencia Lectora 2023 (Forma 103) sincronizada con éxito en Supabase!');
-  console.log('• Evaluación ID: eval-paes-lect-2023-f103');
-  console.log(`• Total Preguntas: ${totalExito}`);
-  console.log(`• Clavijero: 65 claves oficiales asignadas y 5 preguntas piloto configuradas`);
+  console.log('\n🎉 ¡Preguntas de PAES Lectora 2023 actualizadas con éxito!');
+  console.log('• Pregunta 1 ahora contiene la Lectura 1 completa Y la fotografía oficial de las Guías Alimentarias del MINSAL.');
+  console.log('• Pregunta 3 también contiene la fotografía oficial vinculada para cotejo directo.');
+  console.log('• Preguntas 2 a 7 ya NO repiten el párrafo gigante, mostrando "Lectura 1 (Continuación):" de forma limpia.');
 }
 
 main().catch(console.error);
