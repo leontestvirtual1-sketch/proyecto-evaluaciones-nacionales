@@ -11,6 +11,8 @@ import {
   Save
 } from 'lucide-react';
 import { Prueba, Pregunta, AlumnoBasico, RendicionPrueba, RespuestaAlumno } from '../types';
+import { supabase } from '../lib/supabaseClient';
+import { mapRowToPregunta } from '../hooks/useBancoPreguntas';
 
 interface IngresoRespuestasModalProps {
   isOpen: boolean;
@@ -55,11 +57,55 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
   const [respuestasMarcadas, setRespuestasMarcadas] = useState<Record<string, string>>({});
   const [fotoEvidencia, setFotoEvidencia] = useState<string | null>(null);
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
+  const [loadedPreguntas, setLoadedPreguntas] = useState<Pregunta[]>([]);
+
+  React.useEffect(() => {
+    if (!isOpen || !prueba) {
+      setLoadedPreguntas([]);
+      return;
+    }
+
+    const byId = new Map<string, Pregunta>();
+    (preguntas || []).forEach(p => byId.set(p.id, p));
+    const inMem = (prueba.preguntasIds || [])
+      .map(id => byId.get(id))
+      .filter((p): p is Pregunta => Boolean(p));
+
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0 && inMem.length === prueba.preguntasIds.length) {
+      setLoadedPreguntas(inMem);
+      return;
+    }
+
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+      let active = true;
+      (async () => {
+        try {
+          const { data: dbRows, error } = await supabase
+            .from('preguntas')
+            .select('*')
+            .in('id', prueba.preguntasIds);
+          if (!active) return;
+          if (!error && dbRows && dbRows.length > 0) {
+            const mapped = dbRows.map(mapRowToPregunta);
+            const dbMap = new Map(mapped.map(q => [q.id, q]));
+            const ordered = prueba.preguntasIds
+              .map(id => dbMap.get(id))
+              .filter((q): q is Pregunta => Boolean(q));
+            setLoadedPreguntas(ordered);
+          }
+        } catch (err) {
+          console.error('[IngresoRespuestasModal] Error al cargar preguntas:', err);
+        }
+      })();
+      return () => { active = false; };
+    }
+  }, [isOpen, prueba, preguntas]);
 
   // Determina las preguntas de la prueba usando preguntasIds como fuente primaria;
   // si no existen, filtra por asignatura. Un solo nivel de lógica sin cascadas.
   const itemsToEvaluate = React.useMemo(() => {
     if (!prueba) return [];
+    if (loadedPreguntas.length > 0) return loadedPreguntas;
     if (prueba.preguntasIds?.length) {
       const byId = new Map(preguntas.map(p => [p.id, p]));
       return prueba.preguntasIds.flatMap(id => {

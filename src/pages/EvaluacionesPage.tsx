@@ -30,6 +30,8 @@ import { useAcademicData } from '../context/AcademicDataContext';
 import { CatalogoEvaluacionesModal } from '../components/CatalogoEvaluacionesModal';
 import { EnunciadoRenderer } from '../components/common/EnunciadoRenderer';
 import { resolveImageUrl } from '../lib/storage';
+import { supabase } from '../lib/supabaseClient';
+import { mapRowToPregunta } from '../hooks/useBancoPreguntas';
 import { preguntasLenguaje2MMock } from '../data/len2mQuestionsMock';
 import { preguntasLenguaje2MJunioMock } from '../data/len2mJunioQuestionsMock';
 import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
@@ -129,11 +131,65 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
   isProduction = false,
   onClose
 }) => {
+  const [loadedPreguntas, setLoadedPreguntas] = useState<Pregunta[]>([]);
+  const [isLoadingPreguntas, setIsLoadingPreguntas] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!isOpen || !prueba) {
+      setLoadedPreguntas([]);
+      setIsLoadingPreguntas(false);
+      return;
+    }
+
+    const byId = new Map<string, Pregunta>();
+    (preguntas || []).forEach(p => byId.set(p.id, p));
+    const inMem = (prueba.preguntasIds || [])
+      .map(id => byId.get(id))
+      .filter((p): p is Pregunta => Boolean(p));
+
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0 && inMem.length === prueba.preguntasIds.length) {
+      setLoadedPreguntas(inMem);
+      setIsLoadingPreguntas(false);
+      return;
+    }
+
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+      let active = true;
+      setIsLoadingPreguntas(true);
+
+      (async () => {
+        try {
+          const { data: dbRows, error } = await supabase
+            .from('preguntas')
+            .select('*')
+            .in('id', prueba.preguntasIds);
+
+          if (!active) return;
+          if (!error && dbRows && dbRows.length > 0) {
+            const mapped = dbRows.map(mapRowToPregunta);
+            const dbMap = new Map(mapped.map(q => [q.id, q]));
+            const ordered = prueba.preguntasIds
+              .map(id => dbMap.get(id))
+              .filter((q): q is Pregunta => Boolean(q));
+            setLoadedPreguntas(ordered);
+          }
+        } catch (err) {
+          console.error('[PruebaFacsimilModal] Error al cargar preguntas:', err);
+        } finally {
+          if (active) setIsLoadingPreguntas(false);
+        }
+      })();
+
+      return () => { active = false; };
+    }
+  }, [isOpen, prueba, preguntas]);
+
   if (!isOpen || !prueba) return null;
 
   // Match questions strictly by prueba.preguntasIds if defined, preserving order
   const preguntasDeLaPrueba = React.useMemo(() => {
     if (!prueba) return [];
+    if (loadedPreguntas.length > 0) return loadedPreguntas;
 
     const byId = new Map<string, Pregunta>();
     // Solo cargar mocks en modo desarrollo/demo (Directivas 1 y 2)
@@ -171,7 +227,7 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
 
     // Filtrar por asignatura de la prueba
     return (preguntas || []).filter(p => p.asignaturaId === prueba.asignaturaId).slice(0, prueba.totalPreguntas || 30);
-  }, [prueba, preguntas, isProduction]);
+  }, [prueba, preguntas, loadedPreguntas, isProduction]);
 
   // Cerrar con Escape
   useEffect(() => {
@@ -260,7 +316,13 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
 
         {/* Modal Body: List of Questions */}
         <div className="p-6 overflow-y-auto space-y-6 flex-1 divide-y divide-slate-100 dark:divide-slate-800">
-          {preguntasDeLaPrueba.length === 0 ? (
+          {isLoadingPreguntas ? (
+            <div className="text-center py-16 text-slate-400 space-y-3">
+              <div className="w-8 h-8 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto" />
+              <p className="text-sm font-bold text-slate-200">Cargando preguntas y textos oficiales del DEMRE...</p>
+              <p className="text-xs text-slate-500">Recuperando ítems estructurados desde la base de datos...</p>
+            </div>
+          ) : preguntasDeLaPrueba.length === 0 ? (
             <div className="text-center py-12 text-slate-400">
               <HelpCircle className="w-10 h-10 mx-auto mb-2 opacity-50" />
               <p className="text-sm font-semibold">No se encontraron preguntas cargadas para esta evaluación.</p>

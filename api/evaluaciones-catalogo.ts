@@ -236,24 +236,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { evaluacion_id, include_key } = req.query || {};
       if (!evaluacion_id) return res.status(400).json({ error: "evaluacion_id requerido." });
 
-      const EVAL_PREGUNTA_PREFIX: Record<string, string> = {
-        'eval-paes-mat1-2023-f113': 'preg-paes-m1-23-%',
-        'eval-paes-lect-2026-f103': 'preg-paes-lec-26-%',
-        'eval-diag-ciu-3m-2026': 'preg-ciu3m-diag-%',
-        'diag_ciudadana_3m_2026': 'preg-ciu3m-diag-%',
-        'eval-simce-mat-6b-ensayo3': 'preg-mat6b-e3-%',
-        'eval-simce-mat-6b-e3': 'preg-mat6b-e3-%',
-        'eval-simce-mat-2m-ensayo3': 'preg-mat2m-e3-%',
-        'eval-simce-mat-2m-e3': 'preg-mat2m-e3-%',
-        'eval-simce-lect-2m-ensayo6': 'preg-len2m-e6-%',
-        'eval-simce-len-2m-e6': 'preg-len2m-e6-%',
-      };
-
-      const prefix = EVAL_PREGUNTA_PREFIX[evaluacion_id as string];
-      if (!prefix) {
-        return res.status(404).json({ error: "Evaluación no encontrada en el catálogo." });
-      }
-
       // Claves solo accesibles para rol admin con include_key explícito
       let allowKeys = false;
       if (include_key === "1" || include_key === "true") {
@@ -267,23 +249,56 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
       }
 
-      const query = allowKeys
-        ? sbAdmin
-            .from("preguntas")
-            .select(
-              "id, enunciado, alternativas, respuesta_correcta, eje_tematico_id, habilidad_id, dificultad, puntaje, imagen_url, tipo, nivel, fuente, created_at, updated_at"
-            )
-            .ilike("id", prefix)
-            .order("id")
-        : sbAdmin
-            .from("preguntas")
-            .select(
-              "id, enunciado, alternativas, eje_tematico_id, habilidad_id, dificultad, puntaje, imagen_url, tipo, nivel, fuente, created_at, updated_at"
-            )
-            .ilike("id", prefix)
-            .order("id");
+      const selectCols = allowKeys
+        ? "id, enunciado, alternativas, respuesta_correcta, eje_tematico_id, habilidad_id, dificultad, puntaje, imagen_url, tipo, nivel, fuente, created_at, updated_at"
+        : "id, enunciado, alternativas, eje_tematico_id, habilidad_id, dificultad, puntaje, imagen_url, tipo, nivel, fuente, created_at, updated_at";
 
-      const { data, error } = await query;
+      let data: any[] | null = null;
+      let error: any = null;
+
+      // 1. Intentar por IDs explícitos en la evaluación
+      const { data: evalRow } = await sbAdmin
+        .from("evaluaciones")
+        .select("id, pregunta_ids")
+        .eq("id", evaluacion_id)
+        .maybeSingle();
+
+      if (evalRow?.pregunta_ids && Array.isArray(evalRow.pregunta_ids) && evalRow.pregunta_ids.length > 0) {
+        const dbQueryRes1 = await sbAdmin.from("preguntas").select(selectCols as any).in("id", evalRow.pregunta_ids);
+        if (dbQueryRes1.data && dbQueryRes1.data.length > 0) {
+          const map = new Map(dbQueryRes1.data.map((q: any) => [q.id, q]));
+          data = evalRow.pregunta_ids.map((id: string) => map.get(id)).filter(Boolean);
+        } else {
+          error = dbQueryRes1.error;
+        }
+      }
+
+      // 2. Fallback por prefijo si no tuvo IDs explícitos
+      if (!data || data.length === 0) {
+        const EVAL_PREGUNTA_PREFIX: Record<string, string> = {
+          'eval-paes-mat1-2023-f113': 'preg-paes-m1-23-%',
+          'eval-paes-lect-2023-f103': 'preg-paes-lec-23-%',
+          'eval-paes-lect-2024-f103': 'preg-paes-lec-24-%',
+          'eval-paes-lect-2026-f103': 'preg-paes-lec-26-%',
+          'eval-diag-ciu-3m-2026': 'preg-ciu3m-diag-%',
+          'diag_ciudadana_3m_2026': 'preg-ciu3m-diag-%',
+          'eval-simce-mat-6b-ensayo3': 'preg-mat6b-e3-%',
+          'eval-simce-mat-6b-e3': 'preg-mat6b-e3-%',
+          'eval-simce-mat-2m-ensayo3': 'preg-mat2m-e3-%',
+          'eval-simce-mat-2m-e3': 'preg-mat2m-e3-%',
+          'eval-simce-lect-2m-ensayo6': 'preg-len2m-e6-%',
+          'eval-simce-len-2m-e6': 'preg-len2m-e6-%',
+        };
+
+        const prefix = EVAL_PREGUNTA_PREFIX[evaluacion_id as string];
+        if (!prefix) {
+          return res.status(404).json({ error: "Evaluación no encontrada en el catálogo." });
+        }
+
+        const dbQueryRes2 = await sbAdmin.from("preguntas").select(selectCols as any).ilike("id", prefix).order("id");
+        data = dbQueryRes2.data;
+        error = dbQueryRes2.error;
+      }
 
       if (error) {
         console.error("Error fetching preguntas:", error);

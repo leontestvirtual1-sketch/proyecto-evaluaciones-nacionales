@@ -20,6 +20,8 @@ import { useAcademicData } from '../context/AcademicDataContext';
 import { getSequentialPrintTitle } from '../utils/printUtils';
 import { EnunciadoRenderer } from './common/EnunciadoRenderer';
 import { resolveImageUrl } from '../lib/storage';
+import { supabase } from '../lib/supabaseClient';
+import { mapRowToPregunta } from '../hooks/useBancoPreguntas';
 
 interface PrintEvaluacionModalProps {
   isOpen: boolean;
@@ -41,6 +43,49 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   const { user } = useAuth();
   const { nombreEstablecimientoActivo, isProduction } = useAcademicData();
   const [printMode, setPrintMode] = useState<PrintMode>('cuadernillo');
+  const [loadedPreguntas, setLoadedPreguntas] = useState<Pregunta[]>([]);
+
+  React.useEffect(() => {
+    if (!isOpen || !prueba) {
+      setLoadedPreguntas([]);
+      return;
+    }
+
+    const byId = new Map<string, Pregunta>();
+    (preguntas || []).forEach(p => byId.set(p.id, p));
+    const inMem = (prueba.preguntasIds || [])
+      .map(id => byId.get(id))
+      .filter((p): p is Pregunta => Boolean(p));
+
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0 && inMem.length === prueba.preguntasIds.length) {
+      setLoadedPreguntas(inMem);
+      return;
+    }
+
+    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
+      let active = true;
+      (async () => {
+        try {
+          const { data: dbRows, error } = await supabase
+            .from('preguntas')
+            .select('*')
+            .in('id', prueba.preguntasIds);
+          if (!active) return;
+          if (!error && dbRows && dbRows.length > 0) {
+            const mapped = dbRows.map(mapRowToPregunta);
+            const dbMap = new Map(mapped.map(q => [q.id, q]));
+            const ordered = prueba.preguntasIds
+              .map(id => dbMap.get(id))
+              .filter((q): q is Pregunta => Boolean(q));
+            setLoadedPreguntas(ordered);
+          }
+        } catch (err) {
+          console.error('[PrintEvaluacionModal] Error al cargar preguntas:', err);
+        }
+      })();
+      return () => { active = false; };
+    }
+  }, [isOpen, prueba, preguntas]);
 
   // Encontrar el establecimiento actual y su logo oficial dinámicamente
   const establecimientoActual = React.useMemo(() => {
@@ -101,6 +146,7 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   // Filter and prepare questions for this evaluation strictly by preguntasIds
   const preguntasDeLaPrueba = React.useMemo(() => {
     if (!prueba) return [];
+    if (loadedPreguntas.length > 0) return loadedPreguntas;
     
     // Mapa con todas las preguntas disponibles (provistas + catálogo oficial)
     const byId = new Map<string, Pregunta>();
