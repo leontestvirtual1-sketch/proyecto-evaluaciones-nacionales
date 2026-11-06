@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 // AcademicDataContext is the SINGLE source of truth for Demo vs Production data isolation.
 import { ShieldCheck, AlertTriangle, X } from 'lucide-react';
@@ -151,6 +151,20 @@ function MainAppContent({
 
   // App Data State
   const [asignaturas, setAsignaturas] = useState<Asignatura[]>(asignaturasMock);
+
+  // Carga dinámica de asignaturas desde Supabase (fallback al mock si falla)
+  useEffect(() => {
+    supabase
+      .from('asignaturas')
+      .select('*')
+      .order('id')
+      .then(({ data, error }) => {
+        if (!error && data && data.length > 0) {
+          setAsignaturas(data as Asignatura[]);
+        }
+        // Si hay error o no hay datos, se mantiene el mock como fallback
+      });
+  }, []);
   const [rendiciones, setRendiciones] = useState<RendicionPrueba[]>(rendicionesMock);
 
   // Banco de Preguntas conectado a Supabase (con fallback y aislamiento estricto por docente)
@@ -795,7 +809,7 @@ function MainAppContent({
       <EvaluacionGeneratorModal
         isOpen={isGeneratorOpen}
         onClose={() => setIsGeneratorOpen(false)}
-        asignaturas={user?.rol === 'profesor' && user?.asignaturaId ? asignaturasMock.filter(a => a.id === user.asignaturaId) : asignaturasMock}
+        asignaturas={user?.rol === 'profesor' && user?.asignaturaId ? asignaturas.filter(a => a.id === user.asignaturaId) : asignaturas}
         ejes={user?.rol === 'profesor' && user?.asignaturaId ? ejesTematicosMock.filter(e => e.asignaturaId === user.asignaturaId) : ejesTematicosMock}
         habilidades={user?.rol === 'profesor' && user?.asignaturaId ? habilidadesMock.filter(h => h.asignaturaId === user.asignaturaId) : habilidadesMock}
         cursos={academicData.cursos}

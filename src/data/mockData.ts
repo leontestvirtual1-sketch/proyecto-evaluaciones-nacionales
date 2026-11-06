@@ -380,14 +380,21 @@ export const seguimientoDocentesMock: SeguimientoDocente[] = [
 ];
 
 export const asignaturasMock: Asignatura[] = [
-
-
-  { id: 'asig-1', codigo: 'MAT', nombre: 'Matemática' },
-
-  { id: 'asig-2', codigo: 'LEN', nombre: 'Lenguaje y Comunicación' },
-
-  { id: 'asig-3', codigo: 'CN', nombre: 'Ciencias Naturales' }
-
+  { id: 'asig-1',  codigo: 'MAT', nombre: 'Matemática' },
+  { id: 'asig-2',  codigo: 'LEN', nombre: 'Lenguaje y Comunicación / Competencia Lectora' },
+  { id: 'asig-3',  codigo: 'CN',  nombre: 'Ciencias Naturales' },
+  { id: 'asig-4',  codigo: 'HIS', nombre: 'Historia, Geografía y Ciencias Sociales' },
+  { id: 'asig-5',  codigo: 'BIO', nombre: 'Biología' },
+  { id: 'asig-6',  codigo: 'FIS', nombre: 'Física' },
+  { id: 'asig-7',  codigo: 'QUI', nombre: 'Química' },
+  { id: 'asig-8',  codigo: 'CTP', nombre: 'Ciencias Técnico-Profesional (TP)' },
+  { id: 'asig-9',  codigo: 'M2',  nombre: 'Competencia Matemática 2 (M2)' },
+  { id: 'asig-10', codigo: 'ING', nombre: 'Idioma Extranjero: Inglés' },
+  { id: 'asig-11', codigo: 'FIL', nombre: 'Filosofía' },
+  { id: 'asig-12', codigo: 'EC',  nombre: 'Educación Ciudadana' },
+  { id: 'asig-13', codigo: 'EF',  nombre: 'Educación Física y Salud' },
+  { id: 'asig-14', codigo: 'ART', nombre: 'Artes Visuales / Música' },
+  { id: 'asig-15', codigo: 'TEC', nombre: 'Tecnología e Informática' },
 ];
 
 

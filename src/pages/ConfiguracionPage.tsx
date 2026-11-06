@@ -36,16 +36,18 @@ interface ConfiguracionPageProps {
 }
 
 const asignaturasSugeridasMINEDUC = [
-  { codigo: 'HIST', nombre: 'Historia, Geografía y Ciencias Sociales', icono: '🏛️' },
-  { codigo: 'ING', nombre: 'Idioma Extranjero: Inglés', icono: '🇬🇧' },
-  { codigo: 'EF', nombre: 'Educación Física y Salud', icono: '🏃' },
-  { codigo: 'ART', nombre: 'Artes Visuales', icono: '🎨' },
-  { codigo: 'MUS', nombre: 'Música', icono: '🎵' },
-  { codigo: 'TEC', nombre: 'Tecnología', icono: '💻' },
-  { codigo: 'FILO', nombre: 'Filosofía', icono: '🧠' },
-  { codigo: 'FIS', nombre: 'Física', icono: '⚡' },
-  { codigo: 'QUIM', nombre: 'Química', icono: '🧪' },
-  { codigo: 'BIO', nombre: 'Biología', icono: '🧬' }
+  { codigo: 'HIS', nombre: 'Historia, Geografía y Ciencias Sociales', icono: '🏛️' },
+  { codigo: 'FIS', nombre: 'Física',                                   icono: '⚛️' },
+  { codigo: 'QUI', nombre: 'Química',                                  icono: '🧪' },
+  { codigo: 'BIO', nombre: 'Biología',                                 icono: '🧬' },
+  { codigo: 'ING', nombre: 'Idioma Extranjero: Inglés',                icono: '🇬🇧' },
+  { codigo: 'EF',  nombre: 'Educación Física y Salud',                 icono: '🏃' },
+  { codigo: 'FIL', nombre: 'Filosofía',                                icono: '📖' },
+  { codigo: 'EC',  nombre: 'Educación Ciudadana',                      icono: '🏛' },
+  { codigo: 'M2',  nombre: 'Competencia Matemática 2 (M2)',            icono: '📐' },
+  { codigo: 'CTP', nombre: 'Ciencias Técnico-Profesional (TP)',        icono: '🏭' },
+  { codigo: 'ART', nombre: 'Artes Visuales / Música',                  icono: '🎨' },
+  { codigo: 'TEC', nombre: 'Tecnología e Informática',                 icono: '💻' },
 ];
 
 export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({
