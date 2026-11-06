@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   Save,
@@ -69,6 +70,18 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
     setErrorMsg(null);
     setSuccessMsg(null);
   }, [isOpen, pregunta]);
+
+  // Cerrar con tecla Escape en cualquier momento
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen || !pregunta) return null;
 
@@ -207,14 +220,27 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
     setEnunciado((prev) => `${prev} ${prefix}${suffix}`);
   };
 
-  return (
+  const modalContent = (
     <div
-      className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-150"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-editar-pregunta-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
-      <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden text-slate-100">
+      {/* Botón flotante siempre visible para volver atrás / cerrar */}
+      <button
+        onClick={onClose}
+        className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+        title="Volver atrás / Cerrar (Esc)"
+      >
+        <X size={15} />
+        <span>Volver / Cerrar (Esc)</span>
+      </button>
+
+      <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden text-slate-100 my-auto">
         {/* ── HEADER ──────────────────────────────────────────────────────── */}
         <div className="px-6 py-4 border-b border-slate-800 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 flex items-center justify-between gap-4 shrink-0">
           <div className="flex items-center gap-3">
@@ -635,6 +661,10 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 };
 
 export default EditarPreguntaModal;

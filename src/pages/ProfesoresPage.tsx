@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   GraduationCap,
   PlusCircle,
@@ -35,6 +36,15 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, profesor, onClose
   const [error, setError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isSaving) onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, isSaving, onClose]);
+
   if (!isOpen || !profesor) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,9 +74,25 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, profesor, onClose
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-md p-6 space-y-5">
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-fade-in overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget && !isSaving) onClose();
+      }}
+    >
+      {/* Botón flotante siempre visible para volver atrás / cerrar */}
+      <button
+        onClick={onClose}
+        disabled={isSaving}
+        className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+        title="Volver atrás / Cerrar (Esc)"
+      >
+        <X size={15} />
+        <span>Volver / Cerrar (Esc)</span>
+      </button>
+
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-md p-6 space-y-5 my-auto">
         <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
           <div className="p-2.5 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-2xl">
             <Key className="w-5 h-5" />
@@ -148,6 +174,10 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, profesor, onClose
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 };
 
 import { DocenteFormFields, DocenteFormData } from '../components/DocenteFormFields';
@@ -225,6 +255,15 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
     }
   }, [editProfesor, isOpen, asignaturas]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isSaving) onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, isSaving, onClose]);
+
   if (!isOpen) return null;
 
   const handleFieldChange = (field: keyof DocenteFormData, value: string) => {
@@ -287,8 +326,24 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget && !isSaving) onClose();
+      }}
+    >
+      {/* Botón flotante siempre visible para volver atrás / cerrar */}
+      <button
+        onClick={onClose}
+        disabled={isSaving}
+        className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+        title="Volver atrás / Cerrar (Esc)"
+      >
+        <X size={15} />
+        <span>Volver / Cerrar (Esc)</span>
+      </button>
+
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-xl p-4 sm:p-5 flex flex-col my-auto text-left max-h-[92vh]">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5 mb-3">
@@ -374,6 +429,10 @@ const ProfesorFormModal: React.FC<ProfesorFormModalProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 };
 
 interface ProfesoresPageProps {

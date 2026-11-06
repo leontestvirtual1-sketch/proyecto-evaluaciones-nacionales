@@ -160,6 +160,15 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
 
   const selectedStudentsToPrint = listaAlumnos.filter(a => selectedStudentIds.includes(a.id));
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen || !prueba) return null;
 
   const handlePrint = () => {
@@ -189,7 +198,22 @@ export const PrintEvaluacionModal: React.FC<PrintEvaluacionModalProps> = ({
   };
 
   const modalContent = (
-    <div className="print-modal-portal fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in overflow-y-auto">
+    <div
+      className="print-modal-portal fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      {/* Botón flotante siempre visible para volver atrás / cerrar */}
+      <button
+        onClick={onClose}
+        className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 print:hidden"
+        title="Volver atrás / Cerrar (Esc)"
+      >
+        <X size={15} />
+        <span>Volver / Cerrar (Esc)</span>
+      </button>
+
       {/* Container - Screen View */}
       <div className="print-modal-inner bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-5xl max-h-[92vh] flex flex-col my-4 overflow-hidden">
         {/* Top Control Bar (Hidden when printing) */}

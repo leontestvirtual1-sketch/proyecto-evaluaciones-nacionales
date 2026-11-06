@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Download,
   FileText,
@@ -76,6 +77,18 @@ export const DescargaDemrePage: React.FC = () => {
   const [modalVisor, setModalVisor] = useState<ModalVisorDemreData | null>(null);
   const [modalScriptsOpen, setModalScriptsOpen] = useState<boolean>(false);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!modalVisor && !modalScriptsOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (modalVisor) setModalVisor(null);
+        if (modalScriptsOpen) setModalScriptsOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalVisor, modalScriptsOpen]);
 
   const ITEMS_POR_PAGINA = 24;
 
@@ -543,9 +556,24 @@ export const DescargaDemrePage: React.FC = () => {
       </div>
 
       {/* ── MODAL VISOR INTEGRADO ── */}
-      {modalVisor && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-5xl h-[88vh] bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+      {modalVisor && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setModalVisor(null);
+          }}
+        >
+          {/* Botón flotante siempre visible para volver atrás / cerrar */}
+          <button
+            onClick={() => setModalVisor(null)}
+            className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+            title="Volver atrás / Cerrar (Esc)"
+          >
+            <X size={15} />
+            <span>Volver / Cerrar (Esc)</span>
+          </button>
+
+          <div className="relative w-full max-w-5xl h-[88vh] bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl my-auto">
             {/* Cabecera del Visor */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-950/70">
               <div className="flex items-center gap-3 truncate mr-4">
@@ -587,13 +615,29 @@ export const DescargaDemrePage: React.FC = () => {
               />
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* ── MODAL SCRIPTS Y AUTOMATIZACIÓN DEMRE ── */}
-      {modalScriptsOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-4xl max-h-[88vh] bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+      {modalScriptsOpen && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setModalScriptsOpen(false);
+          }}
+        >
+          {/* Botón flotante siempre visible para volver atrás / cerrar */}
+          <button
+            onClick={() => setModalScriptsOpen(false)}
+            className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+            title="Volver atrás / Cerrar (Esc)"
+          >
+            <X size={15} />
+            <span>Volver / Cerrar (Esc)</span>
+          </button>
+
+          <div className="relative w-full max-w-4xl max-h-[88vh] bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl my-auto">
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/70">
               <div className="flex items-center gap-3">
@@ -699,7 +743,8 @@ export const DescargaDemrePage: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

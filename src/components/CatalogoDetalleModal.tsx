@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   BookOpen,
@@ -176,24 +177,24 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
 
   const LETRAS = ['A', 'B', 'C', 'D', 'E'];
 
-  return (
+  const modalContent = (
     <>
       {/* Overlay — cerrar al hacer clic fuera */}
       <div
-        className="fixed inset-0 z-[65] flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-md"
+        className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
         role="dialog"
         aria-modal="true"
         aria-label={`Detalle: ${evaluacion.titulo}`}
         onClick={onClose}
       >
-        {/* Botón X flotante — siempre visible en esquina superior derecha */}
+        {/* Botón flotante siempre visible para volver atrás / cerrar */}
         <button
           onClick={onClose}
-          className="fixed top-3 right-3 z-[70] w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 border border-slate-600 text-slate-200 hover:bg-red-600 hover:border-red-500 hover:text-white shadow-xl transition-all"
-          aria-label="Cerrar (Esc)"
-          title="Cerrar (Esc)"
+          className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+          title="Volver atrás / Cerrar (Esc)"
         >
-          <X size={18} />
+          <X size={15} />
+          <span>Volver / Cerrar (Esc)</span>
         </button>
 
         {/* Panel interior — detener propagación para no cerrar al hacer clic dentro */}
@@ -695,6 +696,10 @@ export const CatalogoDetalleModal: React.FC<CatalogoDetalleModalProps> = ({
       )}
     </>
   );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 };
 
 export default CatalogoDetalleModal;

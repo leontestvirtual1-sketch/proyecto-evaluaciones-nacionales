@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   BookOpen,
   FileText,
@@ -80,6 +81,15 @@ export const BibliotecaPage: React.FC = () => {
   });
 
   const [modalVisor, setModalVisor] = useState<ModalVisorData | null>(null);
+
+  useEffect(() => {
+    if (!modalVisor) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setModalVisor(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalVisor]);
 
   const toggleFavorito = (id: string) => {
     setFavoritos(prev => {
@@ -541,9 +551,24 @@ export const BibliotecaPage: React.FC = () => {
       )}
 
       {/* Modal Visor Embebido */}
-      {modalVisor && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-5xl h-[90vh] rounded-2xl flex flex-col shadow-2xl overflow-hidden">
+      {modalVisor && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 animate-fade-in overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setModalVisor(null);
+          }}
+        >
+          {/* Botón flotante siempre visible para volver atrás / cerrar */}
+          <button
+            onClick={() => setModalVisor(null)}
+            className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+            title="Volver atrás / Cerrar (Esc)"
+          >
+            <X size={15} />
+            <span>Volver / Cerrar (Esc)</span>
+          </button>
+
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-5xl h-[90vh] rounded-2xl flex flex-col shadow-2xl overflow-hidden my-auto">
             {/* Header Modal */}
             <div className="px-5 py-3.5 bg-slate-800/95 border-b border-slate-700/80 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 min-w-0">
@@ -609,7 +634,8 @@ export const BibliotecaPage: React.FC = () => {
               />
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

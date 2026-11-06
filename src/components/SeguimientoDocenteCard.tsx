@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   GraduationCap,
   BookOpen,
@@ -10,6 +11,7 @@ import {
   Eye,
   Sparkles,
   BarChart3,
+  X,
 } from 'lucide-react';
 import { SeguimientoDocente } from '../types';
 import { useAcademicData } from '../context/AcademicDataContext';
@@ -28,6 +30,15 @@ export const SeguimientoDocenteCard: React.FC<SeguimientoDocenteCardProps> = ({
   const [selectedEstadoPME, setSelectedEstadoPME] = useState<string>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedDocenteModal, setSelectedDocenteModal] = useState<SeguimientoDocente | null>(null);
+
+  useEffect(() => {
+    if (!selectedDocenteModal) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedDocenteModal(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedDocenteModal]);
 
   // Filtered teachers
   const filteredDocentes = docentes.filter(d => {
@@ -333,9 +344,24 @@ export const SeguimientoDocenteCard: React.FC<SeguimientoDocenteCardProps> = ({
       </div>
 
       {/* Modal Detalle Pedagógico del Profesor */}
-      {selectedDocenteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl w-full max-w-xl p-6 sm:p-8 space-y-6 text-left relative overflow-hidden">
+      {selectedDocenteModal && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelectedDocenteModal(null);
+          }}
+        >
+          {/* Botón flotante siempre visible para volver atrás / cerrar */}
+          <button
+            onClick={() => setSelectedDocenteModal(null)}
+            className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+            title="Volver atrás / Cerrar (Esc)"
+          >
+            <X size={15} />
+            <span>Volver / Cerrar (Esc)</span>
+          </button>
+
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl w-full max-w-xl p-6 sm:p-8 space-y-6 text-left relative overflow-hidden my-auto">
             {/* Background Glow */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
 
@@ -438,7 +464,8 @@ export const SeguimientoDocenteCard: React.FC<SeguimientoDocenteCardProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

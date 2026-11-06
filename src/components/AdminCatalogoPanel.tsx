@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { supabase } from "../lib/supabaseClient";
 import { SolicitudEvaluacion, EvaluacionCatalogo, EstadoSolicitud } from "../types";
 import {
@@ -82,6 +83,15 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
   const [editDesc, setEditDesc] = useState<string>("");
   const [isSavingPrice, setIsSavingPrice] = useState(false);
   const [previewEval, setPreviewEval] = useState<EvaluacionCatalogo | null>(null);
+
+  useEffect(() => {
+    if (!editingEval) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setEditingEval(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [editingEval]);
 
   const showToast = (type: "ok" | "err", msg: string) => {
     setToast({ type, msg });
@@ -593,9 +603,24 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
       )}
 
       {/* Modal para Editar Precio y Condiciones Comerciales */}
-      {editingEval && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-4">
+      {editingEval && typeof document !== "undefined" && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setEditingEval(null);
+          }}
+        >
+          {/* Botón flotante siempre visible para volver atrás / cerrar */}
+          <button
+            onClick={() => setEditingEval(null)}
+            className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+            title="Volver atrás / Cerrar (Esc)"
+          >
+            <X size={15} />
+            <span>Volver / Cerrar (Esc)</span>
+          </button>
+
+          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-4 my-auto">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center">
@@ -671,7 +696,8 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Modal para Visualizar Contenido Completo del Catálogo */}
