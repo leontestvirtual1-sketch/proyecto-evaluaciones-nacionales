@@ -35,6 +35,84 @@ import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
 import { preguntasMatematica6BMock } from '../data/mat6bQuestionsMock';
 
 
+interface EvaluacionMetadata {
+  tipo: 'paes' | 'simce' | 'diagnostica' | 'aula';
+  tipoLabel: string;
+  badgeBg: string;
+  badgeText: string;
+  badgeBorder: string;
+  anio?: string;
+  edicion?: 'Regular' | 'Invierno';
+  forma?: string;
+  materiaOficial?: string;
+}
+
+function parseEvaluacionInfo(p: Prueba): EvaluacionMetadata {
+  const full = `${p.titulo} ${p.id} ${p.descripcion || ''}`.toLowerCase();
+
+  if (full.includes('paes') || full.includes('demre')) {
+    const yearMatch = full.match(/\b(202\d)\b/);
+    const anio = yearMatch ? yearMatch[1] : undefined;
+    const isInvierno = full.includes('invierno');
+    const edicion: 'Regular' | 'Invierno' = isInvierno ? 'Invierno' : 'Regular';
+    const formaMatch = full.match(/forma\s*(\d+)/i);
+    const forma = formaMatch ? `Forma ${formaMatch[1]}` : undefined;
+
+    let materiaOficial = 'Competencia Lectora';
+    if (full.includes('matemática 1') || full.includes('matematica 1') || full.includes('m1')) {
+      materiaOficial = 'Competencia Matemática 1 (M1)';
+    } else if (full.includes('matemática 2') || full.includes('matematica 2') || full.includes('m2')) {
+      materiaOficial = 'Competencia Matemática 2 (M2)';
+    } else if (full.includes('historia')) {
+      materiaOficial = 'Historia y Cs. Sociales';
+    } else if (full.includes('ciencias')) {
+      materiaOficial = 'Ciencias';
+    } else if (full.includes('lectora') || full.includes('lengua') || full.includes('lenguaje')) {
+      materiaOficial = 'Competencia Lectora';
+    }
+
+    return {
+      tipo: 'paes',
+      tipoLabel: 'PAES Oficial',
+      badgeBg: 'bg-indigo-500/15',
+      badgeText: 'text-indigo-400',
+      badgeBorder: 'border-indigo-500/30',
+      anio,
+      edicion,
+      forma,
+      materiaOficial,
+    };
+  }
+
+  if (full.includes('simce')) {
+    return {
+      tipo: 'simce',
+      tipoLabel: 'SIMCE Oficial',
+      badgeBg: 'bg-cyan-500/15',
+      badgeText: 'text-cyan-400',
+      badgeBorder: 'border-cyan-500/30',
+    };
+  }
+
+  if (full.includes('diagnóstic') || full.includes('diagnostica') || full.includes('diag')) {
+    return {
+      tipo: 'diagnostica',
+      tipoLabel: 'Diagnóstica',
+      badgeBg: 'bg-amber-500/15',
+      badgeText: 'text-amber-400',
+      badgeBorder: 'border-amber-500/30',
+    };
+  }
+
+  return {
+    tipo: 'aula',
+    tipoLabel: 'Evaluación Institucional',
+    badgeBg: 'bg-slate-500/15',
+    badgeText: 'text-slate-400',
+    badgeBorder: 'border-slate-500/30',
+  };
+}
+
 interface PruebaFacsimilModalProps {
   isOpen: boolean;
   prueba: Prueba | null;
@@ -100,17 +178,44 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
         {/* Modal Header */}
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between gap-4">
           <div className="space-y-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                {prueba.asignaturaNombre} — {prueba.nivel}
-              </span>
-              <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                Código: <strong className="font-mono text-indigo-500">{prueba.codigoPublico}</strong>
-              </span>
-              <span className="text-xs text-slate-400">
-                ⏱️ {prueba.duracionMinutos} min • 📝 {preguntasDeLaPrueba.length} preguntas
-              </span>
-            </div>
+            {(() => {
+              const modalMeta = parseEvaluacionInfo(prueba);
+              return (
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold border ${modalMeta.badgeBg} ${modalMeta.badgeText} ${modalMeta.badgeBorder}`}>
+                    {modalMeta.tipo === 'paes' ? '🏛️ PAES Oficial' : modalMeta.tipo === 'simce' ? '📊 SIMCE Oficial' : modalMeta.tipo === 'diagnostica' ? '📋 Diagnóstica' : 'Evaluación'}
+                  </span>
+                  {modalMeta.tipo === 'paes' && (
+                    <>
+                      {modalMeta.anio && (
+                        <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-slate-800 text-slate-200 border border-slate-700">
+                          {modalMeta.anio}
+                        </span>
+                      )}
+                      {modalMeta.edicion && (
+                        <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold border ${modalMeta.edicion === 'Invierno' ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'}`}>
+                          {modalMeta.edicion}
+                        </span>
+                      )}
+                      {modalMeta.forma && (
+                        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                          {modalMeta.forma}
+                        </span>
+                      )}
+                    </>
+                  )}
+                  <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                    {modalMeta.tipo === 'paes' && modalMeta.materiaOficial ? `${modalMeta.materiaOficial} — ${prueba.nivel}` : `${prueba.asignaturaNombre} — ${prueba.nivel}`}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                    Código: <strong className="font-mono text-indigo-500">{prueba.codigoPublico}</strong>
+                  </span>
+                  <span className="text-xs text-slate-400">
+                    ⏱️ {prueba.duracionMinutos} min • 📝 {preguntasDeLaPrueba.length} preguntas
+                  </span>
+                </div>
+              );
+            })()}
             <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
               {prueba.titulo}
             </h2>
@@ -252,6 +357,8 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAsignatura, setSelectedAsignatura] = useState<string>(initialAsignatura);
   const [selectedEstado, setSelectedEstado] = useState<string>('todos');
+  const [tipoFiltro, setTipoFiltro] = useState<'todos' | 'paes' | 'simce' | 'diagnostica'>('todos');
+  const [anioPaesFiltro, setAnioPaesFiltro] = useState<string>('todos');
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [facsimilModalOpen, setFacsimilModalOpen] = useState(false);
@@ -285,11 +392,39 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   // If user is a teacher, filter to their subject
   const userPruebas = isDocente ? pruebas.filter(p => p.asignaturaId === currentUser.asignaturaId) : pruebas;
 
+  const conteoTotal = userPruebas.length;
+  const conteoPaes = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'paes').length, [userPruebas]);
+  const conteoSimce = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'simce').length, [userPruebas]);
+  const conteoDiag = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'diagnostica').length, [userPruebas]);
+
+  const aniosPaesDisponibles = React.useMemo(() => {
+    const set = new Set<string>();
+    userPruebas.forEach(p => {
+      const meta = parseEvaluacionInfo(p);
+      if (meta.tipo === 'paes' && meta.anio) {
+        set.add(meta.anio);
+      }
+    });
+    return Array.from(set).sort().reverse();
+  }, [userPruebas]);
+
   const filteredPruebas = userPruebas.filter((prueba) => {
+    const meta = parseEvaluacionInfo(prueba);
+
+    if (tipoFiltro !== 'todos' && meta.tipo !== tipoFiltro) {
+      return false;
+    }
+
+    if (tipoFiltro === 'paes' && anioPaesFiltro !== 'todos' && meta.anio !== anioPaesFiltro) {
+      return false;
+    }
+
     const matchesSearch =
       prueba.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       prueba.codigoPublico.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      prueba.asignaturaNombre.toLowerCase().includes(searchTerm.toLowerCase());
+      prueba.asignaturaNombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (meta.materiaOficial && meta.materiaOficial.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (meta.anio && meta.anio.includes(searchTerm));
     
     const matchesAsignatura =
       selectedAsignatura === 'todos' || prueba.asignaturaId === selectedAsignatura;
@@ -396,6 +531,107 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
         </div>
       </div>
 
+      {/* Selector de Instrumento: PAES / SIMCE / Diagnóstica */}
+      <div className="glass-card p-4 space-y-3">
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+            <button
+              onClick={() => { setTipoFiltro('todos'); setAnioPaesFiltro('todos'); }}
+              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all whitespace-nowrap ${
+                tipoFiltro === 'todos'
+                  ? 'bg-slate-800 text-white border border-slate-700 shadow-sm'
+                  : 'bg-slate-900/40 text-slate-400 hover:text-white border border-transparent'
+              }`}
+            >
+              <span>Todas las Evaluaciones ({conteoTotal})</span>
+            </button>
+
+            <button
+              onClick={() => setTipoFiltro('paes')}
+              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
+                tipoFiltro === 'paes'
+                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/40 scale-[1.02]'
+                  : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/20'
+              }`}
+            >
+              <span>🏛️</span>
+              <span>PAES Oficiales DEMRE ({conteoPaes})</span>
+            </button>
+
+            <button
+              onClick={() => { setTipoFiltro('simce'); setAnioPaesFiltro('todos'); }}
+              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
+                tipoFiltro === 'simce'
+                  ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30 border border-cyan-400/40 scale-[1.02]'
+                  : 'bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20'
+              }`}
+            >
+              <span>📊</span>
+              <span>Ensayos SIMCE ({conteoSimce})</span>
+            </button>
+
+            <button
+              onClick={() => { setTipoFiltro('diagnostica'); setAnioPaesFiltro('todos'); }}
+              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
+                tipoFiltro === 'diagnostica'
+                  ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/30 border border-amber-400/40 scale-[1.02]'
+                  : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 border border-amber-500/20'
+              }`}
+            >
+              <span>📋</span>
+              <span>Pruebas Diagnósticas ({conteoDiag})</span>
+            </button>
+          </div>
+
+          {tipoFiltro !== 'todos' && (
+            <button
+              onClick={() => { setTipoFiltro('todos'); setAnioPaesFiltro('todos'); }}
+              className="text-xs text-indigo-400 hover:text-indigo-300 underline font-semibold"
+            >
+              ✕ Mostrar todas
+            </button>
+          )}
+        </div>
+
+        {/* Sub-filtro de Años / Procesos PAES */}
+        {tipoFiltro === 'paes' && aniosPaesDisponibles.length > 0 && (
+          <div className="pt-2.5 border-t border-indigo-500/20 flex items-center gap-2 flex-wrap text-xs">
+            <span className="text-slate-400 font-semibold flex items-center gap-1">
+              <span>📅 Proceso PAES:</span>
+            </span>
+            <button
+              onClick={() => setAnioPaesFiltro('todos')}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
+                anioPaesFiltro === 'todos'
+                  ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                  : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+              }`}
+            >
+              Todos los Procesos ({conteoPaes})
+            </button>
+            {aniosPaesDisponibles.map((yr) => {
+              const countYr = userPruebas.filter(p => {
+                const m = parseEvaluacionInfo(p);
+                return m.tipo === 'paes' && m.anio === yr;
+              }).length;
+              return (
+                <button
+                  key={yr}
+                  onClick={() => setAnioPaesFiltro(yr)}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
+                    anioPaesFiltro === yr
+                      ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                      : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+                  }`}
+                >
+                  PAES {yr} ({countYr})
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
       {/* Filters Bar */}
       <div className="glass-card p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="relative flex-1 w-full">
@@ -457,6 +693,9 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {filteredPruebas.map((prueba) => {
+            const meta = parseEvaluacionInfo(prueba);
+            const isPaes = meta.tipo === 'paes';
+
             const estadoColor =
               prueba.estado === 'activa'
                 ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
@@ -467,21 +706,58 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
             return (
               <div
                 key={prueba.id}
-                className="glass-card p-6 space-y-5 flex flex-col justify-between hover:border-indigo-500/30 transition-all duration-200"
+                className={`glass-card p-6 space-y-5 flex flex-col justify-between transition-all duration-300 ${
+                  isPaes
+                    ? 'border-indigo-500/40 hover:border-indigo-500/80 shadow-lg hover:shadow-indigo-500/15 ring-1 ring-indigo-500/20'
+                    : 'hover:border-slate-700'
+                }`}
               >
                 {/* Header info */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                        {prueba.asignaturaNombre} — {prueba.nivel}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {/* Badge Instrumento */}
+                      <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold border ${meta.badgeBg} ${meta.badgeText} ${meta.badgeBorder} flex items-center gap-1`}>
+                        {isPaes ? '🏛️ PAES Oficial' : meta.tipo === 'simce' ? '📊 SIMCE Oficial' : meta.tipo === 'diagnostica' ? '📋 Diagnóstica' : '🏫 Evaluación'}
                       </span>
+
+                      {/* Badges específicos PAES */}
+                      {isPaes && (
+                        <>
+                          {meta.anio && (
+                            <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-slate-800 text-slate-200 border border-slate-700">
+                              {meta.anio}
+                            </span>
+                          )}
+                          {meta.edicion && (
+                            <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold border ${
+                              meta.edicion === 'Invierno'
+                                ? 'bg-sky-500/10 text-sky-400 border-sky-500/20'
+                                : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                            }`}>
+                              {meta.edicion}
+                            </span>
+                          )}
+                          {meta.forma && (
+                            <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                              {meta.forma}
+                            </span>
+                          )}
+                        </>
+                      )}
+
+                      {/* Asignatura y Nivel */}
+                      <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                        {isPaes && meta.materiaOficial ? `${meta.materiaOficial} — ${prueba.nivel}` : `${prueba.asignaturaNombre} — ${prueba.nivel}`}
+                      </span>
+
+                      {/* Estado */}
                       <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold border capitalize ${estadoColor}`}>
                         {prueba.estado}
                       </span>
                     </div>
 
-                    <div className="text-xs text-slate-400 flex items-center gap-1 font-medium">
+                    <div className="text-xs text-slate-400 flex items-center gap-1 font-medium whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{prueba.duracionMinutos} min</span>
                     </div>
