@@ -455,6 +455,23 @@ export const ejesTematicosMock: EjeTematico[] = [
 
   { id: 'eje-cie-6b-18', codigo: 'CIE-OA18', nombre: 'Concepto de erosión terrestre', asignaturaId: 'asig-3' },
 
+  // Ejes Oficiales DEMRE — Historia y Ciencias Sociales
+  { id: 'eje-his-1', codigo: 'HIS-MUN', nombre: 'Historia: Mundo, América y Chile', asignaturaId: 'asig-4' },
+  { id: 'eje-his-2', codigo: 'HIS-CIU', nombre: 'Formación Ciudadana y Democracia', asignaturaId: 'asig-4' },
+  { id: 'eje-his-3', codigo: 'HIS-ECO', nombre: 'Economía y Sociedad', asignaturaId: 'asig-4' },
+
+  // Ejes Oficiales DEMRE — Física
+  { id: 'eje-fis-1', codigo: 'FIS-OND', nombre: 'Ondas, Sonido y Luz', asignaturaId: 'asig-6' },
+  { id: 'eje-fis-2', codigo: 'FIS-MEC', nombre: 'Mecánica, Cinemática y Dinámica', asignaturaId: 'asig-6' },
+  { id: 'eje-fis-3', codigo: 'FIS-ENE', nombre: 'Energía y Calor', asignaturaId: 'asig-6' },
+  { id: 'eje-fis-4', codigo: 'FIS-ELE', nombre: 'Electricidad y Magnetismo', asignaturaId: 'asig-6' },
+  { id: 'eje-fis-5', codigo: 'FIS-TIE', nombre: 'Tierra y Universo', asignaturaId: 'asig-6' },
+
+  // Ejes Oficiales DEMRE — Química
+  { id: 'eje-qui-1', codigo: 'QUI-EST', nombre: 'Estructura Atómica y Tabla Periódica', asignaturaId: 'asig-7' },
+  { id: 'eje-qui-2', codigo: 'QUI-ORG', nombre: 'Química Orgánica', asignaturaId: 'asig-7' },
+  { id: 'eje-qui-3', codigo: 'QUI-ESTEQ', nombre: 'Reacciones Químicas y Estequiometría', asignaturaId: 'asig-7' },
+  { id: 'eje-qui-4', codigo: 'QUI-SOL', nombre: 'Soluciones Químicas y Ácido-Base', asignaturaId: 'asig-7' },
 ];
 
 
@@ -481,6 +498,22 @@ export const habilidadesMock: Habilidad[] = [
 
   { id: 'hab-cie-3', codigo: 'CIE-RAZ', nombre: 'Razonamiento y Pensamiento Científico', asignaturaId: 'asig-3' },
 
+  // Habilidades Oficiales DEMRE — Historia y Ciencias Sociales
+  { id: 'hab-his-1', codigo: 'HIS-TEMP', nombre: 'Pensamiento Temporal y Espacial', asignaturaId: 'asig-4' },
+  { id: 'hab-his-2', codigo: 'HIS-FUE',  nombre: 'Análisis de Fuentes Históricas', asignaturaId: 'asig-4' },
+  { id: 'hab-his-3', codigo: 'HIS-CRI',  nombre: 'Pensamiento Crítico y Multicausalidad', asignaturaId: 'asig-4' },
+
+  // Habilidades Científicas Oficiales DEMRE — Física
+  { id: 'hab-fis-1', codigo: 'FIS-OBS', nombre: 'Observar y plantear preguntas', asignaturaId: 'asig-6' },
+  { id: 'hab-fis-2', codigo: 'FIS-INV', nombre: 'Planificar y conducir una investigación', asignaturaId: 'asig-6' },
+  { id: 'hab-fis-3', codigo: 'FIS-ANA', nombre: 'Procesar y analizar la evidencia', asignaturaId: 'asig-6' },
+  { id: 'hab-fis-4', codigo: 'FIS-EVA', nombre: 'Evaluar y comunicar', asignaturaId: 'asig-6' },
+
+  // Habilidades Científicas Oficiales DEMRE — Química
+  { id: 'hab-qui-1', codigo: 'QUI-OBS', nombre: 'Observar y plantear preguntas', asignaturaId: 'asig-7' },
+  { id: 'hab-qui-2', codigo: 'QUI-INV', nombre: 'Planificar y conducir una investigación', asignaturaId: 'asig-7' },
+  { id: 'hab-qui-3', codigo: 'QUI-ANA', nombre: 'Procesar y analizar la evidencia', asignaturaId: 'asig-7' },
+  { id: 'hab-qui-4', codigo: 'QUI-EVA', nombre: 'Evaluar y comunicar', asignaturaId: 'asig-7' },
 ];
 
 

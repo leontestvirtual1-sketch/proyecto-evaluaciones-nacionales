@@ -1,0 +1,1205 @@
+{
+  "materia": "fisica",
+  "year": 2026,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 2,
+      "enunciado": "En \nel \nespectro \nelectromagnético, \nentre \nel \nintervalo \nde \nfrecuencias \ncorrespondientes a radiación infrarroja y ultravioleta, se encuentran las \nfrecuencias referidas a",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "los rayos X."
+        },
+        {
+          "letra": "B",
+          "texto": "la luz visible."
+        },
+        {
+          "letra": "C",
+          "texto": "las microondas."
+        },
+        {
+          "letra": "D",
+          "texto": "las radiofrecuencias."
+        },
+        {
+          "letra": "E",
+          "texto": "las radiaciones gamma."
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "enunciado": "En el contexto de una actividad escolar, un grupo de estudiantes hace pasar luz \nblanca hacia prismas cuadrados de iguales dimensiones, pero de distinto tipo: uno \ntransparente, uno translúcido verde y uno translúcido rojo. En el lado opuesto del \ncual incide la luz, ubican una pantalla blanca a una distancia fija del prisma \ntransparente, y registran los colores observados en ella. Luego, repiten el \nprocedimiento utilizando los prismas translúcidos, uno a la vez. Considerando lo \nanterior, ¿cuál de las siguientes hipótesis es acorde con el procedimiento \nrealizado por el grupo de estudiantes?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La distancia de la pantalla a los prismas afecta a la luz que incide en estos."
+        },
+        {
+          "letra": "B",
+          "texto": "El material del prisma influye en la incidencia de la luz en él."
+        },
+        {
+          "letra": "C",
+          "texto": "La luz blanca está compuesta por rayos monocromáticos."
+        },
+        {
+          "letra": "D",
+          "texto": "El color del prisma influye en la luz que este transmite."
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "enunciado": "La lente delgada L forma la imagen I del objeto O. La imagen se ubica en el punto \nQ cuando el objeto se coloca en el punto P, como indica la figura. \n \n \n \n \n \n \n \n \nSi se usa la misma lente, y ahora el objeto O se ubica en el punto Q, el esquema \nque mejor muestra la imagen I que formará la lente es \n \n \n \nA) \n \n \n \n \n \n \nB) \n \n \n \n \n \n \n \nC) \n \n \n \n \n \n \n \n D) \n \n \n \n \n \n \nE) \n \n \n \n \n \nL \nQ \nP \nI \nO \nL \nQ \nP \nI \nO \nL \nQ \nP \nI \nO \nL \nQ \nP \nI \nO \nL \nQ \nP \nI \nO \nL \nQ \nP \nI \nO",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "En un laboratorio de óptica se hace incidir un conjunto de tres haces paralelos      \nde luz láser de potencia fija sobre un arreglo de lentes, tal como se representa    \nen la siguiente figura: \n \n \n \nRespecto del patrón de haces de luz observado, ¿cuál de las siguientes opciones \nseñala correctamente el objetivo que se pretende lograr con el experimento descrito?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Cambiar el ángulo de incidencia del conjunto de láseres en ambos lentes."
+        },
+        {
+          "letra": "B",
+          "texto": "Aumentar la amplitud del conjunto de láseres en ambos lentes."
+        },
+        {
+          "letra": "C",
+          "texto": "Aumentar la separación entre los distintos haces de luz láser."
+        },
+        {
+          "letra": "D",
+          "texto": "Focalizar los distintos haces de luz láser en un único punto."
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "Un estudiante ubica un bloque en la parte más alta de un plano inclinado muy \nlargo, lo empuja brevemente, con una fuerza paralela a la superficie, midiendo \ncuánto tarda en llegar hasta la base del plano. Luego repite el procedimiento varias \nveces, con las mismas condiciones iniciales, pero recubriendo la superficie del \nplano inclinado con un material diferente cada vez. Al respecto, ¿cuál de las \nsiguientes fuerzas se asocia directamente con la variable independiente del \nprocedimiento descrito?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La fuerza peso."
+        },
+        {
+          "letra": "B",
+          "texto": "La fuerza normal."
+        },
+        {
+          "letra": "C",
+          "texto": "La fuerza de roce."
+        },
+        {
+          "letra": "D",
+          "texto": "La fuerza aplicada."
+        }
+      ]
+    },
+    {
+      "numero": 9,
+      "enunciado": "En una clase de física, se analizan las fuerzas que actúan sobre un cuerpo que \nestá en reposo sobre una superficie horizontal. Los estudiantes P, Q, R y S, \nentregan diferentes afirmaciones para explicar cuáles son las fuerzas que actúan \nsobre el cuerpo y sus características. Al respecto, ¿cuál de las siguientes opciones \nindica una afirmación correcta entregada por uno de los estudiantes?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El estudiante P afirma que actúan la fuerza peso y la fuerza normal, ambas \ncon igual módulo y diferente dirección."
+        },
+        {
+          "letra": "B",
+          "texto": "El estudiante Q afirma que actúan la fuerza peso y la fuerza normal, ambas \ncon igual módulo y dirección, pero sentido contrario."
+        },
+        {
+          "letra": "C",
+          "texto": "El estudiante R afirma que actúan la fuerza peso y la fuerza normal, y que \nambas son un par de fuerzas acción y reacción."
+        },
+        {
+          "letra": "D",
+          "texto": "El estudiante S afirma que actúan la fuerza peso, la fuerza normal y la fuerza \nde roce, todas estas con igual módulo y sentido."
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "Una persona aplica una fuerza de magnitud 30 N a un resorte ideal, logrando que \nse estire 20 cm, quedando en equilibrio. Al respecto, ¿cuál es la fuerza que habrá \nque aplicarle para que se estire 45 cm?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "97,5 N"
+        },
+        {
+          "letra": "B",
+          "texto": "67,5 N"
+        },
+        {
+          "letra": "C",
+          "texto": "43,5 N"
+        },
+        {
+          "letra": "D",
+          "texto": "37,5 N"
+        }
+      ]
+    },
+    {
+      "numero": 12,
+      "enunciado": "Una empresa que fabrica resortes para amortiguadores, debe pegar en las cajas \ncontenedoras un rótulo con información sobre sus características dependiendo de \nlas necesidades de sus clientes. A continuación, se muestran los cuatro rótulos \nque dispone la empresa:  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi un cliente solicitara información sobre un amortiguador que sea capaz de resistir \nuna cantidad de carga específica y comprimirse hasta una cierta parte de su largo \ninicial, ¿qué rótulo debería pegar la empresa en las cajas contenedoras para \nsatisfacer la solicitud del cliente?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Rótulo 1."
+        },
+        {
+          "letra": "B",
+          "texto": "Rótulo 2."
+        },
+        {
+          "letra": "C",
+          "texto": "Rótulo 3."
+        },
+        {
+          "letra": "D",
+          "texto": "Rótulo 4. \n \n \n \n Rótulo 1 \nRótulo 2 \n \n \n \n \n Rótulo 3 \nRótulo 4 \nFuerza \naplicada (N) \nDeformación \n(cm) \n \nLongitud \nnatural 45 cm"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "En el año 2008 hizo erupción el volcán Chaitén en la región de Los Lagos. La \nerupción consistió en la liberación de material piroclástico y, un mes después de \nfinalizada la erupción, unos científicos exploraron la zona para estudiar la \npresencia de material liberado por el volcán en dicho evento. Al respecto, ¿cuál \nde las siguientes hipótesis podrían someter a prueba los científicos en su \nexploración?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El ritmo de subducción en la región ha aumentado."
+        },
+        {
+          "letra": "B",
+          "texto": "Las grietas en el suelo se forman en los alrededores del volcán."
+        },
+        {
+          "letra": "C",
+          "texto": "El tamaño de las rocas volcánicas es mayor en las cercanías del volcán que \nen lugares alejados."
+        },
+        {
+          "letra": "D",
+          "texto": "La temperatura de la cámara magmática del volcán es mayor que la de otros \nvolcanes del mismo borde tectónico."
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Un grupo de personas estudia el comportamiento de ciertas placas tectónicas, \nR, V, J, T y H, las cuales presentan un movimiento que está representado con \nflechas, tal como se muestra en la siguiente figura: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEn relación con el análisis de la figura, ¿cuál de las siguientes inferencias es \ncorrecta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el límite entre H y J podría existir subducción."
+        },
+        {
+          "letra": "B",
+          "texto": "En el límite entre V y J podría existir subducción."
+        },
+        {
+          "letra": "C",
+          "texto": "En el límite entre V y R podría existir una dorsal oceánica."
+        },
+        {
+          "letra": "D",
+          "texto": "En el límite entre T y V podría existir una dorsal oceánica. \n \n \n \n \n \nH \nR \nV \nT \nJ"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "Un grupo de investigadores viaja a la Antártica para indagar sobre el pasado \ngeológico de nuestro planeta. En el desarrollo de su investigación descubren bajo \nuna profunda capa de hielo, fósiles que indican la presencia de grandes zonas \nboscosas en el pasado. Al respecto, ¿cuál de las siguientes opciones relaciona el \ndescubrimiento con la teoría de la deriva continental?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Los continentes cambian sus posiciones a lo largo del tiempo."
+        },
+        {
+          "letra": "B",
+          "texto": "Los bordes de los continentes encajan entre sí."
+        },
+        {
+          "letra": "C",
+          "texto": "Existen cordilleras con la misma edad y clase de rocas."
+        },
+        {
+          "letra": "D",
+          "texto": "Existen rocas con la misma orientación magnética en distintos continentes."
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "Para un experimento se dispone de diez barras de grafito de igual ancho y distinta \nlongitud. Se mide la resistencia eléctrica de dichas barras para establecer una \nrelación entre ella y la longitud de cada barra.  \nAdemás del instrumento que mide la resistencia eléctrica, ¿cuál de los siguientes \nmateriales es suficiente y necesario para establecer la relación entre ambas \nvariables?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Una regla"
+        },
+        {
+          "letra": "B",
+          "texto": "Una batería"
+        },
+        {
+          "letra": "C",
+          "texto": "Una ampolleta"
+        },
+        {
+          "letra": "D",
+          "texto": "Un amperímetro"
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "Un grupo de estudiantes realiza un experimento en clases y determina la potencia \neléctrica de tres circuitos compuestos por varias resistencias, conectados a una \nmisma fuente de poder de voltaje constante. Los resultados se presentan en la \nsiguiente tabla: \n \n \n \n \n \n \n \nConsiderando lo anterior, ¿qué inferencia correcta puede plantear el grupo de \nestudiantes?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El voltaje en cada resistencia es el mismo."
+        },
+        {
+          "letra": "B",
+          "texto": "Los circuitos tienen el mismo tipo de conexión."
+        },
+        {
+          "letra": "C",
+          "texto": "Los circuitos tienen igual cantidad de resistencias."
+        },
+        {
+          "letra": "D",
+          "texto": "La resistencia equivalente es la misma para todos los circuitos. \n \nCircuito \nPotencia (Watts) \n  I \n II \nIII"
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Un equipo de investigación cultivó distintos tipos de células humanas con una \nsustancia que, al entrar a estas, se unía de manera persistente y específica al ADN \nque constituye parte del nucléolo, afectando el proceso de expresión génica. Ante \neste resultado es posible especular acerca de potenciales efectos de esta sustancia \nsobre las células tratadas. A partir de lo anterior, ¿cuál de las siguientes inferencias \nes correcta respecto a un efecto directo de la sustancia sobre las células tratadas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Aumento progresivo del volumen citoplasmático en las células tratadas."
+        },
+        {
+          "letra": "B",
+          "texto": "Disminución en la cantidad de ribosomas producidos por unidad de tiempo."
+        },
+        {
+          "letra": "C",
+          "texto": "Aumento de la cantidad de material genético presente en el núcleo de las \ncélulas tratadas."
+        },
+        {
+          "letra": "D",
+          "texto": "Disminución en la velocidad de transporte de sustancias a través de los poros \nnucleares."
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "En un experimento escolar se dispone de una planta con flores blancas y una solución \nacuosa con colorante azul para repostería. Luego, se corta un tallo con flor y se \nintroduce en un vaso de precipitados que contiene la solución coloreada. Tras unos \nminutos puede observarse el cambio de color de la flor a azul. Finalmente, el profesor \nles pide a los estudiantes que realicen un corte a los pétalos azules, para observarlos \nen el microscopio e identificar cuáles son las estructuras celulares que contienen el \ncolorante. Considerando lo anterior, ¿en cuál de las siguientes estructuras se debería \nencontrar el colorante mencionado?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En las mitocondrias."
+        },
+        {
+          "letra": "B",
+          "texto": "En la vacuola."
+        },
+        {
+          "letra": "C",
+          "texto": "En los peroxisomas."
+        },
+        {
+          "letra": "D",
+          "texto": "En el núcleo."
+        }
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "Un grupo de investigadores evaluó el efecto de un nuevo fármaco M sobre la \npermeabilidad que presentan los enterocitos a la glucosa. El grupo reportó que el \nfármaco M disminuye la permeabilidad de los enterocitos a la glucosa, provocando \nuna disminución de su flujo desde el intestino hacia los vasos sanguíneos, tal como \nse indica a continuación: \n \n \nUna comisión evaluó esta investigación y señaló que existe una deficiencia \nmetodológica que es necesaria mejorar para una correcta interpretación de los \nresultados, por lo que recomiendan replantear el diseño experimental. En relación \ncon estos antecedentes, ¿cuál de las siguientes opciones corresponde a un error del \ndiseño que afecta los resultados presentados por el grupo de investigación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Faltó evaluar un grupo donde no se aplique el fármaco."
+        },
+        {
+          "letra": "B",
+          "texto": "Faltó evaluar el fármaco a mayores concentraciones."
+        },
+        {
+          "letra": "C",
+          "texto": "Faltó evaluar el fármaco a menores concentraciones."
+        },
+        {
+          "letra": "D",
+          "texto": "Faltó evaluar un grupo con el fármaco en dosis crecientes. \n \n \n \n \n \n \n \nConcentración fármaco M\nPorcentaje de \npermeabilidad a la    \nglucosa (%)\n5 (µM)\n10 (µM)\n20 (µM)\nConcentración fármaco M (u.a.) \n5      10     20"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "En la segunda mitad del siglo XVIII, se desconocía cómo se efectuaba la fecundación. \nSe proponía que el esperma desprendía un gas que al evaporarse entraba en \ncontacto con el ovocito. El científico Lazzaro Spallanzani realizó múltiples \nexperimentos que contribuyeron a la comprensión de este fenómeno, uno de los \ncuales se resume a continuación: \n \n \n \n \n \n \n \n \n \n \n \nSegún el experimento presentado, ¿qué demostró Spallanzani sobre el proceso de \nfecundación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que la participación directa de los espermatozoides garantiza la reproducción."
+        },
+        {
+          "letra": "B",
+          "texto": "Que la fecundación depende de la cercanía a la cual se encuentran los gametos."
+        },
+        {
+          "letra": "C",
+          "texto": "Que el desarrollo de organismos se asegura con la participación de ovocitos."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la fecundación requiere una interacción química entre espermatozoides y \novocitos."
+        }
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "Un equipo de investigadores está interesado en conocer si existe una relación entre \nla duración del ciclo ovárico y la fertilidad en mujeres de entre 20 y 35 años. Los \ninvestigadores plantean la siguiente hipótesis: “mujeres con una duración promedio \nde 28 días del ciclo ovárico presentan un alto porcentaje de fertilidad”. Al respecto, \n¿cuál de las siguientes opciones corresponde a una evidencia que valida la hipótesis \npresentada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Un estudio previo reportó que mujeres que tienen ciclos ováricos de 28 días \npresentan igual fertilidad que aquellas que poseen ciclos más cortos."
+        },
+        {
+          "letra": "B",
+          "texto": "Una investigación reciente indicó que las mujeres con ciclo ovárico de 35 días \ntienen la misma probabilidad de embarazo que aquellas con un ciclo ovárico de \n28 días."
+        },
+        {
+          "letra": "C",
+          "texto": "Un estudio realizado en un grupo de mujeres encontró que aquellas con un ciclo \novárico de 28 días tienen una tasa de fertilidad del 90 %."
+        },
+        {
+          "letra": "D",
+          "texto": "Una investigación reportó una correlación positiva entre la duración de la \nmenstruación y la fertilidad en mujeres con ciclos ováricos de 28 días. \n \n \nTratamiento \nResultados \nHuevos de rana adheridos \npor consistencia natural \ncon esperma alejada \n(contacto indirecto). \n1 de 13 huevos \ndesarrolla renacuajos. \nHuevos de rana embebidos \npor esperma cercana \n(contacto directo). \n12 de 13 huevos \ndesarrolla renacuajos."
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "Un laboratorio farmacéutico está evaluando dos vías de administración de un nuevo \nanticonceptivo en animales de experimentación. Una de estas vías es la oral por \nmedio de pastillas, mientras que la otra es a través de un anillo vaginal. La \nconcentración plasmática del fármaco, según la vía de administración, se presenta \nen el siguiente gráfico:  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEn relación con lo anterior, ¿cuál de las siguientes preguntas de investigación pudo \nhaber guiado el estudio realizado por el laboratorio que originó estos resultados?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "¿Qué vía de administración confiere la mayor eficacia para el anticonceptivo?"
+        },
+        {
+          "letra": "B",
+          "texto": "¿Cuál vía de administración permite mantener por más tiempo el anticonceptivo \nen el organismo?"
+        },
+        {
+          "letra": "C",
+          "texto": "¿Qué concentración plasmática del anticonceptivo presenta menores efectos \nsecundarios?"
+        },
+        {
+          "letra": "D",
+          "texto": "¿Cuál es la concentración plasmática del anticonceptivo en el tiempo para dos \nvías de administración? \n \n \nVía oral  \n \nVía vaginal \nTiempo (días) \nConcentración \nplasmática (u.a.)"
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "La mitosis presenta distintos puntos de control que permiten que este proceso se \nlleve a cabo correctamente. Uno de estos puntos de control se encuentra en la \nmetafase mitótica, en donde se verifica que los cromosomas se unan correctamente \nal huso mitótico. Al respecto, ¿cuál de las siguientes evidencias valida que este punto \nde control está funcionando correctamente?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las células que presenten anomalías luego de la replicación del material \ngenético detendrán la progresión de la mitosis."
+        },
+        {
+          "letra": "B",
+          "texto": "Las células que tengan cromosomas fuera del ecuador de la célula detendrán \nla progresión de la mitosis."
+        },
+        {
+          "letra": "C",
+          "texto": "Las células que presenten daño del ADN detendrán la progresión de la mitosis."
+        },
+        {
+          "letra": "D",
+          "texto": "Las células que presenten un volumen celular alterado expresarán proteínas \nque detendrán la progresión de la mitosis."
+        }
+      ]
+    },
+    {
+      "numero": 30,
+      "enunciado": "En el contexto de una investigación sobre la disyunción cromosómica y sus \nalteraciones, una científica está estudiando un compuesto que bloquea el proceso de \nseparación de las cromátidas hermanas. Considerando que se aplicó la molécula a \ncultivos de células germinales, ¿en cuál de las siguientes etapas hará efecto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Profase I."
+        },
+        {
+          "letra": "B",
+          "texto": "Anafase I."
+        },
+        {
+          "letra": "C",
+          "texto": "Profase II."
+        },
+        {
+          "letra": "D",
+          "texto": "Anafase II."
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "La trombosis o formación de coágulos de sangre constituye una complicación \npermanente durante las estadías hospitalarias debido a sus secuelas. En este \ncontexto, un grupo de científicos ha conseguido producir en el laboratorio una \nproteína transgénica, la cual originalmente es secretada por sanguijuelas evitando la \ncoagulación de sangre cuando estos animales se alimentan. A partir de los \nantecedentes presentados, ¿cuál de las siguientes hipótesis es coherente con las \nvariables de este estudio?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La proteína transgénica es un potencial fármaco que previene la trombosis en \npersonas hospitalizadas."
+        },
+        {
+          "letra": "B",
+          "texto": "La proteína transgénica es un anticoagulante más efectivo para tratar trombosis \nque aquella producida por las sanguijuelas."
+        },
+        {
+          "letra": "C",
+          "texto": "Las personas con trombosis tratadas con la proteína transgénica tienen una \nreducción en su tiempo de estadía hospitalaria."
+        },
+        {
+          "letra": "D",
+          "texto": "Las personas con trombosis tratadas con la proteína transgénica presentan \nsecuelas menos graves que aquellos no tratados."
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "Las poblaciones bacterianas pueden evolucionar rápidamente, respondiendo ante la \npresencia de antibióticos, utilizados como una presión de selección. En la siguiente \ntabla, se resumen los resultados de un estudio en el que se expusieron cultivos de \nuna bacteria X, a la misma temperatura y a diferentes antibióticos: \n \n \nTiempo de muestreo \n(horas) \nRespuesta ante la presencia de antibiótico \nAntibiótico 1 \nAntibiótico 2 Antibiótico 3 Antibiótico 4 \nInicial \n- \n- \n- \n- \n- \n- \n+ \n- \n- \n- \n+ \n- \n- \n+ \n+ \n+ \n- \n+ \n+ \n+ \n+ \n+ \n+ \n+ \n+ \n+ \n+ \n+ \n \n+ = Resistencia al antibiótico            - = Sensibilidad al antibiótico \n \nConsiderando los resultados de la tabla, ¿cuál de las siguientes opciones pudo ser \nla pregunta de investigación que pudo haber guiado este estudio?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "¿Qué mecanismo desarrolla la bacteria X para volverse resistente frente a la \nacción de los antibióticos?"
+        },
+        {
+          "letra": "B",
+          "texto": "¿Cuánto tiempo demora la bacteria X en generar resistencia a los antibióticos?"
+        },
+        {
+          "letra": "C",
+          "texto": "¿Qué tipo de antibiótico resulta ser más efectivo en función del tiempo para el \ntratamiento contra las enfermedades bacterianas?"
+        },
+        {
+          "letra": "D",
+          "texto": "¿Cómo influye la temperatura en el crecimiento de una población bacteriana \nsometida a diferentes tratamientos con antibióticos?"
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "Un grupo de científicos se encuentra realizando estudios de biología molecular de un \nfósil encontrado en el Parque Nacional Torres del Paine. Para ello realizaron una \ncomparación de las secuencias genéticas de este fósil con restos de 4 especies de \ninterés presentes en otras áreas geográficas de similares características. Los \ninvestigadores presentaron los resultados del porcentaje de coincidencia entre las \nsecuencias analizadas (similitud), en la siguiente tabla: \n \n \n   Especie \n   Similitud (%) \n \n \nEn este contexto, ¿cuál de las siguientes conclusiones es correcta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El fósil encontrado es de una especie antigua que posee un ancestro común \ncon la especie 4."
+        },
+        {
+          "letra": "B",
+          "texto": "El fósil encontrado es de una especie que se encuentra estrechamente \nrelacionada con la especie 3."
+        },
+        {
+          "letra": "C",
+          "texto": "El fósil encontrado es de una especie que habitó junto con las especies 1 y 2 en \nun área geográfica distinta de donde fue hallado."
+        },
+        {
+          "letra": "D",
+          "texto": "El fósil encontrado es de una especie extinta sin relación evolutiva alguna con \nlas especies comparadas."
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "Al estudiar la influencia de distintas variables sobre la fotosíntesis de las plantas \nterrestres, fue posible establecer una relación entre el rendimiento fotosintético en \nfunción de la concentración de oxígeno en el estroma del cloroplasto, la cual se \nrepresenta en el siguiente gráfico:  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nConsiderando lo anterior, ¿cuál de las siguientes opciones corresponde a una \ninferencia correcta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las plantas que viven en ambientes altamente oxigenados presentarán un \ncrecimiento acelerado."
+        },
+        {
+          "letra": "B",
+          "texto": "La mayor producción de oxígeno asociada a la fotosíntesis se logrará en \nplantas de rendimiento fotosintético óptimo."
+        },
+        {
+          "letra": "C",
+          "texto": "Las plantas que eliminan mayores niveles de oxígeno en las hojas \npresentarán rendimientos fotosintéticos superiores."
+        },
+        {
+          "letra": "D",
+          "texto": "Las plantas que habitan ambientes con bajas concentraciones de oxígeno \npresentarán rendimientos fotosintéticos menores. \n \n \n \n \n \n \nRendimiento fotosintético (u.a.) \nConcentración de oxígeno en el estroma (u.a.)"
+        }
+      ]
+    },
+    {
+      "numero": 36,
+      "enunciado": "Para una determinada cuenca, se ha estudiado parte de su trama trófica \ndulceacuícola representada por dos especies de peces (X e Y) y una especie Z de \nninfa herbívora (estado larval de insectos adultos) por un periodo de 6 años, mediante \nla estimación de la biomasa, medida en unidades arbitrarias (u.a.), y su respectivo rol \ntrófico. Los resultados se presentan en la siguiente tabla: \n \n \n \n \n \n \n \n \nAl respecto, ¿cuál de las siguientes opciones corresponde a una tendencia que se \npuede extraer de los datos reportados?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La biomasa de la trama trófica en estudio disminuye a medida que pasan los \naños."
+        },
+        {
+          "letra": "B",
+          "texto": "La energía disponible en esta trama trófica aumenta a medida que pasan los \naños."
+        },
+        {
+          "letra": "C",
+          "texto": "Los consumidores terciarios aumentan a medida que los consumidores \nsecundarios disminuyen."
+        },
+        {
+          "letra": "D",
+          "texto": "Los consumidores secundarios disminuyen a medida que los consumidores \nprimarios aumentan. \nRol trófico \nEspecie \nEstimación de la biomasa \nAño \nAño \nAño \nAño \nAño \nAño   \nConsumidor terciario \nX  \nConsumidor secundario \nY  \n8,75 \n8,05 \n7,7 \n5,6 \n4,9 \n4,55 \nConsumidor primario \nZ  \n0,105 0,103 0,100 0,108 0,110  0,104"
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "En una historia de ciencia ficción, una persona explorando un planeta encuentra \nuna extraña sustancia que brilla intensamente. Al analizarla, descubre que tiene \ndiversas propiedades. En relación con lo anterior y considerando que el planeta \npresenta los mismos elementos químicos y condiciones de la Tierra, ¿cuál de las \nsiguientes opciones señala un procedimiento resumido que debería implementar la \npersona para determinar si la sustancia encontrada es una mezcla o una sustancia \npura?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Determinar si la sustancia tiene nuevas propiedades físicas."
+        },
+        {
+          "letra": "B",
+          "texto": "Determinar si la sustancia se puede separar por medios físicos."
+        },
+        {
+          "letra": "C",
+          "texto": "Determinar si la sustancia es capaz de disolverse en agua."
+        },
+        {
+          "letra": "D",
+          "texto": "Determinar si la sustancia es conductora de electricidad."
+        }
+      ]
+    },
+    {
+      "numero": 38,
+      "enunciado": "El petróleo es un líquido viscoso de color negro resultante de la descomposición \nbacteriana de la materia orgánica que por millones de años se acumuló en las \nprofundidades de la corteza terrestre. Una técnica utilizada para separar los \ncompuestos que forman parte del petróleo consiste en aplicar un aumento de la \ntemperatura para ir colectando los diferentes compuestos en base a su temperatura \nde ebullición. Al respecto, ¿cuál de las siguientes opciones corresponde a la técnica \nque permite separar y colectar los compuestos derivados del petróleo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Filtración"
+        },
+        {
+          "letra": "B",
+          "texto": "Tamizado"
+        },
+        {
+          "letra": "C",
+          "texto": "Decantación"
+        },
+        {
+          "letra": "D",
+          "texto": "Destilación fraccionada"
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "Un científico propuso lo siguiente para la estructura del átomo: sugiere la existencia \nde dos áreas separadas en él. Un núcleo de pequeño volumen, comparado con el \nvolumen del átomo, que contiene un determinado número de partículas con carga \npositiva (protones), y que concentra la mayor parte de la masa del átomo y una \nzona distante, alrededor de este núcleo, donde se encontraría un número igual de \npartículas con carga negativa (electrones) girando a alta velocidad, en trayectorias \ndenominadas órbitas. La atracción entre cargas eléctricas positivas y negativas \nmantendría unidas ambas áreas del átomo.  \nAl respecto, ¿cuál de las siguientes opciones es una inferencia correcta a partir de \nlo propuesto por el científico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Los electrones tienen una masa mucho menor que la de los protones."
+        },
+        {
+          "letra": "B",
+          "texto": "La masa total del átomo está dada por los electrones."
+        },
+        {
+          "letra": "C",
+          "texto": "Los protones y los electrones se repelen."
+        },
+        {
+          "letra": "D",
+          "texto": "Los átomos son indivisibles."
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "Un estudiante planteó lo siguiente: “El KMnO4 sirve para diferenciar alquenos de \naldehídos”, para ello preparó 6 tubos de ensayo y añadió a cada tubo 5 mL de         \n6 muestras de aldehídos diferentes y conocidos. Luego agregó 1 mL de KMnO4, \nanotando los datos obtenidos. Estos se muestran en la tabla a continuación: \n \n \nTubo \nCompuestos orgánicos \nReacción con KMnO4 \n \nMetanal \n(+) \n \nPentanal \n(+) \n \nBenzaldehído \n(+) \n \n2-etilbutanal \n(+) \n \n2,3,4-trimetilpentanal \n(+) \n \nEtanal \n(+) \n \n             \n              (+): Hay reacción      (–): No hay reacción \n \n \nEn relación a lo planteado en el enunciado y a los datos obtenidos, ¿cuál de las \nsiguientes opciones es correcta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El procedimiento experimental está planteado incorrectamente debido a que \nsolo utiliza aldehídos."
+        },
+        {
+          "letra": "B",
+          "texto": "Los datos obtenidos son consistentes con lo planteado por el estudiante, ya \nque permiten diferenciar entre alquenos y aldehídos."
+        },
+        {
+          "letra": "C",
+          "texto": "El procedimiento experimental está planteado incorrectamente por lo que los \ndatos obtenidos presentan errores."
+        },
+        {
+          "letra": "D",
+          "texto": "El procedimiento experimental permite comprobar el objetivo planteado por el \nestudiante diferenciando alquenos y aldehídos."
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "Con respecto a la siguiente molécula: \n \n \nO\nO\nOH\nCH3\nO\n \n \n \n¿Cuál de los siguientes grupos funcionales se encuentra presente en ella?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Aldehído"
+        },
+        {
+          "letra": "B",
+          "texto": "Cetona"
+        },
+        {
+          "letra": "C",
+          "texto": "Alcohol"
+        },
+        {
+          "letra": "D",
+          "texto": "Éster"
+        },
+        {
+          "letra": "E",
+          "texto": "Éter"
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "En el contexto de un experimento escolar, un grupo de estudiantes hace reaccionar \ncompletamente dos reactivos (X e Y) con el fin de obtener un producto XnYm. Las \ncantidades específicas de X e Y, para dos ensayos de formación de XnYm, se \npresentan en el siguiente gráfico: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEn relación con el análisis del gráfico, ¿cuál de las siguientes conclusiones es \ncorrecta para la formación del producto XnYm?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La cantidad de sustancia de X y de Y que se combinan deben ser iguales."
+        },
+        {
+          "letra": "B",
+          "texto": "La proporción de la cantidad de sustancia en que los reactivos X e Y se \ncombinan es variable."
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad de sustancia obtenida es igual a la suma de la cantidad de \nsustancia de los reactivos X e Y."
+        },
+        {
+          "letra": "D",
+          "texto": "Los reactivos X e Y se combinan en la misma proporción en mol, en ambos \nensayos."
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "La combustión del metano se representa por la ecuación \n  \nCH4 (g)   +   2 O2 (g)                 CO2 (g)   +   2 H2O () \n  \n¿Qué masa de CO2 se produce por la combustión completa de 32 g de metano?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "88 g"
+        },
+        {
+          "letra": "B",
+          "texto": "44 g"
+        },
+        {
+          "letra": "C",
+          "texto": "32 g"
+        },
+        {
+          "letra": "D",
+          "texto": "22 g"
+        },
+        {
+          "letra": "E",
+          "texto": "16 g"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "¿Qué masa de oxígeno hay en 200 g de SO3?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "16 g"
+        },
+        {
+          "letra": "B",
+          "texto": "32 g"
+        },
+        {
+          "letra": "C",
+          "texto": "48 g"
+        },
+        {
+          "letra": "D",
+          "texto": "80 g"
+        },
+        {
+          "letra": "E",
+          "texto": "120 g"
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "Un grupo de bioquímicos se encuentra realizando una investigación sobre una \nsustancia orgánica presente en los cítricos. En su estudio desean obtener esta \nsustancia orgánica a partir de diversos tipos de especies vegetales: limón, pomelo, \nnaranja y mandarina, para lo cual realizan un procedimiento experimental de \nextracción. Para ello, colocan la misma masa de cáscaras y realizan por separado \nen cada especie de cítricos el proceso de extracción por el mismo período de \ntiempo y bajo las mismas condiciones de temperatura y presión. Luego, cuantifican \nla cantidad de sustancia orgánica obtenida. En base a lo anterior, ¿cuál de las \nsiguientes opciones corresponde a la variable independiente utilizada por los \nbioquímicos en su investigación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Tiempo de extracción"
+        },
+        {
+          "letra": "B",
+          "texto": "Especies de cítricos"
+        },
+        {
+          "letra": "C",
+          "texto": "Temperatura de extracción"
+        },
+        {
+          "letra": "D",
+          "texto": "Masa de cáscaras de cítricos"
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "Un grupo de científicos se propuso realizar un análisis comparativo entre muestras \nprovenientes de distintos océanos. Mediante los análisis adecuados, determinaron \nque “las muestras de agua del mar Rojo alcanzaron una concentración de iones \nentre 42 y 46 g/L, las del mar Mediterráneo entre 36 y 39 g/L y las del Atlántico \nentre 33 y 36 g/L”. A partir de lo anterior, ¿a qué componente de la investigación \ncientífica se asocia la frase entre comillas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A una hipótesis"
+        },
+        {
+          "letra": "B",
+          "texto": "A un resultado"
+        },
+        {
+          "letra": "C",
+          "texto": "A una inferencia"
+        },
+        {
+          "letra": "D",
+          "texto": "A un procedimiento"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "En el laboratorio un grupo de estudiantes prepara diferentes diluciones a partir de \nuna solución de sulfato de cobre 1 mol/L que se encuentra en un vaso de \nprecipitados de 500 mL. Las nuevas diluciones tienen una concentración de        \n0,5, 0,25 y 0,1 mol/L en un volumen final de 100 mL cada una. Para ello, tomaron \n50, 25 y 10 mL respectivamente. Finalmente, guardan el resto de la solución de \nsulfato de cobre inicial en una botella de 250 mL a 4 °C. Considerando que el \nprocedimiento experimental se realizó correctamente, ¿cuál de las opciones señala \nel material indispensable para medir una variable controlada en este proceso?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Vaso de precipitados de 500 mL."
+        },
+        {
+          "letra": "B",
+          "texto": "Probeta graduada de 50 mL."
+        },
+        {
+          "letra": "C",
+          "texto": "Matraz de aforo de 100 mL."
+        },
+        {
+          "letra": "D",
+          "texto": "Botella de vidrio de 250 mL."
+        }
+      ]
+    },
+    {
+      "numero": 57,
+      "enunciado": "En verano, se recomienda utilizar protector solar incluso si se va a estar bajo el \nagua, como ocurre al bañarse en una piscina o en el mar. ¿Cuál es la \nfundamentación de la recomendación anterior?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El agua refleja luz solar."
+        },
+        {
+          "letra": "B",
+          "texto": "El agua transmite parte de la luz solar."
+        },
+        {
+          "letra": "C",
+          "texto": "En el agua, la luz solar cambia su rapidez."
+        },
+        {
+          "letra": "D",
+          "texto": "Una parte de la luz solar es absorbida por el agua."
+        }
+      ]
+    },
+    {
+      "numero": 58,
+      "enunciado": "Tres estaciones espaciales 𝑃, 𝑄 y 𝑅 están constantemente comunicadas mediante \nondas de radio emitidas con una misma frecuencia 𝑓. En cierto momento, las tres \nestaciones se desplazan con la misma rapidez 𝑣, pero en los sentidos indicados en \nla siguiente figura: \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes opciones corresponde a una predicción que debiese \ncumplirse para la frecuencia de la onda de radio captada en las estaciones \nespaciales?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "𝑃 capta de 𝑄 una señal de frecuencia mayor que 𝑓."
+        },
+        {
+          "letra": "B",
+          "texto": "𝑅 capta de 𝑃 una señal de frecuencia menor que 𝑓."
+        },
+        {
+          "letra": "C",
+          "texto": "𝑄 capta de 𝑅 una señal de frecuencia mayor que 𝑓."
+        },
+        {
+          "letra": "D",
+          "texto": "𝑄 capta de 𝑃 una señal de frecuencia menor que 𝑓.  \n \n \n \n \n \n \n𝑃 \n𝑄 \n𝑅 \n𝑣 \n𝑣 \n𝑣"
+        }
+      ]
+    },
+    {
+      "numero": 59,
+      "enunciado": "Un grupo de estudiantes desea observar los patrones de interferencia generados \nal ubicar una fuente puntual de luz láser frente a un papel con dos rendijas muy \nfinas y muy juntas entre sí. Si luego desean modificar el experimento e \nigualmente observar un patrón de interferencia, ¿de qué es indispensable que se \naseguren?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "De que la distancia entre las rendijas sea similar."
+        },
+        {
+          "letra": "B",
+          "texto": "De utilizar una fuente de luz láser de la misma intensidad."
+        },
+        {
+          "letra": "C",
+          "texto": "De utilizar una fuente de luz láser del mismo color original."
+        },
+        {
+          "letra": "D",
+          "texto": "De ubicar el láser a la misma distancia del papel con las rendijas."
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "Una guitarra se encuentra a 2 m de una lente divergente y sobre la línea del eje \nóptico. Al respecto, ¿cuál de los siguientes pares de características posee la \nimagen de la guitarra formada por la lente?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Es real y más pequeña que la guitarra."
+        },
+        {
+          "letra": "B",
+          "texto": "Es virtual y más pequeña que la guitarra."
+        },
+        {
+          "letra": "C",
+          "texto": "Es real y de igual tamaño que la guitarra."
+        },
+        {
+          "letra": "D",
+          "texto": "Es virtual y de igual tamaño que la guitarra."
+        }
+      ]
+    },
+    {
+      "numero": 62,
+      "enunciado": "Un objeto se coloca frente a un espejo cóncavo de foco F y vértice V, como se \nrepresenta en la siguiente figura: \n \n \n \n \n \n \n¿En cuál de las siguientes opciones se presenta correctamente un par de rayos \nincidentes y sus respectivos rayos reflejados? \n \nA) \n  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nF \nV \nF \nV \nF \nV \nF \nV \nF \nV \nF\nV \nB) \nC) \nD) \nE)",
+      "alternativas": []
+    },
+    {
+      "numero": 63,
+      "enunciado": "Un grupo de personas realiza una investigación para verificar si se cumple la ley de \nla reflexión de la luz en el agua. Para esto, utilizarán un puntero láser y un espejo \nplano que ubican dentro de un recipiente transparente lleno de agua. Al respecto, \n¿cuál de los siguientes elementos es más adecuado que el grupo incluya en el \nmontaje para cumplir con su objetivo de investigación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Un segundo espejo plano."
+        },
+        {
+          "letra": "B",
+          "texto": "Un transportador."
+        },
+        {
+          "letra": "C",
+          "texto": "Un cronómetro."
+        },
+        {
+          "letra": "D",
+          "texto": "Una regla."
+        }
+      ]
+    },
+    {
+      "numero": 65,
+      "enunciado": "Una persona toma dos cuerpos de distinta masa, material y dimensiones, pone uno \nsobre el otro y los empuja sobre una superficie horizontal. Luego, los intercambia de \nposición y vuelve a empujar el conjunto de cuerpos sobre la misma superficie \nasegurándose de que la velocidad inicial sea la misma en ambos casos. La persona \nobserva que en las dos situaciones recorren distintas distancias antes de detenerse.  \nEn relación con lo anterior, ¿cuál de las siguientes opciones señala la variable \nresponsable de lo observado por la persona?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las dimensiones de los cuerpos."
+        },
+        {
+          "letra": "B",
+          "texto": "Las masas de los cuerpos."
+        },
+        {
+          "letra": "C",
+          "texto": "Los materiales de los cuerpos."
+        },
+        {
+          "letra": "D",
+          "texto": "La superficie en la que se mueven los cuerpos."
+        }
+      ]
+    },
+    {
+      "numero": 66,
+      "enunciado": "Una persona mueve un mueble de su hogar mediante una fuerza 𝐹⃗ horizontal \nconstante, desde un punto P hacia un punto Q, sobre una superficie de roce \ndespreciable, excepto cuando pasa sobre una alfombra, sobre la cual la fuerza de \nroce 𝐹⃗𝑅 es de igual magnitud que la fuerza 𝐹⃗. Esta situación se representa en la \nsiguiente figura: \n \n \n \n \n \nAl respecto, ¿cómo es la aceleración del mueble durante el trayecto descrito?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "De igual valor antes y después de pasar por la alfombra."
+        },
+        {
+          "letra": "B",
+          "texto": "De menor valor después de pasar por la alfombra que antes de pasar por ella."
+        },
+        {
+          "letra": "C",
+          "texto": "Creciente durante todo el trayecto, excepto en su paso por la alfombra, \ndonde es constante."
+        },
+        {
+          "letra": "D",
+          "texto": "Creciente durante todo el trayecto, excepto en su paso por la alfombra, \ndonde es decreciente.  \n \n \n \nAlfombra \nP \nQ\n𝐹Ԧ  \n𝐹Ԧ  \n𝐹Ԧ  \n𝐹Ԧ𝑅"
+        }
+      ]
+    },
+    {
+      "numero": 67,
+      "enunciado": "Un grupo de estudiantes desea estudiar las fuerzas que están actuando sobre una \npersona mientras se desliza por un tobogán, tal como se representa en la siguiente \nfigura: \n \n \n \nSi durante la caída la persona se desliza con aceleración constante y su ropa en \ncontacto con el tobogán experimenta un aumento en la temperatura, ¿cuál de los \nsiguientes diagramas indica la dirección de la fuerza directamente responsable del \naumento de temperatura de su ropa? \n \n \n \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 68,
+      "enunciado": "Un equipo realiza una investigación sobre la fuerza de roce entre un bloque y una \nsuperficie horizontal y rugosa. Durante el experimento, el bloque es desplazado \naplicándole una fuerza horizontal, cuya magnitud se representa en el siguiente \ngráfico.  \n \n \nConsiderando que a los 5 s el bloque comienza a moverse y a los 8 s se detiene, \n¿qué instrumentos de medición son suficientes para obtener los datos graficados?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Una balanza y un dinamómetro."
+        },
+        {
+          "letra": "B",
+          "texto": "Un dinamómetro y un cronómetro."
+        },
+        {
+          "letra": "C",
+          "texto": "Un sensor de movimiento y una balanza."
+        },
+        {
+          "letra": "D",
+          "texto": "Un cronómetro y un sensor de movimiento. \n \n \n \nMagnitud de la \nfuerza (N) \nTiempo (s)"
+        }
+      ]
+    },
+    {
+      "numero": 69,
+      "enunciado": "La unidad de ingeniería de una empresa constructora realiza pruebas de los \ncables de acero que utilizan en sus grúas. Para ello, cuelgan verticalmente \nobjetos de distinta masa al cable y miden su elongación en cada caso. Luego, \ncon los datos obtenidos, la unidad de ingeniería realiza el siguiente gráfico entre \nel peso de los objetos colgados y la elongación experimentada por el cable:  \n \n \n \n \n \nA partir de los resultados que obtuvo la unidad de ingeniería, ¿cuál de las \nsiguientes conclusiones es correcta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El límite elástico del cable es desconocido."
+        },
+        {
+          "letra": "B",
+          "texto": "La constante de elasticidad del cable es desconocida."
+        },
+        {
+          "letra": "C",
+          "texto": "El cable se romperá cuando la fuerza sea mayor que 4000 N."
+        },
+        {
+          "letra": "D",
+          "texto": "La constante de elasticidad para elongaciones mayores que 5 cm es nula. \n \n \n \nPeso (N) \nElongación (cm)"
+        }
+      ]
+    },
+    {
+      "numero": 70,
+      "enunciado": "Un resorte ideal en su estado natural mide 15 cm de longitud. Este resorte se \ncuelga verticalmente de uno de sus extremos y se suspende de él un bloque de \n3 kg, alcanzando una longitud de 20 cm. Si la magnitud de la aceleración de \ngravedad del lugar es 10 \n,\ns\nm\n2 ¿cuál es la constante elástica del resorte?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "1,50 cm\nN"
+        },
+        {
+          "letra": "B",
+          "texto": "2,00 cm\nN"
+        },
+        {
+          "letra": "C",
+          "texto": "2,25 cm\nN"
+        },
+        {
+          "letra": "D",
+          "texto": "6,00 cm\nN"
+        }
+      ]
+    },
+    {
+      "numero": 71,
+      "enunciado": "La actividad de un volcán está provocando una preocupación creciente en la \npoblación de una pequeña comunidad, la cual nunca ha presenciado una erupción \nvolcánica. Debido a esto, la autoridad local quiere crear un afiche informativo sobre \nel tema para educar a la población local. ¿Cuál de las siguientes opciones presenta \nun tema adecuado para incluir en el afiche?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Tipos de erupciones volcánicas"
+        },
+        {
+          "letra": "B",
+          "texto": "Ranking de erupciones volcánicas con más víctimas"
+        },
+        {
+          "letra": "C",
+          "texto": "Mecanismos de formación de volcanes"
+        },
+        {
+          "letra": "D",
+          "texto": "Recomendaciones ante una erupción volcánica"
+        }
+      ]
+    },
+    {
+      "numero": 72,
+      "enunciado": "A un grupo de geólogas les llama la atención que la cordillera de los Andes en el \nnorte chico de Chile es notoriamente más alta que en la zona sur del país, por lo \nque quieren enfocarse en el estudio de las razones de esta característica. A partir \nde lo anterior, ¿cuál de las siguientes opciones es una hipótesis que podría explicar \nadecuadamente la diferencia mencionada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Existen lagunas sísmicas en el norte chico de Chile."
+        },
+        {
+          "letra": "B",
+          "texto": "Existe una mayor cantidad de volcanes activos en la zona sur de Chile."
+        },
+        {
+          "letra": "C",
+          "texto": "El ángulo de subducción de la placa de Nazca es menor en el norte chico de \nChile."
+        },
+        {
+          "letra": "D",
+          "texto": "La divergencia entre la placa de Nazca y la placa del Pacífico es mayor en la \nzona sur de Chile."
+        }
+      ]
+    },
+    {
+      "numero": 74,
+      "enunciado": "Se han extraído rocas del suelo oceánico, en las posiciones representadas en la \nimagen, a distancias similares de una dorsal. Así, las rocas extraídas del sector 3 \nestán a igual distancia de la dorsal que las rocas sacadas del sector 4, pero al doble \nde distancia que las extraídas de los sectores 1 y 2. \n \n \n \n \n \nA partir de los procesos que ocurren en una dorsal, ¿cuál de las siguientes \nafirmaciones es correcta con respecto a las rocas de los distintos sectores?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las rocas de los sectores 2 y 5 tienen temperatura similar."
+        },
+        {
+          "letra": "B",
+          "texto": "Las rocas de los sectores 1 y 6 tienen igual densidad."
+        },
+        {
+          "letra": "C",
+          "texto": "Las rocas de los sectores 3 y 4 están a igual profundidad."
+        },
+        {
+          "letra": "D",
+          "texto": "Las rocas de los sectores 5 y 6 tienen edad similar."
+        }
+      ]
+    },
+    {
+      "numero": 76,
+      "enunciado": "En una actividad experimental, en cierto circuito eléctrico compuesto por varias pilas \nconectadas en serie, dos interruptores y un resistor, circula un determinado flujo de \ncargas en un tiempo conocido. Si se requiere que el flujo de cargas por unidad de \ntiempo en el circuito aumente, ¿cuál de las siguientes acciones es la que lo \npermite?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Aumentar la diferencia de potencial del circuito."
+        },
+        {
+          "letra": "B",
+          "texto": "Aumentar la resistencia del circuito."
+        },
+        {
+          "letra": "C",
+          "texto": "Disminuir el número de pilas."
+        },
+        {
+          "letra": "D",
+          "texto": "Disminuir el número de interruptores."
+        }
+      ]
+    },
+    {
+      "numero": 77,
+      "enunciado": "Un electricista quiere instalar el circuito eléctrico en una casa, para lo que necesita \nla información suministrada por la ingeniera a cargo. ¿Cuál de los siguientes \nrecursos contiene la información necesaria para realizar la instalación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Un inventario con los artefactos eléctricos que se utilizarán en la casa."
+        },
+        {
+          "letra": "B",
+          "texto": "Un cuadro con la cantidad de luminarias requeridas para cada habitación."
+        },
+        {
+          "letra": "C",
+          "texto": "Un plano de la casa indicando los tipos de conexiones requeridas para cada \nhabitación."
+        },
+        {
+          "letra": "D",
+          "texto": "Un folleto que describa las características de los enchufes requeridos para \ncada habitación de la casa."
+        }
+      ]
+    },
+    {
+      "numero": 78,
+      "enunciado": "Una estudiante quiere comprobar que la red domiciliaria efectivamente corresponde \na un circuito en paralelo. ¿Cuál de las siguientes mediciones permite a la estudiante \nlograr su objetivo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La lectura que marca el medidor de la casa."
+        },
+        {
+          "letra": "B",
+          "texto": "La diferencia de potencial en cada enchufe de la casa."
+        },
+        {
+          "letra": "C",
+          "texto": "La intensidad de corriente que circula por los artefactos de la casa."
+        },
+        {
+          "letra": "D",
+          "texto": "La resistencia eléctrica de los cables que forman el circuito de la casa."
+        }
+      ]
+    },
+    {
+      "numero": 80,
+      "enunciado": "Una persona investiga acerca de la eficiencia energética de algunos tipos de \nampolletas. Lee que, a diferencia de una ampolleta incandescente, la cual \ntransforma alrededor de un 5 % de su consumo eléctrico en luz, una ampolleta LED \nemite cerca del 50 % de la energía consumida en forma de radiación \nelectromagnética visible. En relación con lo anterior, ¿cuál de las siguientes \nopciones es una conclusión coherente con la información recopilada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El uso de ampolletas LED permite una mayor iluminación en un hogar que el \nuso de ampolletas incandescentes."
+        },
+        {
+          "letra": "B",
+          "texto": "El consumo eléctrico de una ampolleta LED es mayor que el consumo de una \nampolleta incandescente de similar luminosidad."
+        },
+        {
+          "letra": "C",
+          "texto": "El cambio de las ampolletas incandescentes de similar luminosidad a LED \nsignifica un ahorro en el consumo eléctrico destinado a iluminación."
+        },
+        {
+          "letra": "D",
+          "texto": "El cambiar las ampolletas incandescentes de una casa por ampolletas LED de \nsimilar potencia, resulta en un ahorro del consumo eléctrico en el corto plazo. \n \n@demre.uchile\nDEMRE U.chile\nDEMRE Uchile\n/demre.uchile\n/DEMREuchile\n/demre.uchile\n/demre_uchile\ndemre.cl"
+        }
+      ]
+    }
+  ]
+}
