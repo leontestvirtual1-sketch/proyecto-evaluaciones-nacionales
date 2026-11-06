@@ -138,13 +138,16 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
   const [loadedPreguntas, setLoadedPreguntas] = useState<Pregunta[]>([]);
   const [isLoadingPreguntas, setIsLoadingPreguntas] = useState<boolean>(false);
   const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
+  const [mostrarRespuestas, setMostrarRespuestas] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isOpen || !prueba) {
       setLoadedPreguntas([]);
       setIsLoadingPreguntas(false);
+      setMostrarRespuestas(false);
       return;
     }
+    setMostrarRespuestas(false);
 
     const byId = new Map<string, Pregunta>();
     (preguntas || []).forEach(p => byId.set(p.id, p));
@@ -334,12 +337,44 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-3">
+            {/* Toggle Facsímil Limpio vs Pauta con Respuestas */}
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
+              <button
+                type="button"
+                onClick={() => setMostrarRespuestas(false)}
+                className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
+                  !mostrarRespuestas
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm font-bold'
+                    : 'text-slate-500 hover:text-slate-300'
+                }`}
+                title="Ver facsímil limpio sin respuestas (ideal para ensayar o proyectar en clases)"
+              >
+                <span>✨</span>
+                <span>Facsímil Limpio</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setMostrarRespuestas(true)}
+                className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
+                  mostrarRespuestas
+                    ? 'bg-emerald-600 text-white shadow-sm font-bold'
+                    : 'text-slate-500 hover:text-slate-300'
+                }`}
+                title="Ver alternativas correctas destacadas con su clave oficial"
+              >
+                <span>🔑</span>
+                <span>Pauta con Respuestas</span>
+              </button>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Modal Body: List of Questions */}
@@ -411,13 +446,13 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
                     <div
                       key={alt.letra}
                       className={`p-3 rounded-xl border text-xs flex items-start gap-2.5 transition-all ${
-                        alt.es_correcta
+                        alt.es_correcta && mostrarRespuestas
                           ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-semibold'
                           : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
                       }`}
                     >
                       <span className={`w-5 h-5 rounded-md text-[11px] font-bold flex items-center justify-center flex-shrink-0 ${
-                        alt.es_correcta
+                        alt.es_correcta && mostrarRespuestas
                           ? 'bg-emerald-600 text-white'
                           : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                       }`}>
@@ -426,7 +461,7 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
                       <span className="pt-0.5">
                         <EnunciadoRenderer content={alt.texto} inline={true} />
                       </span>
-                      {alt.es_correcta && (
+                      {alt.es_correcta && mostrarRespuestas && (
                         <span className="ml-auto text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400">
                           ✓ Correcta
                         </span>

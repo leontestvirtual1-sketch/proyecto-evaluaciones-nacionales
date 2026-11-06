@@ -450,6 +450,12 @@ export const DescargaDemrePage: React.FC = () => {
                             </span>
                           )
                         )}
+                        {doc.tipo === 'clavijero' && (
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+                            <span>🔑</span>
+                            <span>Solucionario Oficial con Respuestas</span>
+                          </span>
+                        )}
                       </div>
 
                       <button
