@@ -1,0 +1,1253 @@
+{
+  "materia": "m2",
+  "year": 2025,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n\n,0\n.",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q .",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": "\n\nb\n,a\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n\nb\n,a\n, a menos que se indique lo \ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del 1 al",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "y en el experimento de lanzarlo, sus caras son equiprobables de salir. \n \n6. \nEn el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \n \n \n \n \n \nRegistro de Propiedad Intelectual Nº  \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \nINSTRUCCIONES PARA LAS PREGUNTAS DE SUFICIENCIA DE DATOS \n \nEn las preguntas de Suficiencia de Datos no se pide la solución al problema, sino que se \ndecida si con los datos proporcionados, tanto en el enunciado como en las afirmaciones \n(1) y (2), se puede llegar a la solución del problema. \n \n \nEs así que se deberá marcar la opción:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola, si la afirmación (1) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (2) por sí sola no lo es,"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola, si la afirmación (2) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (1) por sí sola no lo es,"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2), si ambas afirmaciones (1) y (2) juntas son suficientes \npara resolver el problema, pero ninguna de las afirmaciones por sí sola es \nsuficiente,"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2), si cada una por sí sola es suficiente para \nresolver el problema,"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional, si ambas afirmaciones juntas son \ninsuficientes para resolver el problema y se requiere información adicional \npara llegar a la solución. \n \nSÍMBOLOS MATEMÁTICOS \n \n \n \nes menor que \n \nes semejante con \n \nes mayor que \n \nes perpendicular a \n \nes menor o igual que \n \nes distinto de \n \nes mayor o igual que \n// \nes paralelo a \n \nángulo recto \n \npertenece a \n \nángulo \nAB \ntrazo AB \nlog \nlogaritmo en base 10 \nx \nvalor absoluto de x \n \nconjunto vacío \nx! \nfactorial de x \n \nes aproximado a \n \nintersección de conjuntos \n \nunión de conjuntos \nu \nvector u \nAc \ncomplemento del conjunto A \n \n \n \n \n \n1. \nSi P , Q y R son tres números positivos, tal que \n,0\nP\nR \n y \n,1\nQ\nR \n, \n¿cuál es el orden creciente de los números?"
+        },
+        {
+          "letra": "A",
+          "texto": "Q\nR\nP\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "P\nR\nQ\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "P\nQ\nR\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "R\nQ\nP\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "Q\nP\nR\n\n\n \n \n \n \n \n \n \n \n \n \n \n2. \nSi m es un número entero mayor que 1 y x es un número real positivo,  \n¿cuál de las siguientes expresiones es igual a \nm x\nx \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "m\nx"
+        },
+        {
+          "letra": "B",
+          "texto": "m\nx\n"
+        },
+        {
+          "letra": "C",
+          "texto": "m\nm\nx"
+        },
+        {
+          "letra": "D",
+          "texto": "m\nm\nx\n"
+        },
+        {
+          "letra": "E",
+          "texto": "m\nx \n \n \n \n3. \nPara calcular el área A de un triángulo cuyos lados miden a , b y c, se puede \nutilizar la expresión \n\n\n\n\nc\nS\nb\nS\na\nS\nS\nA\n\n\n\n\n, tal que \nc\nb\na\nS\n\n\n\n. \n \nPara determinar el área de un triángulo en el que dos de sus lados miden L y el \notro mide \nL\n, se realiza el siguiente procedimiento, en el cual se comete un \nerror. \n \nPaso 1: se reemplaza S en la expresión para calcular A , obteniéndose  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nc\nc\nb\na\nb\nc\nb\na\na\nc\nb\na\nc\nb\na\nA\n. \n \nPaso 2:  se reemplazan las medidas de los lados del triángulo, obteniéndose \n\n\n\n\n\n\n\n\n\n\n\n\n\n\nL\nL\nL\nL\nA\n. \n \nPaso 3:  se \nexpresa \nel \nradicando \nutilizando \npotencias, \nobteniéndose \nL\nA\n\n\n\n\n\n\n\n. \n \nPaso 4: se aplica la propiedad de la raíz y de la potencia, obteniéndose \nL\nA\n\n. \n \n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n4. \nSi a y b son números racionales, tal que \nb\na\n\n\n\n, ¿cuál de las siguientes \nexpresiones representa siempre a un número mayor que 1?"
+        },
+        {
+          "letra": "A",
+          "texto": "b\na\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\na "
+        },
+        {
+          "letra": "C",
+          "texto": "ab"
+        },
+        {
+          "letra": "D",
+          "texto": ",0\nb\na "
+        },
+        {
+          "letra": "E",
+          "texto": "\n2\na\nb \n \n \n \n \n5. \nEn un laboratorio, una balanza digital registra de manera automática la masa de \nun cultivo bacteriano. La masa del cultivo se cuadruplica cada 24 horas tal \ncomo se representa en la siguiente tabla: \n \n \n \n \n \n \n \n \n \n¿Cuánta masa registrará la balanza transcurridos cuatro días?"
+        },
+        {
+          "letra": "A",
+          "texto": "kg\n,4\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "kg\n,8\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "kg\n,2\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "kg\n,4\n\n\n \nDías transcurridos \nMasa \n\nkg \n4,6\n\n\n \n,2\n\n\n \n,1\n\n\n \n \n \n \n6. \nSi \na\nP\n\n\n, \na\nQ\n\n\n y \na\nR\n\n\n, con \na \n, ¿cuál de las siguientes \nrelaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "R\nP\nQ\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "R\nP\nQ\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "P\nR\nQ\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "Q\nR\nP\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "Q\nP\nR\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n9. \nSi \nx\np \n y \ny\nb \n, ¿cuál de las siguientes expresiones es igual a \n\ny\nx \n, \nen términos de p y b ?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nb\np\nlog3\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\nb\np\nlog3\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\nlog\np\nlog\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nb\np\nlog\n\n \n \n \n \n13. En el siguiente gráfico se representa el precio de un producto durante sus primeros \ncuatro meses en el mercado.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se considera el mes con mayor crecimiento porcentual con respecto al mes \nanterior de los meses presentados en el gráfico, ¿cuál tiene que ser el precio del \nproducto en mayo para que ese mes tenga el mismo crecimiento porcentual con \nrespecto al mes anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$\n \n \n \n \n14. Fer recibió una herencia H de \n$\n que se entregará repartida en pagos \nmensuales e iguales.  \n \nPara determinar el monto mensual P , en pesos, que se le entregará a Fer, \nla institución encargada le otorga una tasa de interés c de un \n%\n5,0\n mensual en \nun plazo de n meses, y utiliza el modelo: \n \n\nn\nc\ncH\nP\n\n\n\n\n, \n \ntal que c está escrito en su forma decimal. \n \nSi Fer ha decidido recibir la herencia en un plazo de 60 meses, ¿cuál de las \nsiguientes \nexpresiones \nrepresenta \nel \nmonto, \nen \npesos, \nque \nrecibirá \nmensualmente?"
+        },
+        {
+          "letra": "A",
+          "texto": "60\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n60\n5,1\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n60\n,1\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n60\n,1\n\n\n \n \n \n \n15. ¿Cuál de las siguientes expresiones es igual a \n\n\n2\np\np\np\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "p"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "Si \nx\np \n y \ny\nb \n, ¿cuál de las siguientes expresiones es igual a \n\ny\nx \n, \nen términos de p y b ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\nb\np\nlog3\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\nb\np\nlog3\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\nlog\np\nlog\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nb\np\nlog\n\n \n \n \n \n13. En el siguiente gráfico se representa el precio de un producto durante sus primeros \ncuatro meses en el mercado.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se considera el mes con mayor crecimiento porcentual con respecto al mes \nanterior de los meses presentados en el gráfico, ¿cuál tiene que ser el precio del \nproducto en mayo para que ese mes tenga el mismo crecimiento porcentual con \nrespecto al mes anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$\n \n \n \n \n14. Fer recibió una herencia H de \n$\n que se entregará repartida en pagos \nmensuales e iguales.  \n \nPara determinar el monto mensual P , en pesos, que se le entregará a Fer, \nla institución encargada le otorga una tasa de interés c de un \n%\n5,0\n mensual en \nun plazo de n meses, y utiliza el modelo: \n \n\nn\nc\ncH\nP\n\n\n\n\n, \n \ntal que c está escrito en su forma decimal. \n \nSi Fer ha decidido recibir la herencia en un plazo de 60 meses, ¿cuál de las \nsiguientes \nexpresiones \nrepresenta \nel \nmonto, \nen \npesos, \nque \nrecibirá \nmensualmente?"
+        },
+        {
+          "letra": "A",
+          "texto": "60\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n60\n5,1\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n60\n,1\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n60\n,1\n\n\n \n \n \n \n15. ¿Cuál de las siguientes expresiones es igual a \n\n\n2\np\np\np\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "p\n8 \n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\np\n8 2\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\np\n4 2\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "p\n6 \n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n18. ¿Cuál es el conjunto solución de la inecuación \nx\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n,"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n,"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n\n,"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n,\n \n \n \n \n19.  La edad actual de Raúl es \n1\nx \n años y la de su hermana Paulina es \n\n\npx \n años.  \n \nSi S corresponde a la suma de las edades actuales de Raúl y Paulina, ¿cuál de \nlas siguientes expresiones representa la edad de Raúl hace 3 años?"
+        },
+        {
+          "letra": "A",
+          "texto": "p\np\nS\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\nS\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\nS\n"
+        },
+        {
+          "letra": "D",
+          "texto": "p\np\nS\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "p\np\nS\n\n\n\n \n \n \n \n20. La aceleración de gravedad g en un planeta, en \ns\nm , se puede calcular \nmediante la expresión \nR\nM\nG\ng\n\n\n, tal que G es una constante, M es la masa \ndel planeta en kilogramos, R es su radio en metros y la aceleración de \ngravedad de la Tierra es aproximadamente \ns\nm\n. \n \nConsidera que el radio de Marte mide aproximadamente la mitad del radio de la \nTierra, y que su masa equivale a \n1,0 veces la masa de la Tierra. \n \n¿Cuál es aproximadamente la aceleración de gravedad en Marte?"
+        },
+        {
+          "letra": "A",
+          "texto": "s\nm\n,0"
+        },
+        {
+          "letra": "B",
+          "texto": "s\nm\n5,0"
+        },
+        {
+          "letra": "C",
+          "texto": "s\nm"
+        },
+        {
+          "letra": "D",
+          "texto": "s\nm\n \n \n \n \n24. Una persona contestó correctamente las 18 preguntas de una prueba que tiene \npreguntas de 1, 2 y 3 puntos, obteniendo un total de 35 puntos. Solo seis de \nlas preguntas de la prueba valían 1 punto. \n \nSi x corresponde al total de puntos obtenidos en las preguntas que valen          \n2 puntos e y corresponde al total de puntos obtenidos en las preguntas que \nvalen 3 puntos, ¿cuál de los siguientes sistemas de ecuaciones representa la \nsituación planteada? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. Considera la función f , cuyo dominio es el conjunto de los números reales, \ndefinida por \nx\nx\nx\nf\n\n\n\n.  \n \n¿Cuál de las siguientes funciones tiene como gráfica la parábola asociada a f , \npero trasladada en 5 unidades hacia la derecha?"
+        },
+        {
+          "letra": "A",
+          "texto": "\nx\nx\nx\ng\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\nx\nx\nx\nh\n2 \n"
+        },
+        {
+          "letra": "C",
+          "texto": "\nx\nx\nx\np\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\nx\nx\nx\nq\n\n\n\n \n \n \n \n \n \ny\nx\n\n\n \ny\nx\n\n"
+        },
+        {
+          "letra": "A",
+          "texto": "D) \ny\nx\n\n\n \n \ny\nx\n\n\n \ny\nx\n\n\n \ny\nx\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "y\nx\n\n\n \ny\nx\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "27. Un estudiante de Artes pintará un cuadro de forma rectangular, este tendrá una \nsección de dibujo y por fuera se dejará un margen con un ancho uniforme que \nocupará \ncm\n. \n \nSi la sección de dibujo tendrá \ncm\n de largo y \ncm\n de ancho, ¿cuál es el \nancho correspondiente al margen?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm\n5,"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\n5,7"
+        },
+        {
+          "letra": "C",
+          "texto": "cm\n5,4"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n5,1\n \n \n \n \n28. Considera la función f , cuyo dominio es el conjunto de los números reales, \ndefinida por \nc\nbx\nax\nx\nf\n\n\n\n, con \na \n, ¿cuál de las siguientes afirmaciones \nes siempre verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "La ordenada del vértice de la parábola asociada a la función f es el \nmáximo de esta."
+        },
+        {
+          "letra": "B",
+          "texto": "La gráfica de la función f no interseca al eje X ."
+        },
+        {
+          "letra": "C",
+          "texto": "La gráfica de la función f interseca al eje Y por debajo del origen."
+        },
+        {
+          "letra": "D",
+          "texto": "El recorrido de la función son todos los números reales negativos."
+        },
+        {
+          "letra": "E",
+          "texto": "El eje de simetría de la parábola asociada a f es el eje Y . \n \n \n \n \n \n30. Considera la función f , definida por \nx\nk\nx\nx\nf\n\n\n\n, cuyo dominio es el \nconjunto de los números reales, con k un número real distinto de cero. \n \nSi la segunda coordenada del vértice de la parábola asociada a f es  \nmayor que 1, ¿qué condición debe cumplir k ?"
+        },
+        {
+          "letra": "A",
+          "texto": "Debe ser mayor que 2."
+        },
+        {
+          "letra": "B",
+          "texto": "Debe ser menor que 2 y mayor que 0 ."
+        },
+        {
+          "letra": "C",
+          "texto": "Debe ser menor que 0 y mayor que \n\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Debe ser menor que \n\n. \n \n \n \n \n \n \n \n \n \n \n \n \n31. Considera la función f , definida por \nt\nt\nt\nt\nf\n\n\n\n\n, con dominio el \nconjunto de los números reales. \n \n¿Cuál de las siguientes opciones representa todos los valores de t para los que \n\nt\nf\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "0 , 10 y 15"
+        },
+        {
+          "letra": "B",
+          "texto": "0 , 10\n\n y 15\n"
+        },
+        {
+          "letra": "C",
+          "texto": "3, \n\n y 12\n"
+        },
+        {
+          "letra": "D",
+          "texto": "32. Al aplicar una homotecia con centro en el origen del sistema coordenado al \nvector \n\n,2 \n, se obtiene el vector \n\n,4\n\n. \n \nSi se aplica esta misma homotecia al vector \n\n,3\n, entonces se obtiene n .  \n¿Cuál es el módulo de n ?"
+        },
+        {
+          "letra": "A",
+          "texto": "50 unidades"
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 13,
+      "enunciado": "En el siguiente gráfico se representa el precio de un producto durante sus primeros \ncuatro meses en el mercado.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se considera el mes con mayor crecimiento porcentual con respecto al mes \nanterior de los meses presentados en el gráfico, ¿cuál tiene que ser el precio del \nproducto en mayo para que ese mes tenga el mismo crecimiento porcentual con \nrespecto al mes anterior?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Fer recibió una herencia H de \n$\n que se entregará repartida en pagos \nmensuales e iguales.  \n \nPara determinar el monto mensual P , en pesos, que se le entregará a Fer, \nla institución encargada le otorga una tasa de interés c de un \n%\n5,0\n mensual en \nun plazo de n meses, y utiliza el modelo: \n \n\nn\nc\ncH\nP\n\n\n\n\n, \n \ntal que c está escrito en su forma decimal. \n \nSi Fer ha decidido recibir la herencia en un plazo de 60 meses, ¿cuál de las \nsiguientes \nexpresiones \nrepresenta \nel \nmonto, \nen \npesos, \nque \nrecibirá \nmensualmente?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "60\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n60\n5,1\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n60\n,1\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n60\n,1\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a \n\n\n2\np\np\np\n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p\n8 \n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\np\n8 2\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\np\n4 2\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "p\n6 \n"
+        }
+      ]
+    },
+    {
+      "numero": 18,
+      "enunciado": "¿Cuál es el conjunto solución de la inecuación \nx\n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n,"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n,"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n\n,"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n,"
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "La edad actual de Raúl es \n1\nx \n años y la de su hermana Paulina es \n\n\npx \n años.  \n \nSi S corresponde a la suma de las edades actuales de Raúl y Paulina, ¿cuál de \nlas siguientes expresiones representa la edad de Raúl hace 3 años?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p\np\nS\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\nS\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\nS\n"
+        },
+        {
+          "letra": "D",
+          "texto": "p\np\nS\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "p\np\nS\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "La aceleración de gravedad g en un planeta, en \ns\nm , se puede calcular \nmediante la expresión \nR\nM\nG\ng\n\n\n, tal que G es una constante, M es la masa \ndel planeta en kilogramos, R es su radio en metros y la aceleración de \ngravedad de la Tierra es aproximadamente \ns\nm\n. \n \nConsidera que el radio de Marte mide aproximadamente la mitad del radio de la \nTierra, y que su masa equivale a \n1,0 veces la masa de la Tierra. \n \n¿Cuál es aproximadamente la aceleración de gravedad en Marte?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "s\nm\n,0"
+        },
+        {
+          "letra": "B",
+          "texto": "s\nm\n5,0"
+        },
+        {
+          "letra": "C",
+          "texto": "s\nm"
+        },
+        {
+          "letra": "D",
+          "texto": "s\nm"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "Una persona contestó correctamente las 18 preguntas de una prueba que tiene \npreguntas de 1, 2 y 3 puntos, obteniendo un total de 35 puntos. Solo seis de \nlas preguntas de la prueba valían 1 punto. \n \nSi x corresponde al total de puntos obtenidos en las preguntas que valen          \n2 puntos e y corresponde al total de puntos obtenidos en las preguntas que \nvalen 3 puntos, ¿cuál de los siguientes sistemas de ecuaciones representa la \nsituación planteada?",
+      "alternativas": []
+    },
+    {
+      "numero": 26,
+      "enunciado": "Considera la función f , cuyo dominio es el conjunto de los números reales, \ndefinida por \nx\nx\nx\nf\n\n\n\n.  \n \n¿Cuál de las siguientes funciones tiene como gráfica la parábola asociada a f , \npero trasladada en 5 unidades hacia la derecha?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\nx\nx\nx\ng\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\nx\nx\nx\nh\n2 \n"
+        },
+        {
+          "letra": "C",
+          "texto": "\nx\nx\nx\np\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\nx\nx\nx\nq\n\n\n\n \n \n \n \n \n \ny\nx\n\n\n \ny\nx\n\n"
+        },
+        {
+          "letra": "A",
+          "texto": "D) \ny\nx\n\n\n \n \ny\nx\n\n\n \ny\nx\n\n\n \ny\nx\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "y\nx\n\n\n \ny\nx\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Un estudiante de Artes pintará un cuadro de forma rectangular, este tendrá una \nsección de dibujo y por fuera se dejará un margen con un ancho uniforme que \nocupará \ncm\n. \n \nSi la sección de dibujo tendrá \ncm\n de largo y \ncm\n de ancho, ¿cuál es el \nancho correspondiente al margen?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm\n5,"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\n5,7"
+        },
+        {
+          "letra": "C",
+          "texto": "cm\n5,4"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n5,1"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "Considera la función f , cuyo dominio es el conjunto de los números reales, \ndefinida por \nc\nbx\nax\nx\nf\n\n\n\n, con \na \n, ¿cuál de las siguientes afirmaciones \nes siempre verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La ordenada del vértice de la parábola asociada a la función f es el \nmáximo de esta."
+        },
+        {
+          "letra": "B",
+          "texto": "La gráfica de la función f no interseca al eje X ."
+        },
+        {
+          "letra": "C",
+          "texto": "La gráfica de la función f interseca al eje Y por debajo del origen."
+        },
+        {
+          "letra": "D",
+          "texto": "El recorrido de la función son todos los números reales negativos."
+        },
+        {
+          "letra": "E",
+          "texto": "El eje de simetría de la parábola asociada a f es el eje Y ."
+        }
+      ]
+    },
+    {
+      "numero": 30,
+      "enunciado": "Considera la función f , definida por \nx\nk\nx\nx\nf\n\n\n\n, cuyo dominio es el \nconjunto de los números reales, con k un número real distinto de cero. \n \nSi la segunda coordenada del vértice de la parábola asociada a f es  \nmayor que 1, ¿qué condición debe cumplir k ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Debe ser mayor que 2."
+        },
+        {
+          "letra": "B",
+          "texto": "Debe ser menor que 2 y mayor que 0 ."
+        },
+        {
+          "letra": "C",
+          "texto": "Debe ser menor que 0 y mayor que \n\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Debe ser menor que \n\n."
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "Considera la función f , definida por \nt\nt\nt\nt\nf\n\n\n\n\n, con dominio el \nconjunto de los números reales. \n \n¿Cuál de las siguientes opciones representa todos los valores de t para los que \n\nt\nf\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "0 , 10 y 15"
+        },
+        {
+          "letra": "B",
+          "texto": "0 , 10\n\n y 15\n"
+        },
+        {
+          "letra": "C",
+          "texto": "3, \n\n y 12\n"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "Al aplicar una homotecia con centro en el origen del sistema coordenado al \nvector \n\n,2 \n, se obtiene el vector \n\n,4\n\n. \n \nSi se aplica esta misma homotecia al vector \n\n,3\n, entonces se obtiene n .  \n¿Cuál es el módulo de n ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "50 unidades"
+        },
+        {
+          "letra": "B",
+          "texto": "10 unidades"
+        },
+        {
+          "letra": "C",
+          "texto": "15 unidades"
+        },
+        {
+          "letra": "D",
+          "texto": "5,2\n unidades"
+        },
+        {
+          "letra": "E",
+          "texto": "10 unidades"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "Para la construcción de las casas de una villa, se deben construir los cimientos \nde cada una de ellas. Estos cimientos deben tener \ncm\n de profundidad y \ncm\n de ancho. \n \n En el siguiente diagrama, la parte gris representa la forma de la excavación que \nse realizará para confeccionar los cimientos de cada casa, mirado desde arriba.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n El metro cúbico de hormigón que se utilizará para confeccionar el cimiento de \nlas casas tiene un valor de \n$\n. \n \n ¿Cuál de las siguientes expresiones corresponde al precio total, en pesos, que \nse debe pagar por los cimientos de x casas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n8,0\n5,0\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n8,0\n5,0\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n8,0\n5,0\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n8,0\n5,0\n\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "Considera el siguiente cuadrilátero: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuánto mide su área?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm"
+        }
+      ]
+    },
+    {
+      "numero": 36,
+      "enunciado": "El área de una figura geométrica llamada elipse se puede calcular como ab\n\n, en \ncentímetros cuadrados, tal que a corresponde a la medida del semieje mayor, \nen centímetros, y b corresponde a la medida del semieje menor, en \ncentímetros, tal como se representa a continuación: \n \n \n \n \n \n \n \n \n \n \n \n \nConsidera un trozo rectangular de madera al que se le hará un corte con forma \nde elipse para luego pintar la parte superior y ser utilizado como cubierta de un \nlavamanos. Las medidas se presentan en la siguiente figura: \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el área de la madera que se pintará para ser utilizada como cubierta \nde ese lavamanos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\ncm\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\ncm\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\ncm\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\ncm\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "Dos barcos ubicados en el mismo lugar comienzan a navegar al mismo tiempo. \nEl primero lo hace hacia el norte a una rapidez constante de v nudos y el \nsegundo lo hace hacia el este a una rapidez constante de w nudos. \n \nSi un nudo equivale a una rapidez de \nh\nkm\n,1\n, ¿cuál de las siguientes \nexpresiones representa la distancia a la que se encuentran los barcos, en \nkilómetros, después de dos horas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "w\nv\n,1\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "w\nv\n,1\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nw\nv\n,1\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nw\nv\n,1\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 39,
+      "enunciado": "En una comunidad se quieren cambiar los botes de basura cilíndricos por otros \ncon forma de cubo que son más fáciles de manipular por los camiones \nrecolectores de basura. Actualmente hay 30 botes de basura cilíndricos, como \nel que se presenta en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \n Los botes de basura con forma de cubo tendrán una altura que es 3\n2 de la altura \nde los botes cilíndricos. \n \n Si se quiere mantener la capacidad de contención total de basura de los                 \n30 botes cilíndricos, ¿cuál de las siguientes expresiones permite calcular la \ncantidad de botes con forma de cubo que se necesitan?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "h\nr\n45"
+        },
+        {
+          "letra": "B",
+          "texto": "h\n5,1\nr \n"
+        },
+        {
+          "letra": "C",
+          "texto": "h\nr\n45"
+        },
+        {
+          "letra": "D",
+          "texto": "r\nh\n"
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "Al punto \n\n1\n,3\nA\n se le aplica una traslación según el vector \n\n\nk\n,1\nk\nv\n\n\n, \ncon k un número entero.  \n \n¿En cuál de las siguientes gráficas el punto P no corresponde a una posible \ntraslación de A según v ? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nB) \nA) \nC) \nD) \nP \nA\nX\nY\nA\nP \n4 X\nY\nX\nY\nP \nA\nP \nA\nX\nY",
+      "alternativas": []
+    },
+    {
+      "numero": 42,
+      "enunciado": "En una empresa, las proyecciones de ventas de febrero \n\nF\nV\n y marzo \n\nM\nV\n, \nen miles de pesos, están definidas por las siguientes condiciones: \n \n Si \nVF \n, entonces \n8,0\nV\nV\nM\nF \n. \n Si \nVF \n, entonces \n2,1\nV\nV\nM\nF \n. \n \n¿Cuál de los siguientes gráficos podría representar las proyecciones de ventas \nde esta empresa? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nC) \nB) \nA) \nD) \nVentas en miles \nde pesos \nMes \nVentas en miles \nde pesos \nMes \nMes \nVentas en miles \nde pesos \nVentas en miles \nde pesos \nMes",
+      "alternativas": []
+    },
+    {
+      "numero": 43,
+      "enunciado": "Considera el siguiente diagrama de cajón elaborado a partir de 100 datos: \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes gráficos podría representar la distribución de estos \ndatos? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nB) \nC) \nD) \nFrecuencia \nFrecuencia \nFrecuencia \nFrecuencia",
+      "alternativas": []
+    },
+    {
+      "numero": 45,
+      "enunciado": "Los 40 estudiantes de un curso compraron dos números de rifa cada uno para \nun sorteo de 80 números. \n \nPablo sabe que la probabilidad de que gane es 40\n1 . Sin embargo, debido a que \nel día del sorteo faltaron varios estudiantes a clases y el sorteo se realiza solo \nentre los presentes, la probabilidad de que Pablo gane cambia a b\n1 . \n \n¿Cuál de las siguientes expresiones permite determinar la cantidad de \nestudiantes que faltaron a clases el día del sorteo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "b\n40 "
+        },
+        {
+          "letra": "B",
+          "texto": "b\n40 "
+        },
+        {
+          "letra": "C",
+          "texto": "b\n40 "
+        },
+        {
+          "letra": "D",
+          "texto": "b\nb\n40 "
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "En una ciudad de 6000 personas, 200 miden más de 8,1\n metros.  \n \nSi se escogen dos personas al azar, ¿cuál es la probabilidad de que ninguna de \nellas mida más de 8,1\n metros?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "5800 "
+        },
+        {
+          "letra": "C",
+          "texto": "200 "
+        },
+        {
+          "letra": "D",
+          "texto": "E) \n2 "
+        }
+      ]
+    },
+    {
+      "numero": 48,
+      "enunciado": "Se dispone de dos cajas A y B, en A hay en total 3 fichas blancas, 2 rojas y \n6 negras, en B hay en total 2 fichas blancas y 3 rojas, todas del mismo tipo.  \n \nSe define el siguiente experimento: se lanza un dado común, si el número \nobtenido es menor que 3, se extrae al azar una ficha de la caja A; en caso \ncontrario, se extrae al azar una ficha de la caja B. \n \nSi se realiza este experimento, ¿cuál es la probabilidad de extraer una ficha \nnegra? \n \nA) \nB) \nC) \nD) \nE)",
+      "alternativas": []
+    },
+    {
+      "numero": 49,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 50,
+      "enunciado": "unidades",
+      "alternativas": [
+        {
+          "letra": "B",
+          "texto": "10 unidades"
+        },
+        {
+          "letra": "C",
+          "texto": "15 unidades"
+        },
+        {
+          "letra": "D",
+          "texto": "5,2\n unidades"
+        },
+        {
+          "letra": "E",
+          "texto": "10 unidades \n \n \n \n34. Para la construcción de las casas de una villa, se deben construir los cimientos \nde cada una de ellas. Estos cimientos deben tener \ncm\n de profundidad y \ncm\n de ancho. \n \n En el siguiente diagrama, la parte gris representa la forma de la excavación que \nse realizará para confeccionar los cimientos de cada casa, mirado desde arriba.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n El metro cúbico de hormigón que se utilizará para confeccionar el cimiento de \nlas casas tiene un valor de \n$\n. \n \n ¿Cuál de las siguientes expresiones corresponde al precio total, en pesos, que \nse debe pagar por los cimientos de x casas?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n8,0\n5,0\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n8,0\n5,0\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n8,0\n5,0\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n8,0\n5,0\n\n\n\n\n \n \n \n \n35. Considera el siguiente cuadrilátero: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuánto mide su área?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n36. El área de una figura geométrica llamada elipse se puede calcular como ab\n\n, en \ncentímetros cuadrados, tal que a corresponde a la medida del semieje mayor, \nen centímetros, y b corresponde a la medida del semieje menor, en \ncentímetros, tal como se representa a continuación: \n \n \n \n \n \n \n \n \n \n \n \n \nConsidera un trozo rectangular de madera al que se le hará un corte con forma \nde elipse para luego pintar la parte superior y ser utilizado como cubierta de un \nlavamanos. Las medidas se presentan en la siguiente figura: \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el área de la madera que se pintará para ser utilizada como cubierta \nde ese lavamanos?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\ncm\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\ncm\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\ncm\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\ncm\n\n\n \n \n \n \n37. Dos barcos ubicados en el mismo lugar comienzan a navegar al mismo tiempo. \nEl primero lo hace hacia el norte a una rapidez constante de v nudos y el \nsegundo lo hace hacia el este a una rapidez constante de w nudos. \n \nSi un nudo equivale a una rapidez de \nh\nkm\n,1\n, ¿cuál de las siguientes \nexpresiones representa la distancia a la que se encuentran los barcos, en \nkilómetros, después de dos horas?"
+        },
+        {
+          "letra": "A",
+          "texto": "w\nv\n,1\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "w\nv\n,1\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nw\nv\n,1\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nw\nv\n,1\n\n\n\n \n \n \n \n39. En una comunidad se quieren cambiar los botes de basura cilíndricos por otros \ncon forma de cubo que son más fáciles de manipular por los camiones \nrecolectores de basura. Actualmente hay 30 botes de basura cilíndricos, como \nel que se presenta en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \n Los botes de basura con forma de cubo tendrán una altura que es 3\n2 de la altura \nde los botes cilíndricos. \n \n Si se quiere mantener la capacidad de contención total de basura de los                 \n30 botes cilíndricos, ¿cuál de las siguientes expresiones permite calcular la \ncantidad de botes con forma de cubo que se necesitan?"
+        },
+        {
+          "letra": "A",
+          "texto": "h\nr\n45"
+        },
+        {
+          "letra": "B",
+          "texto": "h\n5,1\nr \n"
+        },
+        {
+          "letra": "C",
+          "texto": "h\nr\n45"
+        },
+        {
+          "letra": "D",
+          "texto": "r\nh\n\n \n \n \n \n40. Al punto \n\n1\n,3\nA\n se le aplica una traslación según el vector \n\n\nk\n,1\nk\nv\n\n\n, \ncon k un número entero.  \n \n¿En cuál de las siguientes gráficas el punto P no corresponde a una posible \ntraslación de A según v ?"
+        },
+        {
+          "letra": "B",
+          "texto": "A)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nP \nA\nX\nY\nA\nP \n4 X\nY\nX\nY\nP \nA\nP \nA\nX\nY\n \n \n \n42. En una empresa, las proyecciones de ventas de febrero \n\nF\nV\n y marzo \n\nM\nV\n, \nen miles de pesos, están definidas por las siguientes condiciones: \n \n Si \nVF \n, entonces \n8,0\nV\nV\nM\nF \n. \n Si \nVF \n, entonces \n2,1\nV\nV\nM\nF \n. \n \n¿Cuál de los siguientes gráficos podría representar las proyecciones de ventas \nde esta empresa?"
+        },
+        {
+          "letra": "C",
+          "texto": "B)"
+        },
+        {
+          "letra": "A",
+          "texto": "D) \nVentas en miles \nde pesos \nMes \nVentas en miles \nde pesos \nMes \nMes \nVentas en miles \nde pesos \nVentas en miles \nde pesos \nMes \n \n \n \n43. Considera el siguiente diagrama de cajón elaborado a partir de 100 datos: \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes gráficos podría representar la distribución de estos \ndatos?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nFrecuencia \nFrecuencia \nFrecuencia \nFrecuencia \n \n \n \n45. Los 40 estudiantes de un curso compraron dos números de rifa cada uno para \nun sorteo de 80 números. \n \nPablo sabe que la probabilidad de que gane es 40\n1 . Sin embargo, debido a que \nel día del sorteo faltaron varios estudiantes a clases y el sorteo se realiza solo \nentre los presentes, la probabilidad de que Pablo gane cambia a b\n1 . \n \n¿Cuál de las siguientes expresiones permite determinar la cantidad de \nestudiantes que faltaron a clases el día del sorteo?"
+        },
+        {
+          "letra": "A",
+          "texto": "b\n40 "
+        },
+        {
+          "letra": "B",
+          "texto": "b\n40 "
+        },
+        {
+          "letra": "C",
+          "texto": "b\n40 "
+        },
+        {
+          "letra": "D",
+          "texto": "b\nb\n40 \n \n \n \n \n47. En una ciudad de 6000 personas, 200 miden más de 8,1\n metros.  \n \nSi se escogen dos personas al azar, ¿cuál es la probabilidad de que ninguna de \nellas mida más de 8,1\n metros?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "5800 "
+        },
+        {
+          "letra": "C",
+          "texto": "200 "
+        },
+        {
+          "letra": "D",
+          "texto": "E) \n2 \n \n \n \n \n48. Se dispone de dos cajas A y B, en A hay en total 3 fichas blancas, 2 rojas y \n6 negras, en B hay en total 2 fichas blancas y 3 rojas, todas del mismo tipo.  \n \nSe define el siguiente experimento: se lanza un dado común, si el número \nobtenido es menor que 3, se extrae al azar una ficha de la caja A; en caso \ncontrario, se extrae al azar una ficha de la caja B. \n \nSi se realiza este experimento, ¿cuál es la probabilidad de extraer una ficha \nnegra?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        },
+        {
+          "letra": "E",
+          "texto": "49. Cada estudiante que asistió a una reunión saluda con un apretón de manos a \ntodos los demás estudiantes solo una vez.  \n \nSi se contabilizaron en total 105 apretones de manos y n es la cantidad total de \nestudiantes que asistió a la reunión, ¿cuál de las siguientes relaciones es \nverdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nn\nn\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\nn\nn\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nn\nn\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "n\nn\n\n\n \n \n \n \n50. Considera una circunferencia, en ella se irán ubicando puntos equidistantes \nentre sí, para luego calcular la cantidad de trazos que se necesitan para unir a \ncualquier par de puntos. \n \nEn la siguiente imagen se dan dos ejemplos de la situación planteada. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se ubican n puntos en la circunferencia, ¿cuál de las siguientes expresiones \npermite determinar la cantidad de trazos necesarios para unir a cualquier par de \npuntos?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\nn"
+        },
+        {
+          "letra": "B",
+          "texto": "n\n\n\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nn\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n!\nn\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "Una persona desarrolla un test de 10 preguntas, el cual solo tiene preguntas de \nverdadero o falso. \n \nSi esta persona contestó todas las preguntas al azar y el test se aprueba al \nobtener al menos 7 respuestas correctas, ¿cuál es la probabilidad de que la \npersona apruebe el test?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "1 \n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "Se puede determinar el valor del número racional y\nx , si se sabe que: \n \n(1) \ny es la cuarta parte de x . \n(2) \ny\nx\n\n",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Considera la función f , cuyo dominio es el conjunto de los números reales, \ndefinida por \nc\nbx\nax\nx\nf\n\n\n\n y que \np\nf\n\n y \nq\nf\n\n. \n \n Se pueden determinar los valores de p y q , si se conoce el valor de: \n \n(1) \na y b \n(2) \n\nf",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional \n \n \n \nEn un país se está pensando implementar el aforo en recintos cerrados como \nforma de controlar el avance de una enfermedad, y se propone la siguiente \nmanera de calcularlo: \n \n El aforo de un recinto se calcula como la aproximación a la unidad de la división \nentre la superficie del recinto en metros cuadrados y \nm\n5,1\n. \n \n Se puede calcular la cantidad máxima de personas permitidas en un recinto con \npiso rectangular, si se sabe que: \n \n(1) \nsu perímetro es \nm\n.  \n(2) \nun lado mide \nm\n más que el otro."
+        },
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 55,
+      "enunciado": "Se consultó a un grupo de personas sobre su edad. De acuerdo con los \nresultados obtenidos, las edades van desde los 60 años hasta los 90 años. \n \nSe puede determinar la mediana de las edades de las personas, si se conoce: \n \n(1) \nla cantidad de personas que se consultó. \n(2) \nel percentil 49 y 51 de las edades.",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional \nProceso de Admisión 2 0 2 5"
+        }
+      ]
+    }
+  ]
+}

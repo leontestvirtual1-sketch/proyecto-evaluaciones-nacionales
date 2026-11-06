@@ -1,0 +1,1768 @@
+{
+  "materia": "m1",
+  "year": 2025,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n\n,0\n.",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q .",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": "\n\nb\n,a\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n\nb\n,a\n, a menos que se indique lo \ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del \n1 al 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "En el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \nSÍMBOLOS MATEMÁTICOS \n \n \nes menor que \n \nes mayor que \n \nes menor o igual que \n \nes mayor o igual que \n \nángulo recto \n \nes semejante con \n \nes distinto de \nAB \ntrazo AB \nAB \nmedida del trazo AB \n \nRegistro de Propiedad Intelectual Nº  2024-A-7358\nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n2. \nConsidera la siguiente recta numérica: \n \n \n \n \n \n¿Cuál de los siguientes procedimientos representa la operación \n\n\n\n\n\n \nusando la recta numérica?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Ubicarse en el \n\n y desplazarse 8 unidades a la izquierda."
+        },
+        {
+          "letra": "B",
+          "texto": "Ubicarse en el \n\n y desplazarse 8 unidades a la derecha."
+        },
+        {
+          "letra": "C",
+          "texto": "Ubicarse en el \n\n y desplazarse 5 unidades a la derecha."
+        },
+        {
+          "letra": "D",
+          "texto": "Ubicarse en el \n\n y desplazarse 3 unidades a la derecha. \n1 \n \n \n \n3. \nPara encontrar el resultado de \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n:\n, se realiza el \nsiguiente procedimiento, cometiéndose un error. \n \n \nPaso 1:  se resuelven las operaciones de los paréntesis internos, obteniéndose \n\n\n\n\n\n\n\n\n\n\n\n\n\n:\n. \n \nPaso 2:  se resuelven las multiplicaciones, obteniéndose \n:\n\n. \n \nPaso 3:  se resuelve la división como \n48 \n\n. \n \nPaso 4:  se resuelve la multiplicación, obteniéndose \n\n. \n \n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n4. \nUna persona necesita comprar \nkg\n de alimento de cierta marca para sus \nperros. \n \nEn una tienda para mascotas, ese alimento tiene los siguientes precios: \n \n El saco de \nkg\n se vende a \n$\n. \n El saco de \nkg\n se vende a \n$\n. \n El saco de \nkg\n se vende a \n$\n. \n El saco de \nkg\n se vende a \n$\n. \n \nSi la persona requiere priorizar en primer lugar el menor precio a pagar y luego \nla menor cantidad de sacos, ¿cuál de las siguientes opciones le conviene a  \nla persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "Comprar doce sacos de \nkg\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Comprar cinco sacos de \nkg\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Comprar cuatro sacos de \nkg\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Comprar tres sacos de \nkg\n. \n \n \n \n6. \nDos personas se juntan a realizar ejercicios, pero cada una tiene su propia \nrutina, las que se detallan a continuación: \n \n La primera persona realiza ejercicios durante 2 minutos y luego se toma \n30 segundos de descanso, repitiendo esta serie ocho veces. \n La segunda persona realiza ejercicios durante 1 minuto y 30 segundos y \nluego se toma 15 segundos de descanso, repitiendo esta serie doce veces. \n \nSi las dos personas comienzan sus rutinas al mismo tiempo, ¿cuál de los \nsiguientes argumentos garantiza que una de las personas termina la rutina antes \nque la otra?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que la cantidad de repeticiones de las series de ambas personas es \ndistinta."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el tiempo de descanso de ambas personas es distinto."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la suma entre el tiempo de ejercicio, el descanso y las repeticiones de \nlas series es distinta en cada persona."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la suma entre el tiempo de ejercicio y el descanso, multiplicada por las \nrepeticiones de las series, es distinta en cada persona."
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Una persona recorrió en bicicleta una ruta de \nkm\n en 3 días. \n \nEl primer día recorrió 3\n1 de la ruta, el segundo día recorrió 5\n3 de lo que le faltaba \ny el tercer día recorrió el resto. \n \n¿Cuántos kilómetros recorrió el tercer día? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "Para conocer el equivalente en centímetros de una distancia medida en millas, \nse utiliza el siguiente modelo: \n \nx\nC\n\n\n, \n \ntal que x es la distancia en millas y C es el equivalente en centímetros. \n \nSi un kilómetro es equivalente a \n centímetros, ¿cuál de las siguientes \nigualdades representa la equivalencia en kilómetros k de una distancia de \nx millas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\nk\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nk\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nk\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nk\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "La regla de Naegele es un método que permite determinar la fecha probable de \nparto de una mujer, determinando el día, mes y año tal como se representa en el \nsiguiente diagrama: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la fecha de la última menstruación de una mujer embarazada fue el \n19/04/2022, ¿cuál será la probable fecha de parto de esta mujer según la regla \nde Naegele?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "26/01/2023"
+        },
+        {
+          "letra": "B",
+          "texto": "19/01/2023"
+        },
+        {
+          "letra": "C",
+          "texto": "12/01/2023"
+        },
+        {
+          "letra": "D",
+          "texto": "16/01/2023"
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "Si 30 corresponde al \n%\n de una cantidad, ¿cuál es dicha cantidad? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 13,
+      "enunciado": "Si p aumentado en su \n%\n es 150 , ¿cuál de las siguientes expresiones \ncorresponde a p?  \n \nA) \n150 \n \nB) \n100 \n \nC) \nD) \n150 ",
+      "alternativas": []
+    },
+    {
+      "numero": 15,
+      "enunciado": "En los departamentos de Administración y de Talleres de una empresa se \nnecesitaba contratar a 150 personas entre ambos departamentos. Se \npresentaron 500 postulantes, según el detalle de la tabla adjunta. \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Del total de los hombres que postularon, exactamente un \n%\n fue \ncontratado."
+        },
+        {
+          "letra": "B",
+          "texto": "En Administración se contrató al \n%\n del total de quienes postularon a ese \ndepartamento."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un \n%\n de las mujeres que fueron contratadas corresponden \nal departamento de Administración."
+        },
+        {
+          "letra": "D",
+          "texto": "En Talleres se contrató al \n%\n de los hombres y al \n%\n de las mujeres \npostulantes a ese departamento. \n \n \n \n \n \nDepartamento   \nPostulantes \nContratados \nAdministración \nHombres \nMujeres  \nTalleres \nHombres \nMujeres  \n \n \n \n \n17. Una tienda ofrece un \n%\n de descuento en el precio por la compra de \ncualquier camisa. Una persona quiere comprar tres camisas que tienen un valor \nde \n$\n cada una sin descuento. \n \n¿Cuál de las siguientes expresiones representa el valor total que pagará \nla persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n$\n \n \n \n \n \n \n \n \n21. ¿Cuál de los siguientes números es igual a \n2 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n2 \n \n \n \n \n \n \n \n \n \n \n23. En un estudio sobre cierto insecticida, se determinó que, después de cada \nsemana de uso, la cantidad de insectos disminuye a 5\n2 de la cantidad de \ninsectos que había al comienzo de dicha semana. \n \nPara acabar con una plaga de 1000 insectos, se utilizará este insecticida y \ncuando solo queden 64 individuos o menos, se requerirá de un día más para \nacabar con la plaga. \n \nSi se asume que los insectos no se reproducen durante el periodo de aplicación \ndel insecticida, ¿cuántos días se necesitarán para acabar con la plaga?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n24. Si \n\nx\nx\nP\nx\n\n\n\n\n\n, con \nx\n\n\n, ¿cuál de las siguientes expresiones es \nigual a P ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x "
+        },
+        {
+          "letra": "B",
+          "texto": "x2 "
+        },
+        {
+          "letra": "C",
+          "texto": "x "
+        },
+        {
+          "letra": "D",
+          "texto": "x \n \n \n \n \n25.  ¿Cuál de las siguientes expresiones es igual a  \n\n1\nb\nb\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. Una persona compró \nkg\n de naranjas en \n$\n y \nkg\n de manzanas  \nen \n$\n. \n \nSi la cantidad de kilogramos de frutas y su precio se modelan por medio de una \nrelación lineal, ¿cuál de las siguientes expresiones representa el precio total, \nen pesos, al comprar \nkg\nx\n de cada fruta?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\nx\nx"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n\nx\n \n \n \n \n27. Una persona va a comprar 18 yogures y el precio de cada uno es M\n$\n. Para ello \nlleva un monto de P\n$ , el cual es suficiente para comprar. \n \n \n¿Cuál de las siguientes expresiones corresponde al dinero que le sobra?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nM\nP\n$\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\nP\nM\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nM\nP\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\nM\nP\n$\n \n \n \n \n \n \n \n \n28. Una persona mide la longitud de un objeto con una huincha, obteniendo que \neste mide \n2,\n centímetros. \n \nConsidera que 2 pulgadas son aproximadamente \n1,5 centímetros, ¿cuál es la \nmedida del objeto, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 pulgadas"
+        },
+        {
+          "letra": "B",
+          "texto": "5 pulgadas"
+        },
+        {
+          "letra": "C",
+          "texto": "17 pulgadas"
+        },
+        {
+          "letra": "D",
+          "texto": "108 pulgadas \n \n \n \n29. Una persona quiere desinfectar un sector de juegos. Para ello utilizará un líquido \ndesinfectante que trae la siguiente información en la etiqueta: \n \n \n \n \n \n \n \n \n \n \n \n \nSi la persona usa una jeringa de \nmL\n para añadir el desinfectante en un balde \ncon cinco litros de agua, ¿cuántas veces tiene que vaciar el contenido de la \njeringa llena en el agua?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nTabla de dilución líquido desinfectante  \nCantidad de \ndesinfectante \nDiluir en: \n  5 mL \nun cuarto litro de agua \n10 mL \nmedio litro de agua \n20 mL \nun litro de agua \n \n \n \n \n31. Para una fiesta se compraron tres botellas de jugo del mismo precio y \ntres botellas de bebidas del mismo precio, gastándose en total \n$\n. \n \nUna botella de bebida es 390\n$\n más cara que una botella de jugo. \n \n¿Cuál de las siguientes ecuaciones permite determinar el precio x de una \nbotella de jugo, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\nx\n\n\n\n \n \n \n \n32. La figura adjunta corresponde a una representación del triángulo de Pascal. \nEn esta representación, el número en cada casilla blanca corresponde a la suma \nde las dos casillas inmediatamente superiores. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa a x en términos de p ?"
+        },
+        {
+          "letra": "A",
+          "texto": "p "
+        },
+        {
+          "letra": "B",
+          "texto": "p "
+        },
+        {
+          "letra": "C",
+          "texto": "p "
+        },
+        {
+          "letra": "D",
+          "texto": "p \n \nEjemplo \n \n \n \n33. En un partido de básquetbol, un jugador tiene la posibilidad de hacer \nanotaciones que valen dos o tres puntos, dependiendo del lugar desde el que \nlanzó el balón al anotar. \n \nUn jugador marcó 37 puntos en el último partido haciendo cinco anotaciones de \ndos puntos y x anotaciones de tres puntos. \n \n¿Cuál de las siguientes ecuaciones permite determinar la cantidad de \nanotaciones de tres puntos que hizo el jugador?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n \n \n \n \n34. Tomás y cuatro de sus amigos van a un parque de diversiones. El parque cobra \nuna entrada a todos los asistentes y un gasto adicional por entrar a cierta \natracción. Tomás decide pagar el total de estos gastos y luego cobrar a cada \nquien su parte. Escribe lo siguiente en el chat del grupo de amigos que fueron al \nparque. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi Tomás pagó un total de \n$\n en su visita al parque, ¿cuál de las \nsiguientes ecuaciones permite calcular el precio x que se pagó por cada \nentrada al parque?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n\n \n \n \n \n35. La cantidad n de chirridos por minuto que emite un grillo se relaciona con la \ntemperatura ambiental mediante la ecuación \n\n\n\n\n\n\n\nn\nT\n, tal que T es la \ntemperatura ambiental en C\n\n. \n \n¿Cuántos chirridos por minuto emitirá un grillo si la temperatura ambiental es \nde \nC\n20 \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n36. Una persona vende plantas por internet a 3500\n$\n cada una. Un mes necesita \nrealizar ventas por un monto superior a \n$\n. \n \nA mediados del mes, ha vendido solo 40 plantas y teme que no alcance su \nmeta de ventas, por lo que decide comenzar a vender las plantas a 4500\n$\n cada \nuna por el resto del mes. \n \n¿Cuál de las siguientes inecuaciones permite calcular la cantidad x de plantas \nque tiene que vender la segunda mitad del mes para alcanzar su meta?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n\n \n \n \n \n38. Una empresa distribuye bidones de agua de \nL\n por un valor de 2200\n$\n cada \nuno. Esta empresa tiene un plan en el que cobra una suscripción mensual de \n$\n, con lo cual el precio de cada uno de esos bidones comprados en el mes \nse reduce a 1800\n$\n. \n \n \nOtra empresa tiene un servicio similar, pero cobra una suscripción mensual de \n$\n para que el precio de cada bidón del mismo tipo se reduzca a 1600\n$\n. \n \nSi una persona se suscribe a alguna de estas empresas, ¿cuál es la cantidad \nmínima de bidones que tiene que comprar para que \nle convenga \neconómicamente la segunda empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n42. Considera la función cuadrática f , cuyo dominio es el conjunto de los números \nreales, definida por \nc\nbx\nax\nx\nf\n\n\n\n. \n \nSi los coeficientes b y c son cero, ¿cuál de los siguientes gráficos podría \ncorresponder a la gráfica asociada a f ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nX \nY \nX \nY \nX \nY \nX \nY \n \n \n \n44. Un estudiante debe rendir cuatro pruebas en un semestre, de las cuales ya tiene \ntres notas, estas son 5 , 6 y 4. \n \n¿Cuál de las siguientes expresiones permite determinar el promedio que tendría \nel estudiante con su cuarta nota x ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n15 "
+        },
+        {
+          "letra": "B",
+          "texto": "x\n15 "
+        },
+        {
+          "letra": "C",
+          "texto": "x\n5 "
+        },
+        {
+          "letra": "D",
+          "texto": "x\n15 \n \n \n \n \n \n \n \n \n \n47. Los resultados de las elecciones del centro de estudiantes de un colegio estarán \nmuy estrechos. Para tratar de predecir el resultado, se encuesta a algunos \nestudiantes por su intención de voto. En los gráficos adjuntos se presentan los \nresultados. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la cantidad de hombres y mujeres que respondieron la encuesta es la misma, \n¿cuál de las siguientes tablas presenta la intención de todos los votos?"
+        },
+        {
+          "letra": "A",
+          "texto": "Frecuencia \nAna \nJuan \nSofía \nCarlos \n \n  \nFrecuencia \nAna \nJuan \nSofía \nCarlos"
+        },
+        {
+          "letra": "B",
+          "texto": "Frecuencia  \nAna \nJuan \nSofía \nCarlos"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n  \nFrecuencia \nAna \nJuan \nSofía \nCarlos \n \nAna \nJuan \nSofía \nCarlos \n24 %"
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 17,
+      "enunciado": "Una tienda ofrece un \n%\n de descuento en el precio por la compra de \ncualquier camisa. Una persona quiere comprar tres camisas que tienen un valor \nde \n$\n cada una sin descuento. \n \n¿Cuál de las siguientes expresiones representa el valor total que pagará \nla persona?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n$\n \n \n \n \n \n \n \n \n21. ¿Cuál de los siguientes números es igual a \n2 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n2 \n \n \n \n \n \n \n \n \n \n \n23. En un estudio sobre cierto insecticida, se determinó que, después de cada \nsemana de uso, la cantidad de insectos disminuye a 5\n2 de la cantidad de \ninsectos que había al comienzo de dicha semana. \n \nPara acabar con una plaga de 1000 insectos, se utilizará este insecticida y \ncuando solo queden 64 individuos o menos, se requerirá de un día más para \nacabar con la plaga. \n \nSi se asume que los insectos no se reproducen durante el periodo de aplicación \ndel insecticida, ¿cuántos días se necesitarán para acabar con la plaga?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n24. Si \n\nx\nx\nP\nx\n\n\n\n\n\n, con \nx\n\n\n, ¿cuál de las siguientes expresiones es \nigual a P ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x "
+        },
+        {
+          "letra": "B",
+          "texto": "x2 "
+        },
+        {
+          "letra": "C",
+          "texto": "x "
+        },
+        {
+          "letra": "D",
+          "texto": "x \n \n \n \n \n25.  ¿Cuál de las siguientes expresiones es igual a  \n\n1\nb\nb\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. Una persona compró \nkg\n de naranjas en \n$\n y \nkg\n de manzanas  \nen \n$\n. \n \nSi la cantidad de kilogramos de frutas y su precio se modelan por medio de una \nrelación lineal, ¿cuál de las siguientes expresiones representa el precio total, \nen pesos, al comprar \nkg\nx\n de cada fruta?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\nx\nx"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n\nx\n \n \n \n \n27. Una persona va a comprar 18 yogures y el precio de cada uno es M\n$\n. Para ello \nlleva un monto de P\n$ , el cual es suficiente para comprar. \n \n \n¿Cuál de las siguientes expresiones corresponde al dinero que le sobra?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nM\nP\n$\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\nP\nM\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nM\nP\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\nM\nP\n$\n \n \n \n \n \n \n \n \n28. Una persona mide la longitud de un objeto con una huincha, obteniendo que \neste mide \n2,\n centímetros. \n \nConsidera que 2 pulgadas son aproximadamente \n1,5 centímetros, ¿cuál es la \nmedida del objeto, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 pulgadas"
+        },
+        {
+          "letra": "B",
+          "texto": "5 pulgadas"
+        },
+        {
+          "letra": "C",
+          "texto": "17 pulgadas"
+        },
+        {
+          "letra": "D",
+          "texto": "108 pulgadas \n \n \n \n29. Una persona quiere desinfectar un sector de juegos. Para ello utilizará un líquido \ndesinfectante que trae la siguiente información en la etiqueta: \n \n \n \n \n \n \n \n \n \n \n \n \nSi la persona usa una jeringa de \nmL\n para añadir el desinfectante en un balde \ncon cinco litros de agua, ¿cuántas veces tiene que vaciar el contenido de la \njeringa llena en el agua?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nTabla de dilución líquido desinfectante  \nCantidad de \ndesinfectante \nDiluir en: \n  5 mL \nun cuarto litro de agua \n10 mL \nmedio litro de agua"
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 21,
+      "enunciado": "¿Cuál de los siguientes números es igual a \n2 ? \n \nA) \n \nB) \nC) \nD) \n2 ",
+      "alternativas": []
+    },
+    {
+      "numero": 23,
+      "enunciado": "En un estudio sobre cierto insecticida, se determinó que, después de cada \nsemana de uso, la cantidad de insectos disminuye a 5\n2 de la cantidad de \ninsectos que había al comienzo de dicha semana. \n \nPara acabar con una plaga de 1000 insectos, se utilizará este insecticida y \ncuando solo queden 64 individuos o menos, se requerirá de un día más para \nacabar con la plaga. \n \nSi se asume que los insectos no se reproducen durante el periodo de aplicación \ndel insecticida, ¿cuántos días se necesitarán para acabar con la plaga? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 24,
+      "enunciado": "Si \n\nx\nx\nP\nx\n\n\n\n\n\n, con \nx\n\n\n, ¿cuál de las siguientes expresiones es \nigual a P ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x "
+        },
+        {
+          "letra": "B",
+          "texto": "x2 "
+        },
+        {
+          "letra": "C",
+          "texto": "x "
+        },
+        {
+          "letra": "D",
+          "texto": "x "
+        }
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a  \n\n1\nb\nb\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "Una persona compró \nkg\n de naranjas en \n$\n y \nkg\n de manzanas  \nen \n$\n. \n \nSi la cantidad de kilogramos de frutas y su precio se modelan por medio de una \nrelación lineal, ¿cuál de las siguientes expresiones representa el precio total, \nen pesos, al comprar \nkg\nx\n de cada fruta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\nx\nx"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n\nx"
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Una persona va a comprar 18 yogures y el precio de cada uno es M\n$\n. Para ello \nlleva un monto de P\n$ , el cual es suficiente para comprar. \n \n \n¿Cuál de las siguientes expresiones corresponde al dinero que le sobra?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\nM\nP\n$\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\nP\nM\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nM\nP\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\nM\nP\n$"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "Una persona mide la longitud de un objeto con una huincha, obteniendo que \neste mide \n2,\n centímetros. \n \nConsidera que 2 pulgadas son aproximadamente \n1,5 centímetros, ¿cuál es la \nmedida del objeto, en pulgadas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "2 pulgadas"
+        },
+        {
+          "letra": "B",
+          "texto": "5 pulgadas"
+        },
+        {
+          "letra": "C",
+          "texto": "17 pulgadas"
+        },
+        {
+          "letra": "D",
+          "texto": "108 pulgadas"
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 30,
+      "enunciado": "segundos de descanso, repitiendo esta serie ocho veces. \n La segunda persona realiza ejercicios durante 1 minuto y 30 segundos y \nluego se toma 15 segundos de descanso, repitiendo esta serie doce veces. \n \nSi las dos personas comienzan sus rutinas al mismo tiempo, ¿cuál de los \nsiguientes argumentos garantiza que una de las personas termina la rutina antes \nque la otra?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que la cantidad de repeticiones de las series de ambas personas es \ndistinta."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el tiempo de descanso de ambas personas es distinto."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la suma entre el tiempo de ejercicio, el descanso y las repeticiones de \nlas series es distinta en cada persona."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la suma entre el tiempo de ejercicio y el descanso, multiplicada por las \nrepeticiones de las series, es distinta en cada persona. \n \n \n \n7. \nUna persona recorrió en bicicleta una ruta de \nkm\n en 3 días. \n \nEl primer día recorrió 3\n1 de la ruta, el segundo día recorrió 5\n3 de lo que le faltaba \ny el tercer día recorrió el resto. \n \n¿Cuántos kilómetros recorrió el tercer día?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n9. \nPara conocer el equivalente en centímetros de una distancia medida en millas, \nse utiliza el siguiente modelo: \n \nx\nC\n\n\n, \n \ntal que x es la distancia en millas y C es el equivalente en centímetros. \n \nSi un kilómetro es equivalente a \n centímetros, ¿cuál de las siguientes \nigualdades representa la equivalencia en kilómetros k de una distancia de \nx millas?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\nk\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nk\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nk\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nk\n\n\n\n \n \n \n \n10. La regla de Naegele es un método que permite determinar la fecha probable de \nparto de una mujer, determinando el día, mes y año tal como se representa en el \nsiguiente diagrama: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la fecha de la última menstruación de una mujer embarazada fue el \n19/04/2022, ¿cuál será la probable fecha de parto de esta mujer según la regla \nde Naegele?"
+        },
+        {
+          "letra": "A",
+          "texto": "26/01/2023"
+        },
+        {
+          "letra": "B",
+          "texto": "19/01/2023"
+        },
+        {
+          "letra": "C",
+          "texto": "12/01/2023"
+        },
+        {
+          "letra": "D",
+          "texto": "16/01/2023 \n \n \n \n11. Si 30 corresponde al \n%\n de una cantidad, ¿cuál es dicha cantidad?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n13. Si p aumentado en su \n%\n es 150 , ¿cuál de las siguientes expresiones \ncorresponde a p?"
+        },
+        {
+          "letra": "A",
+          "texto": "150 "
+        },
+        {
+          "letra": "B",
+          "texto": "100 "
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n150 \n \n \n \n \n \n \n \n \n \n15. En los departamentos de Administración y de Talleres de una empresa se \nnecesitaba contratar a 150 personas entre ambos departamentos. Se \npresentaron 500 postulantes, según el detalle de la tabla adjunta. \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "Del total de los hombres que postularon, exactamente un \n%\n fue \ncontratado."
+        },
+        {
+          "letra": "B",
+          "texto": "En Administración se contrató al \n%\n del total de quienes postularon a ese \ndepartamento."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un \n%\n de las mujeres que fueron contratadas corresponden \nal departamento de Administración."
+        },
+        {
+          "letra": "D",
+          "texto": "En Talleres se contrató al \n%\n de los hombres y al \n%\n de las mujeres \npostulantes a ese departamento. \n \n \n \n \n \nDepartamento   \nPostulantes \nContratados \nAdministración \nHombres \nMujeres  \nTalleres \nHombres \nMujeres  \n \n \n \n \n17. Una tienda ofrece un \n%\n de descuento en el precio por la compra de \ncualquier camisa. Una persona quiere comprar tres camisas que tienen un valor \nde \n$\n cada una sin descuento. \n \n¿Cuál de las siguientes expresiones representa el valor total que pagará \nla persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n$\n \n \n \n \n \n \n \n \n21. ¿Cuál de los siguientes números es igual a \n2 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n2 \n \n \n \n \n \n \n \n \n \n \n23. En un estudio sobre cierto insecticida, se determinó que, después de cada \nsemana de uso, la cantidad de insectos disminuye a 5\n2 de la cantidad de \ninsectos que había al comienzo de dicha semana. \n \nPara acabar con una plaga de 1000 insectos, se utilizará este insecticida y \ncuando solo queden 64 individuos o menos, se requerirá de un día más para \nacabar con la plaga. \n \nSi se asume que los insectos no se reproducen durante el periodo de aplicación \ndel insecticida, ¿cuántos días se necesitarán para acabar con la plaga?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n24. Si \n\nx\nx\nP\nx\n\n\n\n\n\n, con \nx\n\n\n, ¿cuál de las siguientes expresiones es \nigual a P ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x "
+        },
+        {
+          "letra": "B",
+          "texto": "x2 "
+        },
+        {
+          "letra": "C",
+          "texto": "x "
+        },
+        {
+          "letra": "D",
+          "texto": "x \n \n \n \n \n25.  ¿Cuál de las siguientes expresiones es igual a  \n\n1\nb\nb\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. Una persona compró \nkg\n de naranjas en \n$\n y \nkg\n de manzanas  \nen \n$\n. \n \nSi la cantidad de kilogramos de frutas y su precio se modelan por medio de una \nrelación lineal, ¿cuál de las siguientes expresiones representa el precio total, \nen pesos, al comprar \nkg\nx\n de cada fruta?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\nx\nx"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n\nx\n \n \n \n \n27. Una persona va a comprar 18 yogures y el precio de cada uno es M\n$\n. Para ello \nlleva un monto de P\n$ , el cual es suficiente para comprar. \n \n \n¿Cuál de las siguientes expresiones corresponde al dinero que le sobra?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nM\nP\n$\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\nP\nM\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nM\nP\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\nM\nP\n$\n \n \n \n \n \n \n \n \n28. Una persona mide la longitud de un objeto con una huincha, obteniendo que \neste mide \n2,\n centímetros. \n \nConsidera que 2 pulgadas son aproximadamente \n1,5 centímetros, ¿cuál es la \nmedida del objeto, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 pulgadas"
+        },
+        {
+          "letra": "B",
+          "texto": "5 pulgadas"
+        },
+        {
+          "letra": "C",
+          "texto": "17 pulgadas"
+        },
+        {
+          "letra": "D",
+          "texto": "108 pulgadas \n \n \n \n29. Una persona quiere desinfectar un sector de juegos. Para ello utilizará un líquido \ndesinfectante que trae la siguiente información en la etiqueta: \n \n \n \n \n \n \n \n \n \n \n \n \nSi la persona usa una jeringa de \nmL\n para añadir el desinfectante en un balde \ncon cinco litros de agua, ¿cuántas veces tiene que vaciar el contenido de la \njeringa llena en el agua?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nTabla de dilución líquido desinfectante  \nCantidad de \ndesinfectante \nDiluir en: \n  5 mL \nun cuarto litro de agua \n10 mL \nmedio litro de agua \n20 mL \nun litro de agua"
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "Para una fiesta se compraron tres botellas de jugo del mismo precio y \ntres botellas de bebidas del mismo precio, gastándose en total \n$\n. \n \nUna botella de bebida es 390\n$\n más cara que una botella de jugo. \n \n¿Cuál de las siguientes ecuaciones permite determinar el precio x de una \nbotella de jugo, en pesos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\nx\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "La figura adjunta corresponde a una representación del triángulo de Pascal. \nEn esta representación, el número en cada casilla blanca corresponde a la suma \nde las dos casillas inmediatamente superiores. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa a x en términos de p ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p "
+        },
+        {
+          "letra": "B",
+          "texto": "p "
+        },
+        {
+          "letra": "C",
+          "texto": "p "
+        },
+        {
+          "letra": "D",
+          "texto": "p \n \nEjemplo"
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "En un partido de básquetbol, un jugador tiene la posibilidad de hacer \nanotaciones que valen dos o tres puntos, dependiendo del lugar desde el que \nlanzó el balón al anotar. \n \nUn jugador marcó 37 puntos en el último partido haciendo cinco anotaciones de \ndos puntos y x anotaciones de tres puntos. \n \n¿Cuál de las siguientes ecuaciones permite determinar la cantidad de \nanotaciones de tres puntos que hizo el jugador?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "Tomás y cuatro de sus amigos van a un parque de diversiones. El parque cobra \nuna entrada a todos los asistentes y un gasto adicional por entrar a cierta \natracción. Tomás decide pagar el total de estos gastos y luego cobrar a cada \nquien su parte. Escribe lo siguiente en el chat del grupo de amigos que fueron al \nparque. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi Tomás pagó un total de \n$\n en su visita al parque, ¿cuál de las \nsiguientes ecuaciones permite calcular el precio x que se pagó por cada \nentrada al parque?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "La cantidad n de chirridos por minuto que emite un grillo se relaciona con la \ntemperatura ambiental mediante la ecuación \n\n\n\n\n\n\n\nn\nT\n, tal que T es la \ntemperatura ambiental en C\n\n. \n \n¿Cuántos chirridos por minuto emitirá un grillo si la temperatura ambiental es \nde \nC\n20 \n? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 36,
+      "enunciado": "Una persona vende plantas por internet a 3500\n$\n cada una. Un mes necesita \nrealizar ventas por un monto superior a \n$\n. \n \nA mediados del mes, ha vendido solo 40 plantas y teme que no alcance su \nmeta de ventas, por lo que decide comenzar a vender las plantas a 4500\n$\n cada \nuna por el resto del mes. \n \n¿Cuál de las siguientes inecuaciones permite calcular la cantidad x de plantas \nque tiene que vender la segunda mitad del mes para alcanzar su meta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 38,
+      "enunciado": "Una empresa distribuye bidones de agua de \nL\n por un valor de 2200\n$\n cada \nuno. Esta empresa tiene un plan en el que cobra una suscripción mensual de \n$\n, con lo cual el precio de cada uno de esos bidones comprados en el mes \nse reduce a 1800\n$\n. \n \n \nOtra empresa tiene un servicio similar, pero cobra una suscripción mensual de \n$\n para que el precio de cada bidón del mismo tipo se reduzca a 1600\n$\n. \n \nSi una persona se suscribe a alguna de estas empresas, ¿cuál es la cantidad \nmínima de bidones que tiene que comprar para que \nle convenga \neconómicamente la segunda empresa? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 42,
+      "enunciado": "Considera la función cuadrática f , cuyo dominio es el conjunto de los números \nreales, definida por \nc\nbx\nax\nx\nf\n\n\n\n. \n \nSi los coeficientes b y c son cero, ¿cuál de los siguientes gráficos podría \ncorresponder a la gráfica asociada a f ? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nB) \nC) \nD) \nX \nY \nX \nY \nX \nY \nX \nY",
+      "alternativas": []
+    },
+    {
+      "numero": 44,
+      "enunciado": "Un estudiante debe rendir cuatro pruebas en un semestre, de las cuales ya tiene \ntres notas, estas son 5 , 6 y 4. \n \n¿Cuál de las siguientes expresiones permite determinar el promedio que tendría \nel estudiante con su cuarta nota x ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n15 "
+        },
+        {
+          "letra": "B",
+          "texto": "x\n15 "
+        },
+        {
+          "letra": "C",
+          "texto": "x\n5 "
+        },
+        {
+          "letra": "D",
+          "texto": "x\n15 "
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 48,
+      "enunciado": "\n\n. \n \nPaso 4:  se resuelve la multiplicación, obteniéndose \n\n. \n \n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n4. \nUna persona necesita comprar \nkg\n de alimento de cierta marca para sus \nperros. \n \nEn una tienda para mascotas, ese alimento tiene los siguientes precios: \n \n El saco de \nkg\n se vende a \n$\n. \n El saco de \nkg\n se vende a \n$\n. \n El saco de \nkg\n se vende a \n$\n. \n El saco de \nkg\n se vende a \n$\n. \n \nSi la persona requiere priorizar en primer lugar el menor precio a pagar y luego \nla menor cantidad de sacos, ¿cuál de las siguientes opciones le conviene a  \nla persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "Comprar doce sacos de \nkg\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Comprar cinco sacos de \nkg\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Comprar cuatro sacos de \nkg\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Comprar tres sacos de \nkg\n. \n \n \n \n6. \nDos personas se juntan a realizar ejercicios, pero cada una tiene su propia \nrutina, las que se detallan a continuación: \n \n La primera persona realiza ejercicios durante 2 minutos y luego se toma \n30 segundos de descanso, repitiendo esta serie ocho veces. \n La segunda persona realiza ejercicios durante 1 minuto y 30 segundos y \nluego se toma 15 segundos de descanso, repitiendo esta serie doce veces. \n \nSi las dos personas comienzan sus rutinas al mismo tiempo, ¿cuál de los \nsiguientes argumentos garantiza que una de las personas termina la rutina antes \nque la otra?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que la cantidad de repeticiones de las series de ambas personas es \ndistinta."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el tiempo de descanso de ambas personas es distinto."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la suma entre el tiempo de ejercicio, el descanso y las repeticiones de \nlas series es distinta en cada persona."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la suma entre el tiempo de ejercicio y el descanso, multiplicada por las \nrepeticiones de las series, es distinta en cada persona. \n \n \n \n7. \nUna persona recorrió en bicicleta una ruta de \nkm\n en 3 días. \n \nEl primer día recorrió 3\n1 de la ruta, el segundo día recorrió 5\n3 de lo que le faltaba \ny el tercer día recorrió el resto. \n \n¿Cuántos kilómetros recorrió el tercer día?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n9. \nPara conocer el equivalente en centímetros de una distancia medida en millas, \nse utiliza el siguiente modelo: \n \nx\nC\n\n\n, \n \ntal que x es la distancia en millas y C es el equivalente en centímetros. \n \nSi un kilómetro es equivalente a \n centímetros, ¿cuál de las siguientes \nigualdades representa la equivalencia en kilómetros k de una distancia de \nx millas?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\nk\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nk\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nk\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nk\n\n\n\n \n \n \n \n10. La regla de Naegele es un método que permite determinar la fecha probable de \nparto de una mujer, determinando el día, mes y año tal como se representa en el \nsiguiente diagrama: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la fecha de la última menstruación de una mujer embarazada fue el \n19/04/2022, ¿cuál será la probable fecha de parto de esta mujer según la regla \nde Naegele?"
+        },
+        {
+          "letra": "A",
+          "texto": "26/01/2023"
+        },
+        {
+          "letra": "B",
+          "texto": "19/01/2023"
+        },
+        {
+          "letra": "C",
+          "texto": "12/01/2023"
+        },
+        {
+          "letra": "D",
+          "texto": "16/01/2023 \n \n \n \n11. Si 30 corresponde al \n%\n de una cantidad, ¿cuál es dicha cantidad?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n13. Si p aumentado en su \n%\n es 150 , ¿cuál de las siguientes expresiones \ncorresponde a p?"
+        },
+        {
+          "letra": "A",
+          "texto": "150 "
+        },
+        {
+          "letra": "B",
+          "texto": "100 "
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n150 \n \n \n \n \n \n \n \n \n \n15. En los departamentos de Administración y de Talleres de una empresa se \nnecesitaba contratar a 150 personas entre ambos departamentos. Se \npresentaron 500 postulantes, según el detalle de la tabla adjunta. \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "Del total de los hombres que postularon, exactamente un \n%\n fue \ncontratado."
+        },
+        {
+          "letra": "B",
+          "texto": "En Administración se contrató al \n%\n del total de quienes postularon a ese \ndepartamento."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un \n%\n de las mujeres que fueron contratadas corresponden \nal departamento de Administración."
+        },
+        {
+          "letra": "D",
+          "texto": "En Talleres se contrató al \n%\n de los hombres y al \n%\n de las mujeres \npostulantes a ese departamento. \n \n \n \n \n \nDepartamento   \nPostulantes \nContratados \nAdministración \nHombres \nMujeres  \nTalleres \nHombres \nMujeres  \n \n \n \n \n17. Una tienda ofrece un \n%\n de descuento en el precio por la compra de \ncualquier camisa. Una persona quiere comprar tres camisas que tienen un valor \nde \n$\n cada una sin descuento. \n \n¿Cuál de las siguientes expresiones representa el valor total que pagará \nla persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n$"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n$\n \n \n \n \n \n \n \n \n21. ¿Cuál de los siguientes números es igual a \n2 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n2 \n \n \n \n \n \n \n \n \n \n \n23. En un estudio sobre cierto insecticida, se determinó que, después de cada \nsemana de uso, la cantidad de insectos disminuye a 5\n2 de la cantidad de \ninsectos que había al comienzo de dicha semana. \n \nPara acabar con una plaga de 1000 insectos, se utilizará este insecticida y \ncuando solo queden 64 individuos o menos, se requerirá de un día más para \nacabar con la plaga. \n \nSi se asume que los insectos no se reproducen durante el periodo de aplicación \ndel insecticida, ¿cuántos días se necesitarán para acabar con la plaga?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n24. Si \n\nx\nx\nP\nx\n\n\n\n\n\n, con \nx\n\n\n, ¿cuál de las siguientes expresiones es \nigual a P ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x "
+        },
+        {
+          "letra": "B",
+          "texto": "x2 "
+        },
+        {
+          "letra": "C",
+          "texto": "x "
+        },
+        {
+          "letra": "D",
+          "texto": "x \n \n \n \n \n25.  ¿Cuál de las siguientes expresiones es igual a  \n\n1\nb\nb\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. Una persona compró \nkg\n de naranjas en \n$\n y \nkg\n de manzanas  \nen \n$\n. \n \nSi la cantidad de kilogramos de frutas y su precio se modelan por medio de una \nrelación lineal, ¿cuál de las siguientes expresiones representa el precio total, \nen pesos, al comprar \nkg\nx\n de cada fruta?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\nx\nx"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\n\nx\n \n \n \n \n27. Una persona va a comprar 18 yogures y el precio de cada uno es M\n$\n. Para ello \nlleva un monto de P\n$ , el cual es suficiente para comprar. \n \n \n¿Cuál de las siguientes expresiones corresponde al dinero que le sobra?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nM\nP\n$\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\nP\nM\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nM\nP\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\nM\nP\n$\n \n \n \n \n \n \n \n \n28. Una persona mide la longitud de un objeto con una huincha, obteniendo que \neste mide \n2,\n centímetros. \n \nConsidera que 2 pulgadas son aproximadamente \n1,5 centímetros, ¿cuál es la \nmedida del objeto, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 pulgadas"
+        },
+        {
+          "letra": "B",
+          "texto": "5 pulgadas"
+        },
+        {
+          "letra": "C",
+          "texto": "17 pulgadas"
+        },
+        {
+          "letra": "D",
+          "texto": "108 pulgadas \n \n \n \n29. Una persona quiere desinfectar un sector de juegos. Para ello utilizará un líquido \ndesinfectante que trae la siguiente información en la etiqueta: \n \n \n \n \n \n \n \n \n \n \n \n \nSi la persona usa una jeringa de \nmL\n para añadir el desinfectante en un balde \ncon cinco litros de agua, ¿cuántas veces tiene que vaciar el contenido de la \njeringa llena en el agua?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nTabla de dilución líquido desinfectante  \nCantidad de \ndesinfectante \nDiluir en: \n  5 mL \nun cuarto litro de agua \n10 mL \nmedio litro de agua \n20 mL \nun litro de agua \n \n \n \n \n31. Para una fiesta se compraron tres botellas de jugo del mismo precio y \ntres botellas de bebidas del mismo precio, gastándose en total \n$\n. \n \nUna botella de bebida es 390\n$\n más cara que una botella de jugo. \n \n¿Cuál de las siguientes ecuaciones permite determinar el precio x de una \nbotella de jugo, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\nx\n\n\n\n \n \n \n \n32. La figura adjunta corresponde a una representación del triángulo de Pascal. \nEn esta representación, el número en cada casilla blanca corresponde a la suma \nde las dos casillas inmediatamente superiores. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa a x en términos de p ?"
+        },
+        {
+          "letra": "A",
+          "texto": "p "
+        },
+        {
+          "letra": "B",
+          "texto": "p "
+        },
+        {
+          "letra": "C",
+          "texto": "p "
+        },
+        {
+          "letra": "D",
+          "texto": "p \n \nEjemplo \n \n \n \n33. En un partido de básquetbol, un jugador tiene la posibilidad de hacer \nanotaciones que valen dos o tres puntos, dependiendo del lugar desde el que \nlanzó el balón al anotar. \n \nUn jugador marcó 37 puntos en el último partido haciendo cinco anotaciones de \ndos puntos y x anotaciones de tres puntos. \n \n¿Cuál de las siguientes ecuaciones permite determinar la cantidad de \nanotaciones de tres puntos que hizo el jugador?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n \n \n \n \n34. Tomás y cuatro de sus amigos van a un parque de diversiones. El parque cobra \nuna entrada a todos los asistentes y un gasto adicional por entrar a cierta \natracción. Tomás decide pagar el total de estos gastos y luego cobrar a cada \nquien su parte. Escribe lo siguiente en el chat del grupo de amigos que fueron al \nparque. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi Tomás pagó un total de \n$\n en su visita al parque, ¿cuál de las \nsiguientes ecuaciones permite calcular el precio x que se pagó por cada \nentrada al parque?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n\n \n \n \n \n35. La cantidad n de chirridos por minuto que emite un grillo se relaciona con la \ntemperatura ambiental mediante la ecuación \n\n\n\n\n\n\n\nn\nT\n, tal que T es la \ntemperatura ambiental en C\n\n. \n \n¿Cuántos chirridos por minuto emitirá un grillo si la temperatura ambiental es \nde \nC\n20 \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n36. Una persona vende plantas por internet a 3500\n$\n cada una. Un mes necesita \nrealizar ventas por un monto superior a \n$\n. \n \nA mediados del mes, ha vendido solo 40 plantas y teme que no alcance su \nmeta de ventas, por lo que decide comenzar a vender las plantas a 4500\n$\n cada \nuna por el resto del mes. \n \n¿Cuál de las siguientes inecuaciones permite calcular la cantidad x de plantas \nque tiene que vender la segunda mitad del mes para alcanzar su meta?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n\n\n \n \n \n \n38. Una empresa distribuye bidones de agua de \nL\n por un valor de 2200\n$\n cada \nuno. Esta empresa tiene un plan en el que cobra una suscripción mensual de \n$\n, con lo cual el precio de cada uno de esos bidones comprados en el mes \nse reduce a 1800\n$\n. \n \n \nOtra empresa tiene un servicio similar, pero cobra una suscripción mensual de \n$\n para que el precio de cada bidón del mismo tipo se reduzca a 1600\n$\n. \n \nSi una persona se suscribe a alguna de estas empresas, ¿cuál es la cantidad \nmínima de bidones que tiene que comprar para que \nle convenga \neconómicamente la segunda empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n42. Considera la función cuadrática f , cuyo dominio es el conjunto de los números \nreales, definida por \nc\nbx\nax\nx\nf\n\n\n\n. \n \nSi los coeficientes b y c son cero, ¿cuál de los siguientes gráficos podría \ncorresponder a la gráfica asociada a f ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nX \nY \nX \nY \nX \nY \nX \nY \n \n \n \n44. Un estudiante debe rendir cuatro pruebas en un semestre, de las cuales ya tiene \ntres notas, estas son 5 , 6 y 4. \n \n¿Cuál de las siguientes expresiones permite determinar el promedio que tendría \nel estudiante con su cuarta nota x ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n15 "
+        },
+        {
+          "letra": "B",
+          "texto": "x\n15 "
+        },
+        {
+          "letra": "C",
+          "texto": "x\n5 "
+        },
+        {
+          "letra": "D",
+          "texto": "x\n15 \n \n \n \n \n \n \n \n \n \n47. Los resultados de las elecciones del centro de estudiantes de un colegio estarán \nmuy estrechos. Para tratar de predecir el resultado, se encuesta a algunos \nestudiantes por su intención de voto. En los gráficos adjuntos se presentan los \nresultados. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la cantidad de hombres y mujeres que respondieron la encuesta es la misma, \n¿cuál de las siguientes tablas presenta la intención de todos los votos?"
+        },
+        {
+          "letra": "A",
+          "texto": "Frecuencia \nAna \nJuan \nSofía \nCarlos \n \n  \nFrecuencia \nAna \nJuan \nSofía \nCarlos"
+        },
+        {
+          "letra": "B",
+          "texto": "Frecuencia  \nAna \nJuan \nSofía \nCarlos"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n  \nFrecuencia \nAna \nJuan \nSofía \nCarlos \n \nAna \nJuan \nSofía \nCarlos \n24 % \n16 % \n24 % \n36 % \nPor quién votarán las mujeres \nCarlos \nPor quién votarán los hombres \nFrecuencia \nAna \nJuan Sofía \n \n \n \n48. Los números 68 , x , 75 , 80 y 70 tienen un promedio de 73 . \n \n¿Cuál es el valor de x ?"
+        },
+        {
+          "letra": "A",
+          "texto": ","
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "6,"
+        }
+      ]
+    },
+    {
+      "numero": 49,
+      "enunciado": "En la tabla adjunta se presenta la distribución de la cantidad de videojuegos que \ntiene un grupo de jóvenes de un colegio. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes argumentos es verdadero?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El promedio de la cantidad de videojuegos es \n5,3\n, porque es el promedio \nde los datos centrales."
+        },
+        {
+          "letra": "B",
+          "texto": "El rango de la cantidad de videojuegos es 5 , porque la resta entre la \nfrecuencia mayor y la frecuencia menor es 5 ."
+        },
+        {
+          "letra": "C",
+          "texto": "El promedio de la cantidad de videojuegos es \n5,3\n, porque es el promedio \nentre la mayor y la menor cantidad de videojuegos."
+        },
+        {
+          "letra": "D",
+          "texto": "La moda de la cantidad de videojuegos es 1 y 6 , porque son los dos datos \nque más se repiten. \nCantidad de videojuegos \nFrecuencia \n \n \n \n \n51. En una encuesta, las personas indicaron su preferencia de estilo musical, eligiendo \nsolo una de entre las opciones rock, pop, rap y reguetón, obteniéndose las \nrespuestas que se presentan en la siguiente tabla: \n \n \n \n \n \n \n \n \n \n \n \nSi se selecciona al azar a una persona de las encuestadas, ¿cuál es la \nprobabilidad de que prefiera el rock?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nEstilo Musical \nFrecuencia \nRock \nPop \nRap \nReguetón \n \n \n \n52. En la tabla adjunta se presentan los resultados obtenidos al consultar a un grupo \nde personas sobre la preferencia de estudiar una de las cuatro carreras \nprofesionales propuestas, tal que cada persona escogió solo una carrera. \n \n \n \n \n \n \n \n \n \n \n \nSi se escoge a una de estas personas al azar, ¿cuál de las siguientes \nexpresiones permite determinar la probabilidad de que esta prefiera una carrera \ndel área de la salud?"
+        },
+        {
+          "letra": "A",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n"
+        },
+        {
+          "letra": "B",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n"
+        },
+        {
+          "letra": "C",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n\n\n \nCarrera profesional \nFrecuencia \nIngeniería civil \nPeriodismo  \nMedicina \nEnfermería \n \n \n \n \n53. Considera las siguientes cajas con sus respectivas bolitas grises y blancas. \n \n \n \n \n \n \n \n¿En cuál de las cajas, al extraer al azar una bolita, la probabilidad de que sea \ngris es mayor que \n5,0\n y menor que 1?"
+        },
+        {
+          "letra": "A",
+          "texto": "En la Caja 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En la Caja 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En la Caja 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En la Caja 4 \nCaja 1 \nCaja 2 \nCaja 3 \nCaja 4 \n \n \n \n54. En la tabla adjunta se presentan los resultados de una encuesta realizada a"
+        }
+      ]
+    },
+    {
+      "numero": 50,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 51,
+      "enunciado": "En una encuesta, las personas indicaron su preferencia de estilo musical, eligiendo \nsolo una de entre las opciones rock, pop, rap y reguetón, obteniéndose las \nrespuestas que se presentan en la siguiente tabla: \n \n \n \n \n \n \n \n \n \n \n \nSi se selecciona al azar a una persona de las encuestadas, ¿cuál es la \nprobabilidad de que prefiera el rock? \n \nA) \nB) \nC) \nD) \nEstilo Musical \nFrecuencia \nRock \nPop \nRap \nReguetón",
+      "alternativas": []
+    },
+    {
+      "numero": 52,
+      "enunciado": "En la tabla adjunta se presentan los resultados obtenidos al consultar a un grupo \nde personas sobre la preferencia de estudiar una de las cuatro carreras \nprofesionales propuestas, tal que cada persona escogió solo una carrera. \n \n \n \n \n \n \n \n \n \n \n \nSi se escoge a una de estas personas al azar, ¿cuál de las siguientes \nexpresiones permite determinar la probabilidad de que esta prefiera una carrera \ndel área de la salud?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n"
+        },
+        {
+          "letra": "B",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n"
+        },
+        {
+          "letra": "C",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "enfermería\nFrecuencia\nmedicina\nFrecuencia\n\n\n \nCarrera profesional \nFrecuencia \nIngeniería civil \nPeriodismo  \nMedicina \nEnfermería"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Considera las siguientes cajas con sus respectivas bolitas grises y blancas. \n \n \n \n \n \n \n \n¿En cuál de las cajas, al extraer al azar una bolita, la probabilidad de que sea \ngris es mayor que \n5,0\n y menor que 1?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En la Caja 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En la Caja 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En la Caja 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En la Caja 4 \nCaja 1 \nCaja 2 \nCaja 3 \nCaja 4"
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "En la tabla adjunta se presentan los resultados de una encuesta realizada a \n50 personas sobre su fruta preferida. \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se elige a una de estas personas al azar, ¿cuál es la probabilidad de que la \npersona elegida tenga como fruta preferida la pera o la naranja? \n \nA) \nB) \nC) \nD) \nFruta \nCantidad de personas \nUva \nPera \nManzana \nNaranja \nFrutilla",
+      "alternativas": []
+    },
+    {
+      "numero": 55,
+      "enunciado": "El Fondo Nacional de Salud (Fonasa) es un tipo de previsión de salud, junto con\nlas Isapres y otras instituciones.\nLas personas solo pueden tener un tipo de previsión y las que tienen Fonasa se\ncategorizan en los tramos A, B, C y D, según su nivel socioeconómico.\nEn los gráficos adjuntos se presenta la distribución de la población de acuerdo\ncon los tipos de previsión y la distribución de la población con Fonasa en los\ndistintos tramos en 2021.\nSi se escogía al azar a una persona de la población nacional en 2021, ¿cuál es \nla probabilidad de que hubiera estado clasificada en el tramo A de Fonasa?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ",0"
+        },
+        {
+          "letra": "B",
+          "texto": "2,0"
+        },
+        {
+          "letra": "C",
+          "texto": ",0"
+        },
+        {
+          "letra": "D",
+          "texto": ",0\nAdaptado de: Fonasa (2022). Cuenta Pública Participativa 2022."
+        }
+      ]
+    },
+    {
+      "numero": 57,
+      "enunciado": "Una empresa de repostería usa un diseño de bandejas desmontables de forma \ncircular que se apilan una sobre otra para ir colocando diferentes dulces, tal \ncomo se representa en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \nPara determinar el diámetro de la bandeja que va ubicada en el piso k , la \nempresa usa la expresión \n\n\np\nn\nk\n\n\n\n\n\n\n\n\n\n\n, tal que n representa la cantidad \nde bandejas desmontables que se usarán y p es el diámetro de la bandeja del \nprimer piso, en centímetros. \n \nLa empresa tiene que preparar un diseño de cinco pisos tal que el diámetro de \nla bandeja del primer piso mida \ncm\n. \n \n¿Cuál será el área de la bandeja del tercer piso donde irán los dulces?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm\n225"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\n240"
+        },
+        {
+          "letra": "C",
+          "texto": "cm\n300"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n900\n \nPrimer piso"
+        }
+      ]
+    },
+    {
+      "numero": 58,
+      "enunciado": "En el patio de un colegio hay dibujados cuatro círculos de perímetros \nm\n12\n, \nm\n10\n, \nm\n8\n y \nm\n4\n, que se desean pintar de un color diferente para una \nactividad extraescolar. \n \nSe necesita conocer el área total de estos cuatro círculos para estimar la \ncantidad de pintura a comprar. \n \n¿Cuál es el área que se necesita conocer?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\nm\n"
+        },
+        {
+          "letra": "B",
+          "texto": "m\n81"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n34"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n17"
+        }
+      ]
+    },
+    {
+      "numero": 59,
+      "enunciado": "Una piscina con forma de paralelepípedo recto, cuyas medidas son \nm\n de \nancho por \nm\n de largo y una profundidad de \nm\n7,1\n, tiene agua hasta una \nmarca ubicada \ncm\n antes del borde superior. \n \nPara aplicar un producto limpiador, una persona desea conocer la cantidad de \nagua en la piscina. \n \n¿Cuál es el volumen de agua contenido en la piscina?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "m"
+        },
+        {
+          "letra": "B",
+          "texto": "m\n2,"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n,"
+        },
+        {
+          "letra": "D",
+          "texto": "m"
+        }
+      ]
+    },
+    {
+      "numero": 60,
+      "enunciado": "Una maestranza produce piezas metálicas uniendo dos cilindros sólidos de la \nmisma altura, tal como se representa en la siguiente figura: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el volumen de material que se necesita para fabricar esta pieza?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm\n5000"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\n2500"
+        },
+        {
+          "letra": "C",
+          "texto": "cm\n1250"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n560"
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "Considera un perfil rectangular de \nm\n de largo hecho de aluminio de \nmm\n8,4\n \nde grosor, tal como el que se representa a continuación: \n \n \n \n¿Por cuál de los siguientes números hay que multiplicar el largo del perfil, en \nmm , para obtener la cantidad de aluminio necesaria para confeccionar uno de \nestos perfiles, en \nmm ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n8,4\n8,\n8,4\n6,\n8,\n6,\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n8,4\n8,\n8,4\n6,\n8,\n6,\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n8,4\n8,\n8,4\n6,\n8,\n6,\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n8,4\n8,\n8,4\n6,\n8,\n6,\n\n\n\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 62,
+      "enunciado": "En la siguiente imagen se representa una figura sobre una hoja de papel \ncuadriculado con dos posiciones marcadas: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes movimientos se le debe aplicar a la figura en la  \nposición 1 para que quede en la posición 2?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Trasladar la figura cuatro unidades a la izquierda y cuatro unidades hacia \nabajo."
+        },
+        {
+          "letra": "B",
+          "texto": "Trasladar la figura cuatro unidades a la izquierda y cinco unidades hacia \nabajo."
+        },
+        {
+          "letra": "C",
+          "texto": "Trasladar la figura tres unidades a la izquierda y tres unidades hacia abajo."
+        },
+        {
+          "letra": "D",
+          "texto": "Trasladar la figura cinco unidades a la izquierda y cuatro unidades hacia \nabajo."
+        }
+      ]
+    },
+    {
+      "numero": 63,
+      "enunciado": "Considera el siguiente dibujo de un velero en el agua: \n \n \n \n \n \n \n \n \n \n¿En cuál de las siguientes opciones se representa el velero y su traslación en  \nel agua? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 64,
+      "enunciado": "En el siguiente tablero de ajedrez, el rey se ubica inicialmente en la casilla e2. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEl rey puede moverse en cualquier dirección y sentido, una casilla a la vez. \nCada uno de estos movimientos se puede representar con una flecha que indica \nla dirección del movimiento con respecto al tablero anterior, por ejemplo, a la \nflecha       le corresponde el siguiente movimiento: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes series de movimientos permite que la pieza quede \nubicada en la casilla c7, partiendo de e2? \n \n \n \n \n \n \n \n \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 65,
+      "enunciado": "En la figura adjunta, el punto B es el simétrico del punto A con respecto a la \nrecta L , el punto D es el simétrico del punto C con respecto a la recta L y \n\n50\nCDB\n. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuánto mide uno de los ángulos formados por las rectas DB y CA ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "\n \n \n \n \nListado de referencias bibliográficas  \n \n \nPregunta \nCita bibliográfica  \nFonasa. (2022). Cuenta pública 2022. Fondo Nacional de Salud (Fonasa). \nhttps://www.fonasa.cl/sites/fonasa/adjuntos/CUENTAPUBLICA2022c \nProceso de Admisión 2 0 2 5"
+        }
+      ]
+    }
+  ]
+}

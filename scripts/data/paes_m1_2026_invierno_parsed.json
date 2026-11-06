@@ -1,0 +1,3017 @@
+{
+  "materia": "m1",
+  "year": 2026,
+  "edicion": "Invierno",
+  "forma": 111,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes\nperpendiculares, cuyo origen es el punto (0, 0).",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo [p, q] es el conjunto de todos los números reales mayores o\niguales que p y menores o iguales que q; el intervalo ]p, q] es el conjunto\nde todos los números reales mayores que p y menores o iguales que q;\nel intervalo [p, q[ es el conjunto de todos los números reales mayores o\niguales que p y menores que q; y el intervalo ]p, q[ es el conjunto de todos\nlos números reales mayores que p y menores que q.",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": "Todas las funciones presentadas tendrán como dominio el conjunto de los\nnúmeros reales a menos que se indique lo contrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "→v= (a, b) es un vector que tiene su punto de inicio en el origen del plano\ncartesiano y su punto final en el punto (a, b), a menos que se indique lo\ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del 1\nal 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.",
+      "alternativas": []
+    },
+    {
+      "numero": 7,
+      "enunciado": "En el experimento de lanzar una moneda, sus dos opciones son\nequiprobables de salir, a menos que se indique lo contrario.\nSÍMBOLOS MATEMÁTICOS\n<\nes menor que\n>\nes mayor que\n≤\nes menor o igual que\n≥\nes mayor o igual que\nángulo recto\n∼\nes semejante con̸\n=\nes distinto de\nAB\ntrazo AB\nAB\nmedida del trazo AB\nRegistro de Propiedad Intelectual Nº 2025 - A - 2573\nUniversidad de Chile.\nDerechos reservados ©. Prohibida su reproducción total o parcial.\n1.\n¿Cuál es el valor de 1 −(−3)(−2 −6)?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "−32"
+        },
+        {
+          "letra": "B",
+          "texto": "−23"
+        },
+        {
+          "letra": "C",
+          "texto": "−16"
+        },
+        {
+          "letra": "D",
+          "texto": "−4\n2.\nConsuelo y dos amigas comieron en un restaurante. A continuación se presenta la\nboleta de todo lo consumido por las tres amigas.\nAcordaron que cada una de ellas pagará lo que consumió y, además, la promoción\nde sopaipillas la dividirán en tres partes iguales y cada una pagará una de esas tres\npartes.\nSi Consuelo consumió un sándwich y una bebida, ¿cuánto tiene que pagar?"
+        },
+        {
+          "letra": "A",
+          "texto": "$8900"
+        },
+        {
+          "letra": "B",
+          "texto": "$9000"
+        },
+        {
+          "letra": "C",
+          "texto": "$12 000"
+        },
+        {
+          "letra": "D",
+          "texto": "$22 200\n3.\nPara representar una fracción se pueden utilizar gráficos circulares.\nPor ejemplo, en la siguiente imagen se han representado los números 5\ny 1 1\n.\n¿En cuál de las siguientes opciones se representa el resultado de 3 ·\n\u00121\n6 + 3\n2 · 4\n\u0013\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n4.\nPara calcular el valor de la expresión −2(4 · 5) −(30 −2 · 3)\n, se realizan los\nsiguientes pasos, cometiéndose un error.\nPaso 1: se reescribe −2(4 · 5) como (−8) · (−10), obteniéndose\n(−8) · (−10) −(30 −2 · 3)\n.\nPaso 2: se resuelve (30 −2 · 3), obteniéndose (−8) · (−10) −24\n.\nPaso 3: se resuelve el numerador, obteniéndose 56\n.\nPaso 4: se simplifica la fracción del paso anterior, obteniéndose 14\n.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n5.\nEn el gráfico adjunto se representa la percepción ciudadana en relación con los\natributos de un candidato. Esta percepción se presenta en un puntaje que va de\n−20 a 20 puntos.\n¿Cuál de los atributos presentó una mayor variación en su puntaje según la\npercepción ciudadana, entre agosto y noviembre?"
+        },
+        {
+          "letra": "A",
+          "texto": "Liderazgo"
+        },
+        {
+          "letra": "B",
+          "texto": "Cercanía"
+        },
+        {
+          "letra": "C",
+          "texto": "Honestidad"
+        },
+        {
+          "letra": "D",
+          "texto": "Capacidad de diálogo\n6.\nEn un juego, en cada partida un jugador debe responder 10 preguntas de cultura\ngeneral y tiene la opción de no contestar en 4 oportunidades.\n• Cuando el jugador da una respuesta correcta gana una ficha blanca que vale\n1 punto,\n• y cuando da una respuesta incorrecta gana una ficha negra que vale −1 punto.\nLuego de tres partidas completas, una persona que jugó este juego, quedó con las\nsiguientes fichas:\n¿Cuál de las siguientes expresiones representa el puntaje final de este jugador luego\nde estas tres partidas?"
+        },
+        {
+          "letra": "A",
+          "texto": "(5 · 1 −(5 · −1)) + (5 · 1 −(4 · −1)) + (4 · 1 −(2 · −1))"
+        },
+        {
+          "letra": "B",
+          "texto": "(5 · 1 + 5 · −1) + (5 · 1 + 4 · −1) + (4 · 1 + 2 · −1)"
+        },
+        {
+          "letra": "C",
+          "texto": "(5 · −1 + 5 · 1) + (5 · −1 + 4 · 1) + (4 · −1 + 2 · 1)"
+        },
+        {
+          "letra": "D",
+          "texto": "(5 · 1 + 5 · 1) + (5 · 1 + 4 · 1) + (4 · 1 + 2 · 1)\n7.\nUna persona tiene una caja con 12 huevos y realiza lo siguiente:\n• aparta 1\ny 1\ndel total de los huevos de la caja para la preparación de una tortilla\ny huevos revueltos, respectivamente,\n• utiliza la mitad de los huevos restantes para preparar un queque y\n• al guardar la caja se le rompe un huevo y lo elimina.\n¿Cuántos huevos le quedan a la persona en la caja para ser utilizados en otra\npreparación?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "Se prepararán 200 copas de un cóctel para un evento, utilizando bebida gaseosa y\njugo de limón. Cada copa del cóctel y sus medidas se representan en la siguiente\nimagen:\nSi se considera que 1 onza es 30 mL, ¿cuántos mL de jugo de limón se necesitarán\npara preparar las copas del cóctel?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "300 mL"
+        },
+        {
+          "letra": "B",
+          "texto": "7500 mL"
+        },
+        {
+          "letra": "C",
+          "texto": "9000 mL"
+        },
+        {
+          "letra": "D",
+          "texto": "21 000 mL"
+        }
+      ]
+    },
+    {
+      "numero": 9,
+      "enunciado": "La masa molar de un compuesto químico se calcula sumando las masas molares de\ntodos los átomos que lo conforman.\nConsidera el compuesto denominado ácido sulfúrico y la información que se presenta\na continuación:\nÁcido sulfúrico\nH2SO4\n2 átomos de\nhidrógeno\n1 átomo de\nazufre\n4 átomos de\noxígeno\nÁtomo\nMasa molar\n\u0010 g\nmol\n\u0011\nH\nS\nO\n¿Cuál de las siguientes expresiones representa la masa molar del ácido sulfúrico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1 + 32 + 16)\ng\nmol"
+        },
+        {
+          "letra": "B",
+          "texto": "(2 + 4) · (32 + 16)\ng\nmol"
+        },
+        {
+          "letra": "C",
+          "texto": "(2 · 1 + 1 · 32 + 4 · 16)\ng\nmol"
+        },
+        {
+          "letra": "D",
+          "texto": "(1 + 2 + 4) · (1 + 32 + 16)\ng\nmol"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 11,
+      "enunciado": "Tampoco se permite el uso de teléfono celular, calculadora o cualquier otro dispositivo electrónico durante la \nrendición de la prueba.",
+      "alternativas": []
+    },
+    {
+      "numero": 12,
+      "enunciado": "Finalmente, anota tu número de Cédula de Identidad (o Pasaporte) en los casilleros que se encuentran en la parte \ninferior de este folleto, lee y firma la declaración correspondiente.\nDECLARACIÓN: declaro conocer y aceptar la normativa que rige al Proceso de Admisión a las universidades chilenas y \nsoy consciente de que, en caso de colaborar con la reproducción, sustracción, almacenamiento o transmisión, total o \nparcial, de este folleto, a través de cualquier medio, me expongo a la exclusión inmediata de este Proceso, sin perjuicio \nde las demás acciones o sanciones legales.\nFirma\nNúmero de cédula de identidad (o pasaporte)\n—\nProceso de Admisión 2 0 2 6\nEN ESTA PRUEBA SE CONSIDERARÁ LO SIGUIENTE:\n1.\nLas figuras que aparecen son solo indicativas.\n2.\nLos gráficos que se presentan están dibujados en un sistema de ejes\nperpendiculares, cuyo origen es el punto (0, 0).\n3.\nEl intervalo [p, q] es el conjunto de todos los números reales mayores o\niguales que p y menores o iguales que q; el intervalo ]p, q] es el conjunto\nde todos los números reales mayores que p y menores o iguales que q;\nel intervalo [p, q[ es el conjunto de todos los números reales mayores o\niguales que p y menores que q; y el intervalo ]p, q[ es el conjunto de todos\nlos números reales mayores que p y menores que q.\n4.\nTodas las funciones presentadas tendrán como dominio el conjunto de los\nnúmeros reales a menos que se indique lo contrario.\n5.\n→v= (a, b) es un vector que tiene su punto de inicio en el origen del plano\ncartesiano y su punto final en el punto (a, b), a menos que se indique lo\ncontrario.\n6.\nSe entenderá por dado común a aquel que posee 6 caras numeradas del 1\nal 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.\n7.\nEn el experimento de lanzar una moneda, sus dos opciones son\nequiprobables de salir, a menos que se indique lo contrario.\nSÍMBOLOS MATEMÁTICOS\n<\nes menor que\n>\nes mayor que\n≤\nes menor o igual que\n≥\nes mayor o igual que\nángulo recto\n∼\nes semejante con̸\n=\nes distinto de\nAB\ntrazo AB\nAB\nmedida del trazo AB\nRegistro de Propiedad Intelectual Nº 2025 - A - 2573\nUniversidad de Chile.\nDerechos reservados ©. Prohibida su reproducción total o parcial.\n1.\n¿Cuál es el valor de 1 −(−3)(−2 −6)?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "−32"
+        },
+        {
+          "letra": "B",
+          "texto": "−23"
+        },
+        {
+          "letra": "C",
+          "texto": "−16"
+        },
+        {
+          "letra": "D",
+          "texto": "−4\n2.\nConsuelo y dos amigas comieron en un restaurante. A continuación se presenta la\nboleta de todo lo consumido por las tres amigas.\nAcordaron que cada una de ellas pagará lo que consumió y, además, la promoción\nde sopaipillas la dividirán en tres partes iguales y cada una pagará una de esas tres\npartes.\nSi Consuelo consumió un sándwich y una bebida, ¿cuánto tiene que pagar?"
+        },
+        {
+          "letra": "A",
+          "texto": "$8900"
+        },
+        {
+          "letra": "B",
+          "texto": "$9000"
+        },
+        {
+          "letra": "C",
+          "texto": "$12 000"
+        },
+        {
+          "letra": "D",
+          "texto": "$22 200\n3.\nPara representar una fracción se pueden utilizar gráficos circulares.\nPor ejemplo, en la siguiente imagen se han representado los números 5\ny 1 1\n.\n¿En cuál de las siguientes opciones se representa el resultado de 3 ·\n\u00121\n6 + 3\n2 · 4\n\u0013\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n4.\nPara calcular el valor de la expresión −2(4 · 5) −(30 −2 · 3)\n, se realizan los\nsiguientes pasos, cometiéndose un error.\nPaso 1: se reescribe −2(4 · 5) como (−8) · (−10), obteniéndose\n(−8) · (−10) −(30 −2 · 3)\n.\nPaso 2: se resuelve (30 −2 · 3), obteniéndose (−8) · (−10) −24\n.\nPaso 3: se resuelve el numerador, obteniéndose 56\n.\nPaso 4: se simplifica la fracción del paso anterior, obteniéndose 14\n.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n5.\nEn el gráfico adjunto se representa la percepción ciudadana en relación con los\natributos de un candidato. Esta percepción se presenta en un puntaje que va de\n−20 a 20 puntos.\n¿Cuál de los atributos presentó una mayor variación en su puntaje según la\npercepción ciudadana, entre agosto y noviembre?"
+        },
+        {
+          "letra": "A",
+          "texto": "Liderazgo"
+        },
+        {
+          "letra": "B",
+          "texto": "Cercanía"
+        },
+        {
+          "letra": "C",
+          "texto": "Honestidad"
+        },
+        {
+          "letra": "D",
+          "texto": "Capacidad de diálogo\n6.\nEn un juego, en cada partida un jugador debe responder 10 preguntas de cultura\ngeneral y tiene la opción de no contestar en 4 oportunidades.\n• Cuando el jugador da una respuesta correcta gana una ficha blanca que vale\n1 punto,\n• y cuando da una respuesta incorrecta gana una ficha negra que vale −1 punto.\nLuego de tres partidas completas, una persona que jugó este juego, quedó con las\nsiguientes fichas:\n¿Cuál de las siguientes expresiones representa el puntaje final de este jugador luego\nde estas tres partidas?"
+        },
+        {
+          "letra": "A",
+          "texto": "(5 · 1 −(5 · −1)) + (5 · 1 −(4 · −1)) + (4 · 1 −(2 · −1))"
+        },
+        {
+          "letra": "B",
+          "texto": "(5 · 1 + 5 · −1) + (5 · 1 + 4 · −1) + (4 · 1 + 2 · −1)"
+        },
+        {
+          "letra": "C",
+          "texto": "(5 · −1 + 5 · 1) + (5 · −1 + 4 · 1) + (4 · −1 + 2 · 1)"
+        },
+        {
+          "letra": "D",
+          "texto": "(5 · 1 + 5 · 1) + (5 · 1 + 4 · 1) + (4 · 1 + 2 · 1)\n7.\nUna persona tiene una caja con 12 huevos y realiza lo siguiente:\n• aparta 1\ny 1\ndel total de los huevos de la caja para la preparación de una tortilla\ny huevos revueltos, respectivamente,\n• utiliza la mitad de los huevos restantes para preparar un queque y\n• al guardar la caja se le rompe un huevo y lo elimina.\n¿Cuántos huevos le quedan a la persona en la caja para ser utilizados en otra\npreparación?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n8.\nSe prepararán 200 copas de un cóctel para un evento, utilizando bebida gaseosa y\njugo de limón. Cada copa del cóctel y sus medidas se representan en la siguiente\nimagen:\nSi se considera que 1 onza es 30 mL, ¿cuántos mL de jugo de limón se necesitarán\npara preparar las copas del cóctel?"
+        },
+        {
+          "letra": "A",
+          "texto": "300 mL"
+        },
+        {
+          "letra": "B",
+          "texto": "7500 mL"
+        },
+        {
+          "letra": "C",
+          "texto": "9000 mL"
+        },
+        {
+          "letra": "D",
+          "texto": "21 000 mL\n9.\nLa masa molar de un compuesto químico se calcula sumando las masas molares de\ntodos los átomos que lo conforman.\nConsidera el compuesto denominado ácido sulfúrico y la información que se presenta\na continuación:\nÁcido sulfúrico\nH2SO4\n2 átomos de\nhidrógeno\n1 átomo de\nazufre\n4 átomos de\noxígeno\nÁtomo\nMasa molar\n\u0010 g\nmol\n\u0011\nH\nS\nO\n¿Cuál de las siguientes expresiones representa la masa molar del ácido sulfúrico?"
+        },
+        {
+          "letra": "A",
+          "texto": "(1 + 32 + 16)\ng\nmol"
+        },
+        {
+          "letra": "B",
+          "texto": "(2 + 4) · (32 + 16)\ng\nmol"
+        },
+        {
+          "letra": "C",
+          "texto": "(2 · 1 + 1 · 32 + 4 · 16)\ng\nmol"
+        },
+        {
+          "letra": "D",
+          "texto": "(1 + 2 + 4) · (1 + 32 + 16)\ng\nmol\n10.\nConsidera una hoja de papel de 20 cm de ancho y 30 cm de largo. Esta hoja se\ndobla sucesivamente por la mitad del lado más largo, formando en cada doblez un\nrectángulo, como se representa en la figura.\n¿Cuántos dobleces se le deben hacer a la hoja de papel para conseguir un rectángulo\nde 2,5 cm de ancho y 3,75 cm de largo?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n11.\n¿Cuál de las siguientes afirmaciones permite justificar que 5 es el 25 % de 20?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que 20 + 5 = 25."
+        },
+        {
+          "letra": "B",
+          "texto": "Que 5, 20 y 25 son múltiplos de 5."
+        },
+        {
+          "letra": "C",
+          "texto": "Que 5 es divisor de 20."
+        },
+        {
+          "letra": "D",
+          "texto": "Que 5 es la cuarta parte de 20.\n12.\nEl círculo de la figura adjunta está dividido en nueve partes iguales y algunas de estas\nse pintaron de color gris.\n¿Qué porcentaje de la figura se pintó de color gris?"
+        },
+        {
+          "letra": "A",
+          "texto": "11,1 %"
+        },
+        {
+          "letra": "B",
+          "texto": "12,5 %"
+        },
+        {
+          "letra": "C",
+          "texto": "80 %"
+        },
+        {
+          "letra": "D",
+          "texto": "88,8 %"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "Existen estándares para las medidas de las casillas de un tablero de ajedrez y sus\npiezas. Uno de estos es la relación entre la base circular de la pieza llamada rey y el\ntamaño de las casillas. El diámetro de la base debe medir entre un 75 % y un 80 %\ndel lado de la casilla.\nEl tablero y la pieza del rey se representa en la siguiente figura:\nSi en un tablero de ajedrez las casillas tienen de lado 5 cm y se quieren seguir los\nestándares, ¿cuánto debe medir el diámetro de la base del rey?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Entre 15 cm y 16 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "Entre 4,2 cm y 4,25 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "Entre 3,75 cm y 4 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "Entre 1,875 cm y 2 cm"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Una cafetería ofrece la siguiente promoción:\nUn grupo de cinco personas asiste a la cafetería a comprar esta promoción y desean\ndividir el total a pagar en partes iguales.\n¿Qué porcentaje de descuento obtuvo cada persona al pagar por su café?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "4 %"
+        },
+        {
+          "letra": "B",
+          "texto": "5 %"
+        },
+        {
+          "letra": "C",
+          "texto": "20 %"
+        },
+        {
+          "letra": "D",
+          "texto": "25 %"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "En una elección, el 45 % de los electores no votó y el candidato ganador obtuvo\n6 de cada 10 votos.\n¿Qué porcentaje de los electores votó por el candidato ganador?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "2,7 %"
+        },
+        {
+          "letra": "B",
+          "texto": "3,3 %"
+        },
+        {
+          "letra": "C",
+          "texto": "27 %"
+        },
+        {
+          "letra": "D",
+          "texto": "33 %"
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "En el gráfico circular adjunto se presenta la cantidad de personas que han\nseleccionado cada alternativa de una pregunta en un test de personalidad.\nConsiderando que todas las personas marcaron solo una alternativa, ¿cuál de las\nsiguientes afirmaciones es verdadera, en relación con los datos del gráfico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Más del 50 % de las personas marcó las alternativas C o D."
+        },
+        {
+          "letra": "B",
+          "texto": "Exactamente un 25 % de las personas marcó la alternativa C."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un 4 % de las personas marcó la alternativa B."
+        },
+        {
+          "letra": "D",
+          "texto": "Menos del 25 % de las personas marcó las alternativas B o C."
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "Una persona tiene un emprendimiento de bizcochuelos. Para prepararlos compra\n5 cajas de huevos, tal que cada caja contiene 6 bandejas y cada bandeja tiene\n30 huevos.\nProducto de la mala manipulación de las cajas se quebraron el 1 % de los huevos\ncomprados, los cuales no se utilizarán en la preparación de bizcochuelos.\nSi para cada bizcochuelo la persona ocupa 6 huevos, ¿cuántos de estos bizcochuelos\npuede preparar con los huevos que le quedaron?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 18,
+      "enunciado": "Se comienza un cultivo con 100 bacterias que duplican su cantidad cada hora.\n¿Cuántas bacterias habrá en el cultivo en 24 h?\nA)\nB)\nC)\n100 · 224\nD)\n100 · 225",
+      "alternativas": []
+    },
+    {
+      "numero": 19,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 20,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 21,
+      "enunciado": "000 mL\n9.\nLa masa molar de un compuesto químico se calcula sumando las masas molares de\ntodos los átomos que lo conforman.\nConsidera el compuesto denominado ácido sulfúrico y la información que se presenta\na continuación:\nÁcido sulfúrico\nH2SO4\n2 átomos de\nhidrógeno\n1 átomo de\nazufre\n4 átomos de\noxígeno\nÁtomo\nMasa molar\n\u0010 g\nmol\n\u0011\nH\nS\nO\n¿Cuál de las siguientes expresiones representa la masa molar del ácido sulfúrico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1 + 32 + 16)\ng\nmol"
+        },
+        {
+          "letra": "B",
+          "texto": "(2 + 4) · (32 + 16)\ng\nmol"
+        },
+        {
+          "letra": "C",
+          "texto": "(2 · 1 + 1 · 32 + 4 · 16)\ng\nmol"
+        },
+        {
+          "letra": "D",
+          "texto": "(1 + 2 + 4) · (1 + 32 + 16)\ng\nmol\n10.\nConsidera una hoja de papel de 20 cm de ancho y 30 cm de largo. Esta hoja se\ndobla sucesivamente por la mitad del lado más largo, formando en cada doblez un\nrectángulo, como se representa en la figura.\n¿Cuántos dobleces se le deben hacer a la hoja de papel para conseguir un rectángulo\nde 2,5 cm de ancho y 3,75 cm de largo?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n11.\n¿Cuál de las siguientes afirmaciones permite justificar que 5 es el 25 % de 20?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que 20 + 5 = 25."
+        },
+        {
+          "letra": "B",
+          "texto": "Que 5, 20 y 25 son múltiplos de 5."
+        },
+        {
+          "letra": "C",
+          "texto": "Que 5 es divisor de 20."
+        },
+        {
+          "letra": "D",
+          "texto": "Que 5 es la cuarta parte de 20.\n12.\nEl círculo de la figura adjunta está dividido en nueve partes iguales y algunas de estas\nse pintaron de color gris.\n¿Qué porcentaje de la figura se pintó de color gris?"
+        },
+        {
+          "letra": "A",
+          "texto": "11,1 %"
+        },
+        {
+          "letra": "B",
+          "texto": "12,5 %"
+        },
+        {
+          "letra": "C",
+          "texto": "80 %"
+        },
+        {
+          "letra": "D",
+          "texto": "88,8 %\n13.\nExisten estándares para las medidas de las casillas de un tablero de ajedrez y sus\npiezas. Uno de estos es la relación entre la base circular de la pieza llamada rey y el\ntamaño de las casillas. El diámetro de la base debe medir entre un 75 % y un 80 %\ndel lado de la casilla.\nEl tablero y la pieza del rey se representa en la siguiente figura:\nSi en un tablero de ajedrez las casillas tienen de lado 5 cm y se quieren seguir los\nestándares, ¿cuánto debe medir el diámetro de la base del rey?"
+        },
+        {
+          "letra": "A",
+          "texto": "Entre 15 cm y 16 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "Entre 4,2 cm y 4,25 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "Entre 3,75 cm y 4 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "Entre 1,875 cm y 2 cm\n14.\nUna cafetería ofrece la siguiente promoción:\nUn grupo de cinco personas asiste a la cafetería a comprar esta promoción y desean\ndividir el total a pagar en partes iguales.\n¿Qué porcentaje de descuento obtuvo cada persona al pagar por su café?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 %"
+        },
+        {
+          "letra": "B",
+          "texto": "5 %"
+        },
+        {
+          "letra": "C",
+          "texto": "20 %"
+        },
+        {
+          "letra": "D",
+          "texto": "25 %\n15.\nEn una elección, el 45 % de los electores no votó y el candidato ganador obtuvo\n6 de cada 10 votos.\n¿Qué porcentaje de los electores votó por el candidato ganador?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,7 %"
+        },
+        {
+          "letra": "B",
+          "texto": "3,3 %"
+        },
+        {
+          "letra": "C",
+          "texto": "27 %"
+        },
+        {
+          "letra": "D",
+          "texto": "33 %\n16.\nEn el gráfico circular adjunto se presenta la cantidad de personas que han\nseleccionado cada alternativa de una pregunta en un test de personalidad.\nConsiderando que todas las personas marcaron solo una alternativa, ¿cuál de las\nsiguientes afirmaciones es verdadera, en relación con los datos del gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "Más del 50 % de las personas marcó las alternativas C o D."
+        },
+        {
+          "letra": "B",
+          "texto": "Exactamente un 25 % de las personas marcó la alternativa C."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un 4 % de las personas marcó la alternativa B."
+        },
+        {
+          "letra": "D",
+          "texto": "Menos del 25 % de las personas marcó las alternativas B o C.\n17.\nUna persona tiene un emprendimiento de bizcochuelos. Para prepararlos compra\n5 cajas de huevos, tal que cada caja contiene 6 bandejas y cada bandeja tiene\n30 huevos.\nProducto de la mala manipulación de las cajas se quebraron el 1 % de los huevos\ncomprados, los cuales no se utilizarán en la preparación de bizcochuelos.\nSi para cada bizcochuelo la persona ocupa 6 huevos, ¿cuántos de estos bizcochuelos\npuede preparar con los huevos que le quedaron?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n18.\nSe comienza un cultivo con 100 bacterias que duplican su cantidad cada hora.\n¿Cuántas bacterias habrá en el cultivo en 24 h?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · 224"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · 225\n19.\n¿Cuál es el valor de 2 · 2\n√\n5?"
+        },
+        {
+          "letra": "A",
+          "texto": "√"
+        },
+        {
+          "letra": "B",
+          "texto": "√"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n√\n20.\n¿Cuál es el valor de 23 · 34\n2 · 9\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\n¿Cuál es el valor de (−2)6?"
+        },
+        {
+          "letra": "A",
+          "texto": "−64"
+        },
+        {
+          "letra": "B",
+          "texto": "−12"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "La diagonal de un prisma recto de base rectangular se calcula como\n√\na2 + b2 + c2,\ncon a, b y c las medidas de sus aristas.\nConsidera que la diagonal de un prisma recto de base rectangular mide\n√\n83 cm y\nque dos de sus aristas miden 3 cm y 5 cm.\n¿Cuánto mide la arista faltante?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "4 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "7 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "19 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "49 cm"
+        }
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "Se representará la expresión (4 · 125)3 como producto de potencias de base 2 y 5,\npara lo cual se realiza el siguiente procedimiento, cometiéndose un error.\nPaso 1: se reescriben los factores de la base, obteniéndose\n\u000022 · 53\u00013.\nPaso 2: se aplica la propiedad de la multiplicación de potencias con igual exponente,\nobteniéndose\n\u000022\u00013 ·\n\u000053\u00013.\nPaso 3: se aplica la propiedad de la potencia de una potencia, obteniéndose\n2(2 + 3) · 5(3 + 3).\nPaso 4: se resuelve la suma de los exponentes, obteniéndose 25 · 56.\n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 25,
+      "enunciado": "%\n15.\nEn una elección, el 45 % de los electores no votó y el candidato ganador obtuvo\n6 de cada 10 votos.\n¿Qué porcentaje de los electores votó por el candidato ganador?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "2,7 %"
+        },
+        {
+          "letra": "B",
+          "texto": "3,3 %"
+        },
+        {
+          "letra": "C",
+          "texto": "27 %"
+        },
+        {
+          "letra": "D",
+          "texto": "33 %\n16.\nEn el gráfico circular adjunto se presenta la cantidad de personas que han\nseleccionado cada alternativa de una pregunta en un test de personalidad.\nConsiderando que todas las personas marcaron solo una alternativa, ¿cuál de las\nsiguientes afirmaciones es verdadera, en relación con los datos del gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "Más del 50 % de las personas marcó las alternativas C o D."
+        },
+        {
+          "letra": "B",
+          "texto": "Exactamente un 25 % de las personas marcó la alternativa C."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un 4 % de las personas marcó la alternativa B."
+        },
+        {
+          "letra": "D",
+          "texto": "Menos del 25 % de las personas marcó las alternativas B o C.\n17.\nUna persona tiene un emprendimiento de bizcochuelos. Para prepararlos compra\n5 cajas de huevos, tal que cada caja contiene 6 bandejas y cada bandeja tiene\n30 huevos.\nProducto de la mala manipulación de las cajas se quebraron el 1 % de los huevos\ncomprados, los cuales no se utilizarán en la preparación de bizcochuelos.\nSi para cada bizcochuelo la persona ocupa 6 huevos, ¿cuántos de estos bizcochuelos\npuede preparar con los huevos que le quedaron?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n18.\nSe comienza un cultivo con 100 bacterias que duplican su cantidad cada hora.\n¿Cuántas bacterias habrá en el cultivo en 24 h?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · 224"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · 225\n19.\n¿Cuál es el valor de 2 · 2\n√\n5?"
+        },
+        {
+          "letra": "A",
+          "texto": "√"
+        },
+        {
+          "letra": "B",
+          "texto": "√"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n√\n20.\n¿Cuál es el valor de 23 · 34\n2 · 9\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\n¿Cuál es el valor de (−2)6?"
+        },
+        {
+          "letra": "A",
+          "texto": "−64"
+        },
+        {
+          "letra": "B",
+          "texto": "−12"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n22.\nLa diagonal de un prisma recto de base rectangular se calcula como\n√\na2 + b2 + c2,\ncon a, b y c las medidas de sus aristas.\nConsidera que la diagonal de un prisma recto de base rectangular mide\n√\n83 cm y\nque dos de sus aristas miden 3 cm y 5 cm.\n¿Cuánto mide la arista faltante?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "7 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "19 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "49 cm\n23.\nSe representará la expresión (4 · 125)3 como producto de potencias de base 2 y 5,\npara lo cual se realiza el siguiente procedimiento, cometiéndose un error.\nPaso 1: se reescriben los factores de la base, obteniéndose\n\u000022 · 53\u00013.\nPaso 2: se aplica la propiedad de la multiplicación de potencias con igual exponente,\nobteniéndose\n\u000022\u00013 ·\n\u000053\u00013.\nPaso 3: se aplica la propiedad de la potencia de una potencia, obteniéndose\n2(2 + 3) · 5(3 + 3).\nPaso 4: se resuelve la suma de los exponentes, obteniéndose 25 · 56.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n24.\nEn el año 2020, la capacidad mundial de almacenamiento alcanzó los 6,7 zettabytes.\nDe acuerdo con algunas estimaciones, la capacidad mundial de almacenamiento,\nen zettabytes, aumentará a un ritmo del 20 % anualmente entre los años 2020 y 2025.\nDada esta información, la capacidad mundial de almacenamiento, en zettabytes en\nel año 2025 se puede proyectar por el modelo 6,7 · (1,2)N.\n¿Qué representa el parámetro N en este modelo?"
+        },
+        {
+          "letra": "A",
+          "texto": "Al cociente entre 2025 y 2020."
+        },
+        {
+          "letra": "B",
+          "texto": "La diferencia entre 2025 y 2020."
+        },
+        {
+          "letra": "C",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2025."
+        },
+        {
+          "letra": "D",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2021.\n25.\nSi la edad actual de Pedro es m años, ¿cuál de las siguientes expresiones representa\nla expresión “la edad de Pedro hace n años disminuida en 3 años”?"
+        },
+        {
+          "letra": "A",
+          "texto": "m −n"
+        },
+        {
+          "letra": "B",
+          "texto": "m −n −3"
+        },
+        {
+          "letra": "C",
+          "texto": "m −(n −3)"
+        },
+        {
+          "letra": "D",
+          "texto": "(m + n) −3"
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 27,
+      "enunciado": "%",
+      "alternativas": [
+        {
+          "letra": "D",
+          "texto": "33 %\n16.\nEn el gráfico circular adjunto se presenta la cantidad de personas que han\nseleccionado cada alternativa de una pregunta en un test de personalidad.\nConsiderando que todas las personas marcaron solo una alternativa, ¿cuál de las\nsiguientes afirmaciones es verdadera, en relación con los datos del gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "Más del 50 % de las personas marcó las alternativas C o D."
+        },
+        {
+          "letra": "B",
+          "texto": "Exactamente un 25 % de las personas marcó la alternativa C."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un 4 % de las personas marcó la alternativa B."
+        },
+        {
+          "letra": "D",
+          "texto": "Menos del 25 % de las personas marcó las alternativas B o C.\n17.\nUna persona tiene un emprendimiento de bizcochuelos. Para prepararlos compra\n5 cajas de huevos, tal que cada caja contiene 6 bandejas y cada bandeja tiene\n30 huevos.\nProducto de la mala manipulación de las cajas se quebraron el 1 % de los huevos\ncomprados, los cuales no se utilizarán en la preparación de bizcochuelos.\nSi para cada bizcochuelo la persona ocupa 6 huevos, ¿cuántos de estos bizcochuelos\npuede preparar con los huevos que le quedaron?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n18.\nSe comienza un cultivo con 100 bacterias que duplican su cantidad cada hora.\n¿Cuántas bacterias habrá en el cultivo en 24 h?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · 224"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · 225\n19.\n¿Cuál es el valor de 2 · 2\n√\n5?"
+        },
+        {
+          "letra": "A",
+          "texto": "√"
+        },
+        {
+          "letra": "B",
+          "texto": "√"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n√\n20.\n¿Cuál es el valor de 23 · 34\n2 · 9\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\n¿Cuál es el valor de (−2)6?"
+        },
+        {
+          "letra": "A",
+          "texto": "−64"
+        },
+        {
+          "letra": "B",
+          "texto": "−12"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n22.\nLa diagonal de un prisma recto de base rectangular se calcula como\n√\na2 + b2 + c2,\ncon a, b y c las medidas de sus aristas.\nConsidera que la diagonal de un prisma recto de base rectangular mide\n√\n83 cm y\nque dos de sus aristas miden 3 cm y 5 cm.\n¿Cuánto mide la arista faltante?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "7 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "19 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "49 cm\n23.\nSe representará la expresión (4 · 125)3 como producto de potencias de base 2 y 5,\npara lo cual se realiza el siguiente procedimiento, cometiéndose un error.\nPaso 1: se reescriben los factores de la base, obteniéndose\n\u000022 · 53\u00013.\nPaso 2: se aplica la propiedad de la multiplicación de potencias con igual exponente,\nobteniéndose\n\u000022\u00013 ·\n\u000053\u00013.\nPaso 3: se aplica la propiedad de la potencia de una potencia, obteniéndose\n2(2 + 3) · 5(3 + 3).\nPaso 4: se resuelve la suma de los exponentes, obteniéndose 25 · 56.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n24.\nEn el año 2020, la capacidad mundial de almacenamiento alcanzó los 6,7 zettabytes.\nDe acuerdo con algunas estimaciones, la capacidad mundial de almacenamiento,\nen zettabytes, aumentará a un ritmo del 20 % anualmente entre los años 2020 y 2025.\nDada esta información, la capacidad mundial de almacenamiento, en zettabytes en\nel año 2025 se puede proyectar por el modelo 6,7 · (1,2)N.\n¿Qué representa el parámetro N en este modelo?"
+        },
+        {
+          "letra": "A",
+          "texto": "Al cociente entre 2025 y 2020."
+        },
+        {
+          "letra": "B",
+          "texto": "La diferencia entre 2025 y 2020."
+        },
+        {
+          "letra": "C",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2025."
+        },
+        {
+          "letra": "D",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2021.\n25.\nSi la edad actual de Pedro es m años, ¿cuál de las siguientes expresiones representa\nla expresión “la edad de Pedro hace n años disminuida en 3 años”?"
+        },
+        {
+          "letra": "A",
+          "texto": "m −n"
+        },
+        {
+          "letra": "B",
+          "texto": "m −n −3"
+        },
+        {
+          "letra": "C",
+          "texto": "m −(n −3)"
+        },
+        {
+          "letra": "D",
+          "texto": "(m + n) −3\n26.\nEn\nlos\nmeses\nde\nmenor\ndemanda,\nel\nmetro\ntraslada\naproximadamente\n2 600 000 personas cada día, recibiendo un total de $2 000 000 000 diarios\npor concepto de pasaje.\nEn los meses de mayor demanda, el metro traslada diariamente 100 000 personas\nmás que en los meses de menor demanda.\nSi el precio del pasaje es igual todo el año, ¿cuánto dinero recibe diariamente el\nmetro en los meses de mayor demanda, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 000 100 000\n2 600 000"
+        },
+        {
+          "letra": "B",
+          "texto": "2 700 000\n2 600 000 · 2 000 000 000"
+        },
+        {
+          "letra": "C",
+          "texto": "2 000 000 000\n2 600 000\n+ 100 000"
+        },
+        {
+          "letra": "D",
+          "texto": "2 600 000 · 2 000 000 000 + 100 000\n27.\n¿Cuál de las siguientes expresiones es igual a (2x −3)2 −(2x −3)(2x + 3)?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−6x + 18"
+        },
+        {
+          "letra": "D",
+          "texto": "−12x + 18"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "En la siguiente imagen se presentan las instrucciones para preparar un cereal\ninstantáneo para bebé que viene con una cuchara de capacidad 5 gramos.\nSe quiere preparar este cereal instantáneo usando solo 120 mL de leche tibia.\nSi se mantienen las proporciones de las instrucciones, ¿cuántas cucharadas se\ndeben agregar a la leche?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 29,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 30,
+      "enunciado": "huevos.\nProducto de la mala manipulación de las cajas se quebraron el 1 % de los huevos\ncomprados, los cuales no se utilizarán en la preparación de bizcochuelos.\nSi para cada bizcochuelo la persona ocupa 6 huevos, ¿cuántos de estos bizcochuelos\npuede preparar con los huevos que le quedaron?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n18.\nSe comienza un cultivo con 100 bacterias que duplican su cantidad cada hora.\n¿Cuántas bacterias habrá en el cultivo en 24 h?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · 224"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · 225\n19.\n¿Cuál es el valor de 2 · 2\n√\n5?"
+        },
+        {
+          "letra": "A",
+          "texto": "√"
+        },
+        {
+          "letra": "B",
+          "texto": "√"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n√\n20.\n¿Cuál es el valor de 23 · 34\n2 · 9\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\n¿Cuál es el valor de (−2)6?"
+        },
+        {
+          "letra": "A",
+          "texto": "−64"
+        },
+        {
+          "letra": "B",
+          "texto": "−12"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n22.\nLa diagonal de un prisma recto de base rectangular se calcula como\n√\na2 + b2 + c2,\ncon a, b y c las medidas de sus aristas.\nConsidera que la diagonal de un prisma recto de base rectangular mide\n√\n83 cm y\nque dos de sus aristas miden 3 cm y 5 cm.\n¿Cuánto mide la arista faltante?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "7 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "19 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "49 cm\n23.\nSe representará la expresión (4 · 125)3 como producto de potencias de base 2 y 5,\npara lo cual se realiza el siguiente procedimiento, cometiéndose un error.\nPaso 1: se reescriben los factores de la base, obteniéndose\n\u000022 · 53\u00013.\nPaso 2: se aplica la propiedad de la multiplicación de potencias con igual exponente,\nobteniéndose\n\u000022\u00013 ·\n\u000053\u00013.\nPaso 3: se aplica la propiedad de la potencia de una potencia, obteniéndose\n2(2 + 3) · 5(3 + 3).\nPaso 4: se resuelve la suma de los exponentes, obteniéndose 25 · 56.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n24.\nEn el año 2020, la capacidad mundial de almacenamiento alcanzó los 6,7 zettabytes.\nDe acuerdo con algunas estimaciones, la capacidad mundial de almacenamiento,\nen zettabytes, aumentará a un ritmo del 20 % anualmente entre los años 2020 y 2025.\nDada esta información, la capacidad mundial de almacenamiento, en zettabytes en\nel año 2025 se puede proyectar por el modelo 6,7 · (1,2)N.\n¿Qué representa el parámetro N en este modelo?"
+        },
+        {
+          "letra": "A",
+          "texto": "Al cociente entre 2025 y 2020."
+        },
+        {
+          "letra": "B",
+          "texto": "La diferencia entre 2025 y 2020."
+        },
+        {
+          "letra": "C",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2025."
+        },
+        {
+          "letra": "D",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2021.\n25.\nSi la edad actual de Pedro es m años, ¿cuál de las siguientes expresiones representa\nla expresión “la edad de Pedro hace n años disminuida en 3 años”?"
+        },
+        {
+          "letra": "A",
+          "texto": "m −n"
+        },
+        {
+          "letra": "B",
+          "texto": "m −n −3"
+        },
+        {
+          "letra": "C",
+          "texto": "m −(n −3)"
+        },
+        {
+          "letra": "D",
+          "texto": "(m + n) −3\n26.\nEn\nlos\nmeses\nde\nmenor\ndemanda,\nel\nmetro\ntraslada\naproximadamente\n2 600 000 personas cada día, recibiendo un total de $2 000 000 000 diarios\npor concepto de pasaje.\nEn los meses de mayor demanda, el metro traslada diariamente 100 000 personas\nmás que en los meses de menor demanda.\nSi el precio del pasaje es igual todo el año, ¿cuánto dinero recibe diariamente el\nmetro en los meses de mayor demanda, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 000 100 000\n2 600 000"
+        },
+        {
+          "letra": "B",
+          "texto": "2 700 000\n2 600 000 · 2 000 000 000"
+        },
+        {
+          "letra": "C",
+          "texto": "2 000 000 000\n2 600 000\n+ 100 000"
+        },
+        {
+          "letra": "D",
+          "texto": "2 600 000 · 2 000 000 000 + 100 000\n27.\n¿Cuál de las siguientes expresiones es igual a (2x −3)2 −(2x −3)(2x + 3)?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−6x + 18"
+        },
+        {
+          "letra": "D",
+          "texto": "−12x + 18\n28.\nEn la siguiente imagen se presentan las instrucciones para preparar un cereal\ninstantáneo para bebé que viene con una cuchara de capacidad 5 gramos.\nSe quiere preparar este cereal instantáneo usando solo 120 mL de leche tibia.\nSi se mantienen las proporciones de las instrucciones, ¿cuántas cucharadas se\ndeben agregar a la leche?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n29.\nEn un estacionamiento se cobra de manera proporcional al tiempo en que un vehículo\nse encuentra estacionado. Algunos valores se presentan en la tabla adjunta.\nTiempo en minutos\nPrecio en pesos\n¿Cuál de las siguientes expresiones representa el precio por pagar, en pesos, de un\nvehículo que está estacionado x minutos?"
+        },
+        {
+          "letra": "A",
+          "texto": "12x"
+        },
+        {
+          "letra": "B",
+          "texto": "x"
+        },
+        {
+          "letra": "C",
+          "texto": "x + 11"
+        },
+        {
+          "letra": "D",
+          "texto": "x + 12\n30.\nJavier y David compraron una bolsa de 24 dulces a un precio total de $2100, tal que\nJavier aportó $1400 y David aportó el resto del dinero.\nEllos deciden vender cada dulce a $200 y repartirse el dinero obtenido de forma\nproporcional a lo que aportó cada uno en la compra.\n¿Cuánto dinero recibirá Javier luego de vender todos los dulces?"
+        },
+        {
+          "letra": "A",
+          "texto": "$1600"
+        },
+        {
+          "letra": "B",
+          "texto": "$2400"
+        },
+        {
+          "letra": "C",
+          "texto": "$2700"
+        },
+        {
+          "letra": "D",
+          "texto": "$3200"
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "Para juntar dinero para un viaje, Pedro ahorró durante solo 8 semanas el dinero\nque su abuela le daba semanalmente, el cual siempre era el mismo monto. Luego,\nen los dos meses siguientes, recibió una mesada de $10 000 cada mes y trabajó\n6 sábados, en los que ganó $15 000 diarios.\nSi Pedro logró juntar en total $210 000 para el viaje, ¿cuánto dinero le dio la abuela\nsemanalmente?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$12 500"
+        },
+        {
+          "letra": "B",
+          "texto": "$15 000"
+        },
+        {
+          "letra": "C",
+          "texto": "$23 125"
+        },
+        {
+          "letra": "D",
+          "texto": "$26 250"
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 33,
+      "enunciado": "%\n16.\nEn el gráfico circular adjunto se presenta la cantidad de personas que han\nseleccionado cada alternativa de una pregunta en un test de personalidad.\nConsiderando que todas las personas marcaron solo una alternativa, ¿cuál de las\nsiguientes afirmaciones es verdadera, en relación con los datos del gráfico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Más del 50 % de las personas marcó las alternativas C o D."
+        },
+        {
+          "letra": "B",
+          "texto": "Exactamente un 25 % de las personas marcó la alternativa C."
+        },
+        {
+          "letra": "C",
+          "texto": "Exactamente un 4 % de las personas marcó la alternativa B."
+        },
+        {
+          "letra": "D",
+          "texto": "Menos del 25 % de las personas marcó las alternativas B o C.\n17.\nUna persona tiene un emprendimiento de bizcochuelos. Para prepararlos compra\n5 cajas de huevos, tal que cada caja contiene 6 bandejas y cada bandeja tiene\n30 huevos.\nProducto de la mala manipulación de las cajas se quebraron el 1 % de los huevos\ncomprados, los cuales no se utilizarán en la preparación de bizcochuelos.\nSi para cada bizcochuelo la persona ocupa 6 huevos, ¿cuántos de estos bizcochuelos\npuede preparar con los huevos que le quedaron?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n18.\nSe comienza un cultivo con 100 bacterias que duplican su cantidad cada hora.\n¿Cuántas bacterias habrá en el cultivo en 24 h?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · 224"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · 225\n19.\n¿Cuál es el valor de 2 · 2\n√\n5?"
+        },
+        {
+          "letra": "A",
+          "texto": "√"
+        },
+        {
+          "letra": "B",
+          "texto": "√"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n√\n20.\n¿Cuál es el valor de 23 · 34\n2 · 9\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\n¿Cuál es el valor de (−2)6?"
+        },
+        {
+          "letra": "A",
+          "texto": "−64"
+        },
+        {
+          "letra": "B",
+          "texto": "−12"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n22.\nLa diagonal de un prisma recto de base rectangular se calcula como\n√\na2 + b2 + c2,\ncon a, b y c las medidas de sus aristas.\nConsidera que la diagonal de un prisma recto de base rectangular mide\n√\n83 cm y\nque dos de sus aristas miden 3 cm y 5 cm.\n¿Cuánto mide la arista faltante?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "7 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "19 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "49 cm\n23.\nSe representará la expresión (4 · 125)3 como producto de potencias de base 2 y 5,\npara lo cual se realiza el siguiente procedimiento, cometiéndose un error.\nPaso 1: se reescriben los factores de la base, obteniéndose\n\u000022 · 53\u00013.\nPaso 2: se aplica la propiedad de la multiplicación de potencias con igual exponente,\nobteniéndose\n\u000022\u00013 ·\n\u000053\u00013.\nPaso 3: se aplica la propiedad de la potencia de una potencia, obteniéndose\n2(2 + 3) · 5(3 + 3).\nPaso 4: se resuelve la suma de los exponentes, obteniéndose 25 · 56.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n24.\nEn el año 2020, la capacidad mundial de almacenamiento alcanzó los 6,7 zettabytes.\nDe acuerdo con algunas estimaciones, la capacidad mundial de almacenamiento,\nen zettabytes, aumentará a un ritmo del 20 % anualmente entre los años 2020 y 2025.\nDada esta información, la capacidad mundial de almacenamiento, en zettabytes en\nel año 2025 se puede proyectar por el modelo 6,7 · (1,2)N.\n¿Qué representa el parámetro N en este modelo?"
+        },
+        {
+          "letra": "A",
+          "texto": "Al cociente entre 2025 y 2020."
+        },
+        {
+          "letra": "B",
+          "texto": "La diferencia entre 2025 y 2020."
+        },
+        {
+          "letra": "C",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2025."
+        },
+        {
+          "letra": "D",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2021.\n25.\nSi la edad actual de Pedro es m años, ¿cuál de las siguientes expresiones representa\nla expresión “la edad de Pedro hace n años disminuida en 3 años”?"
+        },
+        {
+          "letra": "A",
+          "texto": "m −n"
+        },
+        {
+          "letra": "B",
+          "texto": "m −n −3"
+        },
+        {
+          "letra": "C",
+          "texto": "m −(n −3)"
+        },
+        {
+          "letra": "D",
+          "texto": "(m + n) −3\n26.\nEn\nlos\nmeses\nde\nmenor\ndemanda,\nel\nmetro\ntraslada\naproximadamente\n2 600 000 personas cada día, recibiendo un total de $2 000 000 000 diarios\npor concepto de pasaje.\nEn los meses de mayor demanda, el metro traslada diariamente 100 000 personas\nmás que en los meses de menor demanda.\nSi el precio del pasaje es igual todo el año, ¿cuánto dinero recibe diariamente el\nmetro en los meses de mayor demanda, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 000 100 000\n2 600 000"
+        },
+        {
+          "letra": "B",
+          "texto": "2 700 000\n2 600 000 · 2 000 000 000"
+        },
+        {
+          "letra": "C",
+          "texto": "2 000 000 000\n2 600 000\n+ 100 000"
+        },
+        {
+          "letra": "D",
+          "texto": "2 600 000 · 2 000 000 000 + 100 000\n27.\n¿Cuál de las siguientes expresiones es igual a (2x −3)2 −(2x −3)(2x + 3)?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−6x + 18"
+        },
+        {
+          "letra": "D",
+          "texto": "−12x + 18\n28.\nEn la siguiente imagen se presentan las instrucciones para preparar un cereal\ninstantáneo para bebé que viene con una cuchara de capacidad 5 gramos.\nSe quiere preparar este cereal instantáneo usando solo 120 mL de leche tibia.\nSi se mantienen las proporciones de las instrucciones, ¿cuántas cucharadas se\ndeben agregar a la leche?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n29.\nEn un estacionamiento se cobra de manera proporcional al tiempo en que un vehículo\nse encuentra estacionado. Algunos valores se presentan en la tabla adjunta.\nTiempo en minutos\nPrecio en pesos\n¿Cuál de las siguientes expresiones representa el precio por pagar, en pesos, de un\nvehículo que está estacionado x minutos?"
+        },
+        {
+          "letra": "A",
+          "texto": "12x"
+        },
+        {
+          "letra": "B",
+          "texto": "x"
+        },
+        {
+          "letra": "C",
+          "texto": "x + 11"
+        },
+        {
+          "letra": "D",
+          "texto": "x + 12\n30.\nJavier y David compraron una bolsa de 24 dulces a un precio total de $2100, tal que\nJavier aportó $1400 y David aportó el resto del dinero.\nEllos deciden vender cada dulce a $200 y repartirse el dinero obtenido de forma\nproporcional a lo que aportó cada uno en la compra.\n¿Cuánto dinero recibirá Javier luego de vender todos los dulces?"
+        },
+        {
+          "letra": "A",
+          "texto": "$1600"
+        },
+        {
+          "letra": "B",
+          "texto": "$2400"
+        },
+        {
+          "letra": "C",
+          "texto": "$2700"
+        },
+        {
+          "letra": "D",
+          "texto": "$3200\n31.\nPara juntar dinero para un viaje, Pedro ahorró durante solo 8 semanas el dinero\nque su abuela le daba semanalmente, el cual siempre era el mismo monto. Luego,\nen los dos meses siguientes, recibió una mesada de $10 000 cada mes y trabajó\n6 sábados, en los que ganó $15 000 diarios.\nSi Pedro logró juntar en total $210 000 para el viaje, ¿cuánto dinero le dio la abuela\nsemanalmente?"
+        },
+        {
+          "letra": "A",
+          "texto": "$12 500"
+        },
+        {
+          "letra": "B",
+          "texto": "$15 000"
+        },
+        {
+          "letra": "C",
+          "texto": "$23 125"
+        },
+        {
+          "letra": "D",
+          "texto": "$26 250\n32.\nLa solución de una inecuación se representa en el intervalo de la figura adjunta.\n¿Cuál de los siguientes intervalos representa este gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "[1, 3]"
+        },
+        {
+          "letra": "B",
+          "texto": "]1, 3["
+        },
+        {
+          "letra": "C",
+          "texto": "[1, 3["
+        },
+        {
+          "letra": "D",
+          "texto": "]1, 3]\n33.\nLa dosis de un medicamento solo es efectiva si se suministran como mínimo 25 mg\npor kilogramo una vez al día, pero la dosis diaria no puede ser mayor que 2000 mg.\n¿Cuántos kilogramos, como máximo, debe tener un paciente para que este\nmedicamento sea efectivo y no supere la dosis diaria?"
+        },
+        {
+          "letra": "A",
+          "texto": "25 kg"
+        },
+        {
+          "letra": "B",
+          "texto": "55 kg"
+        },
+        {
+          "letra": "C",
+          "texto": "80 kg"
+        },
+        {
+          "letra": "D",
+          "texto": "105 kg"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "El índice HOMA-IR es un modelo que sirve para evaluar la resistencia a la insulina y se\nmide utilizando la insulinemia y la glucemia, ambas medidas en ayunas, de acuerdo\ncon la siguiente igualdad:\nHOMA-IR =\ninsulinemia\n\u0012µU\nmL\n\u0013\n· glucemia\n\u0012mmol\nL\n\u0013\n22,5\nEn la siguiente tabla se presenta la interpretación de los distintos valores del índice\nHOMA-IR:\nValores\nInterpretación\nInferiores a 1,96\nSin resistencia a la insulina\nEntre 1,96 a 3\nSospecha de resistencia a la insulina\nSuperiores que 3\nResistencia a la insulina\nSi una persona tiene una glucemia de 5,6 mmol\nL\n, ¿cuál de las siguientes\ndesigualdades representa la condición que debe tener su insulinemia (x), medida\nen µU\nmL\n, para que la interpretación de su índice HOMA-IR sea sin resistencia a la\ninsulina?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x < 1,96 · 22,5\n5,6"
+        },
+        {
+          "letra": "B",
+          "texto": "x < 1,96 · 5,6\n22,5"
+        },
+        {
+          "letra": "C",
+          "texto": "x > 1,96 · 22,5\n5,6"
+        },
+        {
+          "letra": "D",
+          "texto": "x > 1,96 · 5,6\n22,5"
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "Una persona compró una camisa y un pantalón, pagando en total $50 000.\nLa camisa costó un 30 % del total pagado, mientras que el pantalón tenía ya un\ndescuento de un 20 % sobre su precio original.\nEn el siguiente sistema de ecuaciones se modela la situación anterior:\nA\n50 000 = 30\nB · 80\n100 + A = 50 000\n¿Qué representa B en el sistema de ecuaciones?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El precio original del pantalón"
+        },
+        {
+          "letra": "B",
+          "texto": "El precio final del pantalón"
+        },
+        {
+          "letra": "C",
+          "texto": "La suma del precio original de ambas prendas"
+        },
+        {
+          "letra": "D",
+          "texto": "La suma del precio final de ambas prendas"
+        }
+      ]
+    },
+    {
+      "numero": 36,
+      "enunciado": "Una empresa dedicada a la venta de poleras ofrece a sus clientes dos opciones de\ndiseño: personalizado o de catálogo.\nEl precio por polera con diseño personalizado es $8500 y con diseño de catálogo\nes $7500. Adicionalmente, se hace un cobro por envío a domicilio de $2500.\nEn un día de trabajo se vendió un total de 18 poleras en diez envíos y se recaudó\n$146 000 solo por las poleras.\nLa persona encargada de verificar las ventas debe determinar la cantidad de poleras\ncon diseño personalizado que se vendieron. Para calcular, realiza el siguiente\nprocedimiento, cometiendo un error.\nPaso 1: representa con la letra x la cantidad de poleras con diseño personalizado\ny con la letra y la cantidad de poleras con diseño de catálogo. Luego,\nestablece el sistema\nx + y = 18\n8500x + 7500y = 146 000 + 25 000\nPaso 2: despeja la variable y de la primera ecuación, obteniendo y = 18 −x.\nPaso 3: reemplaza y en la segunda ecuación, obteniendo\n8500x −7500x = 146 000 + 25 000 −7500 · 18.\nPaso 4: resuelve la igualdad anterior y determina que la cantidad de poleras con\ndiseño personalizado es 36.\n¿En cuál de los pasos la persona cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4"
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "Considera la función g definida por g(x) = 8x −5, con dominio el conjunto de los\nnúmeros reales.\nSi g(x) = 35, ¿cuál es el valor de x?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 38,
+      "enunciado": "Para pintar las líneas blancas de una carretera se utilizaron máquinas idénticas que\npintan una misma cantidad de kilómetros de la línea cada hora. El trabajo se realizó\nen 6 horas, las primeras 4 horas trabajó solo una máquina, pero durante las 2 horas\nsiguientes trabajaron dos máquinas en forma simultánea.\n¿Cuál de los siguientes gráficos representa mejor la relación entre el tiempo en que\ntrabajaron las máquinas y la cantidad de kilómetros de la línea pintada?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 39,
+      "enunciado": "En una imprenta ofrecen un servicio de empastado para tesis universitarias, cobrando\nun valor de $115 por página, más una tarifa fija de $27 000 por el servicio.\n¿Cuál de las siguientes funciones modela el precio, en pesos, que debe pagar una\npersona por empastar su tesis de x páginas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "f(x) = 115x"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 115x + 27 000"
+        },
+        {
+          "letra": "C",
+          "texto": "h(x) = (115 + 27 000)x"
+        },
+        {
+          "letra": "D",
+          "texto": "k(x) = 115 + 27 000x"
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "La distancia de reacción es la distancia recorrida por un vehículo desde que el\nconductor se percata de un obstáculo hasta que comienza a pisar el pedal de freno.\nLa distancia de reacción f y la rapidez del vehículo se relacionan mediante una\nfunción de la forma f(x) = ax, con a constante.\nEn la siguiente tabla se presentan algunos ejemplos:\nRapidez del vehículo\nDistancia de reacción\n110 km\nh\n33 m\n70 km\nh\n21 m\n¿Cuál es la distancia de reacción de un vehículo que tiene una rapidez de 30 km\nh\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "15 m"
+        },
+        {
+          "letra": "B",
+          "texto": "10 m"
+        },
+        {
+          "letra": "C",
+          "texto": "9 m"
+        },
+        {
+          "letra": "D",
+          "texto": "1 m"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "En el año 2021 se produjeron 57,4 millones de toneladas de basura tecnológica y en\nel año 2022 se produjeron 59,4 millones.\nSi se considera que el aumento de producción de basura tecnológica será el mismo\ncada año, ¿cuántos millones de toneladas de basura tecnológica se producirían en\nel año 2030?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "77,4"
+        },
+        {
+          "letra": "B",
+          "texto": "75,4"
+        },
+        {
+          "letra": "C",
+          "texto": "73,4"
+        },
+        {
+          "letra": "D",
+          "texto": "71,4"
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "La empresa CIELOS construye diferentes tipos de casas en terrenos rectangulares\nde distintas áreas, cumpliéndose siempre que el largo de cada terreno mida 5 m más\nque su ancho.\nSi el área de uno de los terrenos es 104 m2, ¿cuál es el perímetro del terreno?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "62 m"
+        },
+        {
+          "letra": "B",
+          "texto": "42 m"
+        },
+        {
+          "letra": "C",
+          "texto": "31 m"
+        },
+        {
+          "letra": "D",
+          "texto": "21 m"
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "La siguiente gráfica de una función cuadrática representa la altura que alcanza un\nchorro de agua en términos de la distancia horizontal recorrida desde el punto en que\nemerge el chorro.\n¿Cuál de las siguientes afirmaciones es verdadera respecto al gráfico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La distancia horizontal máxima recorrida por el chorro de agua es 25 cm."
+        },
+        {
+          "letra": "B",
+          "texto": "La altura máxima alcanzada por el chorro de agua es 60 cm."
+        },
+        {
+          "letra": "C",
+          "texto": "La altura alcanzada por el chorro de agua, luego de recorrer 10 cm horizontales\nes igual a la altura alcanzada a los 50 cm."
+        },
+        {
+          "letra": "D",
+          "texto": "La altura máxima del chorro de agua se alcanza cuando este ha recorrido 60 cm\nhorizontalmente."
+        }
+      ]
+    },
+    {
+      "numero": 44,
+      "enunciado": "Una malla rectangular está formada por cuadrados de lado 2 cm. La malla tiene\n100 cuadrados de alto y 200 cuadrados de largo.\n¿Cuál es el perímetro de la malla?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "600 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "40 000 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "160 000 cm"
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "El área de la siguiente figura, formada por 10 cuadrados congruentes entre sí, es\n160 cm2.\nSe realiza el siguiente procedimiento para determinar el perímetro de la figura,\ncometiéndose un error.\nPaso 1: se determina el área de cada cuadrado dividiendo el área total por la\ncantidad de cuadrados, obteniéndose 16 cm2.\nPaso 2: se determina la medida del lado de un cuadrado calculando la raíz cuadrada\nde la medida de su área, obteniéndose 4 cm.\nPaso 3: se determina que el perímetro es la suma de la medida de todos los lados de\nlos cuadrados que conforman la figura, concluyéndose que se debe sumar\nla medida de 29 lados.\nPaso 4: se calcula el perímetro multiplicando 29 · 4, obteniéndose 116 cm.\n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4"
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "Una persona debe confeccionar una repisa con dos tensores, tal como se representan\nen la imagen.\nSi la persona quiere calcular la medida que debe tener cada uno de los tensores,\nen centímetros, ¿cuál de las siguientes expresiones debe utilizar?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "√\n2002 −1502"
+        },
+        {
+          "letra": "B",
+          "texto": "2002 −1502"
+        },
+        {
+          "letra": "C",
+          "texto": "√\n2002 + 1502"
+        },
+        {
+          "letra": "D",
+          "texto": "2002 + 1502"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "Un carpintero restaurará el siguiente mueble con forma de prisma recto de base\nrectangular.\nPara la restauración, debe pintar el exterior de la estructura, sin incluir la base inferior.\n¿Cuál es la medida de la superficie por pintar?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "24 800 cm2"
+        },
+        {
+          "letra": "B",
+          "texto": "28 000 cm2"
+        },
+        {
+          "letra": "C",
+          "texto": "46 400 cm2"
+        },
+        {
+          "letra": "D",
+          "texto": "49 600 cm2"
+        }
+      ]
+    },
+    {
+      "numero": 48,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 49,
+      "enunciado": "cm\n23.\nSe representará la expresión (4 · 125)3 como producto de potencias de base 2 y 5,\npara lo cual se realiza el siguiente procedimiento, cometiéndose un error.\nPaso 1: se reescriben los factores de la base, obteniéndose\n\u000022 · 53\u00013.\nPaso 2: se aplica la propiedad de la multiplicación de potencias con igual exponente,\nobteniéndose\n\u000022\u00013 ·\n\u000053\u00013.\nPaso 3: se aplica la propiedad de la potencia de una potencia, obteniéndose\n2(2 + 3) · 5(3 + 3).\nPaso 4: se resuelve la suma de los exponentes, obteniéndose 25 · 56.\n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n24.\nEn el año 2020, la capacidad mundial de almacenamiento alcanzó los 6,7 zettabytes.\nDe acuerdo con algunas estimaciones, la capacidad mundial de almacenamiento,\nen zettabytes, aumentará a un ritmo del 20 % anualmente entre los años 2020 y 2025.\nDada esta información, la capacidad mundial de almacenamiento, en zettabytes en\nel año 2025 se puede proyectar por el modelo 6,7 · (1,2)N.\n¿Qué representa el parámetro N en este modelo?"
+        },
+        {
+          "letra": "A",
+          "texto": "Al cociente entre 2025 y 2020."
+        },
+        {
+          "letra": "B",
+          "texto": "La diferencia entre 2025 y 2020."
+        },
+        {
+          "letra": "C",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2025."
+        },
+        {
+          "letra": "D",
+          "texto": "La capacidad en que aumentó el almacenamiento entre 2020 y 2021.\n25.\nSi la edad actual de Pedro es m años, ¿cuál de las siguientes expresiones representa\nla expresión “la edad de Pedro hace n años disminuida en 3 años”?"
+        },
+        {
+          "letra": "A",
+          "texto": "m −n"
+        },
+        {
+          "letra": "B",
+          "texto": "m −n −3"
+        },
+        {
+          "letra": "C",
+          "texto": "m −(n −3)"
+        },
+        {
+          "letra": "D",
+          "texto": "(m + n) −3\n26.\nEn\nlos\nmeses\nde\nmenor\ndemanda,\nel\nmetro\ntraslada\naproximadamente\n2 600 000 personas cada día, recibiendo un total de $2 000 000 000 diarios\npor concepto de pasaje.\nEn los meses de mayor demanda, el metro traslada diariamente 100 000 personas\nmás que en los meses de menor demanda.\nSi el precio del pasaje es igual todo el año, ¿cuánto dinero recibe diariamente el\nmetro en los meses de mayor demanda, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 000 100 000\n2 600 000"
+        },
+        {
+          "letra": "B",
+          "texto": "2 700 000\n2 600 000 · 2 000 000 000"
+        },
+        {
+          "letra": "C",
+          "texto": "2 000 000 000\n2 600 000\n+ 100 000"
+        },
+        {
+          "letra": "D",
+          "texto": "2 600 000 · 2 000 000 000 + 100 000\n27.\n¿Cuál de las siguientes expresiones es igual a (2x −3)2 −(2x −3)(2x + 3)?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−6x + 18"
+        },
+        {
+          "letra": "D",
+          "texto": "−12x + 18\n28.\nEn la siguiente imagen se presentan las instrucciones para preparar un cereal\ninstantáneo para bebé que viene con una cuchara de capacidad 5 gramos.\nSe quiere preparar este cereal instantáneo usando solo 120 mL de leche tibia.\nSi se mantienen las proporciones de las instrucciones, ¿cuántas cucharadas se\ndeben agregar a la leche?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n29.\nEn un estacionamiento se cobra de manera proporcional al tiempo en que un vehículo\nse encuentra estacionado. Algunos valores se presentan en la tabla adjunta.\nTiempo en minutos\nPrecio en pesos\n¿Cuál de las siguientes expresiones representa el precio por pagar, en pesos, de un\nvehículo que está estacionado x minutos?"
+        },
+        {
+          "letra": "A",
+          "texto": "12x"
+        },
+        {
+          "letra": "B",
+          "texto": "x"
+        },
+        {
+          "letra": "C",
+          "texto": "x + 11"
+        },
+        {
+          "letra": "D",
+          "texto": "x + 12\n30.\nJavier y David compraron una bolsa de 24 dulces a un precio total de $2100, tal que\nJavier aportó $1400 y David aportó el resto del dinero.\nEllos deciden vender cada dulce a $200 y repartirse el dinero obtenido de forma\nproporcional a lo que aportó cada uno en la compra.\n¿Cuánto dinero recibirá Javier luego de vender todos los dulces?"
+        },
+        {
+          "letra": "A",
+          "texto": "$1600"
+        },
+        {
+          "letra": "B",
+          "texto": "$2400"
+        },
+        {
+          "letra": "C",
+          "texto": "$2700"
+        },
+        {
+          "letra": "D",
+          "texto": "$3200\n31.\nPara juntar dinero para un viaje, Pedro ahorró durante solo 8 semanas el dinero\nque su abuela le daba semanalmente, el cual siempre era el mismo monto. Luego,\nen los dos meses siguientes, recibió una mesada de $10 000 cada mes y trabajó\n6 sábados, en los que ganó $15 000 diarios.\nSi Pedro logró juntar en total $210 000 para el viaje, ¿cuánto dinero le dio la abuela\nsemanalmente?"
+        },
+        {
+          "letra": "A",
+          "texto": "$12 500"
+        },
+        {
+          "letra": "B",
+          "texto": "$15 000"
+        },
+        {
+          "letra": "C",
+          "texto": "$23 125"
+        },
+        {
+          "letra": "D",
+          "texto": "$26 250\n32.\nLa solución de una inecuación se representa en el intervalo de la figura adjunta.\n¿Cuál de los siguientes intervalos representa este gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "[1, 3]"
+        },
+        {
+          "letra": "B",
+          "texto": "]1, 3["
+        },
+        {
+          "letra": "C",
+          "texto": "[1, 3["
+        },
+        {
+          "letra": "D",
+          "texto": "]1, 3]\n33.\nLa dosis de un medicamento solo es efectiva si se suministran como mínimo 25 mg\npor kilogramo una vez al día, pero la dosis diaria no puede ser mayor que 2000 mg.\n¿Cuántos kilogramos, como máximo, debe tener un paciente para que este\nmedicamento sea efectivo y no supere la dosis diaria?"
+        },
+        {
+          "letra": "A",
+          "texto": "25 kg"
+        },
+        {
+          "letra": "B",
+          "texto": "55 kg"
+        },
+        {
+          "letra": "C",
+          "texto": "80 kg"
+        },
+        {
+          "letra": "D",
+          "texto": "105 kg\n34.\nEl índice HOMA-IR es un modelo que sirve para evaluar la resistencia a la insulina y se\nmide utilizando la insulinemia y la glucemia, ambas medidas en ayunas, de acuerdo\ncon la siguiente igualdad:\nHOMA-IR =\ninsulinemia\n\u0012µU\nmL\n\u0013\n· glucemia\n\u0012mmol\nL\n\u0013\n22,5\nEn la siguiente tabla se presenta la interpretación de los distintos valores del índice\nHOMA-IR:\nValores\nInterpretación\nInferiores a 1,96\nSin resistencia a la insulina\nEntre 1,96 a 3\nSospecha de resistencia a la insulina\nSuperiores que 3\nResistencia a la insulina\nSi una persona tiene una glucemia de 5,6 mmol\nL\n, ¿cuál de las siguientes\ndesigualdades representa la condición que debe tener su insulinemia (x), medida\nen µU\nmL\n, para que la interpretación de su índice HOMA-IR sea sin resistencia a la\ninsulina?"
+        },
+        {
+          "letra": "A",
+          "texto": "x < 1,96 · 22,5\n5,6"
+        },
+        {
+          "letra": "B",
+          "texto": "x < 1,96 · 5,6\n22,5"
+        },
+        {
+          "letra": "C",
+          "texto": "x > 1,96 · 22,5\n5,6"
+        },
+        {
+          "letra": "D",
+          "texto": "x > 1,96 · 5,6\n22,5\n35.\nUna persona compró una camisa y un pantalón, pagando en total $50 000.\nLa camisa costó un 30 % del total pagado, mientras que el pantalón tenía ya un\ndescuento de un 20 % sobre su precio original.\nEn el siguiente sistema de ecuaciones se modela la situación anterior:\nA"
+        }
+      ]
+    },
+    {
+      "numero": 50,
+      "enunciado": "000 = 30\nB · 80\n100 + A = 50 000\n¿Qué representa B en el sistema de ecuaciones?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El precio original del pantalón"
+        },
+        {
+          "letra": "B",
+          "texto": "El precio final del pantalón"
+        },
+        {
+          "letra": "C",
+          "texto": "La suma del precio original de ambas prendas"
+        },
+        {
+          "letra": "D",
+          "texto": "La suma del precio final de ambas prendas\n36.\nUna empresa dedicada a la venta de poleras ofrece a sus clientes dos opciones de\ndiseño: personalizado o de catálogo.\nEl precio por polera con diseño personalizado es $8500 y con diseño de catálogo\nes $7500. Adicionalmente, se hace un cobro por envío a domicilio de $2500.\nEn un día de trabajo se vendió un total de 18 poleras en diez envíos y se recaudó\n$146 000 solo por las poleras.\nLa persona encargada de verificar las ventas debe determinar la cantidad de poleras\ncon diseño personalizado que se vendieron. Para calcular, realiza el siguiente\nprocedimiento, cometiendo un error.\nPaso 1: representa con la letra x la cantidad de poleras con diseño personalizado\ny con la letra y la cantidad de poleras con diseño de catálogo. Luego,\nestablece el sistema\nx + y = 18\n8500x + 7500y = 146 000 + 25 000\nPaso 2: despeja la variable y de la primera ecuación, obteniendo y = 18 −x.\nPaso 3: reemplaza y en la segunda ecuación, obteniendo\n8500x −7500x = 146 000 + 25 000 −7500 · 18.\nPaso 4: resuelve la igualdad anterior y determina que la cantidad de poleras con\ndiseño personalizado es 36.\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n37.\nConsidera la función g definida por g(x) = 8x −5, con dominio el conjunto de los\nnúmeros reales.\nSi g(x) = 35, ¿cuál es el valor de x?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n38.\nPara pintar las líneas blancas de una carretera se utilizaron máquinas idénticas que\npintan una misma cantidad de kilómetros de la línea cada hora. El trabajo se realizó\nen 6 horas, las primeras 4 horas trabajó solo una máquina, pero durante las 2 horas\nsiguientes trabajaron dos máquinas en forma simultánea.\n¿Cuál de los siguientes gráficos representa mejor la relación entre el tiempo en que\ntrabajaron las máquinas y la cantidad de kilómetros de la línea pintada?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n39.\nEn una imprenta ofrecen un servicio de empastado para tesis universitarias, cobrando\nun valor de $115 por página, más una tarifa fija de $27 000 por el servicio.\n¿Cuál de las siguientes funciones modela el precio, en pesos, que debe pagar una\npersona por empastar su tesis de x páginas?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = 115x"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 115x + 27 000"
+        },
+        {
+          "letra": "C",
+          "texto": "h(x) = (115 + 27 000)x"
+        },
+        {
+          "letra": "D",
+          "texto": "k(x) = 115 + 27 000x\n40.\nLa distancia de reacción es la distancia recorrida por un vehículo desde que el\nconductor se percata de un obstáculo hasta que comienza a pisar el pedal de freno.\nLa distancia de reacción f y la rapidez del vehículo se relacionan mediante una\nfunción de la forma f(x) = ax, con a constante.\nEn la siguiente tabla se presentan algunos ejemplos:\nRapidez del vehículo\nDistancia de reacción\n110 km\nh\n33 m\n70 km\nh\n21 m\n¿Cuál es la distancia de reacción de un vehículo que tiene una rapidez de 30 km\nh\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "15 m"
+        },
+        {
+          "letra": "B",
+          "texto": "10 m"
+        },
+        {
+          "letra": "C",
+          "texto": "9 m"
+        },
+        {
+          "letra": "D",
+          "texto": "1 m\n41.\nEn el año 2021 se produjeron 57,4 millones de toneladas de basura tecnológica y en\nel año 2022 se produjeron 59,4 millones.\nSi se considera que el aumento de producción de basura tecnológica será el mismo\ncada año, ¿cuántos millones de toneladas de basura tecnológica se producirían en\nel año 2030?"
+        },
+        {
+          "letra": "A",
+          "texto": "77,4"
+        },
+        {
+          "letra": "B",
+          "texto": "75,4"
+        },
+        {
+          "letra": "C",
+          "texto": "73,4"
+        },
+        {
+          "letra": "D",
+          "texto": "71,4\n42.\nLa empresa CIELOS construye diferentes tipos de casas en terrenos rectangulares\nde distintas áreas, cumpliéndose siempre que el largo de cada terreno mida 5 m más\nque su ancho.\nSi el área de uno de los terrenos es 104 m2, ¿cuál es el perímetro del terreno?"
+        },
+        {
+          "letra": "A",
+          "texto": "62 m"
+        },
+        {
+          "letra": "B",
+          "texto": "42 m"
+        },
+        {
+          "letra": "C",
+          "texto": "31 m"
+        },
+        {
+          "letra": "D",
+          "texto": "21 m\n43.\nLa siguiente gráfica de una función cuadrática representa la altura que alcanza un\nchorro de agua en términos de la distancia horizontal recorrida desde el punto en que\nemerge el chorro.\n¿Cuál de las siguientes afirmaciones es verdadera respecto al gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "La distancia horizontal máxima recorrida por el chorro de agua es 25 cm."
+        },
+        {
+          "letra": "B",
+          "texto": "La altura máxima alcanzada por el chorro de agua es 60 cm."
+        },
+        {
+          "letra": "C",
+          "texto": "La altura alcanzada por el chorro de agua, luego de recorrer 10 cm horizontales\nes igual a la altura alcanzada a los 50 cm."
+        },
+        {
+          "letra": "D",
+          "texto": "La altura máxima del chorro de agua se alcanza cuando este ha recorrido 60 cm\nhorizontalmente.\n44.\nUna malla rectangular está formada por cuadrados de lado 2 cm. La malla tiene\n100 cuadrados de alto y 200 cuadrados de largo.\n¿Cuál es el perímetro de la malla?"
+        },
+        {
+          "letra": "A",
+          "texto": "600 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "40 000 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "160 000 cm\n45.\nEl área de la siguiente figura, formada por 10 cuadrados congruentes entre sí, es\n160 cm2.\nSe realiza el siguiente procedimiento para determinar el perímetro de la figura,\ncometiéndose un error.\nPaso 1: se determina el área de cada cuadrado dividiendo el área total por la\ncantidad de cuadrados, obteniéndose 16 cm2.\nPaso 2: se determina la medida del lado de un cuadrado calculando la raíz cuadrada\nde la medida de su área, obteniéndose 4 cm.\nPaso 3: se determina que el perímetro es la suma de la medida de todos los lados de\nlos cuadrados que conforman la figura, concluyéndose que se debe sumar\nla medida de 29 lados.\nPaso 4: se calcula el perímetro multiplicando 29 · 4, obteniéndose 116 cm.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n46.\nUna persona debe confeccionar una repisa con dos tensores, tal como se representan\nen la imagen.\nSi la persona quiere calcular la medida que debe tener cada uno de los tensores,\nen centímetros, ¿cuál de las siguientes expresiones debe utilizar?"
+        },
+        {
+          "letra": "A",
+          "texto": "√\n2002 −1502"
+        },
+        {
+          "letra": "B",
+          "texto": "2002 −1502"
+        },
+        {
+          "letra": "C",
+          "texto": "√\n2002 + 1502"
+        },
+        {
+          "letra": "D",
+          "texto": "2002 + 1502\n47.\nUn carpintero restaurará el siguiente mueble con forma de prisma recto de base\nrectangular.\nPara la restauración, debe pintar el exterior de la estructura, sin incluir la base inferior.\n¿Cuál es la medida de la superficie por pintar?"
+        },
+        {
+          "letra": "A",
+          "texto": "24 800 cm2"
+        },
+        {
+          "letra": "B",
+          "texto": "28 000 cm2"
+        },
+        {
+          "letra": "C",
+          "texto": "46 400 cm2"
+        },
+        {
+          "letra": "D",
+          "texto": "49 600 cm2\n48.\nConsidera la siguiente técnica para hacer figuras con una hoja de papel:\n• Se dobla la hoja de papel a la mitad.\n• Se marca la mitad de la figura, se recorta y por último se desdobla el papel.\n¿Cuál de las siguientes figuras se puede hacer utilizando esta técnica?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n49.\nUn barco que inicia un recorrido realiza los siguientes movimientos:\n5 kilómetros al oeste\n4 kilómetros al norte\n3 kilómetros al este\n9 kilómetros al sur\n6 kilómetros al oeste\n¿Cuál es la ubicación final del barco con respecto a su ubicación inicial?"
+        },
+        {
+          "letra": "A",
+          "texto": "8 kilómetros al oeste y 5 kilómetros al sur"
+        },
+        {
+          "letra": "B",
+          "texto": "14 kilómetros al oeste y 13 kilómetros al norte"
+        },
+        {
+          "letra": "C",
+          "texto": "8 kilómetros al este y 5 kilómetros al norte"
+        },
+        {
+          "letra": "D",
+          "texto": "14 kilómetros al este y 13 kilómetros al sur\n50.\nHelena creó una obra de arte moderno. Realizó un dibujo sobre el cuadrado ABCD,\ncomo se presenta en la siguiente figura, donde O es el centro del cuadrado:\nCreó otras tres figuras distintas y las unió, donde la primera es obtenida por una\nreflexión con respecto al lado BC, la segunda por una reflexión con respecto al\npunto O, y la tercera por una rotación en torno al punto O, en 90◦, en sentido\nantihorario.\nSi la primera figura la posicionó a la izquierda, la segunda al centro y la tercera a la\nderecha, ¿cuál de las siguientes figuras muestra la obra de arte de Helena?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "Considera la siguiente figura:\n¿Cuáles son las coordenadas del vector de traslación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(−12, 6)"
+        },
+        {
+          "letra": "B",
+          "texto": "(−12, −6)"
+        },
+        {
+          "letra": "C",
+          "texto": "(12, 6)"
+        },
+        {
+          "letra": "D",
+          "texto": "(12, −6)"
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "A una figura se le aplica una reflexión y luego una traslación. La imagen del vértice\n(x, y) es (x + 2, 6 −y).\nA otra figura se le aplican las mismas transformaciones isométricas y en el mismo\norden.\nSi (−1, −2) es un vértice de la figura, ¿cuáles son las coordenadas de la imagen de\neste vértice?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1, 8)"
+        },
+        {
+          "letra": "B",
+          "texto": "(1, −8)"
+        },
+        {
+          "letra": "C",
+          "texto": "(−1, −8)"
+        },
+        {
+          "letra": "D",
+          "texto": "(−1, 8)"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "En la siguiente tabla se resume la distribución de los puntajes de una prueba en un\ncurso.\nPuntaje\nFrecuencia\n¿Cuál es el total de estudiantes del curso que rindió la prueba?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 54,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 55,
+      "enunciado": "kg",
+      "alternativas": [
+        {
+          "letra": "C",
+          "texto": "80 kg"
+        },
+        {
+          "letra": "D",
+          "texto": "105 kg\n34.\nEl índice HOMA-IR es un modelo que sirve para evaluar la resistencia a la insulina y se\nmide utilizando la insulinemia y la glucemia, ambas medidas en ayunas, de acuerdo\ncon la siguiente igualdad:\nHOMA-IR =\ninsulinemia\n\u0012µU\nmL\n\u0013\n· glucemia\n\u0012mmol\nL\n\u0013\n22,5\nEn la siguiente tabla se presenta la interpretación de los distintos valores del índice\nHOMA-IR:\nValores\nInterpretación\nInferiores a 1,96\nSin resistencia a la insulina\nEntre 1,96 a 3\nSospecha de resistencia a la insulina\nSuperiores que 3\nResistencia a la insulina\nSi una persona tiene una glucemia de 5,6 mmol\nL\n, ¿cuál de las siguientes\ndesigualdades representa la condición que debe tener su insulinemia (x), medida\nen µU\nmL\n, para que la interpretación de su índice HOMA-IR sea sin resistencia a la\ninsulina?"
+        },
+        {
+          "letra": "A",
+          "texto": "x < 1,96 · 22,5\n5,6"
+        },
+        {
+          "letra": "B",
+          "texto": "x < 1,96 · 5,6\n22,5"
+        },
+        {
+          "letra": "C",
+          "texto": "x > 1,96 · 22,5\n5,6"
+        },
+        {
+          "letra": "D",
+          "texto": "x > 1,96 · 5,6\n22,5\n35.\nUna persona compró una camisa y un pantalón, pagando en total $50 000.\nLa camisa costó un 30 % del total pagado, mientras que el pantalón tenía ya un\ndescuento de un 20 % sobre su precio original.\nEn el siguiente sistema de ecuaciones se modela la situación anterior:\nA\n50 000 = 30\nB · 80\n100 + A = 50 000\n¿Qué representa B en el sistema de ecuaciones?"
+        },
+        {
+          "letra": "A",
+          "texto": "El precio original del pantalón"
+        },
+        {
+          "letra": "B",
+          "texto": "El precio final del pantalón"
+        },
+        {
+          "letra": "C",
+          "texto": "La suma del precio original de ambas prendas"
+        },
+        {
+          "letra": "D",
+          "texto": "La suma del precio final de ambas prendas\n36.\nUna empresa dedicada a la venta de poleras ofrece a sus clientes dos opciones de\ndiseño: personalizado o de catálogo.\nEl precio por polera con diseño personalizado es $8500 y con diseño de catálogo\nes $7500. Adicionalmente, se hace un cobro por envío a domicilio de $2500.\nEn un día de trabajo se vendió un total de 18 poleras en diez envíos y se recaudó\n$146 000 solo por las poleras.\nLa persona encargada de verificar las ventas debe determinar la cantidad de poleras\ncon diseño personalizado que se vendieron. Para calcular, realiza el siguiente\nprocedimiento, cometiendo un error.\nPaso 1: representa con la letra x la cantidad de poleras con diseño personalizado\ny con la letra y la cantidad de poleras con diseño de catálogo. Luego,\nestablece el sistema\nx + y = 18\n8500x + 7500y = 146 000 + 25 000\nPaso 2: despeja la variable y de la primera ecuación, obteniendo y = 18 −x.\nPaso 3: reemplaza y en la segunda ecuación, obteniendo\n8500x −7500x = 146 000 + 25 000 −7500 · 18.\nPaso 4: resuelve la igualdad anterior y determina que la cantidad de poleras con\ndiseño personalizado es 36.\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n37.\nConsidera la función g definida por g(x) = 8x −5, con dominio el conjunto de los\nnúmeros reales.\nSi g(x) = 35, ¿cuál es el valor de x?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n38.\nPara pintar las líneas blancas de una carretera se utilizaron máquinas idénticas que\npintan una misma cantidad de kilómetros de la línea cada hora. El trabajo se realizó\nen 6 horas, las primeras 4 horas trabajó solo una máquina, pero durante las 2 horas\nsiguientes trabajaron dos máquinas en forma simultánea.\n¿Cuál de los siguientes gráficos representa mejor la relación entre el tiempo en que\ntrabajaron las máquinas y la cantidad de kilómetros de la línea pintada?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n39.\nEn una imprenta ofrecen un servicio de empastado para tesis universitarias, cobrando\nun valor de $115 por página, más una tarifa fija de $27 000 por el servicio.\n¿Cuál de las siguientes funciones modela el precio, en pesos, que debe pagar una\npersona por empastar su tesis de x páginas?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = 115x"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 115x + 27 000"
+        },
+        {
+          "letra": "C",
+          "texto": "h(x) = (115 + 27 000)x"
+        },
+        {
+          "letra": "D",
+          "texto": "k(x) = 115 + 27 000x\n40.\nLa distancia de reacción es la distancia recorrida por un vehículo desde que el\nconductor se percata de un obstáculo hasta que comienza a pisar el pedal de freno.\nLa distancia de reacción f y la rapidez del vehículo se relacionan mediante una\nfunción de la forma f(x) = ax, con a constante.\nEn la siguiente tabla se presentan algunos ejemplos:\nRapidez del vehículo\nDistancia de reacción\n110 km\nh\n33 m\n70 km\nh\n21 m\n¿Cuál es la distancia de reacción de un vehículo que tiene una rapidez de 30 km\nh\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "15 m"
+        },
+        {
+          "letra": "B",
+          "texto": "10 m"
+        },
+        {
+          "letra": "C",
+          "texto": "9 m"
+        },
+        {
+          "letra": "D",
+          "texto": "1 m\n41.\nEn el año 2021 se produjeron 57,4 millones de toneladas de basura tecnológica y en\nel año 2022 se produjeron 59,4 millones.\nSi se considera que el aumento de producción de basura tecnológica será el mismo\ncada año, ¿cuántos millones de toneladas de basura tecnológica se producirían en\nel año 2030?"
+        },
+        {
+          "letra": "A",
+          "texto": "77,4"
+        },
+        {
+          "letra": "B",
+          "texto": "75,4"
+        },
+        {
+          "letra": "C",
+          "texto": "73,4"
+        },
+        {
+          "letra": "D",
+          "texto": "71,4\n42.\nLa empresa CIELOS construye diferentes tipos de casas en terrenos rectangulares\nde distintas áreas, cumpliéndose siempre que el largo de cada terreno mida 5 m más\nque su ancho.\nSi el área de uno de los terrenos es 104 m2, ¿cuál es el perímetro del terreno?"
+        },
+        {
+          "letra": "A",
+          "texto": "62 m"
+        },
+        {
+          "letra": "B",
+          "texto": "42 m"
+        },
+        {
+          "letra": "C",
+          "texto": "31 m"
+        },
+        {
+          "letra": "D",
+          "texto": "21 m\n43.\nLa siguiente gráfica de una función cuadrática representa la altura que alcanza un\nchorro de agua en términos de la distancia horizontal recorrida desde el punto en que\nemerge el chorro.\n¿Cuál de las siguientes afirmaciones es verdadera respecto al gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "La distancia horizontal máxima recorrida por el chorro de agua es 25 cm."
+        },
+        {
+          "letra": "B",
+          "texto": "La altura máxima alcanzada por el chorro de agua es 60 cm."
+        },
+        {
+          "letra": "C",
+          "texto": "La altura alcanzada por el chorro de agua, luego de recorrer 10 cm horizontales\nes igual a la altura alcanzada a los 50 cm."
+        },
+        {
+          "letra": "D",
+          "texto": "La altura máxima del chorro de agua se alcanza cuando este ha recorrido 60 cm\nhorizontalmente.\n44.\nUna malla rectangular está formada por cuadrados de lado 2 cm. La malla tiene\n100 cuadrados de alto y 200 cuadrados de largo.\n¿Cuál es el perímetro de la malla?"
+        },
+        {
+          "letra": "A",
+          "texto": "600 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "40 000 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "160 000 cm\n45.\nEl área de la siguiente figura, formada por 10 cuadrados congruentes entre sí, es\n160 cm2.\nSe realiza el siguiente procedimiento para determinar el perímetro de la figura,\ncometiéndose un error.\nPaso 1: se determina el área de cada cuadrado dividiendo el área total por la\ncantidad de cuadrados, obteniéndose 16 cm2.\nPaso 2: se determina la medida del lado de un cuadrado calculando la raíz cuadrada\nde la medida de su área, obteniéndose 4 cm.\nPaso 3: se determina que el perímetro es la suma de la medida de todos los lados de\nlos cuadrados que conforman la figura, concluyéndose que se debe sumar\nla medida de 29 lados.\nPaso 4: se calcula el perímetro multiplicando 29 · 4, obteniéndose 116 cm.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n46.\nUna persona debe confeccionar una repisa con dos tensores, tal como se representan\nen la imagen.\nSi la persona quiere calcular la medida que debe tener cada uno de los tensores,\nen centímetros, ¿cuál de las siguientes expresiones debe utilizar?"
+        },
+        {
+          "letra": "A",
+          "texto": "√\n2002 −1502"
+        },
+        {
+          "letra": "B",
+          "texto": "2002 −1502"
+        },
+        {
+          "letra": "C",
+          "texto": "√\n2002 + 1502"
+        },
+        {
+          "letra": "D",
+          "texto": "2002 + 1502\n47.\nUn carpintero restaurará el siguiente mueble con forma de prisma recto de base\nrectangular.\nPara la restauración, debe pintar el exterior de la estructura, sin incluir la base inferior.\n¿Cuál es la medida de la superficie por pintar?"
+        },
+        {
+          "letra": "A",
+          "texto": "24 800 cm2"
+        },
+        {
+          "letra": "B",
+          "texto": "28 000 cm2"
+        },
+        {
+          "letra": "C",
+          "texto": "46 400 cm2"
+        },
+        {
+          "letra": "D",
+          "texto": "49 600 cm2\n48.\nConsidera la siguiente técnica para hacer figuras con una hoja de papel:\n• Se dobla la hoja de papel a la mitad.\n• Se marca la mitad de la figura, se recorta y por último se desdobla el papel.\n¿Cuál de las siguientes figuras se puede hacer utilizando esta técnica?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n49.\nUn barco que inicia un recorrido realiza los siguientes movimientos:\n5 kilómetros al oeste\n4 kilómetros al norte\n3 kilómetros al este\n9 kilómetros al sur\n6 kilómetros al oeste\n¿Cuál es la ubicación final del barco con respecto a su ubicación inicial?"
+        },
+        {
+          "letra": "A",
+          "texto": "8 kilómetros al oeste y 5 kilómetros al sur"
+        },
+        {
+          "letra": "B",
+          "texto": "14 kilómetros al oeste y 13 kilómetros al norte"
+        },
+        {
+          "letra": "C",
+          "texto": "8 kilómetros al este y 5 kilómetros al norte"
+        },
+        {
+          "letra": "D",
+          "texto": "14 kilómetros al este y 13 kilómetros al sur\n50.\nHelena creó una obra de arte moderno. Realizó un dibujo sobre el cuadrado ABCD,\ncomo se presenta en la siguiente figura, donde O es el centro del cuadrado:\nCreó otras tres figuras distintas y las unió, donde la primera es obtenida por una\nreflexión con respecto al lado BC, la segunda por una reflexión con respecto al\npunto O, y la tercera por una rotación en torno al punto O, en 90◦, en sentido\nantihorario.\nSi la primera figura la posicionó a la izquierda, la segunda al centro y la tercera a la\nderecha, ¿cuál de las siguientes figuras muestra la obra de arte de Helena?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n51.\nConsidera la siguiente figura:\n¿Cuáles son las coordenadas del vector de traslación?"
+        },
+        {
+          "letra": "A",
+          "texto": "(−12, 6)"
+        },
+        {
+          "letra": "B",
+          "texto": "(−12, −6)"
+        },
+        {
+          "letra": "C",
+          "texto": "(12, 6)"
+        },
+        {
+          "letra": "D",
+          "texto": "(12, −6)\n52.\nA una figura se le aplica una reflexión y luego una traslación. La imagen del vértice\n(x, y) es (x + 2, 6 −y).\nA otra figura se le aplican las mismas transformaciones isométricas y en el mismo\norden.\nSi (−1, −2) es un vértice de la figura, ¿cuáles son las coordenadas de la imagen de\neste vértice?"
+        },
+        {
+          "letra": "A",
+          "texto": "(1, 8)"
+        },
+        {
+          "letra": "B",
+          "texto": "(1, −8)"
+        },
+        {
+          "letra": "C",
+          "texto": "(−1, −8)"
+        },
+        {
+          "letra": "D",
+          "texto": "(−1, 8)\n53.\nEn la siguiente tabla se resume la distribución de los puntajes de una prueba en un\ncurso.\nPuntaje\nFrecuencia\n¿Cuál es el total de estudiantes del curso que rindió la prueba?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n54.\nEn el siguiente gráfico se representan las cantidades de celulares vendidos\ndiariamente en una tienda, por cuatro personas de esta área, durante una semana\nde trabajo.\nLa meta propuesta por la tienda es que cada persona logre vender al menos\n5 celulares en un día de trabajo.\n¿Cuál es la persona que cumplió la meta más veces durante la semana de trabajo?"
+        },
+        {
+          "letra": "A",
+          "texto": "Gonzalo"
+        },
+        {
+          "letra": "B",
+          "texto": "Camilo"
+        },
+        {
+          "letra": "C",
+          "texto": "Antonia"
+        },
+        {
+          "letra": "D",
+          "texto": "Fabiola\n55.\nLos artículos de una tienda de jardinería están clasificados en cinco categorías:\nflores, árboles, semillas, tierra y arbustos.\nLa cantidad de artículos vendidos en cierta semana se presenta en el siguiente\ngráfico:\n¿Cuál fue el total de artículos vendidos?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 56,
+      "enunciado": "En las tablas adjuntas se presenta la cantidad de estudiantes que poseen “baja” y\n“no baja” asistencia en los distintos niveles de un colegio, durante un semestre.\nPrimeros medios\nSegundos medios\nAsistencia\nFrecuencia\nAsistencia\nFrecuencia\nBaja\nBaja\nNo baja\nNo baja\nTerceros medios\nCuartos medios\nAsistencia\nFrecuencia\nAsistencia\nFrecuencia\nBaja\nBaja\nNo baja\nNo baja\nEn el colegio se elegirá el nivel que tenga mayor porcentaje de sus estudiantes con\n“baja” asistencia para ser el primero al que se le realizará un seguimiento.\n¿Con cuál de los niveles se comenzará?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Con los primeros medios"
+        },
+        {
+          "letra": "B",
+          "texto": "Con los segundos medios"
+        },
+        {
+          "letra": "C",
+          "texto": "Con los terceros medios"
+        },
+        {
+          "letra": "D",
+          "texto": "Con los cuartos medios"
+        }
+      ]
+    },
+    {
+      "numero": 57,
+      "enunciado": "En los siguientes gráficos se presenta el porcentaje de alimentos orgánicos a la venta\ndurante tres años en dos supermercados.\nLos gráficos presentan un aspecto en su construcción que dificulta la comparación\nde los porcentajes de venta de alimentos orgánicos entre los supermercados.\n¿Cuál de los siguientes argumentos justifica esta afirmación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que los gráficos están graduados en distintas escalas."
+        },
+        {
+          "letra": "B",
+          "texto": "Que los porcentajes están escritos sobre las barras a distintas alturas."
+        },
+        {
+          "letra": "C",
+          "texto": "Que los porcentajes de ambos supermercados aumentaron en el tiempo."
+        },
+        {
+          "letra": "D",
+          "texto": "Que las barras se encuentran juntas, una a continuación de otra."
+        }
+      ]
+    },
+    {
+      "numero": 58,
+      "enunciado": "En el mundial de fútbol del 2022 participaron 32 países. La edad promedio de los\nfutbolistas fue de 26,95 años.\nEn el siguiente gráfico se presenta la distribución de las edades de los futbolistas de\ncuatro países que participaron en el mundial.\n¿Cuál de estos cuatro países tiene el mayor promedio de edad?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Irán"
+        },
+        {
+          "letra": "B",
+          "texto": "España"
+        },
+        {
+          "letra": "C",
+          "texto": "EE.UU."
+        },
+        {
+          "letra": "D",
+          "texto": "Ghana"
+        }
+      ]
+    },
+    {
+      "numero": 59,
+      "enunciado": "En la tabla adjunta se presentan los milímetros de precipitaciones en cada mes en\ncierta ciudad de Chile.\nMes\nene\nfeb\nmar\nabr\nmay\njun\njul\nago\nsep\noct\nnov\ndic\nPrecipitaciones\n(mm)\n¿Cuál es el promedio de precipitaciones de junio, julio, agosto y septiembre?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "20,09 mm"
+        },
+        {
+          "letra": "B",
+          "texto": "38,25 mm"
+        },
+        {
+          "letra": "C",
+          "texto": "41,50 mm"
+        },
+        {
+          "letra": "D",
+          "texto": "76,50 mm"
+        }
+      ]
+    },
+    {
+      "numero": 60,
+      "enunciado": "La distribución de seguidores, en redes sociales de internet, que tiene un grupo de\nestudiantes de cuarto año medio está representada en el diagrama de cajón adjunto.\n¿Cuál de las siguientes afirmaciones se puede deducir a partir de este diagrama?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El promedio de la cantidad de seguidores en el grupo de estudiantes es de 270."
+        },
+        {
+          "letra": "B",
+          "texto": "La mitad de estudiantes del grupo tiene 270 seguidores."
+        },
+        {
+          "letra": "C",
+          "texto": "Hay 60 estudiantes en el grupo que tienen entre 80 y 140 seguidores."
+        },
+        {
+          "letra": "D",
+          "texto": "Al menos un 25 % de los estudiantes del grupo tiene desde 140 hasta\n270 seguidores."
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 62,
+      "enunciado": "m",
+      "alternativas": [
+        {
+          "letra": "B",
+          "texto": "42 m"
+        },
+        {
+          "letra": "C",
+          "texto": "31 m"
+        },
+        {
+          "letra": "D",
+          "texto": "21 m\n43.\nLa siguiente gráfica de una función cuadrática representa la altura que alcanza un\nchorro de agua en términos de la distancia horizontal recorrida desde el punto en que\nemerge el chorro.\n¿Cuál de las siguientes afirmaciones es verdadera respecto al gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "La distancia horizontal máxima recorrida por el chorro de agua es 25 cm."
+        },
+        {
+          "letra": "B",
+          "texto": "La altura máxima alcanzada por el chorro de agua es 60 cm."
+        },
+        {
+          "letra": "C",
+          "texto": "La altura alcanzada por el chorro de agua, luego de recorrer 10 cm horizontales\nes igual a la altura alcanzada a los 50 cm."
+        },
+        {
+          "letra": "D",
+          "texto": "La altura máxima del chorro de agua se alcanza cuando este ha recorrido 60 cm\nhorizontalmente.\n44.\nUna malla rectangular está formada por cuadrados de lado 2 cm. La malla tiene\n100 cuadrados de alto y 200 cuadrados de largo.\n¿Cuál es el perímetro de la malla?"
+        },
+        {
+          "letra": "A",
+          "texto": "600 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "40 000 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "160 000 cm\n45.\nEl área de la siguiente figura, formada por 10 cuadrados congruentes entre sí, es\n160 cm2.\nSe realiza el siguiente procedimiento para determinar el perímetro de la figura,\ncometiéndose un error.\nPaso 1: se determina el área de cada cuadrado dividiendo el área total por la\ncantidad de cuadrados, obteniéndose 16 cm2.\nPaso 2: se determina la medida del lado de un cuadrado calculando la raíz cuadrada\nde la medida de su área, obteniéndose 4 cm.\nPaso 3: se determina que el perímetro es la suma de la medida de todos los lados de\nlos cuadrados que conforman la figura, concluyéndose que se debe sumar\nla medida de 29 lados.\nPaso 4: se calcula el perímetro multiplicando 29 · 4, obteniéndose 116 cm.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n46.\nUna persona debe confeccionar una repisa con dos tensores, tal como se representan\nen la imagen.\nSi la persona quiere calcular la medida que debe tener cada uno de los tensores,\nen centímetros, ¿cuál de las siguientes expresiones debe utilizar?"
+        },
+        {
+          "letra": "A",
+          "texto": "√\n2002 −1502"
+        },
+        {
+          "letra": "B",
+          "texto": "2002 −1502"
+        },
+        {
+          "letra": "C",
+          "texto": "√\n2002 + 1502"
+        },
+        {
+          "letra": "D",
+          "texto": "2002 + 1502\n47.\nUn carpintero restaurará el siguiente mueble con forma de prisma recto de base\nrectangular.\nPara la restauración, debe pintar el exterior de la estructura, sin incluir la base inferior.\n¿Cuál es la medida de la superficie por pintar?"
+        },
+        {
+          "letra": "A",
+          "texto": "24 800 cm2"
+        },
+        {
+          "letra": "B",
+          "texto": "28 000 cm2"
+        },
+        {
+          "letra": "C",
+          "texto": "46 400 cm2"
+        },
+        {
+          "letra": "D",
+          "texto": "49 600 cm2\n48.\nConsidera la siguiente técnica para hacer figuras con una hoja de papel:\n• Se dobla la hoja de papel a la mitad.\n• Se marca la mitad de la figura, se recorta y por último se desdobla el papel.\n¿Cuál de las siguientes figuras se puede hacer utilizando esta técnica?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n49.\nUn barco que inicia un recorrido realiza los siguientes movimientos:\n5 kilómetros al oeste\n4 kilómetros al norte\n3 kilómetros al este\n9 kilómetros al sur\n6 kilómetros al oeste\n¿Cuál es la ubicación final del barco con respecto a su ubicación inicial?"
+        },
+        {
+          "letra": "A",
+          "texto": "8 kilómetros al oeste y 5 kilómetros al sur"
+        },
+        {
+          "letra": "B",
+          "texto": "14 kilómetros al oeste y 13 kilómetros al norte"
+        },
+        {
+          "letra": "C",
+          "texto": "8 kilómetros al este y 5 kilómetros al norte"
+        },
+        {
+          "letra": "D",
+          "texto": "14 kilómetros al este y 13 kilómetros al sur\n50.\nHelena creó una obra de arte moderno. Realizó un dibujo sobre el cuadrado ABCD,\ncomo se presenta en la siguiente figura, donde O es el centro del cuadrado:\nCreó otras tres figuras distintas y las unió, donde la primera es obtenida por una\nreflexión con respecto al lado BC, la segunda por una reflexión con respecto al\npunto O, y la tercera por una rotación en torno al punto O, en 90◦, en sentido\nantihorario.\nSi la primera figura la posicionó a la izquierda, la segunda al centro y la tercera a la\nderecha, ¿cuál de las siguientes figuras muestra la obra de arte de Helena?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n51.\nConsidera la siguiente figura:\n¿Cuáles son las coordenadas del vector de traslación?"
+        },
+        {
+          "letra": "A",
+          "texto": "(−12, 6)"
+        },
+        {
+          "letra": "B",
+          "texto": "(−12, −6)"
+        },
+        {
+          "letra": "C",
+          "texto": "(12, 6)"
+        },
+        {
+          "letra": "D",
+          "texto": "(12, −6)\n52.\nA una figura se le aplica una reflexión y luego una traslación. La imagen del vértice\n(x, y) es (x + 2, 6 −y).\nA otra figura se le aplican las mismas transformaciones isométricas y en el mismo\norden.\nSi (−1, −2) es un vértice de la figura, ¿cuáles son las coordenadas de la imagen de\neste vértice?"
+        },
+        {
+          "letra": "A",
+          "texto": "(1, 8)"
+        },
+        {
+          "letra": "B",
+          "texto": "(1, −8)"
+        },
+        {
+          "letra": "C",
+          "texto": "(−1, −8)"
+        },
+        {
+          "letra": "D",
+          "texto": "(−1, 8)\n53.\nEn la siguiente tabla se resume la distribución de los puntajes de una prueba en un\ncurso.\nPuntaje\nFrecuencia\n¿Cuál es el total de estudiantes del curso que rindió la prueba?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n54.\nEn el siguiente gráfico se representan las cantidades de celulares vendidos\ndiariamente en una tienda, por cuatro personas de esta área, durante una semana\nde trabajo.\nLa meta propuesta por la tienda es que cada persona logre vender al menos\n5 celulares en un día de trabajo.\n¿Cuál es la persona que cumplió la meta más veces durante la semana de trabajo?"
+        },
+        {
+          "letra": "A",
+          "texto": "Gonzalo"
+        },
+        {
+          "letra": "B",
+          "texto": "Camilo"
+        },
+        {
+          "letra": "C",
+          "texto": "Antonia"
+        },
+        {
+          "letra": "D",
+          "texto": "Fabiola\n55.\nLos artículos de una tienda de jardinería están clasificados en cinco categorías:\nflores, árboles, semillas, tierra y arbustos.\nLa cantidad de artículos vendidos en cierta semana se presenta en el siguiente\ngráfico:\n¿Cuál fue el total de artículos vendidos?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n56.\nEn las tablas adjuntas se presenta la cantidad de estudiantes que poseen “baja” y\n“no baja” asistencia en los distintos niveles de un colegio, durante un semestre.\nPrimeros medios\nSegundos medios\nAsistencia\nFrecuencia\nAsistencia\nFrecuencia\nBaja\nBaja\nNo baja\nNo baja\nTerceros medios\nCuartos medios\nAsistencia\nFrecuencia\nAsistencia\nFrecuencia\nBaja\nBaja\nNo baja\nNo baja\nEn el colegio se elegirá el nivel que tenga mayor porcentaje de sus estudiantes con\n“baja” asistencia para ser el primero al que se le realizará un seguimiento.\n¿Con cuál de los niveles se comenzará?"
+        },
+        {
+          "letra": "A",
+          "texto": "Con los primeros medios"
+        },
+        {
+          "letra": "B",
+          "texto": "Con los segundos medios"
+        },
+        {
+          "letra": "C",
+          "texto": "Con los terceros medios"
+        },
+        {
+          "letra": "D",
+          "texto": "Con los cuartos medios\n57.\nEn los siguientes gráficos se presenta el porcentaje de alimentos orgánicos a la venta\ndurante tres años en dos supermercados.\nLos gráficos presentan un aspecto en su construcción que dificulta la comparación\nde los porcentajes de venta de alimentos orgánicos entre los supermercados.\n¿Cuál de los siguientes argumentos justifica esta afirmación?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que los gráficos están graduados en distintas escalas."
+        },
+        {
+          "letra": "B",
+          "texto": "Que los porcentajes están escritos sobre las barras a distintas alturas."
+        },
+        {
+          "letra": "C",
+          "texto": "Que los porcentajes de ambos supermercados aumentaron en el tiempo."
+        },
+        {
+          "letra": "D",
+          "texto": "Que las barras se encuentran juntas, una a continuación de otra.\n58.\nEn el mundial de fútbol del 2022 participaron 32 países. La edad promedio de los\nfutbolistas fue de 26,95 años.\nEn el siguiente gráfico se presenta la distribución de las edades de los futbolistas de\ncuatro países que participaron en el mundial.\n¿Cuál de estos cuatro países tiene el mayor promedio de edad?"
+        },
+        {
+          "letra": "A",
+          "texto": "Irán"
+        },
+        {
+          "letra": "B",
+          "texto": "España"
+        },
+        {
+          "letra": "C",
+          "texto": "EE.UU."
+        },
+        {
+          "letra": "D",
+          "texto": "Ghana\n59.\nEn la tabla adjunta se presentan los milímetros de precipitaciones en cada mes en\ncierta ciudad de Chile.\nMes\nene\nfeb\nmar\nabr\nmay\njun\njul\nago\nsep\noct\nnov\ndic\nPrecipitaciones\n(mm)\n¿Cuál es el promedio de precipitaciones de junio, julio, agosto y septiembre?"
+        },
+        {
+          "letra": "A",
+          "texto": "20,09 mm"
+        },
+        {
+          "letra": "B",
+          "texto": "38,25 mm"
+        },
+        {
+          "letra": "C",
+          "texto": "41,50 mm"
+        },
+        {
+          "letra": "D",
+          "texto": "76,50 mm\n60.\nLa distribución de seguidores, en redes sociales de internet, que tiene un grupo de\nestudiantes de cuarto año medio está representada en el diagrama de cajón adjunto.\n¿Cuál de las siguientes afirmaciones se puede deducir a partir de este diagrama?"
+        },
+        {
+          "letra": "A",
+          "texto": "El promedio de la cantidad de seguidores en el grupo de estudiantes es de 270."
+        },
+        {
+          "letra": "B",
+          "texto": "La mitad de estudiantes del grupo tiene 270 seguidores."
+        },
+        {
+          "letra": "C",
+          "texto": "Hay 60 estudiantes en el grupo que tienen entre 80 y 140 seguidores."
+        },
+        {
+          "letra": "D",
+          "texto": "Al menos un 25 % de los estudiantes del grupo tiene desde 140 hasta\n270 seguidores.\n61.\nConsidera el siguiente grupo de datos: 18, 19, 20, 21, 21, 27, 30, 30, 31, 34 y 35.\n¿Cuál de los siguientes diagramas de cajón representa a este grupo de datos?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n62.\nEn la tabla adjunta se presentan los resultados de una encuesta realizada a un grupo\nde estudiantes sobre el área de preferencia para realizar sus estudios superiores.\nÁrea de preferencia\nHombre\nMujer\nCientífica\nHumanista\nMatemática\nArtística\nSi se selecciona al azar a una persona del grupo de estudiantes, ¿cuál es la\nprobabilidad de que sea mujer y que escoja el área artística?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 63,
+      "enunciado": "Un grupo de personas está jugando a un juego que consiste en:\n• escoger un número entre el 2 y el 12, ambos valores incluidos,\n• después debe lanzar dos dados comunes y calcular la suma de los puntos en\nlos dados.\nSi la suma obtenida coincide con el número escogido, entonces se obtiene un punto.\nFinalmente, gana el juego la persona que primero consiga 20 puntos.\n¿Cuál de los siguientes números debería escoger una persona para tener mayor\nprobabilidad de ganar el juego?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 64,
+      "enunciado": "En la siguiente tabla se presenta la probabilidad de obtener cada cara de un dado\ncargado al lanzarlo.\nNúmero de la cara\nProbabilidad\n0,2\n0,1\n0,1\n0,1\n0,4\n0,1\n¿Cuál de las siguientes afirmaciones es verdadera con respecto a la información\nentregada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La probabilidad de obtener un 1 o un 2 al lanzar este dado es la misma que se\nobtiene al lanzar un dado común."
+        },
+        {
+          "letra": "B",
+          "texto": "La probabilidad de obtener un 6 al lanzar este dado es la misma que se obtiene\nal lanzar un dado común."
+        },
+        {
+          "letra": "C",
+          "texto": "La probabilidad de obtener un número mayor que 4 al lanzar este dado es 0,5 ."
+        },
+        {
+          "letra": "D",
+          "texto": "La probabilidad de obtener un número par al lanzar este dado es 0,1 ."
+        }
+      ]
+    },
+    {
+      "numero": 65,
+      "enunciado": "Un juego de azar consiste en lanzar tres monedas simultáneamente. El puntaje\nobtenido por un jugador está dado por la expresión c −2s, tal que c y s corresponden\na la cantidad de caras y de sellos, respectivamente, obtenidos en el lanzamiento.\n¿Cuál es la probabilidad de que un jugador obtenga un puntaje negativo en un\nlanzamiento?\nA)\nB)\nC)\nD)\n               Listado de referencias bibliográficas \nPregunta\nCita bibliográfica\nFonasa.(2022). Cuenta pública 2022. Fondo Nacional de Salud (FONASA).\nhttps//www.fonasa.cl/sities/fonasa/adjuntos/CUENTAPUBLICA2022c\nIMPORTANTE\nProceso de Admisión 2 0 2 6\n■ Este folleto está protegido bajo Registro de Propiedad Intelectual de la \nUniversidad de Chile.\n■ Está prohibida la reproducción, transmisión total o parcial de este folleto, \npor cualquier medio o método.\n■ Es obligatorio devolver íntegramente este folleto antes de abandonar la \nsala.\n■ Es obligatorio devolver la hoja de respuestas antes de abandonar la sala.",
+      "alternativas": []
+    }
+  ]
+}

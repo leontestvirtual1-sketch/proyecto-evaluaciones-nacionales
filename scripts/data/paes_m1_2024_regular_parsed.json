@@ -1,0 +1,1581 @@
+{
+  "materia": "m1",
+  "year": 2024,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)0\n,0\n(\n.",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q .",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": ")\nb\n,a\n(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del         \n1 al 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "En el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \nSÍMBOLOS MATEMÁTICOS \n \n \nes menor que \n \nes mayor que \n \nes menor o igual que \n \nes mayor o igual que \n \nángulo recto \n \nes semejante con \n \nes distinto de \nAB \ntrazo AB \nAB \nmedida del trazo AB \n \nRegistro de Propiedad Intelectual Nº 2023-A-8887 \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n1. \n¿Cuál es el resultado de \n\n\n\n\n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "\n \n \n \n \n \n \n \n \n \n2. \nUn diario tiene una colilla recortable para un concurso, la que se presenta a \n \ncontinuación: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el resultado que permite entrar al concurso?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n1 ♥ ♪ \n \n3 2 \n \n \n \n \n3 ☻ \n \n \n \nCUADRADO MÁGICO \nManda el resultado  \ncorrecto de  \n♥ + ☻ + ♪ \n a la casilla postal de este \ndiario para entrar al \nconcurso de una bicicleta \nNombre \n \nNúmero contacto \n \nResultado \nCada fila, cada columna y cada diagonal \ndeben contener los números 1, 2, 3 y 4  \nsin que se repitan. \n \n \n \n3. \nSi al quíntuplo de 10\n\n se le resta el triple de 12\n\n, ¿qué número se obtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": "2"
+        },
+        {
+          "letra": "D",
+          "texto": "34 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n4. \n¿En cuál de las siguientes opciones se representa la frase “el doble de la tercera \nparte de la diferencia entre 8 y 6 ”?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n5. \nEn la siguiente tabla se presentan las fechas de algunos hechos históricos:  \n \n \n \n \n \n \n \n \n \n¿Cuántos años pasaron desde el año de la construcción de la Gran Pirámide de \nGuiza hasta el año del nacimiento de Cleopatra?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nHecho histórico \nAño \nConstrucción de la Gran Pirámide de Guiza \n2570 a.C. \nNacimiento de Cleopatra \n    69 a.C. \n \n \n \n \n6. \nUn juego consiste en lanzar un dardo a un tablero como el de la figura adjunta.  \n \n \n \n \n \n \n \n \n \n \n \n \nSe obtienen 10 puntos si el dardo cae en el sector A, 5 puntos si cae en el sector \nB y ningún punto si cae en el sector C. \n \n \nEn la tabla adjunta se presenta la cantidad de aciertos en cada sector de tres \ntiradores en los 10 lanzamientos que cada uno realizó. \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál tirador obtuvo el mayor puntaje y cuál obtuvo el menor puntaje, \nrespectivamente?"
+        },
+        {
+          "letra": "A",
+          "texto": "Roberta y Sandra"
+        },
+        {
+          "letra": "B",
+          "texto": "Roberta y Pedro"
+        },
+        {
+          "letra": "C",
+          "texto": "Sandra y Roberta"
+        },
+        {
+          "letra": "D",
+          "texto": "Pedro y Sandra \n \n \n \n \n \n \n \n \n \n \nSectores \n \nA \nB \nC \nPedro \nSandra \nRoberta \nA \nB \nC"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Una persona realiza un viaje al exterior y lleva consigo su tarjeta de débito, la que \nfunciona fuera del país. En su tarjeta tiene un saldo inicial de \n$\n y decide \nhacer algunas actividades turísticas, por lo que realizó los siguientes movimientos \nen su tarjeta: \n \n Un pago de \n$\n  para pagar la entrada a una obra de teatro. \n Un pago de \n$\n para pagar el ingreso al parque de diversiones y algo de \ncomida dentro del parque.  \n \nSi por cada pago que realiza con su tarjeta el banco le cobra una comisión de \n$\n independientemente del monto, ¿cuál es su saldo final luego de realizados \nlos pagos de ese día?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "Un colegio de enseñanza media tiene 180 estudiantes en total y un sexto de ellos \npertenece al segundo medio B. \n \n \nEl día en que el segundo medio B realizó la elección de su directiva, faltó la décima \nparte de los estudiantes de dicho curso. Quienes asistieron votaron entre Fernando \ny Josefina para la presidencia.  \n \n \nSi 3\n1 de los estudiantes votaron por Josefina y no hubo votos nulos ni blancos, \n¿cuántos estudiantes votaron por Fernando? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "En la figura se presenta un cartel con los precios de las impresiones en blanco y \nnegro de un centro de impresión. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nUn curso de Química Orgánica requiere de un libro de tres capítulos de 150 , 130 y \n85 hojas, en ese orden. Una persona imprimió primero solo el primer capítulo, \nluego solo el segundo y por último solo el tercero, a medida que avanzaba en el \ncurso. \n \n \n¿Cuánto dinero gastó la persona en imprimir el libro?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 11,
+      "enunciado": "Tampoco se permite el uso de teléfono celular, calculadora o cualquier otro dispositivo electrónico durante la \nrendición de la prueba.",
+      "alternativas": []
+    },
+    {
+      "numero": 12,
+      "enunciado": "Finalmente, anota tu número de Cédula de Identidad (o Pasaporte) en los casilleros que se encuentran en la parte \ninferior de este folleto, lee y firma la declaración correspondiente.\nDECLARACIÓN: declaro conocer y aceptar la normativa que rige al Proceso de Admisión a las universidades chilenas \ny soy consciente de que, en caso de colaborar con la reproducción, sustracción, almacenamiento o transmisión, \ntotal o parcial, de este folleto, a través de cualquier medio, me expongo a la exclusión inmediata de este Proceso, sin \nperjuicio de las demás acciones o sanciones legales.\nFirma\nPROCESO DE ADMISIÓN 2024\nNúmero de cédula de identidad (o pasaporte)\n—\n \n \n \nEN ESTA PRUEBA SE CONSIDERARÁ LO SIGUIENTE: \n \n1. \nLas figuras que aparecen son solo indicativas.  \n2. \nLos gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)0\n,0\n(\n. \n3. \nEl intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q . \n4. \n)\nb\n,a\n(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario. \n5. \nSe entenderá por dado común a aquel que posee 6 caras numeradas del         \n1 al 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir. \n6. \nEn el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \nSÍMBOLOS MATEMÁTICOS \n \n \nes menor que \n \nes mayor que \n \nes menor o igual que \n \nes mayor o igual que \n \nángulo recto \n \nes semejante con \n \nes distinto de \nAB \ntrazo AB \nAB \nmedida del trazo AB \n \nRegistro de Propiedad Intelectual Nº 2023-A-8887 \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n1. \n¿Cuál es el resultado de \n\n\n\n\n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "\n \n \n \n \n \n \n \n \n \n2. \nUn diario tiene una colilla recortable para un concurso, la que se presenta a \n \ncontinuación: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el resultado que permite entrar al concurso?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n1 ♥ ♪ \n \n3 2 \n \n \n \n \n3 ☻ \n \n \n \nCUADRADO MÁGICO \nManda el resultado  \ncorrecto de  \n♥ + ☻ + ♪ \n a la casilla postal de este \ndiario para entrar al \nconcurso de una bicicleta \nNombre \n \nNúmero contacto \n \nResultado \nCada fila, cada columna y cada diagonal \ndeben contener los números 1, 2, 3 y 4  \nsin que se repitan. \n \n \n \n3. \nSi al quíntuplo de 10\n\n se le resta el triple de 12\n\n, ¿qué número se obtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": "2"
+        },
+        {
+          "letra": "D",
+          "texto": "34 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n4. \n¿En cuál de las siguientes opciones se representa la frase “el doble de la tercera \nparte de la diferencia entre 8 y 6 ”?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n5. \nEn la siguiente tabla se presentan las fechas de algunos hechos históricos:  \n \n \n \n \n \n \n \n \n \n¿Cuántos años pasaron desde el año de la construcción de la Gran Pirámide de \nGuiza hasta el año del nacimiento de Cleopatra?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nHecho histórico \nAño \nConstrucción de la Gran Pirámide de Guiza \n2570 a.C. \nNacimiento de Cleopatra \n    69 a.C. \n \n \n \n \n6. \nUn juego consiste en lanzar un dardo a un tablero como el de la figura adjunta.  \n \n \n \n \n \n \n \n \n \n \n \n \nSe obtienen 10 puntos si el dardo cae en el sector A, 5 puntos si cae en el sector \nB y ningún punto si cae en el sector C. \n \n \nEn la tabla adjunta se presenta la cantidad de aciertos en cada sector de tres \ntiradores en los 10 lanzamientos que cada uno realizó. \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál tirador obtuvo el mayor puntaje y cuál obtuvo el menor puntaje, \nrespectivamente?"
+        },
+        {
+          "letra": "A",
+          "texto": "Roberta y Sandra"
+        },
+        {
+          "letra": "B",
+          "texto": "Roberta y Pedro"
+        },
+        {
+          "letra": "C",
+          "texto": "Sandra y Roberta"
+        },
+        {
+          "letra": "D",
+          "texto": "Pedro y Sandra \n \n \n \n \n \n \n \n \n \n \nSectores \n \nA \nB \nC \nPedro \nSandra \nRoberta \nA \nB \nC \n \n \n \n7. \nUna persona realiza un viaje al exterior y lleva consigo su tarjeta de débito, la que \nfunciona fuera del país. En su tarjeta tiene un saldo inicial de \n$\n y decide \nhacer algunas actividades turísticas, por lo que realizó los siguientes movimientos \nen su tarjeta: \n \n Un pago de \n$\n  para pagar la entrada a una obra de teatro. \n Un pago de \n$\n para pagar el ingreso al parque de diversiones y algo de \ncomida dentro del parque.  \n \nSi por cada pago que realiza con su tarjeta el banco le cobra una comisión de \n$\n independientemente del monto, ¿cuál es su saldo final luego de realizados \nlos pagos de ese día?"
+        },
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n8. \nUn colegio de enseñanza media tiene 180 estudiantes en total y un sexto de ellos \npertenece al segundo medio B. \n \n \nEl día en que el segundo medio B realizó la elección de su directiva, faltó la décima \nparte de los estudiantes de dicho curso. Quienes asistieron votaron entre Fernando \ny Josefina para la presidencia.  \n \n \nSi 3\n1 de los estudiantes votaron por Josefina y no hubo votos nulos ni blancos, \n¿cuántos estudiantes votaron por Fernando?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n9. \nEn la figura se presenta un cartel con los precios de las impresiones en blanco y \nnegro de un centro de impresión. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nUn curso de Química Orgánica requiere de un libro de tres capítulos de 150 , 130 y \n85 hojas, en ese orden. Una persona imprimió primero solo el primer capítulo, \nluego solo el segundo y por último solo el tercero, a medida que avanzaba en el \ncurso. \n \n \n¿Cuánto dinero gastó la persona en imprimir el libro?"
+        },
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n10. Considera la siguiente secuencia de figuras, formadas por cuadrados y \ntriángulos, que se va formando con palitos de fósforo. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la cantidad de palitos que se utilizan en la figura 25?"
+        },
+        {
+          "letra": "A",
+          "texto": "7 "
+        },
+        {
+          "letra": "B",
+          "texto": "\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n"
+        },
+        {
+          "letra": "D",
+          "texto": "2 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n11. ¿Cuál de las siguientes expresiones representa el \n%\n del \n%\n del \n%\n de un \nnúmero P?"
+        },
+        {
+          "letra": "A",
+          "texto": "%\n8,0\n de P"
+        },
+        {
+          "letra": "B",
+          "texto": "%\n de P"
+        },
+        {
+          "letra": "C",
+          "texto": "%\n6,0\n de P"
+        },
+        {
+          "letra": "D",
+          "texto": "%\n de P \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n12. ¿A qué porcentaje corresponde 25 de 125 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "A un \n%"
+        },
+        {
+          "letra": "B",
+          "texto": "A un \n%"
+        },
+        {
+          "letra": "C",
+          "texto": "A un \n%"
+        },
+        {
+          "letra": "D",
+          "texto": "A un \n%"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "Helena va en segundo básico de un colegio de 1000 estudiantes, de los cuales \nel \n%\n participa en el taller de patinaje. De este taller, el \n%\n compite en un \ntorneo y Helena es una de las competidoras. \n \n¿Cuál de los siguientes argumentos es válido?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "90 estudiantes del taller no compiten, porque solo 10 estudiantes son del \ncurso de Helena."
+        },
+        {
+          "letra": "B",
+          "texto": "Helena es parte del %\n del colegio que compite, porque el \n%\n restante \nno practica patinaje."
+        },
+        {
+          "letra": "C",
+          "texto": "10 estudiantes compiten en el torneo, porque son el \n%\n del total de     \n100 estudiantes que participan en el taller de patinaje."
+        },
+        {
+          "letra": "D",
+          "texto": "El \n%\n del estudiantado del colegio no practica patinaje, porque no son \nparte del \n%\n que compite en el torneo."
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Una persona recibirá un bono del \n%\n de su sueldo mensual por los próximos \n meses por ser parte de un equipo que cumplió las metas de productividad. \n \nLa persona calcula que su sueldo mensual normal equivale a recibir \n$\n por \ncada jornada de trabajo. \n \n¿Cuánto dinero tendría que recibir por jornada de trabajo para que este \nequivalga al nuevo sueldo con bono?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "Un comerciante compra planchas de volcanita a 6000\n$\n cada una y las vende \npara obtener un \n%\n de ganancia. Luego de un tiempo, decide rebajar el precio \nde venta de cada plancha de volcanita en un \n%\n, obteniendo un nuevo precio \nde venta. \n \n¿Cuál es el nuevo precio de venta de cada plancha de volcanita?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$"
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "Un hotel tiene 200 habitaciones y para un fin de semana largo tiene reservadas  \n140 habitaciones. \n \n¿Cuál es el porcentaje de habitaciones que aún están disponibles ese fin de \nsemana?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "%"
+        },
+        {
+          "letra": "B",
+          "texto": "%"
+        },
+        {
+          "letra": "C",
+          "texto": "%"
+        },
+        {
+          "letra": "D",
+          "texto": "%"
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "¿Cuál es el valor de \n\n\n? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 18,
+      "enunciado": "¿Cuál de las siguientes opciones representa al número \n2\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": "26 "
+        },
+        {
+          "letra": "C",
+          "texto": "2 "
+        },
+        {
+          "letra": "D",
+          "texto": "25 "
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Considera el número mtp de tres dígitos, tal que m es el de la centena, t es el \nde la decena y  es el de la unidad.  \n \n¿Cuál de las siguientes expresiones representa a este número?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p\nt\nm\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\nt\nm\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\nt\nm\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "p\nt\nm\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \np"
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "¿Cuál es el valor de \n\n? \n \nA) \n\n \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 21,
+      "enunciado": "¿Cuál es el valor de \n\n1\n\n\n? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 22,
+      "enunciado": "La cantidad de bacterias de cierto cultivo aumenta en un \n%\n cada               \n40 minutos. \n \nSi la cantidad inicial era 250 bacterias, ¿en cuánto aumentó la cantidad de \nbacterias transcurridas dos horas? \n \nA) \nB) \nC) 182 \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 23,
+      "enunciado": "Los antiguos dispositivos de almacenamiento de datos tenían una capacidad \nmáxima de 1 megabyte y, actualmente, existen dispositivos que almacenan           \n1 terabyte.  \n \nSi un terabyte equivale a \n bytes y un megabyte equivale a \n bytes, \n¿cuántas veces cabe el almacenamiento de un dispositivo antiguo en un \ndispositivo actual? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 24,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 25,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 26,
+      "enunciado": "",
+      "alternativas": [
+        {
+          "letra": "C",
+          "texto": "2 "
+        },
+        {
+          "letra": "D",
+          "texto": "25 \n \n \n \n \n \n \n \n \n \n \n \n19. Considera el número mtp de tres dígitos, tal que m es el de la centena, t es el \nde la decena y  es el de la unidad.  \n \n¿Cuál de las siguientes expresiones representa a este número?"
+        },
+        {
+          "letra": "A",
+          "texto": "p\nt\nm\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\nt\nm\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\nt\nm\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "p\nt\nm\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \np\n \n \n \n20. ¿Cuál es el valor de \n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "21. ¿Cuál es el valor de \n\n1\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n22. La cantidad de bacterias de cierto cultivo aumenta en un \n%\n cada               \n40 minutos. \n \nSi la cantidad inicial era 250 bacterias, ¿en cuánto aumentó la cantidad de \nbacterias transcurridas dos horas?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "182"
+        },
+        {
+          "letra": "D",
+          "texto": "23. Los antiguos dispositivos de almacenamiento de datos tenían una capacidad \nmáxima de 1 megabyte y, actualmente, existen dispositivos que almacenan           \n1 terabyte.  \n \nSi un terabyte equivale a \n bytes y un megabyte equivale a \n bytes, \n¿cuántas veces cabe el almacenamiento de un dispositivo antiguo en un \ndispositivo actual?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n24. ¿Cuál de las siguientes expresiones es igual a \n2\nx\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\nx\n2 2\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nx\n4 2\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nx\n4 2\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n4 2 \n \n \n \n \n \n \n \n \n \n \n25. A continuación se realiza la multiplicación \n\n\nx\nx\nx\n\n\n\n\n, en la cual se \ncomete un error.  \n \nPaso 1: se aplica distributividad, obteniéndose: \n\n\n\n\nx\nx\nx\nx\nx\n\n\n\n\n\n\n\n \n \nPaso 2: se desarrollan las multiplicaciones, obteniéndose: \n\n\n\nx\nx\nx\nx\n\n\n\n\n\n \nPaso 3: se ordena la expresión por términos semejantes, obteniéndose: \nx\nx\nx\nx\n\n\n\n\n\n \nPaso 4: se suman los términos semejantes, obteniéndose: \nx\nx\n\n\n \n \n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. ¿Cuál de las siguientes expresiones representa a “el doble del cubo de un     \nnúmero x , disminuido en un tercio del mismo número”?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nx\nx\n3 "
+        },
+        {
+          "letra": "B",
+          "texto": "x\n2 3 "
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n\nx"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nx\n2 3 "
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a \n\n2\ny\ny\n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "y\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "y\ny\n2 2\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "y\ny\n2 2\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "y\ny\n2 2\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "Una receta indica usar 325 gramos de harina, entre otros ingredientes, para hacer \n20 galletas. \n \n \nSi se sigue esa receta, ¿cuál de las siguientes fórmulas permite determinar la \ncantidad de gramos de harina que se necesitan para hacer n galletas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "n\n325 "
+        },
+        {
+          "letra": "B",
+          "texto": "n\n325 "
+        },
+        {
+          "letra": "C",
+          "texto": "n\n325 "
+        },
+        {
+          "letra": "D",
+          "texto": "n\n20 "
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "En una tienda de perfumería empacan jabones en cajas. En la figura adjunta se \nrepresenta la relación entre la cantidad de jabones y la cantidad de cajas que se \nnecesitan para empacar dicha cantidad de jabones. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi esta relación se puede modelar mediante la función f definida por \nx\n)\nx\n(f\n\n\n, ¿qué representa el número 20 ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La constante de proporcionalidad directa."
+        },
+        {
+          "letra": "B",
+          "texto": "La constante de proporcionalidad inversa."
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad total de jabones."
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad total de cajas."
+        }
+      ]
+    },
+    {
+      "numero": 30,
+      "enunciado": "Carmen tiene 13 lápices más que Ariel y entre las dos tienen a lo más 49 lápices.  \n \n \n¿Cuál es la máxima cantidad de lápices que puede tener Ariel?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "17"
+        },
+        {
+          "letra": "B",
+          "texto": "18"
+        },
+        {
+          "letra": "C",
+          "texto": "30"
+        },
+        {
+          "letra": "D",
+          "texto": "31"
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "En una frutería se llenan cajas de dos tipos. Un tipo de caja, cuando está llena de \nfruta, pesa \nkg\nM\n y el otro tipo de caja, cuando está llena de fruta, pesa \nkg\nP\n. La \ncapacidad del camión donde se llevarán las cajas no puede superar los \nkg\n. \n \n \nSe sabe que la cantidad de cajas de los dos tipos que se colocarán en el camión es \nla misma. \n \n \n¿Cuál de las siguientes inecuaciones permite determinar la cantidad máxima de \ncajas x de cada tipo que se pueden colocar en el camión?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\nx\nP\nM\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nP\nM\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nP\nM\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\nP\nM\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "En una oficina de encomiendas se desea enviar cinco regalos idénticos y un frasco \nde medio kilogramo de miel.  \n \nPara determinar la masa de estos regalos se colocan en una balanza dos regalos y \nel frasco de miel y en la otra balanza se colocan tres regalos, como se representa \nen la figura adjunta. \n \n \n \n \n \n \n \n \n \n \nLa balanza de la izquierda marca menos que la balanza de la derecha.  \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Cada regalo tiene una masa de  100 gramos."
+        },
+        {
+          "letra": "B",
+          "texto": "Cada regalo tiene una masa de 500 gramos."
+        },
+        {
+          "letra": "C",
+          "texto": "Cada regalo tiene una masa mayor que 500 gramos."
+        },
+        {
+          "letra": "D",
+          "texto": "Cada regalo tiene una masa menor que 500 gramos."
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "En la tabla adjunta se indica la temperatura que alcanza cierto líquido en \ndeterminado tiempo, a partir de los \nC\n0 \n. \n \n \n \n \n \n \n \n \nSi la temperatura alcanzada por el líquido es directamente proporcional al \ntiempo que ha sido calentado, en ese orden, ¿cuál es la constante de \nproporcionalidad? \n \nA) \nB) \nC) \n \n \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTemperatura ( C\n\n) \nTiempo (min )",
+      "alternativas": []
+    },
+    {
+      "numero": 34,
+      "enunciado": "Raúl y Teresa arman bolsas de dulces distribuyendo en total 1000 dulces en     \n300 bolsas y cada uno arma bolsas distintas. Raúl pone tres dulces en cada una \ny Teresa pone cinco dulces en cada una. \n \nSi no sobra ningún dulce, ¿cuántas bolsas armó Raúl? \n \nA) \nB) 180 \nC) 125 \nD)   50",
+      "alternativas": []
+    },
+    {
+      "numero": 35,
+      "enunciado": "La fábrica de bicicletas “MTB” utiliza aluminio y titanio en la elaboración de dos de \nsus modelos llamados Sport y Cross Country. La cantidad de estos metales en kg , \nusados en cada modelo se presenta en la tabla adjunta. \n \n \n \n \n \n \n \n \nSi la fábrica disponía de \nkg\n de aluminio y \nkg\n de titanio, y utilizó todo el \nmaterial, ¿cuántas bicicletas del modelo Cross Country fabricó? \n \nA) \n \nB) \nC) \nD) \n \n \n \n \n \n \n \nModelo Sport \nModelo Cross Country \nAluminio (kg) \nTitanio (kg)",
+      "alternativas": []
+    },
+    {
+      "numero": 36,
+      "enunciado": "En la figura adjunta se presentan las medidas de tres segmentos con los que, \npara algún valor de x , se puede construir un triángulo rectángulo. \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes ecuaciones permite calcular el valor de x ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\nx2\n\n\n\n \nx\nx\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nx\n9 2\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nx2\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nx cm \n(2x + 15) cm \n(2x + 10) cm"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "Una compañía de teatro desea aumentar la cantidad de público en sus obras y \npara esto ofrece un plan mensual en el que hay que pagar un monto fijo de 9000\n$\n \ncada mes, más 1000\n$\n por cada entrada, valor que corresponde al \n%\n del precio \nde una entrada sin contratar el plan. \n \nSi una persona contrató el plan mensual por 6 meses, ¿cuánto dinero ahorró si \ncompró 18 entradas en esos 6 meses?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$"
+        }
+      ]
+    },
+    {
+      "numero": 38,
+      "enunciado": "Una psicóloga considera la función f definida por \nx\nx\nf\n\n como su modelo \nde cobro por paciente, tal que x es la cantidad de sesiones que tuvo en un mes y \n\nx\nf\n es el total mensual que cobra por ellas, en pesos. \n \n \nLa psicóloga quiere hacer un ajuste a su modelo de cobro, considerando una tarifa \nfija inicial y una tarifa por sesión de manera que la primera sesión del mes tenga el \nmismo valor que en el modelo anterior, pero que el resto de las sesiones del mes \ntengan un valor de un \n%\n más económico que en el modelo anterior. \n \n \n¿Cuál de las siguientes funciones es el nuevo modelo de cobro de la psicóloga?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\nx\nx\ng\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\nx\nx\nh\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\nx\nx\np\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\nx\nx\nr\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 39,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 40,
+      "enunciado": "minutos. \n \nSi la cantidad inicial era 250 bacterias, ¿en cuánto aumentó la cantidad de \nbacterias transcurridas dos horas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "182"
+        },
+        {
+          "letra": "D",
+          "texto": "23. Los antiguos dispositivos de almacenamiento de datos tenían una capacidad \nmáxima de 1 megabyte y, actualmente, existen dispositivos que almacenan           \n1 terabyte.  \n \nSi un terabyte equivale a \n bytes y un megabyte equivale a \n bytes, \n¿cuántas veces cabe el almacenamiento de un dispositivo antiguo en un \ndispositivo actual?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n24. ¿Cuál de las siguientes expresiones es igual a \n2\nx\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\nx\n2 2\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nx\n4 2\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nx\n4 2\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n4 2 \n \n \n \n \n \n \n \n \n \n \n25. A continuación se realiza la multiplicación \n\n\nx\nx\nx\n\n\n\n\n, en la cual se \ncomete un error.  \n \nPaso 1: se aplica distributividad, obteniéndose: \n\n\n\n\nx\nx\nx\nx\nx\n\n\n\n\n\n\n\n \n \nPaso 2: se desarrollan las multiplicaciones, obteniéndose: \n\n\n\nx\nx\nx\nx\n\n\n\n\n\n \nPaso 3: se ordena la expresión por términos semejantes, obteniéndose: \nx\nx\nx\nx\n\n\n\n\n\n \nPaso 4: se suman los términos semejantes, obteniéndose: \nx\nx\n\n\n \n \n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. ¿Cuál de las siguientes expresiones representa a “el doble del cubo de un     \nnúmero x , disminuido en un tercio del mismo número”?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nx\nx\n3 "
+        },
+        {
+          "letra": "B",
+          "texto": "x\n2 3 "
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n\nx"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nx\n2 3 \n \n \n \n \n \n \n \n \n \n \n \n27. ¿Cuál de las siguientes expresiones es igual a \n\n2\ny\ny\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "y\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "y\ny\n2 2\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "y\ny\n2 2\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "y\ny\n2 2\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n28. Una receta indica usar 325 gramos de harina, entre otros ingredientes, para hacer \n20 galletas. \n \n \nSi se sigue esa receta, ¿cuál de las siguientes fórmulas permite determinar la \ncantidad de gramos de harina que se necesitan para hacer n galletas?"
+        },
+        {
+          "letra": "A",
+          "texto": "n\n325 "
+        },
+        {
+          "letra": "B",
+          "texto": "n\n325 "
+        },
+        {
+          "letra": "C",
+          "texto": "n\n325 "
+        },
+        {
+          "letra": "D",
+          "texto": "n\n20 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n29. En una tienda de perfumería empacan jabones en cajas. En la figura adjunta se \nrepresenta la relación entre la cantidad de jabones y la cantidad de cajas que se \nnecesitan para empacar dicha cantidad de jabones. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi esta relación se puede modelar mediante la función f definida por \nx\n)\nx\n(f\n\n\n, ¿qué representa el número 20 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "La constante de proporcionalidad directa."
+        },
+        {
+          "letra": "B",
+          "texto": "La constante de proporcionalidad inversa."
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad total de jabones."
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad total de cajas. \n \n \n \n \n \n \n \n \n \n \n \n \n30. Carmen tiene 13 lápices más que Ariel y entre las dos tienen a lo más 49 lápices.  \n \n \n¿Cuál es la máxima cantidad de lápices que puede tener Ariel?"
+        },
+        {
+          "letra": "A",
+          "texto": "17"
+        },
+        {
+          "letra": "B",
+          "texto": "18"
+        },
+        {
+          "letra": "C",
+          "texto": "30"
+        },
+        {
+          "letra": "D",
+          "texto": "31 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n31. En una frutería se llenan cajas de dos tipos. Un tipo de caja, cuando está llena de \nfruta, pesa \nkg\nM\n y el otro tipo de caja, cuando está llena de fruta, pesa \nkg\nP\n. La \ncapacidad del camión donde se llevarán las cajas no puede superar los \nkg\n. \n \n \nSe sabe que la cantidad de cajas de los dos tipos que se colocarán en el camión es \nla misma. \n \n \n¿Cuál de las siguientes inecuaciones permite determinar la cantidad máxima de \ncajas x de cada tipo que se pueden colocar en el camión?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nx\nP\nM\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nP\nM\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\nP\nM\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\nP\nM\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n32. En una oficina de encomiendas se desea enviar cinco regalos idénticos y un frasco \nde medio kilogramo de miel.  \n \nPara determinar la masa de estos regalos se colocan en una balanza dos regalos y \nel frasco de miel y en la otra balanza se colocan tres regalos, como se representa \nen la figura adjunta. \n \n \n \n \n \n \n \n \n \n \nLa balanza de la izquierda marca menos que la balanza de la derecha.  \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "Cada regalo tiene una masa de  100 gramos."
+        },
+        {
+          "letra": "B",
+          "texto": "Cada regalo tiene una masa de 500 gramos."
+        },
+        {
+          "letra": "C",
+          "texto": "Cada regalo tiene una masa mayor que 500 gramos."
+        },
+        {
+          "letra": "D",
+          "texto": "Cada regalo tiene una masa menor que 500 gramos. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n33. En la tabla adjunta se indica la temperatura que alcanza cierto líquido en \ndeterminado tiempo, a partir de los \nC\n0 \n. \n \n \n \n \n \n \n \n \nSi la temperatura alcanzada por el líquido es directamente proporcional al \ntiempo que ha sido calentado, en ese orden, ¿cuál es la constante de \nproporcionalidad?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTemperatura ( C\n\n) \nTiempo (min ) \n \n \n \n34. Raúl y Teresa arman bolsas de dulces distribuyendo en total 1000 dulces en     \n300 bolsas y cada uno arma bolsas distintas. Raúl pone tres dulces en cada una \ny Teresa pone cinco dulces en cada una. \n \nSi no sobra ningún dulce, ¿cuántas bolsas armó Raúl?"
+        },
+        {
+          "letra": "A",
+          "texto": "B) 180"
+        },
+        {
+          "letra": "C",
+          "texto": "125"
+        },
+        {
+          "letra": "D",
+          "texto": "50 \n \n \n \n \n35. La fábrica de bicicletas “MTB” utiliza aluminio y titanio en la elaboración de dos de \nsus modelos llamados Sport y Cross Country. La cantidad de estos metales en kg , \nusados en cada modelo se presenta en la tabla adjunta. \n \n \n \n \n \n \n \n \nSi la fábrica disponía de \nkg\n de aluminio y \nkg\n de titanio, y utilizó todo el \nmaterial, ¿cuántas bicicletas del modelo Cross Country fabricó?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \nModelo Sport \nModelo Cross Country \nAluminio (kg) \nTitanio (kg) \n \n \n \n \n36. En la figura adjunta se presentan las medidas de tres segmentos con los que, \npara algún valor de x , se puede construir un triángulo rectángulo. \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes ecuaciones permite calcular el valor de x ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\nx2\n\n\n\n \nx\nx\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nx\n9 2\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nx2\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nx cm \n(2x + 15) cm \n(2x + 10) cm"
+        },
+        {
+          "letra": "D",
+          "texto": "37. Una compañía de teatro desea aumentar la cantidad de público en sus obras y \npara esto ofrece un plan mensual en el que hay que pagar un monto fijo de 9000\n$\n \ncada mes, más 1000\n$\n por cada entrada, valor que corresponde al \n%\n del precio \nde una entrada sin contratar el plan. \n \nSi una persona contrató el plan mensual por 6 meses, ¿cuánto dinero ahorró si \ncompró 18 entradas en esos 6 meses?"
+        },
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n38. Una psicóloga considera la función f definida por \nx\nx\nf\n\n como su modelo \nde cobro por paciente, tal que x es la cantidad de sesiones que tuvo en un mes y \n\nx\nf\n es el total mensual que cobra por ellas, en pesos. \n \n \nLa psicóloga quiere hacer un ajuste a su modelo de cobro, considerando una tarifa \nfija inicial y una tarifa por sesión de manera que la primera sesión del mes tenga el \nmismo valor que en el modelo anterior, pero que el resto de las sesiones del mes \ntengan un valor de un \n%\n más económico que en el modelo anterior. \n \n \n¿Cuál de las siguientes funciones es el nuevo modelo de cobro de la psicóloga?"
+        },
+        {
+          "letra": "A",
+          "texto": "\nx\nx\ng\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\nx\nx\nh\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\nx\nx\np\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\nx\nx\nr\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n39. En una empresa lechera, el costo, en pesos, de procesar x litros de leche se \nmodela mediante la función f definida por \nx\n)\nx\n(f\n\n\n. La empresa \nencontró una forma de reducir ese costo un \n%\n. \n \n \n¿Cuál de las siguientes funciones modela el nuevo costo, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n)\nx\n(\nm\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n)\nx\n(\ng\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n)\nx\n(\nh\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n)\nx\n(p\n\n\n \n \n \n \n \n \n \n \n \n \n40. Considera la función \n definida por \nn\nn\nn\nf\n\n\n\n, tal que \n es un \nnúmero real. \n \n \n¿Cuál es el valor de \n\n\n\nf\nf\nf\nf\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "120"
+        },
+        {
+          "letra": "B",
+          "texto": "140"
+        },
+        {
+          "letra": "C",
+          "texto": "195"
+        },
+        {
+          "letra": "D",
+          "texto": "440 \n \n \n \n \n \n \n \n \n \nf\nn"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "Una empresa está estudiando los efectos de cambiar su forma de producción a \nuna nueva. Con ambas formas de producción, el costo por unidad de producir               \nx unidades se modela a través de una función cuadrática. \n \nEn el siguiente gráfico se representa el costo de producción por unidad de \nambas formas de producción: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera al comparar ambas formas \nde producción?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Siempre es más conveniente cambiar a la forma de producción nueva."
+        },
+        {
+          "letra": "B",
+          "texto": "El costo de producir cero productos es igual en ambas formas de \nproducción."
+        },
+        {
+          "letra": "C",
+          "texto": "Cuando se producen más de cien unidades, la forma de producción antigua \ngenera un menor costo por unidad."
+        },
+        {
+          "letra": "D",
+          "texto": "El menor costo por unidad posible de la forma de producción antigua es \nmenor que el menor costo por unidad posible de la forma de producción \nnueva. \n \n \n \n \n \n \nCantidad producida  \nForma de producción \nantigua \nForma de producción \nnueva \nCosto por unidad"
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "La altura que alcanza el salto de un tipo de grillo puede representarse por medio \nde la siguiente parábola: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones se puede deducir del gráfico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En \ns\n,0\n, el grillo está a \n de altura."
+        },
+        {
+          "letra": "B",
+          "texto": "En \ns\n, el grillo alcanza su mayor altura."
+        },
+        {
+          "letra": "C",
+          "texto": "Solo a los \ns\n5,1\n, el grillo alcanza una altura de \ncm\n."
+        },
+        {
+          "letra": "D",
+          "texto": "A los \ns\n, el grillo está bajo tierra. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n0,5 \n1,5 \nTiempo (s) \nAltura (cm) \ncm"
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "Una empresa necesita realizar un logo compuesto por una letra N y una letra X, \ncon 50 metros lineales de acero. Las dimensiones de las letras se presentan a \ncontinuación: \n \n \n \n \n \n \n \n \n \n \n \n¿Cuántos logos se pueden construir con las medidas anteriores? \n \nA) \n \nB) \n \nC) \n \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 44,
+      "enunciado": "Una fábrica hace sillas de escritorio de distinto tamaño, las cuales se pueden \nreclinar hasta en un ángulo de \n\n, tal como se representa en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPara cualquier tamaño de silla, ¿cuál de las siguientes fórmulas permite determinar \nla distancia entre A y B \n\nAB\nD\n de manera que el respaldo quede perpendicular al \nasiento?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "BO\nAO\nDAB\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "AB\nBO\nAO\nD\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "AB\nAO\nD\n"
+        },
+        {
+          "letra": "D",
+          "texto": "BO\nAO\nD\nAB\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA \nB \nO"
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "En una tienda tienen distintos tamaños de cajas de regalo de forma cúbica, las que \ntienen en la cara superior una cinta pegada en su diagonal (de vértice a vértice). \nAlgunas de estas cajas se representan en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \nSi la altura de cada caja se representa por \ncm\nh\n, ¿cuál de las siguientes \nexpresiones permite determinar el largo, en cm , de la cinta a usar en cada \ncaja?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "h"
+        },
+        {
+          "letra": "B",
+          "texto": "h"
+        },
+        {
+          "letra": "C",
+          "texto": "h"
+        },
+        {
+          "letra": "D",
+          "texto": "h"
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "Se tiene una circunferencia P de radio \ncm\n. Si el área de una circunferencia Q \nes un cuarto del área de P , ¿cuál es el radio de Q ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "Una profesora dejó como tarea hacer un vaso milimetrado de capacidad máxima \ncm\n, sellando cualquier tubo con forma cilíndrica en su parte inferior, no \nimportando la medida del radio, como se representa en la siguiente figura: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la profesora dijo que consideren  aproximado a 3 y Axel realizará el trabajo con \nun tubo con forma cilíndrica de \ncm\n de radio, ¿cuánto debe medir de altura el \nvaso milimetrado de Axel?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\n5,"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n5,"
+        }
+      ]
+    },
+    {
+      "numero": 48,
+      "enunciado": "En la siguiente figura se presentan las medidas, en metros, de las aristas de un \nedificio con forma de paralelepípedo recto, en términos de x , sin considerar \nsubterráneo ni balcones. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el área del edificio, considerando solo las superficies laterales y el techo, \nen metros cuadrados?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x"
+        },
+        {
+          "letra": "B",
+          "texto": "x"
+        },
+        {
+          "letra": "C",
+          "texto": "x"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n \n \n \n \n \n \n \n \n \n \n \nx\n \nx\nx"
+        }
+      ]
+    },
+    {
+      "numero": 49,
+      "enunciado": "Considera los vectores en el plano cartesiano \n\n1\n,2\nF1\n\n\n, \n\n\n,3\nF2\n\n\n, \n\n\nb\n,a\nF3 \n y \n\n3\n,4\nF 4 \n. \n \n \nSi \n\n\n,6\nF\nF\nF\nF\n\n\n\n\n, ¿cuál es el valor de  y  respectivamente?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "3  y  4"
+        },
+        {
+          "letra": "B",
+          "texto": "3  y  9"
+        },
+        {
+          "letra": "C",
+          "texto": "3  y  1"
+        },
+        {
+          "letra": "D",
+          "texto": "4  y  4 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \na\nb"
+        }
+      ]
+    },
+    {
+      "numero": 50,
+      "enunciado": "En la figura adjunta se presentan los puntos \n\n\n,1\nA\n, \n\n\n,4\nB\n y \n\n\n,5\nC\n\n, y los \nvectores u, v y w. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes condiciones permite asegurar que el  triángulo           es \nrectángulo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que el vector w es la suma de los vectores u y v."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perímetro del triángulo ABC es igual a \n20 \n."
+        },
+        {
+          "letra": "C",
+          "texto": "Que los módulos de los vectores u y v son iguales."
+        },
+        {
+          "letra": "D",
+          "texto": "Que el área del triángulo \n es igual a \nBC\nAB\n. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA \nB \nC \nY \nX \nu \nv \nw\nABC\nABC"
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "Considera un punto A , tal que este es cualquier punto que se ubica en el primer o \ntercer cuadrante, de tal manera que al reflejarlo respecto al \nY\neje\n se obtiene el \npunto B. \n \n \nSi x es la distancia del punto A al \n, ¿cuál de las siguientes expresiones \npermite determinar la distancia entre los puntos A y B?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x"
+        },
+        {
+          "letra": "B",
+          "texto": "x"
+        },
+        {
+          "letra": "C",
+          "texto": "x"
+        },
+        {
+          "letra": "D",
+          "texto": "x"
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "Una persona lleva a cabo los siguientes pasos para realizar cuatro \ntransformaciones isométricas consecutivas al punto \n\n,5\n\n, cometiendo un error. \n \nPaso 1: el punto \n\n,5\n\n se traslada según el vector \n\n,5 \n, obteniendo el punto \n\n\n,0\n. \n \nPaso 2: el punto \n\n,0\n se rota en \n\n90 con centro en el origen del plano cartesiano \ny en sentido horario, obteniendo el punto \n0\n,7\n.  \n \nPaso 3: el punto \n0\n,7\n se refleja con respecto al \n, obteniendo el punto \n\n\n,7\n\n. \n \nPaso 4: el punto \n\n,7\n\n se refleja con respecto al \nX\neje\n, obteniendo el punto \n\n\n,7\n\n. \n \n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \nY\neje\nY\neje"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Para llegar a la casa de Diego, Juan desde su casa debe caminar 2 cuadras hacia \nel este y 5 cuadras hacia el sur. Luego, para llegar a la casa de Pedro, desde la \ncasa de Diego, Juan debe caminar una cuadra hacia el este y una cuadra hacia el \nsur. Considera que todas las cuadras son del mismo tamaño.  \n \n \nSe grafica en un plano cartesiano el recorrido realizado, considerando la casa de \nJuan en el punto de origen del plano cartesiano, como el que se representa en la \nfigura adjunta. \n \n \n \n \n \n \n \n \n \n \nEn el gráfico realizado en el plano cartesiano, ¿cuál de los siguientes es el vector \nde traslación que permite trasladarse de la casa de Juan a la casa de Pedro?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n,3 \n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,3\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,3 "
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n,3\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nNorte \nSur \nEste \nOeste \n(eje X) \n(eje Y)"
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "En la oficina administrativa de una empresa se les preguntó, a las personas que allí \ntrabajan, cuántas horas extraordinarias de trabajo habían realizado en el mes \nanterior, registrándose las respuestas en la tabla adjunta. \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes gráficos representa correctamente la información entregada \nen la tabla? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nC) \nD) \nHoras extraordinarias \nFrecuencia \nA) \nB) \nHoras extraordinarias \nFrecuencia \nHoras extraordinarias \nFrecuencia \nHoras extraordinarias \nFrecuencia \nHoras extraordinarias \nFrecuencia",
+      "alternativas": []
+    },
+    {
+      "numero": 55,
+      "enunciado": "Una empresa realiza una investigación sobre los sueldos de las personas de las \ndistintas áreas que esta empresa tiene, y agrupa la información en el siguiente \nhistograma, en el que los sueldos están en millones de pesos. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes tablas representa los sueldos de las personas de la \nempresa, en millones de pesos? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSueldos \nFrecuencia \n1,5 \n2,5 \n3,5 \n4,5",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Sueldos \nFrecuencia \n[1, 2[ \n[2, 3[ \n[3, 4[ \n[4, 5["
+        },
+        {
+          "letra": "B",
+          "texto": "Sueldos \nFrecuencia \n[1, 2[ \n[2, 3[ \n[3, 4[ \n[4, 5["
+        },
+        {
+          "letra": "C",
+          "texto": "Sueldos \nFrecuencia \n1,5 \n2,5 \n3,5 \n4,5"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n,1\n \n3\n,2\n \n\n,3\n \n\n,4\n \nFrecuencia \nSueldo de las personas de distintas áreas"
+        }
+      ]
+    },
+    {
+      "numero": 56,
+      "enunciado": "Considera el siguiente grupo de datos 12 , , 14 , 12 y 16 . \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El rango del grupo de datos es 4."
+        },
+        {
+          "letra": "B",
+          "texto": "El promedio de los datos es 12 ."
+        },
+        {
+          "letra": "C",
+          "texto": "La mediana de los datos es 14 ."
+        },
+        {
+          "letra": "D",
+          "texto": "La moda de los datos es 16 ."
+        }
+      ]
+    },
+    {
+      "numero": 57,
+      "enunciado": "En la siguiente tabla se presenta información sobre el total de unidades vendidas, \npor una persona, durante un periodo de cinco semanas, de cuatro productos \ndistintos. \n \n \n \n \n \n \n \n \n \n \n \nUna semana después, los productos 1 y 2 registraron ventas de 80 unidades cada \nuno, el producto 3 registró ventas de 100 unidades y el producto 4 registró ventas \nde 40 unidades.  \n \nEn consideración de estas seis semanas, ¿cuál producto registró un mayor \npromedio de ventas semanal?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El producto 1"
+        },
+        {
+          "letra": "B",
+          "texto": "El producto 2"
+        },
+        {
+          "letra": "C",
+          "texto": "El producto 3"
+        },
+        {
+          "letra": "D",
+          "texto": "El producto 4 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nProducto \nCantidad de unidades vendidas"
+        }
+      ]
+    },
+    {
+      "numero": 58,
+      "enunciado": "En las tablas adjuntas se presentan las distribuciones de la edad, en años, de dos \ngrupos de personas, A y B: \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El rango de la edad en el grupo A es mayor que el rango de la edad en el \ngrupo B."
+        },
+        {
+          "letra": "B",
+          "texto": "La moda de la edad del grupo A es 15 años menor que la del grupo B."
+        },
+        {
+          "letra": "C",
+          "texto": "La mediana de la edad del grupo A es mayor que la mediana de la edad del \ngrupo B."
+        },
+        {
+          "letra": "D",
+          "texto": "El rango de la edad de ambos grupos es 25 años. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEdad en años Frecuencia \n \nEdad en años \nFrecuencia \n \nGrupo A \nGrupo B"
+        }
+      ]
+    },
+    {
+      "numero": 59,
+      "enunciado": "Se encuestó a doce familias respecto a la cantidad de familiares que tienen en el \nextranjero. En la tabla adjunta se registran los resultados obtenidos. \n \n \n \n \n \n¿Cuál es el promedio de la cantidad de familiares en el extranjero que tienen estas \nfamilias? \n \nA) 1 \nB) \nC) \n4,2\n \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCantidad de familiares \nen el extranjero",
+      "alternativas": []
+    },
+    {
+      "numero": 60,
+      "enunciado": "Una municipalidad ofrece un subsidio para mejoramiento de infraestructura del \nhogar a todos los habitantes de la comuna que pertenecen al \n%\n de menores \ningresos de la población del país. \n \n \n¿Cuál de las siguientes afirmaciones respecto del ingreso de una vecina de la \ncomuna asegura que puede optar a este subsidio?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que sea mayor que el percentil 20 de los ingresos de la población del país."
+        },
+        {
+          "letra": "B",
+          "texto": "Que sea menor que el percentil 40 de los ingresos de la población del país."
+        },
+        {
+          "letra": "C",
+          "texto": "Que sea igual que el percentil 50 de los ingresos de la población de la \ncomuna."
+        },
+        {
+          "letra": "D",
+          "texto": "Que sea igual que el percentil 60 de los ingresos de la población de la \ncomuna."
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "En la figura adjunta se resumen las temperaturas del aire cerca de la superficie \nde cinco ciudades en cierto año. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la ciudad que tuvo la menor diferencia entre la temperatura máxima y \nmínima registrada, según la figura?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Tombuctú"
+        },
+        {
+          "letra": "B",
+          "texto": "Reikiavik"
+        },
+        {
+          "letra": "C",
+          "texto": "Calama"
+        },
+        {
+          "letra": "D",
+          "texto": "La Habana \n \n \n \n \n \n \n \n \n \n \n \nAdaptado de Plot temperature distribution as box plots for a defined set of cities, por Climate Change \nService, 2020, (https://cds.climate.copernicus.eu/toolbox/doc/gallery/54_box_plots.html)."
+        }
+      ]
+    },
+    {
+      "numero": 62,
+      "enunciado": "Los siguientes datos corresponden a la masa de los tomates cosechados en un \nhuerto de una escuela: \ng\n, \ng\n, \ng\n, \ng\n, \ng\n, \ng\n, \ng\n, \ng\n, \ng\n, \ng\n, \ng\n y \ng\n. \n \n¿Cuál de los siguientes percentiles supera los \ng\n? \n \nA) \nB) \nC) 30 \nD) 40",
+      "alternativas": []
+    },
+    {
+      "numero": 63,
+      "enunciado": "Una caja contiene en total 5 fichas del mismo tipo numeradas correlativamente del \n1 al 5 y otra caja contiene en total 5 fichas del mismo tipo numeradas \ncorrelativamente del 6 al  10 .  \n \nSi se selecciona una ficha al azar de cada caja, ¿cuál es la probabilidad de que la \nsuma de los números de las fichas sea un número par? \n \nA) \nB) \n \n  \nC) \n \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 64,
+      "enunciado": "A una reunión internacional asistirán personas que hablan francés, inglés y \nespañol. Se sabe que, del total de ellas, seis solo hablan francés, diez solo hablan \ninglés, tres personas hablan los tres idiomas y se encargarán de ser los \ntraductores. \n \nSi se considera a \n como la cantidad de personas que solo hablan español y no \nhay personas que hablen dos idiomas, ¿cuál de las siguientes expresiones permite \ncalcular la probabilidad de que al elegir a una persona al azar esta hable español?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\nx\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x "
+        },
+        {
+          "letra": "D",
+          "texto": "x\nx\n\n\n  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nx"
+        }
+      ]
+    },
+    {
+      "numero": 65,
+      "enunciado": "Un curso vende una rifa para juntar dinero para un paseo. La rifa tiene                    \n250 números distintos, todos con la misma probabilidad de ser sorteados.              \nEl profesor le dice a un estudiante, que compró números de la rifa, que tiene una \nprobabilidad de \n1 de ganarla.  \n \n \n¿Cuántos números de la rifa compró ese estudiante? \n \nA) \nB) \nC) \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPROCESO DE ADMISIÓN 2024\nIMPORTANTE\n■ Este folleto está protegido bajo Registro de Propiedad Intelectual de la \nUniversidad de Chile.\n■ Está prohibida la reproducción, transmisión total o parcial de este folleto, \npor cualquier medio o método.\n■ Es obligatorio devolver íntegramente el folleto antes de abandonar la sala.\n■ Es obligatorio devolver la hoja de respuestas antes de abandonar la sala.",
+      "alternativas": []
+    }
+  ]
+}

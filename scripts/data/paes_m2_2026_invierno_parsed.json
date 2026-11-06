@@ -1,0 +1,3215 @@
+{
+  "materia": "m2",
+  "year": 2026,
+  "edicion": "Invierno",
+  "forma": 111,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes\nperpendiculares, cuyo origen es el punto (0, 0).",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo [p, q] es el conjunto de todos los números reales mayores\no iguales que p y menores o iguales que q; el intervalo ]p, q] es el\nconjunto de todos los números reales mayores que p y menores o\niguales que q; el intervalo [p, q[ es el conjunto de todos los números\nreales mayores o iguales que p y menores que q; y el intervalo ]p, q[\nes el conjunto de todos los números reales mayores que p y menores que q.",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": "Todas las funciones presentadas tendrán como dominio el conjunto de los\nnúmeros reales a menos que se indique lo contrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "→v= (a, b) es un vector que tiene su punto de inicio en el origen del plano\ncartesiano y su punto final en el punto (a, b), a menos que se indique lo\ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del 1\nal 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.",
+      "alternativas": []
+    },
+    {
+      "numero": 7,
+      "enunciado": "En el experimento de lanzar una moneda, sus dos opciones son\nequiprobables de salir, a menos que se indique lo contrario.\nRegistro de Propiedad Intelectual Nº 2025-A-2575\nUniversidad de Chile.\nDerechos reservados ©. Prohibida su reproducción total o parcial.\nINSTRUCCIONES PARA LAS PREGUNTAS DE SUFICIENCIA DE DATOS\nEn las preguntas de Suficiencia de Datos no se pide la solución al problema, sino que se\ndecida si con los datos proporcionados, tanto en el enunciado como en las afirmaciones (1)\ny (2), se puede llegar a la solución del problema.\nEs así que se deberá marcar la opción:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola, si la afirmación (1) por sí sola es suficiente para resolver el problema,\npero la afirmación (2) por sí sola no lo es,"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola, si la afirmación (2) por sí sola es suficiente para resolver el problema,\npero la afirmación (1) por sí sola no lo es,"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2), si ambas afirmaciones (1) y (2) juntas son suficientes para\nresolver el problema, pero ninguna de las afirmaciones por sí sola es suficiente,"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2), si cada una por sí sola es suficiente para resolver el\nproblema,"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional, si ambas afirmaciones juntas son insuficientes\npara resolver el problema y se requiere información adicional para llegar a la solución.\nSÍMBOLOS MATEMÁTICOS\n<\nes menor que\n∼\nes semejante con\n>\nes mayor que\n⊥\nes perpendicular a\n≤\nes menor o igual que̸\n=\nes distinto de\n≥\nes mayor o igual que\n//\nes paralelo a\nángulo recto\n∈\npertenece a\n∢\nángulo\nAB\ntrazo AB\nlog\nlogaritmo en base 10\nAB\nmedida del trazo AB\n∅\nconjunto vacío\n|x|\nvalor absoluto de x\n≈\nes aproximado a\nx!\nfactorial de x\n∪\nunión de conjuntos\n∩\nintersección de conjuntos\nAc\ncomplemento del conjunto A\n→u\nvector u\n1.\nConsidera el número racional x ubicado en la recta numérica entre 4\ny 3\n, tal que la\ndistancia entre x y 4\nes el doble de la distancia entre 3\ny x.\n¿Cuál es el valor de x?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n2.\nSe desea pintar el interior de una vivienda, de la cual se deben cubrir 130 m2 con\ndos capas de pintura.\nPara esto se comprarán galones de pintura que tienen un rendimiento entre 35 m2 y\n45 m2 y un precio unitario de $29 200.\nSi se decide comprar la mínima cantidad de galones que asegure que no faltará\npintura, ¿cuánto dinero se gastará?"
+        },
+        {
+          "letra": "A",
+          "texto": "$146 000"
+        },
+        {
+          "letra": "B",
+          "texto": "$175 200"
+        },
+        {
+          "letra": "C",
+          "texto": "$204 400"
+        },
+        {
+          "letra": "D",
+          "texto": "$233 600\n3.\nEl Rol Único Tributario (RUT) se compone de dos partes separadas por un guion:\nun número de siete u ocho dígitos y un dígito verificador.\nEl dígito verificador puede ser un dígito o la letra K y se obtiene mediante el siguiente\nalgoritmo:\nConsidera que el RUT es AB.CDE.FGH – V (en el caso de tener siete dígitos,\nse considera A = 0 ).\n1. Se debe calcular la siguiente suma:\n3 · A + 2 · B + 7 · C + 6 · D + 5 · E + 4 · F + 3 · G + 2 · H\n2. Se debe dividir la suma calculada por 11 para encontrar el resto n.\n3. Según el valor del resto n, el dígito verificador V es:\n• 11 −n,\nsi (11 −n) ≤9\n• K,\nsi (11 −n) = 10\n• 0,\nsi (11 −n) = 11\n¿Cuál es el dígito verificador del RUT 60.910.000 – □?"
+        },
+        {
+          "letra": "A",
+          "texto": "K"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "4.\nSi el 25 % de M es N, ¿qué porcentaje de N es M?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 %"
+        },
+        {
+          "letra": "B",
+          "texto": "25 %"
+        },
+        {
+          "letra": "C",
+          "texto": "75 %"
+        },
+        {
+          "letra": "D",
+          "texto": "400 %\n5.\nConsidera que 1200 se aumenta en su 15 % y el número que se obtiene se disminuye\nen su 5 %.\n¿Cuál de las siguientes expresiones representa el número final que se obtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": "1200 · 1,15 · 0,95"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 · 0,15 · 0,05"
+        },
+        {
+          "letra": "C",
+          "texto": "1200 · 1,15 −1200 · 0,95"
+        },
+        {
+          "letra": "D",
+          "texto": "1200 · 0,15 −1200 · 0,05\n6.\nPara medir la popularidad de un artista en redes sociales, se analizó la cantidad de\nbúsquedas diarias que tuvo durante tres días seguidos. Se detectó que el artista\ndescendió un 4 % cada día respecto al día anterior, presentando 276 480 búsquedas\nel último día.\n¿Cuál es la cantidad de búsquedas que se realizaron de este artista el primer día?"
+        },
+        {
+          "letra": "A",
+          "texto": "276 480\n0,962"
+        },
+        {
+          "letra": "B",
+          "texto": "276 480\n0,042"
+        },
+        {
+          "letra": "C",
+          "texto": "276 480 · 0,962"
+        },
+        {
+          "letra": "D",
+          "texto": "276 480 · 0,042\n7.\nAl terminar cada día trabajado en una obra de construcción, se calcula el porcentaje\nde la obra que queda por realizar, usando la siguiente expresión:\n100 · (1 −k) %\n¿Qué representa k en esta expresión?"
+        },
+        {
+          "letra": "A",
+          "texto": "El porcentaje de avance de la obra durante el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "B",
+          "texto": "El porcentaje de avance de la obra hasta el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "C",
+          "texto": "El porcentaje de avance de la obra de cada uno de los días de trabajo, escrito en\ndecimal."
+        },
+        {
+          "letra": "D",
+          "texto": "El porcentaje que queda por realizar de la obra al término del último día de trabajo,\nescrito en decimal."
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "En la tabla adjunta se presenta la masa de dos partículas.\nPartícula\nMasa\nProtón\n1,67 · 10−27 kg\nElectrón\n9,11 · 10−31 kg\n¿Cuál es la diferencia positiva entre las masas de las partículas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(9,11 −1,67) · 10−58 kg"
+        },
+        {
+          "letra": "B",
+          "texto": "(9,11 −1,67) · 10−4 kg"
+        },
+        {
+          "letra": "C",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−27 kg"
+        },
+        {
+          "letra": "D",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−31 kg"
+        }
+      ]
+    },
+    {
+      "numero": 9,
+      "enunciado": "Para expresar\n√\n8 ·\n3√\n16 −\nÄ√\nä3\ncomo la multiplicación de dos números, se realiza\nel siguiente procedimiento, en el cual se comete un error.\nPaso 1: se resuelve la potencia\nÄ√\nä3\n, obteniéndose 2\n√\n2.\nPaso 2: se realiza la multiplicación de raíces\nÄ√\nä\n·\n3√\n16, obteniéndose\n6√\n128.\nPaso 3: se descompone y reduce la raíz\n6√\n128, obteniéndose 2\n6√\n2.\nPaso 4: se factoriza la resta 2\n6√\n2 −2\n√\n2, obteniéndose 2\nÄ\n6√\n2 −\n√\nä\n.\n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "Si log 2 ≈0,30 y log 3 ≈0,48, ¿cuál de las siguientes expresiones corresponde a\nuna aproximación de log2 15?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "0,70 + 0,48"
+        },
+        {
+          "letra": "B",
+          "texto": "4,8 + 0,30\n0,30"
+        },
+        {
+          "letra": "C",
+          "texto": "1 + 0,48\n2 · 0,30"
+        },
+        {
+          "letra": "D",
+          "texto": "0,70 + 0,48\n0,30"
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 12,
+      "enunciado": "Finalmente, anota tu número de Cédula de Identidad (o Pasaporte) en los casilleros que se encuentran en la parte \ninferior de este folleto, lee y firma la declaración correspondiente.\nDECLARACIÓN: declaro conocer y aceptar la normativa que rige al Proceso de Admisión a las universidades chilenas y \nsoy consciente de que, en caso de colaborar con la reproducción, sustracción, almacenamiento o transmisión, total o \nparcial, de este folleto, a través de cualquier medio, me expongo a la exclusión inmediata de este Proceso, sin perjuicio \nde las demás acciones o sanciones legales.\nFirma\nNúmero de cédula de identidad (o pasaporte)\n—\nProceso de Admisión 2 0 2 6\nEN ESTA PRUEBA SE CONSIDERARÁ LO SIGUIENTE:\n1.\nLas figuras que aparecen son solo indicativas.\n2.\nLos gráficos que se presentan están dibujados en un sistema de ejes\nperpendiculares, cuyo origen es el punto (0, 0).\n3.\nEl intervalo [p, q] es el conjunto de todos los números reales mayores\no iguales que p y menores o iguales que q; el intervalo ]p, q] es el\nconjunto de todos los números reales mayores que p y menores o\niguales que q; el intervalo [p, q[ es el conjunto de todos los números\nreales mayores o iguales que p y menores que q; y el intervalo ]p, q[\nes el conjunto de todos los números reales mayores que p y menores que q.\n4.\nTodas las funciones presentadas tendrán como dominio el conjunto de los\nnúmeros reales a menos que se indique lo contrario.\n5.\n→v= (a, b) es un vector que tiene su punto de inicio en el origen del plano\ncartesiano y su punto final en el punto (a, b), a menos que se indique lo\ncontrario.\n6.\nSe entenderá por dado común a aquel que posee 6 caras numeradas del 1\nal 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.\n7.\nEn el experimento de lanzar una moneda, sus dos opciones son\nequiprobables de salir, a menos que se indique lo contrario.\nRegistro de Propiedad Intelectual Nº 2025-A-2575\nUniversidad de Chile.\nDerechos reservados ©. Prohibida su reproducción total o parcial.\nINSTRUCCIONES PARA LAS PREGUNTAS DE SUFICIENCIA DE DATOS\nEn las preguntas de Suficiencia de Datos no se pide la solución al problema, sino que se\ndecida si con los datos proporcionados, tanto en el enunciado como en las afirmaciones (1)\ny (2), se puede llegar a la solución del problema.\nEs así que se deberá marcar la opción:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola, si la afirmación (1) por sí sola es suficiente para resolver el problema,\npero la afirmación (2) por sí sola no lo es,"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola, si la afirmación (2) por sí sola es suficiente para resolver el problema,\npero la afirmación (1) por sí sola no lo es,"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2), si ambas afirmaciones (1) y (2) juntas son suficientes para\nresolver el problema, pero ninguna de las afirmaciones por sí sola es suficiente,"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2), si cada una por sí sola es suficiente para resolver el\nproblema,"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional, si ambas afirmaciones juntas son insuficientes\npara resolver el problema y se requiere información adicional para llegar a la solución.\nSÍMBOLOS MATEMÁTICOS\n<\nes menor que\n∼\nes semejante con\n>\nes mayor que\n⊥\nes perpendicular a\n≤\nes menor o igual que̸\n=\nes distinto de\n≥\nes mayor o igual que\n//\nes paralelo a\nángulo recto\n∈\npertenece a\n∢\nángulo\nAB\ntrazo AB\nlog\nlogaritmo en base 10\nAB\nmedida del trazo AB\n∅\nconjunto vacío\n|x|\nvalor absoluto de x\n≈\nes aproximado a\nx!\nfactorial de x\n∪\nunión de conjuntos\n∩\nintersección de conjuntos\nAc\ncomplemento del conjunto A\n→u\nvector u\n1.\nConsidera el número racional x ubicado en la recta numérica entre 4\ny 3\n, tal que la\ndistancia entre x y 4\nes el doble de la distancia entre 3\ny x.\n¿Cuál es el valor de x?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n2.\nSe desea pintar el interior de una vivienda, de la cual se deben cubrir 130 m2 con\ndos capas de pintura.\nPara esto se comprarán galones de pintura que tienen un rendimiento entre 35 m2 y\n45 m2 y un precio unitario de $29 200.\nSi se decide comprar la mínima cantidad de galones que asegure que no faltará\npintura, ¿cuánto dinero se gastará?"
+        },
+        {
+          "letra": "A",
+          "texto": "$146 000"
+        },
+        {
+          "letra": "B",
+          "texto": "$175 200"
+        },
+        {
+          "letra": "C",
+          "texto": "$204 400"
+        },
+        {
+          "letra": "D",
+          "texto": "$233 600\n3.\nEl Rol Único Tributario (RUT) se compone de dos partes separadas por un guion:\nun número de siete u ocho dígitos y un dígito verificador.\nEl dígito verificador puede ser un dígito o la letra K y se obtiene mediante el siguiente\nalgoritmo:\nConsidera que el RUT es AB.CDE.FGH – V (en el caso de tener siete dígitos,\nse considera A = 0 ).\n1. Se debe calcular la siguiente suma:\n3 · A + 2 · B + 7 · C + 6 · D + 5 · E + 4 · F + 3 · G + 2 · H\n2. Se debe dividir la suma calculada por 11 para encontrar el resto n.\n3. Según el valor del resto n, el dígito verificador V es:\n• 11 −n,\nsi (11 −n) ≤9\n• K,\nsi (11 −n) = 10\n• 0,\nsi (11 −n) = 11\n¿Cuál es el dígito verificador del RUT 60.910.000 – □?"
+        },
+        {
+          "letra": "A",
+          "texto": "K"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "4.\nSi el 25 % de M es N, ¿qué porcentaje de N es M?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 %"
+        },
+        {
+          "letra": "B",
+          "texto": "25 %"
+        },
+        {
+          "letra": "C",
+          "texto": "75 %"
+        },
+        {
+          "letra": "D",
+          "texto": "400 %\n5.\nConsidera que 1200 se aumenta en su 15 % y el número que se obtiene se disminuye\nen su 5 %.\n¿Cuál de las siguientes expresiones representa el número final que se obtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": "1200 · 1,15 · 0,95"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 · 0,15 · 0,05"
+        },
+        {
+          "letra": "C",
+          "texto": "1200 · 1,15 −1200 · 0,95"
+        },
+        {
+          "letra": "D",
+          "texto": "1200 · 0,15 −1200 · 0,05\n6.\nPara medir la popularidad de un artista en redes sociales, se analizó la cantidad de\nbúsquedas diarias que tuvo durante tres días seguidos. Se detectó que el artista\ndescendió un 4 % cada día respecto al día anterior, presentando 276 480 búsquedas\nel último día.\n¿Cuál es la cantidad de búsquedas que se realizaron de este artista el primer día?"
+        },
+        {
+          "letra": "A",
+          "texto": "276 480\n0,962"
+        },
+        {
+          "letra": "B",
+          "texto": "276 480\n0,042"
+        },
+        {
+          "letra": "C",
+          "texto": "276 480 · 0,962"
+        },
+        {
+          "letra": "D",
+          "texto": "276 480 · 0,042\n7.\nAl terminar cada día trabajado en una obra de construcción, se calcula el porcentaje\nde la obra que queda por realizar, usando la siguiente expresión:\n100 · (1 −k) %\n¿Qué representa k en esta expresión?"
+        },
+        {
+          "letra": "A",
+          "texto": "El porcentaje de avance de la obra durante el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "B",
+          "texto": "El porcentaje de avance de la obra hasta el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "C",
+          "texto": "El porcentaje de avance de la obra de cada uno de los días de trabajo, escrito en\ndecimal."
+        },
+        {
+          "letra": "D",
+          "texto": "El porcentaje que queda por realizar de la obra al término del último día de trabajo,\nescrito en decimal.\n8.\nEn la tabla adjunta se presenta la masa de dos partículas.\nPartícula\nMasa\nProtón\n1,67 · 10−27 kg\nElectrón\n9,11 · 10−31 kg\n¿Cuál es la diferencia positiva entre las masas de las partículas?"
+        },
+        {
+          "letra": "A",
+          "texto": "(9,11 −1,67) · 10−58 kg"
+        },
+        {
+          "letra": "B",
+          "texto": "(9,11 −1,67) · 10−4 kg"
+        },
+        {
+          "letra": "C",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−27 kg"
+        },
+        {
+          "letra": "D",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−31 kg\n9.\nPara expresar\n√\n8 ·\n3√\n16 −\nÄ√\nä3\ncomo la multiplicación de dos números, se realiza\nel siguiente procedimiento, en el cual se comete un error.\nPaso 1: se resuelve la potencia\nÄ√\nä3\n, obteniéndose 2\n√\n2.\nPaso 2: se realiza la multiplicación de raíces\nÄ√\nä\n·\n3√\n16, obteniéndose\n6√\n128.\nPaso 3: se descompone y reduce la raíz\n6√\n128, obteniéndose 2\n6√\n2.\nPaso 4: se factoriza la resta 2\n6√\n2 −2\n√\n2, obteniéndose 2\nÄ\n6√\n2 −\n√\nä\n.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n10.\nSi log 2 ≈0,30 y log 3 ≈0,48, ¿cuál de las siguientes expresiones corresponde a\nuna aproximación de log2 15?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,70 + 0,48"
+        },
+        {
+          "letra": "B",
+          "texto": "4,8 + 0,30\n0,30"
+        },
+        {
+          "letra": "C",
+          "texto": "1 + 0,48\n2 · 0,30"
+        },
+        {
+          "letra": "D",
+          "texto": "0,70 + 0,48\n0,30\n11.\nEn un laboratorio se estudiaron dos cultivos de bacterias, para los cuales se registraron\nlos siguientes datos:\nCantidad inicial de bacterias\nMinutos que tardan en duplicarse\nCultivo A\nCultivo B\n¿Cuántas bacterias en total tendrán los dos cultivos transcurridos 40 minutos desde\nel inicio del estudio?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n12.\nEl nivel de intensidad sonora β, en dB, y la intensidad acústica I, en W\nm2, se\nrelacionan mediante la expresión β = 10 · log(I) + 120, tal que β ≥0 .\nEn la siguiente tabla se presentan los niveles máximos permisibles de intensidad\nsonora en zonas residenciales durante el día según la legislación chilena.\nDe 7:00 a 21:00\nDe 21:00 a 7:00\n55 dB\n45 dB\n¿Cuál es el máximo permisible de intensidad acústica en zonas residenciales a las\n23:00?"
+        },
+        {
+          "letra": "A",
+          "texto": "10−6,5 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "10−7,5 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "107,5 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "1016,5 W\nm2"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a\nn»\n(3n)2 · 6(n2) · 4n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "62n2"
+        },
+        {
+          "letra": "B",
+          "texto": "6n+2"
+        },
+        {
+          "letra": "C",
+          "texto": "3n · 6n · 4"
+        },
+        {
+          "letra": "D",
+          "texto": "32 · 62n · 4"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "En cierto tipo de cuenta de ahorro, una institución financiera ofrece un interés\ncompuesto mensual de 1,5 % al capital que se deposite.\nUna persona abre una de estas cuentas de ahorro y deposita un capital inicial de\n$350 000 y lo tiene tres meses sin realizar retiros ni depósitos.\n¿Cuál de las siguientes expresiones representa el interés que se produce en ese\nperiodo de tiempo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$350 000 · 0,0153"
+        },
+        {
+          "letra": "B",
+          "texto": "$350 000 · 1,153"
+        },
+        {
+          "letra": "C",
+          "texto": "$350 000 · (1,0153 −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "$350 000 · (1,153 −1)"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 16,
+      "enunciado": "−\nÄ√\nä3\ncomo la multiplicación de dos números, se realiza\nel siguiente procedimiento, en el cual se comete un error.\nPaso 1: se resuelve la potencia\nÄ√\nä3\n, obteniéndose 2\n√\n2.\nPaso 2: se realiza la multiplicación de raíces\nÄ√\nä\n·\n3√\n16, obteniéndose\n6√\n128.\nPaso 3: se descompone y reduce la raíz\n6√\n128, obteniéndose 2\n6√\n2.\nPaso 4: se factoriza la resta 2\n6√\n2 −2\n√\n2, obteniéndose 2\nÄ\n6√\n2 −\n√\nä\n.\n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n10.\nSi log 2 ≈0,30 y log 3 ≈0,48, ¿cuál de las siguientes expresiones corresponde a\nuna aproximación de log2 15?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,70 + 0,48"
+        },
+        {
+          "letra": "B",
+          "texto": "4,8 + 0,30\n0,30"
+        },
+        {
+          "letra": "C",
+          "texto": "1 + 0,48\n2 · 0,30"
+        },
+        {
+          "letra": "D",
+          "texto": "0,70 + 0,48\n0,30\n11.\nEn un laboratorio se estudiaron dos cultivos de bacterias, para los cuales se registraron\nlos siguientes datos:\nCantidad inicial de bacterias\nMinutos que tardan en duplicarse\nCultivo A\nCultivo B\n¿Cuántas bacterias en total tendrán los dos cultivos transcurridos 40 minutos desde\nel inicio del estudio?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n12.\nEl nivel de intensidad sonora β, en dB, y la intensidad acústica I, en W\nm2, se\nrelacionan mediante la expresión β = 10 · log(I) + 120, tal que β ≥0 .\nEn la siguiente tabla se presentan los niveles máximos permisibles de intensidad\nsonora en zonas residenciales durante el día según la legislación chilena.\nDe 7:00 a 21:00\nDe 21:00 a 7:00\n55 dB\n45 dB\n¿Cuál es el máximo permisible de intensidad acústica en zonas residenciales a las\n23:00?"
+        },
+        {
+          "letra": "A",
+          "texto": "10−6,5 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "10−7,5 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "107,5 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "1016,5 W\nm2\n13.\n¿Cuál de las siguientes expresiones es igual a\nn»\n(3n)2 · 6(n2) · 4n?"
+        },
+        {
+          "letra": "A",
+          "texto": "62n2"
+        },
+        {
+          "letra": "B",
+          "texto": "6n+2"
+        },
+        {
+          "letra": "C",
+          "texto": "3n · 6n · 4"
+        },
+        {
+          "letra": "D",
+          "texto": "32 · 62n · 4\n14.\nEn cierto tipo de cuenta de ahorro, una institución financiera ofrece un interés\ncompuesto mensual de 1,5 % al capital que se deposite.\nUna persona abre una de estas cuentas de ahorro y deposita un capital inicial de\n$350 000 y lo tiene tres meses sin realizar retiros ni depósitos.\n¿Cuál de las siguientes expresiones representa el interés que se produce en ese\nperiodo de tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$350 000 · 0,0153"
+        },
+        {
+          "letra": "B",
+          "texto": "$350 000 · 1,153"
+        },
+        {
+          "letra": "C",
+          "texto": "$350 000 · (1,0153 −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "$350 000 · (1,153 −1)\n15.\n¿Cuál de las siguientes expresiones es igual a (3a + 5b)(5b −3a) −(5b −3a)2?"
+        },
+        {
+          "letra": "A",
+          "texto": "−30ab"
+        },
+        {
+          "letra": "B",
+          "texto": "6a (5b −3a)"
+        },
+        {
+          "letra": "C",
+          "texto": "10b (3a −5b)"
+        },
+        {
+          "letra": "D",
+          "texto": "2 (9a2 −25b2 −15ab)\n16.\nUna persona compró un marco de p cm de largo para colocar una foto cuyos\nlados están en razón 16 : 9 y que aún no imprime. Debe dejarle un paspartú de\ntres centímetros, el cual corresponde a un espacio en blanco entre el marco y la foto,\ntal como se representa en la siguiente figura:\nPara imprimir la foto del tamaño correcto y sin perder su proporción, le piden la medida\nde la diagonal que tiene que tener la foto en pulgadas.\nSi una pulgada es equivalente a 2,54 centímetros, ¿cuál de las siguientes expresiones\nrepresenta la medida de la diagonal que tiene que entregar, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p ·\n…337"
+        },
+        {
+          "letra": "B",
+          "texto": "2,54 · (p −6) ·\n…337"
+        },
+        {
+          "letra": "C",
+          "texto": "(p −6) ·\n…337\n2,54"
+        },
+        {
+          "letra": "D",
+          "texto": "p ·\n…337\n2,54"
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "En la siguiente figura se representa la gráfica de una relación de proporcionalidad\ninversa y la gráfica de una relación de proporcionalidad directa.\n¿Cuál de las siguientes expresiones es igual a m\nc\n, en términos de b y q?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "q\nb"
+        },
+        {
+          "letra": "B",
+          "texto": "q2\nb2"
+        },
+        {
+          "letra": "C",
+          "texto": "b\nq"
+        },
+        {
+          "letra": "D",
+          "texto": "b\nq2"
+        }
+      ]
+    },
+    {
+      "numero": 18,
+      "enunciado": "El volumen y la presión de un gas se comportan de manera inversamente proporcional\ncuando la temperatura es constante.\nEn el siguiente gráfico se presentan algunos valores del comportamiento de un gas\nen particular.\nSi se considera que el gas tiene una presión de p atmósferas, ¿cuál de las siguientes\nexpresiones representa la variación absoluta en el volumen del gas, en litros, cuando\nla presión disminuye en dos atmósferas?\nA)\np −2\nB)\nC)\np −2\nD)\np(p −2)",
+      "alternativas": []
+    },
+    {
+      "numero": 19,
+      "enunciado": "La densidad ρ de un cuerpo, en gramos por centímetro cúbico, se calcula como\nρ = m\nV\n, tal que m es la masa del cuerpo, en gramos, y V es su volumen,\nen centímetros cúbicos.\nConsidera dos esferas macizas, una de plata de densidad ρplata = 10,5\ng\ncm3 y la\notra de piedra de alabastro de densidad ρalabastro = 2,7\ng\ncm3.\nSi ambas esferas tienen un volumen de 81 cm3, ¿cuál es la diferencia positiva de\nsus masas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "1069,2 g"
+        },
+        {
+          "letra": "B",
+          "texto": "850,5 g"
+        },
+        {
+          "letra": "C",
+          "texto": "631,8 g"
+        },
+        {
+          "letra": "D",
+          "texto": "218,7 g"
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "Considera la inecuación 2 (5 −3x) ≥−1\n.\n¿Cuál de los siguientes gráficos representa el conjunto solución de la inecuación?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 21,
+      "enunciado": "El costo de producción de un artículo es de $14 000 por unidad, además de un\ncosto fijo de $260 000.\nSi se venden todos los artículos producidos a $25 000 cada uno, ¿cuál de las\nsiguientes inecuaciones permite determinar el intervalo de las cantidades x de\nartículos que se deben producir para obtener una ganancia de al menos $3 000 000?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "25 000x −14 000x ≤3 000 000 −260 000"
+        },
+        {
+          "letra": "B",
+          "texto": "25 000x −14 000x ≤3 000 000 + 260 000"
+        },
+        {
+          "letra": "C",
+          "texto": "25 000x −14 000x ≥3 000 000 −260 000"
+        },
+        {
+          "letra": "D",
+          "texto": "25 000x −14 000x ≥3 000 000 + 260 000"
+        }
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "Considera la inecuación 2\n3x + r\n4 < x\n6 −5\n, en x, tal que su conjunto solución es\nò\n−∞, −1\nï\ny r es un número real.\n¿Cuál es el valor de r?\nA)\nB)\nC)\n−1\nD)\n−1",
+      "alternativas": []
+    },
+    {
+      "numero": 23,
+      "enunciado": "Para medir la temperatura se utilizan comúnmente las escalas Celsius, Fahrenheit y\nKelvin.\nConsidera que la relación entre grados Celsius (c) y grados Fahrenheit (f) está dada\npor la ecuación c = 5\n9 · (f −32).\nPara transformar de grados Celsius a Kelvin (k) hay que sumar 273,15 a la magnitud\nen grados Celsius.\n¿Cuál de las siguientes ecuaciones relaciona correctamente la temperatura en Kelvin\ncon la temperatura en grados Fahrenheit?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "f = 9\n5 · (k + 273,15) + 32"
+        },
+        {
+          "letra": "B",
+          "texto": "f = 9\n5 · (k −273,15) + 32"
+        },
+        {
+          "letra": "C",
+          "texto": "f = 9\n5 · k + 273,15 + 32"
+        },
+        {
+          "letra": "D",
+          "texto": "f = 9\n5 · k −273,15 + 32"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 25,
+      "enunciado": "%",
+      "alternativas": [
+        {
+          "letra": "C",
+          "texto": "75 %"
+        },
+        {
+          "letra": "D",
+          "texto": "400 %\n5.\nConsidera que 1200 se aumenta en su 15 % y el número que se obtiene se disminuye\nen su 5 %.\n¿Cuál de las siguientes expresiones representa el número final que se obtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": "1200 · 1,15 · 0,95"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 · 0,15 · 0,05"
+        },
+        {
+          "letra": "C",
+          "texto": "1200 · 1,15 −1200 · 0,95"
+        },
+        {
+          "letra": "D",
+          "texto": "1200 · 0,15 −1200 · 0,05\n6.\nPara medir la popularidad de un artista en redes sociales, se analizó la cantidad de\nbúsquedas diarias que tuvo durante tres días seguidos. Se detectó que el artista\ndescendió un 4 % cada día respecto al día anterior, presentando 276 480 búsquedas\nel último día.\n¿Cuál es la cantidad de búsquedas que se realizaron de este artista el primer día?"
+        },
+        {
+          "letra": "A",
+          "texto": "276 480\n0,962"
+        },
+        {
+          "letra": "B",
+          "texto": "276 480\n0,042"
+        },
+        {
+          "letra": "C",
+          "texto": "276 480 · 0,962"
+        },
+        {
+          "letra": "D",
+          "texto": "276 480 · 0,042\n7.\nAl terminar cada día trabajado en una obra de construcción, se calcula el porcentaje\nde la obra que queda por realizar, usando la siguiente expresión:\n100 · (1 −k) %\n¿Qué representa k en esta expresión?"
+        },
+        {
+          "letra": "A",
+          "texto": "El porcentaje de avance de la obra durante el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "B",
+          "texto": "El porcentaje de avance de la obra hasta el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "C",
+          "texto": "El porcentaje de avance de la obra de cada uno de los días de trabajo, escrito en\ndecimal."
+        },
+        {
+          "letra": "D",
+          "texto": "El porcentaje que queda por realizar de la obra al término del último día de trabajo,\nescrito en decimal.\n8.\nEn la tabla adjunta se presenta la masa de dos partículas.\nPartícula\nMasa\nProtón\n1,67 · 10−27 kg\nElectrón\n9,11 · 10−31 kg\n¿Cuál es la diferencia positiva entre las masas de las partículas?"
+        },
+        {
+          "letra": "A",
+          "texto": "(9,11 −1,67) · 10−58 kg"
+        },
+        {
+          "letra": "B",
+          "texto": "(9,11 −1,67) · 10−4 kg"
+        },
+        {
+          "letra": "C",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−27 kg"
+        },
+        {
+          "letra": "D",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−31 kg\n9.\nPara expresar\n√\n8 ·\n3√\n16 −\nÄ√\nä3\ncomo la multiplicación de dos números, se realiza\nel siguiente procedimiento, en el cual se comete un error.\nPaso 1: se resuelve la potencia\nÄ√\nä3\n, obteniéndose 2\n√\n2.\nPaso 2: se realiza la multiplicación de raíces\nÄ√\nä\n·\n3√\n16, obteniéndose\n6√\n128.\nPaso 3: se descompone y reduce la raíz\n6√\n128, obteniéndose 2\n6√\n2.\nPaso 4: se factoriza la resta 2\n6√\n2 −2\n√\n2, obteniéndose 2\nÄ\n6√\n2 −\n√\nä\n.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n10.\nSi log 2 ≈0,30 y log 3 ≈0,48, ¿cuál de las siguientes expresiones corresponde a\nuna aproximación de log2 15?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,70 + 0,48"
+        },
+        {
+          "letra": "B",
+          "texto": "4,8 + 0,30\n0,30"
+        },
+        {
+          "letra": "C",
+          "texto": "1 + 0,48\n2 · 0,30"
+        },
+        {
+          "letra": "D",
+          "texto": "0,70 + 0,48\n0,30\n11.\nEn un laboratorio se estudiaron dos cultivos de bacterias, para los cuales se registraron\nlos siguientes datos:\nCantidad inicial de bacterias\nMinutos que tardan en duplicarse\nCultivo A\nCultivo B\n¿Cuántas bacterias en total tendrán los dos cultivos transcurridos 40 minutos desde\nel inicio del estudio?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n12.\nEl nivel de intensidad sonora β, en dB, y la intensidad acústica I, en W\nm2, se\nrelacionan mediante la expresión β = 10 · log(I) + 120, tal que β ≥0 .\nEn la siguiente tabla se presentan los niveles máximos permisibles de intensidad\nsonora en zonas residenciales durante el día según la legislación chilena.\nDe 7:00 a 21:00\nDe 21:00 a 7:00\n55 dB\n45 dB\n¿Cuál es el máximo permisible de intensidad acústica en zonas residenciales a las\n23:00?"
+        },
+        {
+          "letra": "A",
+          "texto": "10−6,5 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "10−7,5 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "107,5 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "1016,5 W\nm2\n13.\n¿Cuál de las siguientes expresiones es igual a\nn»\n(3n)2 · 6(n2) · 4n?"
+        },
+        {
+          "letra": "A",
+          "texto": "62n2"
+        },
+        {
+          "letra": "B",
+          "texto": "6n+2"
+        },
+        {
+          "letra": "C",
+          "texto": "3n · 6n · 4"
+        },
+        {
+          "letra": "D",
+          "texto": "32 · 62n · 4\n14.\nEn cierto tipo de cuenta de ahorro, una institución financiera ofrece un interés\ncompuesto mensual de 1,5 % al capital que se deposite.\nUna persona abre una de estas cuentas de ahorro y deposita un capital inicial de\n$350 000 y lo tiene tres meses sin realizar retiros ni depósitos.\n¿Cuál de las siguientes expresiones representa el interés que se produce en ese\nperiodo de tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$350 000 · 0,0153"
+        },
+        {
+          "letra": "B",
+          "texto": "$350 000 · 1,153"
+        },
+        {
+          "letra": "C",
+          "texto": "$350 000 · (1,0153 −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "$350 000 · (1,153 −1)\n15.\n¿Cuál de las siguientes expresiones es igual a (3a + 5b)(5b −3a) −(5b −3a)2?"
+        },
+        {
+          "letra": "A",
+          "texto": "−30ab"
+        },
+        {
+          "letra": "B",
+          "texto": "6a (5b −3a)"
+        },
+        {
+          "letra": "C",
+          "texto": "10b (3a −5b)"
+        },
+        {
+          "letra": "D",
+          "texto": "2 (9a2 −25b2 −15ab)\n16.\nUna persona compró un marco de p cm de largo para colocar una foto cuyos\nlados están en razón 16 : 9 y que aún no imprime. Debe dejarle un paspartú de\ntres centímetros, el cual corresponde a un espacio en blanco entre el marco y la foto,\ntal como se representa en la siguiente figura:\nPara imprimir la foto del tamaño correcto y sin perder su proporción, le piden la medida\nde la diagonal que tiene que tener la foto en pulgadas.\nSi una pulgada es equivalente a 2,54 centímetros, ¿cuál de las siguientes expresiones\nrepresenta la medida de la diagonal que tiene que entregar, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p ·\n…337"
+        },
+        {
+          "letra": "B",
+          "texto": "2,54 · (p −6) ·\n…337"
+        },
+        {
+          "letra": "C",
+          "texto": "(p −6) ·\n…337\n2,54"
+        },
+        {
+          "letra": "D",
+          "texto": "p ·\n…337\n2,54\n17.\nEn la siguiente figura se representa la gráfica de una relación de proporcionalidad\ninversa y la gráfica de una relación de proporcionalidad directa.\n¿Cuál de las siguientes expresiones es igual a m\nc\n, en términos de b y q?"
+        },
+        {
+          "letra": "A",
+          "texto": "q\nb"
+        },
+        {
+          "letra": "B",
+          "texto": "q2\nb2"
+        },
+        {
+          "letra": "C",
+          "texto": "b\nq"
+        },
+        {
+          "letra": "D",
+          "texto": "b\nq2\n18.\nEl volumen y la presión de un gas se comportan de manera inversamente proporcional\ncuando la temperatura es constante.\nEn el siguiente gráfico se presentan algunos valores del comportamiento de un gas\nen particular.\nSi se considera que el gas tiene una presión de p atmósferas, ¿cuál de las siguientes\nexpresiones representa la variación absoluta en el volumen del gas, en litros, cuando\nla presión disminuye en dos atmósferas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p −2"
+        },
+        {
+          "letra": "B",
+          "texto": "C)\np −2"
+        },
+        {
+          "letra": "D",
+          "texto": "p(p −2)\n19.\nLa densidad ρ de un cuerpo, en gramos por centímetro cúbico, se calcula como\nρ = m\nV\n, tal que m es la masa del cuerpo, en gramos, y V es su volumen,\nen centímetros cúbicos.\nConsidera dos esferas macizas, una de plata de densidad ρplata = 10,5\ng\ncm3 y la\notra de piedra de alabastro de densidad ρalabastro = 2,7\ng\ncm3.\nSi ambas esferas tienen un volumen de 81 cm3, ¿cuál es la diferencia positiva de\nsus masas?"
+        },
+        {
+          "letra": "A",
+          "texto": "1069,2 g"
+        },
+        {
+          "letra": "B",
+          "texto": "850,5 g"
+        },
+        {
+          "letra": "C",
+          "texto": "631,8 g"
+        },
+        {
+          "letra": "D",
+          "texto": "218,7 g\n20.\nConsidera la inecuación 2 (5 −3x) ≥−1\n.\n¿Cuál de los siguientes gráficos representa el conjunto solución de la inecuación?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\nEl costo de producción de un artículo es de $14 000 por unidad, además de un\ncosto fijo de $260 000.\nSi se venden todos los artículos producidos a $25 000 cada uno, ¿cuál de las\nsiguientes inecuaciones permite determinar el intervalo de las cantidades x de\nartículos que se deben producir para obtener una ganancia de al menos $3 000 000?"
+        },
+        {
+          "letra": "A",
+          "texto": "25 000x −14 000x ≤3 000 000 −260 000"
+        },
+        {
+          "letra": "B",
+          "texto": "25 000x −14 000x ≤3 000 000 + 260 000"
+        },
+        {
+          "letra": "C",
+          "texto": "25 000x −14 000x ≥3 000 000 −260 000"
+        },
+        {
+          "letra": "D",
+          "texto": "25 000x −14 000x ≥3 000 000 + 260 000\n22.\nConsidera la inecuación 2\n3x + r\n4 < x\n6 −5\n, en x, tal que su conjunto solución es\nò\n−∞, −1\nï\ny r es un número real.\n¿Cuál es el valor de r?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−1"
+        },
+        {
+          "letra": "D",
+          "texto": "−1\n23.\nPara medir la temperatura se utilizan comúnmente las escalas Celsius, Fahrenheit y\nKelvin.\nConsidera que la relación entre grados Celsius (c) y grados Fahrenheit (f) está dada\npor la ecuación c = 5\n9 · (f −32).\nPara transformar de grados Celsius a Kelvin (k) hay que sumar 273,15 a la magnitud\nen grados Celsius.\n¿Cuál de las siguientes ecuaciones relaciona correctamente la temperatura en Kelvin\ncon la temperatura en grados Fahrenheit?"
+        },
+        {
+          "letra": "A",
+          "texto": "f = 9\n5 · (k + 273,15) + 32"
+        },
+        {
+          "letra": "B",
+          "texto": "f = 9\n5 · (k −273,15) + 32"
+        },
+        {
+          "letra": "C",
+          "texto": "f = 9\n5 · k + 273,15 + 32"
+        },
+        {
+          "letra": "D",
+          "texto": "f = 9\n5 · k −273,15 + 32\n24.\nUna persona viajó en vehículo a la playa recorriendo dos tramos de igual longitud.\nEl primer tramo lo recorrió con una rapidez media de 120 km\nh\ny el segundo tramo,\ncon una rapidez media de 80 km\nh\n, recorriendo ambos tramos en un total de 6 horas.\n¿Cuánto tiempo más demoró en recorrer el segundo tramo en comparación con\nel primero?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 h 50 min"
+        },
+        {
+          "letra": "B",
+          "texto": "2 h 30 min"
+        },
+        {
+          "letra": "C",
+          "texto": "1 h 20 min"
+        },
+        {
+          "letra": "D",
+          "texto": "1 h 12 min\n25.\nUna persona tiene 50 monedas, algunas de $500 y otras de $100, tal que todas juntas\nmasan 375 g. Para determinar cuánto dinero tiene, establece lo siguiente:\nEsta persona añade cinco monedas de $500 a lo que ya tenía, y plantea un nuevo\nsistema de ecuaciones, en el que x e y reflejan la cantidad actual de monedas\nde cada tipo que tiene.\n¿Cuál de los siguientes sistemas permite determinar los valores de x e y actualizados?"
+        },
+        {
+          "letra": "A",
+          "texto": "(x + 5) + y = 50\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "B",
+          "texto": "x + (y + 5) = 50\n6,5x + 9y = 375 + 5 · 9"
+        },
+        {
+          "letra": "C",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "D",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 9"
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "En una panadería, el precio de venta del kilogramo de pan es de $p, el cual se calcula\npara obtener un 25 % de ganancia sobre el costo de producción.\nSi el costo de producción aumenta en $q y se quiere seguir obteniendo un 25 % de\nganancia sobre este, ¿cuál de las siguientes funciones modela el nuevo precio de\nventa de x kilogramos de pan?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "h(x) = (p + 1,25q) · x"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = (p + q) · 1,25x"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = (0,75p + q) · x"
+        },
+        {
+          "letra": "D",
+          "texto": "m(x) = (0,25p + q) · x"
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Considera la función f definida por f(x) = ax2 + bx + c, tal que a, b y c son números\nreales distintos de cero.\n¿Cuál de las siguientes funciones representa la gráfica de la función f reflejada con\nrespecto al eje X?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p(x) = −ax2 + bx + c"
+        },
+        {
+          "letra": "B",
+          "texto": "q(x) = −ax2 −bx −c"
+        },
+        {
+          "letra": "C",
+          "texto": "s(x) = −ax2 + bx −c"
+        },
+        {
+          "letra": "D",
+          "texto": "t(x) = ax2 −bx + c"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "Considera la gráfica de la función cuadrática f, con dominio el conjunto de los números\nreales, de la forma f(x) = ax2 + bx + c.\n¿Cuál de las siguientes expresiones es igual a b?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "−3a"
+        },
+        {
+          "letra": "B",
+          "texto": "−3\n2a"
+        },
+        {
+          "letra": "C",
+          "texto": "2a"
+        },
+        {
+          "letra": "D",
+          "texto": "3a"
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "Considera la función f definida por f(x) = 2x2 + (2k + 1)x + k + 9\n, tal que k es\nun número real.\nSi la coordenada x del vértice es −5\n, ¿cuál es la coordenada y del vértice?\nA)\n−8\nB)\n−17\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 30,
+      "enunciado": "En las especificaciones de un cohete en miniatura, se registra una función que modela\nla altura que alcanzaría el cohete desde su lanzamiento hasta que toca el suelo.\nLa función registrada es h(x) = −5x2 + 80x, tal que h representa la altura,\nen metros, con respecto al tiempo x transcurrido desde que fue lanzado el cohete,\nen segundos.\n¿Cuál es la altura máxima que alcanzaría este cohete?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "320 metros"
+        },
+        {
+          "letra": "B",
+          "texto": "560 metros"
+        },
+        {
+          "letra": "C",
+          "texto": "700 metros"
+        },
+        {
+          "letra": "D",
+          "texto": "960 metros"
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 32,
+      "enunciado": "· 62n · 4\n14.\nEn cierto tipo de cuenta de ahorro, una institución financiera ofrece un interés\ncompuesto mensual de 1,5 % al capital que se deposite.\nUna persona abre una de estas cuentas de ahorro y deposita un capital inicial de\n$350 000 y lo tiene tres meses sin realizar retiros ni depósitos.\n¿Cuál de las siguientes expresiones representa el interés que se produce en ese\nperiodo de tiempo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$350 000 · 0,0153"
+        },
+        {
+          "letra": "B",
+          "texto": "$350 000 · 1,153"
+        },
+        {
+          "letra": "C",
+          "texto": "$350 000 · (1,0153 −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "$350 000 · (1,153 −1)\n15.\n¿Cuál de las siguientes expresiones es igual a (3a + 5b)(5b −3a) −(5b −3a)2?"
+        },
+        {
+          "letra": "A",
+          "texto": "−30ab"
+        },
+        {
+          "letra": "B",
+          "texto": "6a (5b −3a)"
+        },
+        {
+          "letra": "C",
+          "texto": "10b (3a −5b)"
+        },
+        {
+          "letra": "D",
+          "texto": "2 (9a2 −25b2 −15ab)\n16.\nUna persona compró un marco de p cm de largo para colocar una foto cuyos\nlados están en razón 16 : 9 y que aún no imprime. Debe dejarle un paspartú de\ntres centímetros, el cual corresponde a un espacio en blanco entre el marco y la foto,\ntal como se representa en la siguiente figura:\nPara imprimir la foto del tamaño correcto y sin perder su proporción, le piden la medida\nde la diagonal que tiene que tener la foto en pulgadas.\nSi una pulgada es equivalente a 2,54 centímetros, ¿cuál de las siguientes expresiones\nrepresenta la medida de la diagonal que tiene que entregar, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p ·\n…337"
+        },
+        {
+          "letra": "B",
+          "texto": "2,54 · (p −6) ·\n…337"
+        },
+        {
+          "letra": "C",
+          "texto": "(p −6) ·\n…337\n2,54"
+        },
+        {
+          "letra": "D",
+          "texto": "p ·\n…337\n2,54\n17.\nEn la siguiente figura se representa la gráfica de una relación de proporcionalidad\ninversa y la gráfica de una relación de proporcionalidad directa.\n¿Cuál de las siguientes expresiones es igual a m\nc\n, en términos de b y q?"
+        },
+        {
+          "letra": "A",
+          "texto": "q\nb"
+        },
+        {
+          "letra": "B",
+          "texto": "q2\nb2"
+        },
+        {
+          "letra": "C",
+          "texto": "b\nq"
+        },
+        {
+          "letra": "D",
+          "texto": "b\nq2\n18.\nEl volumen y la presión de un gas se comportan de manera inversamente proporcional\ncuando la temperatura es constante.\nEn el siguiente gráfico se presentan algunos valores del comportamiento de un gas\nen particular.\nSi se considera que el gas tiene una presión de p atmósferas, ¿cuál de las siguientes\nexpresiones representa la variación absoluta en el volumen del gas, en litros, cuando\nla presión disminuye en dos atmósferas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p −2"
+        },
+        {
+          "letra": "B",
+          "texto": "C)\np −2"
+        },
+        {
+          "letra": "D",
+          "texto": "p(p −2)\n19.\nLa densidad ρ de un cuerpo, en gramos por centímetro cúbico, se calcula como\nρ = m\nV\n, tal que m es la masa del cuerpo, en gramos, y V es su volumen,\nen centímetros cúbicos.\nConsidera dos esferas macizas, una de plata de densidad ρplata = 10,5\ng\ncm3 y la\notra de piedra de alabastro de densidad ρalabastro = 2,7\ng\ncm3.\nSi ambas esferas tienen un volumen de 81 cm3, ¿cuál es la diferencia positiva de\nsus masas?"
+        },
+        {
+          "letra": "A",
+          "texto": "1069,2 g"
+        },
+        {
+          "letra": "B",
+          "texto": "850,5 g"
+        },
+        {
+          "letra": "C",
+          "texto": "631,8 g"
+        },
+        {
+          "letra": "D",
+          "texto": "218,7 g\n20.\nConsidera la inecuación 2 (5 −3x) ≥−1\n.\n¿Cuál de los siguientes gráficos representa el conjunto solución de la inecuación?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\nEl costo de producción de un artículo es de $14 000 por unidad, además de un\ncosto fijo de $260 000.\nSi se venden todos los artículos producidos a $25 000 cada uno, ¿cuál de las\nsiguientes inecuaciones permite determinar el intervalo de las cantidades x de\nartículos que se deben producir para obtener una ganancia de al menos $3 000 000?"
+        },
+        {
+          "letra": "A",
+          "texto": "25 000x −14 000x ≤3 000 000 −260 000"
+        },
+        {
+          "letra": "B",
+          "texto": "25 000x −14 000x ≤3 000 000 + 260 000"
+        },
+        {
+          "letra": "C",
+          "texto": "25 000x −14 000x ≥3 000 000 −260 000"
+        },
+        {
+          "letra": "D",
+          "texto": "25 000x −14 000x ≥3 000 000 + 260 000\n22.\nConsidera la inecuación 2\n3x + r\n4 < x\n6 −5\n, en x, tal que su conjunto solución es\nò\n−∞, −1\nï\ny r es un número real.\n¿Cuál es el valor de r?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−1"
+        },
+        {
+          "letra": "D",
+          "texto": "−1\n23.\nPara medir la temperatura se utilizan comúnmente las escalas Celsius, Fahrenheit y\nKelvin.\nConsidera que la relación entre grados Celsius (c) y grados Fahrenheit (f) está dada\npor la ecuación c = 5\n9 · (f −32).\nPara transformar de grados Celsius a Kelvin (k) hay que sumar 273,15 a la magnitud\nen grados Celsius.\n¿Cuál de las siguientes ecuaciones relaciona correctamente la temperatura en Kelvin\ncon la temperatura en grados Fahrenheit?"
+        },
+        {
+          "letra": "A",
+          "texto": "f = 9\n5 · (k + 273,15) + 32"
+        },
+        {
+          "letra": "B",
+          "texto": "f = 9\n5 · (k −273,15) + 32"
+        },
+        {
+          "letra": "C",
+          "texto": "f = 9\n5 · k + 273,15 + 32"
+        },
+        {
+          "letra": "D",
+          "texto": "f = 9\n5 · k −273,15 + 32\n24.\nUna persona viajó en vehículo a la playa recorriendo dos tramos de igual longitud.\nEl primer tramo lo recorrió con una rapidez media de 120 km\nh\ny el segundo tramo,\ncon una rapidez media de 80 km\nh\n, recorriendo ambos tramos en un total de 6 horas.\n¿Cuánto tiempo más demoró en recorrer el segundo tramo en comparación con\nel primero?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 h 50 min"
+        },
+        {
+          "letra": "B",
+          "texto": "2 h 30 min"
+        },
+        {
+          "letra": "C",
+          "texto": "1 h 20 min"
+        },
+        {
+          "letra": "D",
+          "texto": "1 h 12 min\n25.\nUna persona tiene 50 monedas, algunas de $500 y otras de $100, tal que todas juntas\nmasan 375 g. Para determinar cuánto dinero tiene, establece lo siguiente:\nEsta persona añade cinco monedas de $500 a lo que ya tenía, y plantea un nuevo\nsistema de ecuaciones, en el que x e y reflejan la cantidad actual de monedas\nde cada tipo que tiene.\n¿Cuál de los siguientes sistemas permite determinar los valores de x e y actualizados?"
+        },
+        {
+          "letra": "A",
+          "texto": "(x + 5) + y = 50\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "B",
+          "texto": "x + (y + 5) = 50\n6,5x + 9y = 375 + 5 · 9"
+        },
+        {
+          "letra": "C",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "D",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 9\n26.\nEn una panadería, el precio de venta del kilogramo de pan es de $p, el cual se calcula\npara obtener un 25 % de ganancia sobre el costo de producción.\nSi el costo de producción aumenta en $q y se quiere seguir obteniendo un 25 % de\nganancia sobre este, ¿cuál de las siguientes funciones modela el nuevo precio de\nventa de x kilogramos de pan?"
+        },
+        {
+          "letra": "A",
+          "texto": "h(x) = (p + 1,25q) · x"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = (p + q) · 1,25x"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = (0,75p + q) · x"
+        },
+        {
+          "letra": "D",
+          "texto": "m(x) = (0,25p + q) · x\n27.\nConsidera la función f definida por f(x) = ax2 + bx + c, tal que a, b y c son números\nreales distintos de cero.\n¿Cuál de las siguientes funciones representa la gráfica de la función f reflejada con\nrespecto al eje X?"
+        },
+        {
+          "letra": "A",
+          "texto": "p(x) = −ax2 + bx + c"
+        },
+        {
+          "letra": "B",
+          "texto": "q(x) = −ax2 −bx −c"
+        },
+        {
+          "letra": "C",
+          "texto": "s(x) = −ax2 + bx −c"
+        },
+        {
+          "letra": "D",
+          "texto": "t(x) = ax2 −bx + c\n28.\nConsidera la gráfica de la función cuadrática f, con dominio el conjunto de los números\nreales, de la forma f(x) = ax2 + bx + c.\n¿Cuál de las siguientes expresiones es igual a b?"
+        },
+        {
+          "letra": "A",
+          "texto": "−3a"
+        },
+        {
+          "letra": "B",
+          "texto": "−3\n2a"
+        },
+        {
+          "letra": "C",
+          "texto": "2a"
+        },
+        {
+          "letra": "D",
+          "texto": "3a\n29.\nConsidera la función f definida por f(x) = 2x2 + (2k + 1)x + k + 9\n, tal que k es\nun número real.\nSi la coordenada x del vértice es −5\n, ¿cuál es la coordenada y del vértice?"
+        },
+        {
+          "letra": "A",
+          "texto": "−8"
+        },
+        {
+          "letra": "B",
+          "texto": "−17"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nEn las especificaciones de un cohete en miniatura, se registra una función que modela\nla altura que alcanzaría el cohete desde su lanzamiento hasta que toca el suelo.\nLa función registrada es h(x) = −5x2 + 80x, tal que h representa la altura,\nen metros, con respecto al tiempo x transcurrido desde que fue lanzado el cohete,\nen segundos.\n¿Cuál es la altura máxima que alcanzaría este cohete?"
+        },
+        {
+          "letra": "A",
+          "texto": "320 metros"
+        },
+        {
+          "letra": "B",
+          "texto": "560 metros"
+        },
+        {
+          "letra": "C",
+          "texto": "700 metros"
+        },
+        {
+          "letra": "D",
+          "texto": "960 metros\n31.\nConsidera la función f, con dominio el conjunto de los números reales, definida por\nf(x) = x2 −bx + c. La gráfica de f pasa por los puntos (−p, 0) y (2p, 0), con\np > 0.\n¿En qué cuadrante se encuentra el vértice de la parábola?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el primer cuadrante"
+        },
+        {
+          "letra": "B",
+          "texto": "En el segundo cuadrante"
+        },
+        {
+          "letra": "C",
+          "texto": "En el tercer cuadrante"
+        },
+        {
+          "letra": "D",
+          "texto": "En el cuarto cuadrante\n32.\nLa radiación emitida por un cuerpo negro, en W\nm2, se puede calcular como σ · T4,\ntal que T es su temperatura en Kelvin (K) y σ es una constante.\nUn cuerpo negro que emite una radiación de 5,678 W\nm2 tiene una temperatura\nde 100 K.\n¿Cuál es la radiación de un cuerpo negro que tiene una temperatura de 200 K?"
+        },
+        {
+          "letra": "A",
+          "texto": "11,356 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "34,068 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "45,424 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "90,848 W\nm2"
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "Considera el triángulo rectángulo ABC de la figura adjunta, al que se le ha trazado su\naltura CD.\nPara calcular la medida de CD, se realiza el siguiente procedimiento, en el cual se\ncomete un error.\nPaso 1: se calcula la medida de AB como\n√\n32 + 42 y se obtiene que mide 5 cm.\nPaso 2: se aplica el teorema de Pitágoras en los triángulos ADC y CDB y se\nobtienen las igualdades 42 + AD2 = CD2 y 32 + (5 −AD)2 = CD2,\nrespectivamente.\nPaso 3: se igualan las ecuaciones obtenidas en el Paso 2 y, al resolver la ecuación\n42 + AD2 = 32 + (5 −AD)2, se obtiene que AD = 9\n5 cm.\nPaso 4: se reemplaza el valor de AD en la igualdad 42 + AD2 = CD2 y, al\ndespejar, se obtiene que CD =\n√\ncm.\n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "Sobre un cuadrado de lado L cm y centro O, se dibuja otro cuadrado de centro O,\ncuyo lado es a\nb\ndel lado del cuadrado anterior, con a y b números enteros positivos.\nLuego, se pinta de color gris la superficie delimitada por los contornos de estos dos\ncuadrados, tal como se representa a continuación:\nLuego, sobre esta figura, se dibuja otro cuadrado de centro O cuyo lado es a\nb\ndel lado\ndel último cuadrado dibujado y se pinta la superficie delimitada por los contornos de\nestos cuadrados, tal como se representa a continuación:\nSi se repite cinco veces el proceso de pintar la superficie delimitada entre los\ncuadrados, ¿cuál es el área, en cm2, de la última superficie pintada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "L2\nÅ\u0010a\nb\n\u00114\n−\n\u0010a\nb\n\u00115ã"
+        },
+        {
+          "letra": "B",
+          "texto": "L2\nÅ\u0010a\nb\n\u00115\n−\n\u0010a\nb\n\u00114ã"
+        },
+        {
+          "letra": "C",
+          "texto": "L2\nÅ\u0010a\nb\n\u001110\n−\n\u0010a\nb\n\u00118ã"
+        },
+        {
+          "letra": "D",
+          "texto": "L2\nÅ\u0010a\nb\n\u00118\n−\n\u0010a\nb\n\u001110ã"
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "Julieta compró un espejo con forma de hexágono regular, el cual está inscrito en una\nbase circular de madera de 40 cm de diámetro, tal como se representa en la siguiente\nfigura.\nPara que el espejo combine con la decoración de su baño, cubrirá las partes visibles\nde la base de madera con un mosaico de cerámicas.\n¿Cuál es el área de la base de madera que debe cubrir Julieta con el mosaico de\ncerámicas, en cm2?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "400π −600\n√"
+        },
+        {
+          "letra": "B",
+          "texto": "400π −100\n√"
+        },
+        {
+          "letra": "C",
+          "texto": "1600π −1200\n√"
+        },
+        {
+          "letra": "D",
+          "texto": "1600π −600\n√"
+        }
+      ]
+    },
+    {
+      "numero": 36,
+      "enunciado": "Se colocan 27 cubos de hielo de arista a\n2 cm en un recipiente cúbico de arista\ninterior 9a\n2 cm.\nSe sabe que cuando el agua se congela, su volumen aumenta en un 10 %.\nSi se considera que no se evapora el agua en el proceso, ¿a qué altura del recipiente,\nen centímetros, llega el agua una vez que los hielos se derriten?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "33a"
+        },
+        {
+          "letra": "B",
+          "texto": "60a"
+        },
+        {
+          "letra": "C",
+          "texto": "11a"
+        },
+        {
+          "letra": "D",
+          "texto": "10a"
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "En el gráfico de la figura adjunta se representan los vectores\n→u,\n→v y\n→w.\n¿Cuáles son las coordenadas del vector\n→v −\nÄ→u +2\n→w\nä\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(−6, 1)"
+        },
+        {
+          "letra": "B",
+          "texto": "(0, 5)"
+        },
+        {
+          "letra": "C",
+          "texto": "(0, −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "(0, 7)"
+        }
+      ]
+    },
+    {
+      "numero": 38,
+      "enunciado": "Se simula un sistema planetario, en dos dimensiones, compuesto por un planeta\n(circunferencia grande) y una luna (circunferencia pequeña) en un plano cartesiano.\nCada minuto, el planeta rota en torno al origen del sistema cartesiano y en sentido\nantihorario y la luna rota en torno al centro del planeta y en sentido horario, tal como\nse ejemplifica en la siguiente figura:\nConsidera la posición del planeta transcurridos 5 minutos.\n¿Cuál de las siguientes imágenes representa mejor la posición de la luna con respecto\nal planeta en ese momento?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 39,
+      "enunciado": "Se dibuja un triángulo en el primer cuadrante del plano cartesiano.\nSi a este triángulo se le aplica una homotecia de razón −p\ncon centro en el origen del\nplano cartesiano, ¿cuál de las siguientes afirmaciones se puede deducir en relación\ncon el triángulo homotético?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Cuando p = 4, su perímetro es el doble del perímetro del original."
+        },
+        {
+          "letra": "B",
+          "texto": "Cuando p = 2, su área es mayor que el área del original."
+        },
+        {
+          "letra": "C",
+          "texto": "Cuando p < 0, su perímetro es menor que el perímetro del original."
+        },
+        {
+          "letra": "D",
+          "texto": "Cuando p > 0, se ubica en el primer cuadrante."
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "El diámetro del sol se puede estimar con una homotecia usando una caja con un\norificio como se representa en la siguiente figura:\nLa proyección del sol en la caja es un círculo que tiene diámetro d centímetros,\n¿cuál de las siguientes expresiones representa el diámetro del sol, en kilómetros?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "L\nD · d"
+        },
+        {
+          "letra": "B",
+          "texto": "L\nd · D"
+        },
+        {
+          "letra": "C",
+          "texto": "d\nL · D"
+        },
+        {
+          "letra": "D",
+          "texto": "d\nL"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 42,
+      "enunciado": "+ AD2 = 32 + (5 −AD)2, se obtiene que AD = 9\n5 cm.\nPaso 4: se reemplaza el valor de AD en la igualdad 42 + AD2 = CD2 y, al\ndespejar, se obtiene que CD =\n√\ncm.\n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n34.\nSobre un cuadrado de lado L cm y centro O, se dibuja otro cuadrado de centro O,\ncuyo lado es a\nb\ndel lado del cuadrado anterior, con a y b números enteros positivos.\nLuego, se pinta de color gris la superficie delimitada por los contornos de estos dos\ncuadrados, tal como se representa a continuación:\nLuego, sobre esta figura, se dibuja otro cuadrado de centro O cuyo lado es a\nb\ndel lado\ndel último cuadrado dibujado y se pinta la superficie delimitada por los contornos de\nestos cuadrados, tal como se representa a continuación:\nSi se repite cinco veces el proceso de pintar la superficie delimitada entre los\ncuadrados, ¿cuál es el área, en cm2, de la última superficie pintada?"
+        },
+        {
+          "letra": "A",
+          "texto": "L2\nÅ\u0010a\nb\n\u00114\n−\n\u0010a\nb\n\u00115ã"
+        },
+        {
+          "letra": "B",
+          "texto": "L2\nÅ\u0010a\nb\n\u00115\n−\n\u0010a\nb\n\u00114ã"
+        },
+        {
+          "letra": "C",
+          "texto": "L2\nÅ\u0010a\nb\n\u001110\n−\n\u0010a\nb\n\u00118ã"
+        },
+        {
+          "letra": "D",
+          "texto": "L2\nÅ\u0010a\nb\n\u00118\n−\n\u0010a\nb\n\u001110ã\n35.\nJulieta compró un espejo con forma de hexágono regular, el cual está inscrito en una\nbase circular de madera de 40 cm de diámetro, tal como se representa en la siguiente\nfigura.\nPara que el espejo combine con la decoración de su baño, cubrirá las partes visibles\nde la base de madera con un mosaico de cerámicas.\n¿Cuál es el área de la base de madera que debe cubrir Julieta con el mosaico de\ncerámicas, en cm2?"
+        },
+        {
+          "letra": "A",
+          "texto": "400π −600\n√"
+        },
+        {
+          "letra": "B",
+          "texto": "400π −100\n√"
+        },
+        {
+          "letra": "C",
+          "texto": "1600π −1200\n√"
+        },
+        {
+          "letra": "D",
+          "texto": "1600π −600\n√\n36.\nSe colocan 27 cubos de hielo de arista a\n2 cm en un recipiente cúbico de arista\ninterior 9a\n2 cm.\nSe sabe que cuando el agua se congela, su volumen aumenta en un 10 %.\nSi se considera que no se evapora el agua en el proceso, ¿a qué altura del recipiente,\nen centímetros, llega el agua una vez que los hielos se derriten?"
+        },
+        {
+          "letra": "A",
+          "texto": "33a"
+        },
+        {
+          "letra": "B",
+          "texto": "60a"
+        },
+        {
+          "letra": "C",
+          "texto": "11a"
+        },
+        {
+          "letra": "D",
+          "texto": "10a\n37.\nEn el gráfico de la figura adjunta se representan los vectores\n→u,\n→v y\n→w.\n¿Cuáles son las coordenadas del vector\n→v −\nÄ→u +2\n→w\nä\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "(−6, 1)"
+        },
+        {
+          "letra": "B",
+          "texto": "(0, 5)"
+        },
+        {
+          "letra": "C",
+          "texto": "(0, −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "(0, 7)\n38.\nSe simula un sistema planetario, en dos dimensiones, compuesto por un planeta\n(circunferencia grande) y una luna (circunferencia pequeña) en un plano cartesiano.\nCada minuto, el planeta rota en torno al origen del sistema cartesiano y en sentido\nantihorario y la luna rota en torno al centro del planeta y en sentido horario, tal como\nse ejemplifica en la siguiente figura:\nConsidera la posición del planeta transcurridos 5 minutos.\n¿Cuál de las siguientes imágenes representa mejor la posición de la luna con respecto\nal planeta en ese momento?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n39.\nSe dibuja un triángulo en el primer cuadrante del plano cartesiano.\nSi a este triángulo se le aplica una homotecia de razón −p\ncon centro en el origen del\nplano cartesiano, ¿cuál de las siguientes afirmaciones se puede deducir en relación\ncon el triángulo homotético?"
+        },
+        {
+          "letra": "A",
+          "texto": "Cuando p = 4, su perímetro es el doble del perímetro del original."
+        },
+        {
+          "letra": "B",
+          "texto": "Cuando p = 2, su área es mayor que el área del original."
+        },
+        {
+          "letra": "C",
+          "texto": "Cuando p < 0, su perímetro es menor que el perímetro del original."
+        },
+        {
+          "letra": "D",
+          "texto": "Cuando p > 0, se ubica en el primer cuadrante.\n40.\nEl diámetro del sol se puede estimar con una homotecia usando una caja con un\norificio como se representa en la siguiente figura:\nLa proyección del sol en la caja es un círculo que tiene diámetro d centímetros,\n¿cuál de las siguientes expresiones representa el diámetro del sol, en kilómetros?"
+        },
+        {
+          "letra": "A",
+          "texto": "L\nD · d"
+        },
+        {
+          "letra": "B",
+          "texto": "L\nd · D"
+        },
+        {
+          "letra": "C",
+          "texto": "d\nL · D"
+        },
+        {
+          "letra": "D",
+          "texto": "d\nL\n41.\nUn cuadrado de lado L ubicado sobre los ejes del plano cartesiano se rota en sentido\nhorario en torno a uno de sus vértices, tal como se representa en la siguiente figura:\n¿Cuál es la coordenada x del punto P luego de la rotación?"
+        },
+        {
+          "letra": "A",
+          "texto": "L · cos(θ)"
+        },
+        {
+          "letra": "B",
+          "texto": "L · sen(θ)"
+        },
+        {
+          "letra": "C",
+          "texto": "L −L · cos(θ)"
+        },
+        {
+          "letra": "D",
+          "texto": "L −L · sen(θ)\n42.\nCuando un rayo de luz pasa de un medio a otro, el ángulo de incidencia θ1 en el\nprimer medio y el ángulo de refracción θ2 con el que entra al otro medio son distintos.\nEste cambio de ángulo depende de los índices de refracción (n1 y n2) de ambos\nmedios, y está dado por la ecuación n1 · sen(θ1) = n2 · sen(θ2).\nLa siguiente figura representa esta situación:\nConsidera un rayo que pasa de un medio de índice de refracción m a otro de índice\nde refracción p, tal que la medida del ángulo de incidencia es el doble de la medida\ndel ángulo de refracción.\nSi para todo ángulo α se cumple que sen(2α) = 2 · sen(α) · cos(α), ¿cuál de las\nsiguientes expresiones representa al coseno del ángulo de refracción?"
+        },
+        {
+          "letra": "A",
+          "texto": "2p\nm"
+        },
+        {
+          "letra": "B",
+          "texto": "2m\np"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n2p"
+        },
+        {
+          "letra": "D",
+          "texto": "p\n2m"
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "En el siguiente histograma se representan los resultados de una encuesta en la que\nse le preguntó a un grupo de 400 estudiantes cuántas horas estudian semanalmente.\n¿Cuál de las siguientes tablas de frecuencia representa los resultados de la encuesta?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes"
+        },
+        {
+          "letra": "B",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes\n[1, 2[\n[1, 2[\n[2, 3[\n[2, 3[\n[3, 4[\n[3, 4[\n[4, 5[\n[4, 5[\n[5, 6[\n[5, 6[\n[6, 7]\n[6, 7]"
+        },
+        {
+          "letra": "C",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes"
+        },
+        {
+          "letra": "D",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes\n[1, 2[\n[1, 2[\n[2, 3[\n[2, 3[\n[3, 4[\n[3, 4[\n[4, 5[\n[4, 5[\n[5, 6[\n[5, 6[\n[6,7]\n[6, 7]"
+        }
+      ]
+    },
+    {
+      "numero": 44,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 45,
+      "enunciado": "m2 y un precio unitario de $29 200.\nSi se decide comprar la mínima cantidad de galones que asegure que no faltará\npintura, ¿cuánto dinero se gastará?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$146 000"
+        },
+        {
+          "letra": "B",
+          "texto": "$175 200"
+        },
+        {
+          "letra": "C",
+          "texto": "$204 400"
+        },
+        {
+          "letra": "D",
+          "texto": "$233 600\n3.\nEl Rol Único Tributario (RUT) se compone de dos partes separadas por un guion:\nun número de siete u ocho dígitos y un dígito verificador.\nEl dígito verificador puede ser un dígito o la letra K y se obtiene mediante el siguiente\nalgoritmo:\nConsidera que el RUT es AB.CDE.FGH – V (en el caso de tener siete dígitos,\nse considera A = 0 ).\n1. Se debe calcular la siguiente suma:\n3 · A + 2 · B + 7 · C + 6 · D + 5 · E + 4 · F + 3 · G + 2 · H\n2. Se debe dividir la suma calculada por 11 para encontrar el resto n.\n3. Según el valor del resto n, el dígito verificador V es:\n• 11 −n,\nsi (11 −n) ≤9\n• K,\nsi (11 −n) = 10\n• 0,\nsi (11 −n) = 11\n¿Cuál es el dígito verificador del RUT 60.910.000 – □?"
+        },
+        {
+          "letra": "A",
+          "texto": "K"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "4.\nSi el 25 % de M es N, ¿qué porcentaje de N es M?"
+        },
+        {
+          "letra": "A",
+          "texto": "4 %"
+        },
+        {
+          "letra": "B",
+          "texto": "25 %"
+        },
+        {
+          "letra": "C",
+          "texto": "75 %"
+        },
+        {
+          "letra": "D",
+          "texto": "400 %\n5.\nConsidera que 1200 se aumenta en su 15 % y el número que se obtiene se disminuye\nen su 5 %.\n¿Cuál de las siguientes expresiones representa el número final que se obtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": "1200 · 1,15 · 0,95"
+        },
+        {
+          "letra": "B",
+          "texto": "1200 · 0,15 · 0,05"
+        },
+        {
+          "letra": "C",
+          "texto": "1200 · 1,15 −1200 · 0,95"
+        },
+        {
+          "letra": "D",
+          "texto": "1200 · 0,15 −1200 · 0,05\n6.\nPara medir la popularidad de un artista en redes sociales, se analizó la cantidad de\nbúsquedas diarias que tuvo durante tres días seguidos. Se detectó que el artista\ndescendió un 4 % cada día respecto al día anterior, presentando 276 480 búsquedas\nel último día.\n¿Cuál es la cantidad de búsquedas que se realizaron de este artista el primer día?"
+        },
+        {
+          "letra": "A",
+          "texto": "276 480\n0,962"
+        },
+        {
+          "letra": "B",
+          "texto": "276 480\n0,042"
+        },
+        {
+          "letra": "C",
+          "texto": "276 480 · 0,962"
+        },
+        {
+          "letra": "D",
+          "texto": "276 480 · 0,042\n7.\nAl terminar cada día trabajado en una obra de construcción, se calcula el porcentaje\nde la obra que queda por realizar, usando la siguiente expresión:\n100 · (1 −k) %\n¿Qué representa k en esta expresión?"
+        },
+        {
+          "letra": "A",
+          "texto": "El porcentaje de avance de la obra durante el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "B",
+          "texto": "El porcentaje de avance de la obra hasta el último día trabajado, escrito en\ndecimal."
+        },
+        {
+          "letra": "C",
+          "texto": "El porcentaje de avance de la obra de cada uno de los días de trabajo, escrito en\ndecimal."
+        },
+        {
+          "letra": "D",
+          "texto": "El porcentaje que queda por realizar de la obra al término del último día de trabajo,\nescrito en decimal.\n8.\nEn la tabla adjunta se presenta la masa de dos partículas.\nPartícula\nMasa\nProtón\n1,67 · 10−27 kg\nElectrón\n9,11 · 10−31 kg\n¿Cuál es la diferencia positiva entre las masas de las partículas?"
+        },
+        {
+          "letra": "A",
+          "texto": "(9,11 −1,67) · 10−58 kg"
+        },
+        {
+          "letra": "B",
+          "texto": "(9,11 −1,67) · 10−4 kg"
+        },
+        {
+          "letra": "C",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−27 kg"
+        },
+        {
+          "letra": "D",
+          "texto": "\u00001,67 −9,11 · 10−4\u0001 · 10−31 kg\n9.\nPara expresar\n√\n8 ·\n3√\n16 −\nÄ√\nä3\ncomo la multiplicación de dos números, se realiza\nel siguiente procedimiento, en el cual se comete un error.\nPaso 1: se resuelve la potencia\nÄ√\nä3\n, obteniéndose 2\n√\n2.\nPaso 2: se realiza la multiplicación de raíces\nÄ√\nä\n·\n3√\n16, obteniéndose\n6√\n128.\nPaso 3: se descompone y reduce la raíz\n6√\n128, obteniéndose 2\n6√\n2.\nPaso 4: se factoriza la resta 2\n6√\n2 −2\n√\n2, obteniéndose 2\nÄ\n6√\n2 −\n√\nä\n.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n10.\nSi log 2 ≈0,30 y log 3 ≈0,48, ¿cuál de las siguientes expresiones corresponde a\nuna aproximación de log2 15?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,70 + 0,48"
+        },
+        {
+          "letra": "B",
+          "texto": "4,8 + 0,30\n0,30"
+        },
+        {
+          "letra": "C",
+          "texto": "1 + 0,48\n2 · 0,30"
+        },
+        {
+          "letra": "D",
+          "texto": "0,70 + 0,48\n0,30\n11.\nEn un laboratorio se estudiaron dos cultivos de bacterias, para los cuales se registraron\nlos siguientes datos:\nCantidad inicial de bacterias\nMinutos que tardan en duplicarse\nCultivo A\nCultivo B\n¿Cuántas bacterias en total tendrán los dos cultivos transcurridos 40 minutos desde\nel inicio del estudio?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n12.\nEl nivel de intensidad sonora β, en dB, y la intensidad acústica I, en W\nm2, se\nrelacionan mediante la expresión β = 10 · log(I) + 120, tal que β ≥0 .\nEn la siguiente tabla se presentan los niveles máximos permisibles de intensidad\nsonora en zonas residenciales durante el día según la legislación chilena.\nDe 7:00 a 21:00\nDe 21:00 a 7:00\n55 dB\n45 dB\n¿Cuál es el máximo permisible de intensidad acústica en zonas residenciales a las\n23:00?"
+        },
+        {
+          "letra": "A",
+          "texto": "10−6,5 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "10−7,5 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "107,5 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "1016,5 W\nm2\n13.\n¿Cuál de las siguientes expresiones es igual a\nn»\n(3n)2 · 6(n2) · 4n?"
+        },
+        {
+          "letra": "A",
+          "texto": "62n2"
+        },
+        {
+          "letra": "B",
+          "texto": "6n+2"
+        },
+        {
+          "letra": "C",
+          "texto": "3n · 6n · 4"
+        },
+        {
+          "letra": "D",
+          "texto": "32 · 62n · 4\n14.\nEn cierto tipo de cuenta de ahorro, una institución financiera ofrece un interés\ncompuesto mensual de 1,5 % al capital que se deposite.\nUna persona abre una de estas cuentas de ahorro y deposita un capital inicial de\n$350 000 y lo tiene tres meses sin realizar retiros ni depósitos.\n¿Cuál de las siguientes expresiones representa el interés que se produce en ese\nperiodo de tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$350 000 · 0,0153"
+        },
+        {
+          "letra": "B",
+          "texto": "$350 000 · 1,153"
+        },
+        {
+          "letra": "C",
+          "texto": "$350 000 · (1,0153 −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "$350 000 · (1,153 −1)\n15.\n¿Cuál de las siguientes expresiones es igual a (3a + 5b)(5b −3a) −(5b −3a)2?"
+        },
+        {
+          "letra": "A",
+          "texto": "−30ab"
+        },
+        {
+          "letra": "B",
+          "texto": "6a (5b −3a)"
+        },
+        {
+          "letra": "C",
+          "texto": "10b (3a −5b)"
+        },
+        {
+          "letra": "D",
+          "texto": "2 (9a2 −25b2 −15ab)\n16.\nUna persona compró un marco de p cm de largo para colocar una foto cuyos\nlados están en razón 16 : 9 y que aún no imprime. Debe dejarle un paspartú de\ntres centímetros, el cual corresponde a un espacio en blanco entre el marco y la foto,\ntal como se representa en la siguiente figura:\nPara imprimir la foto del tamaño correcto y sin perder su proporción, le piden la medida\nde la diagonal que tiene que tener la foto en pulgadas.\nSi una pulgada es equivalente a 2,54 centímetros, ¿cuál de las siguientes expresiones\nrepresenta la medida de la diagonal que tiene que entregar, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p ·\n…337"
+        },
+        {
+          "letra": "B",
+          "texto": "2,54 · (p −6) ·\n…337"
+        },
+        {
+          "letra": "C",
+          "texto": "(p −6) ·\n…337\n2,54"
+        },
+        {
+          "letra": "D",
+          "texto": "p ·\n…337\n2,54\n17.\nEn la siguiente figura se representa la gráfica de una relación de proporcionalidad\ninversa y la gráfica de una relación de proporcionalidad directa.\n¿Cuál de las siguientes expresiones es igual a m\nc\n, en términos de b y q?"
+        },
+        {
+          "letra": "A",
+          "texto": "q\nb"
+        },
+        {
+          "letra": "B",
+          "texto": "q2\nb2"
+        },
+        {
+          "letra": "C",
+          "texto": "b\nq"
+        },
+        {
+          "letra": "D",
+          "texto": "b\nq2\n18.\nEl volumen y la presión de un gas se comportan de manera inversamente proporcional\ncuando la temperatura es constante.\nEn el siguiente gráfico se presentan algunos valores del comportamiento de un gas\nen particular.\nSi se considera que el gas tiene una presión de p atmósferas, ¿cuál de las siguientes\nexpresiones representa la variación absoluta en el volumen del gas, en litros, cuando\nla presión disminuye en dos atmósferas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p −2"
+        },
+        {
+          "letra": "B",
+          "texto": "C)\np −2"
+        },
+        {
+          "letra": "D",
+          "texto": "p(p −2)\n19.\nLa densidad ρ de un cuerpo, en gramos por centímetro cúbico, se calcula como\nρ = m\nV\n, tal que m es la masa del cuerpo, en gramos, y V es su volumen,\nen centímetros cúbicos.\nConsidera dos esferas macizas, una de plata de densidad ρplata = 10,5\ng\ncm3 y la\notra de piedra de alabastro de densidad ρalabastro = 2,7\ng\ncm3.\nSi ambas esferas tienen un volumen de 81 cm3, ¿cuál es la diferencia positiva de\nsus masas?"
+        },
+        {
+          "letra": "A",
+          "texto": "1069,2 g"
+        },
+        {
+          "letra": "B",
+          "texto": "850,5 g"
+        },
+        {
+          "letra": "C",
+          "texto": "631,8 g"
+        },
+        {
+          "letra": "D",
+          "texto": "218,7 g\n20.\nConsidera la inecuación 2 (5 −3x) ≥−1\n.\n¿Cuál de los siguientes gráficos representa el conjunto solución de la inecuación?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\nEl costo de producción de un artículo es de $14 000 por unidad, además de un\ncosto fijo de $260 000.\nSi se venden todos los artículos producidos a $25 000 cada uno, ¿cuál de las\nsiguientes inecuaciones permite determinar el intervalo de las cantidades x de\nartículos que se deben producir para obtener una ganancia de al menos $3 000 000?"
+        },
+        {
+          "letra": "A",
+          "texto": "25 000x −14 000x ≤3 000 000 −260 000"
+        },
+        {
+          "letra": "B",
+          "texto": "25 000x −14 000x ≤3 000 000 + 260 000"
+        },
+        {
+          "letra": "C",
+          "texto": "25 000x −14 000x ≥3 000 000 −260 000"
+        },
+        {
+          "letra": "D",
+          "texto": "25 000x −14 000x ≥3 000 000 + 260 000\n22.\nConsidera la inecuación 2\n3x + r\n4 < x\n6 −5\n, en x, tal que su conjunto solución es\nò\n−∞, −1\nï\ny r es un número real.\n¿Cuál es el valor de r?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−1"
+        },
+        {
+          "letra": "D",
+          "texto": "−1\n23.\nPara medir la temperatura se utilizan comúnmente las escalas Celsius, Fahrenheit y\nKelvin.\nConsidera que la relación entre grados Celsius (c) y grados Fahrenheit (f) está dada\npor la ecuación c = 5\n9 · (f −32).\nPara transformar de grados Celsius a Kelvin (k) hay que sumar 273,15 a la magnitud\nen grados Celsius.\n¿Cuál de las siguientes ecuaciones relaciona correctamente la temperatura en Kelvin\ncon la temperatura en grados Fahrenheit?"
+        },
+        {
+          "letra": "A",
+          "texto": "f = 9\n5 · (k + 273,15) + 32"
+        },
+        {
+          "letra": "B",
+          "texto": "f = 9\n5 · (k −273,15) + 32"
+        },
+        {
+          "letra": "C",
+          "texto": "f = 9\n5 · k + 273,15 + 32"
+        },
+        {
+          "letra": "D",
+          "texto": "f = 9\n5 · k −273,15 + 32\n24.\nUna persona viajó en vehículo a la playa recorriendo dos tramos de igual longitud.\nEl primer tramo lo recorrió con una rapidez media de 120 km\nh\ny el segundo tramo,\ncon una rapidez media de 80 km\nh\n, recorriendo ambos tramos en un total de 6 horas.\n¿Cuánto tiempo más demoró en recorrer el segundo tramo en comparación con\nel primero?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 h 50 min"
+        },
+        {
+          "letra": "B",
+          "texto": "2 h 30 min"
+        },
+        {
+          "letra": "C",
+          "texto": "1 h 20 min"
+        },
+        {
+          "letra": "D",
+          "texto": "1 h 12 min\n25.\nUna persona tiene 50 monedas, algunas de $500 y otras de $100, tal que todas juntas\nmasan 375 g. Para determinar cuánto dinero tiene, establece lo siguiente:\nEsta persona añade cinco monedas de $500 a lo que ya tenía, y plantea un nuevo\nsistema de ecuaciones, en el que x e y reflejan la cantidad actual de monedas\nde cada tipo que tiene.\n¿Cuál de los siguientes sistemas permite determinar los valores de x e y actualizados?"
+        },
+        {
+          "letra": "A",
+          "texto": "(x + 5) + y = 50\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "B",
+          "texto": "x + (y + 5) = 50\n6,5x + 9y = 375 + 5 · 9"
+        },
+        {
+          "letra": "C",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "D",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 9\n26.\nEn una panadería, el precio de venta del kilogramo de pan es de $p, el cual se calcula\npara obtener un 25 % de ganancia sobre el costo de producción.\nSi el costo de producción aumenta en $q y se quiere seguir obteniendo un 25 % de\nganancia sobre este, ¿cuál de las siguientes funciones modela el nuevo precio de\nventa de x kilogramos de pan?"
+        },
+        {
+          "letra": "A",
+          "texto": "h(x) = (p + 1,25q) · x"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = (p + q) · 1,25x"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = (0,75p + q) · x"
+        },
+        {
+          "letra": "D",
+          "texto": "m(x) = (0,25p + q) · x\n27.\nConsidera la función f definida por f(x) = ax2 + bx + c, tal que a, b y c son números\nreales distintos de cero.\n¿Cuál de las siguientes funciones representa la gráfica de la función f reflejada con\nrespecto al eje X?"
+        },
+        {
+          "letra": "A",
+          "texto": "p(x) = −ax2 + bx + c"
+        },
+        {
+          "letra": "B",
+          "texto": "q(x) = −ax2 −bx −c"
+        },
+        {
+          "letra": "C",
+          "texto": "s(x) = −ax2 + bx −c"
+        },
+        {
+          "letra": "D",
+          "texto": "t(x) = ax2 −bx + c\n28.\nConsidera la gráfica de la función cuadrática f, con dominio el conjunto de los números\nreales, de la forma f(x) = ax2 + bx + c.\n¿Cuál de las siguientes expresiones es igual a b?"
+        },
+        {
+          "letra": "A",
+          "texto": "−3a"
+        },
+        {
+          "letra": "B",
+          "texto": "−3\n2a"
+        },
+        {
+          "letra": "C",
+          "texto": "2a"
+        },
+        {
+          "letra": "D",
+          "texto": "3a\n29.\nConsidera la función f definida por f(x) = 2x2 + (2k + 1)x + k + 9\n, tal que k es\nun número real.\nSi la coordenada x del vértice es −5\n, ¿cuál es la coordenada y del vértice?"
+        },
+        {
+          "letra": "A",
+          "texto": "−8"
+        },
+        {
+          "letra": "B",
+          "texto": "−17"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nEn las especificaciones de un cohete en miniatura, se registra una función que modela\nla altura que alcanzaría el cohete desde su lanzamiento hasta que toca el suelo.\nLa función registrada es h(x) = −5x2 + 80x, tal que h representa la altura,\nen metros, con respecto al tiempo x transcurrido desde que fue lanzado el cohete,\nen segundos.\n¿Cuál es la altura máxima que alcanzaría este cohete?"
+        },
+        {
+          "letra": "A",
+          "texto": "320 metros"
+        },
+        {
+          "letra": "B",
+          "texto": "560 metros"
+        },
+        {
+          "letra": "C",
+          "texto": "700 metros"
+        },
+        {
+          "letra": "D",
+          "texto": "960 metros\n31.\nConsidera la función f, con dominio el conjunto de los números reales, definida por\nf(x) = x2 −bx + c. La gráfica de f pasa por los puntos (−p, 0) y (2p, 0), con\np > 0.\n¿En qué cuadrante se encuentra el vértice de la parábola?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el primer cuadrante"
+        },
+        {
+          "letra": "B",
+          "texto": "En el segundo cuadrante"
+        },
+        {
+          "letra": "C",
+          "texto": "En el tercer cuadrante"
+        },
+        {
+          "letra": "D",
+          "texto": "En el cuarto cuadrante\n32.\nLa radiación emitida por un cuerpo negro, en W\nm2, se puede calcular como σ · T4,\ntal que T es su temperatura en Kelvin (K) y σ es una constante.\nUn cuerpo negro que emite una radiación de 5,678 W\nm2 tiene una temperatura\nde 100 K.\n¿Cuál es la radiación de un cuerpo negro que tiene una temperatura de 200 K?"
+        },
+        {
+          "letra": "A",
+          "texto": "11,356 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "34,068 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "45,424 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "90,848 W\nm2\n33.\nConsidera el triángulo rectángulo ABC de la figura adjunta, al que se le ha trazado su\naltura CD.\nPara calcular la medida de CD, se realiza el siguiente procedimiento, en el cual se\ncomete un error.\nPaso 1: se calcula la medida de AB como\n√\n32 + 42 y se obtiene que mide 5 cm.\nPaso 2: se aplica el teorema de Pitágoras en los triángulos ADC y CDB y se\nobtienen las igualdades 42 + AD2 = CD2 y 32 + (5 −AD)2 = CD2,\nrespectivamente.\nPaso 3: se igualan las ecuaciones obtenidas en el Paso 2 y, al resolver la ecuación\n42 + AD2 = 32 + (5 −AD)2, se obtiene que AD = 9\n5 cm.\nPaso 4: se reemplaza el valor de AD en la igualdad 42 + AD2 = CD2 y, al\ndespejar, se obtiene que CD =\n√\ncm.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n34.\nSobre un cuadrado de lado L cm y centro O, se dibuja otro cuadrado de centro O,\ncuyo lado es a\nb\ndel lado del cuadrado anterior, con a y b números enteros positivos.\nLuego, se pinta de color gris la superficie delimitada por los contornos de estos dos\ncuadrados, tal como se representa a continuación:\nLuego, sobre esta figura, se dibuja otro cuadrado de centro O cuyo lado es a\nb\ndel lado\ndel último cuadrado dibujado y se pinta la superficie delimitada por los contornos de\nestos cuadrados, tal como se representa a continuación:\nSi se repite cinco veces el proceso de pintar la superficie delimitada entre los\ncuadrados, ¿cuál es el área, en cm2, de la última superficie pintada?"
+        },
+        {
+          "letra": "A",
+          "texto": "L2\nÅ\u0010a\nb\n\u00114\n−\n\u0010a\nb\n\u00115ã"
+        },
+        {
+          "letra": "B",
+          "texto": "L2\nÅ\u0010a\nb\n\u00115\n−\n\u0010a\nb\n\u00114ã"
+        },
+        {
+          "letra": "C",
+          "texto": "L2\nÅ\u0010a\nb\n\u001110\n−\n\u0010a\nb\n\u00118ã"
+        },
+        {
+          "letra": "D",
+          "texto": "L2\nÅ\u0010a\nb\n\u00118\n−\n\u0010a\nb\n\u001110ã\n35.\nJulieta compró un espejo con forma de hexágono regular, el cual está inscrito en una\nbase circular de madera de 40 cm de diámetro, tal como se representa en la siguiente\nfigura.\nPara que el espejo combine con la decoración de su baño, cubrirá las partes visibles\nde la base de madera con un mosaico de cerámicas.\n¿Cuál es el área de la base de madera que debe cubrir Julieta con el mosaico de\ncerámicas, en cm2?"
+        },
+        {
+          "letra": "A",
+          "texto": "400π −600\n√"
+        },
+        {
+          "letra": "B",
+          "texto": "400π −100\n√"
+        },
+        {
+          "letra": "C",
+          "texto": "1600π −1200\n√"
+        },
+        {
+          "letra": "D",
+          "texto": "1600π −600\n√\n36.\nSe colocan 27 cubos de hielo de arista a\n2 cm en un recipiente cúbico de arista\ninterior 9a\n2 cm.\nSe sabe que cuando el agua se congela, su volumen aumenta en un 10 %.\nSi se considera que no se evapora el agua en el proceso, ¿a qué altura del recipiente,\nen centímetros, llega el agua una vez que los hielos se derriten?"
+        },
+        {
+          "letra": "A",
+          "texto": "33a"
+        },
+        {
+          "letra": "B",
+          "texto": "60a"
+        },
+        {
+          "letra": "C",
+          "texto": "11a"
+        },
+        {
+          "letra": "D",
+          "texto": "10a\n37.\nEn el gráfico de la figura adjunta se representan los vectores\n→u,\n→v y\n→w.\n¿Cuáles son las coordenadas del vector\n→v −\nÄ→u +2\n→w\nä\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "(−6, 1)"
+        },
+        {
+          "letra": "B",
+          "texto": "(0, 5)"
+        },
+        {
+          "letra": "C",
+          "texto": "(0, −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "(0, 7)\n38.\nSe simula un sistema planetario, en dos dimensiones, compuesto por un planeta\n(circunferencia grande) y una luna (circunferencia pequeña) en un plano cartesiano.\nCada minuto, el planeta rota en torno al origen del sistema cartesiano y en sentido\nantihorario y la luna rota en torno al centro del planeta y en sentido horario, tal como\nse ejemplifica en la siguiente figura:\nConsidera la posición del planeta transcurridos 5 minutos.\n¿Cuál de las siguientes imágenes representa mejor la posición de la luna con respecto\nal planeta en ese momento?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n39.\nSe dibuja un triángulo en el primer cuadrante del plano cartesiano.\nSi a este triángulo se le aplica una homotecia de razón −p\ncon centro en el origen del\nplano cartesiano, ¿cuál de las siguientes afirmaciones se puede deducir en relación\ncon el triángulo homotético?"
+        },
+        {
+          "letra": "A",
+          "texto": "Cuando p = 4, su perímetro es el doble del perímetro del original."
+        },
+        {
+          "letra": "B",
+          "texto": "Cuando p = 2, su área es mayor que el área del original."
+        },
+        {
+          "letra": "C",
+          "texto": "Cuando p < 0, su perímetro es menor que el perímetro del original."
+        },
+        {
+          "letra": "D",
+          "texto": "Cuando p > 0, se ubica en el primer cuadrante.\n40.\nEl diámetro del sol se puede estimar con una homotecia usando una caja con un\norificio como se representa en la siguiente figura:\nLa proyección del sol en la caja es un círculo que tiene diámetro d centímetros,\n¿cuál de las siguientes expresiones representa el diámetro del sol, en kilómetros?"
+        },
+        {
+          "letra": "A",
+          "texto": "L\nD · d"
+        },
+        {
+          "letra": "B",
+          "texto": "L\nd · D"
+        },
+        {
+          "letra": "C",
+          "texto": "d\nL · D"
+        },
+        {
+          "letra": "D",
+          "texto": "d\nL\n41.\nUn cuadrado de lado L ubicado sobre los ejes del plano cartesiano se rota en sentido\nhorario en torno a uno de sus vértices, tal como se representa en la siguiente figura:\n¿Cuál es la coordenada x del punto P luego de la rotación?"
+        },
+        {
+          "letra": "A",
+          "texto": "L · cos(θ)"
+        },
+        {
+          "letra": "B",
+          "texto": "L · sen(θ)"
+        },
+        {
+          "letra": "C",
+          "texto": "L −L · cos(θ)"
+        },
+        {
+          "letra": "D",
+          "texto": "L −L · sen(θ)\n42.\nCuando un rayo de luz pasa de un medio a otro, el ángulo de incidencia θ1 en el\nprimer medio y el ángulo de refracción θ2 con el que entra al otro medio son distintos.\nEste cambio de ángulo depende de los índices de refracción (n1 y n2) de ambos\nmedios, y está dado por la ecuación n1 · sen(θ1) = n2 · sen(θ2).\nLa siguiente figura representa esta situación:\nConsidera un rayo que pasa de un medio de índice de refracción m a otro de índice\nde refracción p, tal que la medida del ángulo de incidencia es el doble de la medida\ndel ángulo de refracción.\nSi para todo ángulo α se cumple que sen(2α) = 2 · sen(α) · cos(α), ¿cuál de las\nsiguientes expresiones representa al coseno del ángulo de refracción?"
+        },
+        {
+          "letra": "A",
+          "texto": "2p\nm"
+        },
+        {
+          "letra": "B",
+          "texto": "2m\np"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n2p"
+        },
+        {
+          "letra": "D",
+          "texto": "p\n2m\n43.\nEn el siguiente histograma se representan los resultados de una encuesta en la que\nse le preguntó a un grupo de 400 estudiantes cuántas horas estudian semanalmente.\n¿Cuál de las siguientes tablas de frecuencia representa los resultados de la encuesta?"
+        },
+        {
+          "letra": "A",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes"
+        },
+        {
+          "letra": "B",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes\n[1, 2[\n[1, 2[\n[2, 3[\n[2, 3[\n[3, 4[\n[3, 4[\n[4, 5[\n[4, 5[\n[5, 6[\n[5, 6[\n[6, 7]\n[6, 7]"
+        },
+        {
+          "letra": "C",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes"
+        },
+        {
+          "letra": "D",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes\n[1, 2[\n[1, 2[\n[2, 3[\n[2, 3[\n[3, 4[\n[3, 4[\n[4, 5[\n[4, 5[\n[5, 6[\n[5, 6[\n[6,7]\n[6, 7]\n44.\nUna prueba tiene un puntaje máximo de 60 puntos. La calificación, en términos del\npuntaje P obtenido, se calcula mediante las siguientes expresiones:\n• Para puntajes menores o iguales que 36 puntos: P −36\n+ 4\n• Para puntajes mayores que 36 puntos: P −60\n+ 7\nConsidera que los estudiantes de un curso que obtuvieron la menor y mayor\ncalificación en la prueba lograron un 40 %\ny un 80 %\ndel puntaje máximo,\nrespectivamente.\n¿Cuál es la diferencia entre la calificación mayor y la calificación menor de los\nestudiantes de este curso?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,0"
+        },
+        {
+          "letra": "B",
+          "texto": "2,5"
+        },
+        {
+          "letra": "C",
+          "texto": "3,0"
+        },
+        {
+          "letra": "D",
+          "texto": "4,5\n45.\nEn la siguiente figura se presentan los diagramas de cajón de una característica para\ntres grupos de datos, A, B y C.\n¿Cuál de los siguientes argumentos justifica que el rango intercuartílico de los datos\ndel grupo C es menor que el rango intercuartílico de los datos del grupo A y que el\nrango intercuartílico de los datos del grupo B?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que la diferencia entre el valor máximo y mínimo de C es menor que la diferencia\nentre el valor máximo y mínimo de A y de B."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el cuartil 1 es el mismo para los tres grupos de datos y el cuartil 3 de C es\nmenor que el cuartil 3 de A y de B."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la diferencia entre el percentil 75 y el valor máximo de C es menor que la de\nA y de B."
+        },
+        {
+          "letra": "D",
+          "texto": "Que el cuartil 3 de C es menor que el cuartil 3 de A y de B y el cuartil 2 es el\nmismo para los tres grupos de datos."
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "Considera los datos 4, 8, 5, p y q, cuyo promedio es 5.\n¿Cuál de las siguientes condiciones permite asegurar que su desviación estándar es\nmenor que 5?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p = q"
+        },
+        {
+          "letra": "B",
+          "texto": "pq < 100"
+        },
+        {
+          "letra": "C",
+          "texto": "p + q = 8"
+        },
+        {
+          "letra": "D",
+          "texto": "p < 8 −q"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "Se dibujaron varias figuras siguiendo una secuencia de puntos, tal como se representa\nen la siguiente imagen:\nSi se dibujaron 1000 figuras siguiendo esta secuencia y se selecciona una de ellas al\nazar, ¿cuál es la probabilidad de que esta tenga dibujados al menos 32 puntos?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 48,
+      "enunciado": "En un juego se tiene una bolsa con seis bolas numeradas del 1 al 6, todas del mismo\ntipo. Para su desarrollo se dejan caer al azar las bolas por un tubo, llegando hasta un\ntope que determina el orden final, tal como se representa a continuación:\nSe gana el juego si se obtiene una secuencia que comience y termine con un\nnúmero par.\n¿Cuál es la probabilidad de ganar en el juego?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 49,
+      "enunciado": "En un juego de lotería cada cartón tiene tres números del 1 al 99, los cuales no se\nrepiten. Este juego se gana si los tres números que se sortean coinciden con los\nnúmeros del cartón.\nUna persona compró un cartón que tiene los siguientes números:\nSi los números ganadores se eligen al azar, no se repiten y no importa el orden en\nque estos se saquen, ¿cuál es la probabilidad de que la persona gane?\nA)\nB)\n99 · 98 · 97\nC)\n99 · 98 · 97\nD)\n99 · 98 · 97",
+      "alternativas": []
+    },
+    {
+      "numero": 50,
+      "enunciado": "Se encuestó a un grupo de estudiantes para conocer qué sabor de helados les gusta\nentre vainilla y chocolate, y todos ellos señalaron al menos uno de estos sabores.\nDe acuerdo con los resultados de la encuesta, se sabe que si se escoge a un\nestudiante del grupo al azar, la probabilidad de que le guste el helado de vainilla y\nel helado de chocolate es 0,15, y la probabilidad de que le guste solo el helado de\nchocolate es 0,70.\nSi se escoge al azar a un estudiante del grupo, ¿cuál es la probabilidad de que le\nguste el helado de chocolate dado que le gusta el helado de vainilla?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 51,
+      "enunciado": "En un grupo de 100 hombres y 100 mujeres, cada uno de ellos tiene un piercing o\ntatuajes, pero no ambos. De los hombres, 25 indican tener piercing y el resto tener\ntatuajes; de las mujeres, 35 indican tener piercing y el resto declara tener tatuajes.\nSi se selecciona al azar a una persona de las entrevistadas, ¿cuál es la probabilidad\nde que esta persona sea hombre dado que tiene tatuajes?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 52,
+      "enunciado": "Considera la igualdad z = log a\nb 5 + log b\na.\nSe puede determinar el valor de z, si se conoce el valor de:\n(1)\nab\n(2)\na\nb",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Considera los números reales x e y, con x̸ = y y x̸ = −y.\nSe puede determinar el número que representa la expresión\n\u0000x2 −y2\u00012\n(x + y)2 , si se\nsabe que:\n(1)\nx −y = 10\n(2)\nx + y = 6",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 55,
+      "enunciado": "dB\n45 dB\n¿Cuál es el máximo permisible de intensidad acústica en zonas residenciales a las\n23:00?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "10−6,5 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "10−7,5 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "107,5 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "1016,5 W\nm2\n13.\n¿Cuál de las siguientes expresiones es igual a\nn»\n(3n)2 · 6(n2) · 4n?"
+        },
+        {
+          "letra": "A",
+          "texto": "62n2"
+        },
+        {
+          "letra": "B",
+          "texto": "6n+2"
+        },
+        {
+          "letra": "C",
+          "texto": "3n · 6n · 4"
+        },
+        {
+          "letra": "D",
+          "texto": "32 · 62n · 4\n14.\nEn cierto tipo de cuenta de ahorro, una institución financiera ofrece un interés\ncompuesto mensual de 1,5 % al capital que se deposite.\nUna persona abre una de estas cuentas de ahorro y deposita un capital inicial de\n$350 000 y lo tiene tres meses sin realizar retiros ni depósitos.\n¿Cuál de las siguientes expresiones representa el interés que se produce en ese\nperiodo de tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$350 000 · 0,0153"
+        },
+        {
+          "letra": "B",
+          "texto": "$350 000 · 1,153"
+        },
+        {
+          "letra": "C",
+          "texto": "$350 000 · (1,0153 −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "$350 000 · (1,153 −1)\n15.\n¿Cuál de las siguientes expresiones es igual a (3a + 5b)(5b −3a) −(5b −3a)2?"
+        },
+        {
+          "letra": "A",
+          "texto": "−30ab"
+        },
+        {
+          "letra": "B",
+          "texto": "6a (5b −3a)"
+        },
+        {
+          "letra": "C",
+          "texto": "10b (3a −5b)"
+        },
+        {
+          "letra": "D",
+          "texto": "2 (9a2 −25b2 −15ab)\n16.\nUna persona compró un marco de p cm de largo para colocar una foto cuyos\nlados están en razón 16 : 9 y que aún no imprime. Debe dejarle un paspartú de\ntres centímetros, el cual corresponde a un espacio en blanco entre el marco y la foto,\ntal como se representa en la siguiente figura:\nPara imprimir la foto del tamaño correcto y sin perder su proporción, le piden la medida\nde la diagonal que tiene que tener la foto en pulgadas.\nSi una pulgada es equivalente a 2,54 centímetros, ¿cuál de las siguientes expresiones\nrepresenta la medida de la diagonal que tiene que entregar, en pulgadas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p ·\n…337"
+        },
+        {
+          "letra": "B",
+          "texto": "2,54 · (p −6) ·\n…337"
+        },
+        {
+          "letra": "C",
+          "texto": "(p −6) ·\n…337\n2,54"
+        },
+        {
+          "letra": "D",
+          "texto": "p ·\n…337\n2,54\n17.\nEn la siguiente figura se representa la gráfica de una relación de proporcionalidad\ninversa y la gráfica de una relación de proporcionalidad directa.\n¿Cuál de las siguientes expresiones es igual a m\nc\n, en términos de b y q?"
+        },
+        {
+          "letra": "A",
+          "texto": "q\nb"
+        },
+        {
+          "letra": "B",
+          "texto": "q2\nb2"
+        },
+        {
+          "letra": "C",
+          "texto": "b\nq"
+        },
+        {
+          "letra": "D",
+          "texto": "b\nq2\n18.\nEl volumen y la presión de un gas se comportan de manera inversamente proporcional\ncuando la temperatura es constante.\nEn el siguiente gráfico se presentan algunos valores del comportamiento de un gas\nen particular.\nSi se considera que el gas tiene una presión de p atmósferas, ¿cuál de las siguientes\nexpresiones representa la variación absoluta en el volumen del gas, en litros, cuando\nla presión disminuye en dos atmósferas?"
+        },
+        {
+          "letra": "A",
+          "texto": "p −2"
+        },
+        {
+          "letra": "B",
+          "texto": "C)\np −2"
+        },
+        {
+          "letra": "D",
+          "texto": "p(p −2)\n19.\nLa densidad ρ de un cuerpo, en gramos por centímetro cúbico, se calcula como\nρ = m\nV\n, tal que m es la masa del cuerpo, en gramos, y V es su volumen,\nen centímetros cúbicos.\nConsidera dos esferas macizas, una de plata de densidad ρplata = 10,5\ng\ncm3 y la\notra de piedra de alabastro de densidad ρalabastro = 2,7\ng\ncm3.\nSi ambas esferas tienen un volumen de 81 cm3, ¿cuál es la diferencia positiva de\nsus masas?"
+        },
+        {
+          "letra": "A",
+          "texto": "1069,2 g"
+        },
+        {
+          "letra": "B",
+          "texto": "850,5 g"
+        },
+        {
+          "letra": "C",
+          "texto": "631,8 g"
+        },
+        {
+          "letra": "D",
+          "texto": "218,7 g\n20.\nConsidera la inecuación 2 (5 −3x) ≥−1\n.\n¿Cuál de los siguientes gráficos representa el conjunto solución de la inecuación?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n21.\nEl costo de producción de un artículo es de $14 000 por unidad, además de un\ncosto fijo de $260 000.\nSi se venden todos los artículos producidos a $25 000 cada uno, ¿cuál de las\nsiguientes inecuaciones permite determinar el intervalo de las cantidades x de\nartículos que se deben producir para obtener una ganancia de al menos $3 000 000?"
+        },
+        {
+          "letra": "A",
+          "texto": "25 000x −14 000x ≤3 000 000 −260 000"
+        },
+        {
+          "letra": "B",
+          "texto": "25 000x −14 000x ≤3 000 000 + 260 000"
+        },
+        {
+          "letra": "C",
+          "texto": "25 000x −14 000x ≥3 000 000 −260 000"
+        },
+        {
+          "letra": "D",
+          "texto": "25 000x −14 000x ≥3 000 000 + 260 000\n22.\nConsidera la inecuación 2\n3x + r\n4 < x\n6 −5\n, en x, tal que su conjunto solución es\nò\n−∞, −1\nï\ny r es un número real.\n¿Cuál es el valor de r?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "−1"
+        },
+        {
+          "letra": "D",
+          "texto": "−1\n23.\nPara medir la temperatura se utilizan comúnmente las escalas Celsius, Fahrenheit y\nKelvin.\nConsidera que la relación entre grados Celsius (c) y grados Fahrenheit (f) está dada\npor la ecuación c = 5\n9 · (f −32).\nPara transformar de grados Celsius a Kelvin (k) hay que sumar 273,15 a la magnitud\nen grados Celsius.\n¿Cuál de las siguientes ecuaciones relaciona correctamente la temperatura en Kelvin\ncon la temperatura en grados Fahrenheit?"
+        },
+        {
+          "letra": "A",
+          "texto": "f = 9\n5 · (k + 273,15) + 32"
+        },
+        {
+          "letra": "B",
+          "texto": "f = 9\n5 · (k −273,15) + 32"
+        },
+        {
+          "letra": "C",
+          "texto": "f = 9\n5 · k + 273,15 + 32"
+        },
+        {
+          "letra": "D",
+          "texto": "f = 9\n5 · k −273,15 + 32\n24.\nUna persona viajó en vehículo a la playa recorriendo dos tramos de igual longitud.\nEl primer tramo lo recorrió con una rapidez media de 120 km\nh\ny el segundo tramo,\ncon una rapidez media de 80 km\nh\n, recorriendo ambos tramos en un total de 6 horas.\n¿Cuánto tiempo más demoró en recorrer el segundo tramo en comparación con\nel primero?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 h 50 min"
+        },
+        {
+          "letra": "B",
+          "texto": "2 h 30 min"
+        },
+        {
+          "letra": "C",
+          "texto": "1 h 20 min"
+        },
+        {
+          "letra": "D",
+          "texto": "1 h 12 min\n25.\nUna persona tiene 50 monedas, algunas de $500 y otras de $100, tal que todas juntas\nmasan 375 g. Para determinar cuánto dinero tiene, establece lo siguiente:\nEsta persona añade cinco monedas de $500 a lo que ya tenía, y plantea un nuevo\nsistema de ecuaciones, en el que x e y reflejan la cantidad actual de monedas\nde cada tipo que tiene.\n¿Cuál de los siguientes sistemas permite determinar los valores de x e y actualizados?"
+        },
+        {
+          "letra": "A",
+          "texto": "(x + 5) + y = 50\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "B",
+          "texto": "x + (y + 5) = 50\n6,5x + 9y = 375 + 5 · 9"
+        },
+        {
+          "letra": "C",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 6,5"
+        },
+        {
+          "letra": "D",
+          "texto": "x + y = 50 + 5\n6,5x + 9y = 375 + 5 · 9\n26.\nEn una panadería, el precio de venta del kilogramo de pan es de $p, el cual se calcula\npara obtener un 25 % de ganancia sobre el costo de producción.\nSi el costo de producción aumenta en $q y se quiere seguir obteniendo un 25 % de\nganancia sobre este, ¿cuál de las siguientes funciones modela el nuevo precio de\nventa de x kilogramos de pan?"
+        },
+        {
+          "letra": "A",
+          "texto": "h(x) = (p + 1,25q) · x"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = (p + q) · 1,25x"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = (0,75p + q) · x"
+        },
+        {
+          "letra": "D",
+          "texto": "m(x) = (0,25p + q) · x\n27.\nConsidera la función f definida por f(x) = ax2 + bx + c, tal que a, b y c son números\nreales distintos de cero.\n¿Cuál de las siguientes funciones representa la gráfica de la función f reflejada con\nrespecto al eje X?"
+        },
+        {
+          "letra": "A",
+          "texto": "p(x) = −ax2 + bx + c"
+        },
+        {
+          "letra": "B",
+          "texto": "q(x) = −ax2 −bx −c"
+        },
+        {
+          "letra": "C",
+          "texto": "s(x) = −ax2 + bx −c"
+        },
+        {
+          "letra": "D",
+          "texto": "t(x) = ax2 −bx + c\n28.\nConsidera la gráfica de la función cuadrática f, con dominio el conjunto de los números\nreales, de la forma f(x) = ax2 + bx + c.\n¿Cuál de las siguientes expresiones es igual a b?"
+        },
+        {
+          "letra": "A",
+          "texto": "−3a"
+        },
+        {
+          "letra": "B",
+          "texto": "−3\n2a"
+        },
+        {
+          "letra": "C",
+          "texto": "2a"
+        },
+        {
+          "letra": "D",
+          "texto": "3a\n29.\nConsidera la función f definida por f(x) = 2x2 + (2k + 1)x + k + 9\n, tal que k es\nun número real.\nSi la coordenada x del vértice es −5\n, ¿cuál es la coordenada y del vértice?"
+        },
+        {
+          "letra": "A",
+          "texto": "−8"
+        },
+        {
+          "letra": "B",
+          "texto": "−17"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nEn las especificaciones de un cohete en miniatura, se registra una función que modela\nla altura que alcanzaría el cohete desde su lanzamiento hasta que toca el suelo.\nLa función registrada es h(x) = −5x2 + 80x, tal que h representa la altura,\nen metros, con respecto al tiempo x transcurrido desde que fue lanzado el cohete,\nen segundos.\n¿Cuál es la altura máxima que alcanzaría este cohete?"
+        },
+        {
+          "letra": "A",
+          "texto": "320 metros"
+        },
+        {
+          "letra": "B",
+          "texto": "560 metros"
+        },
+        {
+          "letra": "C",
+          "texto": "700 metros"
+        },
+        {
+          "letra": "D",
+          "texto": "960 metros\n31.\nConsidera la función f, con dominio el conjunto de los números reales, definida por\nf(x) = x2 −bx + c. La gráfica de f pasa por los puntos (−p, 0) y (2p, 0), con\np > 0.\n¿En qué cuadrante se encuentra el vértice de la parábola?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el primer cuadrante"
+        },
+        {
+          "letra": "B",
+          "texto": "En el segundo cuadrante"
+        },
+        {
+          "letra": "C",
+          "texto": "En el tercer cuadrante"
+        },
+        {
+          "letra": "D",
+          "texto": "En el cuarto cuadrante\n32.\nLa radiación emitida por un cuerpo negro, en W\nm2, se puede calcular como σ · T4,\ntal que T es su temperatura en Kelvin (K) y σ es una constante.\nUn cuerpo negro que emite una radiación de 5,678 W\nm2 tiene una temperatura\nde 100 K.\n¿Cuál es la radiación de un cuerpo negro que tiene una temperatura de 200 K?"
+        },
+        {
+          "letra": "A",
+          "texto": "11,356 W\nm2"
+        },
+        {
+          "letra": "B",
+          "texto": "34,068 W\nm2"
+        },
+        {
+          "letra": "C",
+          "texto": "45,424 W\nm2"
+        },
+        {
+          "letra": "D",
+          "texto": "90,848 W\nm2\n33.\nConsidera el triángulo rectángulo ABC de la figura adjunta, al que se le ha trazado su\naltura CD.\nPara calcular la medida de CD, se realiza el siguiente procedimiento, en el cual se\ncomete un error.\nPaso 1: se calcula la medida de AB como\n√\n32 + 42 y se obtiene que mide 5 cm.\nPaso 2: se aplica el teorema de Pitágoras en los triángulos ADC y CDB y se\nobtienen las igualdades 42 + AD2 = CD2 y 32 + (5 −AD)2 = CD2,\nrespectivamente.\nPaso 3: se igualan las ecuaciones obtenidas en el Paso 2 y, al resolver la ecuación\n42 + AD2 = 32 + (5 −AD)2, se obtiene que AD = 9\n5 cm.\nPaso 4: se reemplaza el valor de AD en la igualdad 42 + AD2 = CD2 y, al\ndespejar, se obtiene que CD =\n√\ncm.\n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n34.\nSobre un cuadrado de lado L cm y centro O, se dibuja otro cuadrado de centro O,\ncuyo lado es a\nb\ndel lado del cuadrado anterior, con a y b números enteros positivos.\nLuego, se pinta de color gris la superficie delimitada por los contornos de estos dos\ncuadrados, tal como se representa a continuación:\nLuego, sobre esta figura, se dibuja otro cuadrado de centro O cuyo lado es a\nb\ndel lado\ndel último cuadrado dibujado y se pinta la superficie delimitada por los contornos de\nestos cuadrados, tal como se representa a continuación:\nSi se repite cinco veces el proceso de pintar la superficie delimitada entre los\ncuadrados, ¿cuál es el área, en cm2, de la última superficie pintada?"
+        },
+        {
+          "letra": "A",
+          "texto": "L2\nÅ\u0010a\nb\n\u00114\n−\n\u0010a\nb\n\u00115ã"
+        },
+        {
+          "letra": "B",
+          "texto": "L2\nÅ\u0010a\nb\n\u00115\n−\n\u0010a\nb\n\u00114ã"
+        },
+        {
+          "letra": "C",
+          "texto": "L2\nÅ\u0010a\nb\n\u001110\n−\n\u0010a\nb\n\u00118ã"
+        },
+        {
+          "letra": "D",
+          "texto": "L2\nÅ\u0010a\nb\n\u00118\n−\n\u0010a\nb\n\u001110ã\n35.\nJulieta compró un espejo con forma de hexágono regular, el cual está inscrito en una\nbase circular de madera de 40 cm de diámetro, tal como se representa en la siguiente\nfigura.\nPara que el espejo combine con la decoración de su baño, cubrirá las partes visibles\nde la base de madera con un mosaico de cerámicas.\n¿Cuál es el área de la base de madera que debe cubrir Julieta con el mosaico de\ncerámicas, en cm2?"
+        },
+        {
+          "letra": "A",
+          "texto": "400π −600\n√"
+        },
+        {
+          "letra": "B",
+          "texto": "400π −100\n√"
+        },
+        {
+          "letra": "C",
+          "texto": "1600π −1200\n√"
+        },
+        {
+          "letra": "D",
+          "texto": "1600π −600\n√\n36.\nSe colocan 27 cubos de hielo de arista a\n2 cm en un recipiente cúbico de arista\ninterior 9a\n2 cm.\nSe sabe que cuando el agua se congela, su volumen aumenta en un 10 %.\nSi se considera que no se evapora el agua en el proceso, ¿a qué altura del recipiente,\nen centímetros, llega el agua una vez que los hielos se derriten?"
+        },
+        {
+          "letra": "A",
+          "texto": "33a"
+        },
+        {
+          "letra": "B",
+          "texto": "60a"
+        },
+        {
+          "letra": "C",
+          "texto": "11a"
+        },
+        {
+          "letra": "D",
+          "texto": "10a\n37.\nEn el gráfico de la figura adjunta se representan los vectores\n→u,\n→v y\n→w.\n¿Cuáles son las coordenadas del vector\n→v −\nÄ→u +2\n→w\nä\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "(−6, 1)"
+        },
+        {
+          "letra": "B",
+          "texto": "(0, 5)"
+        },
+        {
+          "letra": "C",
+          "texto": "(0, −1)"
+        },
+        {
+          "letra": "D",
+          "texto": "(0, 7)\n38.\nSe simula un sistema planetario, en dos dimensiones, compuesto por un planeta\n(circunferencia grande) y una luna (circunferencia pequeña) en un plano cartesiano.\nCada minuto, el planeta rota en torno al origen del sistema cartesiano y en sentido\nantihorario y la luna rota en torno al centro del planeta y en sentido horario, tal como\nse ejemplifica en la siguiente figura:\nConsidera la posición del planeta transcurridos 5 minutos.\n¿Cuál de las siguientes imágenes representa mejor la posición de la luna con respecto\nal planeta en ese momento?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n39.\nSe dibuja un triángulo en el primer cuadrante del plano cartesiano.\nSi a este triángulo se le aplica una homotecia de razón −p\ncon centro en el origen del\nplano cartesiano, ¿cuál de las siguientes afirmaciones se puede deducir en relación\ncon el triángulo homotético?"
+        },
+        {
+          "letra": "A",
+          "texto": "Cuando p = 4, su perímetro es el doble del perímetro del original."
+        },
+        {
+          "letra": "B",
+          "texto": "Cuando p = 2, su área es mayor que el área del original."
+        },
+        {
+          "letra": "C",
+          "texto": "Cuando p < 0, su perímetro es menor que el perímetro del original."
+        },
+        {
+          "letra": "D",
+          "texto": "Cuando p > 0, se ubica en el primer cuadrante.\n40.\nEl diámetro del sol se puede estimar con una homotecia usando una caja con un\norificio como se representa en la siguiente figura:\nLa proyección del sol en la caja es un círculo que tiene diámetro d centímetros,\n¿cuál de las siguientes expresiones representa el diámetro del sol, en kilómetros?"
+        },
+        {
+          "letra": "A",
+          "texto": "L\nD · d"
+        },
+        {
+          "letra": "B",
+          "texto": "L\nd · D"
+        },
+        {
+          "letra": "C",
+          "texto": "d\nL · D"
+        },
+        {
+          "letra": "D",
+          "texto": "d\nL\n41.\nUn cuadrado de lado L ubicado sobre los ejes del plano cartesiano se rota en sentido\nhorario en torno a uno de sus vértices, tal como se representa en la siguiente figura:\n¿Cuál es la coordenada x del punto P luego de la rotación?"
+        },
+        {
+          "letra": "A",
+          "texto": "L · cos(θ)"
+        },
+        {
+          "letra": "B",
+          "texto": "L · sen(θ)"
+        },
+        {
+          "letra": "C",
+          "texto": "L −L · cos(θ)"
+        },
+        {
+          "letra": "D",
+          "texto": "L −L · sen(θ)\n42.\nCuando un rayo de luz pasa de un medio a otro, el ángulo de incidencia θ1 en el\nprimer medio y el ángulo de refracción θ2 con el que entra al otro medio son distintos.\nEste cambio de ángulo depende de los índices de refracción (n1 y n2) de ambos\nmedios, y está dado por la ecuación n1 · sen(θ1) = n2 · sen(θ2).\nLa siguiente figura representa esta situación:\nConsidera un rayo que pasa de un medio de índice de refracción m a otro de índice\nde refracción p, tal que la medida del ángulo de incidencia es el doble de la medida\ndel ángulo de refracción.\nSi para todo ángulo α se cumple que sen(2α) = 2 · sen(α) · cos(α), ¿cuál de las\nsiguientes expresiones representa al coseno del ángulo de refracción?"
+        },
+        {
+          "letra": "A",
+          "texto": "2p\nm"
+        },
+        {
+          "letra": "B",
+          "texto": "2m\np"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n2p"
+        },
+        {
+          "letra": "D",
+          "texto": "p\n2m\n43.\nEn el siguiente histograma se representan los resultados de una encuesta en la que\nse le preguntó a un grupo de 400 estudiantes cuántas horas estudian semanalmente.\n¿Cuál de las siguientes tablas de frecuencia representa los resultados de la encuesta?"
+        },
+        {
+          "letra": "A",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes"
+        },
+        {
+          "letra": "B",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes\n[1, 2[\n[1, 2[\n[2, 3[\n[2, 3[\n[3, 4[\n[3, 4[\n[4, 5[\n[4, 5[\n[5, 6[\n[5, 6[\n[6, 7]\n[6, 7]"
+        },
+        {
+          "letra": "C",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes"
+        },
+        {
+          "letra": "D",
+          "texto": "Horas de\nestudio semanal\nCantidad de\nestudiantes\n[1, 2[\n[1, 2[\n[2, 3[\n[2, 3[\n[3, 4[\n[3, 4[\n[4, 5[\n[4, 5[\n[5, 6[\n[5, 6[\n[6,7]\n[6, 7]\n44.\nUna prueba tiene un puntaje máximo de 60 puntos. La calificación, en términos del\npuntaje P obtenido, se calcula mediante las siguientes expresiones:\n• Para puntajes menores o iguales que 36 puntos: P −36\n+ 4\n• Para puntajes mayores que 36 puntos: P −60\n+ 7\nConsidera que los estudiantes de un curso que obtuvieron la menor y mayor\ncalificación en la prueba lograron un 40 %\ny un 80 %\ndel puntaje máximo,\nrespectivamente.\n¿Cuál es la diferencia entre la calificación mayor y la calificación menor de los\nestudiantes de este curso?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,0"
+        },
+        {
+          "letra": "B",
+          "texto": "2,5"
+        },
+        {
+          "letra": "C",
+          "texto": "3,0"
+        },
+        {
+          "letra": "D",
+          "texto": "4,5\n45.\nEn la siguiente figura se presentan los diagramas de cajón de una característica para\ntres grupos de datos, A, B y C.\n¿Cuál de los siguientes argumentos justifica que el rango intercuartílico de los datos\ndel grupo C es menor que el rango intercuartílico de los datos del grupo A y que el\nrango intercuartílico de los datos del grupo B?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que la diferencia entre el valor máximo y mínimo de C es menor que la diferencia\nentre el valor máximo y mínimo de A y de B."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el cuartil 1 es el mismo para los tres grupos de datos y el cuartil 3 de C es\nmenor que el cuartil 3 de A y de B."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la diferencia entre el percentil 75 y el valor máximo de C es menor que la de\nA y de B."
+        },
+        {
+          "letra": "D",
+          "texto": "Que el cuartil 3 de C es menor que el cuartil 3 de A y de B y el cuartil 2 es el\nmismo para los tres grupos de datos.\n46.\nConsidera los datos 4, 8, 5, p y q, cuyo promedio es 5.\n¿Cuál de las siguientes condiciones permite asegurar que su desviación estándar es\nmenor que 5?"
+        },
+        {
+          "letra": "A",
+          "texto": "p = q"
+        },
+        {
+          "letra": "B",
+          "texto": "pq < 100"
+        },
+        {
+          "letra": "C",
+          "texto": "p + q = 8"
+        },
+        {
+          "letra": "D",
+          "texto": "p < 8 −q\n47.\nSe dibujaron varias figuras siguiendo una secuencia de puntos, tal como se representa\nen la siguiente imagen:\nSi se dibujaron 1000 figuras siguiendo esta secuencia y se selecciona una de ellas al\nazar, ¿cuál es la probabilidad de que esta tenga dibujados al menos 32 puntos?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n48.\nEn un juego se tiene una bolsa con seis bolas numeradas del 1 al 6, todas del mismo\ntipo. Para su desarrollo se dejan caer al azar las bolas por un tubo, llegando hasta un\ntope que determina el orden final, tal como se representa a continuación:\nSe gana el juego si se obtiene una secuencia que comience y termine con un\nnúmero par.\n¿Cuál es la probabilidad de ganar en el juego?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n49.\nEn un juego de lotería cada cartón tiene tres números del 1 al 99, los cuales no se\nrepiten. Este juego se gana si los tres números que se sortean coinciden con los\nnúmeros del cartón.\nUna persona compró un cartón que tiene los siguientes números:\nSi los números ganadores se eligen al azar, no se repiten y no importa el orden en\nque estos se saquen, ¿cuál es la probabilidad de que la persona gane?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)\n99 · 98 · 97"
+        },
+        {
+          "letra": "C",
+          "texto": "99 · 98 · 97"
+        },
+        {
+          "letra": "D",
+          "texto": "99 · 98 · 97\n50.\nSe encuestó a un grupo de estudiantes para conocer qué sabor de helados les gusta\nentre vainilla y chocolate, y todos ellos señalaron al menos uno de estos sabores.\nDe acuerdo con los resultados de la encuesta, se sabe que si se escoge a un\nestudiante del grupo al azar, la probabilidad de que le guste el helado de vainilla y\nel helado de chocolate es 0,15, y la probabilidad de que le guste solo el helado de\nchocolate es 0,70.\nSi se escoge al azar a un estudiante del grupo, ¿cuál es la probabilidad de que le\nguste el helado de chocolate dado que le gusta el helado de vainilla?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n51.\nEn un grupo de 100 hombres y 100 mujeres, cada uno de ellos tiene un piercing o\ntatuajes, pero no ambos. De los hombres, 25 indican tener piercing y el resto tener\ntatuajes; de las mujeres, 35 indican tener piercing y el resto declara tener tatuajes.\nSi se selecciona al azar a una persona de las entrevistadas, ¿cuál es la probabilidad\nde que esta persona sea hombre dado que tiene tatuajes?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n52.\nConsidera la igualdad z = log a\nb 5 + log b\na.\nSe puede determinar el valor de z, si se conoce el valor de:\n(1)\nab\n(2)\na\nb"
+        },
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional\n53.\nConsidera los números reales x e y, con x̸ = y y x̸ = −y.\nSe puede determinar el número que representa la expresión\n\u0000x2 −y2\u00012\n(x + y)2 , si se\nsabe que:\n(1)\nx −y = 10\n(2)\nx + y = 6"
+        },
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional\n54.\nUna persona forrará por completo un cofre utilizando un tipo de tela llamada arpillera.\nEl cofre tiene la forma de un prisma recto de base cuadrada y su tapa tiene la forma\nde la mitad de un cilindro, tal como se representa a continuación:\nConsidera que la arpillera tiene un costo de $3500 por metro cuadrado. Se puede\ndeterminar cuánto le costará forrar el cofre, si se conoce:\n(1)\nla medida del radio del cilindro.\n(2)\nla medida del ancho, alto y largo del cofre."
+        },
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional\n55.\nEn una urna se tienen 5 bolitas entre bolitas azules y rojas, todas del mismo tipo.\nAl extraer dos bolitas sin reposición, se puede determinar la probabilidad de que la\nsegunda sea azul dado que la primera fue roja, si:\n(1)\nal sacar cinco bolitas con reposición se conoce la probabilidad de que\ntodas sean azules.\n(2)\nal sacar dos bolitas sin reposición se conoce la probabilidad de que\nuna sea azul y la otra sea roja."
+        },
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional\n\nIMPORTANTE\n■ Este folleto está protegido bajo Registro de Propiedad Intelectual de la \nUniversidad de Chile.\n■ Está prohibida la reproducción, transmisión total o parcial de este folleto, \npor cualquier medio o método.\n■ Es obligatorio devolver íntegramente este folleto antes de abandonar la \nsala.\n■ Es obligatorio devolver la hoja de respuestas antes de abandonar la sala.\nProceso de Admisión 2 0 2 6"
+        }
+      ]
+    }
+  ]
+}

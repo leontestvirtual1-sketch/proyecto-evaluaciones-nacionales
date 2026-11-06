@@ -1,0 +1,1160 @@
+{
+  "materia": "m1",
+  "year": 2023,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)\n,0\n(\n.",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q .",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": ")\nb\n,a(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del         \n1 al 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "En el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \nSÍMBOLOS MATEMÁTICOS \n \n \nes menor que \n \nes semejante con \n \nes mayor que \n \nes perpendicular a \n \nes menor o igual que \n \nes distinto de \n \nes mayor o igual que \n// \nes paralelo a \n \nángulo recto \n \npertenece a \n \nángulo \nAB \ntrazo AB \nlog \nlogaritmo en base 10 \nx \nvalor absoluto de x \n \nconjunto vacío \nx! \nfactorial de x \n \nes aproximado a \n \nintersección de conjuntos \n \nunión de conjuntos \nu \nvector u \nAc \ncomplemento del conjunto A \n \n \n \n \nRegistro de Propiedad Intelectual Nº 2022-A-6880. \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n \n1. \nPor el arriendo de un juego inflable se cobra una cuota fija de \n$\n por cuatro \nhoras, más \n$\n por cada hora adicional. \n \n¿Cuántas horas como máximo puede arrendar una empresa el juego inflable si \ntiene un presupuesto de \n$\n para este efecto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "4"
+        },
+        {
+          "letra": "B",
+          "texto": "8"
+        },
+        {
+          "letra": "C",
+          "texto": "9"
+        },
+        {
+          "letra": "D",
+          "texto": "10 \n \n \n \n \n \n \n \n2. \nConsidera el número p distinto de cero que es multiplicado dos veces por \n,1\n                  \ny luego, dos veces por \n,0\n, tal como se representa a continuación: \n \n,0\n,0\n,1\n,1\np\n\n\n\n\n \n \n¿Qué pueden representar dichas multiplicaciones, respecto del número original p ?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que hubo dos aumentos del \n%\n y luego, dos disminuciones del \n%\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Que no hubo aumento de p ni disminución de p."
+        },
+        {
+          "letra": "C",
+          "texto": "Que hubo dos aumentos de \n,0\n y luego, dos disminuciones de \n,0\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Que hubo dos aumentos del \n%\n y luego, dos disminuciones del \n%\n. \n \n \n \n \n \n \n \n \n \n \n3. \nEn la figura adjunta se cumple que la suma de los valores de los casilleros \ncontiguos de una fila es igual al valor inmediatamente superior a ellos                  \n(por ejemplo \nf\nq\np\n\n\n). \n \n \n \n \n \n \n \nSi la suma de los tres valores de la última fila es 17 , ¿cuál es el valor de \nf\np \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "12"
+        },
+        {
+          "letra": "B",
+          "texto": "13"
+        },
+        {
+          "letra": "C",
+          "texto": "18"
+        },
+        {
+          "letra": "D",
+          "texto": "4. \nLa automotora “Mi auto” tiene cinco marcas de automóviles, cada marca tiene tres \nmodelos y cada modelo está en tres colores distintos. \n \nLa automotora “Viaje feliz” tiene cuatro marcas de automóviles, cada marca tiene \ntres modelos y cada modelo en cuatro colores distintos. \n \nSi las marcas de los automóviles de las automotoras son distintas entre sí, ¿cuál de \nlas siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "La automotora “Viaje feliz” ofrece tres posibilidades distintas más para elegir \nun automóvil que la automotora “Mi auto”."
+        },
+        {
+          "letra": "B",
+          "texto": "Ambas automotoras ofrecen la misma cantidad de posibilidades distintas \npara elegir un automóvil."
+        },
+        {
+          "letra": "C",
+          "texto": "La automotora “Mi auto” ofrece más posibilidades distintas para elegir un \nautomóvil que la automotora “Viaje feliz”."
+        },
+        {
+          "letra": "D",
+          "texto": "El total de las distintas posibilidades de elegir un automóvil está \ndeterminado por la suma entre la cantidad de marcas, de modelos y de \ncolores. \n \n \nf \n  \np \nq \n \n \n \n5. \nEl modelo RVA de colores, permite crear cualquier color mediante la mezcla de los \ndistintos tonos de tres colores: rojo, verde y azul. Los valores de la intensidad de \ncada uno de estos colores van desde el 0 al 255 y cada color creado tiene un \ncódigo de tres números donde el primero representa al rojo, el segundo al verde y \nel tercero al azul. \n \nEl código de la mezcla de dos colores se obtiene haciendo el promedio de cada \nuno de los valores de los colores originales tal como se presenta a continuación: \n \n \n \n \n \n \n¿Con qué color hay que mezclar el color \n\n,\n,\n para obtener el color \n\n\n,\n,\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n,\n,"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,\n,"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,\n,"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n,\n,\n \n \n6. \nEn la temporada de invierno, la diferencia horaria entre Nueva Zelanda y Chile es \nde \nh\n, desde Chile. Por ejemplo, si en Chile son las 11 de la mañana de un \nlunes, en Nueva Zelanda son las 3 de la mañana del martes. \n \nEn la misma temporada la diferencia horaria entre México y Chile es de \nh\n\n, \ndesde Chile. Es decir, cuando en Chile son las 11 de la mañana de un lunes, en \nMéxico son las 10 de la mañana del mismo día. \n \n¿Cuál es la diferencia horaria entre Nueva Zelanda y México, desde México, en la \ntemporada de invierno?"
+        },
+        {
+          "letra": "A",
+          "texto": "h\n"
+        },
+        {
+          "letra": "B",
+          "texto": "h\n"
+        },
+        {
+          "letra": "C",
+          "texto": "h"
+        },
+        {
+          "letra": "D",
+          "texto": "h\n \nColores para mezclar  \nColor resultante \n\n\nc\n,b\n,a\n, \nt\n,n\n,\nm\n \n\n\n\n\n\n\n\nt\nc\n,\nn\nb\n,\nm\na"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Un comerciante compra una cantidad de naranjas a razón de 3 kilogramos por \n$\n y las vende todas a razón de 4 kilogramos por 1000\n$\n.  \n \nSi obtuvo una ganancia de 3000\n$\n, ¿cuántos kilogramos de naranjas compró? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 8,
+      "enunciado": "¿Cuál es el \n%\n del \n%\n de 300 ? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "Si el precio de un helado es 500\n$\n, ¿cuál de las siguientes expresiones representa \nel valor del helado aumentado en su \n%\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n"
+        },
+        {
+          "letra": "C",
+          "texto": ",1\n"
+        },
+        {
+          "letra": "D",
+          "texto": ",2\n"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "Los cuadrados congruentes de las cuadrículas de 5 por 5 que aparecen en las \nopciones sirven para contar el puntaje que se ha obtenido en cierto juego con \ncartas. \n \nUna persona inicialmente tiene 8 puntos de un total de 25. Luego de una buena \njugada, el juego la bonifica con un aumento del \n%\n respecto de los puntos que \ntiene en ese momento. \n \n¿Cuál de las siguientes opciones presenta de forma correcta el cambio entre la \nsituación inicial de 8 puntos y el puntaje final luego de la bonificación? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPuntaje inicial \nPuntaje final",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Puntaje inicial \nPuntaje final"
+        },
+        {
+          "letra": "B",
+          "texto": "Puntaje inicial \nPuntaje final"
+        },
+        {
+          "letra": "C",
+          "texto": "Puntaje inicial \nPuntaje final"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "En un estudio realizado a un grupo de 25 personas, se les consultó por su bebida \nfavorita, de entre cuatro disponibles (Almíbar, Refrescante, Quitased y Frutirico).         \nEn la tabla adjunta se presentan los resultados obtenidos. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El \n%\n de las personas prefiere la bebida Almíbar o la bebida Quitased."
+        },
+        {
+          "letra": "B",
+          "texto": "Un \n%\n,0\n de las personas prefiere la bebida Refrescante."
+        },
+        {
+          "letra": "C",
+          "texto": "Las personas que prefieren la bebida Frutirico representan un \n%\n de las \npersonas que prefieren la bebida Quitased."
+        },
+        {
+          "letra": "D",
+          "texto": "Las personas que prefieren la bebida Almíbar o la bebida Frutirico \nrepresentan menos del \n%\n del total de personas."
+        }
+      ]
+    },
+    {
+      "numero": 12,
+      "enunciado": "¿Qué porcentaje es 4740 de \n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "%\n3,0"
+        },
+        {
+          "letra": "B",
+          "texto": "%"
+        },
+        {
+          "letra": "C",
+          "texto": "%\n,3"
+        },
+        {
+          "letra": "D",
+          "texto": "%\n \n \n \n \nBebida \nCantidad de personas \nAlmíbar \nRefrescante \nQuitased \nFrutirico"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "Un profesor ve algunos resultados de una encuesta por internet realizada a       \n100 personas un determinado día, de las cuales el \n%\n omitió la última pregunta. \nUna semana después se realiza la misma encuesta a otras 100 personas, de las \ncuales un \n%\n omitió la última pregunta. \n \n \nEl profesor le pide a cuatro de sus estudiantes que realicen conclusiones de estos \ndatos. \n \n Sebastián señala: del total de personas encuestadas un \n%\n omitió la \núltima pregunta. \n Angélica señala: en la segunda encuesta la omisión total tuvo un aumento \nde 10 puntos porcentuales con respecto a la omisión total de la primera \nencuesta. \n Luisa señala: del total de personas encuestadas 60 personas omitieron la \núltima pregunta. \n Manuel señala: en la segunda encuesta la pregunta más omitida fue la \núltima. \n \n¿Cuál de ellos está en lo correcto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Sebastián"
+        },
+        {
+          "letra": "B",
+          "texto": "Angélica"
+        },
+        {
+          "letra": "C",
+          "texto": "Luisa"
+        },
+        {
+          "letra": "D",
+          "texto": "Manuel"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Un estudiante realiza el siguiente procedimiento para determinar el resultado de la \nexpresión \n\n\n\n\n\n\n\n\n\n, cometiendo un error en el desarrollo. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n \n \n \n \n \n \n \n\n\n\n\n\n\n\n\n\n \n \n\n\n\n\n\n\n\n\n\n\n\n\n \n \n\n\n\n\n\n\n\n \n \n9 \n\n\n\n\n\n \n \nPaso 1 \nPaso 2 \nPaso 3 \nPaso 4"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "En la tabla adjunta se presentan las equivalencias de las medidas de \nalmacenamiento de información de una computadora, cuya unidad básica es el bit. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuántos Gigabytes equivalen a un Zettabyte? \n \nA) \n \nB) \n \nC) \n \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMedida \nSimbología \nEquivalencia \nByte \nB \n8 bits \nKilobyte \nKB \n1024 B \nMegabyte \nMB \n1024 KB \nGigabyte \nGB \n1024 MB \nTerabyte \nTB \n1024 GB \nPetabyte \nPB \n1024 TB \nExabyte \nEB \n1024 PB \nZettabyte \nZB \n1024 EB \nYottabyte \nYB \n1024 ZB",
+      "alternativas": []
+    },
+    {
+      "numero": 16,
+      "enunciado": "¿Cuál es el valor de \n\n\n\n\n? \n \nA) \n\n \nB) \n\n \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 17,
+      "enunciado": "Tres figuras están formadas por cuadrados congruentes entre sí que presentan una \nregla de formación que consiste en duplicar el lado de cada figura respecto de la \nanterior, como se presenta a continuación: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿En cuál de las siguientes tablas se relaciona cada figura con la cantidad de \ncuadrados que la componen? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nFigura \nCantidad de cuadrados \n(41)0 \nA)  \nB)  \nFigura \nCantidad de cuadrados \n22  2 \n22  4 \nC)  \nFigura \nCantidad de cuadrados \n(21)2 \n(22)2 \n(23)2 \n \nD)  \nFigura \nCantidad de cuadrados \n(22)0 \n(22)2 \n(22)4 \n \nFig. 1 \nFig. 2 \nFig. 3",
+      "alternativas": []
+    },
+    {
+      "numero": 18,
+      "enunciado": "En la tabla adjunta se presenta el precio original y el precio oferta de tres productos \nque están con un descuento en un almacén. \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera respecto al porcentaje de \ndescuento de los productos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Al comprar los tres productos, el descuento es un \n%\n del total original."
+        },
+        {
+          "letra": "B",
+          "texto": "El porcentaje de descuento en el té es mayor que el porcentaje de \ndescuento en el azúcar."
+        },
+        {
+          "letra": "C",
+          "texto": "El porcentaje de descuento de cada producto es la diferencia entre el valor \noriginal y el precio oferta, y todo multiplicado por 100 ."
+        },
+        {
+          "letra": "D",
+          "texto": "La leche tiene el doble de porcentaje de descuento que el té."
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Cierto tipo de bacteria se cuadruplica cada una hora. \n \nSi en un instante hay 320 de estas bacterias en un lugar, ¿cuál de las siguientes \nexpresiones permite determinar la cantidad de bacterias que habrá n horas  \ndespués de ese instante?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "n\n320 "
+        },
+        {
+          "letra": "B",
+          "texto": "n\n320 "
+        },
+        {
+          "letra": "C",
+          "texto": "\nn\n320 "
+        },
+        {
+          "letra": "D",
+          "texto": "320n \n \n \n \n \nProductos de oferta de la semana \nProducto \nPrecio original \nPrecio oferta \nLeche (1 L) \n$1000 \n     $800 \nTé (100 unidades) \n$2000 \n   $1800 \nAzúcar (1 kg) \n$1000 \n      $850"
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "El largo de un rectángulo mide el triple de su ancho. \n \nSi su ancho mide \nmm\n3k\n, con k un número entero positivo, ¿cuál de las \nsiguientes expresiones representa el área del rectángulo, en \nmm ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "k\nk\n"
+        },
+        {
+          "letra": "B",
+          "texto": "k\n"
+        },
+        {
+          "letra": "C",
+          "texto": "k\n"
+        },
+        {
+          "letra": "D",
+          "texto": "k\nk\n"
+        }
+      ]
+    },
+    {
+      "numero": 21,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 22,
+      "enunciado": "2 \n22  4",
+      "alternativas": [
+        {
+          "letra": "C",
+          "texto": "Figura \nCantidad de cuadrados \n(21)2 \n(22)2 \n(23)2"
+        },
+        {
+          "letra": "D",
+          "texto": "Figura \nCantidad de cuadrados \n(22)0 \n(22)2 \n(22)4 \n \nFig. 1 \nFig. 2 \nFig. 3 \n \n \n \n18. En la tabla adjunta se presenta el precio original y el precio oferta de tres productos \nque están con un descuento en un almacén. \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera respecto al porcentaje de \ndescuento de los productos?"
+        },
+        {
+          "letra": "A",
+          "texto": "Al comprar los tres productos, el descuento es un \n%\n del total original."
+        },
+        {
+          "letra": "B",
+          "texto": "El porcentaje de descuento en el té es mayor que el porcentaje de \ndescuento en el azúcar."
+        },
+        {
+          "letra": "C",
+          "texto": "El porcentaje de descuento de cada producto es la diferencia entre el valor \noriginal y el precio oferta, y todo multiplicado por 100 ."
+        },
+        {
+          "letra": "D",
+          "texto": "La leche tiene el doble de porcentaje de descuento que el té. \n \n \n \n \n \n19. Cierto tipo de bacteria se cuadruplica cada una hora. \n \nSi en un instante hay 320 de estas bacterias en un lugar, ¿cuál de las siguientes \nexpresiones permite determinar la cantidad de bacterias que habrá n horas  \ndespués de ese instante?"
+        },
+        {
+          "letra": "A",
+          "texto": "n\n320 "
+        },
+        {
+          "letra": "B",
+          "texto": "n\n320 "
+        },
+        {
+          "letra": "C",
+          "texto": "\nn\n320 "
+        },
+        {
+          "letra": "D",
+          "texto": "320n \n \n \n \n \nProductos de oferta de la semana \nProducto \nPrecio original \nPrecio oferta \nLeche (1 L) \n$1000 \n     $800 \nTé (100 unidades) \n$2000 \n   $1800 \nAzúcar (1 kg) \n$1000 \n      $850 \n \n \n \n20. El largo de un rectángulo mide el triple de su ancho. \n \nSi su ancho mide \nmm\n3k\n, con k un número entero positivo, ¿cuál de las \nsiguientes expresiones representa el área del rectángulo, en \nmm ?"
+        },
+        {
+          "letra": "A",
+          "texto": "k\nk\n"
+        },
+        {
+          "letra": "B",
+          "texto": "k\n"
+        },
+        {
+          "letra": "C",
+          "texto": "k\n"
+        },
+        {
+          "letra": "D",
+          "texto": "k\nk\n\n \n \n21. Considera las variables directamente proporcionales m y n , con \nn \n. Cuando \nm \n se tiene que \nn \n. \n \n¿Cuál de los siguientes gráficos representa mejor la relación entre m y n ?"
+        },
+        {
+          "letra": "D",
+          "texto": "n \nm"
+        },
+        {
+          "letra": "C",
+          "texto": "n \nm"
+        },
+        {
+          "letra": "B",
+          "texto": "n \nm"
+        },
+        {
+          "letra": "A",
+          "texto": "n \nm \n \n \n \n22. ¿Cuál de las siguientes expresiones es igual que \n\n\na\n(b\nc)\na\n(b\nc)\n\n\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "c\nb\na\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c\nb\nab\na\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "c\nb\nb\na\na\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ")c\nb\n(\na\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "El volumen del paralelepípedo de la figura adjunta, en metros cúbicos, es \n\n\nx\nx\nx\n\n\n, con x un número real mayor que 5 . \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa el valor de p ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x "
+        },
+        {
+          "letra": "B",
+          "texto": "x "
+        },
+        {
+          "letra": "C",
+          "texto": "x2 "
+        },
+        {
+          "letra": "D",
+          "texto": "x \n \n \n \n \np metros \nx metros \n(x – 5)  metros"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "La expresión \n\n\n\n\na\na\na\n\n\n\n\n se factoriza como el producto de dos \nfactores, tal que uno de ellos es \n1\na \n. \n \n¿Cuál de las siguientes expresiones corresponde al otro factor de la expresión?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\na\na2\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\na "
+        },
+        {
+          "letra": "C",
+          "texto": "\n\na\na2\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\na\n2 "
+        }
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "Una persona desea preparar galletas y tiene una receta para doce galletas. \n \n \n \n \n \n \n \n \n \n \n \n \n \nAl revisar su cocina, se da cuenta de que dispone de los siguientes ingredientes: \n \n \ng\n de azúcar \n \ng\n de mantequilla \n \nkg\n de harina \n \n4 huevos enteros \n \n¿Cuál es la cantidad máxima de galletas que la persona podrá preparar, \nmanteniendo las cantidades de los ingredientes de la receta original haciendo de a \n12 galletas? \n \nA) \nB) \nC) \nD) \nr",
+      "alternativas": []
+    },
+    {
+      "numero": 26,
+      "enunciado": "La ley de Hooke establece que el estiramiento que sufre un resorte es \ndirectamente proporcional a la masa que sujeta. \n \nEn la figura adjunta se presenta cómo se estira un resorte cuando se le cuelgan \ndiferentes masas. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el valor de x ? \n \nA) \nB) \nC) 8 \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n2 cm \nx cm \n3 kg \n9 kg",
+      "alternativas": []
+    },
+    {
+      "numero": 27,
+      "enunciado": "Para dibujar las proporciones del cuerpo humano existen varios cánones que se \nmiden en “cabezas”, unidad que hace referencia a la altura de la cabeza del \nindividuo. \n \nEl canon que se representa en la figura adjunta se llama “canon de las siete \ncabezas y media” y plantea que la figura humana masculina en la adultez se puede \nmodelar por 7 2\n1 cabezas de altura y ancho máximo de 2 cabezas. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nLoomis, A. (2005). El dibujo de figura en todo su valor. Continen 1. \n \n \nSi se usa este modelo, ¿cuánto debe medir el ancho máximo del dibujo de un \nhombre adulto si se sabe que la estatura en el dibujo es de \ncm\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "En la siguiente tabla se presenta la velocidad \n)\nV\n(\n permitida al conducir en las \ncalles y caminos de Chile. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Si un automovilista excede en \nh\nkm\n la velocidad máxima permitida \ncuando condujo en una zona de escuela, entonces iba a una velocidad de \nh\nkm\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Un automovilista tiene permitido conducir a una velocidad de \nh\nkm\n en \nzonas rurales con camino de una pista de circulación por sentido."
+        },
+        {
+          "letra": "C",
+          "texto": "Si un automovilista en zona urbana decide aumentar su velocidad \nh\nkm\n, \nalcanzando la velocidad máxima permitida, entonces iba a \nh\nkm\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Un automovilista tiene permitido conducir a una de velocidad de \nh\nkm\n en \nzonas rurales. \n \n \n \n \nZonas urbanas \nh\nkm\nV \n \nZonas de escuela: en horario de entrada y salida de estudiantes \nh\nkm\nV \n \nZonas rurales:  \ncaminos con una pista de circulación por \nsentido. \nh\nkm\nV \n \ncaminos con dos o más pistas de circulación \npor sentido. \nh\nkm\nV \n \n    \nComisión Nacional de Seguridad de Tránsito. (s.f.).  Normativa relacionada con Velocidad. \nhttps://www.conaset.cl/normativa-\nvelocidad/#:~:text=En%20zonas%20urbanas%2C%20el%20l%C3%ADmite,es%20de%20120%20km%2Fh"
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "En una tienda de mascotas se dispone de un monto máximo de \n$\n para pagar \nla electricidad que se consume en un mes.  \n \nLa empresa eléctrica que suministra este servicio realiza el cobro, en pesos, \nmediante la función \nx\n)\nx\n(c\n\n\n, siendo x la cantidad de kWh consumidos \nen el mes. \n \n¿Cuál de los siguientes conjuntos contiene a todos y únicamente los posibles \nvalores del consumo en kWh en el mes que se puede solventar con el monto \ndisponible en esa tienda?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n,0"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,0"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,0"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n,0"
+        }
+      ]
+    },
+    {
+      "numero": 30,
+      "enunciado": "Un cargador de celular del tipo A carga \n%\n de la capacidad de la batería                \ncada 3 minutos y un cargador del tipo B carga %\n de la capacidad de la batería \ncada 2 minutos.  \n \nSe tienen dos celulares de las mismas características. Uno tiene un \n%\n de \nbatería cargada y se conecta al cargador del tipo A, mientras que el otro celular \ntiene un \n%\n de su batería cargada y se conecta al cargador del tipo B.  \n \n¿Cuál de los siguientes gráficos representa de mejor manera el porcentaje de  \ncarga de las baterías a medida que transcurren los minutos? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nB) \nC) \nD) \n minutos  \nPorcentaje de \ncarga   \nTiempo en  \n minutos  \nPorcentaje de \ncarga   \nTiempo en  \n minutos  \nPorcentaje de \ncarga   \nTiempo en  \n minutos  \nPorcentaje de \ncarga   \nTiempo en",
+      "alternativas": []
+    },
+    {
+      "numero": 31,
+      "enunciado": "En una frutería cada durazno cuesta \n$\n y cada mango cuesta \n$\n. Una \npersona gastó 6800\n$\n en total comprando solo 16 frutas entre duraznos y mangos. \n \n¿Cuál de las siguientes ecuaciones permite determinar la cantidad x de duraznos \nque compró la persona?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\nx\nx\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nx\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "¿Cuál de los siguientes puntos ubicados en el plano cartesiano representa mejor \na la intersección de las rectas asociadas al sistema                         ? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nB) \nC) \nD) \n2y  3x = 4 \n  3x – y = 0 \nA) \nX \nY \nX \nY \nX \nY \nX \nY",
+      "alternativas": []
+    },
+    {
+      "numero": 33,
+      "enunciado": "¿Cuáles son las soluciones de la ecuación \nx\nx2\n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n  y  10\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n  y  \n"
+        },
+        {
+          "letra": "C",
+          "texto": "7  y  5"
+        },
+        {
+          "letra": "D",
+          "texto": "14  y  10"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "En un espejo de forma cuadrada se quiere colocar cuatro adornos con forma de \ntriángulo isósceles congruentes entre sí en sus esquinas, tal como se representa \nen la siguiente figura: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes valores debe tener x para que el área libre de adornos del \nespejo sea \ncm\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n8 cm \nx cm \nx cm"
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "Una persona controla un dron y comienza a hacerlo descender verticalmente con \nuna rapidez constante de 5 metros por segundo.  \n \nSi al momento de iniciar el descenso el dron se encontraba a una altura                  \nde 80 metros con respecto al suelo, ¿cuál de los siguientes gráficos representa \nmejor la altura del dron con respecto al suelo, a medida que transcurre el tiempo, \nen segundos, desde el inicio del descenso? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nB) \nC) \nD) \nTiempo en \nsegundos \nAltura en metros \nTiempo en \nsegundos \nAltura en metros \nTiempo en \nsegundos \nAltura en metros \nTiempo en \nsegundos \nAltura en metros",
+      "alternativas": []
+    },
+    {
+      "numero": 36,
+      "enunciado": "Ignacio se dedica a vender productos encargados por sus clientes, que importa \nmediante una aplicación móvil. El precio de venta al que Ignacio vende los \nproductos lo determina según la función \n\nx\n5,1\nx\nP\n\n\n, tal que x \nrepresenta el precio, en pesos, al que compra el producto en la aplicación. \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Ignacio cobra un costo fijo de \n\n5,1\n$\n\n a todos los productos que \nvende."
+        },
+        {
+          "letra": "B",
+          "texto": "Ignacio realiza un recargo de un \n%\n del precio del producto importado sin \nconsiderar ese recargo en el cargo fijo."
+        },
+        {
+          "letra": "C",
+          "texto": "Ignacio cobra un costo fijo de \n\n5,1\n$\n\n a todos los productos que vende."
+        },
+        {
+          "letra": "D",
+          "texto": "Ignacio realiza un recargo de \n%\n5,1\n del precio del producto importado sin \nconsiderar el cargo fijo."
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "En una distribuidora envasaron \nL\n de detergente líquido en bidones de \nL\n         \ny de \nL\n de capacidad. \n \nSi se ocuparon en total 100 bidones, ¿cuál de los siguientes valores es la \ndiferencia entre la cantidad de bidones de distinta capacidad que se usaron? \n \nA) \nB) \nC) \nD) 50",
+      "alternativas": []
+    },
+    {
+      "numero": 38,
+      "enunciado": "¿Cuál de los siguientes gráficos representa mejor a la función f definida por \n\n\n2\nx\nx\nf\n\n\n, con dominio el conjunto de los números reales? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nC) \nD) \nY \nX \nY \nX \n3 \nY \nX \nB) \nY \nX \n3",
+      "alternativas": []
+    },
+    {
+      "numero": 39,
+      "enunciado": "¿En cuál de las siguientes figuras la medida del segmento PQ es la que se indica, \nde acuerdo a las condiciones dadas en cada una de ellas? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nB) \nC) \nD) \nTriángulo ABP equilátero de lado \ncm\n, tal que Q está en el \nsegmento AB. \nCuadrado APBQ de lado \ncm\n5,1\n \nA \nQ \nP \nB \ncm\nRectángulo APBQ de lados \ncm\n y \ncm\n \nA \nQ \nP \nB \ncm\nCuadrado APBQ de lado cm\n \nA \nQ \nP \nB \ncm\n \ncm\n \n \nP \nA \nQ \nB",
+      "alternativas": []
+    },
+    {
+      "numero": 40,
+      "enunciado": "Una fábrica de repisas usa escuadras triangulares para afirmar sus repisas, como \nse representa en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEn la fábrica se siguen las siguientes reglas de construcción: \n El cateto de la escuadra en contacto con la repisa debe medir 3\n2 del ancho \nde la repisa. \n \n La hipotenusa de la escuadra debe medir el doble de su cateto que está en \ncontacto con la repisa. \n \nSegún esta regla de construcción, ¿cuánto debería medir el cateto de la escuadra \nque va adosado en la pared para poner una repisa de ancho \ncm\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "Para proteger una antena de \nm\n de altura de los fuertes vientos, una empresa \ntelefónica decidió colocar dos cables anclados (P y Q) desde la parte más alta de la \nantena al suelo, tal como se representa en la siguiente figura: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPara realizar este anclaje, ¿cuál es la cantidad de cable P y Q que se necesita \ndesde la parte más alta de la antena hasta el suelo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\nm\n32 "
+        },
+        {
+          "letra": "B",
+          "texto": "\nm\n8 "
+        },
+        {
+          "letra": "C",
+          "texto": "\nm\n425 "
+        },
+        {
+          "letra": "D",
+          "texto": "m"
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "En la figura adjunta los lados del rectángulo gris miden \ncm\n y \ncm\n. Alrededor de \neste rectángulo se ha dibujado un rectángulo separado en \ncm\nx\n del borde del \nrectángulo gris, tal como se representa a continuación: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa el perímetro, en cm , del rectángulo \nmayor?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n12 "
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\nx\nx\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\nx\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\nx\nx\n\n\n\n \n \n \n \n \n \n \n \nx cm \nx cm \nx cm \nx cm"
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "Una empresa vende crema para las manos en envases con forma de cilindros \nrectos de \ncm\n de altura y de distintos diámetros. \n \nPor una promoción se decide aumentar en su \n%\n la capacidad de cada envase, \nmanteniendo la altura de los envases cilíndricos. \n \n¿Cuál de las siguientes funciones permite determinar el volumen de los nuevos \nenvases, en \ncm , con r el radio del envase sin promoción, en cm ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n2r\nr\np"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n2r\nr\ng"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n2r\n8,\nr\nf"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n2r\nr\nh"
+        }
+      ]
+    },
+    {
+      "numero": 44,
+      "enunciado": "Para cierta actividad se aconseja beber diariamente al menos \nL\n de agua por \ncada \nkg\n de masa corporal. \n \nPara una persona de masa corporal \nkg\nP\n que tiene una botella de forma cilíndrica \nde diámetro \ncm\n y altura \ncm\n, ¿cuál de las siguientes expresiones permite \ndeterminar la cantidad de veces, en un día, que debe consumir el contenido de la \nbotella llena de agua, para cumplir lo que se aconseja?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "π\nP\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "P\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "P\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "π\nP\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "¿Cuál de las figuras dadas en las opciones se puede obtener usando solo \ntraslaciones de la figura adjunta? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nB) \nC) \nA) \nD) \nY \nX \nX \nY \nY \nX \nX \nY \nX \nY",
+      "alternativas": []
+    },
+    {
+      "numero": 46,
+      "enunciado": "En el plano cartesiano de la cuadrícula adjunta se tiene un punto de inicio el cual se \ndebe mover \ncm\n al este y \ncm\n al norte, para luego trasladarse \ncm\n al sur y \ncm\n al oeste, llegando al punto final. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi cada lado de los cuadrados de la cuadrícula equivalen a \ncm\n, ¿cuál de los \nsiguientes vectores representa el camino desde el punto de inicio hasta el punto \nfinal?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n,4\nv\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,1\nu\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,1\nr\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n1\n,3\ns\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nY \nX \nPunto de inicio \nN \nS \nE \nO"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "¿Cuál de las siguientes imágenes tiene más de dos ejes de simetría?",
+      "alternativas": []
+    },
+    {
+      "numero": 48,
+      "enunciado": "A un punto P del plano cartesiano se le aplica una reflexión respecto al origen de \neste obteniéndose el punto Q , luego el punto Q se traslada según el vector \n)\n,2\n(\nv\n\n\n obteniéndose el punto R . \n \nSi R tiene coordenadas \n)\n,5\n(\n, ¿cuáles son las coordenadas del punto P ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ")\n,3\n("
+        },
+        {
+          "letra": "B",
+          "texto": ")1\n,7\n(\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": ")1\n,7\n(\n"
+        },
+        {
+          "letra": "D",
+          "texto": ")\n,3\n(\n\n"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 49,
+      "enunciado": "¿En cuál de los siguientes cuadriláteros las rectas punteadas corresponden a sus \nejes de simetría?",
+      "alternativas": []
+    },
+    {
+      "numero": 50,
+      "enunciado": "En la figura adjunta se representa una casa y un árbol con las respectivas \nsombras que ellos proyectan en un mismo instante del día. \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el valor de x ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B) 12"
+        },
+        {
+          "letra": "C",
+          "texto": "18"
+        },
+        {
+          "letra": "D",
+          "texto": "A)"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "Deltoide  \nRomboide  \nRectángulo  \nRombo"
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "La retina es un tejido sensible a la luz situada en la superficie interior del ojo similar \na una tela donde se proyectan imágenes, como se representa en la siguiente \nfigura. \n \n \n \n \n \n \n \n \n \nPara estimar la altura t en que se ve un objeto en la retina de un ojo, se puede \nutilizar la relación \nh\nm\nt\n\n\n, tal que h es la altura real del objeto en metros y \np\nmetros\n,0\nm \n, con p la distancia, en metros, entre el objeto y el ojo. \n \nSi la altura real de un objeto es 2 metros y está ubicado a una distancia de                   \n4,3\n metros  de un ojo, ¿qué altura tiene el objeto en la retina del ojo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ",0\n metros"
+        },
+        {
+          "letra": "B",
+          "texto": ",0\n metros"
+        },
+        {
+          "letra": "C",
+          "texto": "1,0 metros"
+        },
+        {
+          "letra": "D",
+          "texto": "1 metros \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nt \np\nh"
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "Una persona apoya una escalera de \nm\n sobre una pandereta de \nm\n5,1\n de altura, \npara poder llegar a cierta altura de un edificio, tal como se representa en la \nsiguiente figura:  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEl punto de apoyo de la escalera en la pandereta está justo cuando completa los \nm\n de escalera. \n \n¿A qué altura de la pared del edificio llega la escalera que colocó la persona?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A \nm\n5,"
+        },
+        {
+          "letra": "B",
+          "texto": "A \nm\n,"
+        },
+        {
+          "letra": "C",
+          "texto": "A \nm\n,9"
+        },
+        {
+          "letra": "D",
+          "texto": "A \nm\n \n \n \n \n \n \n \n \n \n \n \n \n \n2 m \nPandereta"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Carmen quiere saber la altura de su pieza y decidió colocar sobre una mesa, que \ntiene una altura de \ncm\n, una regla de \ncm\n. \n \nLa regla la posicionó de manera vertical, a una distancia de \ncm\n del borde de la \nmesa, desde donde ella puede apreciar el extremo superior de la altura de la pieza \ncomo se representa en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la distancia desde el extremo de la mesa a la pared es de \ncm\n, ¿cuál es la \nmedida de la altura de la pieza de Carmen?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n \n200 cm"
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "Se realiza una encuesta a un grupo de personas, sobre la cantidad de plantas que \ntiene cada una en su casa. Los resultados se presentan en el gráfico adjunto. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes argumentos respalda que la respuesta mayoritaria de los \nencuestados fue 3 plantas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Porque hay 3 barras que llegan al mismo número."
+        },
+        {
+          "letra": "B",
+          "texto": "Porque el 3 tiene la barra más alta."
+        },
+        {
+          "letra": "C",
+          "texto": "Porque la diferencia entre la barra más alta y la más baja es 3."
+        },
+        {
+          "letra": "D",
+          "texto": "Porque la barra del medio tiene frecuencia 3. \n \n \n \n \n \n \n \n \n \nFrecuencia \nCantidad de plantas"
+        }
+      ]
+    },
+    {
+      "numero": 55,
+      "enunciado": "A un grupo de personas se le consultó acerca de la cantidad de películas vistas \nel último mes. En la tabla adjunta se presenta la distribución de los resultados \nde dicha consulta. \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se agregan personas al grupo de tal manera que la frecuencia de todos los datos \naumenta en un \n%\n, ¿cuál de las siguientes expresiones representa la cantidad \ntotal de personas que hay finalmente en el grupo? \n \nA)    \nt2,1\nh\n2,1\n\n\n \nB) \nt2,1\nh\n2,1\n\n \nC) \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCantidad de películas \n vistas el último mes \nFrecuencia \nh \nt",
+      "alternativas": []
+    },
+    {
+      "numero": 56,
+      "enunciado": "Con la información recolectada en un estudio sobre el consumo de legumbres de \nun país se construyó un gráfico en el que se presenta el porcentaje de la población \nque consumió legumbres al menos una vez por semana, durante los años 2018, \n2019 y 2020. \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones se puede deducir de los datos del gráfico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El gráfico es incorrecto, porque los porcentajes de consumo en las barras \nno suman \n%\n."
+        },
+        {
+          "letra": "B",
+          "texto": "La comida favorita de este país son las legumbres puesto que en el año \n2020 el \n%\n de la población la consumía al menos una vez por semana."
+        },
+        {
+          "letra": "C",
+          "texto": "En el año 2021 más del \n%\n de la población consumirá legumbres al \nmenos una vez por semana."
+        },
+        {
+          "letra": "D",
+          "texto": "El gráfico presenta que la población de este país ha aumentado en forma \nsostenida el consumo de legumbres durante los años en estudio. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nAños \nPorcentaje de consumo de legumbres \n47 % \n72 % \n90 %"
+        }
+      ]
+    },
+    {
+      "numero": 57,
+      "enunciado": "En el gráfico de la figura adjunta se presenta la cantidad de goles que tuvo a favor \ny en contra un equipo de fútbol en cuatro partidos jugados. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En total, en los cuatro partidos se hicieron 7 goles entre los equipos que \nparticiparon."
+        },
+        {
+          "letra": "B",
+          "texto": "El equipo ganó más partidos de los que perdió."
+        },
+        {
+          "letra": "C",
+          "texto": "En todos los partidos el equipo hizo goles."
+        },
+        {
+          "letra": "D",
+          "texto": "La mayor diferencia entre los goles a favor y los goles en contra fue en el \ntercer partido."
+        }
+      ]
+    },
+    {
+      "numero": 58,
+      "enunciado": "Los resultados de las dos primeras pruebas de matemática de Esteban son un             \n3,5\n y un \n9,5\n. \n \n¿Cuál de las siguientes notas es la mínima que debe obtener Esteban en la tercera \nprueba para que su promedio sea de al menos un \n9,5\n en las tres pruebas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "9,5"
+        },
+        {
+          "letra": "B",
+          "texto": "1,6"
+        },
+        {
+          "letra": "C",
+          "texto": "2,6"
+        },
+        {
+          "letra": "D",
+          "texto": "5,6\n \n \nCantidad de goles \n1er \n2do \n3er \n4to \nGoles en contra \nGoles a favor \nPartido jugado"
+        }
+      ]
+    },
+    {
+      "numero": 59,
+      "enunciado": "Los trabajadores de una empresa tienen tres tipos de sueldos según su puesto de \ntrabajo. Hay n trabajadores con un sueldo de \n$\n, m trabajadores con un \nsueldo de \n$\n y w trabajadores con un sueldo de \n$\n. \n \n \n¿Cuál de las siguientes fórmulas permite determinar el promedio X de los sueldos \nde todos los trabajadores de esta empresa?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "w\nm\nn\nX\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\nw\nm\nn\nX\n\n\n\n\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "w\nm\nn\nX\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "w\nm\nn\nw\nm\nn\nX\n\n\n\n\n\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 60,
+      "enunciado": "En el diagrama de cajón adjunto se presenta la distribución de los tiempos que \nun grupo de 100 personas logró mantenerse en postura de sentadilla con la \nespalda apoyada en la pared en un gimnasio. \n \n \n \n \n \n \n \n \n \nLas instructoras del gimnasio garantizan que después de tomar el entrenamiento \nbásico por una semana, las personas cuyos tiempos son menores al segundo \ncuartil aumentarán su tiempo en \ns\n y el resto de las personas aumentarán su \ntiempo en \ns\n. \n \nSi estas 100 personas toman el entrenamiento y la promesa de las instructoras es \nefectiva, ¿cuál de las siguientes afirmaciones es verdadera luego de una semana \nde entrenamiento?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Exactamente 2 personas durarán más de \ns\n."
+        },
+        {
+          "letra": "B",
+          "texto": "A lo más 3 personas durarán más de \ns\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Al menos 25 personas durarán más de \ns\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Exactamente 50 personas durarán más de \ns\n. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n25  30  \nTiempo en segundos"
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "En la tabla adjunta se presenta la distribución de la edad de un grupo de                     \n150 personas. \n \n \n \n \n \n \n \n \n \n \n \n \n¿En qué intervalo se encuentra el percentil 20 de las edades?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n,"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n,"
+        }
+      ]
+    },
+    {
+      "numero": 62,
+      "enunciado": "En la siguiente tabla se presenta la distribución del puntaje obtenido en una \nprueba de matemática por todo el estudiantado de primero medio de un colegio. \n \n \n \n \n \n \n \n \nSi se realiza una prueba recuperativa para los estudiantes que estuvieron bajo el \npercentil 40 de los puntajes obtenidos, ¿cuántos estudiantes podrán optar a la \nprueba recuperativa? \n \nA) \nB) \nC) \nD) \n \n \nEdad (en años) \nFrecuencia \n\n\n,\n \n\n\n,\n \n\n\n,\n \n\n\n,\n \n\n\n,\n \n\n\n,\n \n\n\n,\n \n \nPuntaje Frecuencia  Frecuencia acumulada",
+      "alternativas": []
+    },
+    {
+      "numero": 63,
+      "enunciado": "Se consultó a un grupo de 50 personas acerca de su sabor favorito de cierto tipo \nde helado. En la tabla adjunta se registran los resultados obtenidos. \n \n \n \n \n \n \n \n \n \n \n \nSi se elige a una de estas personas al azar, ¿cuál es la probabilidad de que su \nsabor favorito sea de vainilla o de frutilla? \n \nA) \nB) \n9 \n \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 64,
+      "enunciado": "Una caja contiene seis tarjetas todas del mismo tipo y en cada una de ellas hay \nuna palabra escrita. Las palabras escritas en cuatro de las tarjetas son: CLASE, \nSOL, TEMPRANO y LEON. \n \nSe sabe que al extraer al azar una tarjeta de la caja la probabilidad de que la \npalabra escrita en ella tenga menos de tres letras vocales es 3\n2 . \n \n¿Cuáles de las siguientes palabras podrían estar escritas en las otras dos tarjetas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "VASO y RED"
+        },
+        {
+          "letra": "B",
+          "texto": "CINCO y SEIS"
+        },
+        {
+          "letra": "C",
+          "texto": "CUADRILATERO y CANTO"
+        },
+        {
+          "letra": "D",
+          "texto": "PARALELOGRAMO y GIGANTESCO \n \n \nSabor \nFrecuencia \nvainilla \nchocolate \nfrutilla \nmanjar"
+        }
+      ]
+    },
+    {
+      "numero": 65,
+      "enunciado": "Si se lanzan tres monedas, ¿cuál es la probabilidad de obtener al menos un \nsello? \n \nA) \nB) \nC) \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nIMPORTANTE\n\t ESTE FOLLETO ESTÁ PROTEGIDO BAJO REGISTRO DE PROPIEDAD \nINTELECTUAL DE LA UNIVERSIDAD DE CHILE.\n\t ESTÁ PROHIBIDA LA REPRODUCCIÓN, TRANSMISIÓN TOTAL O \nPARCIAL DE ESTE FOLLETO, POR CUALQUIER MEDIO O MÉTODO.\n\t ES OBLIGATORIO DEVOLVER ÍNTEGRAMENTE EL FOLLETO ANTES DE \nABANDONAR LA SALA.\n\t ES OBLIGATORIO DEVOLVER LA HOJA DE RESPUESTAS ANTES DE \nABANDONAR LA SALA.\nacceso.mineduc.cl     demre.cl",
+      "alternativas": []
+    }
+  ]
+}

@@ -1,0 +1,1666 @@
+{
+  "materia": "m2",
+  "year": 2024,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)\n,0\n(\n.",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q .",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": ")\nb\n,a(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del 1 al",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "y en el experimento de lanzarlo, sus caras son equiprobables de salir. \n \n6. \nEn el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \n \n \n \n \n \nRegistro de Propiedad Intelectual Nº 2023-A-8892 \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n \nINSTRUCCIONES PARA LAS PREGUNTAS DE SUFICIENCIA DE DATOS \n \nEn las preguntas de Suficiencia de Datos no se pide la solución al problema, sino que se \ndecida si con los datos proporcionados, tanto en el enunciado como en las afirmaciones \n(1) y (2), se puede llegar a la solución del problema. \n \n \nEs así que se deberá marcar la opción:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola, si la afirmación (1) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (2) por sí sola no lo es,"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola, si la afirmación (2) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (1) por sí sola no lo es,"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2), si ambas afirmaciones (1) y (2) juntas son suficientes \npara resolver el problema, pero ninguna de las afirmaciones por sí sola es \nsuficiente,"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2), si cada una por sí sola es suficiente para \nresolver el problema,"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional, si ambas afirmaciones juntas son \ninsuficientes para resolver el problema y se requiere información adicional \npara llegar a la solución. \n \nSÍMBOLOS MATEMÁTICOS \n \n \n \nes menor que \n \nes semejante con \n \nes mayor que \n \nes perpendicular a \n \nes menor o igual que \n \nes distinto de \n \nes mayor o igual que \n// \nes paralelo a \n \nángulo recto \n \npertenece a \n \nángulo \nAB \ntrazo AB \nlog \nlogaritmo en base 10 \nx \nvalor absoluto de x \n \nconjunto vacío \nx! \nfactorial de x \n \nes aproximado a \n \nintersección de conjuntos \n \nunión de conjuntos \nu \nvector u \nAc \ncomplemento del conjunto A \n \n \n \n \n \n \n \nCategoría \nNivel de colesterol total \nDeseable \nHasta \ndL\nmg\n \nRiesgo bajo \nMayor que \ndL\nmg\n \nhasta \ndL\nmg\n \nRiesgo alto \nMayor que \ndL\nmg\n \n \n1. \nEl nivel de colesterol para las personas se presenta en la tabla adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \nRodrigo presenta un colesterol de \ndL\nmg\n y su doctor le deja dos recetas: \n \nLa primera receta es para que tome un medicamento que reduce el nivel de \ncolesterol en \ndL\nmg\n5,2\n diarios, pero que solo debe tomar mientras presente un \nriesgo alto. \n \nLa segunda receta indica un medicamento que reduce su nivel de colesterol en \ndL\nmg\n8,0\n diarios, pero que solo debe tomar mientras presente un riesgo bajo. \n \nSi Rodrigo sigue el tratamiento indicado por el doctor, ¿cuál de las siguientes \nexpresiones numéricas permite determinar la duración del tratamiento, en días, \npara que el nivel de colesterol de Rodrigo llegue a ser deseable?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n8,0\n5,2\n8,0\n5,2\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "8,0\n5,2\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "8,0\n5,2\n255 "
+        },
+        {
+          "letra": "D",
+          "texto": "8,0\n5,2\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "8,0\n5,2\n\n\n\n \n \n \n \n2. \nConsidera la igualdad \nn\nn\nP\n\n\n\n, con n un número entero. \n \n¿Para cuántos valores distintos de n se cumple que P es un número entero?"
+        },
+        {
+          "letra": "A",
+          "texto": "Solo para un valor."
+        },
+        {
+          "letra": "B",
+          "texto": "Solo para dos valores."
+        },
+        {
+          "letra": "C",
+          "texto": "Solo para cuatro valores."
+        },
+        {
+          "letra": "D",
+          "texto": "Solo para cinco valores. \n \n \n \n \n \n \n \n \n \n3. \nConsidera un cuadrado A de lado \ncm\np\n y un cuadrado B cuyo lado tiene medida \nigual a la medida de la diagonal del cuadrado A.  \n \n¿Para cuál de los siguientes valores de p , en cm , la suma de las medidas de las \ndiagonales de los cuadrados A y B es un número racional?"
+        },
+        {
+          "letra": "A",
+          "texto": "B) \n2 "
+        },
+        {
+          "letra": "C",
+          "texto": "2 "
+        },
+        {
+          "letra": "D",
+          "texto": "2 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n4. \nEn el gráfico adjunto se presenta la composición elemental del cuerpo humano. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTal como en el ser humano,  los cuatro  elementos más abundantes en el resto de  \nlos  organismos  vivos  son  el  Carbono, Hidrógeno, Oxígeno  y  Nitrógeno,  y  para \nrecordar estos cuatro elementos es usual usar el acrónimo nemotécnico CHON. \n \n \n¿Qué porcentaje de los elementos CHON en el cuerpo humano corresponde a \nOxígeno?"
+        },
+        {
+          "letra": "A",
+          "texto": "%\n65 "
+        },
+        {
+          "letra": "B",
+          "texto": "%\n"
+        },
+        {
+          "letra": "C",
+          "texto": "%\n65 "
+        },
+        {
+          "letra": "D",
+          "texto": "%\n\n \n \n \n \n \n \n \n \n \n \n \n%\n%\n \n%\n \n%\n%\nOxígeno \nHidrógeno \nNitrógeno \nOtros elementos \nCarbono \n \n \n \n5. \n¿Cuál es el valor de \n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "10 "
+        },
+        {
+          "letra": "B",
+          "texto": "6 80"
+        },
+        {
+          "letra": "C",
+          "texto": "5 40"
+        },
+        {
+          "letra": "D",
+          "texto": "30 "
+        },
+        {
+          "letra": "E",
+          "texto": "6 40\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n6. \nConsidera los números reales a y b, ambos distintos de cero. \n \n¿Cuál de las siguientes relaciones permite asegurar que \n\nb\na\nb\na\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nb\na\nb\na\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\na\nb\na\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\na\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\na\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "¿Cuál es el valor de \n4 \n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "3 10"
+        },
+        {
+          "letra": "B",
+          "texto": "9 20"
+        },
+        {
+          "letra": "C",
+          "texto": "9 10"
+        },
+        {
+          "letra": "D",
+          "texto": "18 20"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 10,
+      "enunciado": "",
+      "alternativas": [
+        {
+          "letra": "B",
+          "texto": "6 80"
+        },
+        {
+          "letra": "C",
+          "texto": "5 40"
+        },
+        {
+          "letra": "D",
+          "texto": "30 "
+        },
+        {
+          "letra": "E",
+          "texto": "6 40\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n6. \nConsidera los números reales a y b, ambos distintos de cero. \n \n¿Cuál de las siguientes relaciones permite asegurar que \n\nb\na\nb\na\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nb\na\nb\na\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\na\nb\na\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\na\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\na\n\n\n \n \n \n \n \n \n \n \n7. \n¿Cuál es el valor de \n4 \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "3 10"
+        },
+        {
+          "letra": "B",
+          "texto": "9 20"
+        },
+        {
+          "letra": "C",
+          "texto": "9 10"
+        },
+        {
+          "letra": "D",
+          "texto": "18 20 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n8.  \n¿Cuál de las siguientes expresiones es igual a \ny\nx\nx 2\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "y\nx 2\n10 "
+        },
+        {
+          "letra": "B",
+          "texto": "y\nx\n"
+        },
+        {
+          "letra": "C",
+          "texto": "y\nx\n"
+        },
+        {
+          "letra": "D",
+          "texto": "xy\nx\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n9. \nUna sustancia radiactiva se desintegra de tal forma que  después  de una hora \nqueda la mitad de la masa inicial.  \n \nEn  la  tabla  adjunta  se  registra la masa de sustancia en las primeras cuatro horas \nde observación. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes puntos está correctamente graficado en los ejes \ncoordenados? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTiempo transcurrido (horas)            Masa de sustancia (gramos) \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "B)     Masa"
+        },
+        {
+          "letra": "C",
+          "texto": "Masa"
+        },
+        {
+          "letra": "A",
+          "texto": "Masa de sustancia en gramos \nTiempo transcurrido en horas \n \n de sustancia en gramos \nTiempo transcurrido en horas \n \n \n de sustancia en gramos \nTiempo transcurrido en horas \n \n \nMasa de sustancia en gramos \n \nTiempo transcurrido en horas \n \n2,53 \n \n \n \n10. ¿Cuál es el valor de \n1,0\nlog3\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "log\n"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        },
+        {
+          "letra": "E",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "El área de un triángulo equilátero de lado \ncm\nq\n \nes la cuarta parte del área de un \ncuadrado de lado \ncm\np\n. \n \n¿Cuál es el valor de q\np ? \n \nA) \nB) \n \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 12,
+      "enunciado": "En la siguiente tabla  se presentan los  valores aproximados de \nN\nlog\n para algunos \nnúmeros N : \n \n \n \n \n \n \n \n \n \n \n \n \nConsiderando los valores de la tabla, ¿cuál es el valor de \nlog\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ",0\n,0\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "Si p , b y c son números reales mayores que 1 tal que \nc\nb\nlogp\n\n, ¿cuál de las \nsiguientes expresiones es igual a \nb\nlog\nb\nlog\np\np\n\n\n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "c\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c"
+        },
+        {
+          "letra": "C",
+          "texto": "c"
+        },
+        {
+          "letra": "D",
+          "texto": "c\nc \n\n \n \nN \nN\nlog\n \nN \nN\nlog\n \n0,778 \n0,301 \n0,845 \n0,477 \n0,903 \n0,602 \n0,954 \n0,699"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Bajo condiciones especiales, la población de cierto tipo de bacterias se triplica cada \n10 días.  \n \nEn esas condiciones, si una colonia de este tipo tiene inicialmente                   \n8 \n bacterias, ¿cuál será su población de bacterias al término de 50 días?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "8 "
+        },
+        {
+          "letra": "B",
+          "texto": "\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "Si \np\n\n\n, ¿cuál de las siguientes afirmaciones es verdadera con \nrespecto a p?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Es un número impar."
+        },
+        {
+          "letra": "B",
+          "texto": "Es un número primo."
+        },
+        {
+          "letra": "C",
+          "texto": "Es un múltiplo de 13 ."
+        },
+        {
+          "letra": "D",
+          "texto": "Es un múltiplo de 21."
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "Un banco garantiza una tasa de interés trimestral de \n%\n5,2\n para los depósitos a \nplazo. La función que modela el capital final que tendrá una persona luego de \ndepositar es:   \n\nn\nN\nM\nC\n\n\n \n \n \nen la que M corresponde al capital inicial, N es la tasa de interés expresada \ncomo decimal y n es la cantidad de trimestres que se mantiene el dinero en el \nbanco. \n \nSi una persona hace un solo depósito inicial de \n$\n en ese banco, ¿cuál es \nla expresión que representa el capital final que tendrá esta persona después de    \n2 años?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n8\n,1\n$\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n8\n,1\n$\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n1\n,1\n$\n8 \n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n1\n,1\n$\n8 \n"
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 18,
+      "enunciado": "20 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n8.  \n¿Cuál de las siguientes expresiones es igual a \ny\nx\nx 2\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "y\nx 2\n10 "
+        },
+        {
+          "letra": "B",
+          "texto": "y\nx\n"
+        },
+        {
+          "letra": "C",
+          "texto": "y\nx\n"
+        },
+        {
+          "letra": "D",
+          "texto": "xy\nx\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n9. \nUna sustancia radiactiva se desintegra de tal forma que  después  de una hora \nqueda la mitad de la masa inicial.  \n \nEn  la  tabla  adjunta  se  registra la masa de sustancia en las primeras cuatro horas \nde observación. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes puntos está correctamente graficado en los ejes \ncoordenados? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTiempo transcurrido (horas)            Masa de sustancia (gramos) \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "B)     Masa"
+        },
+        {
+          "letra": "C",
+          "texto": "Masa"
+        },
+        {
+          "letra": "A",
+          "texto": "Masa de sustancia en gramos \nTiempo transcurrido en horas \n \n de sustancia en gramos \nTiempo transcurrido en horas \n \n \n de sustancia en gramos \nTiempo transcurrido en horas \n \n \nMasa de sustancia en gramos \n \nTiempo transcurrido en horas \n \n2,53 \n \n \n \n10. ¿Cuál es el valor de \n1,0\nlog3\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "log\n"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        },
+        {
+          "letra": "E",
+          "texto": "\n \n \n \n \n \n \n \n \n \n \n \n \n \n11. El área de un triángulo equilátero de lado \ncm\nq\n \nes la cuarta parte del área de un \ncuadrado de lado \ncm\np\n. \n \n¿Cuál es el valor de q\np ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n12. En la siguiente tabla  se presentan los  valores aproximados de \nN\nlog\n para algunos \nnúmeros N : \n \n \n \n \n \n \n \n \n \n \n \n \nConsiderando los valores de la tabla, ¿cuál es el valor de \nlog\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ",0\n,0\n\n\n \n \n \n \n \n \n13. Si p , b y c son números reales mayores que 1 tal que \nc\nb\nlogp\n\n, ¿cuál de las \nsiguientes expresiones es igual a \nb\nlog\nb\nlog\np\np\n\n\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "c\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c"
+        },
+        {
+          "letra": "C",
+          "texto": "c"
+        },
+        {
+          "letra": "D",
+          "texto": "c\nc \n\n \n \nN \nN\nlog\n \nN \nN\nlog\n \n0,778 \n0,301 \n0,845 \n0,477 \n0,903 \n0,602 \n0,954 \n0,699 \n \n \n \n \n14. Bajo condiciones especiales, la población de cierto tipo de bacterias se triplica cada \n10 días.  \n \nEn esas condiciones, si una colonia de este tipo tiene inicialmente                   \n8 \n bacterias, ¿cuál será su población de bacterias al término de 50 días?"
+        },
+        {
+          "letra": "A",
+          "texto": "8 "
+        },
+        {
+          "letra": "B",
+          "texto": "\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n15. Si \np\n\n\n, ¿cuál de las siguientes afirmaciones es verdadera con \nrespecto a p?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es un número impar."
+        },
+        {
+          "letra": "B",
+          "texto": "Es un número primo."
+        },
+        {
+          "letra": "C",
+          "texto": "Es un múltiplo de 13 ."
+        },
+        {
+          "letra": "D",
+          "texto": "Es un múltiplo de 21. \n \n \n \n \n \n \n \n \n \n \n \n16. Un banco garantiza una tasa de interés trimestral de \n%\n5,2\n para los depósitos a \nplazo. La función que modela el capital final que tendrá una persona luego de \ndepositar es:   \n\nn\nN\nM\nC\n\n\n \n \n \nen la que M corresponde al capital inicial, N es la tasa de interés expresada \ncomo decimal y n es la cantidad de trimestres que se mantiene el dinero en el \nbanco. \n \nSi una persona hace un solo depósito inicial de \n$\n en ese banco, ¿cuál es \nla expresión que representa el capital final que tendrá esta persona después de    \n2 años?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n8\n,1\n$\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n8\n,1\n$\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n1\n,1\n$\n8 \n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n1\n,1\n$\n8 \n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n17. El sueldo líquido es el monto total que recibe una persona que trabaja, luego de \ndescontar del total de haberes, las cotizaciones obligatorias y voluntarias del sueldo \ntotal imponible.  \n \nConsidera la siguiente liquidación de sueldo de una persona: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la expresión que representa el sueldo líquido de esta persona en función \ndel número “a ” del porcentaje de cotización voluntaria, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n\na"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\n\na"
+        },
+        {
+          "letra": "C",
+          "texto": "a\n\n\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ")\na\n(\n\n\n\n\n\n\n\n\n \nLIQUIDACIÓN DE SUELDO \n \nDATOS DEL(A) TRABAJADOR(A) \nRUT: 1*.***.***-8 \nNOMBRE: ****a ****r *****s \nPeríodo de Remuneración: 31 días  \nMes: Enero \nAño: 2022 \n \nHaberes del Trabajador \nValor \nSueldo Base \n$\n \nHoras Extras \n$\n \nAguinaldo \n$\n \nSueldo total imponible \n$\n \nBono de la empresa \n$\n \nMovilización \n$\n \nSueldo total no Imponible \n$\n \nTotal de Haberes \n$\n \nDESCUENTOS \nSUELDO IMPONIBLE \nValor \nCotización Previsional AFP  \n(10 %) \n$\n \nCotización Salud \n(7 %) \n$\n \nCotización Voluntaria \n(a %) \nX \nTOTAL DESCUENTOS \nPREVISIONALES \nY \n \nDETALLE DE REMUNERACIÓN \nSUELDO LIQUIDO A PAGAR $Z \n \n \n \n \n18. Considera la figura adjunta formada por tres cuadrados, uno de lado a metros \ny otros dos de área \np metros cuadrados, cada uno.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa el área de la zona gris en \nmetros cuadrados?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\np\na\np\na\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\np\na\np\na\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n2\np\na\n\n \n\n2\np\na \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \na metros"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Considera la siguiente gráfica que corresponde a la función que modela la relación \nlineal entre la profundidad t , en metros, de un objeto sumergido y la presión que el \nagua ejerce sobre este. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes funciones modela la presión, en Pa , que el agua ejerce \nsobre el objeto, respecto de t , en metros?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "t\n)t(\nf\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "t\n)t(\ng\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "t\n1,0\n)t(\nh\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "t\n1,0\n)t(\nn\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPresión (Pa) \nProfundidad (m)"
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "¿En cuál de las siguientes representaciones las variables son inversamente \nproporcionales? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nC) \nD) \nP \nQ \n \nB) \nM \nN \nT \nU \nR \nS",
+      "alternativas": []
+    },
+    {
+      "numero": 21,
+      "enunciado": "El azúcar de mesa, cuyo nombre químico es sacarosa, corresponde a un \ncompuesto formado por carbono, hidrógeno y oxígeno.  \n \nEn un experimento hipotético se utiliza sacarosa para obtener agua de manera \ndirectamente  proporcional  a  la  masa de sacarosa  utilizada. En  la siguiente \ngráfica se relaciona  la  masa  de  agua  obtenida en el experimento con varias \nmasas de sacarosa. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa  la  masa  en  gramos de sacarosa \n)\nS\n(\n necesarios para obtener cierta masa en gramos de agua        ?\n)\nA\n(",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A\nS\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "A\nS\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "A\nS\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "A\nS\n\n\n \n \n \n \n \n \n \n \n \nSacarosa \n)\ng(\n \nAgua (g )"
+        }
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "En el gráfico adjunto se presentan ciertas temperaturas medidas en distintas \nescalas de temperaturas. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nLa ecuación de equivalencia entre una escala de temperatura y otra es siempre \nuna ecuación lineal, por ejemplo la ecuación \nC\nF\n\n\n\n\n es la ecuación de \nequivalencia entre grados Celsius y grados Fahrenheit. \n \n \nSi la ecuación de equivalencia de grados Newton y grados Delisle es \nb\nN\na\nD\n\n\n\n\n, ¿cuáles son los signos de a y b ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "a \n  y  \nb "
+        },
+        {
+          "letra": "B",
+          "texto": "a \n  y  \nb "
+        },
+        {
+          "letra": "C",
+          "texto": "a \n  y  \nb "
+        },
+        {
+          "letra": "D",
+          "texto": "a \n  y  \nb \n \n \nMenor \ntemperatura \nregistrada \nen la \nsuperficie \nde la Tierra \nTemperatura \nde mezcla de \nsal de \namonio, hielo \ny Agua en  \nFahrenheit \nPunto de \nfusión del hielo \nbajo presión \nde una \natmósfera \n(0o) \nTemperatura \npromedio en \nla \nsuperficie de \nla Tierra \n(15oC) \nTemperatura \npromedio del \ncuerpo \nhumano \n(37oC) \nMayor \ntemperatura \nregistrada \nen la \nsuperficie \nde la Tierra \n \nPunto de \nebullición \ndel agua \nbajo presión \nde una \natmósfera"
+        }
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "Considera la inecuación \nx\nm\nx\n\n\n\n\n, en x , tal que m es un número \nreal. \n \n \nSi el conjunto solución de la inecuación es \n2\n, \n\n\n, ¿cuál es el valor de m ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": "1"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "Para probar la rapidez de dos computadores, se ejecuta un mismo algoritmo en \nambos.  \n \n \nEl computador A ejecuta el algoritmo en p segundos, mientras que el \ncomputador B lo ejecuta tres veces en \np segundos, demorándose lo mismo en \ncada ejecución. \n \n \nAl ejecutar el algoritmo n veces seguidas en ambos computadores,                 \nel computador más rápido demora 60 segundos menos que el otro. \n \n \n¿Cuál \nde \nlas \nsiguientes \nexpresiones \npermite \ndeterminar \nel \ntiempo,                 \nen segundos, que demora el computador más lento en ejecutar el algoritmo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "n"
+        },
+        {
+          "letra": "B",
+          "texto": "n"
+        },
+        {
+          "letra": "C",
+          "texto": "n"
+        },
+        {
+          "letra": "D",
+          "texto": "n"
+        }
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "Un total de q personas planea ir al cine, de las cuales x son adultos e y son \nniños. El valor de la entrada de un niño es n\n$ y el valor para adultos es m\n$\n, por lo \nque se pagarían p\n$ por todas las entradas. \n \n \nSi finalmente tres niños no asistieron al cine y el precio de la entrada de un adulto \ntenía un \n%\n de descuento, pagándose k\n$ por todas las entradas, ¿cuál de los \nsiguientes sistemas representa la situación planteada? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nC) \nB) \nD) \n            x + (y – 3) = q – 3 \n0,70mx + n(y – 3) = k \n            x + (y – 3) = q – 3 \n0,30mx + n(y – 3) = k \n            x + (y – 3) = q  \n0,70mx + n(y – 3) = p – k \n            x + (y – 3) = q – 3  \n0,30mx + n(y – 3) = p – k",
+      "alternativas": []
+    },
+    {
+      "numero": 26,
+      "enunciado": "¿Para qué valores de p y q , respectivamente, se cumple la igualdad \nx\nq\np\nqx\npx\n\n\n\n\n\n, para todo número real x ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "5  y  \n"
+        },
+        {
+          "letra": "B",
+          "texto": "7  y  \n"
+        },
+        {
+          "letra": "C",
+          "texto": "5\n7  y  5"
+        },
+        {
+          "letra": "D",
+          "texto": "1   y  1\n"
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Si p, q y k son números reales, con q distinto de cero y k distinto de 0 y 1, \n¿cuál de los siguientes sistemas en x e y no tiene solución? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   x + y = p \nkx + ky = kp \n   x  y = k \n   x + y = k \n   x + y = q \nkx + ky = q \nA) \nB) \nC) \nD) \n         y = k \n   x + y = k",
+      "alternativas": []
+    },
+    {
+      "numero": 28,
+      "enunciado": "¿Cuál de los siguientes sistemas de ecuaciones, en x e y , cumple que tiene \ninfinitas soluciones para \na \n y tiene solución única para \na \n?",
+      "alternativas": []
+    },
+    {
+      "numero": 29,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 30,
+      "enunciado": "",
+      "alternativas": [
+        {
+          "letra": "E",
+          "texto": "6 40\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n6. \nConsidera los números reales a y b, ambos distintos de cero. \n \n¿Cuál de las siguientes relaciones permite asegurar que \n\nb\na\nb\na\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\nb\na\nb\na\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\na\nb\na\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\na\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\na\n\n\n \n \n \n \n \n \n \n \n7. \n¿Cuál es el valor de \n4 \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "3 10"
+        },
+        {
+          "letra": "B",
+          "texto": "9 20"
+        },
+        {
+          "letra": "C",
+          "texto": "9 10"
+        },
+        {
+          "letra": "D",
+          "texto": "18 20 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n8.  \n¿Cuál de las siguientes expresiones es igual a \ny\nx\nx 2\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "y\nx 2\n10 "
+        },
+        {
+          "letra": "B",
+          "texto": "y\nx\n"
+        },
+        {
+          "letra": "C",
+          "texto": "y\nx\n"
+        },
+        {
+          "letra": "D",
+          "texto": "xy\nx\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n9. \nUna sustancia radiactiva se desintegra de tal forma que  después  de una hora \nqueda la mitad de la masa inicial.  \n \nEn  la  tabla  adjunta  se  registra la masa de sustancia en las primeras cuatro horas \nde observación. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes puntos está correctamente graficado en los ejes \ncoordenados? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTiempo transcurrido (horas)            Masa de sustancia (gramos) \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n\n \n5,2\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "B)     Masa"
+        },
+        {
+          "letra": "C",
+          "texto": "Masa"
+        },
+        {
+          "letra": "A",
+          "texto": "Masa de sustancia en gramos \nTiempo transcurrido en horas \n \n de sustancia en gramos \nTiempo transcurrido en horas \n \n \n de sustancia en gramos \nTiempo transcurrido en horas \n \n \nMasa de sustancia en gramos \n \nTiempo transcurrido en horas \n \n2,53 \n \n \n \n10. ¿Cuál es el valor de \n1,0\nlog3\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "log\n"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        },
+        {
+          "letra": "E",
+          "texto": "\n \n \n \n \n \n \n \n \n \n \n \n \n \n11. El área de un triángulo equilátero de lado \ncm\nq\n \nes la cuarta parte del área de un \ncuadrado de lado \ncm\np\n. \n \n¿Cuál es el valor de q\np ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n12. En la siguiente tabla  se presentan los  valores aproximados de \nN\nlog\n para algunos \nnúmeros N : \n \n \n \n \n \n \n \n \n \n \n \n \nConsiderando los valores de la tabla, ¿cuál es el valor de \nlog\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": ",0\n,0\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ",0\n,0\n\n\n \n \n \n \n \n \n13. Si p , b y c son números reales mayores que 1 tal que \nc\nb\nlogp\n\n, ¿cuál de las \nsiguientes expresiones es igual a \nb\nlog\nb\nlog\np\np\n\n\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "c\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c"
+        },
+        {
+          "letra": "C",
+          "texto": "c"
+        },
+        {
+          "letra": "D",
+          "texto": "c\nc \n\n \n \nN \nN\nlog\n \nN \nN\nlog\n \n0,778 \n0,301 \n0,845 \n0,477 \n0,903 \n0,602 \n0,954 \n0,699 \n \n \n \n \n14. Bajo condiciones especiales, la población de cierto tipo de bacterias se triplica cada \n10 días.  \n \nEn esas condiciones, si una colonia de este tipo tiene inicialmente                   \n8 \n bacterias, ¿cuál será su población de bacterias al término de 50 días?"
+        },
+        {
+          "letra": "A",
+          "texto": "8 "
+        },
+        {
+          "letra": "B",
+          "texto": "\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n15. Si \np\n\n\n, ¿cuál de las siguientes afirmaciones es verdadera con \nrespecto a p?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es un número impar."
+        },
+        {
+          "letra": "B",
+          "texto": "Es un número primo."
+        },
+        {
+          "letra": "C",
+          "texto": "Es un múltiplo de 13 ."
+        },
+        {
+          "letra": "D",
+          "texto": "Es un múltiplo de 21. \n \n \n \n \n \n \n \n \n \n \n \n16. Un banco garantiza una tasa de interés trimestral de \n%\n5,2\n para los depósitos a \nplazo. La función que modela el capital final que tendrá una persona luego de \ndepositar es:   \n\nn\nN\nM\nC\n\n\n \n \n \nen la que M corresponde al capital inicial, N es la tasa de interés expresada \ncomo decimal y n es la cantidad de trimestres que se mantiene el dinero en el \nbanco. \n \nSi una persona hace un solo depósito inicial de \n$\n en ese banco, ¿cuál es \nla expresión que representa el capital final que tendrá esta persona después de    \n2 años?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n8\n,1\n$\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n8\n,1\n$\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n1\n,1\n$\n8 \n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n1\n,1\n$\n8 \n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n17. El sueldo líquido es el monto total que recibe una persona que trabaja, luego de \ndescontar del total de haberes, las cotizaciones obligatorias y voluntarias del sueldo \ntotal imponible.  \n \nConsidera la siguiente liquidación de sueldo de una persona: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la expresión que representa el sueldo líquido de esta persona en función \ndel número “a ” del porcentaje de cotización voluntaria, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\n\na"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\n\n\na"
+        },
+        {
+          "letra": "C",
+          "texto": "a\n\n\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ")\na\n(\n\n\n\n\n\n\n\n\n \nLIQUIDACIÓN DE SUELDO \n \nDATOS DEL(A) TRABAJADOR(A) \nRUT: 1*.***.***-8 \nNOMBRE: ****a ****r *****s \nPeríodo de Remuneración: 31 días  \nMes: Enero \nAño: 2022 \n \nHaberes del Trabajador \nValor \nSueldo Base \n$\n \nHoras Extras \n$\n \nAguinaldo \n$\n \nSueldo total imponible \n$\n \nBono de la empresa \n$\n \nMovilización \n$\n \nSueldo total no Imponible \n$\n \nTotal de Haberes \n$\n \nDESCUENTOS \nSUELDO IMPONIBLE \nValor \nCotización Previsional AFP  \n(10 %) \n$\n \nCotización Salud \n(7 %) \n$\n \nCotización Voluntaria \n(a %) \nX \nTOTAL DESCUENTOS \nPREVISIONALES \nY \n \nDETALLE DE REMUNERACIÓN \nSUELDO LIQUIDO A PAGAR $Z \n \n \n \n \n18. Considera la figura adjunta formada por tres cuadrados, uno de lado a metros \ny otros dos de área \np metros cuadrados, cada uno.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa el área de la zona gris en \nmetros cuadrados?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\np\na\np\na\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\np\na\np\na\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n2\np\na\n\n \n\n2\np\na \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \na metros"
+        },
+        {
+          "letra": "D",
+          "texto": "19.  Considera la siguiente gráfica que corresponde a la función que modela la relación \nlineal entre la profundidad t , en metros, de un objeto sumergido y la presión que el \nagua ejerce sobre este. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes funciones modela la presión, en Pa , que el agua ejerce \nsobre el objeto, respecto de t , en metros?"
+        },
+        {
+          "letra": "A",
+          "texto": "t\n)t(\nf\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "t\n)t(\ng\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "t\n1,0\n)t(\nh\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "t\n1,0\n)t(\nn\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPresión (Pa) \nProfundidad (m) \n \n \n \n20. ¿En cuál de las siguientes representaciones las variables son inversamente \nproporcionales?"
+        },
+        {
+          "letra": "A",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "P \nQ"
+        },
+        {
+          "letra": "B",
+          "texto": "M \nN \nT \nU \nR \nS \n \n \n \n21. El azúcar de mesa, cuyo nombre químico es sacarosa, corresponde a un \ncompuesto formado por carbono, hidrógeno y oxígeno.  \n \nEn un experimento hipotético se utiliza sacarosa para obtener agua de manera \ndirectamente  proporcional  a  la  masa de sacarosa  utilizada. En  la siguiente \ngráfica se relaciona  la  masa  de  agua  obtenida en el experimento con varias \nmasas de sacarosa. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa  la  masa  en  gramos de sacarosa \n)\nS\n(\n necesarios para obtener cierta masa en gramos de agua        ?\n)\nA\n("
+        },
+        {
+          "letra": "A",
+          "texto": "A\nS\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "A\nS\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "A\nS\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "A\nS\n\n\n \n \n \n \n \n \n \n \n \nSacarosa \n)\ng(\n \nAgua (g ) \n \n \n \n22. En el gráfico adjunto se presentan ciertas temperaturas medidas en distintas \nescalas de temperaturas. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nLa ecuación de equivalencia entre una escala de temperatura y otra es siempre \nuna ecuación lineal, por ejemplo la ecuación \nC\nF\n\n\n\n\n es la ecuación de \nequivalencia entre grados Celsius y grados Fahrenheit. \n \n \nSi la ecuación de equivalencia de grados Newton y grados Delisle es \nb\nN\na\nD\n\n\n\n\n, ¿cuáles son los signos de a y b ?"
+        },
+        {
+          "letra": "A",
+          "texto": "a \n  y  \nb "
+        },
+        {
+          "letra": "B",
+          "texto": "a \n  y  \nb "
+        },
+        {
+          "letra": "C",
+          "texto": "a \n  y  \nb "
+        },
+        {
+          "letra": "D",
+          "texto": "a \n  y  \nb \n \n \nMenor \ntemperatura \nregistrada \nen la \nsuperficie \nde la Tierra \nTemperatura \nde mezcla de \nsal de \namonio, hielo \ny Agua en  \nFahrenheit \nPunto de \nfusión del hielo \nbajo presión \nde una \natmósfera \n(0o) \nTemperatura \npromedio en \nla \nsuperficie de \nla Tierra \n(15oC) \nTemperatura \npromedio del \ncuerpo \nhumano \n(37oC) \nMayor \ntemperatura \nregistrada \nen la \nsuperficie \nde la Tierra \n \nPunto de \nebullición \ndel agua \nbajo presión \nde una \natmósfera \n \n \n \n \n23. Considera la inecuación \nx\nm\nx\n\n\n\n\n, en x , tal que m es un número \nreal. \n \n \nSi el conjunto solución de la inecuación es \n2\n, \n\n\n, ¿cuál es el valor de m ?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": "1"
+        },
+        {
+          "letra": "D",
+          "texto": "\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n24. Para probar la rapidez de dos computadores, se ejecuta un mismo algoritmo en \nambos.  \n \n \nEl computador A ejecuta el algoritmo en p segundos, mientras que el \ncomputador B lo ejecuta tres veces en \np segundos, demorándose lo mismo en \ncada ejecución. \n \n \nAl ejecutar el algoritmo n veces seguidas en ambos computadores,                 \nel computador más rápido demora 60 segundos menos que el otro. \n \n \n¿Cuál \nde \nlas \nsiguientes \nexpresiones \npermite \ndeterminar \nel \ntiempo,                 \nen segundos, que demora el computador más lento en ejecutar el algoritmo?"
+        },
+        {
+          "letra": "A",
+          "texto": "n"
+        },
+        {
+          "letra": "B",
+          "texto": "n"
+        },
+        {
+          "letra": "C",
+          "texto": "n"
+        },
+        {
+          "letra": "D",
+          "texto": "n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n25. Un total de q personas planea ir al cine, de las cuales x son adultos e y son \nniños. El valor de la entrada de un niño es n\n$ y el valor para adultos es m\n$\n, por lo \nque se pagarían p\n$ por todas las entradas. \n \n \nSi finalmente tres niños no asistieron al cine y el precio de la entrada de un adulto \ntenía un \n%\n de descuento, pagándose k\n$ por todas las entradas, ¿cuál de los \nsiguientes sistemas representa la situación planteada?"
+        },
+        {
+          "letra": "A",
+          "texto": "C)"
+        },
+        {
+          "letra": "B",
+          "texto": "D) \n            x + (y – 3) = q – 3 \n0,70mx + n(y – 3) = k \n            x + (y – 3) = q – 3 \n0,30mx + n(y – 3) = k \n            x + (y – 3) = q  \n0,70mx + n(y – 3) = p – k \n            x + (y – 3) = q – 3  \n0,30mx + n(y – 3) = p – k \n \n \n \n26. ¿Para qué valores de p y q , respectivamente, se cumple la igualdad \nx\nq\np\nqx\npx\n\n\n\n\n\n, para todo número real x ?"
+        },
+        {
+          "letra": "A",
+          "texto": "5  y  \n"
+        },
+        {
+          "letra": "B",
+          "texto": "7  y  \n"
+        },
+        {
+          "letra": "C",
+          "texto": "5\n7  y  5"
+        },
+        {
+          "letra": "D",
+          "texto": "1   y  1\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n27. Si p, q y k son números reales, con q distinto de cero y k distinto de 0 y 1, \n¿cuál de los siguientes sistemas en x e y no tiene solución? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   x + y = p \nkx + ky = kp \n   x  y = k \n   x + y = k \n   x + y = q \nkx + ky = q"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n         y = k \n   x + y = k \n \n \n \n28. ¿Cuál de los siguientes sistemas de ecuaciones, en x e y , cumple que tiene \ninfinitas soluciones para \na \n y tiene solución única para \na \n? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n29. El nivel de agua, en milímetros, en un estanque al abrir una llave de paso se \nmodela mediante una función, cuya gráfica es una recta, con respecto al tiempo \ntranscurrido en horas. \n \n \nEl nivel inicial del agua es cuatro veces el nivel que aumenta cada hora. \n \n \nSi al cabo de una hora de abrir la llave, el nivel del agua es \nmm\n, ¿cuál es el \nnivel del agua al cabo de cinco horas?"
+        },
+        {
+          "letra": "A",
+          "texto": "mm"
+        },
+        {
+          "letra": "B",
+          "texto": "mm"
+        },
+        {
+          "letra": "C",
+          "texto": "mm"
+        },
+        {
+          "letra": "D",
+          "texto": "mm\n \n \n   x + y = 1 \nax + ay = a \n   x + 2y = 1 \n2x + 4ay = 2 \n   2x + y = 1 \nax + 2ay = 0"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n  ax + ay = 1 \n  2ax + y = 0 \n \n \n \n30. Si m y n son las soluciones de la ecuación cuadrática \nx\nx\n5 2\n\n\n\n, ¿cuál es \nel valor de \nn\nm\nn\nm\n\n\n\n\n\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        },
+        {
+          "letra": "E",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "Una empresa que vende cubos de sal, vende paquetes de x cubos de lado \ncm\n \ncada uno. El volumen de sal en cada paquete, como función de la cantidad de \ncubos que este contiene, x , corresponde a \nx\nx\nf\n\n. \n \nLa empresa decide reducir el tamaño de los lados de los cubos de sal en \ncm\n, \nmanteniendo la cantidad de cubos por paquete. \n \n¿Cuál de las siguientes funciones modela el volumen de sal, en \ncm , que la \nempresa deja de incluir por paquete, en términos de la cantidad de cubos del \npaquete?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\nx\nx\ng\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\nx\nx\nh\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\nx\nx\nj\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n1\nx\nx\nk\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "Considera el triángulo ABC, con \ncm\nBC\nAB\n\n\n y sea x la medida, en cm , \nde la altura trazada desde el vértice B, la cual excede en \ncm\n a la medida de \nAC.  \n \n¿Cuál de las siguientes ecuaciones permite calcular x ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\nx\n2 2\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nx\n5 2\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nx\n2 2\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nx\n5 2\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "x\nx\n5 2\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "La parábola de la figura representa la gráfica de la función f , con dominio el \nconjunto de los números reales, definida por \n\n\nx\nx\nf\n2 \n\n\n.  \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi a esta parábola se le aplica una reflexión con respecto al \nY\neje\n, luego una \ntraslación según el vector \n1\n,0\n, ¿cuál es la función que corresponde a la gráfica \nque se obtiene?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\nx\nx\ng\n2 \n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n2\nx\nx\nh\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\nx\nx\nt\n2 \n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\nx\nx\ns\n2 \n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "\n\n\nx\nx\nr\n2 \n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nY \nX \n–1 \n–1"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "Un estanque de altura \ncm\nb\n que se encuentra lleno de agua, comienza a perder \nagua de manera constante, sin llegar a vaciarse por completo.  \n \nLa función p, con dominio \n\n\n\n\n\n\n\na\nb\n,0\n, que modela la altura del agua que va \nquedando en el estanque, medida en cm, está dada por \nb\nt\nb\na\n)t(\np\n\n\n, tal que t \nes el tiempo transcurrido, medido en horas desde que el estanque comienza a \nperder agua. \n \n¿Cuál de las siguientes expresiones representa el tiempo t , en horas, que debe \ntranscurrir para que la altura del agua que queda sea \ncm\nb\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "a\nb\n"
+        },
+        {
+          "letra": "B",
+          "texto": "a\nb2\n"
+        },
+        {
+          "letra": "C",
+          "texto": "a\nb\nb\n2 2 "
+        },
+        {
+          "letra": "D",
+          "texto": "a\nb\n4 2"
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "Se desea pintar en una pared una superficie de forma triangular, cuya altura es de \n500 centímetros y cuya base es de 700 centímetros. El encargado de realizar el \npintado concluye que se necesitan dar tres manos de pintura para que quede bien \nel trabajo. \n \n \nLos tarros de pintura se venden en formatos de medio galón y un galón. Cada \ngalón rinde \nm\n. \n \n \n¿Cuántos tarros necesita como mínimo para pintar la superficie triangular y que \nquede bien?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Un tarro de medio galón."
+        },
+        {
+          "letra": "B",
+          "texto": "Un tarro de un galón."
+        },
+        {
+          "letra": "C",
+          "texto": "Tres tarros de un galón."
+        },
+        {
+          "letra": "D",
+          "texto": "Un tarro de un galón y un tarro de medio galón."
+        }
+      ]
+    },
+    {
+      "numero": 36,
+      "enunciado": "En la figura adjunta se presenta el cuadrado ABCD , al que se le aplica una \nhomotecia, obteniéndose el cuadrado APQR , donde \n\n\nP\n2, 0\n\n es la imagen de  \n\n\nB 3, 0 . \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La homotecia aplicada al cuadrado ABCD es equivalente a una rotación de \n\n180 con respecto al centro de homotecia."
+        },
+        {
+          "letra": "B",
+          "texto": "Si k es la razón de homotecia, entonces k pertenece al intervalo \nk\n\n\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Si k es la razón de homotecia y se considera el punto \n)\ny\n,0\n(\nD\n, entonces \nlas coordenadas de su imagen R son \n\n0, ky ."
+        },
+        {
+          "letra": "D",
+          "texto": "La razón de homotecia k es \n\n. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nY \nX \nD \nC \nB \nA \nP \nQ \nR"
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "Un segmento, de \ncm\n de longitud, de una arteria ubicada cerca del corazón se \npuede aproximar, de forma teórica, a un cilindro de \nmm\n de diámetro interior. \n \n \nConsiderando esta aproximación teórica, ¿cuál es el volumen de sangre que \ncontiene este segmento de arteria?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm\n8,1 "
+        },
+        {
+          "letra": "B",
+          "texto": "cm\n2,7 "
+        },
+        {
+          "letra": "C",
+          "texto": "cm\n312"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n720"
+        }
+      ]
+    },
+    {
+      "numero": 38,
+      "enunciado": "Considera los números reales a y b distintos de cero y c un número real \nnegativo.  \n \nSi el vector \n\nb\n,a\n está en el segundo cuadrante del plano cartesiano, ¿cuál de \nlas siguientes afirmaciones es siempre verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El vector \n\nc\nb\n,c\na\n\n\n está en el tercer cuadrante."
+        },
+        {
+          "letra": "B",
+          "texto": "El vector \n\nb\n,a\nc\n está en el primer cuadrante."
+        },
+        {
+          "letra": "C",
+          "texto": "El vector \n\nb\n,c\na \n está en el segundo cuadrante."
+        },
+        {
+          "letra": "D",
+          "texto": "El vector \n\ncb\n,a \n está en el tercer cuadrante."
+        },
+        {
+          "letra": "E",
+          "texto": "El vector \n\nc\na\n,b\n\n está en el cuarto cuadrante."
+        }
+      ]
+    },
+    {
+      "numero": 39,
+      "enunciado": "Al punto \n\n,1\nC \n se le aplica una traslación según el vector \n3\n,2 \n\n y luego al \npunto trasladado se le aplica una rotación en \n\n90 con centro en el origen y en \nsentido antihorario, obteniéndose un nuevo punto. \n \n¿Cuáles son las coordenadas de este último punto obtenido?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n,3"
+        },
+        {
+          "letra": "B",
+          "texto": "\n3\n,4"
+        },
+        {
+          "letra": "C",
+          "texto": "\n3\n,4\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n3\n,4 \n"
+        },
+        {
+          "letra": "E",
+          "texto": "\n3\n,4 "
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "Una nutria está intentando cruzar un río desde el punto A hasta llegar a su \nmadriguera en el otro lado del río en el punto B. Sin embargo, la corriente del río la \ndesplaza constantemente en la dirección que indica la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la corriente del río desplazará a la nutria según el vector \n)\n,r(\nv \n, con \nr \n, \n¿cuál de los siguientes vectores indica la dirección que debe tomar la nutria desde \nel punto A para llegar a su madriguera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ")\n,4\n(\nn\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": ")r\n,4\n(\nm\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": ")\n,r\n(\nq\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ")r\n,r\n(\ns\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCorriente del río \n1 \nA \nB \nY \nX \nMadriguera"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "Considera los vectores \n\n\nb\n,a\nv \n y \n\n\nd\n,c\nu \n, con a , b , c y d números reales. \n \nSi \nv\nu\nw\n\n\n, ¿cuál de las siguientes relaciones permite deducir que el vector w \nse encuentra en el primer cuadrante?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "c\na \n   y   \nd\nb "
+        },
+        {
+          "letra": "B",
+          "texto": "c\na \n   y   \nd\nb "
+        },
+        {
+          "letra": "C",
+          "texto": "ac \n   y   \nbd "
+        },
+        {
+          "letra": "D",
+          "texto": "d\nc\nb\na\n\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "d\nc\nb\na\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "¿Cuál es el área del triángulo de vértices \n)\np\n,p\n(\nA\n, \n)\np\n,2\np\n(\nB\n\n y \n)\np\n,2\np\n(\nC\n\n, \ncon p un número real negativo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p\n)\np\n(\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\n)\np\n(\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\n"
+        },
+        {
+          "letra": "D",
+          "texto": "p\n"
+        },
+        {
+          "letra": "E",
+          "texto": "\n2\np\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "En la figura adjunta se representa a un triángulo rectángulo de modo que uno de \nsus vértices O coincide con el centro de una circunferencia con radio \ncm\n y el \notro vértice B está sobre la circunferencia. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n  \n \nSe realiza el siguiente procedimiento para determinar la longitud de OA , \ncometiéndose un error: \n \nPaso 1: se plantea la ecuación \nOB\nAB\ncos\n\n\n . \nPaso 2: se reemplaza en la ecuación y se obtiene \nAB\n1 \n, lo cual equivale a \nAB\n. \nPaso 3: se aplica el teorema de Pitágoras, obteniéndose \nOA\n2 \n\n. \n \nPaso 4: se resuelve la ecuación para concluir que OA  mide \ncm\n. \n \n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n \n\nA \nO\nB"
+        }
+      ]
+    },
+    {
+      "numero": 44,
+      "enunciado": "En el gráfico adjunto se presenta la cantidad de días de lluvia y la cantidad de \nmilímetros de agua lluvia registrada en cada uno de los doce meses de un año, en \ncierto lugar. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSe define el “índice de lluvia diaria” de cada mes como el cociente entre la \ncantidad de milímetros de agua lluvia de un mes y la cantidad de días que llovió \nese mes. \n \n \nSegún el gráfico, ¿en cuál mes se presentó el mayor índice de lluvia diaria?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Mayo"
+        },
+        {
+          "letra": "B",
+          "texto": "Junio"
+        },
+        {
+          "letra": "C",
+          "texto": "Agosto"
+        },
+        {
+          "letra": "D",
+          "texto": "Octubre \n \nAdaptado de Ghana: Economía y demografía, por Datosmacro, 2023, \n(https://datosmacro.expansion.com/paises/ghana)."
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "En un instituto de idiomas se aplicó un examen de 100 puntos a los estudiantes de \njaponés y a los estudiantes de alemán. Los resultados obtenidos por ambos grupos \nse representan a continuación: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes argumentos es válido?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La mediana de los puntajes de los estudiantes de japonés es mayor que la \nmediana de los puntajes de los estudiantes de alemán, porque el nivel de \nexigencia del examen de japonés fue de un \n%\n y el de alemán fue de un \n%\n."
+        },
+        {
+          "letra": "B",
+          "texto": "El rango intercuartil de los puntajes de los estudiantes de alemán es       \n40 puntos, porque tal valor corresponde a la resta entre el puntaje máximo \ny el mínimo y lo anterior dividido por dos."
+        },
+        {
+          "letra": "C",
+          "texto": "En ambos exámenes se obtuvo el puntaje máximo, porque la mayor \ncantidad de estudiantes de ambos grupos obtuvo 100 puntos."
+        },
+        {
+          "letra": "D",
+          "texto": "El rango intercuartil de los puntajes de los estudiantes de japonés y el de \nlos estudiantes que estudiaron alemán son iguales, porque para ambos \ngrupos la diferencia entre el tercer cuartil y el primer cuartil es igual. \n \n \n \n \n \n \n \n \n \n \n \n \nPuntaje  \nAlemán  \nJaponés"
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "En las siguientes tablas se presentan las edades de un grupo de niñas y un grupo \nde niños que asisten a un centro pediátrico. \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera respecto a las edades de los \ngrupos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Tienen la misma desviación estándar y el mismo promedio."
+        },
+        {
+          "letra": "B",
+          "texto": "Tienen la misma desviación estándar, pero distinto promedio."
+        },
+        {
+          "letra": "C",
+          "texto": "Tienen el mismo promedio, pero distinta desviación estándar."
+        },
+        {
+          "letra": "D",
+          "texto": "Tienen distinto promedio y distinta desviación estándar. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nGrupo de niñas \nEdad en años \nFrecuencia \n \nGrupo de niños \nEdad en años \nFrecuencia"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "En la tabla adjunta se presenta la cantidad de estudiantes de dos cursos que \nrindieron una prueba de historia en dos horarios distintos. \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes expresiones representa siempre el promedio general \nobtenido en la prueba considerando a todos los estudiantes?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n\n\ny\nx\nq\ny\nx\np\ny\nx\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n\n\ny\nx\nq\ny\ny\np\nx\nx\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\n\n\n\n\n\n\n\ny\nx\nq\ny\nx\np"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n\n\n\ny\nx\np\ny\nx\nq\ny\nx\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nHorario 1 \nHorario 2 \nCantidad de estudiantes del curso A \nx \n2x \nCantidad de estudiantes del curso B \n2y \ny \nPromedio de notas obtenidas en la prueba por los \nestudiantes de cada horario \np \nq"
+        }
+      ]
+    },
+    {
+      "numero": 48,
+      "enunciado": "Un naipe de 40 cartas tiene las siguientes características: \n \n 10 cartas numeradas del 1 al 10 , con el símbolo ⱷ de color rojo. \n 10 cartas numeradas del 1 al 10 , con el símbolo ☼ de color rojo. \n 10 cartas numeradas del 1 al 10 , con el símbolo ◘ de color negro. \n 10 cartas numeradas del 1 al 10 , con el símbolo ☻ de color negro. \n \n \nUn juego consiste en que un jugador extrae una carta al azar y gana si la carta es \nun número primo y el símbolo es de color rojo. \n \n \n¿Cuál es la probabilidad de que el jugador gane? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 49,
+      "enunciado": "Considera dos sucesos independientes entre sí. El suceso A ocurre con \nprobabilidad \n6,0\n, mientras que la probabilidad de que ocurra simultáneamente con \nel suceso B es \n3,0\n. \n \n¿Cuál es la probabilidad de que ocurra el suceso B?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ",0"
+        },
+        {
+          "letra": "B",
+          "texto": ",0"
+        },
+        {
+          "letra": "C",
+          "texto": ",0"
+        },
+        {
+          "letra": "D",
+          "texto": ",0"
+        }
+      ]
+    },
+    {
+      "numero": 50,
+      "enunciado": "En una caja se tienen 17 bolitas, del mismo tipo, numeradas del 1 al 17 .  \n \nSi se extraen, sin reposición, 4 bolitas al azar, ¿cuál es la probabilidad de \nobtener 4 números impares?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "9 \n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "1 \n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "4 "
+        },
+        {
+          "letra": "D",
+          "texto": "4 "
+        },
+        {
+          "letra": "E",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "En un curso se rifan dos premios, para lo que se vendieron exactamente               \n30 números. El primer número extraído al azar se lleva el primer premio y el \nsegundo número extraído al azar se lleva el segundo premio. Pedro compró dos \nnúmeros de la rifa. \n \nSi el sorteo es sin reposición, ¿cuál es la probabilidad de que Pedro gane los dos \npremios? \n \nA) \nB) \n \nC) \n \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 52,
+      "enunciado": "Considera la función f , cuyo dominio es el conjunto de los números reales, \ndefinida por \nc\nx\nax\n)\nx\n(\nf\n\n\n\n, con a y c números reales distintos de cero. \n \n \nSe puede determinar que la gráfica de f no interseca al \nX\neje\n, si se sabe que: \n \n(1) \nc\na \n \n(2) \n\n\n\n\n\n\n,\na",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Considera el siguiente cuadrilátero: \n \n \n \n \n \n \n \n \n \n \n \nSe puede determinar que el área del cuadrilátero ABCD es \np\n)\nb\nb\n(\n1 \n, si se \nsabe que: \n \n(1) \nDC\n//\nAB\n  \n(2) \np\nb\nb\n\n",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nb1 \nA \nB \nC \nD \np \nb2"
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "Sin conocer las notas que obtuvieron las personas de un curso en una prueba, es \nposible asegurar que al menos el \n%\n de los estudiantes obtuvo nota superior a \n2,5\n, si se sabe que: \n \n(1) \nel promedio es \n2,5\n. \n(2) \nla mediana es \n3,5\n.",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 55,
+      "enunciado": "Se puede determinar la varianza de las edades de un grupo de 30 personas \nmayores de 15 años, si se conoce: \n \n(1) \nla varianza que tenían las edades del grupo hace 3 años. \n(2) \nel promedio y el rango de las edades del grupo.",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPROCESO DE ADMISIÓN 2024\nIMPORTANTE\n■ Este folleto está protegido bajo Registro de Propiedad Intelectual de la \nUniversidad de Chile.\n■ Está prohibida la reproducción, transmisión total o parcial de este folleto, \npor cualquier medio o método.\n■ Es obligatorio devolver íntegramente el folleto antes de abandonar la sala.\n■ Es obligatorio devolver la hoja de respuestas antes de abandonar la sala."
+        }
+      ]
+    }
+  ]
+}

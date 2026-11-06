@@ -1,0 +1,1592 @@
+{
+  "materia": "m2",
+  "year": 2023,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)\n,0\n(\n.",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q .",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": ")\nb\n,a(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del 1 al",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "y en el experimento de lanzarlo, sus caras son equiprobables de salir. \n \n6. \nEn el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \n \n \n \n \n \nRegistro de Propiedad Intelectual Nº 2022-A-6885.  \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n \nINSTRUCCIONES PARA LAS PREGUNTAS DE SUFICIENCIA DE DATOS \n \nEn las preguntas de Suficiencia de Datos no se pide la solución al problema, sino que se \ndecida si con los datos proporcionados, tanto en el enunciado como en las afirmaciones \n(1) y (2), se puede llegar a la solución del problema. \n \n \nEs así que se deberá marcar la opción:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola, si la afirmación (1) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (2) por sí sola no lo es,"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola, si la afirmación (2) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (1) por sí sola no lo es,"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2), si ambas afirmaciones (1) y (2) juntas son suficientes \npara resolver el problema, pero ninguna de las afirmaciones por sí sola es \nsuficiente,"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2), si cada una por sí sola es suficiente para \nresolver el problema,"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional, si ambas afirmaciones juntas son \ninsuficientes para resolver el problema y se requiere información adicional \npara llegar a la solución. \n \n \n \nSÍMBOLOS MATEMÁTICOS \n \n \n \nes menor que \n \nes semejante con \n \nes mayor que \n \nes perpendicular a \n \nes menor o igual que \n \nes distinto de \n \nes mayor o igual que \n// \nes paralelo a \n \nángulo recto \n \npertenece a \n \nángulo \nAB \ntrazo AB \nlog \nlogaritmo en base 10 \nx \nvalor absoluto de x \n \nconjunto vacío \nx! \nfactorial de x \n \nes aproximado a \n \nintersección de conjuntos \n \nunión de conjuntos \nu \nvector u \nAc \ncomplemento del conjunto A \n \n \n \n \n \n \n \n1. \nConsidera que la suma de los primeros N números enteros positivos corresponde \na \n)1\nN\n(\nN\n\n.  \n \n¿Cuál es el valor de \n...\n...\n\n\n\n\n\n\n\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n2. \nSi al producto entre 3 y \n\n se le resta el producto entre 5 y \n\n, ¿qué número se \nobtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n3. \nConsidera tres números enteros negativos y consecutivos p , q y r , tal que su \nsuma es \n\n  y  \nr\nq\np\n\n\n.  \n \n \n¿Cuál de las siguientes relaciones es verdadera para los números \np\n, \nq\n                    \ny \nr\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "r\nq\np\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "r\np\nq\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\nq\nr\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "q\nr\np\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n4. \nLa intensidad con que se percibe cierto sonido emitido desde una fuente, depende \nde la distancia a la que se encuentra el receptor, según la siguiente fórmula: \n \nd\nI \n \n \ntal que I es la intensidad del sonido, medida en decibelios y d es la distancia del \nreceptor a la fuente, medida en metros. \n \nSi un receptor duplica su distancia a la fuente, ¿cómo varía la intensidad del sonido \nque percibe?"
+        },
+        {
+          "letra": "A",
+          "texto": "Pasa a ser un cuarto de la intensidad original."
+        },
+        {
+          "letra": "B",
+          "texto": "Pasa a ser un medio de la intensidad original."
+        },
+        {
+          "letra": "C",
+          "texto": "Pasa a ser cuatro veces la intensidad original."
+        },
+        {
+          "letra": "D",
+          "texto": "Pasa a ser veinticinco veces la intensidad original. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n5. \nEn una tienda un artículo que costaba p\n$ se rebajó en un \n%\n \nde su precio, en \notra tienda el mismo artículo que costaba \n\n\n\n\n\n\np\n$\n se aumentó en \n%\n de su \nprecio.  \n \n¿Cuál es la diferencia del precio entre ambas tiendas después de realizar la \nrebaja y el aumento correspondiente?"
+        },
+        {
+          "letra": "A",
+          "texto": "p"
+        },
+        {
+          "letra": "B",
+          "texto": "p"
+        },
+        {
+          "letra": "C",
+          "texto": "p"
+        },
+        {
+          "letra": "D",
+          "texto": "p"
+        },
+        {
+          "letra": "E",
+          "texto": "p\n \n \n \n \n \n \n \n6.  \n¿Cuál es la suma entre el dígito de las unidades y el dígito de las decenas del \nnúmero 121\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Si p es un número racional distinto de 0 , ¿cuál de las siguientes expresiones \nrepresenta siempre a \nm\np\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "m\nm\np\np"
+        },
+        {
+          "letra": "B",
+          "texto": "m\nm\np\np\n"
+        },
+        {
+          "letra": "C",
+          "texto": "m\nm\np\np\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n2 p\np "
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "¿Cuál es el resultado de \n\n\n? \n \nA) \n10 3 \nB) \nC) \n30 3 \nD) \n30 3\n3",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 10,
+      "enunciado": "3",
+      "alternativas": [
+        {
+          "letra": "B",
+          "texto": "C) \n30 3"
+        },
+        {
+          "letra": "D",
+          "texto": "30 3\n3\n \n \n \n \n \n \n \n \n \n9.  \nConsidera los números reales a , b y c .  \n \n¿Con cuál de las siguientes igualdades se puede deducir que la expresión \nc\nb\na\n\n\n representa siempre a un número racional?"
+        },
+        {
+          "letra": "A",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "c\nb\na\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n10. Una calculadora científica tiene la tecla            que permite calcular logaritmos               \nen base 10 . \n \nPor ejemplo, si se teclea la siguiente secuencia de teclas:  \n        \n \n \n \nla calculadora entrega la solución de la expresión \nlog\nlog\n\n. \n \n¿Cuál de las siguientes secuencias de teclas permite obtener el valor de \nlog2\n? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nlog \n \n( \n+ \n) \n= \nlog \nlog \n \nlog \n="
+        },
+        {
+          "letra": "A",
+          "texto": "log \n( \n) \n="
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nlog \n \n="
+        },
+        {
+          "letra": "B",
+          "texto": " \nlog \nlog \n= \nlog"
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 12,
+      "enunciado": "Finalmente, anota tu número de Cédula de Identidad (o Pasaporte) en los casilleros que se encuentran en la parte \ninferior de este folleto, lee y firma la declaración correspondiente.\nPROCESO DE ADMISIÓN – 2023\nDECLARACIÓN: declaro conocer y aceptar la normativa que rige al Proceso de Admisión a las universidades chilenas \ny soy consciente de que, en caso de colaborar con la reproducción, sustracción, almacenamiento o transmisión, total \no parcial, de este folleto, a través de cualquier medio, me expongo a la exclusión inmediata de este Proceso, sin \nperjuicio de las demás acciones o sanciones legales.\nNÚMERO DE CÉDULA DE IDENTIDAD (O PASAPORTE)\n.\n.\n–\nFIRMA\nFORMA\n \n \n \nEN ESTA PRUEBA SE CONSIDERARÁ LO SIGUIENTE: \n \n1. \nLas figuras que aparecen son solo indicativas. \n \n2. \nLos gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)\n,0\n(\n. \n \n3. \nEl intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q . \n \n4. \n)\nb\n,a(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario. \n \n5. \nSe entenderá por dado común a aquel que posee 6 caras numeradas del 1 al \n6 y en el experimento de lanzarlo, sus caras son equiprobables de salir. \n \n6. \nEn el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \n \n \n \n \n \nRegistro de Propiedad Intelectual Nº 2022-A-6885.  \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n \nINSTRUCCIONES PARA LAS PREGUNTAS DE SUFICIENCIA DE DATOS \n \nEn las preguntas de Suficiencia de Datos no se pide la solución al problema, sino que se \ndecida si con los datos proporcionados, tanto en el enunciado como en las afirmaciones \n(1) y (2), se puede llegar a la solución del problema. \n \n \nEs así que se deberá marcar la opción:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola, si la afirmación (1) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (2) por sí sola no lo es,"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola, si la afirmación (2) por sí sola es suficiente para resolver el \nproblema, pero la afirmación (1) por sí sola no lo es,"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2), si ambas afirmaciones (1) y (2) juntas son suficientes \npara resolver el problema, pero ninguna de las afirmaciones por sí sola es \nsuficiente,"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2), si cada una por sí sola es suficiente para \nresolver el problema,"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional, si ambas afirmaciones juntas son \ninsuficientes para resolver el problema y se requiere información adicional \npara llegar a la solución. \n \n \n \nSÍMBOLOS MATEMÁTICOS \n \n \n \nes menor que \n \nes semejante con \n \nes mayor que \n \nes perpendicular a \n \nes menor o igual que \n \nes distinto de \n \nes mayor o igual que \n// \nes paralelo a \n \nángulo recto \n \npertenece a \n \nángulo \nAB \ntrazo AB \nlog \nlogaritmo en base 10 \nx \nvalor absoluto de x \n \nconjunto vacío \nx! \nfactorial de x \n \nes aproximado a \n \nintersección de conjuntos \n \nunión de conjuntos \nu \nvector u \nAc \ncomplemento del conjunto A \n \n \n \n \n \n \n \n1. \nConsidera que la suma de los primeros N números enteros positivos corresponde \na \n)1\nN\n(\nN\n\n.  \n \n¿Cuál es el valor de \n...\n...\n\n\n\n\n\n\n\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n2. \nSi al producto entre 3 y \n\n se le resta el producto entre 5 y \n\n, ¿qué número se \nobtiene?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n3. \nConsidera tres números enteros negativos y consecutivos p , q y r , tal que su \nsuma es \n\n  y  \nr\nq\np\n\n\n.  \n \n \n¿Cuál de las siguientes relaciones es verdadera para los números \np\n, \nq\n                    \ny \nr\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "r\nq\np\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "r\np\nq\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p\nq\nr\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "q\nr\np\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n4. \nLa intensidad con que se percibe cierto sonido emitido desde una fuente, depende \nde la distancia a la que se encuentra el receptor, según la siguiente fórmula: \n \nd\nI \n \n \ntal que I es la intensidad del sonido, medida en decibelios y d es la distancia del \nreceptor a la fuente, medida en metros. \n \nSi un receptor duplica su distancia a la fuente, ¿cómo varía la intensidad del sonido \nque percibe?"
+        },
+        {
+          "letra": "A",
+          "texto": "Pasa a ser un cuarto de la intensidad original."
+        },
+        {
+          "letra": "B",
+          "texto": "Pasa a ser un medio de la intensidad original."
+        },
+        {
+          "letra": "C",
+          "texto": "Pasa a ser cuatro veces la intensidad original."
+        },
+        {
+          "letra": "D",
+          "texto": "Pasa a ser veinticinco veces la intensidad original. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n5. \nEn una tienda un artículo que costaba p\n$ se rebajó en un \n%\n \nde su precio, en \notra tienda el mismo artículo que costaba \n\n\n\n\n\n\np\n$\n se aumentó en \n%\n de su \nprecio.  \n \n¿Cuál es la diferencia del precio entre ambas tiendas después de realizar la \nrebaja y el aumento correspondiente?"
+        },
+        {
+          "letra": "A",
+          "texto": "p"
+        },
+        {
+          "letra": "B",
+          "texto": "p"
+        },
+        {
+          "letra": "C",
+          "texto": "p"
+        },
+        {
+          "letra": "D",
+          "texto": "p"
+        },
+        {
+          "letra": "E",
+          "texto": "p\n \n \n \n \n \n \n \n6.  \n¿Cuál es la suma entre el dígito de las unidades y el dígito de las decenas del \nnúmero 121\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n7. \nSi p es un número racional distinto de 0 , ¿cuál de las siguientes expresiones \nrepresenta siempre a \nm\np\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "m\nm\np\np"
+        },
+        {
+          "letra": "B",
+          "texto": "m\nm\np\np\n"
+        },
+        {
+          "letra": "C",
+          "texto": "m\nm\np\np\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n2 p\np \n \n \n \n \n \n \n \n \n \n8.  \n¿Cuál es el resultado de \n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "10 3"
+        },
+        {
+          "letra": "B",
+          "texto": "C) \n30 3"
+        },
+        {
+          "letra": "D",
+          "texto": "30 3\n3\n \n \n \n \n \n \n \n \n \n9.  \nConsidera los números reales a , b y c .  \n \n¿Con cuál de las siguientes igualdades se puede deducir que la expresión \nc\nb\na\n\n\n representa siempre a un número racional?"
+        },
+        {
+          "letra": "A",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "c\nb\na\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n10. Una calculadora científica tiene la tecla            que permite calcular logaritmos               \nen base 10 . \n \nPor ejemplo, si se teclea la siguiente secuencia de teclas:  \n        \n \n \n \nla calculadora entrega la solución de la expresión \nlog\nlog\n\n. \n \n¿Cuál de las siguientes secuencias de teclas permite obtener el valor de \nlog2\n? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nlog \n \n( \n+ \n) \n= \nlog \nlog \n \nlog \n="
+        },
+        {
+          "letra": "A",
+          "texto": "log \n( \n) \n="
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nlog \n \n="
+        },
+        {
+          "letra": "B",
+          "texto": " \nlog \nlog \n= \nlog \n \n \n \n11. Considera prismas de base cuadrada. En la siguiente tabla se presentan las \nmedidas de las aristas basales y los volúmenes de algunos prismas,                    \ncon igual altura. \n \n \n \n \n \n \n \n \nSi uno de estos prismas tiene un volumen de \ncm\nV\n y la arista de                    \nla cara basal es \ncm\nz\n, ¿cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "El cociente \nV\n:\nz2\n es igual a \ncm\n."
+        },
+        {
+          "letra": "B",
+          "texto": "La medida de la arista z puede expresarse como 5\nV ."
+        },
+        {
+          "letra": "C",
+          "texto": "El valor de \n)\nlog\nV\n(log\nz\nz\n\n es igual a 2."
+        },
+        {
+          "letra": "D",
+          "texto": "z\nV\nlog3\n\n, cuando la medida z de la arista coincida con la altura. \n \n \n \n12.  Si \nq\np\nlog\n\n, ¿cuál de las siguientes expresiones es igual a \n\n\np\nlog\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "q\n1 "
+        },
+        {
+          "letra": "B",
+          "texto": "q"
+        },
+        {
+          "letra": "C",
+          "texto": "q\n10 "
+        },
+        {
+          "letra": "D",
+          "texto": "q"
+        },
+        {
+          "letra": "E",
+          "texto": "q\n1 \n \n \n \n \n \nArista de la cara basal (en cm ) \nVolumen del prisma (en \ncm )"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "La magnitud de un terremoto y la energía que este libera están relacionadas por \nla fórmula \n8,\nM\n5,1\nE\nlog\n\n\n\n, tal que E es la cantidad de energía liberada \nmedida en ergios y M es la magnitud del terremoto en grados Richter.  \n \n¿Cuál es la diferencia de magnitud, en grados Richter, entre un terremoto que \nlibera una cantidad de energía de \n ergios y otro que libera \n ergios?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "8,1"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "9,3"
+        },
+        {
+          "letra": "E",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Considera dos cuadrados de lados \ncm\na\n y \ncm\nx\n que se intersectan solo en un \npunto que es un vértice, de tal manera que tienen una de sus diagonales en una \nmisma recta.  \n \n¿Cuál de las siguientes expresiones representa la menor área, en \ncm , que hay \nque agregar para construir un cuadrado que contenga a los cuadrados dados?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\na\n"
+        },
+        {
+          "letra": "B",
+          "texto": "ax"
+        },
+        {
+          "letra": "C",
+          "texto": "ax"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\na\na\nx\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "Considera la ecuación \np\nx\np\nx\n\n\n\n\n.  \n \n¿Cuál es el menor valor que puede tomar x para que p sea un número entero \npositivo? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 16,
+      "enunciado": "En la figura adjunta, sobre los puntos A y B se traza una recta que divide al \nplano en los semiplanos I y II, además, por estos puntos se trazan las                   \nrectas \nL y \nL , formando los ángulos BAD y CBA , cuyas medidas están                   \nentre \n0 y \n\n180 .                   \n \n \n \n \n \n \n \n \n \n \n \n \nSi \n\n\n\n\nx\nBAD\n y \n\n\n\n\nx\nCBA\n, ¿cuál de los siguientes conjuntos \ncontiene solo a los posibles valores de x en que las rectas \nL y \nL se \nintersectan en algún punto perteneciente al semiplano II?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n,"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n,"
+        },
+        {
+          "letra": "E",
+          "texto": "\n\n,\n  \n \n \n \n \n \n \n \n \n \n \n \nL2 \nA \nB \nSemiplano I \nSemiplano II \nD \nC \nL1"
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "Diego paga una compra de c\n$ con 35 monedas, algunas de a\n$ y  el resto de b\n$ . \n \nSi M es la cantidad de monedas de a\n$ y N es la cantidad de monedas de b\n$ , \n¿cuál de los siguientes sistemas de ecuaciones permite determinar la cantidad      \nde monedas de a\n$ y de b\n$ que utilizó Diego en su compra? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nc\nbN\naM\nb\na\nN\nM\n\n\n\n\n",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "bN\naM\nc\nN\nM\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c\nbN\naM\nN\nM\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\nc\nN\nM\nb\na\nN\nM\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 18,
+      "enunciado": "En la figura adjunta \nL\n//\nL\n y \n\n\n\n\n\n5 . \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el valor de \n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n\n \n\n3 \nL \nL"
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Considera  el  sistema                              ,  en x e y ,  con  a  y  b números reales                     \n \n \ndistintos entre sí, distintos de cero y \nb\na\n\n\n. \n \n¿Cuál es la solución del sistema?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nax + by + 1 = 0 \nbx + ay + 1 = 0"
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "Dos ciclistas viajan en sentidos opuestos en una misma carretera y en línea \nrecta, uno al encuentro del otro. Se encuentran separados inicialmente por una \ndistancia d , y la rapidez a la que se desplazan son v y w . \n \n¿Cuál de las siguientes funciones permite calcular la distancia a la que están los \ndos ciclistas, antes de encontrarse, en función del tiempo t ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "d\nt)\nw\nv\n(\n)t(\nf\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "d\nt)\nw\nv\n(\n)t(\ng\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "t)\nw\nv\n(\nd\n)t(\np\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "d\nt)\nw\nv\n(\n)t(\nn\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "t)\nw\nv\n(\nd\n)t(\nm\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 21,
+      "enunciado": "Considera los rectángulos de perímetro P y ancho x .  \n \nSi la función f corresponde al largo de ellos, ¿cuál de las siguientes funciones \nrepresenta a f ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "Considera la ecuación \n\n\nx\nx\n\n\n\n. \n \n¿Cuál de los siguientes argumentos es válido?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La ecuación posee dos soluciones, porque \nx \n y \nx \n satisfacen la \nigualdad."
+        },
+        {
+          "letra": "B",
+          "texto": "Las soluciones de la ecuación son \nx \n y \nx \n, porque \n)\n)(\n(\n\n\n\n \ny \n)\n)(\n(\n\n\n\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Las soluciones son \nx \n y \nx \n, porque ambos valores satisfacen la \necuación \nx\nx2\n\n\n\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Las soluciones de la ecuación son ambas positivas, porque el discriminante \nasociado a la ecuación es positivo."
+        }
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "¿Cuál de las siguientes condiciones para m permite asegurar que las \nsoluciones de la ecuación \nmx\nmx 2\n\n\n\n, en x , no sean números reales?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "m "
+        },
+        {
+          "letra": "B",
+          "texto": "m "
+        },
+        {
+          "letra": "C",
+          "texto": "m "
+        },
+        {
+          "letra": "D",
+          "texto": "m\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "m\n\n\n \n \n \n \n \n \n \n \n \nA \nB \nC \nD"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "El cuadrado ABCD de la figura adjunta está formado por cuatro cuadrados de \nlado \ncm\nx\n y el perímetro de ABCD , en cm , es igual numéricamente al área,                   \nen \ncm , del cuadrado de lado x . \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes valores corresponde al área de la región achurada,                 \nen \ncm ? \n \nA) \nB) \nC) \nD) \nE) 16",
+      "alternativas": []
+    },
+    {
+      "numero": 25,
+      "enunciado": "Considera un rectángulo cuya área es \ncm\nM\n, tal que su largo mide \ncm\n más \nque su ancho.  \n \n¿Cuál de las siguientes expresiones representa el perímetro del rectángulo en \nfunción de M ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "M\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "M\n"
+        },
+        {
+          "letra": "C",
+          "texto": "M\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "M "
+        },
+        {
+          "letra": "E",
+          "texto": "M\n"
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "Considera la función cuadrática f , cuyo dominio es el conjunto de los números \nreales, definida por \n\n\nx\n)\nx\n(\nf\n2 \n\n\n\n. \n \n¿Cuál de los siguientes gráficos representa mejor a algunos de los puntos que \npertenecen a la gráfica de f ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Y \nX"
+        },
+        {
+          "letra": "C",
+          "texto": "Y \nX \n–5"
+        },
+        {
+          "letra": "D",
+          "texto": "Y \nX \n–5"
+        },
+        {
+          "letra": "B",
+          "texto": "Y \nX"
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "En la tabla adjunta se indica el costo unitario de producir x maceteros.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la función que modela el costo unitario por producir x maceteros es una función \ncuadrática, ¿cuál de las siguientes afirmaciones se puede deducir de esta \nsituación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El costo unitario de producir 80 maceteros es mayor que el costo unitario de \nproducir 20 maceteros."
+        },
+        {
+          "letra": "B",
+          "texto": "La mayor cantidad de maceteros que se puede producir es 70 ."
+        },
+        {
+          "letra": "C",
+          "texto": "La menor cantidad de maceteros que se puede producir es 500 ."
+        },
+        {
+          "letra": "D",
+          "texto": "El costo unitario de producir 50 maceteros es menor que el de producir un \nmacetero. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCantidad de maceteros producidos \nCosto unitario ($)"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "En la figura adjunta se representa la gráfica de la función f , cuyo dominio es el \nconjunto de los números reales, definida por \nc\nbx\nax\n)\nx\n(\nf\n\n\n\n\n, con a , b y c \nnúmeros reales. \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes relaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "a "
+        },
+        {
+          "letra": "B",
+          "texto": "a\nb \n"
+        },
+        {
+          "letra": "C",
+          "texto": "c "
+        },
+        {
+          "letra": "D",
+          "texto": "b \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nX \nY"
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 30,
+      "enunciado": "3",
+      "alternativas": [
+        {
+          "letra": "D",
+          "texto": "30 3\n3\n \n \n \n \n \n \n \n \n \n9.  \nConsidera los números reales a , b y c .  \n \n¿Con cuál de las siguientes igualdades se puede deducir que la expresión \nc\nb\na\n\n\n representa siempre a un número racional?"
+        },
+        {
+          "letra": "A",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "c\nb\na\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "c\nb\na\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n10. Una calculadora científica tiene la tecla            que permite calcular logaritmos               \nen base 10 . \n \nPor ejemplo, si se teclea la siguiente secuencia de teclas:  \n        \n \n \n \nla calculadora entrega la solución de la expresión \nlog\nlog\n\n. \n \n¿Cuál de las siguientes secuencias de teclas permite obtener el valor de \nlog2\n? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nlog \n \n( \n+ \n) \n= \nlog \nlog \n \nlog \n="
+        },
+        {
+          "letra": "A",
+          "texto": "log \n( \n) \n="
+        },
+        {
+          "letra": "C",
+          "texto": "D) \nlog \n \n="
+        },
+        {
+          "letra": "B",
+          "texto": " \nlog \nlog \n= \nlog \n \n \n \n11. Considera prismas de base cuadrada. En la siguiente tabla se presentan las \nmedidas de las aristas basales y los volúmenes de algunos prismas,                    \ncon igual altura. \n \n \n \n \n \n \n \n \nSi uno de estos prismas tiene un volumen de \ncm\nV\n y la arista de                    \nla cara basal es \ncm\nz\n, ¿cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "El cociente \nV\n:\nz2\n es igual a \ncm\n."
+        },
+        {
+          "letra": "B",
+          "texto": "La medida de la arista z puede expresarse como 5\nV ."
+        },
+        {
+          "letra": "C",
+          "texto": "El valor de \n)\nlog\nV\n(log\nz\nz\n\n es igual a 2."
+        },
+        {
+          "letra": "D",
+          "texto": "z\nV\nlog3\n\n, cuando la medida z de la arista coincida con la altura. \n \n \n \n12.  Si \nq\np\nlog\n\n, ¿cuál de las siguientes expresiones es igual a \n\n\np\nlog\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "q\n1 "
+        },
+        {
+          "letra": "B",
+          "texto": "q"
+        },
+        {
+          "letra": "C",
+          "texto": "q\n10 "
+        },
+        {
+          "letra": "D",
+          "texto": "q"
+        },
+        {
+          "letra": "E",
+          "texto": "q\n1 \n \n \n \n \n \nArista de la cara basal (en cm ) \nVolumen del prisma (en \ncm ) \n \n \n \n \n13.  La magnitud de un terremoto y la energía que este libera están relacionadas por \nla fórmula \n8,\nM\n5,1\nE\nlog\n\n\n\n, tal que E es la cantidad de energía liberada \nmedida en ergios y M es la magnitud del terremoto en grados Richter.  \n \n¿Cuál es la diferencia de magnitud, en grados Richter, entre un terremoto que \nlibera una cantidad de energía de \n ergios y otro que libera \n ergios?"
+        },
+        {
+          "letra": "A",
+          "texto": "8,1"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "9,3"
+        },
+        {
+          "letra": "E",
+          "texto": "14.  Considera dos cuadrados de lados \ncm\na\n y \ncm\nx\n que se intersectan solo en un \npunto que es un vértice, de tal manera que tienen una de sus diagonales en una \nmisma recta.  \n \n¿Cuál de las siguientes expresiones representa la menor área, en \ncm , que hay \nque agregar para construir un cuadrado que contenga a los cuadrados dados?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\na\n"
+        },
+        {
+          "letra": "B",
+          "texto": "ax"
+        },
+        {
+          "letra": "C",
+          "texto": "ax"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\nx\na\na\nx\n\n\n\n \n \n \n \n \n \n \n \n \n \n15. Considera la ecuación \np\nx\np\nx\n\n\n\n\n.  \n \n¿Cuál es el menor valor que puede tomar x para que p sea un número entero \npositivo?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n16.  En la figura adjunta, sobre los puntos A y B se traza una recta que divide al \nplano en los semiplanos I y II, además, por estos puntos se trazan las                   \nrectas \nL y \nL , formando los ángulos BAD y CBA , cuyas medidas están                   \nentre \n0 y \n\n180 .                   \n \n \n \n \n \n \n \n \n \n \n \n \nSi \n\n\n\n\nx\nBAD\n y \n\n\n\n\nx\nCBA\n, ¿cuál de los siguientes conjuntos \ncontiene solo a los posibles valores de x en que las rectas \nL y \nL se \nintersectan en algún punto perteneciente al semiplano II?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n,"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\n\n,"
+        },
+        {
+          "letra": "E",
+          "texto": "\n\n,\n  \n \n \n \n \n \n \n \n \n \n \n \nL2 \nA \nB \nSemiplano I \nSemiplano II \nD \nC \nL1 \n \n \n \n17.  Diego paga una compra de c\n$ con 35 monedas, algunas de a\n$ y  el resto de b\n$ . \n \nSi M es la cantidad de monedas de a\n$ y N es la cantidad de monedas de b\n$ , \n¿cuál de los siguientes sistemas de ecuaciones permite determinar la cantidad      \nde monedas de a\n$ y de b\n$ que utilizó Diego en su compra? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nc\nbN\naM\nb\na\nN\nM\n\n\n\n\n"
+        },
+        {
+          "letra": "A",
+          "texto": "bN\naM\nc\nN\nM\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "c\nbN\naM\nN\nM\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n\nc\nN\nM\nb\na\nN\nM\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "18.  En la figura adjunta \nL\n//\nL\n y \n\n\n\n\n\n5 . \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el valor de \n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n\n \n\n3 \nL \nL \n \n \n \n19.  Considera  el  sistema                              ,  en x e y ,  con  a  y  b números reales                     \n \n \ndistintos entre sí, distintos de cero y \nb\na\n\n\n. \n \n¿Cuál es la solución del sistema?"
+        },
+        {
+          "letra": "A",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "b\na\ny\n;\nb\na\nx\n\n\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nax + by + 1 = 0 \nbx + ay + 1 = 0 \n \n \n \n20.  Dos ciclistas viajan en sentidos opuestos en una misma carretera y en línea \nrecta, uno al encuentro del otro. Se encuentran separados inicialmente por una \ndistancia d , y la rapidez a la que se desplazan son v y w . \n \n¿Cuál de las siguientes funciones permite calcular la distancia a la que están los \ndos ciclistas, antes de encontrarse, en función del tiempo t ?"
+        },
+        {
+          "letra": "A",
+          "texto": "d\nt)\nw\nv\n(\n)t(\nf\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "d\nt)\nw\nv\n(\n)t(\ng\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "t)\nw\nv\n(\nd\n)t(\np\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "d\nt)\nw\nv\n(\n)t(\nn\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "t)\nw\nv\n(\nd\n)t(\nm\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n21.  Considera los rectángulos de perímetro P y ancho x .  \n \nSi la función f corresponde al largo de ellos, ¿cuál de las siguientes funciones \nrepresenta a f ?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\nP\n)\nx\n(\nf\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "x\nP\n)\nx\n(\nf\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n22. Considera la ecuación \n\n\nx\nx\n\n\n\n. \n \n¿Cuál de los siguientes argumentos es válido?"
+        },
+        {
+          "letra": "A",
+          "texto": "La ecuación posee dos soluciones, porque \nx \n y \nx \n satisfacen la \nigualdad."
+        },
+        {
+          "letra": "B",
+          "texto": "Las soluciones de la ecuación son \nx \n y \nx \n, porque \n)\n)(\n(\n\n\n\n \ny \n)\n)(\n(\n\n\n\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Las soluciones son \nx \n y \nx \n, porque ambos valores satisfacen la \necuación \nx\nx2\n\n\n\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Las soluciones de la ecuación son ambas positivas, porque el discriminante \nasociado a la ecuación es positivo. \n \n \n \n \n \n \n \n23.  ¿Cuál de las siguientes condiciones para m permite asegurar que las \nsoluciones de la ecuación \nmx\nmx 2\n\n\n\n, en x , no sean números reales?"
+        },
+        {
+          "letra": "A",
+          "texto": "m "
+        },
+        {
+          "letra": "B",
+          "texto": "m "
+        },
+        {
+          "letra": "C",
+          "texto": "m "
+        },
+        {
+          "letra": "D",
+          "texto": "m\n\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "m\n\n\n \n \n \n \n \n \n \n \n \nA \nB \nC \nD \n24. El cuadrado ABCD de la figura adjunta está formado por cuatro cuadrados de \nlado \ncm\nx\n y el perímetro de ABCD , en cm , es igual numéricamente al área,                   \nen \ncm , del cuadrado de lado x . \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes valores corresponde al área de la región achurada,                 \nen \ncm ?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        },
+        {
+          "letra": "E",
+          "texto": "16 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n25.  Considera un rectángulo cuya área es \ncm\nM\n, tal que su largo mide \ncm\n más \nque su ancho.  \n \n¿Cuál de las siguientes expresiones representa el perímetro del rectángulo en \nfunción de M ?"
+        },
+        {
+          "letra": "A",
+          "texto": "M\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "M\n"
+        },
+        {
+          "letra": "C",
+          "texto": "M\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "M "
+        },
+        {
+          "letra": "E",
+          "texto": "M\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n26. Considera la función cuadrática f , cuyo dominio es el conjunto de los números \nreales, definida por \n\n\nx\n)\nx\n(\nf\n2 \n\n\n\n. \n \n¿Cuál de los siguientes gráficos representa mejor a algunos de los puntos que \npertenecen a la gráfica de f ?"
+        },
+        {
+          "letra": "A",
+          "texto": "Y \nX"
+        },
+        {
+          "letra": "C",
+          "texto": "Y \nX \n–5"
+        },
+        {
+          "letra": "D",
+          "texto": "Y \nX \n–5"
+        },
+        {
+          "letra": "B",
+          "texto": "Y \nX \n \n \n \n27.  En la tabla adjunta se indica el costo unitario de producir x maceteros.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi la función que modela el costo unitario por producir x maceteros es una función \ncuadrática, ¿cuál de las siguientes afirmaciones se puede deducir de esta \nsituación?"
+        },
+        {
+          "letra": "A",
+          "texto": "El costo unitario de producir 80 maceteros es mayor que el costo unitario de \nproducir 20 maceteros."
+        },
+        {
+          "letra": "B",
+          "texto": "La mayor cantidad de maceteros que se puede producir es 70 ."
+        },
+        {
+          "letra": "C",
+          "texto": "La menor cantidad de maceteros que se puede producir es 500 ."
+        },
+        {
+          "letra": "D",
+          "texto": "El costo unitario de producir 50 maceteros es menor que el de producir un \nmacetero. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCantidad de maceteros producidos \nCosto unitario ($) \n \n \n \n \n28.  En la figura adjunta se representa la gráfica de la función f , cuyo dominio es el \nconjunto de los números reales, definida por \nc\nbx\nax\n)\nx\n(\nf\n\n\n\n\n, con a , b y c \nnúmeros reales. \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes relaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "a "
+        },
+        {
+          "letra": "B",
+          "texto": "a\nb \n"
+        },
+        {
+          "letra": "C",
+          "texto": "c "
+        },
+        {
+          "letra": "D",
+          "texto": "b \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nX \nY \n \n \n \n29. En cierto videojuego la superficie de terreno que abarca la explosión de una bomba \nlanzada, puede ser modelada por la función \n2t5\nt\nS\n\n, en la cual S corresponde a \nla superficie circular de la explosión de la bomba en unidades cuadradas y t al \ntiempo en segundos que dura la explosión. \n \n¿Cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "Una explosión de una bomba que dura un segundo, abarca la mitad de \nterreno que si la explosión durase dos segundos."
+        },
+        {
+          "letra": "B",
+          "texto": "Una bomba tardaría el doble de tiempo en abarcar 200 unidades cuadradas \ncon su explosión que lo que tardaría en abarcar 800 unidades cuadradas."
+        },
+        {
+          "letra": "C",
+          "texto": "Basta un segundo más de explosión para que una bomba cuadruplique la \nsuperficie que puede abarcar en cualquier momento."
+        },
+        {
+          "letra": "D",
+          "texto": "Una bomba cuadruplica la superficie abarcada si se duplica el tiempo de \nexplosión. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n30.  Se necesita determinar el perímetro del rectángulo ABCD , cuyo largo y ancho \nmiden \ncm\n)1\nx\n(\n\n y \ncm\n)\nx\n(\n\n, respectivamente. Se sabe que ABCD es \nsemejante a un rectángulo cuyo largo y ancho miden \ncm\n y \ncm\n, \nrespectivamente.  \n \n \nPara determinar el perímetro del rectángulo ABCD se realiza el siguiente \nprocedimiento, cometiéndose un error: \n \nPaso 1: \ncomo los rectángulos son semejantes se plantea la expresión: \nx\nx\n\n\n\n  \nPaso 2: \nse resuelve la expresión anterior, obteniéndose \nx \n. \nPaso 3: \nse reemplaza este valor de x en \ncm\n)1\nx\n(\n\n y \ncm\n)\nx\n(\n\n, \nobteniéndose que el largo y el ancho del rectángulo son \ncm\n y \ncm\n, respectivamente. \nPaso  4: se calcula el perímetro del rectángulo obteniéndose \ncm\n. \n \n \n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4"
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "La razón de semejanza entre las figuras P y Q , en ese orden, es 5\n3 , mientras que \nla razón de semejanza entre las figuras R y P , en ese orden, es 3\n7 .  \n \n¿Cuál es la razón de semejanza entre las figuras R y Q , en ese orden? \n \nA) \n \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 32,
+      "enunciado": "Para determinar la altura de un poste vertical, Camilo coloca un espejo en el suelo \nentre él y el poste, de tal manera que en un punto del espejo Camilo observa la \ncima del poste, como se representa en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \nSi los ojos de Camilo están a una altura de \nm\n,1\n, la distancia entre su pie y la \nbase del poste es de \nm\n y la distancia entre su pie y el espejo es de \nm\n, ¿cuál \nes la altura del poste?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "m\n,2"
+        },
+        {
+          "letra": "B",
+          "texto": "m\n5,4"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n,9"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n   \n   \nEspejo \nCamilo  \nPoste"
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "Un rectángulo R se divide en cuatro rectángulos de tal forma que el vértice común \na los cuatro rectángulos pertenece a una diagonal del rectángulo R , como se \nrepresenta a continuación: \n \n \n \n \n \n \n \n \n \n \n \n \nSi el ancho del rectángulo R mide \ncm\n, ¿cuál es el perímetro total del \nrectángulo R ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n100 cm \n60 cm"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "En la figura adjunta el \nABC\n\n es rectángulo en C y el \nBDE\n\n es rectángulo    \nen E , con E en el segmento AB y D en el segmento CB .  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi \n\ncm\nx\nAE\n\n\n, \n\ncm\nx\nEB\n\n\n, \n\ncm\nx\nBD\n\n\n y \n\ncm\nx\nDC\n\n\n, \n¿cuál es el valor del segmento CB ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm"
+        },
+        {
+          "letra": "E",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \nB \nE \nA \nC \nD"
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "En el triángulo ABC de la figura adjunta, \ncm\nBC\nAC\n\n\n, la altura CF            \nmide \ncm\n, \nAB\n//\nDE\n y la distancia entre estas paralelas es cm\n.  \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el perímetro del trapecio ABED ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm\n,8"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm\n5,"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nB \nF \nE \nD \nC \nA"
+        }
+      ]
+    },
+    {
+      "numero": 36,
+      "enunciado": "Un grupo de estudiantes tiene la tarea de diseñar el logo de la semana de \naniversario del colegio. Ellos deciden usar como base un triángulo isósceles \nrectángulo junto a una imagen homotética de este con razón de homotecia \n\n y \ncentro de homotecia el vértice donde está el ángulo recto. \n \n¿Cuál de las siguientes opciones se ajusta mejor al logo diseñado por los \nestudiantes? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nA) \nB) \nD) \nC)",
+      "alternativas": []
+    },
+    {
+      "numero": 37,
+      "enunciado": "Un objeto y la imagen que se forma de él en la retina del ojo humano se puede \nmodelar a través de la relación \nO\nk\nI\n\n\n, con k la razón de homotecia, I el \ntamaño de la imagen y O el tamaño del objeto original, como se representa en la \nsiguiente figura: \n \n \n \n \n \n \n \n \n \n \n \nSe sabe que la distancia entre el centro de homotecia y el sector donde se forma la \nimagen en la retina es, aproximadamente, de \nmm\n. \n \n \nSi un objeto de tamaño \nm\n5,0\n está a una distancia al centro de homotecia de \nm\n,  \n¿cuál es el tamaño de la imagen que se forma en la retina, en metros?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "24 "
+        },
+        {
+          "letra": "B",
+          "texto": "24 "
+        },
+        {
+          "letra": "C",
+          "texto": "5,0\n24 "
+        },
+        {
+          "letra": "D",
+          "texto": "24 \n \n \n \n \n \n \n \n \n \n \n \nObjeto \noriginal \nImagen \nCristalino \nRetina"
+        }
+      ]
+    },
+    {
+      "numero": 38,
+      "enunciado": "En la figura adjunta el rectángulo Q es la imagen homotética del rectángulo R y el \npunto \n)\n,0\n(\n es el centro de homotecia. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la razón de homotecia? \n \nA) \nB) \nC)    4\nD) \n\n \n \n \n \n \n \n \n \n \n \nQ \nR \nX \nY",
+      "alternativas": []
+    },
+    {
+      "numero": 39,
+      "enunciado": "Dos figuras geométricas son homotéticas con razón de homotecia \n\n.  \n \nSi la figura original tiene un área de \ncm\nb\n, ¿cuál es el área de la imagen \nhomotética?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm\nb"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\nb"
+        },
+        {
+          "letra": "C",
+          "texto": "2 cm\nb"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\nb"
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "Considera el triángulo ABC de la figura adjunta, tal que D pertenece al                  \n segmento BC . \n \n \n \n \n \n \n \n \n \n \n \nSi \ncm\np\nAB \n y \ncm\ny\nDB \n, ¿cuál de las siguientes expresiones corresponde a la \nmedida del segmento CD , en cm?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\ny\ntan\np\n\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\ny\ntan\np\n\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\ny\ntan\np\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\ny\ntan\np\n\n\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "¿Para qué puntos \n)\ny\n,x\n(\n en el plano cartesiano se cumple \ny\nx\ny\n \n3x \n\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Para los puntos de la forma \n)\n,x\n(\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Para los puntos de la forma \n)\ny\n,x\n(\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Solo para el punto \n)\n,0\n(\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Para ningún punto. \n \n \n \n \n \n \n \n \n \nA \n \n \nB \nD \nC"
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "Al trasladar el punto \n)\ny\n,x\n(\n según el vector \n)\nq\n,p\n(\n, se obtiene un punto en el \nsegundo cuadrante. \n \n¿Cuál de las siguientes relaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p\nx\n\n\n  e  \nq\ny\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "p\nx\n\n\n  e  \nq\ny "
+        },
+        {
+          "letra": "C",
+          "texto": "p\nx \n  e  \nq\ny "
+        },
+        {
+          "letra": "D",
+          "texto": "p\nx\n\n\n  e  \nq\ny\n\n"
+        },
+        {
+          "letra": "E",
+          "texto": "p\nx\n\n\n  e  \nq\ny\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "¿Cuántos vectores \n)\nb\n,a(\n con coordenadas enteras y magnitud \n5 hay en el \nplano cartesiano? \n \nA) \nB) \nC) \nD) \nE) \nInfinitos",
+      "alternativas": []
+    },
+    {
+      "numero": 44,
+      "enunciado": "En el plano cartesiano de la cuadrícula de lado \ncm\n de la figura adjunta, los \npolígonos P , Q , R , S, T y M son congruentes entre sí.  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de los siguientes polígonos es la imagen de M según la traslación dada por \n\n\nv\nu\n\n ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "P"
+        },
+        {
+          "letra": "B",
+          "texto": "R"
+        },
+        {
+          "letra": "C",
+          "texto": "Q"
+        },
+        {
+          "letra": "D",
+          "texto": "S"
+        },
+        {
+          "letra": "E",
+          "texto": "T \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nu \nv \nS \nR \nT \nP \nM \nQ \nY \nX"
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "El curso A tiene un promedio en biología de \n8,5\n y una desviación estandar de \n2,0\n \ny el curso B tiene un promedio de \n8,5\n y una desviación estandar de \n4,0\n, tal que las \nnotas van desde 0,1\n a \n0,7\n. \n \n \n¿Cuál de las siguientes afirmaciones es siempre verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las notas en ambos cursos son iguales."
+        },
+        {
+          "letra": "B",
+          "texto": "La mayoría de las notas en ambos cursos fue de un \n8,5\n."
+        },
+        {
+          "letra": "C",
+          "texto": "En el curso A hubo por lo menos un \n0,6\n y en el curso B hubo por lo menos \nun \n2,6\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Las notas del curso A presentan menor dispersión que las notas del                 \ncurso B."
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "Considera los datos \nx , \nx , \nx y \nx cuyo promedio es x , tal que \nx\nx1\n\n\n, \nx\nx2\n\n\n\n y \nx\nx3\n\n\n.  \n \n¿Cuál es la varianza de estos datos? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 47,
+      "enunciado": "En una competencia las normas indican que las puntuaciones recibidas por los \nparticipantes se calcularán de la siguiente forma: \n \n cada uno de los 5 jueces dará un puntaje entre 1 y 20 . \n para estos 5 puntajes se calculará el promedio x y desviación estándar . \n se eliminarán aquellos puntajes que no estén entre \n\n\nx\n y \n\n\nx\n. \n se calculará nuevamente el promedio, pero solo con los puntajes que estén \nentre \n\n\nx\n y \n\n\nx\n, el cual corresponde al puntaje final del participante. \n \nSi los jueces evalúan a Gabriel con 6 , 8, 12 , 9 y 15 puntos, ¿cuál es el puntaje \nfinal obtenido por Gabriel?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "10 puntos"
+        },
+        {
+          "letra": "B",
+          "texto": "35 puntos"
+        },
+        {
+          "letra": "C",
+          "texto": "29 puntos"
+        },
+        {
+          "letra": "D",
+          "texto": "21 puntos"
+        }
+      ]
+    },
+    {
+      "numero": 48,
+      "enunciado": "Considera el grupo A, cuyos datos son 1, 2 , 3, 4 , 5 y el grupo B, cuyos datos son  \n1001, 1002 , 1003 , 1004 , 1005 . \n \nSi \n)\nA\n(\nVar\n y \n)\nB\n(\nVar\n son las varianzas de los grupos A y B, respectivamente,  \n¿cuál de los siguientes argumentos es válido?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El promedio del grupo A y el promedio del grupo B son distintos, porque \n)\nB\n(\nVar\n)\nA\n(\nVar\n\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Las varianzas de los grupos A y B son iguales, porque los datos del grupo B \nse obtienen de sumar 1000 a cada valor del grupo A."
+        },
+        {
+          "letra": "C",
+          "texto": "El rango de los datos del grupo A es igual al rango de los datos del grupo B, \nporque ambos grupos tienen cinco datos."
+        },
+        {
+          "letra": "D",
+          "texto": "El rango de los datos del grupo A es igual al rango de los datos del grupo B, \nporque \n)\nB\n(\nVar\n)\nA\n(\nVar\n\n."
+        }
+      ]
+    },
+    {
+      "numero": 49,
+      "enunciado": "Considera los datos de los grupos 1 y 2 de la siguiente tabla: \n \n \n \n \n \n \nSi \nr\nq\np\n\n\n, ¿cuál de las siguientes afirmaciones es siempre verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La desviación estándar del grupo 1 es mayor que la del grupo 2."
+        },
+        {
+          "letra": "B",
+          "texto": "Ambos grupos tienen igual desviación estándar."
+        },
+        {
+          "letra": "C",
+          "texto": "El rango de ambos grupos es el mismo."
+        },
+        {
+          "letra": "D",
+          "texto": "En ambos casos la desviación estándar es mayor que cero. \n \n \n \n \n \n \n \n \n \nGrupo 1 \np \nq \nr \nGrupo 2 \np  1 \nq \nr  +  1"
+        }
+      ]
+    },
+    {
+      "numero": 50,
+      "enunciado": "Una caja M contiene solo 3 bolitas rojas y 2 verdes, todas del mismo tipo y una \ncaja N contiene solo una bolita roja y 3 bolitas verdes, todas del mismo tipo.  \n \nUn experimento aleatorio consiste en lanzar un dado común, si sale un número \npar se extrae una bolita desde la caja M, en caso contrario se extrae una bolita \nde la caja N.  \n \nSi se realiza este experimento, ¿cuál es la probabilidad de extraer una bolita \nroja? \n \nA) \nB) \nC) \nD) \nE)",
+      "alternativas": []
+    },
+    {
+      "numero": 51,
+      "enunciado": "Considera las tiendas A , B y C dedicadas a la venta de relojes. Si un cliente \ncompra un reloj en una de estas tres tiendas, la probabilidad de que compre en A \nes \n2,0\n; en B es \n3,0\n y en C es \n5,0\n. Se sabe que la probabilidad de que cualquier \nreloj que se venda en las tiendas A, B y C tenga fallas es \n3,0\n; \n5,0\n y \n6,0\n, \nrespectivamente. \n \nSi Teresa compra un reloj que no tiene fallas, ¿cuál es la probabilidad de que lo \nhaya comprado en la tienda A?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "7,0\n2,0\n"
+        },
+        {
+          "letra": "B",
+          "texto": "3,0\n2,0\n"
+        },
+        {
+          "letra": "C",
+          "texto": "6,0\n5,0\n5,0\n3,0\n3,0\n2,0\n3,0\n2,0\n\n\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "4,0\n5,0\n5,0\n3,0\n7,0\n2,0\n7,0\n2,0\n\n\n\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "De un grupo de 100 personas, 40 de ellas son fumadores. Un \n%\n de los \nfumadores no presenta una enfermedad respiratoria. Al seleccionar una persona al \nazar del grupo total, la probabilidad de que presente una enfermedad respiratoria \nes \n,0\n.  \n \nAl seleccionar una persona al azar del grupo total, ¿cuál es la probabilidad de que \nno fume dado que no tiene una enfermedad respiratoria? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 53,
+      "enunciado": "Se puede determinar el valor numérico de \na\n3 \n, si: \n \n(1) \nse conoce el valor de \na\n2 . \n(2) \na ",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "La distancia entre dos números enteros en la recta numérica es 45. Se pueden \ndeterminar ambos números, si se sabe que: \n \n(1) \nun número es positivo y el otro es negativo. \n(2) \nun número es el sucesor del inverso aditivo del otro.",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional"
+        }
+      ]
+    },
+    {
+      "numero": 55,
+      "enunciado": "Cada uno de los estudiantes de los terceros medios de un colegio lleva una botella \nindividual para hidratarse, ya sea de agua o jugo. \n \n \nAl seleccionar un estudiante de tercero medio de este colegio al azar, se puede \ndeterminar la probabilidad de que sea una mujer que lleva agua, si se sabe que: \n \n(1) \nel \n%\n de los estudiantes son hombres y de estos 6\n5 llevan \nagua.  \n(2) \nlos 3\n2 de las mujeres llevan jugo.",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(1) por sí sola"
+        },
+        {
+          "letra": "B",
+          "texto": "(2) por sí sola"
+        },
+        {
+          "letra": "C",
+          "texto": "Ambas juntas, (1) y (2)"
+        },
+        {
+          "letra": "D",
+          "texto": "Cada una por sí sola, (1) ó (2)"
+        },
+        {
+          "letra": "E",
+          "texto": "Se requiere información adicional \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nIMPORTANTE\n\t ESTE FOLLETO ESTÁ PROTEGIDO BAJO REGISTRO DE PROPIEDAD \nINTELECTUAL DE LA UNIVERSIDAD DE CHILE.\n\t ESTÁ PROHIBIDA LA REPRODUCCIÓN, TRANSMISIÓN TOTAL O \nPARCIAL DE ESTE FOLLETO, POR CUALQUIER MEDIO O MÉTODO.\n\t ES OBLIGATORIO DEVOLVER ÍNTEGRAMENTE EL FOLLETO ANTES DE \nABANDONAR LA SALA.\n\t ES OBLIGATORIO DEVOLVER LA HOJA DE RESPUESTAS ANTES DE \nABANDONAR LA SALA.\nacceso.mineduc.cl     demre.cl"
+        }
+      ]
+    }
+  ]
+}

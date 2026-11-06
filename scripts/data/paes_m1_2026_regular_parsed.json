@@ -1,0 +1,3136 @@
+{
+  "materia": "m1",
+  "year": 2026,
+  "edicion": "Regular",
+  "forma": 113,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes\nperpendiculares, cuyo origen es el punto (0, 0).",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo [p, q] es el conjunto de todos los números reales mayores o\niguales que p y menores o iguales que q; el intervalo ]p, q] es el conjunto\nde todos los números reales mayores que p y menores o iguales que q;\nel intervalo [p, q[ es el conjunto de todos los números reales mayores o\niguales que p y menores que q; y el intervalo ]p, q[ es el conjunto de todos\nlos números reales mayores que p y menores que q.",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": "Todas las funciones presentadas tendrán como dominio el conjunto de los\nnúmeros reales a menos que se indique lo contrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "→v= (a, b) es un vector que tiene su punto de inicio en el origen del plano\ncartesiano y su punto final en el punto (a, b), a menos que se indique lo\ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del 1\nal 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.",
+      "alternativas": []
+    },
+    {
+      "numero": 7,
+      "enunciado": "En el experimento de lanzar una moneda, sus dos opciones son\nequiprobables de salir, a menos que se indique lo contrario.\nSÍMBOLOS MATEMÁTICOS\n<\nes menor que\n>\nes mayor que\n≤\nes menor o igual que\n≥\nes mayor o igual que\nángulo recto\n∼\nes semejante con̸\n=\nes distinto de\nAB\ntrazo AB\nAB\nmedida del trazo AB\nPropiedad Intelectual Universidad de Chile.\nDerechos reservados ©. Prohibida su reproducción total o parcial.\n1.\nEn un juego hay dos tipos de cartas, unas tienen una estrella y las otras tienen un\ncorazón, todas con un número.\nEl puntaje de cada jugador se calcula de la siguiente forma:\n• Primero se extrae una carta al azar (carta inicial) y su valor se considera como\npuntaje inicial.\n• Luego, se extrae otra carta:\n◦si esta tiene una estrella, le debe restar el valor de la carta a su puntaje;\n◦si esta tiene un corazón, le debe sumar el valor de la carta a su puntaje.\n• El puntaje final se obtiene al repetir el procedimiento anterior, hasta tener diez\ncartas.\nUn jugador extrae las siguientes cartas, en este orden:\n¿Cuál es el puntaje final del jugador?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "−14"
+        },
+        {
+          "letra": "B",
+          "texto": "−4"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n2.\nPara preparar una receta, una persona necesita 700 g de carne picada, 1 kg de\nchampiñones y 2 cebollas.\nPara comprar los ingredientes la persona considera los siguientes precios:\n100 g de carne picada\n$900\n0,5 kg de champiñón\n$3500\n1 cebolla\n$200\n¿Cuánto dinero necesita la persona para comprar los ingredientes para esta receta?"
+        },
+        {
+          "letra": "A",
+          "texto": "$4600"
+        },
+        {
+          "letra": "B",
+          "texto": "$8100"
+        },
+        {
+          "letra": "C",
+          "texto": "$10 000"
+        },
+        {
+          "letra": "D",
+          "texto": "$13 700\n3.\nUn auto recorre 5 km para ir de la ciudad A a la ciudad B y recorre 25 km para ir de\nla ciudad B a la ciudad C.\nSi este auto rinde 10 kilómetros por litro, es decir, recorre 10 km con 1 litro de\nbencina, ¿cuál es la cantidad de litros de bencina que se necesitan para hacer el\nrecorrido de la ciudad A hasta la ciudad C de ida y vuelta, pasando ambas veces por\nla ciudad B?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n4.\n¿Cuál es el número cuya tercera parte es 0,09?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,7"
+        },
+        {
+          "letra": "B",
+          "texto": "0,3"
+        },
+        {
+          "letra": "C",
+          "texto": "0,27"
+        },
+        {
+          "letra": "D",
+          "texto": "0,03\n5.\nPara resolver la expresión −\n\u00124\n6 · −8\n\u0013\n+\n\u0012 2\n30 + 2\n60 −4\n\u0013\n, una persona\nrealiza el siguiente procedimiento, cometiendo un error.\nPaso 1: simplifica una vez por 2 cada fracción de la expresión, obteniendo\n−\n\u00122\n3 · −4\n\u0013\n+\n\u0012 1\n15 + 1\n30 −2\n\u0013\n.\nPaso 2: desarrolla el primer paréntesis −\n\u00122\n3 · −4\n\u0013\n, obteniendo 1.\nPaso 3: desarrolla el segundo paréntesis\n\u0012 1\n15 + 1\n30 −2\n\u0013\n, obteniendo −3\n.\nPaso 4: desarrolla 1 −3\n, obteniendo 7\n.\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n11.\nLa escalera de un edificio tiene 20 peldaños entre piso y piso. La altura de cada uno\nde estos peldaños es de 15 cm.\nUna persona empieza a subir por la escalera de este edificio, desde el primer peldaño\ndel primer piso.\nSi n es la cantidad de peldaños que la persona ha subido, ¿cuál de las siguientes\ncondiciones garantiza que la persona llegó a un nuevo piso?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que 15 · n es divisible por 20."
+        },
+        {
+          "letra": "B",
+          "texto": "Que 15 + n es divisible por 20."
+        },
+        {
+          "letra": "C",
+          "texto": "Que 15 · n es divisible por 300."
+        },
+        {
+          "letra": "D",
+          "texto": "Que 15 + n es divisible por 300.\n13.\nAlgunas calculadoras tienen botones que permiten marcar dos ceros o tres ceros a la\nvez, tal como la que se representa en la imagen adjunta.\nDe esta manera, para marcar el número 1000, basta con presionar los siguientes\nbotones una vez cada uno:\n¿Cuál de las siguientes acciones permite marcar el número 1010?"
+        },
+        {
+          "letra": "A",
+          "texto": "Presionar una vez\ny siete veces\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Presionar una vez\ny ocho veces\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Presionar una vez\n, dos veces\ny dos veces\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Presionar una vez\n, tres veces\ny una vez\n.\n14.\nUna persona realiza el siguiente procedimiento para factorizar 12 + 20, cometiendo\nun error.\nPaso 1: escribe cada sumando como el producto de dos números, obteniendo\n4 · 3 + 4 · 5.\nPaso 2: descompone cada factor en números primos, obteniendo 2 · 2 · 3 + 2 · 2 · 5.\nPaso 3: escribe las potencias correspondientes, obteniendo 22 · 3 + 22 · 5.\nPaso 4: factoriza la suma, obteniendo 24 (3 + 5).\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n15.\nLeonardo juega el siguiente juego:\nSe elige un número y luego se extraen dos tarjetas con operaciones: la primera de\nun mazo de color blanco y la segunda de un mazo de color gris. La operación de la\ntarjeta blanca se aplica sobre el número elegido y la operación de la tarjeta gris sobre\nel resultado obtenido.\nLeonardo extrae las siguientes tarjetas:\nSi eligió el número 2, ¿cuál de las siguientes expresiones corresponde a la correcta\naplicación de las instrucciones de las tarjetas en el orden en que las sacó?"
+        },
+        {
+          "letra": "A",
+          "texto": "(2 −5)3"
+        },
+        {
+          "letra": "B",
+          "texto": "3 · (2 −5)"
+        },
+        {
+          "letra": "C",
+          "texto": "3 · (5 −2)"
+        },
+        {
+          "letra": "D",
+          "texto": "(5 −2)3\n18.\nSi p es el 25 % de k, ¿cuál de las siguientes expresiones representa el valor de k?"
+        },
+        {
+          "letra": "A",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "B",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · p"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · p\n19.\n¿Cuánto es el 75 % del 75 % de 100?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "56,25"
+        },
+        {
+          "letra": "D",
+          "texto": "1,5\n22.\nSe estimó que en el 2022 la cantidad de personas que les gustaba jugar videojuegos\nera de 3000 millones.\nSi en el 2023 la cantidad de personas que les gustaba jugar videojuegos aumentó en\n120 millones respecto al año anterior, ¿cuál es el porcentaje de aumento de ese año,\nrespecto del año anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,5 %"
+        },
+        {
+          "letra": "B",
+          "texto": "4 %"
+        },
+        {
+          "letra": "C",
+          "texto": "25 %"
+        },
+        {
+          "letra": "D",
+          "texto": "40 %\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?"
+        },
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M\n26.\nEl ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000\n27.\nUna pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?"
+        },
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros\n28.\nUna persona descubrió que para lograr el color que le gusta para el glaseado de\ngalletas, debe mezclar gotas del colorante rojo con gotas del colorante amarillo en la\nrazón 3 : 5, respectivamente.\nSi la persona usa 30 gotas de colorante amarillo para preparar el glaseado que le\ngusta, ¿cuántas gotas de color rojo deberá agregar para obtener el color que le gusta?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nPara cierta marca de alimentos, la cantidad p de kilogramos de comida que\ndebe comer un perro adulto, durante el día, se modela mediante la expresión\np = m · 0,025, tal que m es la masa del perro, en kilogramos.\n¿Cómo se puede interpretar 0,025 en el modelo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que el perro adulto debe consumir 25 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perro adulto debe consumir 250 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la masa de un perro adulto es 25 veces la cantidad de alimento que debe\nconsumir."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la masa de un perro adulto es 250 veces la cantidad de alimento que debe\nconsumir.\n31.\nEn la información nutricional de un paquete de galletas se indica que una porción de\n4 galletas contiene 180 kilocalorías.\nPara calcular cuántas kilocalorías K se ingieren al consumir este tipo de galletas se\npuede utilizar la fórmula K = 180x\n, tal que x es la cantidad de galletas consumidas.\nUna persona consumió una cantidad de galletas de este tipo junto a un vaso de jugo\nque contiene 90 kilocalorías, ingiriendo en total 405 kilocalorías.\n¿Cuántas galletas consumió esta persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n32.\nDaniela, con el dinero que tiene, compra en un bazar 7 lápices pasta del mismo\ntipo y le sobran $900. En el mismo bazar, Marcos, con el dinero que tiene, compra\n6 lápices pasta del mismo tipo que Daniela y le sobran $2330.\nSi Daniela y Marcos tienen la misma cantidad de dinero, ¿cuál es el precio de un\nlápiz pasta del mismo tipo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$110"
+        },
+        {
+          "letra": "B",
+          "texto": "$248"
+        },
+        {
+          "letra": "C",
+          "texto": "$1430"
+        },
+        {
+          "letra": "D",
+          "texto": "$3230\n33.\nEn una ciudad se registró la cantidad de nacimientos desde el año 2019 al año 2021.\nAl relacionar estas cantidades con la cantidad x (en miles) de nacimientos del año\n2018, se encontraron las siguientes relaciones:\nAño\nCantidad de nacimientos (en miles)\n5x + 4\n3x + 5\n2 −x\nSi en esta ciudad, durante el año 2019 hubo una cantidad menor de nacimientos que\nla suma de los años 2020 y 2021, ¿cuál de las siguientes relaciones representa la\ninformación entregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "5x + 4 < 2x + 7"
+        },
+        {
+          "letra": "B",
+          "texto": "5x + 4 < 4x + 7"
+        },
+        {
+          "letra": "C",
+          "texto": "5x + 4 > 2x + 7"
+        },
+        {
+          "letra": "D",
+          "texto": "5x + 4 > 4x + 7\n34.\nDos jóvenes quieren iniciar un emprendimiento de fabricación y venta de helados. Las\nproyecciones de los gastos y de los ingresos, ambos acumulados, que deberían tener\nen los primeros 12 meses, se presentan en el siguiente gráfico:\n¿Qué representa el punto donde las rectas se intersecan?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es el mes donde se obtiene la mayor cantidad de ingresos acumulados."
+        },
+        {
+          "letra": "B",
+          "texto": "Es el mes donde los ingresos acumulados igualan a los gastos acumulados."
+        },
+        {
+          "letra": "C",
+          "texto": "Es el mes desde cuando el emprendimiento no tendrá más gastos acumulados."
+        },
+        {
+          "letra": "D",
+          "texto": "Es el mes donde los ingresos acumulados son iguales a los gastos iniciales del\nemprendimiento.\n35.\nUna persona gasta $13 500 en la compra de 8 kg de fruta entre manzanas y peras,\npagando $1500 por el kilogramo de manzanas y $1800 por el kilogramo de peras.\nEl siguiente sistema de ecuaciones modela la situación anterior:\n1500x + 1800y = 13 500\nx + y = 8\n¿Qué representa la variable x en este sistema?"
+        },
+        {
+          "letra": "A",
+          "texto": "La cantidad de peras compradas"
+        },
+        {
+          "letra": "B",
+          "texto": "La cantidad de manzanas compradas"
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad de kilogramos de peras compradas"
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad de kilogramos de manzanas compradas\n40.\nUn estanque contiene 720 litros de agua y, cada vez que se abre la llave, este se\nvacía a razón de 3 litros por minuto.\n¿Cuál de las siguientes funciones modela la cantidad de agua que queda en el\nestanque por cada minuto que la llave se encuentra abierta, tal que x son los minutos\ntranscurridos desde que se abre la llave?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = −3x + 720"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 3x −720"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = x −720"
+        },
+        {
+          "letra": "D",
+          "texto": "h(x) = −x + 720\n41.\nUna persona dispone de un terreno de forma rectangular. Se sabe que el terreno\ntiene un área de 192 m2 y que su ancho mide 4 m menos que su largo.\n¿Cuánto mide el largo del terreno?"
+        },
+        {
+          "letra": "A",
+          "texto": "12 m"
+        },
+        {
+          "letra": "B",
+          "texto": "16 m"
+        },
+        {
+          "letra": "C",
+          "texto": "20 m"
+        },
+        {
+          "letra": "D",
+          "texto": "24 m\n42.\nConsidera la función cuadrática f con dominio el conjunto de los números reales.\nEn la siguiente figura se representa la gráfica de f con su eje de simetría.\nX\nY\n¿Para cuál de los siguientes valores de x se tiene que f(x) = 7?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)\n−3"
+        },
+        {
+          "letra": "C",
+          "texto": "−4"
+        },
+        {
+          "letra": "D",
+          "texto": "−5\n43.\nLa distancia d, en metros, que recorre un móvil que parte del reposo está dada\npor d(t) = a · t2\n, tal que t es el tiempo que demora en recorrer esa distancia, en\nsegundos, y a es la aceleración del móvil, en m\ns2 .\nSi el móvil acelera a 10 m\ns2 , ¿cuántos segundos tardará en recorrer una distancia de\n45 metros?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)\n4,5"
+        },
+        {
+          "letra": "C",
+          "texto": "√"
+        },
+        {
+          "letra": "D",
+          "texto": "45.\nEn la figura adjunta se representa un trapecio rectángulo de área 0,76 m2.\n¿Cuál es la medida de su altura?"
+        },
+        {
+          "letra": "A",
+          "texto": "1,444 m"
+        },
+        {
+          "letra": "B",
+          "texto": "0,80 m"
+        },
+        {
+          "letra": "C",
+          "texto": "0,722 m"
+        },
+        {
+          "letra": "D",
+          "texto": "0,40 m\n47.\nEn la siguiente imagen se presenta una red de un cubo.\nSe construye el siguiente cuerpo usando algunos cubos como el anterior.\n¿Cuántos cubos se utilizaron en total para construir el cuerpo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n48.\nUna empresa fabrica y vende cajas cúbicas de madera fina para almacenar joyas.\nEl precio de venta de las cajas se determina como $800 · k, tal que se cobra\n$800 por cada cm2 del área exterior de las cajas.\nConsidera que el área de una cara exterior de estas cajas es de 25 cm2. ¿Cuál de\nlas siguientes expresiones representa k?"
+        },
+        {
+          "letra": "A",
+          "texto": "6 · 52"
+        },
+        {
+          "letra": "B",
+          "texto": "6 · 54"
+        },
+        {
+          "letra": "C",
+          "texto": "6 · 56"
+        },
+        {
+          "letra": "D",
+          "texto": "6 · 512\n49.\nConsidera el siguiente procedimiento:\n¿Cuál de las siguientes figuras se obtendrá al desdoblarse y estirarse el recorte?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n50.\nEn el plano cartesiano de la figura adjunta se representan los puntos cardinales.\n¿En cuál de las siguientes opciones las transformaciones isométricas aplicadas a la\nflecha negra permite que la imagen obtenida sea una flecha que apunta al oeste?"
+        },
+        {
+          "letra": "A",
+          "texto": "Una reflexión con respecto al eje X y luego, una reflexión con respecto a la recta\ny = x."
+        },
+        {
+          "letra": "B",
+          "texto": "Una reflexión con respecto al origen del plano cartesiano y luego, una rotación\nen 45◦en sentido horario con centro el origen del plano cartesiano."
+        },
+        {
+          "letra": "C",
+          "texto": "Una reflexión con respecto al eje Y."
+        },
+        {
+          "letra": "D",
+          "texto": "Una traslación según el vector (−3, −3).\n51.\nConsidera los vectores representados en el plano cartesiano.\nX\nY\n−5\n−2\n→u\n→v\n¿Cuál de las siguientes afirmaciones es verdadera, respecto a los vectores del\ngráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "Tienen distinta dirección."
+        },
+        {
+          "letra": "B",
+          "texto": "Tienen distinto sentido."
+        },
+        {
+          "letra": "C",
+          "texto": "Tienen distinta magnitud."
+        },
+        {
+          "letra": "D",
+          "texto": "Están en el semieje positivo del eje X.\n52.\nEn la cuadrícula de la figura se representa el plano de un videojuego. En ella se ubica\nun tesoro y los pies de una persona, ambos al centro de las casillas.\n¿Cuál de los siguientes vectores lleva a la persona sobre la casilla del tesoro?"
+        },
+        {
+          "letra": "A",
+          "texto": "(8, −4)"
+        },
+        {
+          "letra": "B",
+          "texto": "(−4, 2)"
+        },
+        {
+          "letra": "C",
+          "texto": "(10, −6)"
+        },
+        {
+          "letra": "D",
+          "texto": "(2, −2)\n53.\nUn tipo de migración exterior corresponde al cambio de residencia hacia un país\ndiferente, por ejemplo, la migración desde Chile hacia España. A aquellas personas\nmigrantes que llegan a habitar un país son considerados inmigrantes, mientras que a\naquellas personas que abandonan un país, se les considera emigrantes.\nEn el siguiente gráfico se presenta información de las migraciones exteriores en\nEspaña desde el 2011 hasta el 2021.\nAdaptada de Indicadores demográficos básicos. INE. (2021). Evolución de las migraciones interiores (2008–2021).\n(Reproducido en Atlas Nacional de España, por Instituto Geográfico Nacional (IGN)).\n¿En qué año hubo mayor cantidad de migrantes exteriores en España?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n54.\nEl encargado del personal de una empresa extrae de la ficha de contratación las\nedades de las personas que trabajan en esta empresa. Luego, resume la distribución\nde las edades en la siguiente tabla:\nEdad en años\nCantidad\n18 −24\n25 −34\n35 −44\n45 −54\n55 o más\nLa empresa dará un beneficio educacional según la información de la tabla a los\ntrabajadores cuya edad no supere los 34 años.\n¿Cuál es la mayor cantidad de trabajadores que podría acceder a ese beneficio?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n55.\nUna persona está jugando un nuevo juego en línea en el cual se pueden escoger\ndistintos personajes. Cada personaje tiene cinco habilidades, con un puntaje de 0 a\n100 en cada habilidad.\nEn el siguiente diagrama se representan las habilidades de uno de los personajes.\n¿Cuál es la habilidad más débil de este personaje?"
+        },
+        {
+          "letra": "A",
+          "texto": "Fuerza mágica"
+        },
+        {
+          "letra": "B",
+          "texto": "Defensa mágica"
+        },
+        {
+          "letra": "C",
+          "texto": "Defensa física"
+        },
+        {
+          "letra": "D",
+          "texto": "Fuerza física\n56.\nSe realizó una encuesta a los estudiantes de IV◦medio de un establecimiento\neducacional, sobre la cantidad de años que llevan en dicho establecimiento. En la\nsiguiente tabla se presentan los datos de dicha encuesta.\nCantidad de años\nCantidad de\nestudiantes\n9 o más\n¿Cuántos estudiantes encuestados llevan 5 años o más en el establecimiento\neducacional?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n57.\nSegún la Encuesta Nacional de Empleos se considera como “ocupado” a aquellas\npersonas, en edad de trabajar, que durante la semana de referencia dedicaron al\nmenos una hora para producir bienes o servicios a cambio de una remuneración o\nbeneficio.\nConsidera la siguiente información:\n¿Cuál de las siguientes representaciones gráficas corresponde a la información\nentregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n59.\nConsidera la siguiente tabla:\nValor\nFrecuencia\nP\nQ\nR\n¿Cuál de las siguientes expresiones permite determinar el promedio de los valores?"
+        },
+        {
+          "letra": "A",
+          "texto": "P + Q + 2 · R\nP + Q + R"
+        },
+        {
+          "letra": "B",
+          "texto": "R\nP + Q + R"
+        },
+        {
+          "letra": "C",
+          "texto": "0 · P + 1 · Q + 2 · R\nP + Q + R"
+        },
+        {
+          "letra": "D",
+          "texto": "2 · R\nP + Q + R\n60.\nUna persona plantó un brote de dos centímetros y lo fotografió durante cinco semanas\npara dejar registro de su crecimiento, tal como se representa a continuación:\n¿Cuántos centímetros, en promedio, creció el brote por semana?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "2,4 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "3 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "7,5 cm\n61.\nEn el siguiente gráfico se representa la distribución de la cantidad de horas extras\nrealizadas por 140 trabajadores durante el mes de mayor demanda productiva de\nuna empresa.\nPor cada hora extra se paga $15 000. ¿Cuál fue el pago más frecuente que realizó\nla empresa por concepto de horas extras en ese mes?"
+        },
+        {
+          "letra": "A",
+          "texto": "$15 000"
+        },
+        {
+          "letra": "B",
+          "texto": "$30 000"
+        },
+        {
+          "letra": "C",
+          "texto": "$45 000"
+        },
+        {
+          "letra": "D",
+          "texto": "$60 000\n62.\nConsidera el experimento descrito en la siguiente infografía para calcular el tiempo\nde reacción, en segundos, de una persona.\nCiencianet. (2008). Descubre tu tiempo de reacción. (Reproducido de Mide tu reacción, por C. Torres, en Edumate Perú).\nUna persona efectuó el experimento y en el paso cuatro anotó los siguientes números:\n10 cm\n9 cm\n15 cm"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "o más\n¿Cuántos estudiantes encuestados llevan 5 años o más en el establecimiento\neducacional?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n57.\nSegún la Encuesta Nacional de Empleos se considera como “ocupado” a aquellas\npersonas, en edad de trabajar, que durante la semana de referencia dedicaron al\nmenos una hora para producir bienes o servicios a cambio de una remuneración o\nbeneficio.\nConsidera la siguiente información:\n¿Cuál de las siguientes representaciones gráficas corresponde a la información\nentregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n59.\nConsidera la siguiente tabla:\nValor\nFrecuencia\nP\nQ\nR\n¿Cuál de las siguientes expresiones permite determinar el promedio de los valores?"
+        },
+        {
+          "letra": "A",
+          "texto": "P + Q + 2 · R\nP + Q + R"
+        },
+        {
+          "letra": "B",
+          "texto": "R\nP + Q + R"
+        },
+        {
+          "letra": "C",
+          "texto": "0 · P + 1 · Q + 2 · R\nP + Q + R"
+        },
+        {
+          "letra": "D",
+          "texto": "2 · R\nP + Q + R\n60.\nUna persona plantó un brote de dos centímetros y lo fotografió durante cinco semanas\npara dejar registro de su crecimiento, tal como se representa a continuación:\n¿Cuántos centímetros, en promedio, creció el brote por semana?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "2,4 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "3 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "7,5 cm\n61.\nEn el siguiente gráfico se representa la distribución de la cantidad de horas extras\nrealizadas por 140 trabajadores durante el mes de mayor demanda productiva de\nuna empresa.\nPor cada hora extra se paga $15 000. ¿Cuál fue el pago más frecuente que realizó\nla empresa por concepto de horas extras en ese mes?"
+        },
+        {
+          "letra": "A",
+          "texto": "$15 000"
+        },
+        {
+          "letra": "B",
+          "texto": "$30 000"
+        },
+        {
+          "letra": "C",
+          "texto": "$45 000"
+        },
+        {
+          "letra": "D",
+          "texto": "$60 000\n62.\nConsidera el experimento descrito en la siguiente infografía para calcular el tiempo\nde reacción, en segundos, de una persona.\nCiencianet. (2008). Descubre tu tiempo de reacción. (Reproducido de Mide tu reacción, por C. Torres, en Edumate Perú).\nUna persona efectuó el experimento y en el paso cuatro anotó los siguientes números:"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 11,
+      "enunciado": "La escalera de un edificio tiene 20 peldaños entre piso y piso. La altura de cada uno\nde estos peldaños es de 15 cm.\nUna persona empieza a subir por la escalera de este edificio, desde el primer peldaño\ndel primer piso.\nSi n es la cantidad de peldaños que la persona ha subido, ¿cuál de las siguientes\ncondiciones garantiza que la persona llegó a un nuevo piso?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que 15 · n es divisible por 20."
+        },
+        {
+          "letra": "B",
+          "texto": "Que 15 + n es divisible por 20."
+        },
+        {
+          "letra": "C",
+          "texto": "Que 15 · n es divisible por 300."
+        },
+        {
+          "letra": "D",
+          "texto": "Que 15 + n es divisible por 300.\n13.\nAlgunas calculadoras tienen botones que permiten marcar dos ceros o tres ceros a la\nvez, tal como la que se representa en la imagen adjunta.\nDe esta manera, para marcar el número 1000, basta con presionar los siguientes\nbotones una vez cada uno:\n¿Cuál de las siguientes acciones permite marcar el número 1010?"
+        },
+        {
+          "letra": "A",
+          "texto": "Presionar una vez\ny siete veces\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Presionar una vez\ny ocho veces\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Presionar una vez\n, dos veces\ny dos veces\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Presionar una vez\n, tres veces\ny una vez\n.\n14.\nUna persona realiza el siguiente procedimiento para factorizar 12 + 20, cometiendo\nun error.\nPaso 1: escribe cada sumando como el producto de dos números, obteniendo\n4 · 3 + 4 · 5.\nPaso 2: descompone cada factor en números primos, obteniendo 2 · 2 · 3 + 2 · 2 · 5.\nPaso 3: escribe las potencias correspondientes, obteniendo 22 · 3 + 22 · 5.\nPaso 4: factoriza la suma, obteniendo 24 (3 + 5).\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n15.\nLeonardo juega el siguiente juego:\nSe elige un número y luego se extraen dos tarjetas con operaciones: la primera de\nun mazo de color blanco y la segunda de un mazo de color gris. La operación de la\ntarjeta blanca se aplica sobre el número elegido y la operación de la tarjeta gris sobre\nel resultado obtenido.\nLeonardo extrae las siguientes tarjetas:\nSi eligió el número 2, ¿cuál de las siguientes expresiones corresponde a la correcta\naplicación de las instrucciones de las tarjetas en el orden en que las sacó?"
+        },
+        {
+          "letra": "A",
+          "texto": "(2 −5)3"
+        },
+        {
+          "letra": "B",
+          "texto": "3 · (2 −5)"
+        },
+        {
+          "letra": "C",
+          "texto": "3 · (5 −2)"
+        },
+        {
+          "letra": "D",
+          "texto": "(5 −2)3\n18.\nSi p es el 25 % de k, ¿cuál de las siguientes expresiones representa el valor de k?"
+        },
+        {
+          "letra": "A",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "B",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · p"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · p\n19.\n¿Cuánto es el 75 % del 75 % de 100?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "56,25"
+        },
+        {
+          "letra": "D",
+          "texto": "1,5\n22.\nSe estimó que en el 2022 la cantidad de personas que les gustaba jugar videojuegos\nera de 3000 millones.\nSi en el 2023 la cantidad de personas que les gustaba jugar videojuegos aumentó en\n120 millones respecto al año anterior, ¿cuál es el porcentaje de aumento de ese año,\nrespecto del año anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,5 %"
+        },
+        {
+          "letra": "B",
+          "texto": "4 %"
+        },
+        {
+          "letra": "C",
+          "texto": "25 %"
+        },
+        {
+          "letra": "D",
+          "texto": "40 %\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?"
+        },
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M\n26.\nEl ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000\n27.\nUna pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?"
+        },
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros\n28.\nUna persona descubrió que para lograr el color que le gusta para el glaseado de\ngalletas, debe mezclar gotas del colorante rojo con gotas del colorante amarillo en la\nrazón 3 : 5, respectivamente.\nSi la persona usa 30 gotas de colorante amarillo para preparar el glaseado que le\ngusta, ¿cuántas gotas de color rojo deberá agregar para obtener el color que le gusta?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nPara cierta marca de alimentos, la cantidad p de kilogramos de comida que\ndebe comer un perro adulto, durante el día, se modela mediante la expresión\np = m · 0,025, tal que m es la masa del perro, en kilogramos.\n¿Cómo se puede interpretar 0,025 en el modelo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que el perro adulto debe consumir 25 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perro adulto debe consumir 250 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la masa de un perro adulto es 25 veces la cantidad de alimento que debe\nconsumir."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la masa de un perro adulto es 250 veces la cantidad de alimento que debe\nconsumir.\n31.\nEn la información nutricional de un paquete de galletas se indica que una porción de\n4 galletas contiene 180 kilocalorías.\nPara calcular cuántas kilocalorías K se ingieren al consumir este tipo de galletas se\npuede utilizar la fórmula K = 180x\n, tal que x es la cantidad de galletas consumidas.\nUna persona consumió una cantidad de galletas de este tipo junto a un vaso de jugo\nque contiene 90 kilocalorías, ingiriendo en total 405 kilocalorías.\n¿Cuántas galletas consumió esta persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n32.\nDaniela, con el dinero que tiene, compra en un bazar 7 lápices pasta del mismo\ntipo y le sobran $900. En el mismo bazar, Marcos, con el dinero que tiene, compra\n6 lápices pasta del mismo tipo que Daniela y le sobran $2330.\nSi Daniela y Marcos tienen la misma cantidad de dinero, ¿cuál es el precio de un\nlápiz pasta del mismo tipo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$110"
+        },
+        {
+          "letra": "B",
+          "texto": "$248"
+        },
+        {
+          "letra": "C",
+          "texto": "$1430"
+        },
+        {
+          "letra": "D",
+          "texto": "$3230\n33.\nEn una ciudad se registró la cantidad de nacimientos desde el año 2019 al año 2021.\nAl relacionar estas cantidades con la cantidad x (en miles) de nacimientos del año\n2018, se encontraron las siguientes relaciones:\nAño\nCantidad de nacimientos (en miles)\n5x + 4\n3x + 5\n2 −x\nSi en esta ciudad, durante el año 2019 hubo una cantidad menor de nacimientos que\nla suma de los años 2020 y 2021, ¿cuál de las siguientes relaciones representa la\ninformación entregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "5x + 4 < 2x + 7"
+        },
+        {
+          "letra": "B",
+          "texto": "5x + 4 < 4x + 7"
+        },
+        {
+          "letra": "C",
+          "texto": "5x + 4 > 2x + 7"
+        },
+        {
+          "letra": "D",
+          "texto": "5x + 4 > 4x + 7\n34.\nDos jóvenes quieren iniciar un emprendimiento de fabricación y venta de helados. Las\nproyecciones de los gastos y de los ingresos, ambos acumulados, que deberían tener\nen los primeros 12 meses, se presentan en el siguiente gráfico:\n¿Qué representa el punto donde las rectas se intersecan?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es el mes donde se obtiene la mayor cantidad de ingresos acumulados."
+        },
+        {
+          "letra": "B",
+          "texto": "Es el mes donde los ingresos acumulados igualan a los gastos acumulados."
+        },
+        {
+          "letra": "C",
+          "texto": "Es el mes desde cuando el emprendimiento no tendrá más gastos acumulados."
+        },
+        {
+          "letra": "D",
+          "texto": "Es el mes donde los ingresos acumulados son iguales a los gastos iniciales del\nemprendimiento.\n35.\nUna persona gasta $13 500 en la compra de 8 kg de fruta entre manzanas y peras,\npagando $1500 por el kilogramo de manzanas y $1800 por el kilogramo de peras.\nEl siguiente sistema de ecuaciones modela la situación anterior:\n1500x + 1800y = 13 500\nx + y = 8\n¿Qué representa la variable x en este sistema?"
+        },
+        {
+          "letra": "A",
+          "texto": "La cantidad de peras compradas"
+        },
+        {
+          "letra": "B",
+          "texto": "La cantidad de manzanas compradas"
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad de kilogramos de peras compradas"
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad de kilogramos de manzanas compradas\n40.\nUn estanque contiene 720 litros de agua y, cada vez que se abre la llave, este se\nvacía a razón de 3 litros por minuto.\n¿Cuál de las siguientes funciones modela la cantidad de agua que queda en el\nestanque por cada minuto que la llave se encuentra abierta, tal que x son los minutos\ntranscurridos desde que se abre la llave?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = −3x + 720"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 3x −720"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = x −720"
+        },
+        {
+          "letra": "D",
+          "texto": "h(x) = −x + 720\n41.\nUna persona dispone de un terreno de forma rectangular. Se sabe que el terreno\ntiene un área de 192 m2 y que su ancho mide 4 m menos que su largo.\n¿Cuánto mide el largo del terreno?"
+        },
+        {
+          "letra": "A",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 12,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 13,
+      "enunciado": "Algunas calculadoras tienen botones que permiten marcar dos ceros o tres ceros a la\nvez, tal como la que se representa en la imagen adjunta.\nDe esta manera, para marcar el número 1000, basta con presionar los siguientes\nbotones una vez cada uno:\n¿Cuál de las siguientes acciones permite marcar el número 1010?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Presionar una vez\ny siete veces\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Presionar una vez\ny ocho veces\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Presionar una vez\n, dos veces\ny dos veces\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Presionar una vez\n, tres veces\ny una vez\n."
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 15,
+      "enunciado": "+ 1\n30 −2\n\u0013\n.\nPaso 2: desarrolla el primer paréntesis −\n\u00122\n3 · −4\n\u0013\n, obteniendo 1.\nPaso 3: desarrolla el segundo paréntesis\n\u0012 1\n15 + 1\n30 −2\n\u0013\n, obteniendo −3\n.\nPaso 4: desarrolla 1 −3\n, obteniendo 7\n.\n¿En cuál de los pasos la persona cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n11.\nLa escalera de un edificio tiene 20 peldaños entre piso y piso. La altura de cada uno\nde estos peldaños es de 15 cm.\nUna persona empieza a subir por la escalera de este edificio, desde el primer peldaño\ndel primer piso.\nSi n es la cantidad de peldaños que la persona ha subido, ¿cuál de las siguientes\ncondiciones garantiza que la persona llegó a un nuevo piso?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que 15 · n es divisible por 20."
+        },
+        {
+          "letra": "B",
+          "texto": "Que 15 + n es divisible por 20."
+        },
+        {
+          "letra": "C",
+          "texto": "Que 15 · n es divisible por 300."
+        },
+        {
+          "letra": "D",
+          "texto": "Que 15 + n es divisible por 300.\n13.\nAlgunas calculadoras tienen botones que permiten marcar dos ceros o tres ceros a la\nvez, tal como la que se representa en la imagen adjunta.\nDe esta manera, para marcar el número 1000, basta con presionar los siguientes\nbotones una vez cada uno:\n¿Cuál de las siguientes acciones permite marcar el número 1010?"
+        },
+        {
+          "letra": "A",
+          "texto": "Presionar una vez\ny siete veces\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Presionar una vez\ny ocho veces\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Presionar una vez\n, dos veces\ny dos veces\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Presionar una vez\n, tres veces\ny una vez\n.\n14.\nUna persona realiza el siguiente procedimiento para factorizar 12 + 20, cometiendo\nun error.\nPaso 1: escribe cada sumando como el producto de dos números, obteniendo\n4 · 3 + 4 · 5.\nPaso 2: descompone cada factor en números primos, obteniendo 2 · 2 · 3 + 2 · 2 · 5.\nPaso 3: escribe las potencias correspondientes, obteniendo 22 · 3 + 22 · 5.\nPaso 4: factoriza la suma, obteniendo 24 (3 + 5).\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n15.\nLeonardo juega el siguiente juego:\nSe elige un número y luego se extraen dos tarjetas con operaciones: la primera de\nun mazo de color blanco y la segunda de un mazo de color gris. La operación de la\ntarjeta blanca se aplica sobre el número elegido y la operación de la tarjeta gris sobre\nel resultado obtenido.\nLeonardo extrae las siguientes tarjetas:\nSi eligió el número 2, ¿cuál de las siguientes expresiones corresponde a la correcta\naplicación de las instrucciones de las tarjetas en el orden en que las sacó?"
+        },
+        {
+          "letra": "A",
+          "texto": "(2 −5)3"
+        },
+        {
+          "letra": "B",
+          "texto": "3 · (2 −5)"
+        },
+        {
+          "letra": "C",
+          "texto": "3 · (5 −2)"
+        },
+        {
+          "letra": "D",
+          "texto": "(5 −2)3\n18.\nSi p es el 25 % de k, ¿cuál de las siguientes expresiones representa el valor de k?"
+        },
+        {
+          "letra": "A",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "B",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · p"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · p\n19.\n¿Cuánto es el 75 % del 75 % de 100?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "56,25"
+        },
+        {
+          "letra": "D",
+          "texto": "1,5\n22.\nSe estimó que en el 2022 la cantidad de personas que les gustaba jugar videojuegos\nera de 3000 millones.\nSi en el 2023 la cantidad de personas que les gustaba jugar videojuegos aumentó en\n120 millones respecto al año anterior, ¿cuál es el porcentaje de aumento de ese año,\nrespecto del año anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,5 %"
+        },
+        {
+          "letra": "B",
+          "texto": "4 %"
+        },
+        {
+          "letra": "C",
+          "texto": "25 %"
+        },
+        {
+          "letra": "D",
+          "texto": "40 %\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?"
+        },
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M\n26.\nEl ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000\n27.\nUna pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?"
+        },
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros\n28.\nUna persona descubrió que para lograr el color que le gusta para el glaseado de\ngalletas, debe mezclar gotas del colorante rojo con gotas del colorante amarillo en la\nrazón 3 : 5, respectivamente.\nSi la persona usa 30 gotas de colorante amarillo para preparar el glaseado que le\ngusta, ¿cuántas gotas de color rojo deberá agregar para obtener el color que le gusta?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nPara cierta marca de alimentos, la cantidad p de kilogramos de comida que\ndebe comer un perro adulto, durante el día, se modela mediante la expresión\np = m · 0,025, tal que m es la masa del perro, en kilogramos.\n¿Cómo se puede interpretar 0,025 en el modelo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que el perro adulto debe consumir 25 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perro adulto debe consumir 250 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la masa de un perro adulto es 25 veces la cantidad de alimento que debe\nconsumir."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la masa de un perro adulto es 250 veces la cantidad de alimento que debe\nconsumir.\n31.\nEn la información nutricional de un paquete de galletas se indica que una porción de\n4 galletas contiene 180 kilocalorías.\nPara calcular cuántas kilocalorías K se ingieren al consumir este tipo de galletas se\npuede utilizar la fórmula K = 180x\n, tal que x es la cantidad de galletas consumidas.\nUna persona consumió una cantidad de galletas de este tipo junto a un vaso de jugo\nque contiene 90 kilocalorías, ingiriendo en total 405 kilocalorías.\n¿Cuántas galletas consumió esta persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n32.\nDaniela, con el dinero que tiene, compra en un bazar 7 lápices pasta del mismo\ntipo y le sobran $900. En el mismo bazar, Marcos, con el dinero que tiene, compra\n6 lápices pasta del mismo tipo que Daniela y le sobran $2330.\nSi Daniela y Marcos tienen la misma cantidad de dinero, ¿cuál es el precio de un\nlápiz pasta del mismo tipo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$110"
+        },
+        {
+          "letra": "B",
+          "texto": "$248"
+        },
+        {
+          "letra": "C",
+          "texto": "$1430"
+        },
+        {
+          "letra": "D",
+          "texto": "$3230\n33.\nEn una ciudad se registró la cantidad de nacimientos desde el año 2019 al año 2021.\nAl relacionar estas cantidades con la cantidad x (en miles) de nacimientos del año\n2018, se encontraron las siguientes relaciones:\nAño\nCantidad de nacimientos (en miles)\n5x + 4\n3x + 5\n2 −x\nSi en esta ciudad, durante el año 2019 hubo una cantidad menor de nacimientos que\nla suma de los años 2020 y 2021, ¿cuál de las siguientes relaciones representa la\ninformación entregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "5x + 4 < 2x + 7"
+        },
+        {
+          "letra": "B",
+          "texto": "5x + 4 < 4x + 7"
+        },
+        {
+          "letra": "C",
+          "texto": "5x + 4 > 2x + 7"
+        },
+        {
+          "letra": "D",
+          "texto": "5x + 4 > 4x + 7\n34.\nDos jóvenes quieren iniciar un emprendimiento de fabricación y venta de helados. Las\nproyecciones de los gastos y de los ingresos, ambos acumulados, que deberían tener\nen los primeros 12 meses, se presentan en el siguiente gráfico:\n¿Qué representa el punto donde las rectas se intersecan?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es el mes donde se obtiene la mayor cantidad de ingresos acumulados."
+        },
+        {
+          "letra": "B",
+          "texto": "Es el mes donde los ingresos acumulados igualan a los gastos acumulados."
+        },
+        {
+          "letra": "C",
+          "texto": "Es el mes desde cuando el emprendimiento no tendrá más gastos acumulados."
+        },
+        {
+          "letra": "D",
+          "texto": "Es el mes donde los ingresos acumulados son iguales a los gastos iniciales del\nemprendimiento.\n35.\nUna persona gasta $13 500 en la compra de 8 kg de fruta entre manzanas y peras,\npagando $1500 por el kilogramo de manzanas y $1800 por el kilogramo de peras.\nEl siguiente sistema de ecuaciones modela la situación anterior:\n1500x + 1800y = 13 500\nx + y = 8\n¿Qué representa la variable x en este sistema?"
+        },
+        {
+          "letra": "A",
+          "texto": "La cantidad de peras compradas"
+        },
+        {
+          "letra": "B",
+          "texto": "La cantidad de manzanas compradas"
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad de kilogramos de peras compradas"
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad de kilogramos de manzanas compradas\n40.\nUn estanque contiene 720 litros de agua y, cada vez que se abre la llave, este se\nvacía a razón de 3 litros por minuto.\n¿Cuál de las siguientes funciones modela la cantidad de agua que queda en el\nestanque por cada minuto que la llave se encuentra abierta, tal que x son los minutos\ntranscurridos desde que se abre la llave?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = −3x + 720"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 3x −720"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = x −720"
+        },
+        {
+          "letra": "D",
+          "texto": "h(x) = −x + 720\n41.\nUna persona dispone de un terreno de forma rectangular. Se sabe que el terreno\ntiene un área de 192 m2 y que su ancho mide 4 m menos que su largo.\n¿Cuánto mide el largo del terreno?"
+        },
+        {
+          "letra": "A",
+          "texto": "12 m"
+        },
+        {
+          "letra": "B",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 18,
+      "enunciado": "Si p es el 25 % de k, ¿cuál de las siguientes expresiones representa el valor de k?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "B",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · p"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · p"
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "¿Cuánto es el 75 % del 75 % de 100?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "56,25"
+        },
+        {
+          "letra": "D",
+          "texto": "1,5\n22.\nSe estimó que en el 2022 la cantidad de personas que les gustaba jugar videojuegos\nera de 3000 millones.\nSi en el 2023 la cantidad de personas que les gustaba jugar videojuegos aumentó en\n120 millones respecto al año anterior, ¿cuál es el porcentaje de aumento de ese año,\nrespecto del año anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,5 %"
+        },
+        {
+          "letra": "B",
+          "texto": "4 %"
+        },
+        {
+          "letra": "C",
+          "texto": "25 %"
+        },
+        {
+          "letra": "D",
+          "texto": "40 %\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?"
+        },
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M\n26.\nEl ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000\n27.\nUna pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?"
+        },
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros\n28.\nUna persona descubrió que para lograr el color que le gusta para el glaseado de\ngalletas, debe mezclar gotas del colorante rojo con gotas del colorante amarillo en la\nrazón 3 : 5, respectivamente.\nSi la persona usa 30 gotas de colorante amarillo para preparar el glaseado que le\ngusta, ¿cuántas gotas de color rojo deberá agregar para obtener el color que le gusta?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nPara cierta marca de alimentos, la cantidad p de kilogramos de comida que\ndebe comer un perro adulto, durante el día, se modela mediante la expresión\np = m · 0,025, tal que m es la masa del perro, en kilogramos.\n¿Cómo se puede interpretar 0,025 en el modelo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que el perro adulto debe consumir 25 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perro adulto debe consumir 250 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la masa de un perro adulto es 25 veces la cantidad de alimento que debe\nconsumir."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la masa de un perro adulto es 250 veces la cantidad de alimento que debe\nconsumir.\n31.\nEn la información nutricional de un paquete de galletas se indica que una porción de\n4 galletas contiene 180 kilocalorías.\nPara calcular cuántas kilocalorías K se ingieren al consumir este tipo de galletas se\npuede utilizar la fórmula K = 180x\n, tal que x es la cantidad de galletas consumidas.\nUna persona consumió una cantidad de galletas de este tipo junto a un vaso de jugo\nque contiene 90 kilocalorías, ingiriendo en total 405 kilocalorías.\n¿Cuántas galletas consumió esta persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n32.\nDaniela, con el dinero que tiene, compra en un bazar 7 lápices pasta del mismo\ntipo y le sobran $900. En el mismo bazar, Marcos, con el dinero que tiene, compra\n6 lápices pasta del mismo tipo que Daniela y le sobran $2330.\nSi Daniela y Marcos tienen la misma cantidad de dinero, ¿cuál es el precio de un\nlápiz pasta del mismo tipo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$110"
+        },
+        {
+          "letra": "B",
+          "texto": "$248"
+        },
+        {
+          "letra": "C",
+          "texto": "$1430"
+        },
+        {
+          "letra": "D",
+          "texto": "$3230\n33.\nEn una ciudad se registró la cantidad de nacimientos desde el año 2019 al año 2021.\nAl relacionar estas cantidades con la cantidad x (en miles) de nacimientos del año\n2018, se encontraron las siguientes relaciones:\nAño\nCantidad de nacimientos (en miles)\n5x + 4\n3x + 5\n2 −x\nSi en esta ciudad, durante el año 2019 hubo una cantidad menor de nacimientos que\nla suma de los años 2020 y 2021, ¿cuál de las siguientes relaciones representa la\ninformación entregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "5x + 4 < 2x + 7"
+        },
+        {
+          "letra": "B",
+          "texto": "5x + 4 < 4x + 7"
+        },
+        {
+          "letra": "C",
+          "texto": "5x + 4 > 2x + 7"
+        },
+        {
+          "letra": "D",
+          "texto": "5x + 4 > 4x + 7\n34.\nDos jóvenes quieren iniciar un emprendimiento de fabricación y venta de helados. Las\nproyecciones de los gastos y de los ingresos, ambos acumulados, que deberían tener\nen los primeros 12 meses, se presentan en el siguiente gráfico:\n¿Qué representa el punto donde las rectas se intersecan?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es el mes donde se obtiene la mayor cantidad de ingresos acumulados."
+        },
+        {
+          "letra": "B",
+          "texto": "Es el mes donde los ingresos acumulados igualan a los gastos acumulados."
+        },
+        {
+          "letra": "C",
+          "texto": "Es el mes desde cuando el emprendimiento no tendrá más gastos acumulados."
+        },
+        {
+          "letra": "D",
+          "texto": "Es el mes donde los ingresos acumulados son iguales a los gastos iniciales del\nemprendimiento.\n35.\nUna persona gasta $13 500 en la compra de 8 kg de fruta entre manzanas y peras,\npagando $1500 por el kilogramo de manzanas y $1800 por el kilogramo de peras.\nEl siguiente sistema de ecuaciones modela la situación anterior:\n1500x + 1800y = 13 500\nx + y = 8\n¿Qué representa la variable x en este sistema?"
+        },
+        {
+          "letra": "A",
+          "texto": "La cantidad de peras compradas"
+        },
+        {
+          "letra": "B",
+          "texto": "La cantidad de manzanas compradas"
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad de kilogramos de peras compradas"
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad de kilogramos de manzanas compradas\n40.\nUn estanque contiene 720 litros de agua y, cada vez que se abre la llave, este se\nvacía a razón de 3 litros por minuto.\n¿Cuál de las siguientes funciones modela la cantidad de agua que queda en el\nestanque por cada minuto que la llave se encuentra abierta, tal que x son los minutos\ntranscurridos desde que se abre la llave?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = −3x + 720"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 3x −720"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = x −720"
+        },
+        {
+          "letra": "D",
+          "texto": "h(x) = −x + 720\n41.\nUna persona dispone de un terreno de forma rectangular. Se sabe que el terreno\ntiene un área de 192 m2 y que su ancho mide 4 m menos que su largo.\n¿Cuánto mide el largo del terreno?"
+        },
+        {
+          "letra": "A",
+          "texto": "12 m"
+        },
+        {
+          "letra": "B",
+          "texto": "16 m"
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 22,
+      "enunciado": "Se estimó que en el 2022 la cantidad de personas que les gustaba jugar videojuegos\nera de 3000 millones.\nSi en el 2023 la cantidad de personas que les gustaba jugar videojuegos aumentó en\n120 millones respecto al año anterior, ¿cuál es el porcentaje de aumento de ese año,\nrespecto del año anterior?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "2,5 %"
+        },
+        {
+          "letra": "B",
+          "texto": "4 %"
+        },
+        {
+          "letra": "C",
+          "texto": "25 %"
+        },
+        {
+          "letra": "D",
+          "texto": "40 %"
+        }
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "En el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 25,
+      "enunciado": "%",
+      "alternativas": [
+        {
+          "letra": "D",
+          "texto": "40 %\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?"
+        },
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M"
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "El ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000"
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Una pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 30,
+      "enunciado": "+ 2\n60 −4\n\u0013\n, una persona\nrealiza el siguiente procedimiento, cometiendo un error.\nPaso 1: simplifica una vez por 2 cada fracción de la expresión, obteniendo\n−\n\u00122\n3 · −4\n\u0013\n+\n\u0012 1\n15 + 1\n30 −2\n\u0013\n.\nPaso 2: desarrolla el primer paréntesis −\n\u00122\n3 · −4\n\u0013\n, obteniendo 1.\nPaso 3: desarrolla el segundo paréntesis\n\u0012 1\n15 + 1\n30 −2\n\u0013\n, obteniendo −3\n.\nPaso 4: desarrolla 1 −3\n, obteniendo 7\n.\n¿En cuál de los pasos la persona cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n11.\nLa escalera de un edificio tiene 20 peldaños entre piso y piso. La altura de cada uno\nde estos peldaños es de 15 cm.\nUna persona empieza a subir por la escalera de este edificio, desde el primer peldaño\ndel primer piso.\nSi n es la cantidad de peldaños que la persona ha subido, ¿cuál de las siguientes\ncondiciones garantiza que la persona llegó a un nuevo piso?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que 15 · n es divisible por 20."
+        },
+        {
+          "letra": "B",
+          "texto": "Que 15 + n es divisible por 20."
+        },
+        {
+          "letra": "C",
+          "texto": "Que 15 · n es divisible por 300."
+        },
+        {
+          "letra": "D",
+          "texto": "Que 15 + n es divisible por 300.\n13.\nAlgunas calculadoras tienen botones que permiten marcar dos ceros o tres ceros a la\nvez, tal como la que se representa en la imagen adjunta.\nDe esta manera, para marcar el número 1000, basta con presionar los siguientes\nbotones una vez cada uno:\n¿Cuál de las siguientes acciones permite marcar el número 1010?"
+        },
+        {
+          "letra": "A",
+          "texto": "Presionar una vez\ny siete veces\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Presionar una vez\ny ocho veces\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Presionar una vez\n, dos veces\ny dos veces\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Presionar una vez\n, tres veces\ny una vez\n.\n14.\nUna persona realiza el siguiente procedimiento para factorizar 12 + 20, cometiendo\nun error.\nPaso 1: escribe cada sumando como el producto de dos números, obteniendo\n4 · 3 + 4 · 5.\nPaso 2: descompone cada factor en números primos, obteniendo 2 · 2 · 3 + 2 · 2 · 5.\nPaso 3: escribe las potencias correspondientes, obteniendo 22 · 3 + 22 · 5.\nPaso 4: factoriza la suma, obteniendo 24 (3 + 5).\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n15.\nLeonardo juega el siguiente juego:\nSe elige un número y luego se extraen dos tarjetas con operaciones: la primera de\nun mazo de color blanco y la segunda de un mazo de color gris. La operación de la\ntarjeta blanca se aplica sobre el número elegido y la operación de la tarjeta gris sobre\nel resultado obtenido.\nLeonardo extrae las siguientes tarjetas:\nSi eligió el número 2, ¿cuál de las siguientes expresiones corresponde a la correcta\naplicación de las instrucciones de las tarjetas en el orden en que las sacó?"
+        },
+        {
+          "letra": "A",
+          "texto": "(2 −5)3"
+        },
+        {
+          "letra": "B",
+          "texto": "3 · (2 −5)"
+        },
+        {
+          "letra": "C",
+          "texto": "3 · (5 −2)"
+        },
+        {
+          "letra": "D",
+          "texto": "(5 −2)3\n18.\nSi p es el 25 % de k, ¿cuál de las siguientes expresiones representa el valor de k?"
+        },
+        {
+          "letra": "A",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "B",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · p"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · p\n19.\n¿Cuánto es el 75 % del 75 % de 100?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "56,25"
+        },
+        {
+          "letra": "D",
+          "texto": "1,5\n22.\nSe estimó que en el 2022 la cantidad de personas que les gustaba jugar videojuegos\nera de 3000 millones.\nSi en el 2023 la cantidad de personas que les gustaba jugar videojuegos aumentó en\n120 millones respecto al año anterior, ¿cuál es el porcentaje de aumento de ese año,\nrespecto del año anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,5 %"
+        },
+        {
+          "letra": "B",
+          "texto": "4 %"
+        },
+        {
+          "letra": "C",
+          "texto": "25 %"
+        },
+        {
+          "letra": "D",
+          "texto": "40 %\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?"
+        },
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M\n26.\nEl ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000\n27.\nUna pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?"
+        },
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros\n28.\nUna persona descubrió que para lograr el color que le gusta para el glaseado de\ngalletas, debe mezclar gotas del colorante rojo con gotas del colorante amarillo en la\nrazón 3 : 5, respectivamente.\nSi la persona usa 30 gotas de colorante amarillo para preparar el glaseado que le\ngusta, ¿cuántas gotas de color rojo deberá agregar para obtener el color que le gusta?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nPara cierta marca de alimentos, la cantidad p de kilogramos de comida que\ndebe comer un perro adulto, durante el día, se modela mediante la expresión\np = m · 0,025, tal que m es la masa del perro, en kilogramos.\n¿Cómo se puede interpretar 0,025 en el modelo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que el perro adulto debe consumir 25 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perro adulto debe consumir 250 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la masa de un perro adulto es 25 veces la cantidad de alimento que debe\nconsumir."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la masa de un perro adulto es 250 veces la cantidad de alimento que debe\nconsumir."
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "En la información nutricional de un paquete de galletas se indica que una porción de\n4 galletas contiene 180 kilocalorías.\nPara calcular cuántas kilocalorías K se ingieren al consumir este tipo de galletas se\npuede utilizar la fórmula K = 180x\n, tal que x es la cantidad de galletas consumidas.\nUna persona consumió una cantidad de galletas de este tipo junto a un vaso de jugo\nque contiene 90 kilocalorías, ingiriendo en total 405 kilocalorías.\n¿Cuántas galletas consumió esta persona?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 32,
+      "enunciado": "Daniela, con el dinero que tiene, compra en un bazar 7 lápices pasta del mismo\ntipo y le sobran $900. En el mismo bazar, Marcos, con el dinero que tiene, compra\n6 lápices pasta del mismo tipo que Daniela y le sobran $2330.\nSi Daniela y Marcos tienen la misma cantidad de dinero, ¿cuál es el precio de un\nlápiz pasta del mismo tipo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$110"
+        },
+        {
+          "letra": "B",
+          "texto": "$248"
+        },
+        {
+          "letra": "C",
+          "texto": "$1430"
+        },
+        {
+          "letra": "D",
+          "texto": "$3230"
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "En una ciudad se registró la cantidad de nacimientos desde el año 2019 al año 2021.\nAl relacionar estas cantidades con la cantidad x (en miles) de nacimientos del año\n2018, se encontraron las siguientes relaciones:\nAño\nCantidad de nacimientos (en miles)\n5x + 4\n3x + 5\n2 −x\nSi en esta ciudad, durante el año 2019 hubo una cantidad menor de nacimientos que\nla suma de los años 2020 y 2021, ¿cuál de las siguientes relaciones representa la\ninformación entregada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "5x + 4 < 2x + 7"
+        },
+        {
+          "letra": "B",
+          "texto": "5x + 4 < 4x + 7"
+        },
+        {
+          "letra": "C",
+          "texto": "5x + 4 > 2x + 7"
+        },
+        {
+          "letra": "D",
+          "texto": "5x + 4 > 4x + 7"
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "Dos jóvenes quieren iniciar un emprendimiento de fabricación y venta de helados. Las\nproyecciones de los gastos y de los ingresos, ambos acumulados, que deberían tener\nen los primeros 12 meses, se presentan en el siguiente gráfico:\n¿Qué representa el punto donde las rectas se intersecan?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Es el mes donde se obtiene la mayor cantidad de ingresos acumulados."
+        },
+        {
+          "letra": "B",
+          "texto": "Es el mes donde los ingresos acumulados igualan a los gastos acumulados."
+        },
+        {
+          "letra": "C",
+          "texto": "Es el mes desde cuando el emprendimiento no tendrá más gastos acumulados."
+        },
+        {
+          "letra": "D",
+          "texto": "Es el mes donde los ingresos acumulados son iguales a los gastos iniciales del\nemprendimiento."
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 40,
+      "enunciado": "%\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M\n26.\nEl ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000\n27.\nUna pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?"
+        },
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros\n28.\nUna persona descubrió que para lograr el color que le gusta para el glaseado de\ngalletas, debe mezclar gotas del colorante rojo con gotas del colorante amarillo en la\nrazón 3 : 5, respectivamente.\nSi la persona usa 30 gotas de colorante amarillo para preparar el glaseado que le\ngusta, ¿cuántas gotas de color rojo deberá agregar para obtener el color que le gusta?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nPara cierta marca de alimentos, la cantidad p de kilogramos de comida que\ndebe comer un perro adulto, durante el día, se modela mediante la expresión\np = m · 0,025, tal que m es la masa del perro, en kilogramos.\n¿Cómo se puede interpretar 0,025 en el modelo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que el perro adulto debe consumir 25 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perro adulto debe consumir 250 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la masa de un perro adulto es 25 veces la cantidad de alimento que debe\nconsumir."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la masa de un perro adulto es 250 veces la cantidad de alimento que debe\nconsumir.\n31.\nEn la información nutricional de un paquete de galletas se indica que una porción de\n4 galletas contiene 180 kilocalorías.\nPara calcular cuántas kilocalorías K se ingieren al consumir este tipo de galletas se\npuede utilizar la fórmula K = 180x\n, tal que x es la cantidad de galletas consumidas.\nUna persona consumió una cantidad de galletas de este tipo junto a un vaso de jugo\nque contiene 90 kilocalorías, ingiriendo en total 405 kilocalorías.\n¿Cuántas galletas consumió esta persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n32.\nDaniela, con el dinero que tiene, compra en un bazar 7 lápices pasta del mismo\ntipo y le sobran $900. En el mismo bazar, Marcos, con el dinero que tiene, compra\n6 lápices pasta del mismo tipo que Daniela y le sobran $2330.\nSi Daniela y Marcos tienen la misma cantidad de dinero, ¿cuál es el precio de un\nlápiz pasta del mismo tipo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$110"
+        },
+        {
+          "letra": "B",
+          "texto": "$248"
+        },
+        {
+          "letra": "C",
+          "texto": "$1430"
+        },
+        {
+          "letra": "D",
+          "texto": "$3230\n33.\nEn una ciudad se registró la cantidad de nacimientos desde el año 2019 al año 2021.\nAl relacionar estas cantidades con la cantidad x (en miles) de nacimientos del año\n2018, se encontraron las siguientes relaciones:\nAño\nCantidad de nacimientos (en miles)\n5x + 4\n3x + 5\n2 −x\nSi en esta ciudad, durante el año 2019 hubo una cantidad menor de nacimientos que\nla suma de los años 2020 y 2021, ¿cuál de las siguientes relaciones representa la\ninformación entregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "5x + 4 < 2x + 7"
+        },
+        {
+          "letra": "B",
+          "texto": "5x + 4 < 4x + 7"
+        },
+        {
+          "letra": "C",
+          "texto": "5x + 4 > 2x + 7"
+        },
+        {
+          "letra": "D",
+          "texto": "5x + 4 > 4x + 7\n34.\nDos jóvenes quieren iniciar un emprendimiento de fabricación y venta de helados. Las\nproyecciones de los gastos y de los ingresos, ambos acumulados, que deberían tener\nen los primeros 12 meses, se presentan en el siguiente gráfico:\n¿Qué representa el punto donde las rectas se intersecan?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es el mes donde se obtiene la mayor cantidad de ingresos acumulados."
+        },
+        {
+          "letra": "B",
+          "texto": "Es el mes donde los ingresos acumulados igualan a los gastos acumulados."
+        },
+        {
+          "letra": "C",
+          "texto": "Es el mes desde cuando el emprendimiento no tendrá más gastos acumulados."
+        },
+        {
+          "letra": "D",
+          "texto": "Es el mes donde los ingresos acumulados son iguales a los gastos iniciales del\nemprendimiento.\n35.\nUna persona gasta $13 500 en la compra de 8 kg de fruta entre manzanas y peras,\npagando $1500 por el kilogramo de manzanas y $1800 por el kilogramo de peras.\nEl siguiente sistema de ecuaciones modela la situación anterior:\n1500x + 1800y = 13 500\nx + y = 8\n¿Qué representa la variable x en este sistema?"
+        },
+        {
+          "letra": "A",
+          "texto": "La cantidad de peras compradas"
+        },
+        {
+          "letra": "B",
+          "texto": "La cantidad de manzanas compradas"
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad de kilogramos de peras compradas"
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad de kilogramos de manzanas compradas\n40.\nUn estanque contiene 720 litros de agua y, cada vez que se abre la llave, este se\nvacía a razón de 3 litros por minuto.\n¿Cuál de las siguientes funciones modela la cantidad de agua que queda en el\nestanque por cada minuto que la llave se encuentra abierta, tal que x son los minutos\ntranscurridos desde que se abre la llave?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = −3x + 720"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 3x −720"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = x −720"
+        },
+        {
+          "letra": "D",
+          "texto": "h(x) = −x + 720"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "Una persona dispone de un terreno de forma rectangular. Se sabe que el terreno\ntiene un área de 192 m2 y que su ancho mide 4 m menos que su largo.\n¿Cuánto mide el largo del terreno?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "12 m"
+        },
+        {
+          "letra": "B",
+          "texto": "16 m"
+        },
+        {
+          "letra": "C",
+          "texto": "20 m"
+        },
+        {
+          "letra": "D",
+          "texto": "24 m"
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "Considera la función cuadrática f con dominio el conjunto de los números reales.\nEn la siguiente figura se representa la gráfica de f con su eje de simetría.\nX\nY\n¿Para cuál de los siguientes valores de x se tiene que f(x) = 7?\nA)\nB)\n−3\nC)\n−4\nD)\n−5",
+      "alternativas": []
+    },
+    {
+      "numero": 43,
+      "enunciado": "La distancia d, en metros, que recorre un móvil que parte del reposo está dada\npor d(t) = a · t2\n, tal que t es el tiempo que demora en recorrer esa distancia, en\nsegundos, y a es la aceleración del móvil, en m\ns2 .\nSi el móvil acelera a 10 m\ns2 , ¿cuántos segundos tardará en recorrer una distancia de",
+      "alternativas": []
+    },
+    {
+      "numero": 45,
+      "enunciado": "metros?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)\n4,5"
+        },
+        {
+          "letra": "C",
+          "texto": "√"
+        },
+        {
+          "letra": "D",
+          "texto": "45.\nEn la figura adjunta se representa un trapecio rectángulo de área 0,76 m2.\n¿Cuál es la medida de su altura?"
+        },
+        {
+          "letra": "A",
+          "texto": "1,444 m"
+        },
+        {
+          "letra": "B",
+          "texto": "0,80 m"
+        },
+        {
+          "letra": "C",
+          "texto": "0,722 m"
+        },
+        {
+          "letra": "D",
+          "texto": "0,40 m"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "En la siguiente imagen se presenta una red de un cubo.\nSe construye el siguiente cuerpo usando algunos cubos como el anterior.\n¿Cuántos cubos se utilizaron en total para construir el cuerpo anterior?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 48,
+      "enunciado": "Una empresa fabrica y vende cajas cúbicas de madera fina para almacenar joyas.\nEl precio de venta de las cajas se determina como $800 · k, tal que se cobra\n$800 por cada cm2 del área exterior de las cajas.\nConsidera que el área de una cara exterior de estas cajas es de 25 cm2. ¿Cuál de\nlas siguientes expresiones representa k?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "6 · 52"
+        },
+        {
+          "letra": "B",
+          "texto": "6 · 54"
+        },
+        {
+          "letra": "C",
+          "texto": "6 · 56"
+        },
+        {
+          "letra": "D",
+          "texto": "6 · 512"
+        }
+      ]
+    },
+    {
+      "numero": 49,
+      "enunciado": "Considera el siguiente procedimiento:\n¿Cuál de las siguientes figuras se obtendrá al desdoblarse y estirarse el recorte?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 50,
+      "enunciado": "En el plano cartesiano de la figura adjunta se representan los puntos cardinales.\n¿En cuál de las siguientes opciones las transformaciones isométricas aplicadas a la\nflecha negra permite que la imagen obtenida sea una flecha que apunta al oeste?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Una reflexión con respecto al eje X y luego, una reflexión con respecto a la recta\ny = x."
+        },
+        {
+          "letra": "B",
+          "texto": "Una reflexión con respecto al origen del plano cartesiano y luego, una rotación\nen 45◦en sentido horario con centro el origen del plano cartesiano."
+        },
+        {
+          "letra": "C",
+          "texto": "Una reflexión con respecto al eje Y."
+        },
+        {
+          "letra": "D",
+          "texto": "Una traslación según el vector (−3, −3)."
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "Considera los vectores representados en el plano cartesiano.\nX\nY\n−5\n−2\n→u\n→v\n¿Cuál de las siguientes afirmaciones es verdadera, respecto a los vectores del\ngráfico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Tienen distinta dirección."
+        },
+        {
+          "letra": "B",
+          "texto": "Tienen distinto sentido."
+        },
+        {
+          "letra": "C",
+          "texto": "Tienen distinta magnitud."
+        },
+        {
+          "letra": "D",
+          "texto": "Están en el semieje positivo del eje X."
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "En la cuadrícula de la figura se representa el plano de un videojuego. En ella se ubica\nun tesoro y los pies de una persona, ambos al centro de las casillas.\n¿Cuál de los siguientes vectores lleva a la persona sobre la casilla del tesoro?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "(8, −4)"
+        },
+        {
+          "letra": "B",
+          "texto": "(−4, 2)"
+        },
+        {
+          "letra": "C",
+          "texto": "(10, −6)"
+        },
+        {
+          "letra": "D",
+          "texto": "(2, −2)"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Un tipo de migración exterior corresponde al cambio de residencia hacia un país\ndiferente, por ejemplo, la migración desde Chile hacia España. A aquellas personas\nmigrantes que llegan a habitar un país son considerados inmigrantes, mientras que a\naquellas personas que abandonan un país, se les considera emigrantes.\nEn el siguiente gráfico se presenta información de las migraciones exteriores en\nEspaña desde el 2011 hasta el 2021.\nAdaptada de Indicadores demográficos básicos. INE. (2021). Evolución de las migraciones interiores (2008–2021).\n(Reproducido en Atlas Nacional de España, por Instituto Geográfico Nacional (IGN)).\n¿En qué año hubo mayor cantidad de migrantes exteriores en España?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 54,
+      "enunciado": "El encargado del personal de una empresa extrae de la ficha de contratación las\nedades de las personas que trabajan en esta empresa. Luego, resume la distribución\nde las edades en la siguiente tabla:\nEdad en años\nCantidad\n18 −24\n25 −34\n35 −44\n45 −54",
+      "alternativas": []
+    },
+    {
+      "numero": 55,
+      "enunciado": "o más\nLa empresa dará un beneficio educacional según la información de la tabla a los\ntrabajadores cuya edad no supere los 34 años.\n¿Cuál es la mayor cantidad de trabajadores que podría acceder a ese beneficio?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n55.\nUna persona está jugando un nuevo juego en línea en el cual se pueden escoger\ndistintos personajes. Cada personaje tiene cinco habilidades, con un puntaje de 0 a\n100 en cada habilidad.\nEn el siguiente diagrama se representan las habilidades de uno de los personajes.\n¿Cuál es la habilidad más débil de este personaje?"
+        },
+        {
+          "letra": "A",
+          "texto": "Fuerza mágica"
+        },
+        {
+          "letra": "B",
+          "texto": "Defensa mágica"
+        },
+        {
+          "letra": "C",
+          "texto": "Defensa física"
+        },
+        {
+          "letra": "D",
+          "texto": "Fuerza física"
+        }
+      ]
+    },
+    {
+      "numero": 56,
+      "enunciado": "Se realizó una encuesta a los estudiantes de IV◦medio de un establecimiento\neducacional, sobre la cantidad de años que llevan en dicho establecimiento. En la\nsiguiente tabla se presentan los datos de dicha encuesta.\nCantidad de años\nCantidad de\nestudiantes\n9 o más\n¿Cuántos estudiantes encuestados llevan 5 años o más en el establecimiento\neducacional?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 57,
+      "enunciado": "Según la Encuesta Nacional de Empleos se considera como “ocupado” a aquellas\npersonas, en edad de trabajar, que durante la semana de referencia dedicaron al\nmenos una hora para producir bienes o servicios a cambio de una remuneración o\nbeneficio.\nConsidera la siguiente información:\n¿Cuál de las siguientes representaciones gráficas corresponde a la información\nentregada?\nA)\nB)\nC)\nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 59,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 60,
+      "enunciado": "−4\n\u0013\n, una persona\nrealiza el siguiente procedimiento, cometiendo un error.\nPaso 1: simplifica una vez por 2 cada fracción de la expresión, obteniendo\n−\n\u00122\n3 · −4\n\u0013\n+\n\u0012 1\n15 + 1\n30 −2\n\u0013\n.\nPaso 2: desarrolla el primer paréntesis −\n\u00122\n3 · −4\n\u0013\n, obteniendo 1.\nPaso 3: desarrolla el segundo paréntesis\n\u0012 1\n15 + 1\n30 −2\n\u0013\n, obteniendo −3\n.\nPaso 4: desarrolla 1 −3\n, obteniendo 7\n.\n¿En cuál de los pasos la persona cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n11.\nLa escalera de un edificio tiene 20 peldaños entre piso y piso. La altura de cada uno\nde estos peldaños es de 15 cm.\nUna persona empieza a subir por la escalera de este edificio, desde el primer peldaño\ndel primer piso.\nSi n es la cantidad de peldaños que la persona ha subido, ¿cuál de las siguientes\ncondiciones garantiza que la persona llegó a un nuevo piso?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que 15 · n es divisible por 20."
+        },
+        {
+          "letra": "B",
+          "texto": "Que 15 + n es divisible por 20."
+        },
+        {
+          "letra": "C",
+          "texto": "Que 15 · n es divisible por 300."
+        },
+        {
+          "letra": "D",
+          "texto": "Que 15 + n es divisible por 300.\n13.\nAlgunas calculadoras tienen botones que permiten marcar dos ceros o tres ceros a la\nvez, tal como la que se representa en la imagen adjunta.\nDe esta manera, para marcar el número 1000, basta con presionar los siguientes\nbotones una vez cada uno:\n¿Cuál de las siguientes acciones permite marcar el número 1010?"
+        },
+        {
+          "letra": "A",
+          "texto": "Presionar una vez\ny siete veces\n."
+        },
+        {
+          "letra": "B",
+          "texto": "Presionar una vez\ny ocho veces\n."
+        },
+        {
+          "letra": "C",
+          "texto": "Presionar una vez\n, dos veces\ny dos veces\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Presionar una vez\n, tres veces\ny una vez\n.\n14.\nUna persona realiza el siguiente procedimiento para factorizar 12 + 20, cometiendo\nun error.\nPaso 1: escribe cada sumando como el producto de dos números, obteniendo\n4 · 3 + 4 · 5.\nPaso 2: descompone cada factor en números primos, obteniendo 2 · 2 · 3 + 2 · 2 · 5.\nPaso 3: escribe las potencias correspondientes, obteniendo 22 · 3 + 22 · 5.\nPaso 4: factoriza la suma, obteniendo 24 (3 + 5).\n¿En cuál de los pasos la persona cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4\n15.\nLeonardo juega el siguiente juego:\nSe elige un número y luego se extraen dos tarjetas con operaciones: la primera de\nun mazo de color blanco y la segunda de un mazo de color gris. La operación de la\ntarjeta blanca se aplica sobre el número elegido y la operación de la tarjeta gris sobre\nel resultado obtenido.\nLeonardo extrae las siguientes tarjetas:\nSi eligió el número 2, ¿cuál de las siguientes expresiones corresponde a la correcta\naplicación de las instrucciones de las tarjetas en el orden en que las sacó?"
+        },
+        {
+          "letra": "A",
+          "texto": "(2 −5)3"
+        },
+        {
+          "letra": "B",
+          "texto": "3 · (2 −5)"
+        },
+        {
+          "letra": "C",
+          "texto": "3 · (5 −2)"
+        },
+        {
+          "letra": "D",
+          "texto": "(5 −2)3\n18.\nSi p es el 25 % de k, ¿cuál de las siguientes expresiones representa el valor de k?"
+        },
+        {
+          "letra": "A",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "B",
+          "texto": "1 · p"
+        },
+        {
+          "letra": "C",
+          "texto": "100 · p"
+        },
+        {
+          "letra": "D",
+          "texto": "100 · p\n19.\n¿Cuánto es el 75 % del 75 % de 100?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "56,25"
+        },
+        {
+          "letra": "D",
+          "texto": "1,5\n22.\nSe estimó que en el 2022 la cantidad de personas que les gustaba jugar videojuegos\nera de 3000 millones.\nSi en el 2023 la cantidad de personas que les gustaba jugar videojuegos aumentó en\n120 millones respecto al año anterior, ¿cuál es el porcentaje de aumento de ese año,\nrespecto del año anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,5 %"
+        },
+        {
+          "letra": "B",
+          "texto": "4 %"
+        },
+        {
+          "letra": "C",
+          "texto": "25 %"
+        },
+        {
+          "letra": "D",
+          "texto": "40 %\n23.\nEn el siguiente gráfico se presenta la electricidad total generada por diferentes\ntecnologías en Chile durante 2021.\nGeneradoras de Chile (2022). Cifras destacadas del sector generación en 2021.\n¿Cuál de las siguientes expresiones corresponde a la electricidad total generada\ndurante 2020?"
+        },
+        {
+          "letra": "A",
+          "texto": "80 155\n104,5 GWh"
+        },
+        {
+          "letra": "B",
+          "texto": "80 155 · 100\n104,5\nGWh"
+        },
+        {
+          "letra": "C",
+          "texto": "80 155 · 104,5\nGWh"
+        },
+        {
+          "letra": "D",
+          "texto": "80 155\n104,5 · 100 GWh\n24.\nUna tienda vendía un producto a $25 000. Como no se vendía lo suficiente, la tienda\nrebajó su precio un 20 %. Sin embargo, el precio rebajado no aumentó lo suficiente\nlas ventas, por lo que rebajaron un 25 % el precio ya rebajado.\n¿Cuál de las siguientes expresiones representa el precio del producto luego de los\ndos descuentos, en pesos?"
+        },
+        {
+          "letra": "A",
+          "texto": "0,2 · 0,25 · 25 000"
+        },
+        {
+          "letra": "B",
+          "texto": "(0,2 + 0,25) · 25 000"
+        },
+        {
+          "letra": "C",
+          "texto": "0,8 · 0,75 · 25 000"
+        },
+        {
+          "letra": "D",
+          "texto": "(0,8 + 0,75) · 25 000\n25.\nEl sueldo líquido mensual de una persona es de $M. Todos los meses, gasta las tres\nquintas partes y el resto lo ahorra.\nSi el sueldo líquido de la persona se mantiene fijo durante doce meses, ¿cuál de las\nsiguientes expresiones representa el ahorro, en pesos, de la persona en ese periodo\nde tiempo?"
+        },
+        {
+          "letra": "A",
+          "texto": "5M"
+        },
+        {
+          "letra": "B",
+          "texto": "5 M"
+        },
+        {
+          "letra": "C",
+          "texto": "5 M"
+        },
+        {
+          "letra": "D",
+          "texto": "5 M\n26.\nEl ingreso y la ganancia de una empresa, ambos en pesos, se modelan con respecto\na la cantidad de artículos producidos (x) de la siguiente manera:\n• Ingreso: I(x) = 1000x + 600 000\n• Ganancia:G(x) = 750x + 450 000\nConsidera que la ganancia al producir x artículos se puede calcular como\nG(x) = I(x) −C(x), tal que C es la función de costo.\n¿Cuál es la función costo de la empresa?"
+        },
+        {
+          "letra": "A",
+          "texto": "C(x) = 250x + 150 000"
+        },
+        {
+          "letra": "B",
+          "texto": "C(x) = 250x −150 000"
+        },
+        {
+          "letra": "C",
+          "texto": "C(x) = 1750x −1 050 000"
+        },
+        {
+          "letra": "D",
+          "texto": "C(x) = 1750x + 1 050 000\n27.\nUna pista de baile de forma rectangular tiene dimensiones de (3x + 4) metros de\nlargo y (2x −9) metros de ancho. Se cuenta con (20x + 20) metros de una cinta\nluminosa para demarcar el borde de la pista de baile.\n¿Cuántos metros de cinta luminosa sobran luego de demarcar el borde de la pista?"
+        },
+        {
+          "letra": "A",
+          "texto": "(10x + 30) metros"
+        },
+        {
+          "letra": "B",
+          "texto": "(10x + 10) metros"
+        },
+        {
+          "letra": "C",
+          "texto": "(15x + 15) metros"
+        },
+        {
+          "letra": "D",
+          "texto": "(15x + 25) metros\n28.\nUna persona descubrió que para lograr el color que le gusta para el glaseado de\ngalletas, debe mezclar gotas del colorante rojo con gotas del colorante amarillo en la\nrazón 3 : 5, respectivamente.\nSi la persona usa 30 gotas de colorante amarillo para preparar el glaseado que le\ngusta, ¿cuántas gotas de color rojo deberá agregar para obtener el color que le gusta?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n30.\nPara cierta marca de alimentos, la cantidad p de kilogramos de comida que\ndebe comer un perro adulto, durante el día, se modela mediante la expresión\np = m · 0,025, tal que m es la masa del perro, en kilogramos.\n¿Cómo se puede interpretar 0,025 en el modelo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "Que el perro adulto debe consumir 25 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "B",
+          "texto": "Que el perro adulto debe consumir 250 gramos de alimento por cada kilogramo\nde su masa."
+        },
+        {
+          "letra": "C",
+          "texto": "Que la masa de un perro adulto es 25 veces la cantidad de alimento que debe\nconsumir."
+        },
+        {
+          "letra": "D",
+          "texto": "Que la masa de un perro adulto es 250 veces la cantidad de alimento que debe\nconsumir.\n31.\nEn la información nutricional de un paquete de galletas se indica que una porción de\n4 galletas contiene 180 kilocalorías.\nPara calcular cuántas kilocalorías K se ingieren al consumir este tipo de galletas se\npuede utilizar la fórmula K = 180x\n, tal que x es la cantidad de galletas consumidas.\nUna persona consumió una cantidad de galletas de este tipo junto a un vaso de jugo\nque contiene 90 kilocalorías, ingiriendo en total 405 kilocalorías.\n¿Cuántas galletas consumió esta persona?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n32.\nDaniela, con el dinero que tiene, compra en un bazar 7 lápices pasta del mismo\ntipo y le sobran $900. En el mismo bazar, Marcos, con el dinero que tiene, compra\n6 lápices pasta del mismo tipo que Daniela y le sobran $2330.\nSi Daniela y Marcos tienen la misma cantidad de dinero, ¿cuál es el precio de un\nlápiz pasta del mismo tipo?"
+        },
+        {
+          "letra": "A",
+          "texto": "$110"
+        },
+        {
+          "letra": "B",
+          "texto": "$248"
+        },
+        {
+          "letra": "C",
+          "texto": "$1430"
+        },
+        {
+          "letra": "D",
+          "texto": "$3230\n33.\nEn una ciudad se registró la cantidad de nacimientos desde el año 2019 al año 2021.\nAl relacionar estas cantidades con la cantidad x (en miles) de nacimientos del año\n2018, se encontraron las siguientes relaciones:\nAño\nCantidad de nacimientos (en miles)\n5x + 4\n3x + 5\n2 −x\nSi en esta ciudad, durante el año 2019 hubo una cantidad menor de nacimientos que\nla suma de los años 2020 y 2021, ¿cuál de las siguientes relaciones representa la\ninformación entregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "5x + 4 < 2x + 7"
+        },
+        {
+          "letra": "B",
+          "texto": "5x + 4 < 4x + 7"
+        },
+        {
+          "letra": "C",
+          "texto": "5x + 4 > 2x + 7"
+        },
+        {
+          "letra": "D",
+          "texto": "5x + 4 > 4x + 7\n34.\nDos jóvenes quieren iniciar un emprendimiento de fabricación y venta de helados. Las\nproyecciones de los gastos y de los ingresos, ambos acumulados, que deberían tener\nen los primeros 12 meses, se presentan en el siguiente gráfico:\n¿Qué representa el punto donde las rectas se intersecan?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es el mes donde se obtiene la mayor cantidad de ingresos acumulados."
+        },
+        {
+          "letra": "B",
+          "texto": "Es el mes donde los ingresos acumulados igualan a los gastos acumulados."
+        },
+        {
+          "letra": "C",
+          "texto": "Es el mes desde cuando el emprendimiento no tendrá más gastos acumulados."
+        },
+        {
+          "letra": "D",
+          "texto": "Es el mes donde los ingresos acumulados son iguales a los gastos iniciales del\nemprendimiento.\n35.\nUna persona gasta $13 500 en la compra de 8 kg de fruta entre manzanas y peras,\npagando $1500 por el kilogramo de manzanas y $1800 por el kilogramo de peras.\nEl siguiente sistema de ecuaciones modela la situación anterior:\n1500x + 1800y = 13 500\nx + y = 8\n¿Qué representa la variable x en este sistema?"
+        },
+        {
+          "letra": "A",
+          "texto": "La cantidad de peras compradas"
+        },
+        {
+          "letra": "B",
+          "texto": "La cantidad de manzanas compradas"
+        },
+        {
+          "letra": "C",
+          "texto": "La cantidad de kilogramos de peras compradas"
+        },
+        {
+          "letra": "D",
+          "texto": "La cantidad de kilogramos de manzanas compradas\n40.\nUn estanque contiene 720 litros de agua y, cada vez que se abre la llave, este se\nvacía a razón de 3 litros por minuto.\n¿Cuál de las siguientes funciones modela la cantidad de agua que queda en el\nestanque por cada minuto que la llave se encuentra abierta, tal que x son los minutos\ntranscurridos desde que se abre la llave?"
+        },
+        {
+          "letra": "A",
+          "texto": "f(x) = −3x + 720"
+        },
+        {
+          "letra": "B",
+          "texto": "g(x) = 3x −720"
+        },
+        {
+          "letra": "C",
+          "texto": "p(x) = x −720"
+        },
+        {
+          "letra": "D",
+          "texto": "h(x) = −x + 720\n41.\nUna persona dispone de un terreno de forma rectangular. Se sabe que el terreno\ntiene un área de 192 m2 y que su ancho mide 4 m menos que su largo.\n¿Cuánto mide el largo del terreno?"
+        },
+        {
+          "letra": "A",
+          "texto": "12 m"
+        },
+        {
+          "letra": "B",
+          "texto": "16 m"
+        },
+        {
+          "letra": "C",
+          "texto": "20 m"
+        },
+        {
+          "letra": "D",
+          "texto": "24 m\n42.\nConsidera la función cuadrática f con dominio el conjunto de los números reales.\nEn la siguiente figura se representa la gráfica de f con su eje de simetría.\nX\nY\n¿Para cuál de los siguientes valores de x se tiene que f(x) = 7?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)\n−3"
+        },
+        {
+          "letra": "C",
+          "texto": "−4"
+        },
+        {
+          "letra": "D",
+          "texto": "−5\n43.\nLa distancia d, en metros, que recorre un móvil que parte del reposo está dada\npor d(t) = a · t2\n, tal que t es el tiempo que demora en recorrer esa distancia, en\nsegundos, y a es la aceleración del móvil, en m\ns2 .\nSi el móvil acelera a 10 m\ns2 , ¿cuántos segundos tardará en recorrer una distancia de\n45 metros?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)\n4,5"
+        },
+        {
+          "letra": "C",
+          "texto": "√"
+        },
+        {
+          "letra": "D",
+          "texto": "45.\nEn la figura adjunta se representa un trapecio rectángulo de área 0,76 m2.\n¿Cuál es la medida de su altura?"
+        },
+        {
+          "letra": "A",
+          "texto": "1,444 m"
+        },
+        {
+          "letra": "B",
+          "texto": "0,80 m"
+        },
+        {
+          "letra": "C",
+          "texto": "0,722 m"
+        },
+        {
+          "letra": "D",
+          "texto": "0,40 m\n47.\nEn la siguiente imagen se presenta una red de un cubo.\nSe construye el siguiente cuerpo usando algunos cubos como el anterior.\n¿Cuántos cubos se utilizaron en total para construir el cuerpo anterior?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n48.\nUna empresa fabrica y vende cajas cúbicas de madera fina para almacenar joyas.\nEl precio de venta de las cajas se determina como $800 · k, tal que se cobra\n$800 por cada cm2 del área exterior de las cajas.\nConsidera que el área de una cara exterior de estas cajas es de 25 cm2. ¿Cuál de\nlas siguientes expresiones representa k?"
+        },
+        {
+          "letra": "A",
+          "texto": "6 · 52"
+        },
+        {
+          "letra": "B",
+          "texto": "6 · 54"
+        },
+        {
+          "letra": "C",
+          "texto": "6 · 56"
+        },
+        {
+          "letra": "D",
+          "texto": "6 · 512\n49.\nConsidera el siguiente procedimiento:\n¿Cuál de las siguientes figuras se obtendrá al desdoblarse y estirarse el recorte?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n50.\nEn el plano cartesiano de la figura adjunta se representan los puntos cardinales.\n¿En cuál de las siguientes opciones las transformaciones isométricas aplicadas a la\nflecha negra permite que la imagen obtenida sea una flecha que apunta al oeste?"
+        },
+        {
+          "letra": "A",
+          "texto": "Una reflexión con respecto al eje X y luego, una reflexión con respecto a la recta\ny = x."
+        },
+        {
+          "letra": "B",
+          "texto": "Una reflexión con respecto al origen del plano cartesiano y luego, una rotación\nen 45◦en sentido horario con centro el origen del plano cartesiano."
+        },
+        {
+          "letra": "C",
+          "texto": "Una reflexión con respecto al eje Y."
+        },
+        {
+          "letra": "D",
+          "texto": "Una traslación según el vector (−3, −3).\n51.\nConsidera los vectores representados en el plano cartesiano.\nX\nY\n−5\n−2\n→u\n→v\n¿Cuál de las siguientes afirmaciones es verdadera, respecto a los vectores del\ngráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "Tienen distinta dirección."
+        },
+        {
+          "letra": "B",
+          "texto": "Tienen distinto sentido."
+        },
+        {
+          "letra": "C",
+          "texto": "Tienen distinta magnitud."
+        },
+        {
+          "letra": "D",
+          "texto": "Están en el semieje positivo del eje X.\n52.\nEn la cuadrícula de la figura se representa el plano de un videojuego. En ella se ubica\nun tesoro y los pies de una persona, ambos al centro de las casillas.\n¿Cuál de los siguientes vectores lleva a la persona sobre la casilla del tesoro?"
+        },
+        {
+          "letra": "A",
+          "texto": "(8, −4)"
+        },
+        {
+          "letra": "B",
+          "texto": "(−4, 2)"
+        },
+        {
+          "letra": "C",
+          "texto": "(10, −6)"
+        },
+        {
+          "letra": "D",
+          "texto": "(2, −2)\n53.\nUn tipo de migración exterior corresponde al cambio de residencia hacia un país\ndiferente, por ejemplo, la migración desde Chile hacia España. A aquellas personas\nmigrantes que llegan a habitar un país son considerados inmigrantes, mientras que a\naquellas personas que abandonan un país, se les considera emigrantes.\nEn el siguiente gráfico se presenta información de las migraciones exteriores en\nEspaña desde el 2011 hasta el 2021.\nAdaptada de Indicadores demográficos básicos. INE. (2021). Evolución de las migraciones interiores (2008–2021).\n(Reproducido en Atlas Nacional de España, por Instituto Geográfico Nacional (IGN)).\n¿En qué año hubo mayor cantidad de migrantes exteriores en España?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n54.\nEl encargado del personal de una empresa extrae de la ficha de contratación las\nedades de las personas que trabajan en esta empresa. Luego, resume la distribución\nde las edades en la siguiente tabla:\nEdad en años\nCantidad\n18 −24\n25 −34\n35 −44\n45 −54\n55 o más\nLa empresa dará un beneficio educacional según la información de la tabla a los\ntrabajadores cuya edad no supere los 34 años.\n¿Cuál es la mayor cantidad de trabajadores que podría acceder a ese beneficio?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n55.\nUna persona está jugando un nuevo juego en línea en el cual se pueden escoger\ndistintos personajes. Cada personaje tiene cinco habilidades, con un puntaje de 0 a\n100 en cada habilidad.\nEn el siguiente diagrama se representan las habilidades de uno de los personajes.\n¿Cuál es la habilidad más débil de este personaje?"
+        },
+        {
+          "letra": "A",
+          "texto": "Fuerza mágica"
+        },
+        {
+          "letra": "B",
+          "texto": "Defensa mágica"
+        },
+        {
+          "letra": "C",
+          "texto": "Defensa física"
+        },
+        {
+          "letra": "D",
+          "texto": "Fuerza física\n56.\nSe realizó una encuesta a los estudiantes de IV◦medio de un establecimiento\neducacional, sobre la cantidad de años que llevan en dicho establecimiento. En la\nsiguiente tabla se presentan los datos de dicha encuesta.\nCantidad de años\nCantidad de\nestudiantes\n9 o más\n¿Cuántos estudiantes encuestados llevan 5 años o más en el establecimiento\neducacional?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n57.\nSegún la Encuesta Nacional de Empleos se considera como “ocupado” a aquellas\npersonas, en edad de trabajar, que durante la semana de referencia dedicaron al\nmenos una hora para producir bienes o servicios a cambio de una remuneración o\nbeneficio.\nConsidera la siguiente información:\n¿Cuál de las siguientes representaciones gráficas corresponde a la información\nentregada?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)\n59.\nConsidera la siguiente tabla:\nValor\nFrecuencia\nP\nQ\nR\n¿Cuál de las siguientes expresiones permite determinar el promedio de los valores?"
+        },
+        {
+          "letra": "A",
+          "texto": "P + Q + 2 · R\nP + Q + R"
+        },
+        {
+          "letra": "B",
+          "texto": "R\nP + Q + R"
+        },
+        {
+          "letra": "C",
+          "texto": "0 · P + 1 · Q + 2 · R\nP + Q + R"
+        },
+        {
+          "letra": "D",
+          "texto": "2 · R\nP + Q + R\n60.\nUna persona plantó un brote de dos centímetros y lo fotografió durante cinco semanas\npara dejar registro de su crecimiento, tal como se representa a continuación:\n¿Cuántos centímetros, en promedio, creció el brote por semana?"
+        },
+        {
+          "letra": "A",
+          "texto": "2 cm"
+        },
+        {
+          "letra": "B",
+          "texto": "2,4 cm"
+        },
+        {
+          "letra": "C",
+          "texto": "3 cm"
+        },
+        {
+          "letra": "D",
+          "texto": "7,5 cm"
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "En el siguiente gráfico se representa la distribución de la cantidad de horas extras\nrealizadas por 140 trabajadores durante el mes de mayor demanda productiva de\nuna empresa.\nPor cada hora extra se paga $15 000. ¿Cuál fue el pago más frecuente que realizó\nla empresa por concepto de horas extras en ese mes?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$15 000"
+        },
+        {
+          "letra": "B",
+          "texto": "$30 000"
+        },
+        {
+          "letra": "C",
+          "texto": "$45 000"
+        },
+        {
+          "letra": "D",
+          "texto": "$60 000"
+        }
+      ]
+    },
+    {
+      "numero": 62,
+      "enunciado": "Considera el experimento descrito en la siguiente infografía para calcular el tiempo\nde reacción, en segundos, de una persona.\nCiencianet. (2008). Descubre tu tiempo de reacción. (Reproducido de Mide tu reacción, por C. Torres, en Edumate Perú).\nUna persona efectuó el experimento y en el paso cuatro anotó los siguientes números:\n10 cm\n9 cm\n15 cm\n8 cm\n18 cm\n¿Cuál es el tiempo de reacción de la persona?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "0,10 s"
+        },
+        {
+          "letra": "B",
+          "texto": "0,14 s"
+        },
+        {
+          "letra": "C",
+          "texto": "0,16 s"
+        },
+        {
+          "letra": "D",
+          "texto": "0,17 s"
+        }
+      ]
+    },
+    {
+      "numero": 64,
+      "enunciado": "El memorice es un juego que está compuesto por varias tarjetas. Cada una de estas\ntiene una figura que está repetida una sola vez en otra tarjeta, de tal manera que se\nforman pares de cada una de estas figuras.\nPara jugar, las tarjetas se deben disponer sobre una superficie de manera que\nninguna de las figuras de las tarjetas sea visible. Luego, la persona que juega debe\nvoltear una tarjeta y, después, debe dar vuelta una segunda tarjeta con la finalidad\nde encontrar el par de la primera.\nUna persona dispone sobre la mesa 20 tarjetas de este juego y voltea por primera vez\nuna de las tarjetas, en la cual aparece un rayo, tal como se presenta en la siguiente\nimagen.\nSi esta persona no conoce la figura de ninguna de las otras tarjetas dispuestas, ¿cuál\nes la probabilidad de que esta persona encuentre el segundo rayo al dar vuelta al\nazar la segunda tarjeta?\nA)\nB)\nC)\nD)\nListado de referencias bibliográficas \nPregunta \nCita bibliográfica \nGeneradoras de Chile. (2022). Cifras destacadas del sector \ngeneración en 2021. https://generadoras.cl/reporte-anual-2022/. \nInstituto Nacional de Estadística (INE). (2021). Evolución de las \nmigraciones interiores (2008–2021). Como se cita en Instituto \nGeográfico Nacional (IGN), Atlas Nacional de España. \nCienciaNet. (2008). Descubre tu tiempo de reacción. \nRecuperado de http://ciencianet.com/treaccion.html. \n@demre.uchile\nDEMRE U.chile\nDEMRE Uchile\n/demre.uchile\n/DEMREuchile\n/demre.uchile\n/demre_uchile\ndemre.cl",
+      "alternativas": []
+    }
+  ]
+}

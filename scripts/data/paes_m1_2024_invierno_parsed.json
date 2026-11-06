@@ -1,0 +1,2182 @@
+{
+  "materia": "m1",
+  "year": 2024,
+  "edicion": "Invierno",
+  "forma": 111,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Las figuras que aparecen son solo indicativas.",
+      "alternativas": []
+    },
+    {
+      "numero": 2,
+      "enunciado": "Los gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)\n,0\n(\n.",
+      "alternativas": []
+    },
+    {
+      "numero": 3,
+      "enunciado": "El intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q .",
+      "alternativas": []
+    },
+    {
+      "numero": 4,
+      "enunciado": ")\nb\n,a(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario.",
+      "alternativas": []
+    },
+    {
+      "numero": 5,
+      "enunciado": "Se entenderá por dado común a aquel que posee 6 caras numeradas del         \n1 al 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir.",
+      "alternativas": []
+    },
+    {
+      "numero": 6,
+      "enunciado": "En el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \nSÍMBOLOS MATEMÁTICOS \n \n \nes menor que \n \nes mayor que \n \nes menor o igual que \n \nes mayor o igual que \n \nángulo recto \n \nes semejante con \n \nes distinto de \nAB \ntrazo AB \n \nRegistro de Propiedad Intelectual Nº 2023-A-3773\nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n1. \nUna persona selecciona un número de dos dígitos, luego resta este número a 200 \ny, finalmente, duplica el resultado.  \n \n¿Cuál es el mayor número que puede obtener mediante esta serie de operaciones?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "380"
+        },
+        {
+          "letra": "D",
+          "texto": "398 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n2. \n¿Cuál es el valor de \n\n\n,0\n,0\n,0\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ",0"
+        },
+        {
+          "letra": "B",
+          "texto": ",0"
+        },
+        {
+          "letra": "C",
+          "texto": ",0"
+        },
+        {
+          "letra": "D",
+          "texto": ",0\n \n \n \n \n \n \n \n \n \n \n \n \n3. \n¿Cuál es el valor de \n)1,0\n(\n)1\n(\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ",0"
+        },
+        {
+          "letra": "B",
+          "texto": ",0"
+        },
+        {
+          "letra": "C",
+          "texto": ",2"
+        },
+        {
+          "letra": "D",
+          "texto": "1,2\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n4. \nSi la suma de 3 números enteros consecutivos es igual a p, ¿cuál de las \nsiguientes afirmaciones es siempre verdadera respecto al valor de p?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es un número impar."
+        },
+        {
+          "letra": "B",
+          "texto": "Es un múltiplo de 3."
+        },
+        {
+          "letra": "C",
+          "texto": "Es un número positivo."
+        },
+        {
+          "letra": "D",
+          "texto": "Es un número distinto de cero. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n5. \nUna aplicación de celular dispone al usuario una rutina de ejercicios distinta cada \ndía. Esta aplicación es gratuita por un mes, pero luego se debe pagar una \nsuscripción. Para esta aplicación existen dos formas de pago:  \n \n Suscripción mensual: \n$\n al inicio de cada mes  \n Suscripción por 12 meses: \n$\n \n \nSi una persona escogió la suscripción mensual, ¿cuántos meses como máximo \npuede pagar para que esta sea económicamente más conveniente que la \nsuscripción por 12 meses?"
+        },
+        {
+          "letra": "A",
+          "texto": "9 meses"
+        },
+        {
+          "letra": "B",
+          "texto": "10 meses"
+        },
+        {
+          "letra": "C",
+          "texto": "11 meses"
+        },
+        {
+          "letra": "D",
+          "texto": "13 meses \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n6. \nEn la tabla adjunta se presenta la cantidad de metros cuadrados recomendados \npara la crianza de cerdo de acuerdo con su masa. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se quiere hacer un chiquero para 12 cerdos del tipo Göttingen, que llegan a \ntener una masa de entre \nkg\n y \nkg\n en edad adulta, ¿cuál es la cantidad \nmínima de metros cuadrados que debe tener el chiquero para cumplir con la \nrecomendación?"
+        },
+        {
+          "letra": "A",
+          "texto": ",2"
+        },
+        {
+          "letra": "B",
+          "texto": ",3"
+        },
+        {
+          "letra": "C",
+          "texto": "8,4"
+        },
+        {
+          "letra": "D",
+          "texto": "6,6\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMasa del cerdo \nCantidad mínima de metros cuadrados por \ncerdo \nMenos de \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n3,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nkg\n o más"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Una empresa decide registrar mensualmente la variación de la masa total de los \nmetales almacenados en su bodega. El primer mes aumentó en 2 toneladas la \nmasa almacenada, en el segundo mes disminuyó en 4 toneladas la masa \nalmacenada, el tercer mes aumentó en 3 toneladas la masa almacenada y el \ncuarto mes aumentó en 1 tonelada la masa almacenada. Al finalizar el cuarto mes \nla masa total de los metales en la bodega es de 70 toneladas. \n \n \nDel departamento de ventas de la empresa necesitan saber la cantidad de \ntoneladas de metal que había antes de comenzar los registros para completar el \nregistro. \n \n¿Cuántas toneladas de metal habían almacenadas inicialmente en la bodega?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "66 toneladas"
+        },
+        {
+          "letra": "B",
+          "texto": "68 toneladas"
+        },
+        {
+          "letra": "C",
+          "texto": "70 toneladas"
+        },
+        {
+          "letra": "D",
+          "texto": "74 toneladas"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 9,
+      "enunciado": "meses \nB)",
+      "alternativas": []
+    },
+    {
+      "numero": 10,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 11,
+      "enunciado": "Tampoco se permite el uso de teléfono celular, calculadora o cualquier otro dispositivo electrónico durante la \nrendición de la prueba.",
+      "alternativas": []
+    },
+    {
+      "numero": 12,
+      "enunciado": "Finalmente, anota tu número de Cédula de Identidad (o Pasaporte) en los casilleros que se encuentran en la parte \ninferior de este folleto, lee y firma la declaración correspondiente.\nDECLARACIÓN: declaro conocer y aceptar la normativa que rige al Proceso de Admisión a las universidades chilenas \ny soy consciente de que, en caso de colaborar con la reproducción, sustracción, almacenamiento o transmisión, \ntotal o parcial, de este folleto, a través de cualquier medio, me expongo a la exclusión inmediata de este Proceso, sin \nperjuicio de las demás acciones o sanciones legales.\nFirma\nPROCESO DE ADMISIÓN 2024\nNúmero de cédula de identidad (o pasaporte)\n—\n \n \n \nEN ESTA PRUEBA SE CONSIDERARÁ LO SIGUIENTE: \n \n1. \nLas figuras que aparecen son solo indicativas.  \n2. \nLos gráficos que se presentan están dibujados en un sistema de ejes \nperpendiculares, cuyo origen es el punto \n)\n,0\n(\n. \n3. \nEl intervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o \niguales que p y menores o iguales que q ; el intervalo \n\nq\n,p\n es el conjunto de \ntodos los números reales mayores que p y menores o iguales que q ; el \nintervalo \n\nq\n,p\n es el conjunto de todos los números reales mayores o iguales \nque p y menores que q ; y el intervalo \n\nq\n,p\n es el conjunto de todos los \nnúmeros reales mayores que p y menores que q . \n4. \n)\nb\n,a(\nv \n es un vector que tiene su punto de inicio en el origen del plano \ncartesiano y su punto final en el punto \n)\nb\n,a(\n, a menos que se indique lo \ncontrario. \n5. \nSe entenderá por dado común a aquel que posee 6 caras numeradas del         \n1 al 6 y en el experimento de lanzarlo, sus caras son equiprobables de salir. \n6. \nEn el experimento de lanzar una moneda, sus dos opciones son equiprobables \nde salir, a menos que se indique lo contrario. \n \nSÍMBOLOS MATEMÁTICOS \n \n \nes menor que \n \nes mayor que \n \nes menor o igual que \n \nes mayor o igual que \n \nángulo recto \n \nes semejante con \n \nes distinto de \nAB \ntrazo AB \n \nRegistro de Propiedad Intelectual Nº 2023-A-3773\nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \n \n1. \nUna persona selecciona un número de dos dígitos, luego resta este número a 200 \ny, finalmente, duplica el resultado.  \n \n¿Cuál es el mayor número que puede obtener mediante esta serie de operaciones?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "380"
+        },
+        {
+          "letra": "D",
+          "texto": "398 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n2. \n¿Cuál es el valor de \n\n\n,0\n,0\n,0\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ",0"
+        },
+        {
+          "letra": "B",
+          "texto": ",0"
+        },
+        {
+          "letra": "C",
+          "texto": ",0"
+        },
+        {
+          "letra": "D",
+          "texto": ",0\n \n \n \n \n \n \n \n \n \n \n \n \n3. \n¿Cuál es el valor de \n)1,0\n(\n)1\n(\n\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": ",0"
+        },
+        {
+          "letra": "B",
+          "texto": ",0"
+        },
+        {
+          "letra": "C",
+          "texto": ",2"
+        },
+        {
+          "letra": "D",
+          "texto": "1,2\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n4. \nSi la suma de 3 números enteros consecutivos es igual a p, ¿cuál de las \nsiguientes afirmaciones es siempre verdadera respecto al valor de p?"
+        },
+        {
+          "letra": "A",
+          "texto": "Es un número impar."
+        },
+        {
+          "letra": "B",
+          "texto": "Es un múltiplo de 3."
+        },
+        {
+          "letra": "C",
+          "texto": "Es un número positivo."
+        },
+        {
+          "letra": "D",
+          "texto": "Es un número distinto de cero. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n5. \nUna aplicación de celular dispone al usuario una rutina de ejercicios distinta cada \ndía. Esta aplicación es gratuita por un mes, pero luego se debe pagar una \nsuscripción. Para esta aplicación existen dos formas de pago:  \n \n Suscripción mensual: \n$\n al inicio de cada mes  \n Suscripción por 12 meses: \n$\n \n \nSi una persona escogió la suscripción mensual, ¿cuántos meses como máximo \npuede pagar para que esta sea económicamente más conveniente que la \nsuscripción por 12 meses?"
+        },
+        {
+          "letra": "A",
+          "texto": "9 meses"
+        },
+        {
+          "letra": "B",
+          "texto": "10 meses"
+        },
+        {
+          "letra": "C",
+          "texto": "11 meses"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "meses \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n6. \nEn la tabla adjunta se presenta la cantidad de metros cuadrados recomendados \npara la crianza de cerdo de acuerdo con su masa. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi se quiere hacer un chiquero para 12 cerdos del tipo Göttingen, que llegan a \ntener una masa de entre \nkg\n y \nkg\n en edad adulta, ¿cuál es la cantidad \nmínima de metros cuadrados que debe tener el chiquero para cumplir con la \nrecomendación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": ",2"
+        },
+        {
+          "letra": "B",
+          "texto": ",3"
+        },
+        {
+          "letra": "C",
+          "texto": "8,4"
+        },
+        {
+          "letra": "D",
+          "texto": "6,6\n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMasa del cerdo \nCantidad mínima de metros cuadrados por \ncerdo \nMenos de \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n3,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nEntre \nkg\n y \nkg\n \n,0\n \nkg\n o más \n \n \n \n7. \nUna empresa decide registrar mensualmente la variación de la masa total de los \nmetales almacenados en su bodega. El primer mes aumentó en 2 toneladas la \nmasa almacenada, en el segundo mes disminuyó en 4 toneladas la masa \nalmacenada, el tercer mes aumentó en 3 toneladas la masa almacenada y el \ncuarto mes aumentó en 1 tonelada la masa almacenada. Al finalizar el cuarto mes \nla masa total de los metales en la bodega es de 70 toneladas. \n \n \nDel departamento de ventas de la empresa necesitan saber la cantidad de \ntoneladas de metal que había antes de comenzar los registros para completar el \nregistro. \n \n¿Cuántas toneladas de metal habían almacenadas inicialmente en la bodega?"
+        },
+        {
+          "letra": "A",
+          "texto": "66 toneladas"
+        },
+        {
+          "letra": "B",
+          "texto": "68 toneladas"
+        },
+        {
+          "letra": "C",
+          "texto": "70 toneladas"
+        },
+        {
+          "letra": "D",
+          "texto": "74 toneladas \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n8. \nLa temperatura en una cámara de frigorífico es de \nC\n12 \n. Se necesita variar esta \ntemperatura hasta alcanzar los \nC\n36 \n\n.  \n \n \nSi la temperatura desciende \nC\n3 \n cada cinco minutos, ¿cuánto tiempo se tardará \nen alcanzar dicha temperatura?"
+        },
+        {
+          "letra": "A",
+          "texto": "85 minutos"
+        },
+        {
+          "letra": "B",
+          "texto": "80 minutos"
+        },
+        {
+          "letra": "C",
+          "texto": "60 minutos"
+        },
+        {
+          "letra": "D",
+          "texto": "48 minutos \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n9. \nUna estudiante dedica en total \nh\n a estudiar los primeros cinco días de la semana \ny las distribuye de la siguiente manera: \n \n \n \n \n \n \n \n \n \nEl sábado estudiará \nh\n dividiendo ese tiempo en estudiar Matemática, Física y \nLenguaje. Esa división del tiempo la hace de modo que sea proporcional a las \nhoras de estudio de los días lunes, martes y miércoles. \n \n¿Cuánto tiempo estudiará Matemática el día sábado?"
+        },
+        {
+          "letra": "A",
+          "texto": "min"
+        },
+        {
+          "letra": "B",
+          "texto": "min"
+        },
+        {
+          "letra": "C",
+          "texto": "min"
+        },
+        {
+          "letra": "D",
+          "texto": "min\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nLunes \nMartes \nMiércoles \nJueves \nViernes \nMatemática \nFísica \nLenguaje \nFísica \nHistoria \n1 h \n1 h \n2 h \n1  h \n1 h \n \n \n \n \n10. Una pelota se deja caer desde una altura de \ncm\n. Después de cada rebote la \naltura máxima alcanzada por la pelota es 5\n4 de la altura anterior.  \n \nEn el tercer rebote, ¿cuál es la altura máxima que alcanzará la pelota,  aproximada \nal entero más cercano?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n11. ¿Cuál es el  %\n del \n%\n de 200 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "4,0"
+        },
+        {
+          "letra": "B",
+          "texto": "C)   40"
+        },
+        {
+          "letra": "D",
+          "texto": "400 \n \n \n \n \n \n \n \n \n \n12. Considera los números enteros positivos menores o iguales que 50 . \n \n \n¿Cuál es el porcentaje de estos números que son múltiplos de 8?"
+        },
+        {
+          "letra": "A",
+          "texto": "%"
+        },
+        {
+          "letra": "B",
+          "texto": "%"
+        },
+        {
+          "letra": "C",
+          "texto": "%\n5,"
+        },
+        {
+          "letra": "D",
+          "texto": "%\n5,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n13. Una empresa de bebidas dispone de 2000 litros de agua para la producción de sus \nproductos. Esta agua tiene que ser purificada y en este proceso se pierde un    \n%\n del agua.  \n \n¿Cuál es la cantidad de litros de agua que quedan luego de ser purificada?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D)"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Una radio que transmite 24 horas al día clasifica su tiempo al aire de la siguiente \nmanera: \n \n \n \n \n \n \n \n \n \n \nPor falta de presupuesto, se aumenta el tiempo de comerciales de los \nauspiciadores en 2 horas. \n \n¿Cuál es el nuevo porcentaje de las 24 horas al día destinado a comerciales de \nlos auspiciadores?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "%\n8,"
+        },
+        {
+          "letra": "B",
+          "texto": "%"
+        },
+        {
+          "letra": "C",
+          "texto": "%\n,"
+        },
+        {
+          "letra": "D",
+          "texto": "%\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTiempo al aire \nPorcentaje \nProgramas de conversación en vivo \n35 % \nComerciales de los auspiciadores"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "% \nMúsica envasada \n50 % \n \n \n \n \n15. En una tienda de artículos de aseo, un producto tiene un precio de \n$\n.                    \nEl dueño de la tienda decide aplicarle un \n%\n de descuento. \n \nA la semana siguiente, el dueño de la tienda aplica otra rebaja al precio ya rebajado \ndel producto, de un \n%\n. \n \n \n¿Cuál es el precio final del producto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "750\n$"
+        },
+        {
+          "letra": "D",
+          "texto": "600\n$"
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "En una panadería, un kilogramo de pan cuesta actualmente 1800\n$\n, pero su precio \nsubirá un \n%\n. \n \nSi se compraran x kilogramos de pan después del aumento del precio, ¿cuál de \nlas siguientes expresiones correspondería al monto total, en pesos, que se \npagaría?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n2,0\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n"
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "En la tabla adjunta se presentan algunas unidades de distancia utilizadas en el \nSistema Internacional y su equivalencia en metros. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el resultado de la operación \nPm\nEm\nZm\nYm\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "1 "
+        },
+        {
+          "letra": "B",
+          "texto": "2 "
+        },
+        {
+          "letra": "C",
+          "texto": "1 "
+        },
+        {
+          "letra": "D",
+          "texto": "1 \n \n \n \n \n \n \n \n \n \n \n \n \nUnidad \nSímbolo \nEquivalencia en metros \nYottametro \nYm \n1 000 000 000 000 000 000 000 000  m \nZettametro \nZm \n1 000 000 000 000 000 000 000  m \nExámetro \nEm \n1 000 000 000 000 000 000  m \nPetámetro \nPm \n1 000 000 000 000 000  m \nTerámetro \nTm \n1 000 000 000 000  m \nGigámetro \nGm \n1 000 000 000  m \nMegámetro \nMm \n1 000 000  m \nKilómetro \nKm \n1 000  m"
+        }
+      ]
+    },
+    {
+      "numero": 18,
+      "enunciado": "¿Cuál es el resultado de \n? \n \nA) \nB) \nC) \n \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 19,
+      "enunciado": "Considera la expresión \nE\n\n\n\n\n\n\n\n\n\n. \n \n \n¿Cuál de las siguientes expresiones representa un número entero menor que 200 ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "E\n288 "
+        },
+        {
+          "letra": "B",
+          "texto": "E\n125 "
+        },
+        {
+          "letra": "C",
+          "texto": "E\n250 "
+        },
+        {
+          "letra": "D",
+          "texto": "E\n144 "
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "Camilo le propone a su mamá que cada día ella le deposite en una alcancía el \ndoble de la cantidad depositada el día anterior. La mamá acepta la propuesta, pero \nsolo hasta haberle depositado diez veces. \n \n \nSi la mamá comienza depositándole 20\n$\n, ¿cuánto le depositará al décimo día?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "180\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "200\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$"
+        }
+      ]
+    },
+    {
+      "numero": 21,
+      "enunciado": "El tiempo máximo en microsegundos que tarda un programa de computador en \nordenar alfabéticamente una lista con n nombres se puede modelar mediante la \nexpresión \nn\nn\n,0\n\n\n. \n \n \nSi una lista tiene \n nombres, ¿cuántos microsegundos tardará como máximo \nel programa en ordenar alfabéticamente los nombres de esta lista? \n \nA)         10 \nB) \nC) \n \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 22,
+      "enunciado": "Una persona diseña un programa computacional que crea una copia de todos los \narchivos del computador cada una hora. \n \n \nLa persona ejecuta el programa en su computador y al cabo de m horas este \nposee un total de \nm\nk \n archivos, con m y k números enteros positivos. \n \n \nSi la persona durante ese tiempo no elimina ni adiciona archivos, ¿cuál de las \nsiguientes afirmaciones es siempre verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "k es el tiempo que el programa tarda en llenar totalmente el disco duro del \ncomputador."
+        },
+        {
+          "letra": "B",
+          "texto": "m\n representa la cantidad de veces que el programa copia todos los \narchivos."
+        },
+        {
+          "letra": "C",
+          "texto": "m\nk\n\n\n representa el total de archivos nuevos que se crearon con el \nprograma."
+        },
+        {
+          "letra": "D",
+          "texto": "k corresponde a la cantidad inicial de archivos que posee el computador \nantes de ejecutar el programa."
+        }
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "Una persona compró cierta cantidad de un mismo artículo con \n$\n, sin ningún \ntipo de descuento y no le sobró dinero. \n \n \nSi cada artículo tiene precio A\n$\n, ¿cuántos artículos compró?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A"
+        },
+        {
+          "letra": "B",
+          "texto": "A"
+        },
+        {
+          "letra": "C",
+          "texto": "A\n"
+        },
+        {
+          "letra": "D",
+          "texto": "A"
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "¿Cuál de las siguientes expresiones representa la tercera parte del sucesor de p ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "p "
+        },
+        {
+          "letra": "B",
+          "texto": "\n1\np\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p "
+        },
+        {
+          "letra": "D",
+          "texto": "p "
+        }
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "Para envasar cierta cantidad de agua mineral se necesitan 80 contenedores de \n200 litros de capacidad cada uno.  \n \n¿Cuántos contenedores de 50 litros de capacidad se necesitarán para envasar \nla misma cantidad de agua?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "20"
+        },
+        {
+          "letra": "B",
+          "texto": "125"
+        },
+        {
+          "letra": "C",
+          "texto": "320"
+        },
+        {
+          "letra": "D",
+          "texto": ""
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "Una persona gastó \n\na\n$\n\n en ocho días.  \n \n \nSi todos los días gastó lo mismo, ¿cuál de las siguientes expresiones representa lo \nque gastó la persona en dos días?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n400\na\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n1600\na\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\na\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\na\n$\n"
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Considera el siguiente gráfico en el que se presenta un modelo para la relación \nentre la cantidad de kilogramos de lentejas que se venden a granel en un almacén \ny su monto total a pagar. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuántos kilogramos de lentejas compró en total una persona que pagó 3300\n$\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "kg"
+        },
+        {
+          "letra": "B",
+          "texto": "kg\n2,2"
+        },
+        {
+          "letra": "C",
+          "texto": "kg\n3,2"
+        },
+        {
+          "letra": "D",
+          "texto": "kg\n5,2"
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "Bajo ciertas condiciones, la cantidad de kilómetros recorridos por un automóvil es \ndirectamente proporcional a la cantidad de litros de combustible que consume. \n \nSi un automóvil que cumple estas condiciones recorre 90 kilómetros con 15 litros \nde bencina, ¿cuántos kilómetros puede recorrer este automóvil con 25 litros de \nbencina?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "54"
+        },
+        {
+          "letra": "B",
+          "texto": "60"
+        },
+        {
+          "letra": "C",
+          "texto": "135"
+        },
+        {
+          "letra": "D",
+          "texto": "150"
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "En una carrera se reparte un total de \n dólares a las primeras cuatro \npersonas que lleguen a la meta. Este reparto se realiza a razón de \n:\n:\n:\n de \nmodo que mientras mejor haya sido la posición de llegada, más dinero se gana. \n \n \n¿Cuál es la cantidad que le corresponde a la persona que llegó en segundo lugar?",
+      "alternativas": []
+    },
+    {
+      "numero": 30,
+      "enunciado": "¿Cuál es la solución de la ecuación \nx\n\n\n?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "A) \n2000 dólares"
+        },
+        {
+          "letra": "B",
+          "texto": "3000 dólares"
+        },
+        {
+          "letra": "C",
+          "texto": "4000 dólares"
+        },
+        {
+          "letra": "D",
+          "texto": "6000 dólares"
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "Al finalizar un trayecto, la cantidad L de litros de combustible que quedan en el \nestanque de cierto vehículo, está dada por la expresión: \n \nx\n1,0\nc\nL\n\n\n\n \n \n \nen la que c es la cantidad de litros que tenía el estanque de este vehículo al iniciar \nel trayecto, x es la cantidad de kilómetros que recorrió el vehículo y \n1,0 es una \nconstante medida en litros por kilómetro. \n \n \nEste vehículo, al iniciar el trayecto tenía en el estanque 50 litros y al finalizarlo \ntenía 30 litros. \n \n \n¿Cuántos kilómetros recorrió el vehículo en ese trayecto? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 32,
+      "enunciado": "Una torta está formada por capas alternadas de bizcocho y de manjar, de modo \nque la capa inferior y la capa superior tienen que ser de bizcocho.  \n \nSi cada capa de bizcocho tiene una masa de \ng\n y cada capa de manjar tiene \nuna masa de \ng\n, ¿cuántas capas de manjar, como máximo, puede tener una \ntorta para que esta no supere los \ng\n de masa?  \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 33,
+      "enunciado": "Al organizar un seminario, una persona recibe dos ofertas de dos centros de \neventos. El primero, cobra  2000\n$\n por invitado, más un cargo fijo de \n$\n. El \nsegundo, cobra 5000\n$\n por invitado, más un cargo fijo de \n$\n. \n \n \n¿Cuántos invitados como mínimo deberían asistir al evento, para que el segundo \ncentro de eventos sea más caro? \n \nA) \nB) \nC) 118 \nD) 119",
+      "alternativas": []
+    },
+    {
+      "numero": 34,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 35,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 36,
+      "enunciado": "\n\n.  \n \n \nSi la temperatura desciende \nC\n3 \n cada cinco minutos, ¿cuánto tiempo se tardará \nen alcanzar dicha temperatura?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "85 minutos"
+        },
+        {
+          "letra": "B",
+          "texto": "80 minutos"
+        },
+        {
+          "letra": "C",
+          "texto": "60 minutos"
+        },
+        {
+          "letra": "D",
+          "texto": "48 minutos \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n9. \nUna estudiante dedica en total \nh\n a estudiar los primeros cinco días de la semana \ny las distribuye de la siguiente manera: \n \n \n \n \n \n \n \n \n \nEl sábado estudiará \nh\n dividiendo ese tiempo en estudiar Matemática, Física y \nLenguaje. Esa división del tiempo la hace de modo que sea proporcional a las \nhoras de estudio de los días lunes, martes y miércoles. \n \n¿Cuánto tiempo estudiará Matemática el día sábado?"
+        },
+        {
+          "letra": "A",
+          "texto": "min"
+        },
+        {
+          "letra": "B",
+          "texto": "min"
+        },
+        {
+          "letra": "C",
+          "texto": "min"
+        },
+        {
+          "letra": "D",
+          "texto": "min\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nLunes \nMartes \nMiércoles \nJueves \nViernes \nMatemática \nFísica \nLenguaje \nFísica \nHistoria \n1 h \n1 h \n2 h \n1  h \n1 h \n \n \n \n \n10. Una pelota se deja caer desde una altura de \ncm\n. Después de cada rebote la \naltura máxima alcanzada por la pelota es 5\n4 de la altura anterior.  \n \nEn el tercer rebote, ¿cuál es la altura máxima que alcanzará la pelota,  aproximada \nal entero más cercano?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n11. ¿Cuál es el  %\n del \n%\n de 200 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "4,0"
+        },
+        {
+          "letra": "B",
+          "texto": "C)   40"
+        },
+        {
+          "letra": "D",
+          "texto": "400 \n \n \n \n \n \n \n \n \n \n12. Considera los números enteros positivos menores o iguales que 50 . \n \n \n¿Cuál es el porcentaje de estos números que son múltiplos de 8?"
+        },
+        {
+          "letra": "A",
+          "texto": "%"
+        },
+        {
+          "letra": "B",
+          "texto": "%"
+        },
+        {
+          "letra": "C",
+          "texto": "%\n5,"
+        },
+        {
+          "letra": "D",
+          "texto": "%\n5,\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n13. Una empresa de bebidas dispone de 2000 litros de agua para la producción de sus \nproductos. Esta agua tiene que ser purificada y en este proceso se pierde un    \n%\n del agua.  \n \n¿Cuál es la cantidad de litros de agua que quedan luego de ser purificada?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n14. Una radio que transmite 24 horas al día clasifica su tiempo al aire de la siguiente \nmanera: \n \n \n \n \n \n \n \n \n \n \nPor falta de presupuesto, se aumenta el tiempo de comerciales de los \nauspiciadores en 2 horas. \n \n¿Cuál es el nuevo porcentaje de las 24 horas al día destinado a comerciales de \nlos auspiciadores?"
+        },
+        {
+          "letra": "A",
+          "texto": "%\n8,"
+        },
+        {
+          "letra": "B",
+          "texto": "%"
+        },
+        {
+          "letra": "C",
+          "texto": "%\n,"
+        },
+        {
+          "letra": "D",
+          "texto": "%\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTiempo al aire \nPorcentaje \nProgramas de conversación en vivo \n35 % \nComerciales de los auspiciadores \n15 % \nMúsica envasada \n50 % \n \n \n \n \n15. En una tienda de artículos de aseo, un producto tiene un precio de \n$\n.                    \nEl dueño de la tienda decide aplicarle un \n%\n de descuento. \n \nA la semana siguiente, el dueño de la tienda aplica otra rebaja al precio ya rebajado \ndel producto, de un \n%\n. \n \n \n¿Cuál es el precio final del producto?"
+        },
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "750\n$"
+        },
+        {
+          "letra": "D",
+          "texto": "600\n$\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n16. En una panadería, un kilogramo de pan cuesta actualmente 1800\n$\n, pero su precio \nsubirá un \n%\n. \n \nSi se compraran x kilogramos de pan después del aumento del precio, ¿cuál de \nlas siguientes expresiones correspondería al monto total, en pesos, que se \npagaría?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n2,0\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n \n \n \n \n \n \n17. En la tabla adjunta se presentan algunas unidades de distancia utilizadas en el \nSistema Internacional y su equivalencia en metros. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el resultado de la operación \nPm\nEm\nZm\nYm\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "1 "
+        },
+        {
+          "letra": "B",
+          "texto": "2 "
+        },
+        {
+          "letra": "C",
+          "texto": "1 "
+        },
+        {
+          "letra": "D",
+          "texto": "1 \n \n \n \n \n \n \n \n \n \n \n \n \nUnidad \nSímbolo \nEquivalencia en metros \nYottametro \nYm \n1 000 000 000 000 000 000 000 000  m \nZettametro \nZm \n1 000 000 000 000 000 000 000  m \nExámetro \nEm \n1 000 000 000 000 000 000  m \nPetámetro \nPm \n1 000 000 000 000 000  m \nTerámetro \nTm \n1 000 000 000 000  m \nGigámetro \nGm \n1 000 000 000  m \nMegámetro \nMm \n1 000 000  m \nKilómetro \nKm \n1 000  m \n \n \n \n \n18. ¿Cuál es el resultado de \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n19. Considera la expresión \nE\n\n\n\n\n\n\n\n\n\n. \n \n \n¿Cuál de las siguientes expresiones representa un número entero menor que 200 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "E\n288 "
+        },
+        {
+          "letra": "B",
+          "texto": "E\n125 "
+        },
+        {
+          "letra": "C",
+          "texto": "E\n250 "
+        },
+        {
+          "letra": "D",
+          "texto": "E\n144 \n \n \n \n \n \n \n \n \n20. Camilo le propone a su mamá que cada día ella le deposite en una alcancía el \ndoble de la cantidad depositada el día anterior. La mamá acepta la propuesta, pero \nsolo hasta haberle depositado diez veces. \n \n \nSi la mamá comienza depositándole 20\n$\n, ¿cuánto le depositará al décimo día?"
+        },
+        {
+          "letra": "A",
+          "texto": "180\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "200\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n21. El tiempo máximo en microsegundos que tarda un programa de computador en \nordenar alfabéticamente una lista con n nombres se puede modelar mediante la \nexpresión \nn\nn\n,0\n\n\n. \n \n \nSi una lista tiene \n nombres, ¿cuántos microsegundos tardará como máximo \nel programa en ordenar alfabéticamente los nombres de esta lista?"
+        },
+        {
+          "letra": "A",
+          "texto": "10"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "22. Una persona diseña un programa computacional que crea una copia de todos los \narchivos del computador cada una hora. \n \n \nLa persona ejecuta el programa en su computador y al cabo de m horas este \nposee un total de \nm\nk \n archivos, con m y k números enteros positivos. \n \n \nSi la persona durante ese tiempo no elimina ni adiciona archivos, ¿cuál de las \nsiguientes afirmaciones es siempre verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "k es el tiempo que el programa tarda en llenar totalmente el disco duro del \ncomputador."
+        },
+        {
+          "letra": "B",
+          "texto": "m\n representa la cantidad de veces que el programa copia todos los \narchivos."
+        },
+        {
+          "letra": "C",
+          "texto": "m\nk\n\n\n representa el total de archivos nuevos que se crearon con el \nprograma."
+        },
+        {
+          "letra": "D",
+          "texto": "k corresponde a la cantidad inicial de archivos que posee el computador \nantes de ejecutar el programa. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n23. Una persona compró cierta cantidad de un mismo artículo con \n$\n, sin ningún \ntipo de descuento y no le sobró dinero. \n \n \nSi cada artículo tiene precio A\n$\n, ¿cuántos artículos compró?"
+        },
+        {
+          "letra": "A",
+          "texto": "A"
+        },
+        {
+          "letra": "B",
+          "texto": "A"
+        },
+        {
+          "letra": "C",
+          "texto": "A\n"
+        },
+        {
+          "letra": "D",
+          "texto": "A\n \n \n \n \n \n \n \n \n \n \n \n24. ¿Cuál de las siguientes expresiones representa la tercera parte del sucesor de p ?"
+        },
+        {
+          "letra": "A",
+          "texto": "p "
+        },
+        {
+          "letra": "B",
+          "texto": "\n1\np\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p "
+        },
+        {
+          "letra": "D",
+          "texto": "p \n \n \n \n \n \n \n \n \n \n \n \n25. Para envasar cierta cantidad de agua mineral se necesitan 80 contenedores de \n200 litros de capacidad cada uno.  \n \n¿Cuántos contenedores de 50 litros de capacidad se necesitarán para envasar \nla misma cantidad de agua?"
+        },
+        {
+          "letra": "A",
+          "texto": "20"
+        },
+        {
+          "letra": "B",
+          "texto": "125"
+        },
+        {
+          "letra": "C",
+          "texto": "320"
+        },
+        {
+          "letra": "D",
+          "texto": "26. Una persona gastó \n\na\n$\n\n en ocho días.  \n \n \nSi todos los días gastó lo mismo, ¿cuál de las siguientes expresiones representa lo \nque gastó la persona en dos días?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n400\na\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n1600\na\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\na\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\na\n$\n\n \n \n \n \n \n \n \n \n27. Considera el siguiente gráfico en el que se presenta un modelo para la relación \nentre la cantidad de kilogramos de lentejas que se venden a granel en un almacén \ny su monto total a pagar. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuántos kilogramos de lentejas compró en total una persona que pagó 3300\n$\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "kg"
+        },
+        {
+          "letra": "B",
+          "texto": "kg\n2,2"
+        },
+        {
+          "letra": "C",
+          "texto": "kg\n3,2"
+        },
+        {
+          "letra": "D",
+          "texto": "kg\n5,2\n \n \n \n \n \n \n \n \n \n \n \n28. Bajo ciertas condiciones, la cantidad de kilómetros recorridos por un automóvil es \ndirectamente proporcional a la cantidad de litros de combustible que consume. \n \nSi un automóvil que cumple estas condiciones recorre 90 kilómetros con 15 litros \nde bencina, ¿cuántos kilómetros puede recorrer este automóvil con 25 litros de \nbencina?"
+        },
+        {
+          "letra": "A",
+          "texto": "54"
+        },
+        {
+          "letra": "B",
+          "texto": "60"
+        },
+        {
+          "letra": "C",
+          "texto": "135"
+        },
+        {
+          "letra": "D",
+          "texto": "150 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n29. En una carrera se reparte un total de \n dólares a las primeras cuatro \npersonas que lleguen a la meta. Este reparto se realiza a razón de \n:\n:\n:\n de \nmodo que mientras mejor haya sido la posición de llegada, más dinero se gana. \n \n \n¿Cuál es la cantidad que le corresponde a la persona que llegó en segundo lugar? \n \n \n \n \n \n \n \n \n \n \n \n30. ¿Cuál es la solución de la ecuación \nx\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "A) \n2000 dólares"
+        },
+        {
+          "letra": "B",
+          "texto": "3000 dólares"
+        },
+        {
+          "letra": "C",
+          "texto": "4000 dólares"
+        },
+        {
+          "letra": "D",
+          "texto": "6000 dólares \n \n \n \n31. Al finalizar un trayecto, la cantidad L de litros de combustible que quedan en el \nestanque de cierto vehículo, está dada por la expresión: \n \nx\n1,0\nc\nL\n\n\n\n \n \n \nen la que c es la cantidad de litros que tenía el estanque de este vehículo al iniciar \nel trayecto, x es la cantidad de kilómetros que recorrió el vehículo y \n1,0 es una \nconstante medida en litros por kilómetro. \n \n \nEste vehículo, al iniciar el trayecto tenía en el estanque 50 litros y al finalizarlo \ntenía 30 litros. \n \n \n¿Cuántos kilómetros recorrió el vehículo en ese trayecto?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n32. Una torta está formada por capas alternadas de bizcocho y de manjar, de modo \nque la capa inferior y la capa superior tienen que ser de bizcocho.  \n \nSi cada capa de bizcocho tiene una masa de \ng\n y cada capa de manjar tiene \nuna masa de \ng\n, ¿cuántas capas de manjar, como máximo, puede tener una \ntorta para que esta no supere los \ng\n de masa?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n33. Al organizar un seminario, una persona recibe dos ofertas de dos centros de \neventos. El primero, cobra  2000\n$\n por invitado, más un cargo fijo de \n$\n. El \nsegundo, cobra 5000\n$\n por invitado, más un cargo fijo de \n$\n. \n \n \n¿Cuántos invitados como mínimo deberían asistir al evento, para que el segundo \ncentro de eventos sea más caro?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "118"
+        },
+        {
+          "letra": "D",
+          "texto": "119 \n \n \n \n \n \n \n \n \n34. Se hace una colecta para recaudar fondos, logrando recaudar \n$\n con          \n150 monedas de dos valores distintos. \n \n \nEl siguiente sistema de ecuaciones es un modelo para determinar la cantidad de \nmonedas de cada tipo: \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "x e y corresponden a la cantidad de monedas de \n$\n y de \n$\n, \nrespectivamente."
+        },
+        {
+          "letra": "B",
+          "texto": "Hay exactamente 500 monedas del tipo x y 50 monedas del tipo y ."
+        },
+        {
+          "letra": "C",
+          "texto": "Al considerar una moneda de cada tipo el valor total es 150\n$\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Considerando solo las monedas de 500\n$\n se juntan 5000\n$\n. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n          \ny\nx\n\n\n \ny\nx\n\n\n \n \n \n \n35. En una tienda de ropa se necesita incorporar las ventas por Internet con reparto \na domicilio para aumentar sus ventas. Para el reparto se necesita contratar los \nservicios de una empresa de vehículos de transporte y la tienda recibe dos \ncotizaciones: \n \n Cobro empresa A en un mes: \nt\n)t(\nC\n\n\n\n \n Cobro empresa B en un mes: \nt\n)t(\nC\n\n\n \n \ncon t el tiempo de uso del servicio, en horas, y \n)t(\nC\n el costo del servicio, en \npesos.  \n \n¿Cuánto tiempo se debe usar el servicio en cada empresa para que el costo sea \nel mismo?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,1\nhoras"
+        },
+        {
+          "letra": "B",
+          "texto": "2 horas"
+        },
+        {
+          "letra": "C",
+          "texto": "6 horas"
+        },
+        {
+          "letra": "D",
+          "texto": "12 horas \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n36. El Índice de Masa Corporal (IMC) de una persona se relaciona con su masa, \nmedida en kilogramos, y su estatura, medida en metros, a través de la expresión: \n \nIMC\nestatura\nmasa\n2 \n\n \n \nSi una persona tiene una masa de \nkg\n y tiene un \nIMC \n, ¿cuál es su \nestatura según este modelo?"
+        },
+        {
+          "letra": "A",
+          "texto": "m\n,1"
+        },
+        {
+          "letra": "B",
+          "texto": "m\n,1"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n5,1"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n,2"
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "Una empresa ha desarrollado la fórmula \n\n\nx\n)\nx\n(\nU\n2 \n\n\n\n que le \npermite conocer la utilidad que tendrá, en pesos, al vender x unidades de un \nartículo. \n \n \n¿Cuántos artículos se deben vender para que la utilidad de la empresa sea de \n$\n? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 38,
+      "enunciado": "En el siguiente gráfico se representa la rapidez de un automóvil a control remoto a \nmedida que transcurre el tiempo. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones se puede deducir del gráfico?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Entre los \ns\n y \ns\n el automóvil está detenido."
+        },
+        {
+          "letra": "B",
+          "texto": "El automóvil cambia de dirección cuatro veces."
+        },
+        {
+          "letra": "C",
+          "texto": "La distancia total recorrida por el automóvil es \nkm\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Entre los \ns\n y \ns\n el automóvil disminuye su rapidez. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTiempo en segundos"
+        }
+      ]
+    },
+    {
+      "numero": 39,
+      "enunciado": "La relación entre el puntaje que una persona obtiene en cierta prueba y su nota \nestá dada por la siguiente expresión: \npuntaje\nNOTA\n\n\n.  \n \n¿Cuál de las siguientes afirmaciones es verdadera respecto a esta prueba?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Para una nota 5,3\n se necesita obtener un puntaje de 35 puntos."
+        },
+        {
+          "letra": "B",
+          "texto": "Con 50 puntos se obtiene una nota superior a 6 ."
+        },
+        {
+          "letra": "C",
+          "texto": "Cuando el puntaje aumenta en un punto, la nota aumenta en 2 ."
+        },
+        {
+          "letra": "D",
+          "texto": "La mínima nota que se puede obtener en la prueba es un 2 ."
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "En un computador se simula el lanzamiento de un objeto desde una altura de          \ncm\n. La altura, en \n, que alcanza dicho objeto se modela por la función f \ndefinida por \nt2\nt\n)t(\nf\n\n\n\n\n, tal que t representa el tiempo transcurrido desde \nel lanzamiento, en s . \n \n¿A qué altura se encontraría el objeto a los \ns\n de ser lanzado?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \ncm"
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "Una persona necesita medir la altura de un árbol, para lo cual usa un medidor de \ndistancia láser de la siguiente manera: \n \n primero, se aleja del árbol \nm\n en un tramo de camino recto y perfectamente \nhorizontal. \n segundo, utiliza el medidor de distancia láser a ras del suelo apuntando al \nextremo superior del árbol el cual registra una distancia de \nm\n. \n \n \nEn la figura adjunta se representa la situación anterior. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la altura del árbol?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "m"
+        },
+        {
+          "letra": "B",
+          "texto": "m\n5,"
+        },
+        {
+          "letra": "C",
+          "texto": "m"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n \n \n \n \n \n \n \n \n \n \n \n12 m"
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "La medida d del diámetro de un círculo inscrito en un triángulo rectángulo se puede \ndeterminar con la fórmula de Poncelet: \n \nd\nc\nb\na\n\n\n\n \n \nen la cual  y b son las medidas de los catetos del triángulo y c es la medida de la \nhipotenusa.  \n \nSi las medidas de los catetos de un triángulo rectángulo son \ncm\n y \ncm\n, ¿cuál \nes el perímetro del círculo inscrito en él?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm\nπ"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\nπ"
+        },
+        {
+          "letra": "C",
+          "texto": "cm\nπ"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\nπ\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \na"
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "Una fábrica de espejos recibe un pedido para elaborar varios tamaños de espejos, \ncon la particularidad de que todos deben ser cuadrados y que en las esquinas se \nsobrepongan triángulos rectángulos de madera iguales entre sí, como el que se \nrepresenta en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \nConsidera m y n como las distintas medidas que pueden tener los catetos de los \ntriángulos de madera y p como las distintas medidas que puede tener el lado del \nespejo. \n \nSi todas las medidas están en cm, ¿cuál de las siguientes fórmulas permite \ndeterminar el área \nS que ocupa el vidrio que se ve en cada espejo, en \ncm ?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "n\nm\np\nS\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "n\nm\np\nS\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "n\nm\np\nS\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "n\nm\np\nS\n\n\n\n"
+        }
+      ]
+    },
+    {
+      "numero": 44,
+      "enunciado": "Se tiene un paralelepípedo recto de base cuadrada de lado \ncm\n y altura \ncm\n. \n \nSi se aumentan al doble las medidas de sus aristas, ¿cuál es el volumen del nuevo \nprisma?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm"
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "En la siguiente imagen se presenta un diseño de un módulo formado por bloques \nde vidrio y un bloque de cemento. Los módulos se utilizan para hacer una pared \ndecorativa. \n \n \n \n \n \n \n \n \n \n \n \n \n \nCada bloque de vidrio tiene una cara con forma cuadrada con lado de \ncm\n. \n \nLa durabilidad de este módulo depende de su densidad y, para obtenerla, se \nrequiere conocer el volumen del bloque de vidrio que tiene. \n \n \n¿Cuál es el volumen de los bloques de vidrio en cada módulo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm"
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "El volumen de una esfera y de un cono están dados por las expresiones \nR\n\n \ny \nh\nr2\n\n, respectivamente, con R el radio de la esfera, r el radio basal del cono \ny h la altura del cono. \n \nSi se designa por M al volumen de la esfera, ¿cuál de las siguientes \nexpresiones representa al volumen de un cono cuya altura y radio basal tienen \nla misma medida que el radio de la esfera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "M"
+        },
+        {
+          "letra": "B",
+          "texto": "M"
+        },
+        {
+          "letra": "C",
+          "texto": "M"
+        },
+        {
+          "letra": "D",
+          "texto": "M"
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "El punto \n\n,2 \n es un vértice común de cuatro cuadrados cuyos lados miden         \n2 unidades y son paralelos a los ejes coordenados del plano cartesiano.  \n \n¿Cuál de las siguientes coordenadas podría corresponder a un vértice de alguno \nde los cuadrados?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "\n\n,2 "
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,4 "
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,1 \n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n1\n,2"
+        }
+      ]
+    },
+    {
+      "numero": 48,
+      "enunciado": "Una figura se mueve con las siguientes transformaciones isométricas desde su \nposición inicial hasta su posición final como se presenta en la figura adjunta. \n \n1) La figura en la posición inicial se rota en \n\n90 en sentido horario con centro de \nrotación el centro de la figura. \n2) Luego, se traslada 2 metros hacia el sur y 6 metros al este. \n3) Por último, se vuelve a rotar en \n\n90 en sentido horario con centro de rotación el \ncentro de la figura, resultando la figura en la posición final. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes secuencias de transformaciones isométricas permite \nvolver a dejar la figura en la posición inicial?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Rotar en \n\n180 en sentido horario con centro de rotación el centro de la \nfigura y luego trasladar 2 metros al norte y 6 metros al oeste."
+        },
+        {
+          "letra": "B",
+          "texto": "Rotar en \n\n180 en sentido horario con centro de rotación el centro de la \nfigura y luego trasladar 2 metros al sur y 6 metros al este."
+        },
+        {
+          "letra": "C",
+          "texto": "Rotar en \n\n90 en sentido antihorario con centro de rotación el centro de la \nfigura y luego trasladar 2 metros al sur y 6 metros al este."
+        },
+        {
+          "letra": "D",
+          "texto": "Rotar en \n\n90 en sentido antihorario con centro de rotación el centro de la \nfigura y trasladar 2 metros al norte y 6 metros al oeste."
+        }
+      ]
+    },
+    {
+      "numero": 49,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 50,
+      "enunciado": "% \n \n \n \n \n15. En una tienda de artículos de aseo, un producto tiene un precio de \n$\n.                    \nEl dueño de la tienda decide aplicarle un \n%\n de descuento. \n \nA la semana siguiente, el dueño de la tienda aplica otra rebaja al precio ya rebajado \ndel producto, de un \n%\n. \n \n \n¿Cuál es el precio final del producto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "$"
+        },
+        {
+          "letra": "B",
+          "texto": "$"
+        },
+        {
+          "letra": "C",
+          "texto": "750\n$"
+        },
+        {
+          "letra": "D",
+          "texto": "600\n$\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n16. En una panadería, un kilogramo de pan cuesta actualmente 1800\n$\n, pero su precio \nsubirá un \n%\n. \n \nSi se compraran x kilogramos de pan después del aumento del precio, ¿cuál de \nlas siguientes expresiones correspondería al monto total, en pesos, que se \npagaría?"
+        },
+        {
+          "letra": "A",
+          "texto": "x\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "x\n2,0\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "x\n"
+        },
+        {
+          "letra": "D",
+          "texto": "x\n\n \n \n \n \n \n \n17. En la tabla adjunta se presentan algunas unidades de distancia utilizadas en el \nSistema Internacional y su equivalencia en metros. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el resultado de la operación \nPm\nEm\nZm\nYm\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "1 "
+        },
+        {
+          "letra": "B",
+          "texto": "2 "
+        },
+        {
+          "letra": "C",
+          "texto": "1 "
+        },
+        {
+          "letra": "D",
+          "texto": "1 \n \n \n \n \n \n \n \n \n \n \n \n \nUnidad \nSímbolo \nEquivalencia en metros \nYottametro \nYm \n1 000 000 000 000 000 000 000 000  m \nZettametro \nZm \n1 000 000 000 000 000 000 000  m \nExámetro \nEm \n1 000 000 000 000 000 000  m \nPetámetro \nPm \n1 000 000 000 000 000  m \nTerámetro \nTm \n1 000 000 000 000  m \nGigámetro \nGm \n1 000 000 000  m \nMegámetro \nMm \n1 000 000  m \nKilómetro \nKm \n1 000  m \n \n \n \n \n18. ¿Cuál es el resultado de \n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n19. Considera la expresión \nE\n\n\n\n\n\n\n\n\n\n. \n \n \n¿Cuál de las siguientes expresiones representa un número entero menor que 200 ?"
+        },
+        {
+          "letra": "A",
+          "texto": "E\n288 "
+        },
+        {
+          "letra": "B",
+          "texto": "E\n125 "
+        },
+        {
+          "letra": "C",
+          "texto": "E\n250 "
+        },
+        {
+          "letra": "D",
+          "texto": "E\n144 \n \n \n \n \n \n \n \n \n20. Camilo le propone a su mamá que cada día ella le deposite en una alcancía el \ndoble de la cantidad depositada el día anterior. La mamá acepta la propuesta, pero \nsolo hasta haberle depositado diez veces. \n \n \nSi la mamá comienza depositándole 20\n$\n, ¿cuánto le depositará al décimo día?"
+        },
+        {
+          "letra": "A",
+          "texto": "180\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "200\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "$"
+        },
+        {
+          "letra": "D",
+          "texto": "$\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n21. El tiempo máximo en microsegundos que tarda un programa de computador en \nordenar alfabéticamente una lista con n nombres se puede modelar mediante la \nexpresión \nn\nn\n,0\n\n\n. \n \n \nSi una lista tiene \n nombres, ¿cuántos microsegundos tardará como máximo \nel programa en ordenar alfabéticamente los nombres de esta lista?"
+        },
+        {
+          "letra": "A",
+          "texto": "10"
+        },
+        {
+          "letra": "B",
+          "texto": "C)"
+        },
+        {
+          "letra": "D",
+          "texto": "22. Una persona diseña un programa computacional que crea una copia de todos los \narchivos del computador cada una hora. \n \n \nLa persona ejecuta el programa en su computador y al cabo de m horas este \nposee un total de \nm\nk \n archivos, con m y k números enteros positivos. \n \n \nSi la persona durante ese tiempo no elimina ni adiciona archivos, ¿cuál de las \nsiguientes afirmaciones es siempre verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "k es el tiempo que el programa tarda en llenar totalmente el disco duro del \ncomputador."
+        },
+        {
+          "letra": "B",
+          "texto": "m\n representa la cantidad de veces que el programa copia todos los \narchivos."
+        },
+        {
+          "letra": "C",
+          "texto": "m\nk\n\n\n representa el total de archivos nuevos que se crearon con el \nprograma."
+        },
+        {
+          "letra": "D",
+          "texto": "k corresponde a la cantidad inicial de archivos que posee el computador \nantes de ejecutar el programa. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n23. Una persona compró cierta cantidad de un mismo artículo con \n$\n, sin ningún \ntipo de descuento y no le sobró dinero. \n \n \nSi cada artículo tiene precio A\n$\n, ¿cuántos artículos compró?"
+        },
+        {
+          "letra": "A",
+          "texto": "A"
+        },
+        {
+          "letra": "B",
+          "texto": "A"
+        },
+        {
+          "letra": "C",
+          "texto": "A\n"
+        },
+        {
+          "letra": "D",
+          "texto": "A\n \n \n \n \n \n \n \n \n \n \n \n24. ¿Cuál de las siguientes expresiones representa la tercera parte del sucesor de p ?"
+        },
+        {
+          "letra": "A",
+          "texto": "p "
+        },
+        {
+          "letra": "B",
+          "texto": "\n1\np\n"
+        },
+        {
+          "letra": "C",
+          "texto": "p "
+        },
+        {
+          "letra": "D",
+          "texto": "p \n \n \n \n \n \n \n \n \n \n \n \n25. Para envasar cierta cantidad de agua mineral se necesitan 80 contenedores de \n200 litros de capacidad cada uno.  \n \n¿Cuántos contenedores de 50 litros de capacidad se necesitarán para envasar \nla misma cantidad de agua?"
+        },
+        {
+          "letra": "A",
+          "texto": "20"
+        },
+        {
+          "letra": "B",
+          "texto": "125"
+        },
+        {
+          "letra": "C",
+          "texto": "320"
+        },
+        {
+          "letra": "D",
+          "texto": "26. Una persona gastó \n\na\n$\n\n en ocho días.  \n \n \nSi todos los días gastó lo mismo, ¿cuál de las siguientes expresiones representa lo \nque gastó la persona en dos días?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n\n\n400\na\n$"
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n\n\n1600\na\n$"
+        },
+        {
+          "letra": "C",
+          "texto": "\n\na\n$\n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n\na\n$\n\n \n \n \n \n \n \n \n \n27. Considera el siguiente gráfico en el que se presenta un modelo para la relación \nentre la cantidad de kilogramos de lentejas que se venden a granel en un almacén \ny su monto total a pagar. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuántos kilogramos de lentejas compró en total una persona que pagó 3300\n$\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "kg"
+        },
+        {
+          "letra": "B",
+          "texto": "kg\n2,2"
+        },
+        {
+          "letra": "C",
+          "texto": "kg\n3,2"
+        },
+        {
+          "letra": "D",
+          "texto": "kg\n5,2\n \n \n \n \n \n \n \n \n \n \n \n28. Bajo ciertas condiciones, la cantidad de kilómetros recorridos por un automóvil es \ndirectamente proporcional a la cantidad de litros de combustible que consume. \n \nSi un automóvil que cumple estas condiciones recorre 90 kilómetros con 15 litros \nde bencina, ¿cuántos kilómetros puede recorrer este automóvil con 25 litros de \nbencina?"
+        },
+        {
+          "letra": "A",
+          "texto": "54"
+        },
+        {
+          "letra": "B",
+          "texto": "60"
+        },
+        {
+          "letra": "C",
+          "texto": "135"
+        },
+        {
+          "letra": "D",
+          "texto": "150 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n29. En una carrera se reparte un total de \n dólares a las primeras cuatro \npersonas que lleguen a la meta. Este reparto se realiza a razón de \n:\n:\n:\n de \nmodo que mientras mejor haya sido la posición de llegada, más dinero se gana. \n \n \n¿Cuál es la cantidad que le corresponde a la persona que llegó en segundo lugar? \n \n \n \n \n \n \n \n \n \n \n \n30. ¿Cuál es la solución de la ecuación \nx\n\n\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": ""
+        },
+        {
+          "letra": "D",
+          "texto": "A) \n2000 dólares"
+        },
+        {
+          "letra": "B",
+          "texto": "3000 dólares"
+        },
+        {
+          "letra": "C",
+          "texto": "4000 dólares"
+        },
+        {
+          "letra": "D",
+          "texto": "6000 dólares \n \n \n \n31. Al finalizar un trayecto, la cantidad L de litros de combustible que quedan en el \nestanque de cierto vehículo, está dada por la expresión: \n \nx\n1,0\nc\nL\n\n\n\n \n \n \nen la que c es la cantidad de litros que tenía el estanque de este vehículo al iniciar \nel trayecto, x es la cantidad de kilómetros que recorrió el vehículo y \n1,0 es una \nconstante medida en litros por kilómetro. \n \n \nEste vehículo, al iniciar el trayecto tenía en el estanque 50 litros y al finalizarlo \ntenía 30 litros. \n \n \n¿Cuántos kilómetros recorrió el vehículo en ese trayecto?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n32. Una torta está formada por capas alternadas de bizcocho y de manjar, de modo \nque la capa inferior y la capa superior tienen que ser de bizcocho.  \n \nSi cada capa de bizcocho tiene una masa de \ng\n y cada capa de manjar tiene \nuna masa de \ng\n, ¿cuántas capas de manjar, como máximo, puede tener una \ntorta para que esta no supere los \ng\n de masa?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n33. Al organizar un seminario, una persona recibe dos ofertas de dos centros de \neventos. El primero, cobra  2000\n$\n por invitado, más un cargo fijo de \n$\n. El \nsegundo, cobra 5000\n$\n por invitado, más un cargo fijo de \n$\n. \n \n \n¿Cuántos invitados como mínimo deberían asistir al evento, para que el segundo \ncentro de eventos sea más caro?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "118"
+        },
+        {
+          "letra": "D",
+          "texto": "119 \n \n \n \n \n \n \n \n \n34. Se hace una colecta para recaudar fondos, logrando recaudar \n$\n con          \n150 monedas de dos valores distintos. \n \n \nEl siguiente sistema de ecuaciones es un modelo para determinar la cantidad de \nmonedas de cada tipo: \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones es verdadera?"
+        },
+        {
+          "letra": "A",
+          "texto": "x e y corresponden a la cantidad de monedas de \n$\n y de \n$\n, \nrespectivamente."
+        },
+        {
+          "letra": "B",
+          "texto": "Hay exactamente 500 monedas del tipo x y 50 monedas del tipo y ."
+        },
+        {
+          "letra": "C",
+          "texto": "Al considerar una moneda de cada tipo el valor total es 150\n$\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Considerando solo las monedas de 500\n$\n se juntan 5000\n$\n. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n          \ny\nx\n\n\n \ny\nx\n\n\n \n \n \n \n35. En una tienda de ropa se necesita incorporar las ventas por Internet con reparto \na domicilio para aumentar sus ventas. Para el reparto se necesita contratar los \nservicios de una empresa de vehículos de transporte y la tienda recibe dos \ncotizaciones: \n \n Cobro empresa A en un mes: \nt\n)t(\nC\n\n\n\n \n Cobro empresa B en un mes: \nt\n)t(\nC\n\n\n \n \ncon t el tiempo de uso del servicio, en horas, y \n)t(\nC\n el costo del servicio, en \npesos.  \n \n¿Cuánto tiempo se debe usar el servicio en cada empresa para que el costo sea \nel mismo?"
+        },
+        {
+          "letra": "A",
+          "texto": "2,1\nhoras"
+        },
+        {
+          "letra": "B",
+          "texto": "2 horas"
+        },
+        {
+          "letra": "C",
+          "texto": "6 horas"
+        },
+        {
+          "letra": "D",
+          "texto": "12 horas \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n36. El Índice de Masa Corporal (IMC) de una persona se relaciona con su masa, \nmedida en kilogramos, y su estatura, medida en metros, a través de la expresión: \n \nIMC\nestatura\nmasa\n2 \n\n \n \nSi una persona tiene una masa de \nkg\n y tiene un \nIMC \n, ¿cuál es su \nestatura según este modelo?"
+        },
+        {
+          "letra": "A",
+          "texto": "m\n,1"
+        },
+        {
+          "letra": "B",
+          "texto": "m\n,1"
+        },
+        {
+          "letra": "C",
+          "texto": "m\n5,1"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n,2\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n37. Una empresa ha desarrollado la fórmula \n\n\nx\n)\nx\n(\nU\n2 \n\n\n\n que le \npermite conocer la utilidad que tendrá, en pesos, al vender x unidades de un \nartículo. \n \n \n¿Cuántos artículos se deben vender para que la utilidad de la empresa sea de \n$\n?"
+        },
+        {
+          "letra": "A",
+          "texto": "B)"
+        },
+        {
+          "letra": "C",
+          "texto": "D) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n38. En el siguiente gráfico se representa la rapidez de un automóvil a control remoto a \nmedida que transcurre el tiempo. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes afirmaciones se puede deducir del gráfico?"
+        },
+        {
+          "letra": "A",
+          "texto": "Entre los \ns\n y \ns\n el automóvil está detenido."
+        },
+        {
+          "letra": "B",
+          "texto": "El automóvil cambia de dirección cuatro veces."
+        },
+        {
+          "letra": "C",
+          "texto": "La distancia total recorrida por el automóvil es \nkm\n."
+        },
+        {
+          "letra": "D",
+          "texto": "Entre los \ns\n y \ns\n el automóvil disminuye su rapidez. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nTiempo en segundos  \n \n \n \n39. La relación entre el puntaje que una persona obtiene en cierta prueba y su nota \nestá dada por la siguiente expresión: \npuntaje\nNOTA\n\n\n.  \n \n¿Cuál de las siguientes afirmaciones es verdadera respecto a esta prueba?"
+        },
+        {
+          "letra": "A",
+          "texto": "Para una nota 5,3\n se necesita obtener un puntaje de 35 puntos."
+        },
+        {
+          "letra": "B",
+          "texto": "Con 50 puntos se obtiene una nota superior a 6 ."
+        },
+        {
+          "letra": "C",
+          "texto": "Cuando el puntaje aumenta en un punto, la nota aumenta en 2 ."
+        },
+        {
+          "letra": "D",
+          "texto": "La mínima nota que se puede obtener en la prueba es un 2 . \n \n \n \n \n \n \n \n \n \n \n40. En un computador se simula el lanzamiento de un objeto desde una altura de          \ncm\n. La altura, en \n, que alcanza dicho objeto se modela por la función f \ndefinida por \nt2\nt\n)t(\nf\n\n\n\n\n, tal que t representa el tiempo transcurrido desde \nel lanzamiento, en s . \n \n¿A qué altura se encontraría el objeto a los \ns\n de ser lanzado?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \ncm\n \n \n \n41. Una persona necesita medir la altura de un árbol, para lo cual usa un medidor de \ndistancia láser de la siguiente manera: \n \n primero, se aleja del árbol \nm\n en un tramo de camino recto y perfectamente \nhorizontal. \n segundo, utiliza el medidor de distancia láser a ras del suelo apuntando al \nextremo superior del árbol el cual registra una distancia de \nm\n. \n \n \nEn la figura adjunta se representa la situación anterior. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la altura del árbol?"
+        },
+        {
+          "letra": "A",
+          "texto": "m"
+        },
+        {
+          "letra": "B",
+          "texto": "m\n5,"
+        },
+        {
+          "letra": "C",
+          "texto": "m"
+        },
+        {
+          "letra": "D",
+          "texto": "m\n \n \n \n \n \n \n \n \n \n \n \n12 m \n \n \n \n42. La medida d del diámetro de un círculo inscrito en un triángulo rectángulo se puede \ndeterminar con la fórmula de Poncelet: \n \nd\nc\nb\na\n\n\n\n \n \nen la cual  y b son las medidas de los catetos del triángulo y c es la medida de la \nhipotenusa.  \n \nSi las medidas de los catetos de un triángulo rectángulo son \ncm\n y \ncm\n, ¿cuál \nes el perímetro del círculo inscrito en él?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm\nπ"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\nπ"
+        },
+        {
+          "letra": "C",
+          "texto": "cm\nπ"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\nπ\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \na\n \n \n \n43. Una fábrica de espejos recibe un pedido para elaborar varios tamaños de espejos, \ncon la particularidad de que todos deben ser cuadrados y que en las esquinas se \nsobrepongan triángulos rectángulos de madera iguales entre sí, como el que se \nrepresenta en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \nConsidera m y n como las distintas medidas que pueden tener los catetos de los \ntriángulos de madera y p como las distintas medidas que puede tener el lado del \nespejo. \n \nSi todas las medidas están en cm, ¿cuál de las siguientes fórmulas permite \ndeterminar el área \nS que ocupa el vidrio que se ve en cada espejo, en \ncm ?"
+        },
+        {
+          "letra": "A",
+          "texto": "n\nm\np\nS\n\n\n\n"
+        },
+        {
+          "letra": "B",
+          "texto": "n\nm\np\nS\n\n\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "n\nm\np\nS\n\n\n\n"
+        },
+        {
+          "letra": "D",
+          "texto": "n\nm\np\nS\n\n\n\n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n44. Se tiene un paralelepípedo recto de base cuadrada de lado \ncm\n y altura \ncm\n. \n \nSi se aumentan al doble las medidas de sus aristas, ¿cuál es el volumen del nuevo \nprisma?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n45. En la siguiente imagen se presenta un diseño de un módulo formado por bloques \nde vidrio y un bloque de cemento. Los módulos se utilizan para hacer una pared \ndecorativa. \n \n \n \n \n \n \n \n \n \n \n \n \n \nCada bloque de vidrio tiene una cara con forma cuadrada con lado de \ncm\n. \n \nLa durabilidad de este módulo depende de su densidad y, para obtenerla, se \nrequiere conocer el volumen del bloque de vidrio que tiene. \n \n \n¿Cuál es el volumen de los bloques de vidrio en cada módulo?"
+        },
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n \n46. El volumen de una esfera y de un cono están dados por las expresiones \nR\n\n \ny \nh\nr2\n\n, respectivamente, con R el radio de la esfera, r el radio basal del cono \ny h la altura del cono. \n \nSi se designa por M al volumen de la esfera, ¿cuál de las siguientes \nexpresiones representa al volumen de un cono cuya altura y radio basal tienen \nla misma medida que el radio de la esfera?"
+        },
+        {
+          "letra": "A",
+          "texto": "M"
+        },
+        {
+          "letra": "B",
+          "texto": "M"
+        },
+        {
+          "letra": "C",
+          "texto": "M"
+        },
+        {
+          "letra": "D",
+          "texto": "M\n \n \n \n \n \n \n47. El punto \n\n,2 \n es un vértice común de cuatro cuadrados cuyos lados miden         \n2 unidades y son paralelos a los ejes coordenados del plano cartesiano.  \n \n¿Cuál de las siguientes coordenadas podría corresponder a un vértice de alguno \nde los cuadrados?"
+        },
+        {
+          "letra": "A",
+          "texto": "\n\n,2 "
+        },
+        {
+          "letra": "B",
+          "texto": "\n\n,4 "
+        },
+        {
+          "letra": "C",
+          "texto": "\n\n,1 \n"
+        },
+        {
+          "letra": "D",
+          "texto": "\n1\n,2\n \n \n \n \n \n \n \n \n \n \n48. Una figura se mueve con las siguientes transformaciones isométricas desde su \nposición inicial hasta su posición final como se presenta en la figura adjunta. \n \n1) La figura en la posición inicial se rota en \n\n90 en sentido horario con centro de \nrotación el centro de la figura. \n2) Luego, se traslada 2 metros hacia el sur y 6 metros al este. \n3) Por último, se vuelve a rotar en \n\n90 en sentido horario con centro de rotación el \ncentro de la figura, resultando la figura en la posición final. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes secuencias de transformaciones isométricas permite \nvolver a dejar la figura en la posición inicial?"
+        },
+        {
+          "letra": "A",
+          "texto": "Rotar en \n\n180 en sentido horario con centro de rotación el centro de la \nfigura y luego trasladar 2 metros al norte y 6 metros al oeste."
+        },
+        {
+          "letra": "B",
+          "texto": "Rotar en \n\n180 en sentido horario con centro de rotación el centro de la \nfigura y luego trasladar 2 metros al sur y 6 metros al este."
+        },
+        {
+          "letra": "C",
+          "texto": "Rotar en \n\n90 en sentido antihorario con centro de rotación el centro de la \nfigura y luego trasladar 2 metros al sur y 6 metros al este."
+        },
+        {
+          "letra": "D",
+          "texto": "Rotar en \n\n90 en sentido antihorario con centro de rotación el centro de la \nfigura y trasladar 2 metros al norte y 6 metros al oeste. \n \n \n \n \n \n \n \n49. Se quiere obtener el punto \n)1\n,\n(\n a partir del punto \n)\n,3\n(\n mediante cuatro \ntransformaciones isométricas. Para esto se efectuaron los siguientes pasos, \ncometiendo un error en uno de ellos. \n \nPaso 1:  al punto \n)\n,3\n(\n se le aplica una reflexión con respecto al \nY\neje\n, \nobteniendo el punto \n)\n,3\n(\n. \nPaso 2: al punto \n)\n,3\n(\n se le aplica una traslación según el vector \n)\n,2\n(\n, \nobteniendo el punto \n)\n,1(\n. \nPaso 3: al punto \n)\n,1(\n se le aplica una rotación en \n\n90 en sentido antihorario \ncon centro en el origen, obteniendo el punto \n)1\n,\n(\n\n. \nPaso 4: al punto \n)1\n,\n(\n\n se le aplica una reflexión con respecto al \nX\neje\n, \nobteniendo el punto \n)1\n,\n(\n. \n \n¿En cuál de los pasos se cometió el error?"
+        },
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n50. La siguiente imagen corresponde a un aparato que se usa para copiar dibujos, \npues refleja el dibujo original de modo que el usuario logra realizar el dibujo en otro \npapel, de manera invertida. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál de las siguientes letras se lee igual al ser copiada en papel con este aparato \nsi se coloca al lado izquierdo del papel?"
+        },
+        {
+          "letra": "A",
+          "texto": "S"
+        },
+        {
+          "letra": "B",
+          "texto": "M"
+        },
+        {
+          "letra": "C",
+          "texto": "b"
+        },
+        {
+          "letra": "D",
+          "texto": "Q"
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "En un juego se sacan tarjetas al azar de un mazo que incluyen dos movimientos \nque debe realizar una ficha en un tablero cuadriculado. En la figura adjunta se \npresenta un ejemplo de un movimiento realizado con una de las tarjetas. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nLa ficha de un jugador se encuentra en la casilla inicial que se encuentra en el \ncentro del tablero y se mueve según la siguiente secuencia de tarjetas: \n \n \n \n \n \n \n \n \nAl sacar otra tarjeta, y realizar el movimiento correspondiente, la ficha del jugador \nvuelve a la casilla inicial. \n \n \n¿Cuál fue la cuarta tarjeta que sacó? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nC) \nD) \nA) \nB)",
+      "alternativas": []
+    },
+    {
+      "numero": 52,
+      "enunciado": "Ingrid representa las medidas de su casa en un plano a una escala en \n:\n. \n \n \n¿Cuál de las siguientes fórmulas permitió a Ingrid llevar las medidas de su casa a \nlas medidas en el plano?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "realidad\nla\nen\nmedida\nplano\nel\nen\nMedidas\n"
+        },
+        {
+          "letra": "B",
+          "texto": "\n100\nrealidad\nla\nen\nmedida\nplano\nel\nen\nMedidas\n\n"
+        },
+        {
+          "letra": "C",
+          "texto": "realidad\nla\nen\nmedida\nplano\nel\nen\nMedidas\n"
+        },
+        {
+          "letra": "D",
+          "texto": "realidad\nla\nen\nmedida\nplano\nel\nen\nMedidas\n"
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "En un taller de instrumentos se construirá una guitarra utilizando un plano que está \nen escala \n:\n. En el plano, el largo del mástil de la guitarra es de \nmm\n. \n \n¿Cuál debe ser el largo del mástil de la guitarra que se construirá?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm\n5,"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n,8"
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "Un edificio vertical al suelo da una sombra de 12 metros, mientras que a la misma \nhora un árbol, que está en una posición vertical al suelo, y cuya altura es              \nde 4 metros proyecta una sombra de 3 metros. \n \n¿Cuál de las siguientes igualdades permite determinar la altura x , en metros, del \nedificio?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "x\n3 "
+        },
+        {
+          "letra": "B",
+          "texto": "x\n3 "
+        },
+        {
+          "letra": "C",
+          "texto": "x\n3 "
+        },
+        {
+          "letra": "D",
+          "texto": "x\n3 "
+        }
+      ]
+    },
+    {
+      "numero": 55,
+      "enunciado": "Un carpintero construye una estantería triangular con repisas paralelas entre sí y \nde diferentes longitudes, tal como se representa en la figura adjunta. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es la medida x en la repisa de la estantería que el carpintero debe \nconstruir?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "cm"
+        },
+        {
+          "letra": "B",
+          "texto": "cm"
+        },
+        {
+          "letra": "C",
+          "texto": "cm"
+        },
+        {
+          "letra": "D",
+          "texto": "cm\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nx \n24 cm \n12 cm \n12 cm \n28 cm"
+        }
+      ]
+    },
+    {
+      "numero": 56,
+      "enunciado": "En el taller de literatura de un colegio, se les preguntó a los 25 estudiantes cuántos \ndías tardaron en leer un libro. En base a las respuestas de los estudiantes se armó  \nla siguiente tabla que está incompleta: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuántos estudiantes se demoraron tres días en leer el libro?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "5"
+        },
+        {
+          "letra": "B",
+          "texto": "7"
+        },
+        {
+          "letra": "C",
+          "texto": "8"
+        },
+        {
+          "letra": "D",
+          "texto": "10 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCantidad de días \nFrecuencia \nFrecuencia relativa \n,0\n \n,0\n \n \n \n,0\n \n,0\n \nTotal"
+        }
+      ]
+    },
+    {
+      "numero": 57,
+      "enunciado": "En la siguiente tabla se presenta la cantidad de hijos que tienen las familias que \nviven en un edificio: \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuántas familias viven en total en ese edificio? \n \nA) \nB) 10 \nC) 15 \nD) \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCantidad de hijos \nFrecuencia",
+      "alternativas": []
+    },
+    {
+      "numero": 58,
+      "enunciado": "Las calificaciones obtenidas por cinco estudiantes en una evaluación de \nmatemática están registradas en la siguiente tabla: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEl profesor ajusta las calificaciones obtenidas por cada estudiante de modo que la \ncalificación máxima sea \n0,6\n, para ello utilizará la relación \np\nN \n, tal que N es \nla nueva calificación y p es la calificación actual obtenida por cada estudiante en la \ntabla.  \n \n \n¿Cuál es el nuevo promedio de las calificaciones de estos estudiantes?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "0,6"
+        },
+        {
+          "letra": "B",
+          "texto": "8,4"
+        },
+        {
+          "letra": "C",
+          "texto": ",4"
+        },
+        {
+          "letra": "D",
+          "texto": "0,2\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nEstudiante \nCalificación \nIsabel \n,5\n \nGaspar \n0,4\n \nBaltazar \n0,4\n \nCamila \n,3\n \nClaudia \n0,4"
+        }
+      ]
+    },
+    {
+      "numero": 59,
+      "enunciado": "En el gráfico adjunto se representan los resultados de una encuesta aplicada a los          \n50 estudiantes de dos cuartos medios de un colegio. Dicha encuesta tenía relación \ncon la creación de un taller literario. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nSi cada estudiante marcó una sola opción en la encuesta, ¿cuál de las siguientes \nafirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Más de la cuarta parte de los estudiantes están “totalmente en desacuerdo” \ncon la creación del taller."
+        },
+        {
+          "letra": "B",
+          "texto": "Más de la mitad de los estudiantes respondieron “en desacuerdo” en la \nencuesta."
+        },
+        {
+          "letra": "C",
+          "texto": "Las tres quintas partes de los estudiantes están “totalmente en desacuerdo” \ncon la creación del taller."
+        },
+        {
+          "letra": "D",
+          "texto": "La octava parte de los estudiantes respondieron “ni de acuerdo ni en \ndesacuerdo” con la creación del taller. \n \n \n \n \n \n \n \n \n \n \n \nEn desacuerdo \nTotalmente de acuerdo \nTotalmente en desacuerdo \nDe acuerdo \nNi de acuerdo ni en desacuerdo \n30 % \n50 % \n8 % \n8 % \n4 %"
+        }
+      ]
+    },
+    {
+      "numero": 60,
+      "enunciado": "Un grupo de adolescentes se inscribió para recibir un regalo de Navidad. La \nentidad encargada de comprar los regalos necesita saber la cantidad de \nadolescentes que hay por cada una de las edades para hacerles regalos distintos \npor edad. Para ello, les preguntan qué edad tienen, registrando la siguiente lista:  \n \n15 , 15 , 14 , 14 , 15 , 15 , 15 , 12 , 12 , 13 , 13 , 13 , 13 , 13 , 13 , 13 , 13 , 13 , 14 , 14 , \n14 , 12 , 13 , 14 , 14 , 14 , 14 , 14 , 14 , 14 , 14 , 14 , 14 , 14 , 14 , 14 y 12 . \n \n¿Para qué adolescentes se debe comprar una mayor cantidad de regalos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Para adolescentes de 12 años."
+        },
+        {
+          "letra": "B",
+          "texto": "Para adolescentes de 13 años."
+        },
+        {
+          "letra": "C",
+          "texto": "Para adolescentes de 14 años."
+        },
+        {
+          "letra": "D",
+          "texto": "Para adolescentes de 15 años."
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "Una institución proyectó un aumento del porcentaje del Producto Interno Bruto \n(PIB)  en un país, de la forma que indica el siguiente gráfico: \n \n \n \n \n \n \n \n \n \n \n \n \nUn economista considera que la proyección realizada es poco realista, por lo que \nrecomienda modificar la proyección, disminuyendo el porcentaje a partir del \nsegundo año en un punto porcentual menos al propuesto en la proyección. \n \n¿Cuál de los siguientes gráficos es el más adecuado para representar lo propuesto \npor el economista? \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n2 % \n3 % \nPorcentaje de aumento \nAños \n2 % \n1 % \nAños \n2 % \n1 % \nAños \n2 % \n1 % \nAños \n3 % \n1 % \nAños \nA) \nB) \nC) \nD)\n \nPorcentaje de aumento \nPorcentaje de aumento \nPorcentaje de aumento \nPorcentaje de aumento",
+      "alternativas": []
+    },
+    {
+      "numero": 62,
+      "enunciado": "Durante el año 2023 una fundación focalizará su ayuda al \n%\n de los hogares \ncon menores ingresos de una comuna.  \n \n \n¿Cuál de las siguientes medidas de posición permite determinar el ingreso máximo \nque debe tener un hogar de la comuna para ser beneficiado?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El segundo cuartil de los ingresos."
+        },
+        {
+          "letra": "B",
+          "texto": "El percentil 75 de los ingresos."
+        },
+        {
+          "letra": "C",
+          "texto": "El percentil 4 de los ingresos."
+        },
+        {
+          "letra": "D",
+          "texto": "El primer cuartil de los ingresos."
+        }
+      ]
+    },
+    {
+      "numero": 63,
+      "enunciado": "En el curso de Francisca se vende una rifa para financiar la gira de estudios en la \nque el premio es una bicicleta. Francisca quiere ganar la bicicleta y solo pudo \ncomprar 8 números de la lista que ella vendió. \n \nSi se vendieron 100 listas completas y cada una con 20 números, ¿cuál es la \nprobabilidad que tiene Francisca de ganarse la bicicleta si solo compró de una \nlista? \n \nA) \nB) \nC) \nD)",
+      "alternativas": []
+    },
+    {
+      "numero": 64,
+      "enunciado": "Se realizó una encuesta sobre las preferencias de un grupo de personas respecto a \nsu pasatiempo favorito, tal que cada persona eligió solo un pasatiempo. En esta \nencuesta 30 personas indicaron que su pasatiempo favorito es leer, 48 personas \nindicaron que es hacer deporte y n personas indicaron que es ver películas. \n \n \nAl elegir una persona al azar de este grupo, la probabilidad de que su pasatiempo \nfavorito no sea hacer deporte es \n6,0\n. \n \n \n¿Cuál es la cantidad de personas que indicaron ver películas?  \n \nA) \nB) \nC)   52 \nD) 117",
+      "alternativas": []
+    },
+    {
+      "numero": 65,
+      "enunciado": "Un grupo de estudiantes quiere calcular la probabilidad de que al lanzar tres \nmonedas resulten las tres caras o las tres sellos, realizando el siguiente \nprocedimiento en el cual cometen un error. \n \nPaso 1: \nanotan todos los resultados posibles, obteniendo \n)c\n,c\n,c(\n, \n)s,c\n,c(\n, \n)c\n,s\n,c(\n,  \n)s\n,s\n,c(\n, \n)c\n,c\n,s(\n, \n)s\n,c\n,s(\n, \n)c\n,s\n,s(\n y \n)s\n,s\n,s(\n. \n \nPaso 2: \neligen los resultados favorables, \n)c\n,c\n,c(\n y \n)s\n,s\n,s(\n. \n \nPaso 3: \ncalculan las probabilidades de cada resultado favorable por separado, \n \n\n\n)c\n,c\n,c(\nP\n\n y \n\n)s\n,s\n,s(\nP\n\n. \nPaso 4: \ncalculan \n\n\n\n\n)c\n,c\n,c(\nP\n)s\n,s\n,s(\nP\n)\nsellos\ntres\no\ncaras\ntres\n(\nP\n\n\n\n . \n \n¿En cuál de los pasos se cometió el error?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "En el Paso 1"
+        },
+        {
+          "letra": "B",
+          "texto": "En el Paso 2"
+        },
+        {
+          "letra": "C",
+          "texto": "En el Paso 3"
+        },
+        {
+          "letra": "D",
+          "texto": "En el Paso 4 \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nPROCESO DE ADMISIÓN 2024\nIMPORTANTE\n■ Este folleto está protegido bajo Registro de Propiedad Intelectual de la \nUniversidad de Chile.\n■ Está prohibida la reproducción, transmisión total o parcial de este folleto, \npor cualquier medio o método.\n■ Es obligatorio devolver íntegramente el folleto antes de abandonar la sala.\n■ Es obligatorio devolver la hoja de respuestas antes de abandonar la sala."
+        }
+      ]
+    }
+  ]
+}

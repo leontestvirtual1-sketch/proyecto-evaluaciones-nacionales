@@ -471,7 +471,11 @@ export const ejesTematicosMock: EjeTematico[] = [
   { id: 'eje-qui-1', codigo: 'QUI-EST', nombre: 'Estructura Atómica y Tabla Periódica', asignaturaId: 'asig-7' },
   { id: 'eje-qui-2', codigo: 'QUI-ORG', nombre: 'Química Orgánica', asignaturaId: 'asig-7' },
   { id: 'eje-qui-3', codigo: 'QUI-ESTEQ', nombre: 'Reacciones Químicas y Estequiometría', asignaturaId: 'asig-7' },
-  { id: 'eje-qui-4', codigo: 'QUI-SOL', nombre: 'Soluciones Químicas y Ácido-Base', asignaturaId: 'asig-7' },
+  // Ejes Oficiales DEMRE — Competencia Matemática 2 (M2)
+  { id: 'eje-m2-1', codigo: 'M2-NUM', nombre: 'Números y Proporcionalidad Avanzada', asignaturaId: 'asig-9' },
+  { id: 'eje-m2-2', codigo: 'M2-ALG', nombre: 'Álgebra, Sistemas y Funciones Reales', asignaturaId: 'asig-9' },
+  { id: 'eje-m2-3', codigo: 'M2-GEO', nombre: 'Geometría Analítica, Vectores y Trigonometría', asignaturaId: 'asig-9' },
+  { id: 'eje-m2-4', codigo: 'M2-EST', nombre: 'Probabilidad Condicional y Distribución Normal', asignaturaId: 'asig-9' },
 ];
 
 
@@ -514,6 +518,12 @@ export const habilidadesMock: Habilidad[] = [
   { id: 'hab-qui-2', codigo: 'QUI-INV', nombre: 'Planificar y conducir una investigación', asignaturaId: 'asig-7' },
   { id: 'hab-qui-3', codigo: 'QUI-ANA', nombre: 'Procesar y analizar la evidencia', asignaturaId: 'asig-7' },
   { id: 'hab-qui-4', codigo: 'QUI-EVA', nombre: 'Evaluar y comunicar', asignaturaId: 'asig-7' },
+
+  // Habilidades Matemáticas Oficiales DEMRE — Competencia Matemática 2 (M2)
+  { id: 'hab-m2-1', codigo: 'M2-RES', nombre: 'Resolver Problemas', asignaturaId: 'asig-9' },
+  { id: 'hab-m2-2', codigo: 'M2-MOD', nombre: 'Modelar', asignaturaId: 'asig-9' },
+  { id: 'hab-m2-3', codigo: 'M2-REP', nombre: 'Representar', asignaturaId: 'asig-9' },
+  { id: 'hab-m2-4', codigo: 'M2-ARG', nombre: 'Argumentar y Comunicar', asignaturaId: 'asig-9' },
 ];
 
 
