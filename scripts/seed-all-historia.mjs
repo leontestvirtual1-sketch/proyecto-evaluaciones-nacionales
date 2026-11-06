@@ -46,6 +46,26 @@ function getHabilidad(enunc) {
 
 const HISTORIA_CONFIGS = [
   {
+    parsedFile: 'paes_historia_2023_regular_parsed.json',
+    clavesFile: 'paes-his-2023-reg-f103.json',
+    evalId: 'eval-paes-his-2023-reg-f103',
+    idPrefix: 'preg-paes-his-23reg-',
+    titulo: 'PAES Oficial Historia y Ciencias Sociales — Proceso 2023 (Forma 103 — Regular)',
+    year: 2023,
+    edicion: 'Regular',
+    forma: 103
+  },
+  {
+    parsedFile: 'paes_historia_2024_invierno_parsed.json',
+    clavesFile: 'paes-his-2024-inv-f101.json',
+    evalId: 'eval-paes-his-2024-inv-f101',
+    idPrefix: 'preg-paes-his-24inv-',
+    titulo: 'PAES Oficial Historia y Ciencias Sociales — Proceso 2024 (Forma 101 — Invierno)',
+    year: 2024,
+    edicion: 'Invierno',
+    forma: 101
+  },
+  {
     parsedFile: 'paes_historia_2024_regular_parsed.json',
     clavesFile: 'paes-his-2024-reg-f103.json',
     evalId: 'eval-paes-his-2024-reg-f103',
