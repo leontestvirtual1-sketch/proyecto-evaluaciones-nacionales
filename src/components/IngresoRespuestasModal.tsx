@@ -114,9 +114,9 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
       });
     }
     return preguntas
-      .filter(p => p.asignaturaId === prueba.asignaturaId)
-      .slice(0, prueba.totalPreguntas ?? 30);
-  }, [prueba, preguntas]);
+      .filter(p => p.asignaturaId === prueba?.asignaturaId)
+      .slice(0, prueba?.totalPreguntas ?? 30);
+  }, [prueba, preguntas, loadedPreguntas]);
 
   // Reset or initialize answers when student changes
   useEffect(() => {
@@ -124,8 +124,6 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
     setFotoEvidencia(null);
     setIsSavedSuccess(false);
   }, [selectedAlumnoId, isOpen]);
-
-  if (!isOpen || !prueba) return null;
 
   // Handler for marking an answer
   const handleSelectAlternative = (preguntaId: string, letra: string) => {
@@ -162,7 +160,7 @@ export const IngresoRespuestasModal: React.FC<IngresoRespuestasModalProps> = ({
   const puntajeSimceEstimado = Math.round(180 + porcentajeLogro * 1.5);
 
   const handleSave = (goToNext: boolean = false) => {
-    if (!alumnoActual) return;
+    if (!alumnoActual || !prueba) return;
 
     const nuevaRendicion: RendicionPrueba = {
       id: `rend-${prueba.id}-${alumnoActual.id}-${Date.now()}`,

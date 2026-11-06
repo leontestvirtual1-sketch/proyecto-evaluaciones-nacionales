@@ -184,8 +184,6 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
     }
   }, [isOpen, prueba, preguntas]);
 
-  if (!isOpen || !prueba) return null;
-
   // Match questions strictly by prueba.preguntasIds if defined, preserving order
   const preguntasDeLaPrueba = React.useMemo(() => {
     if (!prueba) return [];
@@ -238,6 +236,8 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
+
+  if (!isOpen || !prueba) return null;
 
   const modalContent = (
     <div
