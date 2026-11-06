@@ -82,3 +82,4 @@ for cfg in HIST_CONFIGS:
         process_single_exam(cfg)
     except Exception as e:
         print(f"❌ Error en {cfg['titulo']}: {e}")
+
