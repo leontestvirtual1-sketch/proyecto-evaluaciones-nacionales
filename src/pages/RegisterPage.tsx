@@ -43,7 +43,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin, onGoToL
     establecimiento: '',
     rbd: '',
     asignaturaId: 'asig-1',
-    asignaturaNombre: 'Matemática',
+    asignaturaNombre: 'Competencia Matemática 1 (M1)',
     tipoCuenta: 'colegio',
     cargo: 'Docente de Asignatura'
   });

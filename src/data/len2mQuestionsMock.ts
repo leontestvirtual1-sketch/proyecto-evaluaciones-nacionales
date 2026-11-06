@@ -39,7 +39,7 @@ export const pruebaLenguaje2MMock: Prueba = {
   titulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Agosto 2026',
   descripcion: 'Evaluación formativa oficial SIMCE (Agosto 2026): Textos expositivos, artículos de opinión, reportajes, divulgación científica botánica y literatura epistolar.',
   asignaturaId: 'asig-2',
-  asignaturaNombre: 'Lenguaje y Comunicación',
+  asignaturaNombre: 'Competencia Lectora',
   nivel: '2° medio',
   profesorId: '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18',
   cursoId: 'curso-2m',

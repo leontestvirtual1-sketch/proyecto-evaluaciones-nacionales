@@ -677,7 +677,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
                   </td>
                 </tr>
               ) : filtered.map(prof => {
-                const asigName = prof.asignaturaNombre || (prof.asignaturaId === 'asig-1' ? 'Matemática' : prof.asignaturaId === 'asig-2' ? 'Lenguaje y Comunicación' : 'Ciencias Naturales');
+                const asigName = prof.asignaturaNombre || (prof.asignaturaId === 'asig-1' ? 'Competencia Matemática 1 (M1)' : prof.asignaturaId === 'asig-2' ? 'Competencia Lectora' : 'Ciencias');
                 let asigBadgeColor = 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20';
                 let asigIcon = '📐';
                 if (prof.asignaturaId === 'asig-3' || asigName.toLowerCase().includes('ciencia')) {

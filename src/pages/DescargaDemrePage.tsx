@@ -26,16 +26,16 @@ import catalogoHistoricoRaw from '../data/catalogo_historico.json';
 const catalogoDocumentos: DocumentoDemre[] = catalogoHistoricoRaw as DocumentoDemre[];
 
 const MATERIA_LABELS: Record<string, { label: string; icon: string; color: string }> = {
-  m1: { label: 'Matemática M1', icon: '📐', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20' },
-  m2: { label: 'Matemática M2', icon: '📐', color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20' },
-  matematica: { label: 'Matemática General', icon: '📐', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20' },
+  m1: { label: 'Competencia Matemática 1 (M1)', icon: '📐', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20' },
+  m2: { label: 'Competencia Matemática 2 (M2)', icon: '📐', color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20' },
+  matematica: { label: 'Competencia Matemática 1 (M1)', icon: '📐', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20' },
   lectora: { label: 'Competencia Lectora', icon: '📖', color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20' },
-  historia: { label: 'Historia y CC.SS.', icon: '🏛️', color: 'text-amber-400 bg-amber-500/10 border-amber-500/20' },
-  biologia: { label: 'Ciencias - Biología', icon: '🧬', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' },
-  quimica: { label: 'Ciencias - Química', icon: '🧪', color: 'text-pink-400 bg-pink-500/10 border-pink-500/20' },
-  fisica: { label: 'Ciencias - Física', icon: '⚡', color: 'text-purple-400 bg-purple-500/10 border-purple-500/20' },
-  tp: { label: 'Ciencias - Técnico Prof.', icon: '🔧', color: 'text-slate-300 bg-slate-500/10 border-slate-500/20' },
-  ciencias: { label: 'Ciencias General', icon: '🔬', color: 'text-teal-400 bg-teal-500/10 border-teal-500/20' },
+  historia: { label: 'Historia, Geografía y Ciencias Sociales', icon: '🏛️', color: 'text-amber-400 bg-amber-500/10 border-amber-500/20' },
+  biologia: { label: 'Ciencias — Biología', icon: '🧬', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' },
+  quimica: { label: 'Ciencias — Química', icon: '🧪', color: 'text-pink-400 bg-pink-500/10 border-pink-500/20' },
+  fisica: { label: 'Ciencias — Física', icon: '⚡', color: 'text-purple-400 bg-purple-500/10 border-purple-500/20' },
+  tp: { label: 'Ciencias — Técnico Profesional', icon: '🔧', color: 'text-slate-300 bg-slate-500/10 border-slate-500/20' },
+  ciencias: { label: 'Ciencias', icon: '🔬', color: 'text-teal-400 bg-teal-500/10 border-teal-500/20' },
   desconocida: { label: 'Institucional / General', icon: '📄', color: 'text-slate-400 bg-slate-500/10 border-slate-500/20' },
 };
 
@@ -351,14 +351,14 @@ export const DescargaDemrePage: React.FC = () => {
               className="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-2.5 py-1 focus:outline-none focus:border-indigo-500"
             >
               <option value="todas">Todas las Áreas</option>
-              <option value="m1">Matemática M1</option>
-              <option value="m2">Matemática M2</option>
+              <option value="m1">Competencia Matemática 1 (M1)</option>
+              <option value="m2">Competencia Matemática 2 (M2)</option>
               <option value="lectora">Competencia Lectora</option>
-              <option value="historia">Historia y CC.SS.</option>
-              <option value="biologia">Ciencias - Biología</option>
-              <option value="fisica">Ciencias - Física</option>
-              <option value="quimica">Ciencias - Química</option>
-              <option value="tp">Ciencias - Técnico Profesional</option>
+              <option value="historia">Historia, Geografía y Ciencias Sociales</option>
+              <option value="biologia">Ciencias — Biología</option>
+              <option value="fisica">Ciencias — Física</option>
+              <option value="quimica">Ciencias — Química</option>
+              <option value="tp">Ciencias — Técnico Profesional</option>
             </select>
           </div>
         </div>

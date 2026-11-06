@@ -244,7 +244,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .select("rol")
           .eq("id", user.id)
           .maybeSingle();
-        if (perfil?.rol === "admin") {
+        if (perfil?.rol === "admin" || perfil?.rol === "profesor") {
           allowKeys = true;
         }
       }

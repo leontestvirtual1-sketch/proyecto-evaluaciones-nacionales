@@ -98,8 +98,8 @@ export const currentUserProfesorPremilitar: UserProfile = {
   rbd: '31030',
   logoUrl: '/logos/escuela-premilitar.png',
   asignaturaId: 'asig-2',
-  asignaturaNombre: 'Lenguaje y Comunicación',
-  cargo: 'Docente de Lenguaje y Comunicación',
+  asignaturaNombre: 'Competencia Lectora',
+  cargo: 'Docente de Competencia Lectora',
   estado: 'activo',
   plan: 'trial',
   diasRestantesTrial: 28,
@@ -117,8 +117,8 @@ export const currentUserProfesorMiCasa: UserProfile = {
   rbd: '1234',
   logoUrl: '/logos/colegio-mi-casa.png',
   asignaturaId: 'asig-1',
-  asignaturaNombre: 'Matemática',
-  cargo: 'Docente de Matemática',
+  asignaturaNombre: 'Competencia Matemática 1 (M1)',
+  cargo: 'Docente de Competencia Matemática 1 (M1)',
   estado: 'activo',
   plan: 'trial',
   diasRestantesTrial: 28,
@@ -187,8 +187,8 @@ export const currentUserProfesor: UserProfile = {
   rol: 'profesor',
   establecimiento: APP_CONFIG.nombreEstablecimiento,
   asignaturaId: 'asig-1',
-  asignaturaNombre: 'Matemática',
-  cargo: 'Docente de Matemática',
+  asignaturaNombre: 'Competencia Matemática 1 (M1)',
+  cargo: 'Docente de Competencia Matemática 1 (M1)',
   estado: 'activo',
   plan: 'institucional'
 };
@@ -202,7 +202,7 @@ export const currentUserProfesorCiencias: UserProfile = {
   rol: 'profesor',
   establecimiento: APP_CONFIG.nombreEstablecimiento,
   asignaturaId: 'asig-3',
-  asignaturaNombre: 'Ciencias Naturales',
+  asignaturaNombre: 'Ciencias',
   cargo: 'Docente de Ciencias Naturales',
   estado: 'activo',
   plan: 'institucional'
@@ -217,8 +217,8 @@ export const currentUserProfesorLenguaje: UserProfile = {
   rol: 'profesor',
   establecimiento: APP_CONFIG.nombreEstablecimiento,
   asignaturaId: 'asig-2',
-  asignaturaNombre: 'Lenguaje y Comunicación',
-  cargo: 'Docente de Lenguaje y Comunicación',
+  asignaturaNombre: 'Competencia Lectora',
+  cargo: 'Docente de Competencia Lectora',
   estado: 'activo',
   plan: 'institucional'
 };
@@ -288,7 +288,7 @@ export const seguimientoDocentesMock: SeguimientoDocente[] = [
     avatarColor: 'from-indigo-600 to-violet-700',
     iniciales: 'MG',
     asignaturaId: 'asig-1',
-    asignaturaNombre: 'Matemática',
+    asignaturaNombre: 'Competencia Matemática 1 (M1)',
     cursosAsignados: ['8° Básico A', '8° Básico B'],
     totalEvaluacionesCreadas: 5,
     totalEvaluacionesActivas: 2,
@@ -312,7 +312,7 @@ export const seguimientoDocentesMock: SeguimientoDocente[] = [
     avatarColor: 'from-sky-600 to-cyan-700',
     iniciales: 'PM',
     asignaturaId: 'asig-3',
-    asignaturaNombre: 'Ciencias Naturales',
+    asignaturaNombre: 'Ciencias',
     cursosAsignados: ['6° Básico A', '6° Básico B'],
     totalEvaluacionesCreadas: 4,
     totalEvaluacionesActivas: 2,
@@ -336,7 +336,7 @@ export const seguimientoDocentesMock: SeguimientoDocente[] = [
     avatarColor: 'from-purple-600 to-fuchsia-700',
     iniciales: 'CM',
     asignaturaId: 'asig-2',
-    asignaturaNombre: 'Lenguaje y Comunicación',
+    asignaturaNombre: 'Competencia Lectora',
     cursosAsignados: ['6° Básico A', '8° Básico A'],
     totalEvaluacionesCreadas: 4,
     totalEvaluacionesActivas: 1,
@@ -360,7 +360,7 @@ export const seguimientoDocentesMock: SeguimientoDocente[] = [
     avatarColor: 'from-amber-600 to-orange-700',
     iniciales: 'RF',
     asignaturaId: 'asig-1',
-    asignaturaNombre: 'Matemática (Nivelación)',
+    asignaturaNombre: 'Competencia Matemática 1 (M1)',
     cursosAsignados: ['7° Básico A', '8° Básico B'],
     totalEvaluacionesCreadas: 3,
     totalEvaluacionesActivas: 1,
@@ -380,14 +380,14 @@ export const seguimientoDocentesMock: SeguimientoDocente[] = [
 ];
 
 export const asignaturasMock: Asignatura[] = [
-  { id: 'asig-1',  codigo: 'MAT', nombre: 'Matemática' },
-  { id: 'asig-2',  codigo: 'LEN', nombre: 'Lenguaje y Comunicación / Competencia Lectora' },
-  { id: 'asig-3',  codigo: 'CN',  nombre: 'Ciencias Naturales' },
+  { id: 'asig-1',  codigo: 'M1',  nombre: 'Competencia Matemática 1 (M1)' },
+  { id: 'asig-2',  codigo: 'CL',  nombre: 'Competencia Lectora' },
+  { id: 'asig-3',  codigo: 'CIE', nombre: 'Ciencias' },
   { id: 'asig-4',  codigo: 'HIS', nombre: 'Historia, Geografía y Ciencias Sociales' },
-  { id: 'asig-5',  codigo: 'BIO', nombre: 'Biología' },
-  { id: 'asig-6',  codigo: 'FIS', nombre: 'Física' },
-  { id: 'asig-7',  codigo: 'QUI', nombre: 'Química' },
-  { id: 'asig-8',  codigo: 'CTP', nombre: 'Ciencias Técnico-Profesional (TP)' },
+  { id: 'asig-5',  codigo: 'BIO', nombre: 'Ciencias — Biología' },
+  { id: 'asig-6',  codigo: 'FIS', nombre: 'Ciencias — Física' },
+  { id: 'asig-7',  codigo: 'QUI', nombre: 'Ciencias — Química' },
+  { id: 'asig-8',  codigo: 'CTP', nombre: 'Ciencias — Técnico Profesional' },
   { id: 'asig-9',  codigo: 'M2',  nombre: 'Competencia Matemática 2 (M2)' },
   { id: 'asig-10', codigo: 'ING', nombre: 'Idioma Extranjero: Inglés' },
   { id: 'asig-11', codigo: 'FIL', nombre: 'Filosofía' },
@@ -3138,7 +3138,7 @@ export const pruebasMock: Prueba[] = [
 
     asignaturaId: 'asig-3',
 
-    asignaturaNombre: 'Ciencias Naturales',
+    asignaturaNombre: 'Ciencias',
 
     nivel: '6° básico',
 
@@ -3172,7 +3172,7 @@ export const pruebasMock: Prueba[] = [
 
     asignaturaId: 'asig-1',
 
-    asignaturaNombre: 'Matemática',
+    asignaturaNombre: 'Competencia Matemática 1 (M1)',
 
     nivel: '8° básico',
 
@@ -3201,7 +3201,7 @@ export const pruebasMock: Prueba[] = [
     titulo: 'Evaluación Diagnóstica Lenguaje y Comunicación 8° Básico (Demo)',
     descripcion: 'Evaluación formativa demo de comprensión lectora, textos argumentativos y dramáticos.',
     asignaturaId: 'asig-2',
-    asignaturaNombre: 'Lenguaje y Comunicación',
+    asignaturaNombre: 'Competencia Lectora',
     nivel: '8° básico',
     profesorId: currentUserProfesorLenguaje.id,
     cursoId: 'curso-2',
@@ -3219,7 +3219,7 @@ export const pruebasMock: Prueba[] = [
     titulo: 'Ensayo Oficial PAES Competencia Matemática 1 (M1) — Admisión 2026',
     descripcion: 'Instrumento modelo DEMRE para 4° Medio: Números, Álgebra y Funciones, Geometría, Probabilidad y Estadística.',
     asignaturaId: 'asig-1',
-    asignaturaNombre: 'Matemática',
+    asignaturaNombre: 'Competencia Matemática 1 (M1)',
     nivel: '4° Medio',
     profesorId: currentUserProfesor.id,
     cursoId: 'curso-4m',

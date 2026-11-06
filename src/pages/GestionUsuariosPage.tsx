@@ -186,8 +186,8 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
     comuna: 'La Granja',
     dependencia: 'Particular Subvencionado',
     asignaturaId: 'asig-1',
-    asignaturaNombre: 'Matemática',
-    cargo: 'Jefe de UTP Matemática',
+    asignaturaNombre: 'Competencia Matemática 1 (M1)',
+    cargo: 'Jefe de UTP Competencia Matemática 1 (M1)',
     plan: 'institucional' as UserPlan,
     tempPassword: 'Sysget2026!'
   });
@@ -251,8 +251,8 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
         comuna: 'La Granja',
         dependencia: 'Particular Subvencionado',
         asignaturaId: 'asig-1',
-        asignaturaNombre: 'Matemática',
-        cargo: 'Jefe de UTP Matemática',
+        asignaturaNombre: 'Competencia Matemática 1 (M1)',
+        cargo: 'Jefe de UTP Competencia Matemática 1 (M1)',
         plan: 'institucional',
         tempPassword: 'Sysget2026!'
       });

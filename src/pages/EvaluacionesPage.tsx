@@ -158,12 +158,34 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
       return;
     }
 
-    if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
-      let active = true;
-      setIsLoadingPreguntas(true);
+    let active = true;
+    setIsLoadingPreguntas(true);
 
-      (async () => {
+    (async () => {
+      try {
+        // 1. Intentar vía endpoint seguro /api/evaluaciones-catalogo (con Service Role y respuestas correctas para docentes/admins)
         try {
+          const { data: { session } } = await supabase.auth.getSession();
+          const headers: Record<string, string> = {};
+          if (session?.access_token) {
+            headers['Authorization'] = `Bearer ${session.access_token}`;
+          }
+
+          const apiRes = await fetch(`/api/evaluaciones-catalogo?action=preguntas&evaluacion_id=${encodeURIComponent(prueba.id)}&include_key=1`, { headers });
+          if (apiRes.ok) {
+            const apiJson = await apiRes.json();
+            if (active && Array.isArray(apiJson.preguntas) && apiJson.preguntas.length > 0) {
+              const mapped = apiJson.preguntas.map(mapRowToPregunta);
+              setLoadedPreguntas(mapped);
+              return;
+            }
+          }
+        } catch (apiErr) {
+          console.warn('[PruebaFacsimilModal] Fallback a consulta directa:', apiErr);
+        }
+
+        // 2. Consulta directa a Supabase (si prueba.preguntasIds está presente)
+        if (prueba.preguntasIds && prueba.preguntasIds.length > 0) {
           const { data: dbRows, error } = await supabase
             .from('preguntas')
             .select('*')
@@ -177,16 +199,17 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
               .map(id => dbMap.get(id))
               .filter((q): q is Pregunta => Boolean(q));
             setLoadedPreguntas(ordered);
+            return;
           }
-        } catch (err) {
-          console.error('[PruebaFacsimilModal] Error al cargar preguntas:', err);
-        } finally {
-          if (active) setIsLoadingPreguntas(false);
         }
-      })();
+      } catch (err) {
+        console.error('[PruebaFacsimilModal] Error al cargar preguntas:', err);
+      } finally {
+        if (active) setIsLoadingPreguntas(false);
+      }
+    })();
 
-      return () => { active = false; };
-    }
+    return () => { active = false; };
   }, [isOpen, prueba, preguntas]);
 
   // Match questions strictly by prueba.preguntasIds if defined, preserving order

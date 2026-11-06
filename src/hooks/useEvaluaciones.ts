@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { Prueba, UserProfile } from '../types';
 import {
@@ -21,7 +21,18 @@ function mapRowToPrueba(row: Record<string, unknown>): Prueba {
     titulo: String(row.titulo || 'Sin título'),
     descripcion: String(row.descripcion || ''),
     asignaturaId: String(row.asignatura_id || 'asig-1'),
-    asignaturaNombre: String(row.asignatura_nombre || (row.asignatura_id === 'asig-2' ? 'Lengua y Literatura' : row.asignatura_id === 'asig-3' ? 'Ciencias Naturales' : 'Matemática')),
+    asignaturaNombre: String(row.asignatura_nombre || (
+      row.asignatura_id === 'asig-1' ? 'Competencia Matemática 1 (M1)' :
+      row.asignatura_id === 'asig-2' ? 'Competencia Lectora' :
+      row.asignatura_id === 'asig-3' ? 'Ciencias' :
+      row.asignatura_id === 'asig-4' ? 'Historia, Geografía y Ciencias Sociales' :
+      row.asignatura_id === 'asig-5' ? 'Ciencias — Biología' :
+      row.asignatura_id === 'asig-6' ? 'Ciencias — Física' :
+      row.asignatura_id === 'asig-7' ? 'Ciencias — Química' :
+      row.asignatura_id === 'asig-8' ? 'Ciencias — Técnico Profesional' :
+      row.asignatura_id === 'asig-9' ? 'Competencia Matemática 2 (M2)' :
+      'Competencia Matemática 1 (M1)'
+    )),
     nivel: String(row.nivel || '2° Medio'),
     profesorId: String(row.profesor_id || ''),
     cursoId: String(row.curso_id || ''),

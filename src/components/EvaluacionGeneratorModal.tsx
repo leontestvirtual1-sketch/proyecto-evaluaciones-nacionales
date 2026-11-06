@@ -92,7 +92,7 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
       titulo: titulo.trim(),
       descripcion: descripcion.trim(),
       asignaturaId: currentAsignatura?.id || asignaturaId,
-      asignaturaNombre: currentAsignatura?.nombre || 'Lenguaje y Comunicación',
+      asignaturaNombre: currentAsignatura?.nombre || 'Competencia Lectora',
       nivel: currentCurso?.nivel || nivel,
       profesorId: '00000000-0000-0000-0000-000000000001',
       cursoId: currentCurso?.id || cursoId,

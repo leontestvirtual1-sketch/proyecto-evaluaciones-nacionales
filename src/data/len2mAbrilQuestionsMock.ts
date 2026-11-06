@@ -5,7 +5,7 @@ export const pruebaLenguaje2MAbrilMock: Prueba = {
   titulo: 'Ensayo SIMCE Lengua y Literatura 2° Medio — Abril 2026',
   descripcion: 'Evaluación formativa SIMCE (Abril 2026): La Gran Muralla China, Biografía de María Tudor, Fundamentos de la Antropología, Nutrición y Desayuno, Cuento Ladrón de sábado (G. García Márquez) y Gladiador de la Pluma (Rogelio Fernández Güell).',
   asignaturaId: 'asig-2',
-  asignaturaNombre: 'Lenguaje y Comunicación',
+  asignaturaNombre: 'Competencia Lectora',
   nivel: '2° medio',
   profesorId: '98e7e5c9-e55d-4b47-bd5d-c6aabd463d18',
   cursoId: 'curso-2m',

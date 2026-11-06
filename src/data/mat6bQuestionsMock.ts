@@ -706,7 +706,7 @@ export const pruebaMatematica6BMock: Prueba = {
   titulo: 'Ensayo 3 SIMCE Matemática 6° Básico',
   descripcion: 'Evaluación oficial de Matemática para 6° Básico con 35 ítems de cobertura curricular completa (Números y Operaciones, Patrones y Álgebra, Geometría, Medición y Datos y Probabilidades).',
   asignaturaId: 'asig-1',
-  asignaturaNombre: 'Matemática',
+  asignaturaNombre: 'Competencia Matemática 1 (M1)',
   nivel: '6° Básico',
   profesorId: 'prof-demo-mat',
   cursoId: 'curso-6a',
