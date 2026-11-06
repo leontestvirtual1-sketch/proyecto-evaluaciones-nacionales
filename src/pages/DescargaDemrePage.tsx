@@ -39,17 +39,27 @@ const MATERIA_LABELS: Record<string, { label: string; icon: string; color: strin
 };
 
 function formatTituloAmigable(doc: DocumentoDemre): string {
-  const isInvierno = doc.archivo.toLowerCase().includes('invierno');
+  const archivo = doc.archivo.toLowerCase();
+  const isPdt = archivo.includes('pdt');
+  const instrumento = isPdt ? 'PDT' : 'PAES';
+
+  const isInvierno = archivo.includes('invierno') || (isPdt && doc.tipo !== 'temario');
   const edicion = isInvierno ? 'Invierno' : 'Regular';
+  const isMarcadas = archivo.includes('marcadas');
+
   const matInfo = MATERIA_LABELS[doc.materia] || MATERIA_LABELS.desconocida;
 
   switch (doc.tipo) {
-    case 'prueba':
-      return `Prueba Oficial PAES ${matInfo.label} (${edicion} ${doc.anio})`;
+    case 'prueba': {
+      const extra = isMarcadas ? ' — Respuestas Marcadas' : '';
+      return `Prueba Oficial ${instrumento} ${matInfo.label} (${edicion} ${doc.anio})${extra}`;
+    }
     case 'clavijero':
-      return `Clavijero Oficial ${matInfo.label} (${edicion} ${doc.anio})`;
-    case 'temario':
-      return `Temario y Especificaciones ${matInfo.label} (Admisión ${doc.anio})`;
+      return `Clavijero Oficial ${instrumento} ${matInfo.label} (${edicion} ${doc.anio})`;
+    case 'temario': {
+      const temarioEdicion = archivo.includes('invierno') || isPdt ? 'Invierno ' : archivo.includes('regular') ? 'Regular ' : '';
+      return `Temario Oficial ${instrumento} ${matInfo.label} (${temarioEdicion}Admisión ${doc.anio})`;
+    }
     case 'revista':
       return `Publicación / Revista Oficial DEMRE (${doc.anio})`;
     default:
@@ -373,7 +383,10 @@ export const DescargaDemrePage: React.FC = () => {
             {documentosPaginados.map((doc, idx) => {
               const titulo = formatTituloAmigable(doc);
               const matInfo = MATERIA_LABELS[doc.materia] || MATERIA_LABELS.desconocida;
-              const isInvierno = doc.archivo.toLowerCase().includes('invierno');
+              const archivoLower = doc.archivo.toLowerCase();
+              const isPdt = archivoLower.includes('pdt');
+              const isInvierno = archivoLower.includes('invierno') || (isPdt && doc.tipo !== 'temario');
+              const isMarcadas = archivoLower.includes('marcadas');
 
               let tipoBadgeColor = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
               let tipoLabel = 'Prueba Oficial';
@@ -400,12 +413,20 @@ export const DescargaDemrePage: React.FC = () => {
                         <span className={`px-2 py-0.5 rounded-md text-[11px] font-semibold border ${tipoBadgeColor}`}>
                           {tipoLabel}
                         </span>
+                        <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold border ${isPdt ? 'bg-purple-500/10 text-purple-400 border-purple-500/30' : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30'}`}>
+                          {isPdt ? 'PDT' : 'PAES'}
+                        </span>
                         <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
                           {doc.anio}
                         </span>
-                        {isInvierno && (
-                          <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
-                            Invierno
+                        {doc.tipo !== 'revista' && (
+                          <span className={`px-2 py-0.5 rounded-md text-[11px] font-semibold border ${isInvierno ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'}`}>
+                            {isInvierno ? 'Invierno' : 'Regular'}
+                          </span>
+                        )}
+                        {isMarcadas && (
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                            Respuestas Marcadas
                           </span>
                         )}
                       </div>
