@@ -1,0 +1,1386 @@
+{
+  "year": 2025,
+  "edicion": "Invierno",
+  "forma": 101,
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "Actualmente es posible evaluar la calidad de las democracias modernas \nconsiderando \ndiversas \ncaracterísticas \nque \ncondicionan \nsu \nfuncionamiento. Con relación a esto, ¿cuál es una condición necesaria \npara sustentar un sistema democrático?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La presencia de partidos políticos para asegurar el desarrollo \nsociocultural."
+        },
+        {
+          "letra": "B",
+          "texto": "La existencia de garantías jurídicas para el respeto de los derechos \nde la ciudadanía."
+        },
+        {
+          "letra": "C",
+          "texto": "La superioridad de las libertades individuales como prioridad para \nproteger el bien común."
+        },
+        {
+          "letra": "D",
+          "texto": "La independencia de las autoridades de gobierno para actuar sin \ncontrapesos políticos."
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "enunciado": "Observa la siguiente caricatura referida al sistema electoral:  \n \nMartín, F. (2014). Mensaje a la población [caricatura]. \n \n \nLa imagen aborda críticamente la forma en que funcionan las \ndemocracias representativas. Al respecto, ¿cuál es el rasgo de este \nsistema político criticado por el autor de la caricatura?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La crítica por la baja participación ciudadana en las últimas \nelecciones."
+        },
+        {
+          "letra": "B",
+          "texto": "La limitada importancia que se le asigna a otras formas de \nparticipación."
+        },
+        {
+          "letra": "C",
+          "texto": "La pérdida de relevancia del sufragio como mecanismo de \nparticipación."
+        },
+        {
+          "letra": "D",
+          "texto": "La oposición a las formas violentas de participación en el espacio \npúblico."
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "enunciado": "La participación política constituye una dimensión fundamental de la \ndemocracia que ayuda a construir un nexo entre los individuos y el \nEstado. En el marco del sistema democrático chileno, ¿cuál es una \ngarantía estatal que resguarda la participación política de la ciudadanía?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La representatividad ideológica del Congreso Nacional."
+        },
+        {
+          "letra": "B",
+          "texto": "La existencia de diversos medios de comunicación masiva."
+        },
+        {
+          "letra": "C",
+          "texto": "El establecimiento constitucional de la libertad de asociación."
+        },
+        {
+          "letra": "D",
+          "texto": "El acceso de la población a la información de carácter privado."
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "enunciado": "Lee el siguiente texto referido al funcionamiento del sistema democrático: \n \n \n«Si los gobiernos se fortalecen pero no rinden cuentas a la población, el \nproceso podría perder su carácter democrático y beneficiar a unos \npocos y no a la mayoría». \n \nPrograma de las Naciones Unidas para el Desarrollo (2008). Informe Anual 2008. El \nfomento de la capacidad: Empoderamiento de las personas y las instituciones. \n \n \n¿Qué rasgo de la democracia actual es destacado en el texto anterior?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La transparencia de la administración pública."
+        },
+        {
+          "letra": "B",
+          "texto": "La representatividad de las autoridades electas."
+        },
+        {
+          "letra": "C",
+          "texto": "El pluralismo ideológico del sistema de partidos."
+        },
+        {
+          "letra": "D",
+          "texto": "El ejercicio del principio de la soberanía popular."
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "enunciado": "Los medios de comunicación masiva juegan un rol fundamental en el \nsistema democrático actual, ya que instalan en la opinión pública temas \nrelevantes para la ciudadanía. En Chile, existe una concentración \nsignificativa de la propiedad de los medios de comunicación. Al respecto, \n¿cómo afecta esta concentración al funcionamiento de la democracia?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Aumenta los mecanismos de propaganda electoral."
+        },
+        {
+          "letra": "B",
+          "texto": "Disminuye la pluralidad en el debate político ciudadano."
+        },
+        {
+          "letra": "C",
+          "texto": "Incrementa el acuerdo entre grupos políticos antagónicos."
+        },
+        {
+          "letra": "D",
+          "texto": "Reduce las formas de participación política de la ciudadanía."
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "enunciado": "Lee el siguiente artículo de la Constitución Política de Chile vigente: \n \n \n«Artículo 52.- \nSon atribuciones exclusivas de la Cámara de Diputados:  \n1) Fiscalizar los actos del Gobierno. Para ejercer esta atribución la \nCámara puede: \na) Adoptar acuerdos o sugerir observaciones, con el voto de la mayoría \nde los diputados presentes, los que se transmitirán por escrito al \nPresidente de la República, quien deberá dar respuesta fundada por \nmedio del Ministro de Estado que corresponda, dentro de treinta días». \n \nConstitución Política de la República de Chile [Const]. Art. 52. 23 de agosto de 2022 (Chile). \n \n \n¿Cuál es un rasgo del sistema político democrático relacionado con el \ntexto constitucional citado?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El establecimiento de normas de transparencia en las instituciones."
+        },
+        {
+          "letra": "B",
+          "texto": "El funcionamiento de un \nsistema electoral basado en la \ncompetencia."
+        },
+        {
+          "letra": "C",
+          "texto": "La aplicación de garantías jurídicas de respeto de los derechos \nciviles."
+        },
+        {
+          "letra": "D",
+          "texto": "La implementación de un sistema de contrapesos de los poderes \npúblicos."
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Revisa el siguiente gráfico con los resultados de la elección presidencial \nde 2005 en Chile:  \n \nResultados de la elección presidencial, periodo 2006 a 2010 \n \nServicio Electoral de Chile (s. f.). Elecciones Presidenciales: Resultados Globales. \n \n \nConsiderando la normativa que rige el sistema electoral chileno, ¿qué \nconclusión es correcta inferir respecto de los resultados de esta \nelección?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La primera mayoría resultó electa de manera inapelable."
+        },
+        {
+          "letra": "B",
+          "texto": "La segunda mayoría debió ser ratificada por el Congreso."
+        },
+        {
+          "letra": "C",
+          "texto": "Las dos candidaturas más votadas pasaron a segunda vuelta."
+        },
+        {
+          "letra": "D",
+          "texto": "Las candidaturas menos votadas se sumaron a la primera mayoría. \n \n \n45,96% \n25,41% \n23,23% \n5,40% \n0%\n5%\n10%\n15%\n20%\n25%\n30%\n35%\n40%\n45%\n50%\nMichelle\nBachelet\nSebastián\nPiñera\nJoaquín\nLavín\nTomás\nHirsch"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "Un grupo de estudiantes debe realizar un trabajo sobre las funciones de \nlas instituciones que organizan y controlan las elecciones en Chile. En \neste contexto, ¿qué información debe ser incluida en el informe de esta \ninvestigación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las atribuciones de los vocales de mesa."
+        },
+        {
+          "letra": "B",
+          "texto": "La propuesta de programa de las candidaturas."
+        },
+        {
+          "letra": "C",
+          "texto": "La configuración del sistema de partidos políticos."
+        },
+        {
+          "letra": "D",
+          "texto": "Las características de la población en edad de votar."
+        }
+      ]
+    },
+    {
+      "numero": 9,
+      "enunciado": "",
+      "alternativas": []
+    },
+    {
+      "numero": 10,
+      "enunciado": "Recuerda que está prohibido copiar, fotografiar, publicar, compartir en redes sociales y reproducir total o parcialmente, \npor cualquier medio, las preguntas de esta prueba.",
+      "alternativas": []
+    },
+    {
+      "numero": 11,
+      "enunciado": "Tampoco se permite el uso de teléfono celular, calculadora o cualquier otro dispositivo electrónico durante la \nrendición de la prueba.",
+      "alternativas": []
+    },
+    {
+      "numero": 12,
+      "enunciado": "Finalmente, anota tu número de Cédula de Identidad (o Pasaporte) en los casilleros que se encuentran en la parte \ninferior de este folleto, lee y firma la declaración correspondiente.\nDECLARACIÓN: declaro conocer y aceptar la normativa que rige al Proceso de Admisión a las universidades chilenas y \nsoy consciente de que, en caso de colaborar con la reproducción, sustracción, almacenamiento o transmisión, total o \nparcial, de este folleto, a través de cualquier medio, me expongo a la exclusión inmediata de este Proceso, sin perjuicio \nde las demás acciones o sanciones legales.\nFirma\nNúmero de cédula de identidad (o pasaporte)\n—\nProceso de Admisión 2 0 2 5\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nRegistro de Propiedad Intelectual N° 2024-A-3452 \nUniversidad de Chile. \nDerechos reservados . Prohibida su reproducción total o parcial. \n \n \nFORMACIÓN CIUDADANA \n \n1. \nActualmente es posible evaluar la calidad de las democracias modernas \nconsiderando \ndiversas \ncaracterísticas \nque \ncondicionan \nsu \nfuncionamiento. Con relación a esto, ¿cuál es una condición necesaria \npara sustentar un sistema democrático?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La presencia de partidos políticos para asegurar el desarrollo \nsociocultural."
+        },
+        {
+          "letra": "B",
+          "texto": "La existencia de garantías jurídicas para el respeto de los derechos \nde la ciudadanía."
+        },
+        {
+          "letra": "C",
+          "texto": "La superioridad de las libertades individuales como prioridad para \nproteger el bien común."
+        },
+        {
+          "letra": "D",
+          "texto": "La independencia de las autoridades de gobierno para actuar sin \ncontrapesos políticos. \n \n \n \n2. \nObserva la siguiente caricatura referida al sistema electoral:  \n \nMartín, F. (2014). Mensaje a la población [caricatura]. \n \n \nLa imagen aborda críticamente la forma en que funcionan las \ndemocracias representativas. Al respecto, ¿cuál es el rasgo de este \nsistema político criticado por el autor de la caricatura?"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "En el funcionamiento de la democracia chilena la plena vigencia del \nEstado de derecho se constituye en una garantía de los derechos \nfundamentales. En este sentido, ¿qué situación es esencial para prevenir \nel deterioro del Estado de derecho?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La centralización de la administración judicial."
+        },
+        {
+          "letra": "B",
+          "texto": "La concentración de atribuciones en el presidente."
+        },
+        {
+          "letra": "C",
+          "texto": "La limitación al ejercicio del poder a través de la ley."
+        },
+        {
+          "letra": "D",
+          "texto": "La independencia ideológica de la administración pública."
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "En las sociedades democráticas actuales es importante verificar la \nprecisión y veracidad de datos, hechos o información que se difunden a \ntravés de los medios de comunicación, para evitar el impacto negativo de \nlas noticias falsas. Respecto de la verificación de datos, ¿de qué forma \ncontribuye \nesta \npráctica \nal \nbuen \nfuncionamiento \ndel \nsistema \ndemocrático?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Impide la censura previa de la información en la prensa."
+        },
+        {
+          "letra": "B",
+          "texto": "Valida la información que sustenta el debate ciudadano."
+        },
+        {
+          "letra": "C",
+          "texto": "Evita el surgimiento de canales alternativos de información."
+        },
+        {
+          "letra": "D",
+          "texto": "Garantiza el derecho ciudadano de acceder a la información."
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "La institucionalidad del Estado de Chile reconoce la participación de la \nciudadanía en instancias en las que puede ejercer control sobre la \nadministración pública. Al respecto, ¿en cuál de las siguientes \nsituaciones se evidencia esta participación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Una solicitud para formar un nuevo partido político fue aceptada por \nel Servicio Electoral."
+        },
+        {
+          "letra": "B",
+          "texto": "Una candidatura independiente ha recibido la mayoría de los votos \nemitidos en las elecciones."
+        },
+        {
+          "letra": "C",
+          "texto": "Una persona recibió los datos que solicitó al Ministerio de Vivienda \nmediante ley de transparencia."
+        },
+        {
+          "letra": "D",
+          "texto": "Una agrupación de defensores del medio ambiente realizó una \nmanifestación frente al palacio de La Moneda.  \n \n \n \nHISTORIA: MUNDO, AMÉRICA Y CHILE"
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "Durante la primera mitad del siglo XIX, las ideas liberales, como la \nlibertad individual o la igualdad ante la ley, fueron fundamentales para \npromover las transformaciones que se desarrollaron en Europa. En este \ncontexto, ¿cuál fue un proceso político que permitió instaurar el ideario \nliberal?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El término de las monarquías parlamentarias."
+        },
+        {
+          "letra": "B",
+          "texto": "El debilitamiento de los movimientos nacionalistas."
+        },
+        {
+          "letra": "C",
+          "texto": "El desarrollo de oleadas de conflictos revolucionarios."
+        },
+        {
+          "letra": "D",
+          "texto": "El establecimiento de sistemas democráticos directos."
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "Lee el siguiente texto acerca de la formación de los Estados nacionales \nen América Latina durante el siglo XIX: \n \n \n«Aunque las nuevas repúblicas de la región defendieron sus territorios \nfrente a potencias extranjeras y vecinos, también se enfrascaron en \nlargas disputas al interior de sus fronteras en torno a quien era el \nsoberano: ¿”el” pueblo o “los” pueblos? ¿la universalidad de los \nciudadanos o las corporaciones?. [...] El peso de la costumbre y lo \ncomunitario siguió siendo decisivo ante la paulatina construcción de una \ncultura liberal. No fue extraño, entonces, encontrar que la facultad de \ndecidir quién era o no ciudadano residiera en los “cuerpos sociales” y en \nlas \nautoridades \ntradicionales \n(vecinos \nhonrados, \npárrocos \no \nmunícipes)». \n \nHerrera, S. (2007). La formación de los estados nacionales en la América hispánica: de la \ncolonia al siglo XIX. \n \n \nSegún el texto, ¿cuál fue uno de los fenómenos políticos que se produjo \nen América Latina en el contexto del surgimiento del Estado nación?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El inmediato funcionamiento de partidos políticos representativos."
+        },
+        {
+          "letra": "B",
+          "texto": "El lento ejercicio de los derechos de participación política de las \npersonas."
+        },
+        {
+          "letra": "C",
+          "texto": "El tardío empleo de constituciones que garantizaran los derechos \npolíticos."
+        },
+        {
+          "letra": "D",
+          "texto": "El rápido término de los conflictos político-territoriales entre los \nnuevos países."
+        }
+      ]
+    },
+    {
+      "numero": 18,
+      "enunciado": "Durante el siglo XIX en diversos lugares del mundo comenzó el \nprogresivo rechazo de la esclavitud que hasta entonces era una situación \naceptada. En este contexto, la incorporación de las ideas liberales en el \nsistema estatal sirvió de fundamento para movimientos abolicionistas. A \npartir de lo anterior, ¿qué principio liberal promovía este tipo de \nmovimientos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La soberanía popular."
+        },
+        {
+          "letra": "B",
+          "texto": "La participación política."
+        },
+        {
+          "letra": "C",
+          "texto": "La libertad de expresión."
+        },
+        {
+          "letra": "D",
+          "texto": "La igualdad de derechos."
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Durante el siglo XIX en América Latina se configuraron Estados \nnacionales que, luego de la emancipación del Imperio español, debieron \nbuscar formas de ordenar jurídicamente a la nación y organizar el \nterritorio nacional. En este contexto, ¿cuál fue un rasgo del proceso de \nformación de los Estados nacionales latinoamericanos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las clases dirigentes se esforzaron por conseguir la unidad a nivel \ncontinental por sobre la soberanía del Estado."
+        },
+        {
+          "letra": "B",
+          "texto": "La institucionalidad del Estado tardó en consolidarse debido a las \ndificultades existentes para concretar acuerdos políticos."
+        },
+        {
+          "letra": "C",
+          "texto": "Las autoridades del Estado priorizaron el establecimiento de una \nlegislación centrada en la transformación de las clases sociales."
+        },
+        {
+          "letra": "D",
+          "texto": "La organización política del Estado se orientó al establecimiento de \nmecanismos para la participación política de los sectores populares."
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "El liberalismo es una doctrina política, económica y social que surgió a \nfines del siglo XVIII en Europa y tomó fuerza durante el siglo XIX, \ninfluyendo en las transformaciones ocurridas en Europa y América. \nConsiderando el contexto latinoamericano de la primera mitad del siglo \nXIX, ¿cuál fue un rasgo de la influencia liberal en la organización de las \nnuevas repúblicas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La separación de los poderes públicos."
+        },
+        {
+          "letra": "B",
+          "texto": "La subsistencia de los títulos nobiliarios."
+        },
+        {
+          "letra": "C",
+          "texto": "La secularización de la administración estatal."
+        },
+        {
+          "letra": "D",
+          "texto": "La ampliación del voto a los sectores populares."
+        }
+      ]
+    },
+    {
+      "numero": 21,
+      "enunciado": "Entre 1818 y 1833 se aprobaron diversas cartas constitucionales en \nChile, cada una de las cuales exigía requisitos para el otorgamiento de \nderechos políticos a la población. Al respecto, ¿qué impacto político tuvo \npara el sistema republicano este tipo de disposiciones constitucionales?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Acabó con el predominio político de los caudillos militares."
+        },
+        {
+          "letra": "B",
+          "texto": "Favoreció la promoción de un sistema político democrático."
+        },
+        {
+          "letra": "C",
+          "texto": "Terminó con las disputas políticas entre miembros de la elite."
+        },
+        {
+          "letra": "D",
+          "texto": "Aseguró el poder político de los grupos aristocráticos criollos."
+        }
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "Examina el siguiente esquema:  \n  \nEl esquema anterior presenta información de la situación en que se \nencontraba Chile durante las primeras décadas del siglo XIX. De acuerdo \na su análisis, ¿qué representa el esquema?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las causas del proceso de emancipación nacional."
+        },
+        {
+          "letra": "B",
+          "texto": "Las ventajas de la Independencia respecto de España."
+        },
+        {
+          "letra": "C",
+          "texto": "Las consecuencias de la instauración del régimen portaliano."
+        },
+        {
+          "letra": "D",
+          "texto": "Las dificultades para la organización de la naciente República."
+        }
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "Lee el siguiente artículo de la Constitución Política de Chile de 1833: \n \n \n«Art. 5º La religión de la República de Chile es la Católica, \nApostólica, Romana; con exclusión del ejercicio público de cualquiera \notra». \n \nConstitución Política de la República de Chile [Const]. Art. 5. 25 de mayo de 1833 (Chile). \n \n \nEn la primera mitad del siglo XIX, ¿cuál fue un impacto social de la \nnormativa constitucional citada?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Fortaleció la influencia del pensamiento conservador en la vida \ncotidiana."
+        },
+        {
+          "letra": "B",
+          "texto": "Estimuló una alianza gubernamental de la burguesía industrial con \nel clero."
+        },
+        {
+          "letra": "C",
+          "texto": "Promovió una ofensiva legislativa liberal hacia la secularización del \nEstado."
+        },
+        {
+          "letra": "D",
+          "texto": "Permitió la libertad de culto a los credos protestantes en los actos \noficiales."
+        }
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "Lee el siguiente texto que hace referencia a la inserción chilena en la \neconomía capitalista de mediados del siglo XIX: \n \n \n«A ninguno de los principales grupos de interés que hegemonizaron la \nactividad económica chilena durante ese siglo (exportadores mineros, \nexportadores agropecuarios y comerciantes mayoristas) le convenía \narriesgar una fuente segura de enriquecimiento a cambio de hipotéticas \nventajas de un desarrollo basado en la industrialización. Estaba, además, \nla necesidad de mantener relaciones armónicas con los representantes \nde las nuevas potencias económicas, fuertemente interesados en la \napertura comercial y fuente casi única de la demanda, los capitales y la \ntecnología que Chile no parecía por aquellos años capaz de generar por \nsí solo». \n \nSalazar, G. y Pinto, J. (2012). Historia contemporánea de Chile (Vol. 3: La economía: \nmercados, empresarios y trabajadores). \n \n \nA partir del texto, ¿cuál fue uno de los factores que propició un modelo \neconómico basado en la exportación de materias primas?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El protagonismo asignado al sector manufacturero."
+        },
+        {
+          "letra": "B",
+          "texto": "Las ventajas generadas por las regulaciones de tipo liberal."
+        },
+        {
+          "letra": "C",
+          "texto": "Los esfuerzos del Estado por debilitar la dependencia externa."
+        },
+        {
+          "letra": "D",
+          "texto": "La apatía del empresariado por la forma tradicional de producción."
+        }
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "En Chile, durante las primeras décadas del siglo XIX, predominaron dos \nfacciones \npolíticas, \nlos \npipiolos \n(liberales) \ny \nlos \npelucones \n(conservadores), que tenían miradas políticas que diferían en diversos \naspectos. Sin embargo, también compartían algunas ideas. Durante este \nperiodo, ¿cuál fue una de las ideas que compartieron estos grupos \npolíticos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La descentralización territorial del poder político."
+        },
+        {
+          "letra": "B",
+          "texto": "La instalación de un sistema político republicano."
+        },
+        {
+          "letra": "C",
+          "texto": "La consagración del liderazgo político de la Iglesia."
+        },
+        {
+          "letra": "D",
+          "texto": "La expansión del conjunto de los derechos políticos."
+        }
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "Lee el siguiente fragmento de un periódico chileno de la segunda mitad \ndel siglo XIX: \n \n \n«Téngase presente, que el salitre y los guanos, son riquezas \ntransitorias, y que, si al término de ellas no hemos robustecido la \neconomía de Chile con industrias reproductivas y espontáneas, \nsufriremos un retroceso atroz, que nos hará perder el alto nivel obtenido \njunto con nuestra respetable posición entre los pueblos civilizados». \n \nEl Veintiuno de Mayo de Iquique. (26 de enero de 1883). Citado en Salazar, G. y Pinto, J. \n(2010). Historia Contemporánea de Chile  (Vol. 3: La economía, mercados, empresarios y \ntrabajadores). \n \n \nConsiderando la organización de la producción en Chile, ¿qué rasgo de \nla economía de la época se usó como base para la crítica contenida en el \ntexto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La \ndiversificación \nde \nlas \ninversiones \nen \nla \nproducción \nmanufacturera."
+        },
+        {
+          "letra": "B",
+          "texto": "La profundización del modelo económico de crecimiento hacia \nadentro."
+        },
+        {
+          "letra": "C",
+          "texto": "La consolidación del proceso de nacionalización de recursos \nnaturales."
+        },
+        {
+          "letra": "D",
+          "texto": "La hegemonía de la exportación de productos de escaso valor \nagregado."
+        }
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "En Chile, durante el siglo XIX la elite enfrentó una serie de dificultades \npara llevar adelante el proceso de instalación del Estado nación. En este \nescenario, ¿qué estrategia se aplicó desde el Estado para fortalecer la \nidentidad nacional?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Se evitó utilizar la guerra como un recurso de cohesión social."
+        },
+        {
+          "letra": "B",
+          "texto": "Se impidió que los inmigrantes emplearan sus símbolos patrios."
+        },
+        {
+          "letra": "C",
+          "texto": "Se usó el sistema educativo para construir un sentido de \npertenencia."
+        },
+        {
+          "letra": "D",
+          "texto": "Se legisló para evitar que los indígenas fueran considerados \nchilenos."
+        }
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "Durante el siglo XIX, Chile inició un proceso de inserción en distintos \nmercados del mundo, aprovechando sus ventajas comparativas respecto \nde otros países latinoamericanos. Al respecto, ¿cuál fue una ventaja \naprovechada por Chile para llevar a cabo este proceso?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La capacidad adquisitiva de su mercado interno."
+        },
+        {
+          "letra": "B",
+          "texto": "La estatización del sector de la industria pesada."
+        },
+        {
+          "letra": "C",
+          "texto": "La localización geográfica de los puertos marítimos."
+        },
+        {
+          "letra": "D",
+          "texto": "La autonomía productiva de la agricultura tradicional."
+        }
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "La siguiente fuente se refiere a los cambios que experimentó la capital de \nChile durante la segunda mitad del siglo XIX: \n \n \n«El campo todavía llegaba hasta la ciudad: a comienzos de la década \nde 1840, a solo una manzana de La Moneda, había una lechería a la \ncual llegaban diariamente treinta o cuarenta vacas. […] \nEl caudal de nuevas riquezas alteró rápidamente esta imagen. Los \nprimeros faroles de gas de la ciudad comenzaron a arder en 1857; los \ntranvías tirados por caballos empezaron a correr ese año, también, \nsumándose a los 4500 coches y carruajes, aproximadamente, que ya \nestaban en circulación. A finales de la década de 1860, parte del centro \nde la ciudad contaba con cañerías de agua potable».  \n \nCollier, S. y Sater, W. (1999). Historia de Chile 1808-1994. \n \n \nEn el contexto de la inserción de la economía chilena a los mercados \ninternacionales y considerando la información entregada por la fuente, \n¿con qué proceso socioeconómico del periodo es correcto relacionar \nestos cambios urbanos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Con el aumento explosivo de la demanda de mano de obra desde el \nsector rural."
+        },
+        {
+          "letra": "B",
+          "texto": "Con el desarrollo de una industrialización local liderada por un \norganismo del Estado."
+        },
+        {
+          "letra": "C",
+          "texto": "Con la implementación de un Estado de Bienestar que garantizaba \nlos servicios básicos."
+        },
+        {
+          "letra": "D",
+          "texto": "Con la importación de productos e implementación de servicios para \nel desarrollo nacional."
+        }
+      ]
+    },
+    {
+      "numero": 30,
+      "enunciado": "En Chile a fines del siglo XIX muchos campesinos vieron en la minería \nuna oportunidad para mejorar sus condiciones de vida, razón por la que \nmigraron desde las haciendas hacia las oficinas salitreras. En este \ncontexto, ¿cuál fue un factor económico que convirtió a estos lugares en \nnúcleos de atracción demográfica?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El aumento del empleo en el mundo rural estimulado por las \nsubvenciones estatales."
+        },
+        {
+          "letra": "B",
+          "texto": "El incremento de las medidas proteccionistas del Estado a las \nactividades extractivas."
+        },
+        {
+          "letra": "C",
+          "texto": "La mayor seguridad en los puestos de trabajos derivada de las \ninnovaciones tecnológicas."
+        },
+        {
+          "letra": "D",
+          "texto": "La alta demanda de mano de obra provocada por el aumento de las \nexportaciones de nitrato a Europa."
+        }
+      ]
+    },
+    {
+      "numero": 31,
+      "enunciado": "El siguiente texto refiere a la creación de la Asociación Salitrera de \nPropaganda a fines del siglo XIX en Chile: \n \n \n«[Uno] de los mayores avances fue la creación de la Asociación \nSalitrera de Propaganda en 1894, entidad que recibió aportes \nmonetarios tanto de las compañías salitreras como del Estado. Su \nfinalidad fue publicitar el salitre como producto de primera necesidad \npara la producción agrícola en América, Europa y Asia para así \naumentar el consumo de nitrato y sacar ventaja frente a otros productos \ncompetidores». \n \nMemoria Chilena (s.f.). La industria del salitre en Chile (1880-1930). Comercialización \ny publicidad salitrera. \n \n \n¿Qué propósito tenía la existencia de una organización como la descrita \nen el texto en la época aludida?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Competir con diversos productos sintéticos inventados en Alemania."
+        },
+        {
+          "letra": "B",
+          "texto": "Incrementar la competitividad del producto nacional a escala \nmundial."
+        },
+        {
+          "letra": "C",
+          "texto": "Aumentar la participación de capital nacional en la producción \nminera."
+        },
+        {
+          "letra": "D",
+          "texto": "Corregir los efectos de la Gran Depresión en la competencia \nnacional."
+        }
+      ]
+    },
+    {
+      "numero": 32,
+      "enunciado": "Lee el siguiente texto que describe las condiciones de los trabajadores \nen Chile durante las dos primeras décadas del siglo XX: \n \n \n«La transición de una economía rural a una urbana deterioró las \nrelaciones entre los trabajadores y la clase media alta. Esta falta de \nintegración social fue más evidente en las mineras. En ellas, \npaternalismo y la dirección electoral ejercida por los jefes tradicionales \ncomenzó a derrumbarse a comienzos del siglo XX. Como resultado de \nello el flujo de mano de obra desde el campo a las ciudades y pueblos \nmineros creó nuevas posibilidades políticas. Los trabajadores ya no \nestaban tan dispersos ni tan protegidos ni controlados a través de lazos \npersonales por un patrón». \n \nDrake, P. (1992). Socialismo y populismo. Chile 1936-1973. \n \n \n¿Cómo impactaron las dinámicas descritas en el texto sobre las formas \nde organización popular?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Fomentando la sindicalización campesina."
+        },
+        {
+          "letra": "B",
+          "texto": "Promoviendo la creación de partidos obreros."
+        },
+        {
+          "letra": "C",
+          "texto": "Propiciando la participación obrera en el gobierno."
+        },
+        {
+          "letra": "D",
+          "texto": "Potenciando las tomas de terrenos en las ciudades."
+        }
+      ]
+    },
+    {
+      "numero": 33,
+      "enunciado": "Lee el siguiente extracto de una conferencia dictada por Luis Emilio \nRecabarren con ocasión del primer centenario de la Independencia de \nChile en 1910: \n \n \n«El progreso económico que ha conquistado la clase capitalista ha sido \nmás eficaz para su progreso social, no así para su perfección moral, […] \nLa última clase, como puede considerarse en la escala social, a los \ngañanes, jornaleros, peones de los campos, carretoneros, etc., vive hoy \ncomo vivió en 1810. Si fuera posible reproducir ahora la vida y \ncostumbres de esta clase de aquella época y compararla como la de \nhoy en día, podríamos afirmar que en los campos permanece \nestacionaria y que en las ciudades se ha desmoralizado más». \n \nRecabarren, L. (1971). Ricos y pobres. \n \n \nA partir de lo expresado en el texto y considerando el periodo histórico \nseñalado, ¿qué crítica se infiere respecto de esta celebración del \ncentenario?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La irrupción de nuevos actores sociales limitó el desarrollo social."
+        },
+        {
+          "letra": "B",
+          "texto": "La elite social se mantuvo al margen de los avances de la \neconomía."
+        },
+        {
+          "letra": "C",
+          "texto": "La falta de un sistema educacional público impidió la movilidad \nsocial."
+        },
+        {
+          "letra": "D",
+          "texto": "La desigualdad social se mantuvo presente durante la vida \nrepublicana."
+        }
+      ]
+    },
+    {
+      "numero": 34,
+      "enunciado": "En Chile, desde mediados del siglo XIX hasta la primera década del siglo \nXX se masificó la huelga como forma de lucha y expresión de \ndescontento en la sociedad. Al respecto, ¿cuál es un elemento del \ncontexto histórico que permite explicar dicho fenómeno?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La reducción de la demanda por mano de obra especializada."
+        },
+        {
+          "letra": "B",
+          "texto": "La excesiva intervención estatal en las actividades productivas."
+        },
+        {
+          "letra": "C",
+          "texto": "La escasa concentración de la propiedad de las tierras agrícolas."
+        },
+        {
+          "letra": "D",
+          "texto": "La expansión de las actividades económicas de carácter industrial."
+        }
+      ]
+    },
+    {
+      "numero": 35,
+      "enunciado": "Lee el siguiente texto que corresponde a una interpretación de los \nfactores que incidieron en la Cuestión Social en el tránsito del siglo XIX \nal XX: \n \n \n«En mi concepto, no son pocos los factores que han conducido al país \nal estado en que se encuentra; pero sobre todo me parece que \npredomina uno hacia el que quiero llamar la atención y que es \nprobablemente el que menos se ve y el que más labora […]. Me refiero \n¿por qué no decirlo bien alto? a nuestra falta de moralidad pública […]. \nHablo de la moralidad que consiste en el cumplimiento de su deber y de \nsus obligaciones por los poderes públicos y los magistrados, en el leal y \ncompleto desempeño de la función que les atribuye la Carta \nFundamental y las leyes, en el ejercicio de los cargos y empleos, \nteniendo en vista el bien general y no intereses y fines de otro género». \n \nMac-Iver, E. (1900). Discurso sobre la crisis moral de la república. \n \n \nConsiderando lo mencionado en el texto, ¿cuál fue uno de los factores \nque incidió en el desarrollo de la Cuestión Social?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El insuficiente ejercicio de la caridad por parte de la aristocracia."
+        },
+        {
+          "letra": "B",
+          "texto": "La ineficiencia estatal al atender las necesidades de la población."
+        },
+        {
+          "letra": "C",
+          "texto": "La despreocupación de la Iglesia Católica por la propiedad privada."
+        },
+        {
+          "letra": "D",
+          "texto": "El mantenimiento del poder político en una clase social privilegiada."
+        }
+      ]
+    },
+    {
+      "numero": 36,
+      "enunciado": "A fines del siglo XIX e inicios del XX, la estructura de la sociedad chilena \nexperimentó \nimportantes \ntransformaciones, \nprincipalmente \ncomo \nconsecuencia de cambios ocurridos en la organización de la economía y \nla implementación de nuevas políticas públicas. De las siguientes \nafirmaciones, ¿cuál fue uno de los factores culturales que influyó en el \nposicionamiento de los sectores medios como un nuevo actor social?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El aumento de la difusión de la prensa escrita."
+        },
+        {
+          "letra": "B",
+          "texto": "La puesta en marcha de los teatros municipales."
+        },
+        {
+          "letra": "C",
+          "texto": "El arribo de numerosos intelectuales extranjeros."
+        },
+        {
+          "letra": "D",
+          "texto": "La ampliación de la cobertura de la educación pública."
+        }
+      ]
+    },
+    {
+      "numero": 37,
+      "enunciado": "La situación de los sectores populares en las ciudades chilenas, en el \ntránsito del siglo XIX al XX, estaba condicionada por el estado de la \ninfraestructura de servicios básicos, la vivienda y la situación laboral. En \neste contexto, ¿cuál fue una consecuencia derivada de las condiciones \nde vida de este grupo social?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La disminución de la fertilidad en la población femenina."
+        },
+        {
+          "letra": "B",
+          "texto": "La proliferación de diversas enfermedades infectocontagiosas."
+        },
+        {
+          "letra": "C",
+          "texto": "La emigración masiva de la población hacia espacios agrícolas."
+        },
+        {
+          "letra": "D",
+          "texto": "La reducción de la cobertura educacional de la población infantil."
+        }
+      ]
+    },
+    {
+      "numero": 38,
+      "enunciado": "Después de la Primera Guerra Mundial las democracias liberales \noccidentales entraron en crisis. Al respecto, ¿cuál de los siguientes \nprocesos contribuyó al deterioro de los sistemas políticos liberales en la \nprimera mitad del siglo XX?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La desarticulación de los imperios coloniales."
+        },
+        {
+          "letra": "B",
+          "texto": "La debilidad de la doctrina nacionalsocialista."
+        },
+        {
+          "letra": "C",
+          "texto": "El inicio de un modelo de Estado de bienestar."
+        },
+        {
+          "letra": "D",
+          "texto": "El desarrollo de la denominada Gran Depresión."
+        }
+      ]
+    },
+    {
+      "numero": 39,
+      "enunciado": "Examina la siguiente imagen de Adolf Hitler hacia 1936: \n \n \nManifestación del Partido Nazi [Fotografía]. (1936). \n \n \nLa fotografía muestra a Adolf Hitler en un desfile realizado durante su \ngobierno. Considerando el contexto histórico de la época, ¿cuál es una \nde las características de los totalitarismos evidenciada en la fotografía?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La inversión del presupuesto en materia armamentística."
+        },
+        {
+          "letra": "B",
+          "texto": "La militarización de los diversos sectores de la sociedad."
+        },
+        {
+          "letra": "C",
+          "texto": "El uso exacerbado de los símbolos con fines propagandísticos."
+        },
+        {
+          "letra": "D",
+          "texto": "El establecimiento de un Estado policial que controlaba a la \npoblación."
+        }
+      ]
+    },
+    {
+      "numero": 40,
+      "enunciado": "Lee el siguiente texto sobre la política educacional de la Italia fascista \ndurante la época de entreguerras: \n \n \n«El plan de estudios de 1934 eliminaba el uso de los dialectos locales \nen las clases, reducía la enseñanza de la ciencia a favor de la \npropaganda sobre el régimen e ignoraba la historia de todos los pueblos \nantiguos anteriores a los romanos, a favor de una historia \nexclusivamente italiana. En 1937, los alumnos de tercer grado (ocho \naños) dedicaban la mayor cantidad de horas a la lengua italiana; gran \nparte de los ejercicios se referían a las obras públicas del gobierno, la \nguerra en Etiopía, el mar Mediterráneo como mare nostro. La clase de \ngeografía insistía en el mare nostro, mientras que las clases de historia \nanalizaban las batallas famosas y la Primera Guerra Mundial». \n \nTannenbaum, E. (1975). La experiencia fascista. Sociedad y cultura en Italia (1922-1945). \n \n \nA partir de la información entregada en el texto, ¿cuál fue uno de los \nobjetivos educacionales del régimen fascista?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Fomentar las ideas expansionistas en las nuevas generaciones."
+        },
+        {
+          "letra": "B",
+          "texto": "Promover la utilización de la violencia en contra de los disidentes."
+        },
+        {
+          "letra": "C",
+          "texto": "Reivindicar las relaciones culturales con el mundo griego europeo."
+        },
+        {
+          "letra": "D",
+          "texto": "Incentivar aprendizajes que contribuyeran al desarrollo tecnológico."
+        }
+      ]
+    },
+    {
+      "numero": 41,
+      "enunciado": "En las primeras tres décadas del siglo XX, surgieron regímenes \ntotalitarios en Italia, Alemania y la Unión Soviética durante el periodo de \nentreguerras. Si bien existieron características comunes entre estos \ntotalitarismos, también evidenciaron marcadas diferencias. Al respecto, \n¿cuál es una diferencia entre los regímenes totalitarios de Alemania y la \nUnión Soviética?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El tipo de ideología en que se sustentaba el poder político."
+        },
+        {
+          "letra": "B",
+          "texto": "La política exterior manifestada en un expansionismo territorial."
+        },
+        {
+          "letra": "C",
+          "texto": "La primacía de la colectividad en desmedro de la individualidad."
+        },
+        {
+          "letra": "D",
+          "texto": "El control estatal sobre el conjunto de aspectos de la vida diaria."
+        }
+      ]
+    },
+    {
+      "numero": 42,
+      "enunciado": "Durante el siglo XX se desarrollaron procesos políticos que originaron los \ntotalitarismos en Europa y los populismos en América Latina, que \npresentaron algunas similitudes y diferencias entre ambos continentes. Al \nrespecto, ¿cuál es un rasgo que permite diferenciar ambos procesos \nhistóricos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El uso de propaganda ideológica."
+        },
+        {
+          "letra": "B",
+          "texto": "El establecimiento de un partido único."
+        },
+        {
+          "letra": "C",
+          "texto": "El liderazgo con fuerte adhesión popular."
+        },
+        {
+          "letra": "D",
+          "texto": "El sistema económico dirigido por el Estado."
+        }
+      ]
+    },
+    {
+      "numero": 43,
+      "enunciado": "Lee el siguiente texto sobre el fascismo: \n \n \n«Hay que reconocer, sin embargo, que el fascismo presentaba algunas \nimportantes ventajas para el capital que no tenían otros regímenes. En \nprimer lugar, eliminó o venció a la revolución social izquierdista y \npareció convertirse en el principal bastión contra ella». \n \nHobsbawm, E. (1996). Historia del siglo XX. \n \n \nEl fascismo fue uno de los regímenes totalitarios que emergieron en \nEuropa en la primera mitad del siglo XX. ¿Qué característica de este \nrégimen político se expresa en el párrafo citado?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El rechazo al liberalismo político."
+        },
+        {
+          "letra": "B",
+          "texto": "El explícito carácter anticomunista."
+        },
+        {
+          "letra": "C",
+          "texto": "La hostilidad a la política de masas."
+        },
+        {
+          "letra": "D",
+          "texto": "La aversión al unipartidismo político."
+        }
+      ]
+    },
+    {
+      "numero": 44,
+      "enunciado": "El denominado Estado de Bienestar que se implementó en los países de \nOccidente desde la década de 1930 tuvo como propósito enfrentar el \nimpacto de la crisis de 1929 en las sociedades. ¿Cuál fue una de las \nimplicancias económicas que tuvo la implementación de este modelo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La reducción de las inversiones privadas en la producción."
+        },
+        {
+          "letra": "B",
+          "texto": "La eliminación de los impuestos a los patrimonios personales."
+        },
+        {
+          "letra": "C",
+          "texto": "La expansión del gasto público destinado a beneficios sociales."
+        },
+        {
+          "letra": "D",
+          "texto": "La fijación de una política de redistribución igualitaria de la renta."
+        }
+      ]
+    },
+    {
+      "numero": 45,
+      "enunciado": "Tras el término de la Segunda Guerra Mundial se iniciaron procesos de \ndescolonización en Asia y África, en países que hasta entonces habían \nformado parte de los imperios europeos. Al respecto, ¿cuál fue uno de \nlos problemas que enfrentaron los países descolonizados?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La pérdida de valor de las tradiciones propias de la cultura local."
+        },
+        {
+          "letra": "B",
+          "texto": "La desarticulación de los movimientos de apoyo a la independencia."
+        },
+        {
+          "letra": "C",
+          "texto": "El desarrollo de diversos conflictos étnicos al interior de sus \nterritorios."
+        },
+        {
+          "letra": "D",
+          "texto": "El escaso interés de Naciones Unidas para reconocer los nuevos \nEstados."
+        }
+      ]
+    },
+    {
+      "numero": 46,
+      "enunciado": "En 1947 el presidente de los Estados Unidos, Harry Truman, estableció \nuna política de contención frente al avance del comunismo soviético en el \nmundo. En ese contexto, ¿cuál es una característica sociopolítica del \nescenario internacional que comienza a configurarse tras la Segunda \nGuerra Mundial?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El fortalecimiento de las alianzas formadas durante el conflicto \nbélico."
+        },
+        {
+          "letra": "B",
+          "texto": "La activación de un nuevo enfrentamiento bélico de alcance \nplanetario."
+        },
+        {
+          "letra": "C",
+          "texto": "El surgimiento de un nuevo orden predominado por ideologías \nantagónicas."
+        },
+        {
+          "letra": "D",
+          "texto": "La consolidación de una política imperialista de las potencias \nindustrializadas."
+        }
+      ]
+    },
+    {
+      "numero": 47,
+      "enunciado": "Finalizada la Segunda Guerra Mundial los procesos de descolonización \nse aceleraron y extensos territorios en Asia y África lograron su \nindependencia. ¿Cuál fue un antecedente histórico que fundamentó el \ndesarrollo de este proceso político?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La articulación de alianzas de cooperación económica entre las \npotencias."
+        },
+        {
+          "letra": "B",
+          "texto": "La división del mundo en dos bloques políticos con ideologías \ndivergentes."
+        },
+        {
+          "letra": "C",
+          "texto": "La condena de crímenes de Lesa Humanidad en tribunales \ninternacionales."
+        },
+        {
+          "letra": "D",
+          "texto": "La declaración del principio de autodeterminación de los pueblos \npor la ONU."
+        }
+      ]
+    },
+    {
+      "numero": 48,
+      "enunciado": "El término de la Segunda Guerra Mundial implicó la creación de un nuevo \nmarco regulador de las relaciones internacionales. En este contexto, la \nOrganización de las Naciones Unidas (ONU) tuvo un papel central, \nbuscando constituirse como una institución garante de los acuerdos para \nconservar la paz. Al respecto, ¿cuál ha sido una atribución de la ONU \npara alcanzar este objetivo?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Supervisar la redacción de leyes en los Estados miembros."
+        },
+        {
+          "letra": "B",
+          "texto": "Mediar en el desarrollo de conflictos bélicos entre los Estados."
+        },
+        {
+          "letra": "C",
+          "texto": "Sugerir candidatos para las elecciones internas de los Estados."
+        },
+        {
+          "letra": "D",
+          "texto": "Impedir el crecimiento de las instituciones militares de los Estados."
+        }
+      ]
+    },
+    {
+      "numero": 49,
+      "enunciado": "El término de la Segunda Guerra Mundial generó cambios importantes en \nla geopolítica mundial, siendo el inicio del proceso de descolonización \nuno de los más significativos. Al respecto, ¿cuál de las siguientes \nafirmaciones permite explicar la relación entre estos dos procesos?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La profundización de la crisis económica en las potencias dificultó el \ncontrol de sus dominios."
+        },
+        {
+          "letra": "B",
+          "texto": "La instauración de los tratados de paz acrecentó el poder de las \ncolonias pertenecientes al bando vencedor."
+        },
+        {
+          "letra": "C",
+          "texto": "La creación de instituciones militares internacionales impidió el \ndominio de un Estado sobre territorios ajenos."
+        },
+        {
+          "letra": "D",
+          "texto": "La emergencia de dos nuevas súper potencias garantizó el respeto \nde los derechos humanos en sus zonas de influencia."
+        }
+      ]
+    },
+    {
+      "numero": 50,
+      "enunciado": "En Chile, a mediados del siglo XX la población urbana superó a la rural, \nproducto de la masiva migración campo-ciudad lo que provocó cambios \nen la fisonomía de las ciudades. ¿Qué cambio se produjo en las \nciudades producto de este proceso?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El surgimiento de núcleos de vivienda precaria de autoconstrucción."
+        },
+        {
+          "letra": "B",
+          "texto": "El rescate patrimonial de los barrios tradicionales del centro urbano."
+        },
+        {
+          "letra": "C",
+          "texto": "El acceso igualitario para los habitantes de la infraestructura \nurbana."
+        },
+        {
+          "letra": "D",
+          "texto": "El desarrollo de un plan estatal que provocó un superávit \nhabitacional."
+        }
+      ]
+    },
+    {
+      "numero": 51,
+      "enunciado": "Lee el siguiente texto relacionado con las dinámicas socioeconómicas de \nmediados del siglo XX en Chile: \n \n \n«El problema del agro quedó postergado, tanto en sus aspectos \neconómicos como sociales, lo que se manifestó en una agudización de \nsus males. El lento crecimiento agrícola se manifestó en una \ndisminución de la población rural. Entre 1940 y 1952, la población total \ncreció en 900.000 habitantes, mientras la población rural se redujo en \n25.000». \n \nAylwin, M. et al. (2011). Chile en el siglo XX. \n \n \n¿Cuál fue un factor del contexto social de la época que explica la \nsituación descrita en el texto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La disminución de los suelos disponibles para la producción \ncerealera."
+        },
+        {
+          "letra": "B",
+          "texto": "La caída de la demanda de alimentos en los mercados \ninternacionales."
+        },
+        {
+          "letra": "C",
+          "texto": "La reestructuración masiva de la propiedad de la tierra en las \nhaciendas."
+        },
+        {
+          "letra": "D",
+          "texto": "La búsqueda de mejores condiciones de vida en las principales \nciudades."
+        }
+      ]
+    },
+    {
+      "numero": 52,
+      "enunciado": "Lee el siguiente texto referido a una realidad de la sociedad chilena a \nmediados del siglo XX: \n \n \n«Yo venía de La Legua y salimos de la misma Legua en marcha con \ncarretones a caballo, carretones de mano o con cosas al hombro, \nveníamos por Santa Rosa y la gente nos preguntaba ¿qué pasa?, \n¿qué pasa? Es una toma de terrenos y tomaban sus frazadas y se \nplegaban al grupo. Los hombres entraron con todo, los carretones por \nDepartamental y nosotras las mujeres nos vinimos acá. Aquí donde es \nTreinta de Octubre».  \n \n   Garcés, M. (2002). Tomando su sitio. El movimiento de pobladores de Santiago, 1957-1970. \n \n \nA partir del párrafo citado y del conocimiento que se posee del periodo, \nestablezca la relación causal entre lo que refleja el relato y el conjunto de \nfenómenos sociales que dan origen a aquello expresado en el testimonio:",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "la incapacidad del Estado oligárquico por resolver las situaciones de \npobreza que afectaban a una parte importante de la población rural."
+        },
+        {
+          "letra": "B",
+          "texto": "la falta de partidos políticos que representaran los intereses de los \nsectores populares urbanos."
+        },
+        {
+          "letra": "C",
+          "texto": "la movilización organizada de pobladores, como una solución \nalternativa a los graves problemas de pobreza urbana y falta de \nvivienda."
+        },
+        {
+          "letra": "D",
+          "texto": "el progreso en la búsqueda de soluciones institucionales a las \ndemandas de la población pobre de las ciudades."
+        }
+      ]
+    },
+    {
+      "numero": 53,
+      "enunciado": "Lee el siguiente texto que presenta una interpretación del clima político \nque desembocó en el Golpe de Estado de 1973 en Chile: \n \n \n«El fracaso de las negociaciones, el consecuente deterioro del rol de las \ninstituciones y procedimientos mediadores tradicionales, la política de \nmovilización social y el deterioro de la autoridad del liderazgo político \nsobre sus militantes, llevaron a la incorporación de los que Juan Linz \ndenomina poderes “neutrales” al juego político. La Contraloría, los \ntribunales, el Tribunal Constitucional y, finalmente, las Fuerzas Armadas \nse vieron involucrados poco a poco en agudas controversias, que \nclaramente pertenecían a la arena política y legislativa». \n \nValenzuela, A. (1989). El quiebre de la democracia en Chile. \n \n \n \nConsiderando el contexto histórico de la época, ¿a qué factor explicativo \ndel quiebre de la democracia en Chile se refiere el texto?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El desinterés de las organizaciones comunitarias por el bienestar \nsocial."
+        },
+        {
+          "letra": "B",
+          "texto": "La indiferencia de la clase política ante la pobreza que sufría la \npoblación."
+        },
+        {
+          "letra": "C",
+          "texto": "La apatía de la sociedad civil frente a la crisis de representatividad \npolítica."
+        },
+        {
+          "letra": "D",
+          "texto": "El menoscabo de la misión de los organismos públicos por la \ncontingencia."
+        }
+      ]
+    },
+    {
+      "numero": 54,
+      "enunciado": "Lee el siguiente texto referido al proceso de recuperación de la \ndemocracia en Chile durante la década de 1980: \n \n \n«En suma, la nueva estrategia que culmina con la Concertación por el \nNo y la extraordinaria campaña que condujo al triunfo del 5 de octubre \nde 1988, fue la suma de la decisión primera de la Democracia Cristiana, \nla nítida definición del PS-Núñez distanciado tempranamente del PC y la \nespectacular evolución del PS-Almeyda, que dejó definitivamente \naislado al extremismo PC-MIR y permitió a la Concertación por el No \nconvertirse en un referente claramente mayoritario, sustentado a su vez \nen una amplia mayoría social». \n \nBoeninger, E. (1997). La democracia en Chile. Lecciones para la gobernabilidad. \n \n \nConsiderando lo señalado en el texto, ¿cuál fue una estrategia que \nfavoreció el triunfo de la opción NO en el plebiscito de 1988?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La actuación coordinada de los parlamentarios de oposición."
+        },
+        {
+          "letra": "B",
+          "texto": "La implementación de las primeras reformas al texto constitucional."
+        },
+        {
+          "letra": "C",
+          "texto": "La salida de los partidos políticos de derecha del escenario político."
+        },
+        {
+          "letra": "D",
+          "texto": "La utilización de una postura política moderada por parte de la \noposición."
+        }
+      ]
+    },
+    {
+      "numero": 55,
+      "enunciado": "Una de las transformaciones que experimentó el Estado chileno producto \nde la implementación del modelo neoliberal durante el periodo de la \nDictadura Militar (1973-1990) fue adoptar el rol de Estado subsidiario. Al \nrespecto, ¿qué implicancia tuvo para el Estado la adopción de este rol?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El traspaso de la gestión de la administración pública a manos de \nprivados."
+        },
+        {
+          "letra": "B",
+          "texto": "El abandono de la realización de programas de desarrollo social por \nparte del gobierno."
+        },
+        {
+          "letra": "C",
+          "texto": "La marginación del sector público en la participación en \ninstituciones financieras."
+        },
+        {
+          "letra": "D",
+          "texto": "La utilización del presupuesto para asistir a sectores económicos de \npoca rentabilidad para los privados."
+        }
+      ]
+    },
+    {
+      "numero": 56,
+      "enunciado": "En Chile, durante la década de 1980 se suscitó una serie de factores que \ncontribuyeron al proceso de recuperación de la democracia, entre ellos \nse ha considerado la reorganización de las fuerzas políticas. Al respecto, \n¿cómo incidió la rearticulación del escenario político en la recuperación \ndel sistema democrático?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Dificultó el liderazgo de las protestas a nivel nacional."
+        },
+        {
+          "letra": "B",
+          "texto": "Implicó el término de la polarización del debate público."
+        },
+        {
+          "letra": "C",
+          "texto": "Permitió la búsqueda de una salida pacífica a la Dictadura."
+        },
+        {
+          "letra": "D",
+          "texto": "Posibilitó la apelación a organismos jurídicos internacionales. \n \n \n \nSISTEMA ECONÓMICO"
+        }
+      ]
+    },
+    {
+      "numero": 57,
+      "enunciado": "Lee el siguiente texto sobre la situación económica de finales del siglo \nXIX en Sudáfrica: \n \n \n«Ya en 1880, las minas de Sudáfrica dominaban la oferta mundial de \ndiamantes. Sin embargo, había muchas compañías mineras y todas \ncompetían entre sí. Durante la década de 1880, Rhodes compró la \nmayor parte de esas minas y creo una única compañía, De Beers, que \nen 1889 controlaba casi toda la producción mundial de diamantes». \n \nKrugman, P. et al. (2013). Fundamentos de economía. \n \n \nConsiderando la teoría económica respecto del funcionamiento del \nmercado, ¿cuál fue un impacto de la situación descrita en el texto \nanterior?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La limitación de la libre competencia."
+        },
+        {
+          "letra": "B",
+          "texto": "El aumento de los costos de producción."
+        },
+        {
+          "letra": "C",
+          "texto": "El control de la oferta de bienes sustitutos."
+        },
+        {
+          "letra": "D",
+          "texto": "La reducción de la demanda a escala global."
+        }
+      ]
+    },
+    {
+      "numero": 58,
+      "enunciado": "Un parque urbano ha sido habilitado para realizar un concierto masivo. El \ndía del concierto se produce un aumento explosivo de los precios de la \nmayoría de los productos ofrecidos por el comercio cercano. \nConsiderando la ley de la oferta y la demanda, ¿cuál de los siguientes \nrazonamientos explica esta subida de los precios?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Los consumidores se verán afectados por la existencia de un \nmonopolio comercial."
+        },
+        {
+          "letra": "B",
+          "texto": "Los consumidores enfrentarán un descenso abrupto de la oferta de \nesos productos."
+        },
+        {
+          "letra": "C",
+          "texto": "Los comerciantes esperan beneficiarse de un aumento de la \ndemanda de sus productos."
+        },
+        {
+          "letra": "D",
+          "texto": "Los comerciantes transferirán el alza del costo de producción a los \nconsumidores."
+        }
+      ]
+    },
+    {
+      "numero": 59,
+      "enunciado": "Uno de los objetivos del Banco Central de Chile es velar por la \nestabilidad de la moneda nacional, manteniendo baja y estable la tasa de \ninflación, entre otros aspectos. Cuando este organismo decide aumentar \nla tasa de interés, ¿qué reacción busca que se produzca en el mercado \nnacional?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Desincentivar el consumo."
+        },
+        {
+          "letra": "B",
+          "texto": "Fomentar la sobreproducción."
+        },
+        {
+          "letra": "C",
+          "texto": "Estimular un aumento de la oferta."
+        },
+        {
+          "letra": "D",
+          "texto": "Restringir la importación de bienes."
+        }
+      ]
+    },
+    {
+      "numero": 60,
+      "enunciado": "José es fabricante de muebles y se abastece con una empresa \nproveedora que le trae la madera desde el sur de Chile. Al ver las \nnoticias sobre el alza de los combustibles, José está preocupado por las \nrepercusiones que pueda tener esto para su negocio. En el contexto del \nfuncionamiento de una economía de libre mercado, ¿cuál de las \nsiguientes situaciones permite justificar el temor de José?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La eficacia de las entregas a los clientes por parte del distribuidor \nde sus productos."
+        },
+        {
+          "letra": "B",
+          "texto": "El impacto que el costo de los factores productivos tendrá en el \nprecio final del producto."
+        },
+        {
+          "letra": "C",
+          "texto": "El desabastecimiento de materias primas necesarias para la \nelaboración de sus productos."
+        },
+        {
+          "letra": "D",
+          "texto": "La posibilidad de que una empresa más grande concentre la oferta \ndel mismo producto."
+        }
+      ]
+    },
+    {
+      "numero": 61,
+      "enunciado": "En un Estado de derecho, la actividad económica está regulada por un \nconjunto de normativas legales, una de las cuales corresponde a las \nleyes tributarias. Al respecto, ¿cuál es uno de los efectos provocados por \nla recaudación de impuestos en el funcionamiento del mercado?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El incremento constante del ingreso de las personas."
+        },
+        {
+          "letra": "B",
+          "texto": "La reducción de la disponibilidad de recursos fiscales."
+        },
+        {
+          "letra": "C",
+          "texto": "La disminución de la disponibilidad de bienes de consumo."
+        },
+        {
+          "letra": "D",
+          "texto": "El aumento del precio final de los productos comercializados."
+        }
+      ]
+    },
+    {
+      "numero": 62,
+      "enunciado": "Lee el siguiente caso hipotético:  \n \n \n«En un país existen tres cadenas de supermercados que operan a nivel \nnacional. Estas cadenas controlan casi el 98 % del mercado de bienes \nde consumo. La participación de cada supermercado es la siguiente: \nSuper Azul, controla el 48 %; Super Verde, el 30 %; y Super Naranjo, el \n20 %. El 2 % es cubierto por comercios de menor tamaño». \n \nElaboración propia. \n \n \nEn una economía de libre mercado, ¿qué problema se puede derivar del \ncaso descrito?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Los supermercados controlan el conjunto de la producción de \nbienes que ofrecen."
+        },
+        {
+          "letra": "B",
+          "texto": "Los supermercados más grandes fijan los precios de acuerdo con \nsus intereses."
+        },
+        {
+          "letra": "C",
+          "texto": "Los comercios de menor tamaño deben adquirir obligatoriamente su \nmercadería en los supermercados."
+        },
+        {
+          "letra": "D",
+          "texto": "El supermercado de menor tamaño tiene que vender productos \ndiferentes a los que ofrecen los grandes supermercados."
+        }
+      ]
+    },
+    {
+      "numero": 63,
+      "enunciado": "La devaluación de la moneda nacional corresponde a un fenómeno en \nque dicha moneda disminuye su valor respecto de otras. ¿Cuál es una \nconsecuencia de este fenómeno para los consumidores?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El estancamiento del salario nominal."
+        },
+        {
+          "letra": "B",
+          "texto": "El debilitamiento del poder adquisitivo."
+        },
+        {
+          "letra": "C",
+          "texto": "La reducción de la demanda del dinero."
+        },
+        {
+          "letra": "D",
+          "texto": "La disminución del precio de los bienes."
+        }
+      ]
+    },
+    {
+      "numero": 64,
+      "enunciado": "La inflación es un fenómeno económico que altera la relación existente \nentre la oferta y la demanda, afectando de diversas maneras a los \nagentes económicos. Considerando el funcionamiento del mercado, ¿de \nqué manera se evidencian los efectos de la inflación en la economía de \nuna familia?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Reduciendo el monto de los ingresos que reciben."
+        },
+        {
+          "letra": "B",
+          "texto": "Aumentando progresivamente el poder adquisitivo."
+        },
+        {
+          "letra": "C",
+          "texto": "Incrementando la cantidad de necesidades básicas."
+        },
+        {
+          "letra": "D",
+          "texto": "Disminuyendo la capacidad que tienen para ahorrar."
+        }
+      ]
+    },
+    {
+      "numero": 65,
+      "enunciado": "En el contexto de la organización de la economía, algunas empresas \npueden desplegar su capacidad de controlar el funcionamiento del \nmercado mediante la aplicación de diversas acciones, con el propósito de \nalcanzar una posición monopólica. Al respecto, ¿cuál de las siguientes \nsituaciones limita las posibilidades de configurar un monopolio?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La presión ejercida por el aumento sostenido de la oferta."
+        },
+        {
+          "letra": "B",
+          "texto": "La aplicación de un conjunto de impuestos a la producción."
+        },
+        {
+          "letra": "C",
+          "texto": "La aprobación de leyes que garanticen la libre competencia."
+        },
+        {
+          "letra": "D",
+          "texto": "La fijación de precios por parte de las unidades productoras.  \n \n \n \nLISTADO DE REFERENCIAS BIBLIOGRÁFICAS \n \n \nN° \nde \npregunta \nCita bibliográfica \n2 Martín, \nF. \n(2014). \nMensaje \na \nla \npoblación \n[caricatura]. \nhttps://ferranhumor.wordpress.com/2014/01/18/mensaje-a-la-poblacion/ \n4 Programa de las Naciones Unidas para el Desarrollo (2008). Informe Anual \n2008. El fomento de la capacidad: Empoderamiento de las personas y las \ninstituciones. \nhttps://www.undp.org/es/el-salvador/publicaciones/informe-\nanual-mundial-pnud-2008 \n6 Constitución Política de la República de Chile [Const]. Art. 52. 23 de agosto \nde 2022 (Chile). \n7 Servicio Electoral de Chile (s. f.). Elecciones Presidenciales: Resultados \nGlobales. \nhttps://www.servel.cl/elecciones-presidenciales-resultados-\nglobales/ \n12 Sartori, G. (2012). ¿Qué es la Democracia? Taurus. \n17 Herrera, S. (2007). La formación de los estados nacionales en la América \nhispánica: de la colonia al siglo XIX. UCA editores. \n23 Constitución Política de la República de Chile [Const]. Art. 5. 26 de mayo \nde 1833 (Chile). \n24 Salazar, G. y Pinto, J. (2010). Historia contemporánea de Chile (Vol. 3: La \neconomía: mercados, empresarios y trabajadores). LOM Ediciones. \n26 El Veintiuno de Mayo de Iquique. (26 de enero de 1883). Citado en \nSalazar, G. y Pinto, J. (2010). Historia Contemporánea de Chile (Vol. 3: La \neconomía, mercados, empresarios y trabajadores). LOM Ediciones. \n29 Collier, S. y Sater, W. (1999). Historia de Chile 1808-1994. Cambridge \nUniversity Press. \n31 Memoria Chilena (s.f.). La industria del salitre en Chile (1880-1930). \nComercialización \ny \npublicidad \nsalitrera. \nhttps://www.memoriachilena.gob.cl/602/w3-article-92924.html \n32 Drake, P. (1992). Socialismo y populismo. Chile 1936-1973. Instituto de \nHistoria, Vicerrectoría Académica, Universidad Católica de Valparaíso. \n33 Recabarren, L. (1971). Ricos y pobres. Austral. \n35 Mac-Iver, E. (1900). Discurso sobre la crisis moral de la república. Imprenta \nModerna. \n39 Manifestación del Partido Nazi [Fotografía]. (1936). Österreichische \nNationalbibliothek. https://onb.digital/result/111B9781 \n40 Tannenbaum, E. (1975). La experiencia fascista. Sociedad y cultura en \nItalia (1922-1945). Alianza Universitaria. \n43 Hobsbawm, E. (1996). Historia del siglo XX. Crítica. \n51 Aylwin, M., Bascuñan, C., Correa, S., Gazmuri, C., Serrano, S., Tagle, M. \n(2011). Chile en el siglo XX. Planeta. \n52 Garcés, M. (2002). Tomando su sitio. El movimiento de pobladores de \nSantiago, 1957 - 1970. LOM Ediciones. \n \n53 Valenzuela, A. (1989). El quiebre de la democracia en Chile. FLACSO. \n54 Boeninger, E. (1997). Democracia en Chile. Lecciones para la \ngobernabilidad. Andrés Bello. \n57 Krugman, P. Wells, R., Graddy, K. (2013). Fundamentos de economía. \nReverté. \n \nIMPORTANTE\nProceso de Admisión 2 0 2 5\n■ Este folleto está protegido bajo Registro de Propiedad Intelectual de la \nUniversidad de Chile.\n■ Está prohibida la reproducción, transmisión total o parcial de este folleto, \npor cualquier medio o método.\n■ Es obligatorio devolver íntegramente este folleto antes de abandonar la \nsala.\n■ Es obligatorio devolver la hoja de respuestas antes de abandonar la sala."
+        }
+      ]
+    }
+  ]
+}
