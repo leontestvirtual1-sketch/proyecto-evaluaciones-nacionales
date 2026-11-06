@@ -52,7 +52,7 @@ function formatTituloAmigable(doc: DocumentoDemre): string {
 
   switch (doc.tipo) {
     case 'prueba': {
-      const extra = isMarcadas ? ' — Respuestas Marcadas' : '';
+      const extra = isMarcadas ? ' — Respuestas Marcadas' : ' — Facsímil Limpio (Para Ensayar)';
       return `Prueba Oficial ${instrumento} ${matInfo.label} (${edicion} ${doc.anio})${extra}`;
     }
     case 'clavijero':
@@ -437,10 +437,18 @@ export const DescargaDemrePage: React.FC = () => {
                             {isInvierno ? 'Invierno' : 'Regular'}
                           </span>
                         )}
-                        {isMarcadas && (
-                          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                            Respuestas Marcadas
-                          </span>
+                        {doc.tipo === 'prueba' && (
+                          isMarcadas ? (
+                            <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+                              <span>⚠️</span>
+                              <span>Respuestas Marcadas (Docente)</span>
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                              <span>✨</span>
+                              <span>Facsímil Limpio (Para Alumnos)</span>
+                            </span>
+                          )
                         )}
                       </div>
 
@@ -465,6 +473,22 @@ export const DescargaDemrePage: React.FC = () => {
                       <p className="text-[11px] text-slate-500 font-mono mt-1 truncate" title={doc.archivo}>
                         {doc.archivo}
                       </p>
+
+                      {/* Indicador pedagógico para pruebas */}
+                      {doc.tipo === 'prueba' && (
+                        <div className={`mt-2.5 px-2.5 py-1.5 rounded-lg border text-[11px] leading-tight flex items-start gap-1.5 ${
+                          isMarcadas
+                            ? 'bg-amber-950/30 border-amber-500/30 text-amber-200/90'
+                            : 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200/90'
+                        }`}>
+                          <span className="shrink-0 text-xs mt-0.5">{isMarcadas ? '⚠️' : '🎯'}</span>
+                          <span>
+                            {isMarcadas
+                              ? 'Pauta oficial con respuestas marcadas por DEMRE. Uso sugerido: corrección y revisión docente.'
+                              : 'Facsímil limpio en blanco. Listo para asignar, ensayar o imprimir con tus alumnos sin respuestas.'}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Área / Materia */}
