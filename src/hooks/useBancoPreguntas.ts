@@ -89,20 +89,41 @@ export function useBancoPreguntas({ user, isSandboxMode }: UseBancoPreguntasProp
         //   y en BD → RPC get_preguntas_evaluacion (migración 057).
         const BANCO_DOCENTE_COLUMNS = 
           'id, propietario_id, asignatura_id, eje_tematico_id, habilidad_id, tipo, nivel, dificultad, enunciado, imagen_url, tabla_markdown, alternativas, respuesta_correcta, puntaje, fuente, rbd, created_at, updated_at';
-        let query = supabase.from('preguntas').select(BANCO_DOCENTE_COLUMNS);
-        // Si no es admin: el docente en su perfil consulta únicamente las preguntas creadas y cargadas por él
-        if (user!.rol !== 'admin') {
-          query = query.eq('propietario_id', user!.id);
-        }
 
-        const { data, error } = await query.order('created_at', { ascending: false });
+        let rawRows: Record<string, unknown>[] = [];
+        let from = 0;
+        const PAGE_SIZE = 1000;
+        let hasMore = true;
 
-        if (error) {
-          console.warn('[useBancoPreguntas] Error al consultar Supabase:', error.message);
+        while (hasMore && isMounted) {
+          let query = supabase.from('preguntas').select(BANCO_DOCENTE_COLUMNS);
+          // Si no es admin: el docente en su perfil consulta únicamente las preguntas creadas y cargadas por él
+          if (user!.rol !== 'admin') {
+            query = query.eq('propietario_id', user!.id);
+          }
+
+          const { data, error } = await query
+            .order('created_at', { ascending: false })
+            .range(from, from + PAGE_SIZE - 1);
+
+          if (error) {
+            console.warn('[useBancoPreguntas] Error al consultar Supabase:', error.message);
+            break;
+          }
+
+          if (!data || data.length === 0) {
+            hasMore = false;
+          } else {
+            rawRows = rawRows.concat(data as unknown as Record<string, unknown>[]);
+            if (data.length < PAGE_SIZE) {
+              hasMore = false;
+            } else {
+              from += PAGE_SIZE;
+            }
+          }
         }
 
         if (isMounted) {
-          const rawRows = (data as unknown as Record<string, unknown>[] | null) || [];
           const dbQuestions = rawRows.length > 0 ? rawRows.map(mapRowToPregunta) : [];
 
           // Enriquecedor de metadatos (imágenes oficiales y tablas formateadas)
