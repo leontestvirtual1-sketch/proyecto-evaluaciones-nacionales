@@ -512,6 +512,33 @@ function MainAppContent({
               onOpenGenerator={() => setIsGeneratorOpen(true)}
               onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
               onUpdatePruebaEstado={handleUpdatePruebaEstado}
+              modulo="evaluaciones"
+            />
+          );
+        case 'simce':
+          return (
+            <EvaluacionesPage
+              pruebas={dashboardPruebas}
+              asignaturas={asignaturas}
+              bancoPreguntas={bancoPreguntas}
+              currentUser={user}
+              onOpenGenerator={() => setIsGeneratorOpen(true)}
+              onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
+              onUpdatePruebaEstado={handleUpdatePruebaEstado}
+              modulo="simce"
+            />
+          );
+        case 'paes':
+          return (
+            <EvaluacionesPage
+              pruebas={dashboardPruebas}
+              asignaturas={asignaturas}
+              bancoPreguntas={bancoPreguntas}
+              currentUser={user}
+              onOpenGenerator={() => setIsGeneratorOpen(true)}
+              onSelectPruebaReporte={(id) => setSelectedReportPruebaId(id)}
+              onUpdatePruebaEstado={handleUpdatePruebaEstado}
+              modulo="paes"
             />
           );
         case 'usuarios':

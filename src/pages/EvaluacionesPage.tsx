@@ -489,6 +489,7 @@ interface EvaluacionesPageProps {
   onSelectPruebaReporte: (pruebaId: string) => void;
   onUpdatePruebaEstado: (pruebaId: string, nuevoEstado: 'borrador' | 'activa' | 'finalizada') => void;
   onAddRendicion?: (rendicion: RendicionPrueba) => void;
+  modulo?: 'evaluaciones' | 'simce' | 'paes' | 'todos';
 }
 
 export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
@@ -499,7 +500,8 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   isSandboxMode = false,
   onOpenGenerator,
   onSelectPruebaReporte,
-  onUpdatePruebaEstado
+  onUpdatePruebaEstado,
+  modulo = 'todos'
 }) => {
   const { alumnos } = useAcademicData();
   const isDocente = currentUser?.rol === 'profesor' && currentUser?.asignaturaId;
@@ -510,6 +512,8 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   const [selectedEstado, setSelectedEstado] = useState<string>('todos');
   const [tipoFiltro, setTipoFiltro] = useState<'todos' | 'paes' | 'simce' | 'diagnostica'>('todos');
   const [anioPaesFiltro, setAnioPaesFiltro] = useState<string>('todos');
+  const [nivelSimceFiltro, setNivelSimceFiltro] = useState<string>('todos');
+  const [tipoInternoFiltro, setTipoInternoFiltro] = useState<'todos' | 'aula' | 'diagnostica'>('todos');
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [facsimilModalOpen, setFacsimilModalOpen] = useState(false);
@@ -543,10 +547,31 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   // If user is a teacher, filter to their subject
   const userPruebas = isDocente ? pruebas.filter(p => p.asignaturaId === currentUser.asignaturaId) : pruebas;
 
+  // Evaluaciones correspondientes al módulo activo
+  const moduloPruebas = React.useMemo(() => {
+    if (modulo === 'paes') {
+      return userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'paes');
+    }
+    if (modulo === 'simce') {
+      return userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'simce');
+    }
+    if (modulo === 'evaluaciones') {
+      return userPruebas.filter(p => {
+        const t = parseEvaluacionInfo(p).tipo;
+        return t === 'aula' || t === 'diagnostica';
+      });
+    }
+    return userPruebas;
+  }, [userPruebas, modulo]);
+
   const conteoTotal = userPruebas.length;
   const conteoPaes = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'paes').length, [userPruebas]);
   const conteoSimce = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'simce').length, [userPruebas]);
   const conteoDiag = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'diagnostica').length, [userPruebas]);
+  const conteoInternas = React.useMemo(() => userPruebas.filter(p => {
+    const t = parseEvaluacionInfo(p).tipo;
+    return t === 'aula' || t === 'diagnostica';
+  }).length, [userPruebas]);
 
   const aniosPaesDisponibles = React.useMemo(() => {
     const set = new Set<string>();
@@ -559,15 +584,29 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
     return Array.from(set).sort().reverse();
   }, [userPruebas]);
 
-  const filteredPruebas = userPruebas.filter((prueba) => {
+  const filteredPruebas = moduloPruebas.filter((prueba) => {
     const meta = parseEvaluacionInfo(prueba);
 
-    if (tipoFiltro !== 'todos' && meta.tipo !== tipoFiltro) {
-      return false;
-    }
-
-    if (tipoFiltro === 'paes' && anioPaesFiltro !== 'todos' && meta.anio !== anioPaesFiltro) {
-      return false;
+    // Subfiltros según módulo
+    if (modulo === 'paes') {
+      if (anioPaesFiltro !== 'todos' && meta.anio !== anioPaesFiltro) {
+        return false;
+      }
+    } else if (modulo === 'simce') {
+      if (nivelSimceFiltro !== 'todos' && prueba.nivel !== nivelSimceFiltro) {
+        return false;
+      }
+    } else if (modulo === 'evaluaciones') {
+      if (tipoInternoFiltro === 'aula' && meta.tipo !== 'aula') return false;
+      if (tipoInternoFiltro === 'diagnostica' && meta.tipo !== 'diagnostica') return false;
+    } else {
+      // Modo consolidado / todos
+      if (tipoFiltro !== 'todos' && meta.tipo !== tipoFiltro) {
+        return false;
+      }
+      if (tipoFiltro === 'paes' && anioPaesFiltro !== 'todos' && meta.anio !== anioPaesFiltro) {
+        return false;
+      }
     }
 
     const matchesSearch =
@@ -586,9 +625,9 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
     return matchesSearch && matchesAsignatura && matchesEstado;
   });
 
-  const totalActivas = userPruebas.filter((p) => p.estado === 'activa').length;
-  const totalFinalizadas = userPruebas.filter((p) => p.estado === 'finalizada').length;
-  const totalBorradores = userPruebas.filter((p) => p.estado === 'borrador').length;
+  const moduloActivas = moduloPruebas.filter((p) => p.estado === 'activa').length;
+  const moduloFinalizadas = moduloPruebas.filter((p) => p.estado === 'finalizada').length;
+  const moduloBorradores = moduloPruebas.filter((p) => p.estado === 'borrador').length;
 
   return (
     <div className="space-y-8 animate-fade-in pb-12">
@@ -600,18 +639,38 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
         </div>
       )}
 
-      {/* Header Banner */}
+      {/* Header Banner Dinámico por Módulo */}
       <div className="glass-card p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-indigo-500/20 text-white relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-              <BookOpen className="w-3.5 h-3.5 mr-1.5 text-indigo-400" /> Gestión de Evaluaciones & Ensayos
+              {modulo === 'paes' ? (
+                <>🏛️ Módulo PAES Oficiales DEMRE</>
+              ) : modulo === 'simce' ? (
+                <>📊 Módulo Ensayos SIMCE Estandarizados</>
+              ) : modulo === 'evaluaciones' ? (
+                <>🏫 Módulo Evaluaciones & Controles Internos</>
+              ) : (
+                <><BookOpen className="w-3.5 h-3.5 mr-1.5 text-indigo-400" /> Gestión General de Evaluaciones & Ensayos</>
+              )}
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              {currentUser?.rol === 'profesor' ? `Mis Evaluaciones — ${currentUser.asignaturaNombre || 'Especialidad'}` : 'Evaluaciones Creadas'}
+              {modulo === 'paes'
+                ? 'PAES Oficiales DEMRE'
+                : modulo === 'simce'
+                ? 'Ensayos SIMCE Estandarizados'
+                : modulo === 'evaluaciones'
+                ? (currentUser?.rol === 'profesor' ? `Mis Evaluaciones & Controles — ${currentUser.asignaturaNombre || 'Especialidad'}` : 'Evaluaciones & Controles Internos')
+                : (currentUser?.rol === 'profesor' ? `Mis Evaluaciones — ${currentUser.asignaturaNombre || 'Especialidad'}` : 'Evaluaciones Creadas')}
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
-              Crea, administra y distribuye pruebas estandarizadas nacionales y ensayos SIMCE. Obtén códigos de acceso directo para tus alumnos y analiza los resultados en tiempo real.
+              {modulo === 'paes'
+                ? 'Catálogo completo de pruebas y facsímiles oficiales liberados por DEMRE (Procesos de Admisión 2023, 2024, 2025 y 2026 Regular e Invierno) para Competencia Lectora, M1, M2, Ciencias (Biología, Física, Química) e Historia.'
+                : modulo === 'simce'
+                ? 'Batería de ensayos formativos oficiales SIMCE para 4° Básico, 6° Básico y 2° Medio con métricas de logro y cobertura curricular estandarizada MINEDUC.'
+                : modulo === 'evaluaciones'
+                ? 'Crea, administra y calibra pruebas de unidad, diagnósticos de aula y controles institucionales diseñados por el equipo docente.'
+                : 'Crea, administra y distribuye pruebas estandarizadas nacionales y ensayos SIMCE. Obtén códigos de acceso directo para tus alumnos y analiza los resultados en tiempo real.'}
             </p>
           </div>
 
@@ -639,15 +698,17 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
         </div>
       </div>
 
-      {/* Stats Quick Grid */}
+      {/* Stats Quick Grid adaptada al módulo */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="glass-card p-4 flex items-center gap-3">
           <div className="p-2.5 bg-indigo-500/10 text-indigo-500 rounded-xl">
             <FileText className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Total Ensayos</p>
-            <p className="text-xl font-extrabold text-slate-900 dark:text-white">{userPruebas.length}</p>
+            <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+              {modulo === 'paes' ? 'Total PAES' : modulo === 'simce' ? 'Total SIMCE' : modulo === 'evaluaciones' ? 'Total Internas' : 'Total Ensayos'}
+            </p>
+            <p className="text-xl font-extrabold text-slate-900 dark:text-white">{moduloPruebas.length}</p>
           </div>
         </div>
 
@@ -657,7 +718,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
           <div>
             <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Activas</p>
-            <p className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">{totalActivas}</p>
+            <p className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">{moduloActivas}</p>
           </div>
         </div>
 
@@ -667,7 +728,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
           <div>
             <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Finalizadas</p>
-            <p className="text-xl font-extrabold text-slate-700 dark:text-slate-300">{totalFinalizadas}</p>
+            <p className="text-xl font-extrabold text-slate-700 dark:text-slate-300">{moduloFinalizadas}</p>
           </div>
         </div>
 
@@ -677,82 +738,22 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
           <div>
             <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Borradores</p>
-            <p className="text-xl font-extrabold text-amber-600 dark:text-amber-400">{totalBorradores}</p>
+            <p className="text-xl font-extrabold text-amber-600 dark:text-amber-400">{moduloBorradores}</p>
           </div>
         </div>
       </div>
 
-      {/* Selector de Instrumento: PAES / SIMCE / Diagnóstica */}
+      {/* Selector / Pestañas según Módulo */}
       <div className="glass-card p-4 space-y-3">
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-            <button
-              onClick={() => { setTipoFiltro('todos'); setAnioPaesFiltro('todos'); }}
-              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-                tipoFiltro === 'todos'
-                  ? 'bg-slate-800 text-white border border-slate-700 shadow-sm'
-                  : 'bg-slate-900/40 text-slate-400 hover:text-white border border-transparent'
-              }`}
-            >
-              <span>Todas las Evaluaciones ({conteoTotal})</span>
-            </button>
-
-            <button
-              onClick={() => setTipoFiltro('paes')}
-              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
-                tipoFiltro === 'paes'
-                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/40 scale-[1.02]'
-                  : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/20'
-              }`}
-            >
-              <span>🏛️</span>
-              <span>PAES Oficiales DEMRE ({conteoPaes})</span>
-            </button>
-
-            <button
-              onClick={() => { setTipoFiltro('simce'); setAnioPaesFiltro('todos'); }}
-              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
-                tipoFiltro === 'simce'
-                  ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30 border border-cyan-400/40 scale-[1.02]'
-                  : 'bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20'
-              }`}
-            >
-              <span>📊</span>
-              <span>Ensayos SIMCE ({conteoSimce})</span>
-            </button>
-
-            <button
-              onClick={() => { setTipoFiltro('diagnostica'); setAnioPaesFiltro('todos'); }}
-              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
-                tipoFiltro === 'diagnostica'
-                  ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/30 border border-amber-400/40 scale-[1.02]'
-                  : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 border border-amber-500/20'
-              }`}
-            >
-              <span>📋</span>
-              <span>Pruebas Diagnósticas ({conteoDiag})</span>
-            </button>
-          </div>
-
-          {tipoFiltro !== 'todos' && (
-            <button
-              onClick={() => { setTipoFiltro('todos'); setAnioPaesFiltro('todos'); }}
-              className="text-xs text-indigo-400 hover:text-indigo-300 underline font-semibold"
-            >
-              ✕ Mostrar todas
-            </button>
-          )}
-        </div>
-
-        {/* Sub-filtro de Años / Procesos PAES */}
-        {tipoFiltro === 'paes' && aniosPaesDisponibles.length > 0 && (
-          <div className="pt-2.5 border-t border-indigo-500/20 flex items-center gap-2 flex-wrap text-xs">
-            <span className="text-slate-400 font-semibold flex items-center gap-1">
-              <span>📅 Proceso PAES:</span>
+        {modulo === 'paes' ? (
+          /* Pestañas específicas para Módulo PAES */
+          <div className="flex items-center gap-2 flex-wrap text-xs">
+            <span className="text-slate-400 font-semibold flex items-center gap-1 mr-1">
+              <span>📅 Proceso Admisión:</span>
             </span>
             <button
               onClick={() => setAnioPaesFiltro('todos')}
-              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
+              className={`px-3 py-1.5 rounded-xl font-bold border transition-all ${
                 anioPaesFiltro === 'todos'
                   ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
                   : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
@@ -769,16 +770,179 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                 <button
                   key={yr}
                   onClick={() => setAnioPaesFiltro(yr)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
+                  className={`px-3 py-1.5 rounded-xl font-bold border transition-all ${
                     anioPaesFiltro === yr
                       ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
                       : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
                   }`}
                 >
-                  PAES {yr} ({countYr})
+                  Proceso {yr} ({countYr})
                 </button>
               );
             })}
+          </div>
+        ) : modulo === 'simce' ? (
+          /* Pestañas específicas para Módulo SIMCE */
+          <div className="flex items-center gap-2 flex-wrap text-xs">
+            <span className="text-slate-400 font-semibold flex items-center gap-1 mr-1">
+              <span>🎓 Nivel Escolar:</span>
+            </span>
+            {['todos', '2° Medio', '6° Básico', '4° Básico'].map((lvl) => {
+              const count = lvl === 'todos'
+                ? conteoSimce
+                : userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'simce' && p.nivel === lvl).length;
+              return (
+                <button
+                  key={lvl}
+                  onClick={() => setNivelSimceFiltro(lvl)}
+                  className={`px-3 py-1.5 rounded-xl font-bold border transition-all ${
+                    nivelSimceFiltro === lvl
+                      ? 'bg-cyan-600 text-white border-cyan-500 shadow-sm'
+                      : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+                  }`}
+                >
+                  {lvl === 'todos' ? `Todos los Niveles (${count})` : `${lvl} (${count})`}
+                </button>
+              );
+            })}
+          </div>
+        ) : modulo === 'evaluaciones' ? (
+          /* Pestañas específicas para Evaluaciones & Controles Internos */
+          <div className="flex items-center gap-2 flex-wrap text-xs">
+            <span className="text-slate-400 font-semibold flex items-center gap-1 mr-1">
+              <span>📋 Tipo de Instrumento:</span>
+            </span>
+            <button
+              onClick={() => setTipoInternoFiltro('todos')}
+              className={`px-3 py-1.5 rounded-xl font-bold border transition-all ${
+                tipoInternoFiltro === 'todos'
+                  ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                  : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+              }`}
+            >
+              Todas las Internas ({conteoInternas})
+            </button>
+            <button
+              onClick={() => setTipoInternoFiltro('aula')}
+              className={`px-3 py-1.5 rounded-xl font-bold border transition-all ${
+                tipoInternoFiltro === 'aula'
+                  ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                  : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+              }`}
+            >
+              🏫 Pruebas de Aula ({userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'aula').length})
+            </button>
+            <button
+              onClick={() => setTipoInternoFiltro('diagnostica')}
+              className={`px-3 py-1.5 rounded-xl font-bold border transition-all ${
+                tipoInternoFiltro === 'diagnostica'
+                  ? 'bg-amber-600 text-white border-amber-500 shadow-sm'
+                  : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+              }`}
+            >
+              📋 Pruebas Diagnósticas ({conteoDiag})
+            </button>
+          </div>
+        ) : (
+          /* Modo Consolidado (Todos los Instrumentos) */
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+                <button
+                  onClick={() => { setTipoFiltro('todos'); setAnioPaesFiltro('todos'); }}
+                  className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all whitespace-nowrap ${
+                    tipoFiltro === 'todos'
+                      ? 'bg-slate-800 text-white border border-slate-700 shadow-sm'
+                      : 'bg-slate-900/40 text-slate-400 hover:text-white border border-transparent'
+                  }`}
+                >
+                  <span>Todas las Evaluaciones ({conteoTotal})</span>
+                </button>
+
+                <button
+                  onClick={() => setTipoFiltro('paes')}
+                  className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
+                    tipoFiltro === 'paes'
+                      ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/40 scale-[1.02]'
+                      : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/20'
+                  }`}
+                >
+                  <span>🏛️</span>
+                  <span>PAES Oficiales DEMRE ({conteoPaes})</span>
+                </button>
+
+                <button
+                  onClick={() => { setTipoFiltro('simce'); setAnioPaesFiltro('todos'); }}
+                  className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
+                    tipoFiltro === 'simce'
+                      ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30 border border-cyan-400/40 scale-[1.02]'
+                      : 'bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20'
+                  }`}
+                >
+                  <span>📊</span>
+                  <span>Ensayos SIMCE ({conteoSimce})</span>
+                </button>
+
+                <button
+                  onClick={() => { setTipoFiltro('diagnostica'); setAnioPaesFiltro('todos'); }}
+                  className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
+                    tipoFiltro === 'diagnostica'
+                      ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/30 border border-amber-400/40 scale-[1.02]'
+                      : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 border border-amber-500/20'
+                  }`}
+                >
+                  <span>📋</span>
+                  <span>Pruebas Diagnósticas ({conteoDiag})</span>
+                </button>
+              </div>
+
+              {tipoFiltro !== 'todos' && (
+                <button
+                  onClick={() => { setTipoFiltro('todos'); setAnioPaesFiltro('todos'); }}
+                  className="text-xs text-indigo-400 hover:text-indigo-300 underline font-semibold"
+                >
+                  ✕ Mostrar todas
+                </button>
+              )}
+            </div>
+
+            {/* Sub-filtro de Años / Procesos PAES en modo consolidado */}
+            {tipoFiltro === 'paes' && aniosPaesDisponibles.length > 0 && (
+              <div className="pt-2.5 border-t border-indigo-500/20 flex items-center gap-2 flex-wrap text-xs">
+                <span className="text-slate-400 font-semibold flex items-center gap-1">
+                  <span>📅 Proceso PAES:</span>
+                </span>
+                <button
+                  onClick={() => setAnioPaesFiltro('todos')}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
+                    anioPaesFiltro === 'todos'
+                      ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                      : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+                  }`}
+                >
+                  Todos los Procesos ({conteoPaes})
+                </button>
+                {aniosPaesDisponibles.map((yr) => {
+                  const countYr = userPruebas.filter(p => {
+                    const m = parseEvaluacionInfo(p);
+                    return m.tipo === 'paes' && m.anio === yr;
+                  }).length;
+                  return (
+                    <button
+                      key={yr}
+                      onClick={() => setAnioPaesFiltro(yr)}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
+                        anioPaesFiltro === yr
+                          ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                          : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
+                      }`}
+                    >
+                      PAES {yr} ({countYr})
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
       </div>

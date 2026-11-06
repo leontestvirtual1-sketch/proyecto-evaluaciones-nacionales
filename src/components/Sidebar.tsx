@@ -20,12 +20,15 @@ import {
   User,
 
   BookMarked,
-  DownloadCloud
+  DownloadCloud,
+  Award
 } from 'lucide-react';
 
 export type PageId =
   | 'dashboard'
   | 'evaluaciones'
+  | 'simce'
+  | 'paes'
   | 'cursos'
   | 'alumnos'
   | 'profesores'
@@ -63,10 +66,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
 
   const NAV_ITEMS_ADMIN: NavItem[] = [
     { id: 'dashboard', label: 'Dashboard General', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
-    { id: 'evaluaciones', label: 'Todas las Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Evaluaciones & Controles', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'simce', label: 'Ensayos SIMCE', icon: <Award className="w-4.5 h-4.5" /> },
+    { id: 'paes', label: 'PAES Oficiales DEMRE', icon: <GraduationCap className="w-4.5 h-4.5" /> },
     { id: 'cursos', label: 'Gestión de Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
     { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
-    { id: 'profesores', label: 'Equipo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+    { id: 'profesores', label: 'Equipo Docente', icon: <UserCheck className="w-4.5 h-4.5" /> },
     { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
     { id: 'biblioteca', label: 'Biblioteca Digital', icon: <BookMarked className="w-4.5 h-4.5" /> },
     { id: 'descarga-demre', label: 'Descargas DEMRE', icon: <DownloadCloud className="w-4.5 h-4.5" /> },
@@ -81,7 +86,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
 
   const NAV_ITEMS_PROFESOR: NavItem[] = [
     { id: 'dashboard', label: 'Mi Dashboard', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
-    { id: 'evaluaciones', label: 'Mis Evaluaciones', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Mis Evaluaciones & Controles', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'simce', label: 'Ensayos SIMCE', icon: <Award className="w-4.5 h-4.5" /> },
+    { id: 'paes', label: 'PAES Oficiales DEMRE', icon: <GraduationCap className="w-4.5 h-4.5" /> },
     { id: 'cursos', label: 'Mis Cursos', icon: <Layers className="w-4.5 h-4.5" /> },
     { id: 'alumnos', label: 'Mis Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
     { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
@@ -91,20 +98,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate, isSand
 
   const NAV_ITEMS_DIRECTOR: NavItem[] = [
     { id: 'dashboard', label: 'Cuadro de Mando', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
-    { id: 'evaluaciones', label: 'Evaluaciones & Ensayos', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Evaluaciones & Controles', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'simce', label: 'Ensayos SIMCE', icon: <Award className="w-4.5 h-4.5" /> },
+    { id: 'paes', label: 'PAES Oficiales DEMRE', icon: <GraduationCap className="w-4.5 h-4.5" /> },
     { id: 'cursos', label: 'Cursos del Colegio', icon: <Layers className="w-4.5 h-4.5" /> },
     { id: 'alumnos', label: 'Alumnos Matriculados', icon: <Users className="w-4.5 h-4.5" /> },
-    { id: 'profesores', label: 'Cuerpo Docente', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+    { id: 'profesores', label: 'Cuerpo Docente', icon: <UserCheck className="w-4.5 h-4.5" /> },
     { id: 'biblioteca', label: 'Biblioteca Digital', icon: <BookMarked className="w-4.5 h-4.5" /> },
     { id: 'descarga-demre', label: 'Descargas DEMRE', icon: <DownloadCloud className="w-4.5 h-4.5" /> },
   ];
 
   const NAV_ITEMS_UTP: NavItem[] = [
     { id: 'dashboard', label: 'Dashboard UTP', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
-    { id: 'evaluaciones', label: 'Evaluaciones del Área', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'evaluaciones', label: 'Evaluaciones & Controles', icon: <BookOpen className="w-4.5 h-4.5" /> },
+    { id: 'simce', label: 'Ensayos SIMCE', icon: <Award className="w-4.5 h-4.5" /> },
+    { id: 'paes', label: 'PAES Oficiales DEMRE', icon: <GraduationCap className="w-4.5 h-4.5" /> },
     { id: 'cursos', label: 'Cursos Asignados', icon: <Layers className="w-4.5 h-4.5" /> },
     { id: 'alumnos', label: 'Alumnos', icon: <Users className="w-4.5 h-4.5" /> },
-    { id: 'profesores', label: 'Docentes Supervisados', icon: <GraduationCap className="w-4.5 h-4.5" /> },
+    { id: 'profesores', label: 'Docentes Supervisados', icon: <UserCheck className="w-4.5 h-4.5" /> },
     { id: 'banco-preguntas', label: 'Banco de Preguntas', icon: <Library className="w-4.5 h-4.5" /> },
     { id: 'biblioteca', label: 'Biblioteca Digital', icon: <BookMarked className="w-4.5 h-4.5" /> },
     { id: 'descarga-demre', label: 'Descargas DEMRE', icon: <DownloadCloud className="w-4.5 h-4.5" /> },
