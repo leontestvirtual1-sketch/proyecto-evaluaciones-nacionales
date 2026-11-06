@@ -295,11 +295,11 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
               {/* Imagen (solo si no está insertada inline con [IMAGEN] o Markdown) */}
               {imagenUrl && !(/\[(IMAGEN|FIGURA)\]/i.test(enunciado || '') || enunciado?.includes('![')) && (
                 <div className="flex justify-center py-2">
-                  <div className="bg-white rounded-xl shadow-md border border-slate-300 p-3 max-w-md mx-auto">
+                  <div className="bg-white rounded-xl shadow-md border border-slate-300 p-3 max-w-2xl mx-auto">
                     <img
                       src={resolveImageUrl(imagenUrl)}
                       alt="Figura pedagógica"
-                      className="max-h-56 w-auto object-contain rounded"
+                      className="max-h-96 w-auto object-contain rounded"
                     />
                   </div>
                 </div>
@@ -394,8 +394,8 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
                 <textarea
                   value={enunciado}
                   onChange={(e) => setEnunciado(e.target.value)}
-                  rows={6}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-sans leading-relaxed transition-all placeholder:text-slate-500"
+                  rows={12}
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-sans leading-relaxed transition-all placeholder:text-slate-500 min-h-[240px]"
                   placeholder="Escribe el enunciado de la pregunta aquí... Usa **negrita**, $fórmulas$ y tablas | col1 | col2 |"
                 />
               </div>
@@ -421,11 +421,11 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
 
                 {imagenUrl ? (
                   <div className="flex flex-col sm:flex-row items-center gap-4 bg-slate-900/60 border border-slate-700 p-3 rounded-xl">
-                    <div className="bg-white rounded-lg p-2 max-w-[180px] max-h-32 flex items-center justify-center overflow-hidden">
+                    <div className="bg-white rounded-lg p-2 max-w-[240px] max-h-48 flex items-center justify-center overflow-hidden">
                       <img
                         src={resolveImageUrl(imagenUrl)}
                         alt="Previsualización"
-                        className="max-h-28 w-auto object-contain"
+                        className="max-h-44 w-auto object-contain"
                       />
                     </div>
                     <div className="flex-1 min-w-0 space-y-2">

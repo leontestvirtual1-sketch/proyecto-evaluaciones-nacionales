@@ -7,6 +7,7 @@ import {
   UserProfile
 } from '../types';
 import { PreguntaFormModal } from '../components/PreguntaFormModal';
+import { EditarPreguntaModal } from '../components/EditarPreguntaModal';
 import { EnunciadoRenderer } from '../components/common/EnunciadoRenderer';
 import { resolveImageUrl } from '../lib/storage';
 import { useCursos } from '../hooks/useCursos';
@@ -115,6 +116,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
   const [nivelFilter, setNivelFilter] = useState<string>('');
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [editarModalOpen, setEditarModalOpen] = useState(false);
   const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
   const [saveStatus, setSaveStatus] = useState<{ type: 'success' | 'error' | 'saving'; msg: string } | null>(null);
 
@@ -894,7 +896,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                       <Copy className="w-3.5 h-3.5" />
                     </button>
                     <button
-                      onClick={() => { setEditingPregunta(pregunta); setModalOpen(true); }}
+                      onClick={() => { setEditingPregunta(pregunta); setEditarModalOpen(true); }}
                       className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                       title="Editar pregunta"
                     >
@@ -981,7 +983,22 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
         )}
       </div>
 
-      {/* Modal Crear/Editar */}
+      {/* Modal Editar Pregunta enriquecido con gestor de imágenes y vista previa en vivo */}
+      {editingPregunta && (
+        <EditarPreguntaModal
+          isOpen={editarModalOpen}
+          onClose={() => { setEditarModalOpen(false); setEditingPregunta(null); }}
+          pregunta={editingPregunta}
+          onSaveSuccess={(pActualizada) => {
+            onUpdatePregunta(pActualizada);
+            setSaveStatus({ type: 'success', msg: '✅ Pregunta actualizada exitosamente en Supabase' });
+            setTimeout(() => setSaveStatus(null), 3500);
+          }}
+          subfolder="evaluaciones"
+        />
+      )}
+
+      {/* Modal Crear Nueva Pregunta */}
       <PreguntaFormModal
         isOpen={modalOpen}
         onClose={() => { setModalOpen(false); setEditingPregunta(null); }}
