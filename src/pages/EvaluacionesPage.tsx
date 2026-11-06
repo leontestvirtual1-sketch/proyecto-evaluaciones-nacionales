@@ -20,8 +20,10 @@ import {
   HelpCircle,
   FileCheck,
   BookMarked,
-  Mail
+  Mail,
+  Edit3
 } from 'lucide-react';
+import { EditarPreguntaModal } from '../components/EditarPreguntaModal';
 import { UserProfile, RendicionPrueba } from '../types';
 import { EnviarEvaluacionModal } from '../components/EnviarEvaluacionModal';
 import { PrintEvaluacionModal } from '../components/PrintEvaluacionModal';
@@ -121,6 +123,7 @@ interface PruebaFacsimilModalProps {
   prueba: Prueba | null;
   preguntas: Pregunta[];
   isProduction?: boolean;
+  canEdit?: boolean;
   onClose: () => void;
 }
 
@@ -129,10 +132,12 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
   prueba,
   preguntas,
   isProduction = false,
+  canEdit = false,
   onClose
 }) => {
   const [loadedPreguntas, setLoadedPreguntas] = useState<Pregunta[]>([]);
   const [isLoadingPreguntas, setIsLoadingPreguntas] = useState<boolean>(false);
+  const [editingPregunta, setEditingPregunta] = useState<Pregunta | null>(null);
 
   useEffect(() => {
     if (!isOpen || !prueba) {
@@ -344,9 +349,21 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
                       Puntaje: <strong>{preg.puntaje} pt(s)</strong>
                     </span>
                   </div>
-                  <span className="text-[11px] text-slate-400">
-                    Fuente: {preg.fuente}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] text-slate-400">
+                      Fuente: {preg.fuente}
+                    </span>
+                    {canEdit && (
+                      <button
+                        onClick={() => setEditingPregunta(preg)}
+                        className="flex items-center gap-1 px-2 py-1 text-[11px] font-semibold rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/20 hover:bg-amber-500/20 transition-colors"
+                        title="Editar esta pregunta"
+                      >
+                        <Edit3 size={11} />
+                        Editar
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* Enunciado con EnunciadoRenderer */}
@@ -416,7 +433,26 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
   );
 
   return typeof document !== 'undefined'
-    ? createPortal(modalContent, document.body)
+    ? createPortal(
+        <>
+          {modalContent}
+          {canEdit && (
+            <EditarPreguntaModal
+              isOpen={editingPregunta !== null}
+              onClose={() => setEditingPregunta(null)}
+              pregunta={editingPregunta}
+              subfolder="evaluaciones"
+              onSaveSuccess={(preguntaActualizada) => {
+                setLoadedPreguntas(prev =>
+                  prev.map(p => p.id === preguntaActualizada.id ? preguntaActualizada : p)
+                );
+                setEditingPregunta(null);
+              }}
+            />
+          )}
+        </>,
+        document.body
+      )
     : modalContent;
 };
 
@@ -983,6 +1019,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
         isOpen={facsimilModalOpen}
         prueba={selectedPruebaForFacsimil}
         preguntas={bancoPreguntas}
+        canEdit={currentUser?.rol === 'admin' || currentUser?.rol === 'profesor'}
         onClose={() => { setFacsimilModalOpen(false); setSelectedPruebaForFacsimil(null); }}
       />
 
