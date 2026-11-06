@@ -21,9 +21,10 @@ import { validarRutChileno, validarRBD, normalizarRBD } from '../utils/chileVali
 
 interface RegisterPageProps {
   onGoToLogin: () => void;
+  onGoToLanding?: () => void;
 }
 
-export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
+export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin, onGoToLanding }) => {
   const { register, isLoading } = useAuth();
   
   // Modelo de contratación: Colegio (B2B) o Profesor Independiente (B2C)
@@ -162,6 +163,18 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onGoToLogin }) => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4">
+      {/* Botón volver al inicio */}
+      {onGoToLanding && (
+        <button
+          onClick={onGoToLanding}
+          className="fixed top-4 left-4 z-50 flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
+          title="Volver a la página de inicio"
+        >
+          <ArrowLeft size={15} />
+          <span>Volver al Inicio</span>
+        </button>
+      )}
+
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl" />

@@ -21,6 +21,15 @@ interface PlanMartinModalProps {
 }
 
 export const PlanMartinModal: React.FC<PlanMartinModalProps> = ({ isOpen, onClose }) => {
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handlePrint = () => {
@@ -40,7 +49,22 @@ export const PlanMartinModal: React.FC<PlanMartinModalProps> = ({ isOpen, onClos
   };
 
   const modalContent = (
-    <div className="print-modal-portal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto">
+    <div
+      className="print-modal-portal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      {/* Botón flotante siempre visible para volver atrás / cerrar */}
+      <button
+        onClick={onClose}
+        className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 print:hidden cursor-pointer"
+        title="Volver atrás / Cerrar (Esc)"
+      >
+        <X size={15} />
+        <span>Volver / Cerrar (Esc)</span>
+      </button>
+
       <div className="print-modal-inner bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col my-auto overflow-hidden text-left print:max-w-none print:max-h-none print:shadow-none print:border-0 print:bg-white print:m-0">
         {/* Header - Screen View */}
         <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 print:hidden">
@@ -236,10 +260,34 @@ interface EvaluacionIAModalProps {
 }
 
 export const EvaluacionIAModal: React.FC<EvaluacionIAModalProps> = ({ isOpen, onClose }) => {
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto">
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      {/* Botón flotante siempre visible para volver atrás / cerrar */}
+      <button
+        onClick={onClose}
+        className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
+        title="Volver atrás / Cerrar (Esc)"
+      >
+        <X size={15} />
+        <span>Volver / Cerrar (Esc)</span>
+      </button>
+
       <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col my-auto overflow-hidden text-left">
         {/* Header */}
         <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900">
@@ -328,6 +376,8 @@ export const EvaluacionIAModal: React.FC<EvaluacionIAModalProps> = ({ isOpen, on
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
 };
 
 // ─── 3. AISLAMIENTO PEDAGÓGICO MODAL ────────────────────────────────
@@ -342,10 +392,34 @@ export const AislamientoModal: React.FC<AislamientoModalProps> = ({
   onClose,
   asignaturaNombre
 }) => {
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto">
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      {/* Botón flotante siempre visible para volver atrás / cerrar */}
+      <button
+        onClick={onClose}
+        className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
+        title="Volver atrás / Cerrar (Esc)"
+      >
+        <X size={15} />
+        <span>Volver / Cerrar (Esc)</span>
+      </button>
+
       <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col my-auto overflow-hidden text-left">
         {/* Header */}
         <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-sky-950/60 via-slate-900 to-slate-900">
@@ -411,4 +485,6 @@ export const AislamientoModal: React.FC<AislamientoModalProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
 };

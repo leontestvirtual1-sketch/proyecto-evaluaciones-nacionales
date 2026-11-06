@@ -1,6 +1,7 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 // AcademicDataContext is the SINGLE source of truth for Demo vs Production data isolation.
-import { ShieldCheck, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, X } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AcademicDataProvider, useAcademicData } from './context/AcademicDataContext';
 import { Navbar } from './components/Navbar';
@@ -137,6 +138,16 @@ function MainAppContent({
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Listener para cerrar modal de notificación con tecla Escape
+  React.useEffect(() => {
+    if (!tokenApprovalNotice) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setTokenApprovalNotice(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [tokenApprovalNotice]);
+
 
   // App Data State
   const [asignaturas, setAsignaturas] = useState<Asignatura[]>(asignaturasMock);
@@ -236,9 +247,19 @@ function MainAppContent({
   // If user is not authenticated, show Login or Register page
   if (!isAuthenticated || !user) {
     if (authView === 'register') {
-      return <RegisterPage onGoToLogin={() => setAuthView('login')} />;
+      return (
+        <RegisterPage
+          onGoToLogin={() => setAuthView('login')}
+          onGoToLanding={() => setShowLanding(true)}
+        />
+      );
     }
-    return <LoginPage onGoToRegister={() => setAuthView('register')} />;
+    return (
+      <LoginPage
+        onGoToRegister={() => setAuthView('register')}
+        onGoToLanding={() => setShowLanding(true)}
+      />
+    );
   }
 
   // Verificación estricta de cuenta caducada (0 días restantes de prueba) o desactivada
@@ -590,6 +611,7 @@ function MainAppContent({
             historialRendiciones={rendiciones.filter(r => r.alumnoId === user.id)}
             darkMode={darkMode}
             onToggleDarkMode={handleToggleDarkMode}
+            onBack={() => setActivePage('dashboard')}
           />
         );
       }
@@ -733,9 +755,24 @@ function MainAppContent({
       </div>
 
       {/* Modal de Aprobación por Token (1-click email approval) */}
-      {tokenApprovalNotice && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl animate-fade-in text-center">
+      {tokenApprovalNotice && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setTokenApprovalNotice(null);
+          }}
+        >
+          {/* Botón flotante siempre visible para volver atrás / cerrar */}
+          <button
+            onClick={() => setTokenApprovalNotice(null)}
+            className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            title="Volver atrás / Cerrar (Esc)"
+          >
+            <X size={15} />
+            <span>Volver / Cerrar (Esc)</span>
+          </button>
+
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl animate-fade-in text-center my-auto">
             <div className="w-12 h-12 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
               <ShieldCheck className="w-6 h-6" />
             </div>
@@ -750,7 +787,8 @@ function MainAppContent({
               Entendido / Cerrar
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Generator Modal con aislamiento estricto por especialidad docente */}

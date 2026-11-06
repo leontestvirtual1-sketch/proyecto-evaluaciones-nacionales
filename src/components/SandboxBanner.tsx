@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { FlaskConical, X, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 interface SandboxBannerProps {
@@ -9,6 +10,15 @@ export const SandboxBanner: React.FC<SandboxBannerProps> = ({ isDemo = true }) =
   const [dismissed, setDismissed] = useState(false);
   const [ctaClicked, setCtaClicked] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (!showModal) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowModal(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showModal]);
 
   if (!isDemo) return null;
 
@@ -54,9 +64,24 @@ export const SandboxBanner: React.FC<SandboxBannerProps> = ({ isDemo = true }) =
       </div>
 
       {/* Contact modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 text-left relative">
+      {showModal && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowModal(false);
+          }}
+        >
+          {/* Botón flotante siempre visible para volver atrás / cerrar */}
+          <button
+            onClick={() => setShowModal(false)}
+            className="fixed top-4 right-4 z-[110] flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-700 shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            title="Volver atrás / Cerrar (Esc)"
+          >
+            <X size={15} />
+            <span>Volver / Cerrar (Esc)</span>
+          </button>
+
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 text-left relative my-auto">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
@@ -106,7 +131,8 @@ export const SandboxBanner: React.FC<SandboxBannerProps> = ({ isDemo = true }) =
               )}
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

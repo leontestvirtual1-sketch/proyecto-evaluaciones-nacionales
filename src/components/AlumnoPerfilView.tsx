@@ -12,7 +12,8 @@ import {
   Sparkles,
   ShieldCheck,
   TrendingUp,
-  FileSpreadsheet
+  FileSpreadsheet,
+  ArrowLeft
 } from 'lucide-react';
 
 interface AlumnoPerfilViewProps {
@@ -20,13 +21,15 @@ interface AlumnoPerfilViewProps {
   historialRendiciones: RendicionPrueba[];
   darkMode: boolean;
   onToggleDarkMode: () => void;
+  onBack?: () => void;
 }
 
 export const AlumnoPerfilView: React.FC<AlumnoPerfilViewProps> = ({
   alumno,
   historialRendiciones,
   darkMode,
-  onToggleDarkMode
+  onToggleDarkMode,
+  onBack
 }) => {
   const [nombre, setNombre] = useState(alumno.nombre);
   const [apellido, setApellido] = useState(alumno.apellido);
@@ -50,6 +53,19 @@ export const AlumnoPerfilView: React.FC<AlumnoPerfilViewProps> = ({
 
   return (
     <div className="space-y-8 animate-fade-in pb-12 max-w-5xl mx-auto">
+      {/* Botón volver a evaluaciones */}
+      {onBack && (
+        <div>
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700/80 transition-all cursor-pointer shadow-md"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Volver a mis Evaluaciones</span>
+          </button>
+        </div>
+      )}
+
       {/* Save Success Toast */}
       {savedSuccess && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-emerald-500/40 flex items-center gap-2 animate-bounce-short text-xs font-semibold">
