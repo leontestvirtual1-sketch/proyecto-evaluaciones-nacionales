@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { formatMiles } from '../utils/formatUtils';
 import {
   Pregunta,
   Asignatura,
@@ -409,6 +410,45 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     search.trim() || fuenteFilter || ejeFilter || habilidadFilter || dificultadFilter || tipoFilter
   );
 
+  // Asignaturas homologadas según el nivel seleccionado (Escolar vs PAES)
+  const asignaturasParaBanco = useMemo(() => {
+    const norm = normalizeNivel(nivelFilter);
+    const isCuartoMedio = norm === '4° medio';
+    const isBasicaOMedia = Boolean(nivelFilter && !isCuartoMedio);
+
+    if (isCuartoMedio) {
+      // Asignaturas oficiales de PAES DEMRE para 4° Medio
+      return [
+        { id: 'asig-2', nombre: 'Competencia Lectora' },
+        { id: 'asig-1', nombre: 'Competencia Matemática 1 (M1)' },
+        { id: 'asig-9', nombre: 'Competencia Matemática 2 (M2)' },
+        { id: 'asig-5', nombre: 'Ciencias — Biología' },
+        { id: 'asig-6', nombre: 'Ciencias — Física' },
+        { id: 'asig-7', nombre: 'Ciencias — Química' },
+        { id: 'asig-8', nombre: 'Ciencias — Técnico Profesional' },
+        { id: 'asig-4', nombre: 'Historia y Ciencias Sociales' },
+      ];
+    }
+
+    if (isBasicaOMedia) {
+      // Asignaturas escolares / SIMCE (básica y media menor)
+      return [
+        { id: 'asig-1', nombre: 'Matemática' },
+        { id: 'asig-2', nombre: 'Lenguaje y Comunicación' },
+        { id: 'asig-3', nombre: 'Ciencias Naturales' },
+        { id: 'asig-4', nombre: 'Historia, Geografía y Ciencias Sociales' },
+        { id: 'asig-10', nombre: 'Idioma Extranjero: Inglés' },
+        { id: 'asig-11', nombre: 'Filosofía' },
+        { id: 'asig-12', nombre: 'Educación Ciudadana' },
+        { id: 'asig-13', nombre: 'Educación Física y Salud' },
+        { id: 'asig-14', nombre: 'Artes Visuales / Música' },
+        { id: 'asig-15', nombre: 'Tecnología e Informática' },
+      ];
+    }
+
+    return asignaturas;
+  }, [asignaturas, nivelFilter]);
+
   // KPIs dinámicos: si hay filtros secundarios activos, reflejan fielmente las preguntas filtradas que se muestran
   const activeDataset = hasSecondaryFilters ? filtered : basePreguntas;
   const totalPreguntasNivel = activeDataset.length;
@@ -494,7 +534,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                 <span className={`px-1.5 py-0.2 rounded-md text-[10px] font-black ${
                   isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400'
                 }`}>
-                  {lvl.count}
+                  {formatMiles(lvl.count)}
                 </span>
               </button>
             );
@@ -515,7 +555,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <span>🌐</span>
             <span>Todos los Cursos</span>
             <span className="px-1.5 py-0.2 rounded-md text-[10px] font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-              {totalPreguntasGlobal}
+              {formatMiles(totalPreguntasGlobal)}
             </span>
           </button>
         </div>
@@ -527,20 +567,20 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
             {nivelFilter ? `Total ${nivelFilter}` : 'Total Materia'}
           </span>
-          <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{totalPreguntasNivel}</p>
+          <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{formatMiles(totalPreguntasNivel)}</p>
         </div>
         <div className="glass-card p-4 space-y-1">
           <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-500">Selección Múltiple</span>
-          <p className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">{totalSeleccionMultiple}</p>
+          <p className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">{formatMiles(totalSeleccionMultiple)}</p>
         </div>
         <div className="glass-card p-4 space-y-1">
           <span className="text-[10px] font-bold uppercase tracking-wider text-sky-500">Desarrollo Escrito</span>
-          <p className="text-2xl font-extrabold text-sky-600 dark:text-sky-400">{totalDesarrollo}</p>
+          <p className="text-2xl font-extrabold text-sky-600 dark:text-sky-400">{formatMiles(totalDesarrollo)}</p>
         </div>
         <div className="glass-card p-4 space-y-1">
           <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-500">Oficiales / Liberadas</span>
           <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
-            {totalOficiales}
+            {formatMiles(totalOficiales)}
           </p>
         </div>
       </div>
@@ -641,7 +681,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
               className="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 font-semibold"
             >
               <option value="">📚 Todas las Asignaturas</option>
-              {asignaturas.map(a => <option key={a.id} value={a.id}>{a.nombre}</option>)}
+              {asignaturasParaBanco.map(a => <option key={a.id} value={a.id}>{a.nombre}</option>)}
             </select>
           ) : (
             <select
@@ -730,7 +770,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                     : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-400'
                 }`}
               >
-                Todas las Fuentes ({basePreguntas.length})
+                Todas las Fuentes ({formatMiles(basePreguntas.length)})
               </button>
 
               {fuentesDisponibles.map(({ fuente, count }) => {
@@ -769,7 +809,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                         ? 'bg-white/20 text-white'
                         : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                     }`}>
-                      {count}
+                      {formatMiles(count)}
                     </span>
                   </button>
                 );
@@ -847,7 +887,14 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                     )}
 
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                      {asig?.nombre || 'General'}
+                      {(() => {
+                        const isCuarto = normalizeNivel(pregunta.nivel) === '4° medio';
+                        if (!isCuarto) {
+                          if (pregunta.asignaturaId === 'asig-1') return 'Matemática';
+                          if (pregunta.asignaturaId === 'asig-2') return 'Lenguaje y Comunicación';
+                        }
+                        return asig?.nombre || 'General';
+                      })()}
                     </span>
 
                     {/* Badge Dinámico de Autor y Establecimiento */}

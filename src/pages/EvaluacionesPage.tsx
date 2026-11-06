@@ -40,6 +40,8 @@ import { preguntasLenguaje2MAbrilMock } from '../data/len2mAbrilQuestionsMock';
 import { preguntasMatematica6BMock } from '../data/mat6bQuestionsMock';
 
 
+import { formatMiles } from '../utils/formatUtils';
+
 interface EvaluacionMetadata {
   tipo: 'paes' | 'simce' | 'diagnostica' | 'aula';
   tipoLabel: string;
@@ -69,7 +71,15 @@ function parseEvaluacionInfo(p: Prueba): EvaluacionMetadata {
     } else if (full.includes('matemática 2') || full.includes('matematica 2') || full.includes('m2')) {
       materiaOficial = 'Competencia Matemática 2 (M2)';
     } else if (full.includes('historia')) {
-      materiaOficial = 'Historia y Cs. Sociales';
+      materiaOficial = 'Historia y Ciencias Sociales';
+    } else if (full.includes('biología') || full.includes('biologia')) {
+      materiaOficial = 'Ciencias — Biología';
+    } else if (full.includes('física') || full.includes('fisica')) {
+      materiaOficial = 'Ciencias — Física';
+    } else if (full.includes('química') || full.includes('quimica')) {
+      materiaOficial = 'Ciencias — Química';
+    } else if (full.includes('técnico') || full.includes('tecnico') || full.includes('tp')) {
+      materiaOficial = 'Ciencias — Técnico Profesional (TP)';
     } else if (full.includes('ciencias')) {
       materiaOficial = 'Ciencias';
     } else if (full.includes('lectora') || full.includes('lengua') || full.includes('lenguaje')) {
@@ -90,12 +100,24 @@ function parseEvaluacionInfo(p: Prueba): EvaluacionMetadata {
   }
 
   if (full.includes('simce')) {
+    let materiaOficial = 'Lenguaje y Comunicación';
+    if (full.includes('matemática') || full.includes('matematica')) {
+      materiaOficial = 'Matemática';
+    } else if (full.includes('lengua y literatura') || full.includes('lenguaje') || full.includes('lectura') || full.includes('comunicación') || full.includes('comunicacion')) {
+      materiaOficial = 'Lengua y Literatura';
+    } else if (full.includes('historia') || full.includes('geografía') || full.includes('sociedad')) {
+      materiaOficial = 'Historia, Geografía y Ciencias Sociales';
+    } else if (full.includes('ciencias')) {
+      materiaOficial = 'Ciencias Naturales';
+    }
+
     return {
       tipo: 'simce',
       tipoLabel: 'SIMCE Oficial',
       badgeBg: 'bg-cyan-500/15',
       badgeText: 'text-cyan-400',
       badgeBorder: 'border-cyan-500/30',
+      materiaOficial,
     };
   }
 
@@ -318,13 +340,13 @@ const PruebaFacsimilModal: React.FC<PruebaFacsimilModalProps> = ({
                     </>
                   )}
                   <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                    {modalMeta.tipo === 'paes' && modalMeta.materiaOficial ? `${modalMeta.materiaOficial} — ${prueba.nivel}` : `${prueba.asignaturaNombre} — ${prueba.nivel}`}
+                    {modalMeta.materiaOficial ? `${modalMeta.materiaOficial} — ${prueba.nivel}` : `${prueba.asignaturaNombre} — ${prueba.nivel}`}
                   </span>
                   <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                     Código: <strong className="font-mono text-indigo-500">{prueba.codigoPublico}</strong>
                   </span>
                   <span className="text-xs text-slate-400">
-                    ⏱️ {prueba.duracionMinutos} min • 📝 {preguntasDeLaPrueba.length} preguntas
+                    ⏱️ {formatMiles(prueba.duracionMinutos)} min • 📝 {formatMiles(preguntasDeLaPrueba.length)} preguntas
                   </span>
                 </div>
               );
@@ -619,6 +641,48 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
     return Array.from(set).sort().reverse();
   }, [userPruebas]);
 
+  // Asignaturas personalizadas según el módulo activo (SIMCE, PAES o Evaluaciones Internas)
+  const asignaturasParaFiltro = React.useMemo(() => {
+    if (modulo === 'simce') {
+      // Asignaturas oficiales evaluadas por la Agencia de la Calidad (SIMCE)
+      return [
+        { id: 'asig-1', nombre: 'Matemática' },
+        { id: 'asig-2', nombre: 'Lengua y Literatura / Lectura' },
+        { id: 'asig-3', nombre: 'Ciencias Naturales' },
+        { id: 'asig-4', nombre: 'Historia, Geografía y Ciencias Sociales' },
+      ];
+    }
+    if (modulo === 'paes') {
+      // Pruebas oficiales de admisión universitaria DEMRE
+      return [
+        { id: 'asig-2', nombre: 'Competencia Lectora' },
+        { id: 'asig-1', nombre: 'Competencia Matemática 1 (M1)' },
+        { id: 'asig-9', nombre: 'Competencia Matemática 2 (M2)' },
+        { id: 'asig-5', nombre: 'Ciencias — Biología' },
+        { id: 'asig-6', nombre: 'Ciencias — Física' },
+        { id: 'asig-7', nombre: 'Ciencias — Química' },
+        { id: 'asig-8', nombre: 'Ciencias — Técnico Profesional (TP)' },
+        { id: 'asig-4', nombre: 'Historia y Ciencias Sociales' },
+      ];
+    }
+    if (modulo === 'evaluaciones') {
+      // Evaluaciones & Controles Internos de aula: asignaturas curriculares
+      return [
+        { id: 'asig-1', nombre: 'Matemática' },
+        { id: 'asig-2', nombre: 'Lenguaje y Comunicación' },
+        { id: 'asig-3', nombre: 'Ciencias Naturales' },
+        { id: 'asig-4', nombre: 'Historia, Geografía y Ciencias Sociales' },
+        { id: 'asig-10', nombre: 'Idioma Extranjero: Inglés' },
+        { id: 'asig-11', nombre: 'Filosofía' },
+        { id: 'asig-12', nombre: 'Educación Ciudadana' },
+        { id: 'asig-13', nombre: 'Educación Física y Salud' },
+        { id: 'asig-14', nombre: 'Artes Visuales / Música' },
+        { id: 'asig-15', nombre: 'Tecnología e Informática' },
+      ];
+    }
+    return asignaturas;
+  }, [asignaturas, modulo]);
+
   const filteredPruebas = moduloPruebas.filter((prueba) => {
     const meta = parseEvaluacionInfo(prueba);
 
@@ -651,8 +715,24 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
       (meta.materiaOficial && meta.materiaOficial.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (meta.anio && meta.anio.includes(searchTerm));
     
-    const matchesAsignatura =
-      selectedAsignatura === 'todos' || prueba.asignaturaId === selectedAsignatura;
+    let matchesAsignatura = selectedAsignatura === 'todos';
+    if (!matchesAsignatura) {
+      if (modulo === 'simce') {
+        if (selectedAsignatura === 'asig-1') {
+          matchesAsignatura = prueba.asignaturaId === 'asig-1' || meta.materiaOficial === 'Matemática';
+        } else if (selectedAsignatura === 'asig-2') {
+          matchesAsignatura = prueba.asignaturaId === 'asig-2' || Boolean(meta.materiaOficial?.includes('Lengua')) || Boolean(meta.materiaOficial?.includes('Lectura'));
+        } else if (selectedAsignatura === 'asig-3') {
+          matchesAsignatura = prueba.asignaturaId === 'asig-3' || Boolean(meta.materiaOficial?.includes('Ciencias'));
+        } else if (selectedAsignatura === 'asig-4') {
+          matchesAsignatura = prueba.asignaturaId === 'asig-4' || Boolean(meta.materiaOficial?.includes('Historia'));
+        } else {
+          matchesAsignatura = prueba.asignaturaId === selectedAsignatura;
+        }
+      } else {
+        matchesAsignatura = prueba.asignaturaId === selectedAsignatura;
+      }
+    }
     
     const matchesEstado =
       selectedEstado === 'todos' || prueba.estado === selectedEstado;
@@ -743,7 +823,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
             <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
               {modulo === 'paes' ? 'Total PAES' : modulo === 'simce' ? 'Total SIMCE' : modulo === 'evaluaciones' ? 'Total Internas' : 'Total Ensayos'}
             </p>
-            <p className="text-xl font-extrabold text-slate-900 dark:text-white">{moduloPruebas.length}</p>
+            <p className="text-xl font-extrabold text-slate-900 dark:text-white">{formatMiles(moduloPruebas.length)}</p>
           </div>
         </div>
 
@@ -753,7 +833,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
           <div>
             <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Activas</p>
-            <p className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">{moduloActivas}</p>
+            <p className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">{formatMiles(moduloActivas)}</p>
           </div>
         </div>
 
@@ -763,7 +843,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
           <div>
             <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Finalizadas</p>
-            <p className="text-xl font-extrabold text-slate-700 dark:text-slate-300">{moduloFinalizadas}</p>
+            <p className="text-xl font-extrabold text-slate-700 dark:text-slate-300">{formatMiles(moduloFinalizadas)}</p>
           </div>
         </div>
 
@@ -773,7 +853,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
           </div>
           <div>
             <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Borradores</p>
-            <p className="text-xl font-extrabold text-amber-600 dark:text-amber-400">{moduloBorradores}</p>
+            <p className="text-xl font-extrabold text-amber-600 dark:text-amber-400">{formatMiles(moduloBorradores)}</p>
           </div>
         </div>
       </div>
@@ -794,7 +874,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
               }`}
             >
-              Todos los Procesos ({conteoPaes})
+              Todos los Procesos ({formatMiles(conteoPaes)})
             </button>
             {aniosPaesDisponibles.map((yr) => {
               const countYr = userPruebas.filter(p => {
@@ -811,7 +891,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                       : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
                   }`}
                 >
-                  Proceso {yr} ({countYr})
+                  Proceso {yr} ({formatMiles(countYr)})
                 </button>
               );
             })}
@@ -836,7 +916,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                       : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
                   }`}
                 >
-                  {lvl === 'todos' ? `Todos los Niveles (${count})` : `${lvl} (${count})`}
+                  {lvl === 'todos' ? `Todos los Niveles (${formatMiles(count)})` : `${lvl} (${formatMiles(count)})`}
                 </button>
               );
             })}
@@ -855,7 +935,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
               }`}
             >
-              Todas las Internas ({conteoInternas})
+              Todas las Internas ({formatMiles(conteoInternas)})
             </button>
             <button
               onClick={() => setTipoInternoFiltro('aula')}
@@ -865,7 +945,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
               }`}
             >
-              🏫 Pruebas de Aula ({userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'aula').length})
+              🏫 Pruebas de Aula ({formatMiles(userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'aula').length)})
             </button>
             <button
               onClick={() => setTipoInternoFiltro('diagnostica')}
@@ -875,7 +955,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
               }`}
             >
-              📋 Pruebas Diagnósticas ({conteoDiag})
+              📋 Pruebas Diagnósticas ({formatMiles(conteoDiag)})
             </button>
           </div>
         ) : (
@@ -891,7 +971,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                       : 'bg-slate-900/40 text-slate-400 hover:text-white border border-transparent'
                   }`}
                 >
-                  <span>Todas las Evaluaciones ({conteoTotal})</span>
+                  <span>Todas las Evaluaciones ({formatMiles(conteoTotal)})</span>
                 </button>
 
                 <button
@@ -903,7 +983,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   }`}
                 >
                   <span>🏛️</span>
-                  <span>PAES Oficiales DEMRE ({conteoPaes})</span>
+                  <span>PAES Oficiales DEMRE ({formatMiles(conteoPaes)})</span>
                 </button>
 
                 <button
@@ -915,7 +995,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   }`}
                 >
                   <span>📊</span>
-                  <span>Ensayos SIMCE ({conteoSimce})</span>
+                  <span>Ensayos SIMCE ({formatMiles(conteoSimce)})</span>
                 </button>
 
                 <button
@@ -927,7 +1007,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   }`}
                 >
                   <span>📋</span>
-                  <span>Pruebas Diagnósticas ({conteoDiag})</span>
+                  <span>Pruebas Diagnósticas ({formatMiles(conteoDiag)})</span>
                 </button>
               </div>
 
@@ -955,7 +1035,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                       : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
                   }`}
                 >
-                  Todos los Procesos ({conteoPaes})
+                  Todos los Procesos ({formatMiles(conteoPaes)})
                 </button>
                 {aniosPaesDisponibles.map((yr) => {
                   const countYr = userPruebas.filter(p => {
@@ -972,7 +1052,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                           : 'bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500'
                       }`}
                     >
-                      PAES {yr} ({countYr})
+                      PAES {yr} ({formatMiles(countYr)})
                     </button>
                   );
                 })}
@@ -1003,7 +1083,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
               className="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl font-semibold outline-none focus:ring-2 focus:ring-indigo-500/20"
             >
               <option value="todos">Todas las Asignaturas</option>
-              {asignaturas.map((a) => (
+              {asignaturasParaFiltro.map((a) => (
                 <option key={a.id} value={a.id}>{a.nombre}</option>
               ))}
             </select>
@@ -1098,7 +1178,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
 
                       {/* Asignatura y Nivel */}
                       <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                        {isPaes && meta.materiaOficial ? `${meta.materiaOficial} — ${prueba.nivel}` : `${prueba.asignaturaNombre} — ${prueba.nivel}`}
+                        {meta.materiaOficial ? `${meta.materiaOficial} — ${prueba.nivel}` : `${prueba.asignaturaNombre} — ${prueba.nivel}`}
                       </span>
 
                       {/* Estado */}
@@ -1109,7 +1189,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
 
                     <div className="text-xs text-slate-400 flex items-center gap-1 font-medium whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" />
-                      <span>{prueba.duracionMinutos} min</span>
+                      <span>{formatMiles(prueba.duracionMinutos)} min</span>
                     </div>
                   </div>
 
@@ -1123,7 +1203,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
 
                   <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 pt-1">
                     <span className="flex items-center gap-1">
-                      <Layers className="w-3.5 h-3.5 text-indigo-400" /> {prueba.totalPreguntas} Preguntas
+                      <Layers className="w-3.5 h-3.5 text-indigo-400" /> {formatMiles(prueba.totalPreguntas)} Preguntas
                     </span>
                     <span>•</span>
                     <span>Curso: <strong>{prueba.cursoNombre}</strong></span>
