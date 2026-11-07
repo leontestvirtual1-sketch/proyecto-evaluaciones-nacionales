@@ -2,6 +2,33 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-07] Fase Piloto: Corrección PUA M1/M2 — Normalización de Símbolos Matemáticos, Decimales y Coordenadas
+
+- **Problema / Requerimiento**:
+  1. **Caracteres PUA (Private Use Area)**: Las preguntas PAES M1 y M2 extraídas de PDF DEMRE contienen caracteres Unicode U+F020–U+F0FF correspondientes a la fuente Symbol (codificación Adobe). Aparecían como glifos ilegibles (□, ▪) en la app.
+  2. **Decimales partidos**: El extractor PDF lee columnas verticales del PDF, generando artefactos como `,0 75` en lugar de `0,75` (caso confirmado: M1 2023 Regular Pregunta 2, `preg-paes-mat1-23reg-02`).
+  3. **Coordenadas rotas e invertidas**: Expresiones como `puntos(,x y)` y `punto(,0 0)` resultantes del mismo problema de extracción vertical (casos M2 2023 Pregunta 38 y 41).
+  4. **Fracciones descompuestas**: M2 2023 Pregunta 5 tenía `200 3 p` en lugar de `\frac{3}{200}p`.
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx):
+    - Función `cleanSymbolFont`: mapeo explícito de 48 códigos PUA a Unicode legible (operadores `+−·÷=≠≈<>≤≥`, paréntesis y variantes apiladas `()[]{}`, conjuntos `∩∪∈`, constantes `π°∞`, letras griegas `αβθρσΔ`, auxiliares `✓©►`).
+    - Regex decimal: `,\s*([0-9])\s+([0-9]{2,})\b` → `$1,$2` (`,0 75` → `0,75`).
+    - Regex coordenadas en **dos pasos**: paso 1 genérico `(,a b)` → `(a, b)`; paso 2 espacio después de palabra clave `puntos(x, y)` → `puntos (x, y)`.
+  - [`supabase/migrations/062_fix_math_pua_and_decimals_pilot.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/062_fix_math_pua_and_decimals_pilot.sql):
+    - Migración idempotente (no aplicada a producción) para preguntas piloto: `preg-paes-mat1-23reg-02`, `-03`, `preg-paes-mat2-23reg-05`, `-38`, `-41`, `-42`.
+    - **Claves oficiales no modificadas**: M1P2=A, M2P5=E, M2P41=A.
+  - [`tests/math-content-normalization.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/math-content-normalization.test.ts):
+    - 5 assertions con `node:test` / `node:assert/strict` — todas verdes.
+    - Cubre: PUA símbolos, decimales partidos, comas en listas legítimas (no afectadas), coordenadas rotas.
+
+- **Verificación / Despliegue**:
+  - `npx tsx tests/math-content-normalization.test.ts`: **5/5 PASS**.
+  - `npx tsc --noEmit`: **0 errores TypeScript**.
+  - `npm run build`: **✓ built in 42.57s, 2275 módulos transformados**.
+  - Commit: `1dbb0e3` — rama `main`.
+  - **Sin escritura a Supabase de producción**: migración 062 lista para revisión antes de aplicar.
+
 ### [2026-09-21] Consola Administrativa Centralizada: Visualización, Filtros y Creación de Cuentas Directivas (Director, Jefes UTP y Docentes)
 
 - **Problema / Requerimiento**:
