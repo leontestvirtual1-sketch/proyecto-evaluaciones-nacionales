@@ -85,6 +85,12 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const { alumnos, isProduction, cursos } = useAcademicData();
   const { usuarios, docentesReales, switchToDocente } = useAuth();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  const effectiveAlumnos = useMemo(() => {
+    if (alumnos && alumnos.length > 0) return alumnos;
+    const fromUsers = (usuarios || []).filter(u => u.rol === 'alumno');
+    return fromUsers;
+  }, [alumnos, usuarios]);
   const [adminTab, setAdminTab] = useState<'con_sysget' | 'sin_sysget'>('con_sysget');
   const [planMejoramientoOpen, setPlanMejoramientoOpen] = useState(false);
   const [planMartinOpen, setPlanMartinOpen] = useState(false);
@@ -288,8 +294,8 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
 
         <StatCard
           title={isProductionAdmin ? 'Alumnos Matriculados' : isAdmin ? 'Cursos Disponibles' : 'Evaluaciones Activas'}
-          value={isProductionAdmin ? `${alumnos.length} Alumno${alumnos.length !== 1 ? 's' : ''}` : isAdmin ? `${cursos.length}` : `${evaluacionesActivas}`}
-          subtitle={isProductionAdmin ? (alumnos.length > 0 ? `${alumnos.length} estudiantes registrados en la red` : 'En proceso de inicio de poblamiento') : isAdmin ? `${alumnos.length} alumnos en el entorno actual` : 'En estado activo'}
+          value={isProductionAdmin ? `${effectiveAlumnos.length} Alumno${effectiveAlumnos.length !== 1 ? 's' : ''}` : isAdmin ? `${cursos.length}` : `${evaluacionesActivas}`}
+          subtitle={isProductionAdmin ? (effectiveAlumnos.length > 0 ? `${effectiveAlumnos.length} estudiantes registrados en la red` : 'En proceso de inicio de poblamiento') : isAdmin ? `${effectiveAlumnos.length} alumnos en el entorno actual` : 'En estado activo'}
           icon={<Users className="w-5 h-5" />}
           iconBgColor="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
         />
@@ -438,11 +444,11 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                               (c.establecimiento && c.establecimiento.toLowerCase().includes(col.nombre.toLowerCase())) ||
                               (col.rbd === '31030')
                             );
-                            const colAlumnos = (alumnos || []).filter(a => {
+                            const colAlumnos = (effectiveAlumnos || []).filter(a => {
                               const aAny = a as unknown as Record<string, unknown>;
                               if (aAny.rbd && aAny.rbd === col.rbd) return true;
                               if (aAny.establecimiento && typeof aAny.establecimiento === 'string' && aAny.establecimiento.toLowerCase().includes(col.nombre.toLowerCase())) return true;
-                              if (colCursos.some(c => c.id === a.cursoId || c.nombre === a.cursoNombre)) return true;
+                              if (colCursos.some(c => c.id === aAny.cursoId || c.nombre === aAny.cursoNombre)) return true;
                               return col.rbd === '31030';
                             });
                             if (colAlumnos.length > 0) {

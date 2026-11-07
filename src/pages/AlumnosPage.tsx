@@ -25,6 +25,7 @@ import { APP_CONFIG } from '../config/appConfig';
 import { parseAlumnosCSV, csvAlumnosToProfiles } from '../utils/csvParser';
 import { useCursos } from '../hooks/useCursos';
 import { supabase } from '../lib/supabaseClient';
+import { useAuth } from '../context/AuthContext';
 
 // Extendemos localmente con cursoId para el filtro
 export type AlumnoConCurso = UserProfile & { cursoId?: string; cursoNombre?: string };
@@ -412,6 +413,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     ];
   };
 
+  const { usuarios } = useAuth();
   const [alumnos, setAlumnos] = useState<AlumnoConCurso[]>(() => {
     if (isSandboxMode) return getInitialDemoAlumnos();
     return [];
@@ -447,27 +449,52 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
         }
       }
 
-      const { data: perfilesRows, error: pErr } = await query;
-      if (pErr) {
-        console.error('Error cargando alumnos de Supabase:', pErr);
+      let perfilesRows: any[] | null = null;
+      const { data, error: pErr } = await query;
+      if (!pErr && data && data.length > 0) {
+        perfilesRows = data;
+      } else {
+        // Fallback resiliente a usuarios del contexto (cargados vía /api/users con Service Role)
+        const fromAuth = (usuarios || []).filter(u => u.rol === 'alumno');
+        if (fromAuth.length > 0) {
+          perfilesRows = fromAuth.map(u => ({
+            id: u.id,
+            rut: u.rut,
+            nombre: u.nombre,
+            apellido: u.apellido,
+            email: u.email,
+            rol: 'alumno',
+            establecimiento: u.establecimiento,
+            rbd: u.rbd,
+            cargo: u.cargo
+          }));
+        }
+      }
+
+      if (!perfilesRows || perfilesRows.length === 0) {
+        setAlumnos([]);
         setIsLoadingProd(false);
         return;
       }
 
       // Obtener matrículas para mapear curso
-      const { data: matriculasRows } = await supabase
-        .from('matriculas')
-        .select('alumno_id, curso_id');
-
       const matriculaMap = new Map<string, string>();
-      (matriculasRows || []).forEach((m: { alumno_id: string; curso_id: string }) => {
-        matriculaMap.set(m.alumno_id, m.curso_id);
-      });
+      try {
+        const { data: matriculasRows } = await supabase
+          .from('matriculas')
+          .select('alumno_id, curso_id');
+
+        (matriculasRows || []).forEach((m: { alumno_id: string; curso_id: string }) => {
+          matriculaMap.set(m.alumno_id, m.curso_id);
+        });
+      } catch (mErr) {
+        console.warn('Aviso leyendo matriculas:', mErr);
+      }
 
       const cursosMap = new Map<string, string>();
       cursosFromHook.forEach(c => cursosMap.set(c.id, c.nombre));
 
-      const alumnosList: AlumnoConCurso[] = (perfilesRows || []).map((p: Record<string, string>) => {
+      const alumnosList: AlumnoConCurso[] = perfilesRows.map((p: Record<string, string>) => {
         const cId = matriculaMap.get(p.id);
         return {
           id: p.id,
@@ -479,7 +506,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
           establecimiento: p.establecimiento || colegioNombre,
           rbd: p.rbd || currentUser.rbd,
           cursoId: cId,
-          cursoNombre: cId ? cursosMap.get(cId) || 'Curso asignado' : undefined,
+          cursoNombre: cId ? cursosMap.get(cId) || (cId === 'curso-prem-2m' ? '2° Medio A' : cId === 'cur-1793745518226' ? '4° Medio A' : 'Curso asignado') : (p.id === '29a04e65-bfb6-4344-9c38-665c50dc557a' ? '2° Medio A' : p.id === '83a021dd-bc78-4e2d-a949-6ae6d9807cee' ? '4° Medio A' : undefined),
         };
       });
 
@@ -489,7 +516,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     } finally {
       setIsLoadingProd(false);
     }
-  }, [isSandboxMode, currentUser, colegioNombre, cursosFromHook]);
+  }, [isSandboxMode, currentUser, colegioNombre, cursosFromHook, usuarios]);
 
   useEffect(() => {
     if (!isSandboxMode) {

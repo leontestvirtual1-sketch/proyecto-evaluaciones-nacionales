@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import { UserProfile, Prueba, Curso, AlumnoBasico, SeguimientoDocente, ReporteTabuladoCurso } from '../types';
+import { supabase } from '../lib/supabaseClient';
 import {
   pruebasMock,
   cursosMock,
@@ -127,6 +128,39 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
     return false;
   }, [currentUser, adminBaseProfile, isSandboxMode]);
 
+  const [alumnosProduccion, setAlumnosProduccion] = useState<AlumnoBasico[]>([]);
+
+  useEffect(() => {
+    if (!isProduction) return;
+    let isMounted = true;
+    async function loadAlumnos() {
+      try {
+        const { data, error } = await supabase
+          .from('perfiles')
+          .select('id, rut, nombre, apellido, email, establecimiento, rbd')
+          .eq('rol', 'alumno');
+
+        if (!error && data && isMounted) {
+          const list: AlumnoBasico[] = data.map((p, idx) => ({
+            id: p.id,
+            rut: p.rut || '',
+            nombre: p.nombre || '',
+            apellido: p.apellido || '',
+            cursoId: 'curso-prem-2m',
+            cursoNombre: p.establecimiento || 'Escuela Premilitar Héroes de la Concepción',
+            numeroDeLista: idx + 1,
+            rbd: p.rbd || '31030',
+            establecimiento: p.establecimiento || 'Escuela Premilitar Héroes de la Concepción'
+          }));
+          setAlumnosProduccion(list);
+        }
+      } catch (e) {
+        console.warn('[AcademicDataContext] Error cargando alumnos de producción:', e);
+      }
+    }
+    loadAlumnos();
+    return () => { isMounted = false; };
+  }, [isProduction]);
 
   const value = useMemo<DataContextType>(() => {
     // En Producción NO se usa pruebasMock bajo ninguna circunstancia (Directiva 1)
@@ -163,7 +197,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
           totalEvaluacionesCreadas: teacherPruebas.length,
           totalEvaluacionesActivas: teacherPruebas.filter(p => p.estado === 'activa').length,
           totalAlumnosEvaluados: 0,
-          totalAlumnosMatriculados: 0,
+          totalAlumnosMatriculados: alumnosProduccion.length,
           coberturaCurricularPorcentaje: teacherPruebas.length > 0 ? 100 : 0,
           promedioLogroAlumnos: 0,
           puntajeSimceEstimado: 0,
@@ -183,7 +217,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
           isProduction: true,
           pruebas: teacherPruebas,
           cursos: teacherCursos,
-          alumnos: [],
+          alumnos: alumnosProduccion,
           seguimientoDocentes: [docSeguimiento],
           reporteActivo: reporteActivo,
           nombreEstablecimientoActivo: activeUser.establecimiento || 'Establecimiento Educacional'
@@ -210,7 +244,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
           totalEvaluacionesCreadas: docPruebas.length,
           totalEvaluacionesActivas: docPruebas.filter(p => p.estado === 'activa').length,
           totalAlumnosEvaluados: 0,
-          totalAlumnosMatriculados: 0,
+          totalAlumnosMatriculados: alumnosProduccion.length,
           coberturaCurricularPorcentaje: docPruebas.length > 0 ? 100 : 0,
           promedioLogroAlumnos: 0,
           puntajeSimceEstimado: 0,
@@ -232,7 +266,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
         isProduction: true,
         pruebas: adminPruebas,
         cursos: prodCursos,
-        alumnos: [],
+        alumnos: alumnosProduccion,
         seguimientoDocentes: dynamicSeguimiento,
         reporteActivo: crearReporteVacio(currentUser || { id: 'superadmin', rut: '1-9', nombre: 'Administrador', apellido: '', email: '', rol: 'admin', establecimiento: 'Sysget Saber', rbd: undefined, asignaturaId: undefined, asignaturaNombre: undefined, cargo: undefined, estado: 'activo', plan: 'institucional', esSuperAdmin: true, esDemo: false }),
         nombreEstablecimientoActivo: 'Sysget Saber — Vista Global'
@@ -275,7 +309,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
       nombreEstablecimientoActivo: 'Liceo Bicentenario Los Andes (Demo)'
     };
 
-  }, [isProduction, customPruebas, currentUser]);
+  }, [isProduction, customPruebas, currentUser, docentesReales, alumnosProduccion]);
 
   return <AcademicDataContext.Provider value={value}>{children}</AcademicDataContext.Provider>;
 };

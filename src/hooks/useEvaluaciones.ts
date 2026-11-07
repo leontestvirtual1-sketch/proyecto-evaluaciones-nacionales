@@ -10,6 +10,33 @@ interface UseEvaluacionesProps {
   isSandboxMode?: boolean;
 }
 
+function deriveCodigoPublico(row: Record<string, unknown>): string {
+  if (row.codigo_acceso && String(row.codigo_acceso).trim() !== '' && row.codigo_acceso !== 'EVAL-001') {
+    return String(row.codigo_acceso);
+  }
+  if (row.codigo_publico && String(row.codigo_publico).trim() !== '' && row.codigo_publico !== 'EVAL-001') {
+    return String(row.codigo_publico);
+  }
+  const id = String(row.id || '');
+  if (id.startsWith('eval-paes-')) {
+    const parts = id.replace('eval-paes-', '').split('-');
+    let sub = parts[0]?.toUpperCase() || 'GEN';
+    if (sub === 'LECT') sub = 'LEC';
+    if (sub === 'MAT1') sub = 'M1';
+    if (sub === 'MAT2') sub = 'M2';
+    const yr = parts[1] || '2026';
+    const forma = parts[parts.length - 1]?.toUpperCase() || 'REG';
+    return `PAES-${sub}-${yr}-${forma}`;
+  }
+  if (id.startsWith('eval-simce-')) {
+    return id.replace('eval-', '').toUpperCase();
+  }
+  if (id.startsWith('prueba-len')) {
+    return id.replace('prueba-', 'SIMCE-').toUpperCase();
+  }
+  return id ? id.toUpperCase() : 'EVAL-001';
+}
+
 function mapRowToPrueba(row: Record<string, unknown>): Prueba {
   const preguntasIdsArray = Array.isArray(row.preguntas_ids)
     ? (row.preguntas_ids as string[])
@@ -37,7 +64,7 @@ function mapRowToPrueba(row: Record<string, unknown>): Prueba {
     profesorId: String(row.profesor_id || ''),
     cursoId: String(row.curso_id || ''),
     cursoNombre: String(row.curso_nombre || 'Curso General'),
-    codigoPublico: String(row.codigo_acceso || row.codigo_publico || 'EVAL-001'),
+    codigoPublico: deriveCodigoPublico(row),
     duracionMinutos: Number(row.tiempo_limite) || Number(row.duracion_minutos) || 60,
     creadoEn: row.created_at ? new Date(String(row.created_at)).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
     // CORRECCIÓN (Auditoría 2026-09-16): columna real es 'preguntas_ids' (plural).
