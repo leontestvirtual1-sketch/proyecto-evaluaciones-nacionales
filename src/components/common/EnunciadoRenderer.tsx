@@ -37,24 +37,51 @@ interface EnunciadoRendererProps {
 }
 
 /**
- * Sanitiza caracteres propietarios del bloque Private Use Area (PUA) de Unicode (\uF000-\uF0FF),
- * típicamente introducidos por la fuente Symbol / Wingdings al extraer texto desde PDFs oficiales MINEDUC / PAES.
+ * Sanitiza caracteres propietarios del bloque Private Use Area (PUA) de Unicode (\uF000-\uF0FF y \uE000-\uF8FF),
+ * típicamente introducidos por fuentes matemáticas Symbol / Wingdings al extraer texto desde PDFs oficiales MINEDUC / DEMRE.
  */
 function cleanSymbolFont(text: string): string {
   if (!text) return text;
   return text
+    // Paréntesis, corchetes y llaves (incluyendo variantes apiladas de Symbol font)
     .replace(/[\uF028\uF0E6\uF0E7\uF0E8]/g, '(')
     .replace(/[\uF029\uF0F6\uF0F7\uF0F8]/g, ')')
+    .replace(/[\uF05B\uF0E9\uF0EA\uF0EB]/g, '[')
+    .replace(/[\uF05D\uF0F9\uF0FA\uF0FB]/g, ']')
+    .replace(/\uF07B/g, '{')
+    .replace(/\uF07D/g, '}')
+    // Operadores básicos y multiplicaciones
     .replace(/\uF02B/g, '+')
     .replace(/[\uF02D\u2013\u2014]/g, '-')
+    .replace(/[\uF0B7\uF0D7]/g, '·')
+    .replace(/\uF0B8/g, '÷')
     .replace(/\uF03D/g, '=')
-    .replace(/\uF05B/g, '[')
-    .replace(/\uF05D/g, ']')
-    .replace(/\uF070/g, 'π')
-    .replace(/\uF0B3/g, '≥')
-    .replace(/\uF0A3/g, '≤')
     .replace(/\uF0B9/g, '≠')
-    .replace(/[\uF0B7\uF0D7]/g, '·');
+    .replace(/\uF0BB/g, '≈')
+    .replace(/\uF03C/g, '<')
+    .replace(/\uF03E/g, '>')
+    .replace(/\uF0A3/g, '≤')
+    .replace(/\uF0B3/g, '≥')
+    // Símbolos matemáticos y conjuntos
+    .replace(/\uF070/g, 'π')
+    .replace(/\uF0B0/g, '°')
+    .replace(/\uF0A5/g, '∞')
+    .replace(/\uF0C7/g, '∩')
+    .replace(/\uF0C8/g, '∪')
+    .replace(/\uF0CE/g, '∈')
+    .replace(/\uF07E/g, '~')
+    .replace(/\uF05E/g, '^')
+    // Letras griegas matemáticas
+    .replace(/\uF061/g, 'α')
+    .replace(/\uF062/g, 'β')
+    .replace(/\uF071/g, 'θ')
+    .replace(/\uF072/g, 'ρ')
+    .replace(/\uF073/g, 'σ')
+    .replace(/\uF044/g, 'Δ')
+    // Íconos auxiliares de folletos DEMRE
+    .replace(/\uF0FC/g, '✓')
+    .replace(/\uF0E3/g, '©')
+    .replace(/\uF138/g, '►');
 }
 
 /**
@@ -75,7 +102,16 @@ function normalizeText(raw: string): string {
   // 1. Limpieza de fuentes propietarias Symbol PUA
   let text = cleanSymbolFont(raw);
 
-  // 2. Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
+  // 2. Normalización de decimales partidos por saltos de extracción: ",0 75" -> "0,75", ",1 25" -> "1,25"
+  text = text.replace(/,\s*([0-9])\s+([0-9]{2,})\b/g, '$1,$2');
+
+  // 3. Normalización de coordenadas partidas e invertidas: (,x y) → (x, y), (,0 0) → (0, 0)
+  //    Paso 1: regex genérico que convierte cualquier (,a b) → (a, b)
+  text = text.replace(/\(\s*,\s*([a-zA-Z0-9_-]+)\s+([a-zA-Z0-9_-]+)\s*\)/g, '($1, $2)');
+  //    Paso 2: agrega espacio entre palabra clave y paréntesis: puntos(x, y) → puntos (x, y)
+  text = text.replace(/\b(punto|puntos|vector|vectores)\s*\(([^)]+)\)/gi, '$1 ($2)');
+
+  // 4. Eliminar marcas de forma/fuente (artefactos de marca de agua PDF)
   text = text
     .replace(/FORMA\s+\d+\s*[|│▌]\s*\d{4}/gi, '')
     .replace(/www\.[a-z0-9.-]+\.[a-z]{2,}/gi, '')
