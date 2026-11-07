@@ -43,7 +43,7 @@ import { preguntasMatematica6BMock } from '../data/mat6bQuestionsMock';
 import { formatMiles } from '../utils/formatUtils';
 
 interface EvaluacionMetadata {
-  tipo: 'paes' | 'simce' | 'diagnostica' | 'aula';
+  tipo: 'paes' | 'simce' | 'diagnostica' | 'informe' | 'aula';
   tipoLabel: string;
   badgeBg: string;
   badgeText: string;
@@ -55,7 +55,28 @@ interface EvaluacionMetadata {
 }
 
 function parseEvaluacionInfo(p: Prueba): EvaluacionMetadata {
-  const full = `${p.titulo} ${p.id} ${p.descripcion || ''}`.toLowerCase();
+  const full = `${p.titulo} ${p.id} ${p.descripcion || ''} ${p.tipoEvaluacion || ''}`.toLowerCase();
+
+  // 1. Informes Oficiales MINEDUC (Actas, Sábanas, Analítica Decreto 67)
+  if (
+    p.tipoEvaluacion === 'informe' ||
+    full.includes('informe') ||
+    full.includes('acta') ||
+    full.includes('sábana') ||
+    full.includes('sabana') ||
+    full.includes('decreto 67') ||
+    full.includes('analítica utp') ||
+    full.includes('analitica utp') ||
+    full.includes('resumen periodo')
+  ) {
+    return {
+      tipo: 'informe',
+      tipoLabel: 'Informe Oficial MINEDUC',
+      badgeBg: 'bg-emerald-500/15',
+      badgeText: 'text-emerald-400',
+      badgeBorder: 'border-emerald-500/30',
+    };
+  }
 
   if (full.includes('paes') || full.includes('demre')) {
     const yearMatch = full.match(/\b(202\d)\b/);
@@ -567,7 +588,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAsignatura, setSelectedAsignatura] = useState<string>(initialAsignatura);
   const [selectedEstado, setSelectedEstado] = useState<string>('todos');
-  const [tipoFiltro, setTipoFiltro] = useState<'todos' | 'paes' | 'simce' | 'diagnostica'>('todos');
+  const [tipoFiltro, setTipoFiltro] = useState<'todos' | 'paes' | 'simce' | 'diagnostica' | 'informe'>('todos');
   const [anioPaesFiltro, setAnioPaesFiltro] = useState<string>('todos');
   const [nivelSimceFiltro, setNivelSimceFiltro] = useState<string>('todos');
   const [tipoInternoFiltro, setTipoInternoFiltro] = useState<'todos' | 'aula' | 'diagnostica'>('todos');
@@ -615,7 +636,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
     if (modulo === 'evaluaciones') {
       return userPruebas.filter(p => {
         const t = parseEvaluacionInfo(p).tipo;
-        return t === 'aula' || t === 'diagnostica';
+        return t === 'aula' || t === 'diagnostica' || t === 'informe';
       });
     }
     return userPruebas;
@@ -625,9 +646,10 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
   const conteoPaes = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'paes').length, [userPruebas]);
   const conteoSimce = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'simce').length, [userPruebas]);
   const conteoDiag = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'diagnostica').length, [userPruebas]);
+  const conteoInforme = React.useMemo(() => userPruebas.filter(p => parseEvaluacionInfo(p).tipo === 'informe').length, [userPruebas]);
   const conteoInternas = React.useMemo(() => userPruebas.filter(p => {
     const t = parseEvaluacionInfo(p).tipo;
-    return t === 'aula' || t === 'diagnostica';
+    return t === 'aula' || t === 'diagnostica' || t === 'informe';
   }).length, [userPruebas]);
 
   const aniosPaesDisponibles = React.useMemo(() => {
@@ -1009,6 +1031,18 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                   <span>📋</span>
                   <span>Pruebas Diagnósticas ({formatMiles(conteoDiag)})</span>
                 </button>
+
+                <button
+                  onClick={() => { setTipoFiltro('informe'); setAnioPaesFiltro('todos'); }}
+                  className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all whitespace-nowrap ${
+                    tipoFiltro === 'informe'
+                      ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/40 scale-[1.02]'
+                      : 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20'
+                  }`}
+                >
+                  <span>📜</span>
+                  <span>Informes & Sábanas ({formatMiles(conteoInforme)})</span>
+                </button>
               </div>
 
               {tipoFiltro !== 'todos' && (
@@ -1148,7 +1182,7 @@ export const EvaluacionesPage: React.FC<EvaluacionesPageProps> = ({
                     <div className="flex items-center gap-1.5 flex-wrap">
                       {/* Badge Instrumento */}
                       <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold border ${meta.badgeBg} ${meta.badgeText} ${meta.badgeBorder} flex items-center gap-1`}>
-                        {isPaes ? '🏛️ PAES Oficial' : meta.tipo === 'simce' ? '📊 SIMCE Oficial' : meta.tipo === 'diagnostica' ? '📋 Diagnóstica' : '🏫 Evaluación'}
+                        {isPaes ? '🏛️ PAES Oficial' : meta.tipo === 'simce' ? '📊 SIMCE Oficial' : meta.tipo === 'diagnostica' ? '📋 Diagnóstica' : meta.tipo === 'informe' ? '📜 Informe Oficial' : '🏫 Evaluación'}
                       </span>
 
                       {/* Badges específicos PAES */}

@@ -925,31 +925,69 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           )}
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="text-[11px] text-slate-400 font-medium">Preguntas por página:</span>
-          <div className="flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-0.5">
-            {[10, 20, 30, 50].map((num) => (
-              <button
-                key={num}
-                onClick={() => {
-                  setItemsPorPaginaPreguntas(num);
-                  setPaginaActualPreguntas(1);
-                }}
-                className={`px-2 py-0.5 text-xs font-bold rounded transition-all ${
-                  itemsPorPaginaPreguntas === num
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                {num}
-              </button>
-            ))}
+        <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] text-slate-400 font-medium">Preguntas por página:</span>
+            <div className="flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-0.5">
+              {[10, 20, 30, 50].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => {
+                    setItemsPorPaginaPreguntas(num);
+                    setPaginaActualPreguntas(1);
+                  }}
+                  className={`px-2 py-0.5 text-xs font-bold rounded transition-all ${
+                    itemsPorPaginaPreguntas === num
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {totalPaginasPreguntas > 1 && (
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setPaginaActualPreguntas(p => Math.max(1, p - 1))}
+                disabled={paginaActualPreguntas === 1}
+                className="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                title="Página Anterior"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <div className="flex items-center gap-1">
+                {Array.from({ length: totalPaginasPreguntas }, (_, i) => i + 1).map((hoja) => (
+                  <button
+                    key={hoja}
+                    onClick={() => setPaginaActualPreguntas(hoja)}
+                    className={`w-6 h-6 rounded-md text-xs font-bold transition-all ${
+                      paginaActualPreguntas === hoja
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    }`}
+                  >
+                    {hoja}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setPaginaActualPreguntas(p => Math.min(totalPaginasPreguntas, p + 1))}
+                disabled={paginaActualPreguntas === totalPaginasPreguntas}
+                className="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                title="Página Siguiente"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Questions List */}
-      <div className="space-y-3">
+      {/* Questions List con Scroll Vertical Contenido */}
+      <div className="space-y-3 max-h-[640px] overflow-y-auto pr-1">
         {filtered.length === 0 ? (
           <div className="glass-card p-12 text-center">
             <HelpCircle className="w-10 h-10 text-slate-300 dark:text-slate-700 mx-auto mb-2" />

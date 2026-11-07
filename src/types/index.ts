@@ -57,6 +57,8 @@ export interface AlumnoBasico {
   cursoId: string;
   cursoNombre: string;
   numeroDeLista?: number;
+  rbd?: string;
+  establecimiento?: string;
 }
 
 export interface EjeTematico {
@@ -130,7 +132,7 @@ export interface Prueba {
   preguntasIds: string[];
   totalPreguntas: number;
   estado: 'borrador' | 'activa' | 'finalizada';
-  tipoEvaluacion?: 'aula' | 'simce' | 'paes';
+  tipoEvaluacion?: 'aula' | 'simce' | 'paes' | 'diagnostica' | 'informe';
   esCatalogo?: boolean;
   precioCLP?: number;
   descripcionCatalogo?: string;

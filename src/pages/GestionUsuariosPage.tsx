@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserProfile, UserEstado, UserPlan } from '../types';
@@ -32,7 +32,9 @@ import {
   Hash,
   MapPin,
   BookOpen,
-  AlertCircle
+  AlertCircle,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { asignaturasMock, establecimientosCatalog } from '../data/mockData';
 import { COMUNAS_REGION_METROPOLITANA } from '../components/DocenteFormFields';
@@ -282,6 +284,19 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
     const matchesRol = rolFilter === 'todos' || effRole === rolFilter;
     return matchesSearch && matchesEstado && matchesRol;
   });
+
+  // Paginación de Usuarios
+  const [itemsPorPagina, setItemsPorPagina] = useState<number>(10);
+  const [paginaActual, setPaginaActual] = useState<number>(1);
+  const totalPaginas = Math.ceil(filteredUsers.length / itemsPorPagina) || 1;
+  const usuariosPaginados = useMemo(() => {
+    const start = (paginaActual - 1) * itemsPorPagina;
+    return filteredUsers.slice(start, start + itemsPorPagina);
+  }, [filteredUsers, paginaActual, itemsPorPagina]);
+
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [searchTerm, estadoFilter, rolFilter, entornoTab]);
 
   // Métricas y conteos
   const total = baseUsersList.length;
@@ -649,11 +664,80 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
         </div>
       </div>
 
-      {/* Tabla de Usuarios */}
+      {/* Barra de Control de Paginación Superior */}
+      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+        <div className="text-xs text-slate-400">
+          Mostrando <span className="font-bold text-white">{(paginaActual - 1) * itemsPorPagina + 1}</span> a{' '}
+          <span className="font-bold text-white">{Math.min(paginaActual * itemsPorPagina, filteredUsers.length)}</span> de{' '}
+          <span className="font-bold text-white">{filteredUsers.length}</span> usuarios
+        </div>
+
+        <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
+          <div className="flex items-center gap-1.5 text-xs text-slate-400">
+            <span>Mostrar:</span>
+            <div className="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-0.5">
+              {[10, 20, 30, 50].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => {
+                    setItemsPorPagina(num);
+                    setPaginaActual(1);
+                  }}
+                  className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                    itemsPorPagina === num
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {totalPaginas > 1 && (
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
+                disabled={paginaActual === 1}
+                className="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                title="Página anterior"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <div className="flex items-center gap-1">
+                {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((hoja) => (
+                  <button
+                    key={hoja}
+                    onClick={() => setPaginaActual(hoja)}
+                    className={`w-6 h-6 rounded-md text-xs font-bold transition-all ${
+                      paginaActual === hoja
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-slate-800/80 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {hoja}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
+                disabled={paginaActual === totalPaginas}
+                className="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                title="Página siguiente"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Tabla de Usuarios con Scroll Vertical Contenido */}
       <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto max-h-[580px] overflow-y-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 font-semibold border-b border-slate-800">
+            <thead className="bg-slate-950/80 text-slate-400 font-semibold border-b border-slate-800 sticky top-0 z-10 backdrop-blur-md">
               <tr>
                 <th className="py-3.5 px-4">Usuario / RUT</th>
                 <th className="py-3.5 px-4">Establecimiento & Rol</th>
@@ -664,14 +748,14 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60 text-slate-300">
-              {filteredUsers.length === 0 ? (
+              {usuariosPaginados.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="text-center py-10 text-slate-500">
                     No se encontraron usuarios en este filtro.
                   </td>
                 </tr>
               ) : (
-                filteredUsers.map(u => (
+                usuariosPaginados.map(u => (
                   <tr key={u.id} className="hover:bg-slate-800/30 transition-colors">
                     {/* Usuario & RUT */}
                     <td className="py-3.5 px-4">
@@ -938,6 +1022,50 @@ export const GestionUsuariosPage: React.FC<{ isSandboxMode?: boolean }> = ({ isS
           </table>
         </div>
       </div>
+
+      {/* Barra de Paginación Inferior */}
+      {totalPaginas > 1 && (
+        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+          <div className="text-xs text-slate-400">
+            Página <strong className="text-white">{paginaActual}</strong> de{' '}
+            <strong className="text-white">{totalPaginas}</strong> ({filteredUsers.length} usuarios en total)
+          </div>
+
+          <div className="flex items-center gap-1.5 self-center sm:self-auto flex-wrap">
+            <button
+              onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
+              disabled={paginaActual === 1}
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Página Anterior"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((hoja) => (
+              <button
+                key={hoja}
+                onClick={() => setPaginaActual(hoja)}
+                className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                  paginaActual === hoja
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'bg-slate-800/80 text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                {hoja}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
+              disabled={paginaActual === totalPaginas}
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Página Siguiente"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
       </>
       )}
 

@@ -278,11 +278,11 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
         />
 
         <StatCard
-          title={isProductionAdmin ? 'Evaluaciones Cargadas' : isAdmin ? 'Ejes con Alerta Crítica' : 'Escala Nacional Promedio'}
-          value={isProductionAdmin ? `${pruebas.length} Evaluación${pruebas.length !== 1 ? 'es' : ''}` : isAdmin ? `${ejesCriticos}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioEscalaNacional} pts`)}
-          subtitle={isProductionAdmin ? 'Disponibles en producción' : isAdmin ? `Según el reporte: ${reporteActivo.pruebaTitulo}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
+          title={isProductionAdmin ? 'Evaluaciones en Catálogo' : isAdmin ? 'Ejes con Alerta Crítica' : 'Escala Nacional Promedio'}
+          value={isProductionAdmin ? `${pruebas.length.toLocaleString('es-CL')} Disponibles` : isAdmin ? `${ejesCriticos}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pendiente' : `${reporteActivo.promedioEscalaNacional} pts`)}
+          subtitle={isProductionAdmin ? `${pruebas.filter(p => p.tipoEvaluacion === 'paes' || p.id.includes('paes') || p.titulo.toLowerCase().includes('paes')).length} PAES • ${pruebas.filter(p => p.tipoEvaluacion === 'simce' || p.id.includes('simce') || p.titulo.toLowerCase().includes('simce')).length} SIMCE` : isAdmin ? `Según el reporte: ${reporteActivo.pruebaTitulo}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Evaluación configurada' : 'Rango 100 - 350 pts')}
           icon={<BookOpen className="w-5 h-5" />}
-          trend={{ text: isProductionAdmin ? 'Evaluaciones disponibles' : isAdmin ? (ejesCriticos > 0 ? 'Requieren atención pedagógica' : 'Sin ejes críticos registrados') : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : 'Resultados del reporte'), type: ejesCriticos > 0 ? 'negative' : 'positive' }}
+          trend={{ text: isProductionAdmin ? 'En Producción Activa' : isAdmin ? (ejesCriticos > 0 ? 'Requieren atención pedagógica' : 'Sin ejes críticos registrados') : (reporteActivo.totalAlumnosRendidos === 0 ? 'Pauta lista' : 'Resultados del reporte'), type: ejesCriticos > 0 ? 'negative' : 'positive' }}
           iconBgColor="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
         />
 
