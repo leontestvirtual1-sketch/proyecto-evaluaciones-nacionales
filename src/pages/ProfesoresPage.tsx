@@ -724,7 +724,7 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
                   </td>
                 </tr>
               ) : profesoresPaginados.map((prof: UserProfile, index: number) => {
-                const isNearBottom = index >= profesoresPaginados.length - 2 && profesoresPaginados.length > 2;
+                const isNearBottom = index >= Math.max(0, profesoresPaginados.length - 2);
                 const asigName = prof.asignaturaNombre || (prof.asignaturaId === 'asig-1' ? 'Competencia Matemática 1 (M1)' : prof.asignaturaId === 'asig-2' ? 'Competencia Lectora' : 'Ciencias');
                 let asigBadgeColor = 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20';
                 let asigIcon = '📐';

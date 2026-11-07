@@ -924,7 +924,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                 {alumnosPaginados.map((alumno, index) => {
-                  const isNearBottom = index >= alumnosPaginados.length - 2 && alumnosPaginados.length > 2;
+                  const isNearBottom = index >= Math.max(0, alumnosPaginados.length - 2);
 
                   return (
                     <tr key={alumno.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
@@ -959,8 +959,8 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
                           </button>
                           {activeMenuId === alumno.id && (
                             <div
-                              className={`absolute right-0 z-30 w-36 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl py-1 animate-fade-in text-left ${
-                                isNearBottom ? 'bottom-8' : 'top-8'
+                              className={`absolute right-0 z-50 w-36 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl py-1 animate-fade-in text-left ${
+                                isNearBottom ? 'bottom-full mb-1' : 'top-full mt-1'
                               }`}
                             >
                               <button

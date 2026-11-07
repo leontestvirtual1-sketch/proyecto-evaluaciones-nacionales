@@ -34,6 +34,27 @@ export const StatCard: React.FC<StatCardProps> = ({
     );
   };
 
+  const renderValue = () => {
+    if (typeof value === 'string' && value.includes(' ')) {
+      const [num, ...rest] = value.split(' ');
+      return (
+        <div className="flex items-baseline gap-1.5 flex-wrap">
+          <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
+            {num}
+          </span>
+          <span className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400">
+            {rest.join(' ')}
+          </span>
+        </div>
+      );
+    }
+    return (
+      <div className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
+        {value}
+      </div>
+    );
+  };
+
   return (
     <div className="glass-card p-5 hover:shadow-xl hover:-translate-y-1 hover:border-slate-700/80 transition-all duration-300">
       <div className="flex items-center justify-between">
@@ -45,9 +66,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         </div>
       </div>
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-        <div className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-          {value}
-        </div>
+        {renderValue()}
         {getTrendBadge()}
       </div>
       {subtitle && (
