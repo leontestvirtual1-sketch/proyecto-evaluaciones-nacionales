@@ -564,15 +564,18 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
               </div>
 
               {/* Lista Paginada de Evaluaciones — Ventana con altura para 10 ítems y Scroll Interno */}
-              <div className="space-y-2.5 max-h-[580px] overflow-y-auto pr-1.5 focus:outline-none">
+              <div className="space-y-2.5 max-h-[640px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-700 focus:outline-none">
                 {evalsPaginadas.map((p: Prueba) => (
-                  <div key={p.id} className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div
+                    key={p.id}
+                    className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group"
+                  >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-[11px] font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                        <span className="font-mono text-[11px] font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20 group-hover:border-indigo-500/40 transition-colors">
                           {p.codigoPublico || 'SIMCE-LEN-2M'}
                         </span>
-                        <span className="text-xs font-bold text-white">{p.titulo}</span>
+                        <span className="text-xs font-bold text-white group-hover:text-indigo-200 transition-colors">{p.titulo}</span>
                       </div>
                       <p className="text-xs text-slate-400">
                         Curso: <strong>{p.cursoNombre}</strong> • Asignatura: <strong>{p.asignaturaNombre}</strong> • {p.totalPreguntas || 35} preguntas oficiales • {p.duracionMinutos || 90} minutos
@@ -582,7 +585,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                     <div className="flex items-center gap-2 shrink-0">
                       <button
                         onClick={() => onNavigateToEvaluaciones && onNavigateToEvaluaciones()}
-                        className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-all border border-slate-700 shadow-sm"
+                        className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-white text-xs font-semibold transition-all border border-slate-700 hover:border-indigo-500 shadow-sm"
                       >
                         Centro de Impresión / PDF
                       </button>

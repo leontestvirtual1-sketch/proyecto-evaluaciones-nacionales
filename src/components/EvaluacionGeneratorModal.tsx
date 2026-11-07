@@ -32,6 +32,7 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
   const [nivel, setNivel] = useState<string>('8° básico');
   const [duracionMinutos, setDuracionMinutos] = useState<number>(45);
   const [numPreguntas, setNumPreguntas] = useState<number>(5);
+  const [tipoEvaluacion, setTipoEvaluacion] = useState<'aula' | 'diagnostica' | 'simce' | 'paes' | 'informe'>('aula');
   const [estadoInicial, setEstadoInicial] = useState<'activa' | 'borrador'>('borrador');
   const [errorValidacion, setErrorValidacion] = useState<string | null>(null);
 
@@ -99,6 +100,7 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
       cursoNombre: currentCurso?.nombre || '2° Medio A',
       codigoPublico: codigoUnico,
       duracionMinutos,
+      tipoEvaluacion,
       creadoEn: new Date().toISOString().split('T')[0],
       // F-01: Conservar IDs reales exactos del banco de preguntas
       preguntasIds: preguntasSeleccionadas.map(p => p.id),
@@ -172,7 +174,24 @@ export const EvaluacionGeneratorModal: React.FC<EvaluacionGeneratorModalProps> =
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
+                    Tipo de Evaluación
+                  </label>
+                  <select
+                    value={tipoEvaluacion}
+                    onChange={(e) => setTipoEvaluacion(e.target.value as any)}
+                    className="w-full px-3.5 py-2.5 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-slate-900 dark:text-white font-medium"
+                  >
+                    <option value="aula">🏫 Evaluación de Aula</option>
+                    <option value="diagnostica">📋 Diagnóstica Integral</option>
+                    <option value="simce">📊 Ensayo SIMCE</option>
+                    <option value="paes">🏛️ Ensayo PAES</option>
+                    <option value="informe">📜 Informe Oficial</option>
+                  </select>
+                </div>
+
                 <div>
                   <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                     Asignatura {asignaturas.length === 1 && <span className="text-emerald-500 lowercase font-normal">(Especialidad Asignada)</span>}
