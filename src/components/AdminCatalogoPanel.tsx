@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { supabase } from "../lib/supabaseClient";
 import { SolicitudEvaluacion, EvaluacionCatalogo, EstadoSolicitud } from "../types";
@@ -16,7 +16,10 @@ import {
   DollarSign,
   X,
   Save,
-  Eye
+  Eye,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft
 } from "lucide-react";
 import { CatalogoDetalleModal } from "./CatalogoDetalleModal";
 
@@ -76,6 +79,10 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
   const [activeTab, setActiveTab] = useState<"solicitudes" | "catalogo">("catalogo");
   const [categoriaFiltro, setCategoriaFiltro] = useState<TipoCategoriaFiltro>("todos");
   const [toast, setToast] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
+
+  // Paginación para listado de evaluaciones del catálogo
+  const [itemsPorPagina, setItemsPorPagina] = useState<number>(10);
+  const [paginaActual, setPaginaActual] = useState<number>(1);
 
   // Modal para editar precio y condiciones comerciales
   const [editingEval, setEditingEval] = useState<EvaluacionCatalogo | null>(null);
@@ -143,7 +150,6 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
           .from("evaluaciones")
           .select("id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas")
           .eq("es_catalogo", true)
-          .not("verificada_at", "is", null)
           .order("created_at", { ascending: false });
 
         if (directEvals && directEvals.length > 0) {
@@ -356,6 +362,12 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
   const conteoSimce = evalsSinAsignar.filter(e => getTipoEvaluacion(e.titulo).categoria === "simce").length;
   const conteoPaes = evalsSinAsignar.filter(e => getTipoEvaluacion(e.titulo).categoria === "paes").length;
 
+  const totalPaginas = Math.ceil(evalsFiltradas.length / itemsPorPagina) || 1;
+  const evalsPaginadas = useMemo(() => {
+    const start = (paginaActual - 1) * itemsPorPagina;
+    return evalsFiltradas.slice(start, start + itemsPorPagina);
+  }, [evalsFiltradas, paginaActual, itemsPorPagina]);
+
   return (
     <div className="relative">
       {/* Toast */}
@@ -528,76 +540,154 @@ export const AdminCatalogoPanel: React.FC<AdminCatalogoPanelProps> = ({
         </div>
       ) : (
         /* Tab: Catálogo */
-        <div className="space-y-2">
-          {evalsFiltradas.length === 0 ? (
-            <div className="text-center py-8 text-slate-500">
-              <BookMarked size={28} className="mx-auto mb-2 opacity-30" />
-              <p className="text-sm">No hay evaluaciones en esta categoría</p>
-              <p className="text-xs mt-1">Las evaluaciones sin docente asignado aparecerán aquí</p>
+        <div className="space-y-3">
+          {/* Barra de control superior de catálogo */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/50">
+            <span className="text-xs text-slate-400">
+              Mostrando <strong className="text-white">{evalsFiltradas.length > 0 ? (paginaActual - 1) * itemsPorPagina + 1 : 0}</strong> a{' '}
+              <strong className="text-white">{Math.min(paginaActual * itemsPorPagina, evalsFiltradas.length)}</strong> de{' '}
+              <strong className="text-white">{evalsFiltradas.length}</strong> evaluaciones en catálogo
+            </span>
+
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <span className="text-[11px] text-slate-400 font-medium">Por página:</span>
+              <div className="flex items-center bg-slate-900 border border-slate-700 rounded-lg p-0.5">
+                {[10, 20, 30, 50].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => {
+                      setItemsPorPagina(num);
+                      setPaginaActual(1);
+                    }}
+                    className={`px-2 py-0.5 text-xs font-bold rounded transition-all ${
+                      itemsPorPagina === num
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
             </div>
-          ) : (
-            evalsFiltradas.map((ev) => {
-              const tipo = getTipoEvaluacion(ev.titulo);
-              return (
-                <div key={ev.id} className="bg-slate-800/60 border border-slate-700 rounded-xl p-3.5 flex items-start gap-3 hover:border-slate-600 transition-colors">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <p className="text-sm font-semibold text-white truncate">{ev.titulo}</p>
-                      <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${tipo.bg} ${tipo.text}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${tipo.dot}`} />
-                        {tipo.label}
-                      </span>
+          </div>
+
+          {/* Listado con scroll controlado */}
+          <div className="space-y-2 max-h-[560px] overflow-y-auto pr-1">
+            {evalsFiltradas.length === 0 ? (
+              <div className="text-center py-8 text-slate-500">
+                <BookMarked size={28} className="mx-auto mb-2 opacity-30" />
+                <p className="text-sm">No hay evaluaciones en esta categoría</p>
+                <p className="text-xs mt-1">Las evaluaciones sin docente asignado aparecerán aquí</p>
+              </div>
+            ) : (
+              evalsPaginadas.map((ev: EvaluacionCatalogo) => {
+                const tipo = getTipoEvaluacion(ev.titulo);
+                return (
+                  <div key={ev.id} className="bg-slate-800/60 border border-slate-700 rounded-xl p-3.5 flex items-start gap-3 hover:border-slate-600 transition-colors">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <p className="text-sm font-semibold text-white truncate">{ev.titulo}</p>
+                        <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${tipo.bg} ${tipo.text}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${tipo.dot}`} />
+                          {tipo.label}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                        <span className="text-[11px] text-slate-400">{ev.nivel}</span>
+                        <span className="text-[11px] text-slate-500">·</span>
+                        <span className="text-[11px] text-slate-400">{ev.totalPreguntas} preguntas</span>
+                        <span className="text-[11px] text-slate-500">·</span>
+                        <button
+                          onClick={() => openEditModal(ev)}
+                          className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-all flex items-center gap-1 ${
+                            ev.precioCLP === 0
+                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
+                              : "bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20"
+                          }`}
+                          title="Hacer clic para editar precio y condiciones"
+                        >
+                          <Tag size={9} />
+                          {ev.precioCLP === 0 ? "Incluida en plan ($0)" : `$${ev.precioCLP.toLocaleString("es-CL")} CLP`}
+                          <Edit3 size={9} className="ml-0.5 opacity-60" />
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                      <span className="text-[11px] text-slate-400">{ev.nivel}</span>
-                      <span className="text-[11px] text-slate-500">·</span>
-                      <span className="text-[11px] text-slate-400">{ev.totalPreguntas} preguntas</span>
-                      <span className="text-[11px] text-slate-500">·</span>
+                    
+                    <div className="flex items-center gap-1.5 mt-0.5 shrink-0 flex-wrap sm:flex-nowrap">
+                      <button
+                        onClick={() => setPreviewEval(ev)}
+                        title="Ver contenido, preguntas y pauta oficial"
+                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/30 hover:border-indigo-500 text-indigo-300 hover:text-white text-xs font-bold transition-all shadow-sm"
+                      >
+                        <Eye size={13} />
+                        <span>Ver Contenido</span>
+                      </button>
                       <button
                         onClick={() => openEditModal(ev)}
-                        className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-all flex items-center gap-1 ${
-                          ev.precioCLP === 0
-                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
-                            : "bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20"
-                        }`}
-                        title="Hacer clic para editar precio y condiciones"
+                        title="Editar precio y descripción comercial"
+                        className="p-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600/80 text-slate-400 hover:text-white transition-colors"
                       >
-                        <Tag size={9} />
-                        {ev.precioCLP === 0 ? "Incluida en plan ($0)" : `$${ev.precioCLP.toLocaleString("es-CL")} CLP`}
-                        <Edit3 size={9} className="ml-0.5 opacity-60" />
+                        <Edit3 size={15} />
+                      </button>
+                      <button
+                        id={`btn-toggle-catalogo-${ev.id}`}
+                        onClick={() => handleToggleCatalogo(ev, false)}
+                        disabled={isProcessing === ev.id}
+                        title="Quitar del catálogo"
+                        className="text-indigo-400 hover:text-red-400 transition-colors p-1"
+                      >
+                        {isProcessing === ev.id ? <Loader2 size={16} className="animate-spin" /> : <ToggleRight size={20} />}
                       </button>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center gap-1.5 mt-0.5 shrink-0 flex-wrap sm:flex-nowrap">
-                    <button
-                      onClick={() => setPreviewEval(ev)}
-                      title="Ver contenido, preguntas y pauta oficial"
-                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/30 hover:border-indigo-500 text-indigo-300 hover:text-white text-xs font-bold transition-all shadow-sm"
-                    >
-                      <Eye size={13} />
-                      <span>Ver Contenido</span>
-                    </button>
-                    <button
-                      onClick={() => openEditModal(ev)}
-                      title="Editar precio y descripción comercial"
-                      className="p-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600/80 text-slate-400 hover:text-white transition-colors"
-                    >
-                      <Edit3 size={15} />
-                    </button>
-                    <button
-                      id={`btn-toggle-catalogo-${ev.id}`}
-                      onClick={() => handleToggleCatalogo(ev, false)}
-                      disabled={isProcessing === ev.id}
-                      title="Quitar del catálogo"
-                      className="text-indigo-400 hover:text-red-400 transition-colors p-1"
-                    >
-                      {isProcessing === ev.id ? <Loader2 size={16} className="animate-spin" /> : <ToggleRight size={20} />}
-                    </button>
-                  </div>
-                </div>
-              );
-            })
+                );
+              })
+            )}
+          </div>
+
+          {/* Barra de paginación inferior */}
+          {totalPaginas > 1 && (
+            <div className="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="text-xs text-slate-400">
+                Página <span className="font-bold text-white">{paginaActual}</span> de{' '}
+                <span className="font-bold text-white">{totalPaginas}</span>
+              </div>
+
+              <div className="flex items-center gap-1 self-center sm:self-auto flex-wrap">
+                <button
+                  onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
+                  disabled={paginaActual === 1}
+                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  title="Página Anterior"
+                >
+                  <ChevronLeft size={14} />
+                </button>
+
+                {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((hoja) => (
+                  <button
+                    key={hoja}
+                    onClick={() => setPaginaActual(hoja)}
+                    className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                      paginaActual === hoja
+                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                        : 'bg-slate-800/80 text-slate-400 hover:text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    {hoja}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
+                  disabled={paginaActual === totalPaginas}
+                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  title="Página Siguiente"
+                >
+                  <ChevronRight size={14} />
+                </button>
+              </div>
+            </div>
           )}
         </div>
       )}

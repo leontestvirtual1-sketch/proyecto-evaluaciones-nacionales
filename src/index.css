@@ -39,7 +39,10 @@
 
 /* Glassmorphism helpers */
 .glass-card {
-  @apply bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-sm rounded-2xl;
+  @apply bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-sm rounded-2xl transition-all duration-300;
+}
+.glass-card:hover {
+  @apply shadow-xl -translate-y-1 border-slate-300 dark:border-slate-700/80;
 }
 
 .glass-nav {

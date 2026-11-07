@@ -85,7 +85,6 @@ export const CatalogoEvaluacionesModal: React.FC<CatalogoEvaluacionesModalProps>
           .from("evaluaciones")
           .select("id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas")
           .eq("es_catalogo", true)
-          .not("verificada_at", "is", null)
           .order("created_at", { ascending: false });
 
         if (currentUser.rol !== 'admin' && currentUser.asignaturaId) {

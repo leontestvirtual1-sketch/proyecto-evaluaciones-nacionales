@@ -210,7 +210,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           "id, titulo, descripcion, asignatura_id, nivel, precio_clp, descripcion_catalogo, total_preguntas, codigo_acceso, tiempo_limite, estado"
         )
         .eq("es_catalogo", true)
-        .not("verificada_at", "is", null)
         .order("created_at", { ascending: false });
 
       if (asignatura_id) {

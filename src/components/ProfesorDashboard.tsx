@@ -26,7 +26,9 @@ import {
   User,
   CheckCircle2,
   XCircle,
-  Printer
+  Printer,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import {
   simceHistoricoMock,
@@ -90,6 +92,16 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
   const [aislamientoOpen, setAislamientoOpen] = useState(false);
   const [printModalOpen, setPrintModalOpen] = useState(false);
   const [selectedPruebaForPrint, setSelectedPruebaForPrint] = useState<Prueba | null>(null);
+
+  // Paginación para Evaluaciones Oficiales en Producción
+  const [itemsPorPaginaEvals, setItemsPorPaginaEvals] = useState<number>(10);
+  const [paginaActualEvals, setPaginaActualEvals] = useState<number>(1);
+
+  const totalPaginasEvals = Math.ceil(pruebas.length / itemsPorPaginaEvals) || 1;
+  const evalsPaginadas = useMemo(() => {
+    const start = (paginaActualEvals - 1) * itemsPorPaginaEvals;
+    return pruebas.slice(start, start + itemsPorPaginaEvals);
+  }, [pruebas, paginaActualEvals, itemsPorPaginaEvals]);
 
   const isAdmin = profesor.rol === 'admin';
   const isProductionAdmin = isAdmin && !isSandboxMode && !!profesor.esSuperAdmin;
@@ -276,16 +288,16 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
 
         <StatCard
           title={isProductionAdmin ? 'Alumnos Matriculados' : isAdmin ? 'Cursos Disponibles' : 'Evaluaciones Activas'}
-          value={isProductionAdmin ? '0 Alumnos' : isAdmin ? `${cursos.length}` : `${evaluacionesActivas}`}
-          subtitle={isProductionAdmin ? 'En proceso de inicio de poblamiento' : isAdmin ? `${alumnos.length} alumnos en el entorno actual` : 'En estado activo'}
+          value={isProductionAdmin ? `${alumnos.length} Alumno${alumnos.length !== 1 ? 's' : ''}` : isAdmin ? `${cursos.length}` : `${evaluacionesActivas}`}
+          subtitle={isProductionAdmin ? (alumnos.length > 0 ? `${alumnos.length} estudiantes registrados en la red` : 'En proceso de inicio de poblamiento') : isAdmin ? `${alumnos.length} alumnos en el entorno actual` : 'En estado activo'}
           icon={<Users className="w-5 h-5" />}
           iconBgColor="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
         />
 
         <StatCard
           title={isProductionAdmin ? 'Rendiciones Aplicadas' : isAdmin ? 'Acciones de Reforzamiento' : 'Alumnos Rendidos'}
-          value={isProductionAdmin ? '0 Rendiciones' : isAdmin ? `${reporteActivo.planAccionReforzamiento.length}` : `${reporteActivo.totalAlumnosRendidos} / ${reporteActivo.totalAlumnosMatriculados}`}
-          subtitle={isProductionAdmin ? 'Listo para aplicación e ingreso' : isAdmin ? `En ${reporteActivo.pruebaTitulo}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Inicio de ciclo de evaluación' : 'Avance de entrega')}
+          value={isProductionAdmin ? `${reporteActivo.totalAlumnosRendidos > 0 ? reporteActivo.totalAlumnosRendidos : 0} Rendiciones` : isAdmin ? `${reporteActivo.planAccionReforzamiento.length}` : `${reporteActivo.totalAlumnosRendidos} / ${reporteActivo.totalAlumnosMatriculados}`}
+          subtitle={isProductionAdmin ? (reporteActivo.totalAlumnosRendidos > 0 ? 'Rendiciones procesadas con éxito' : 'Listo para aplicación e ingreso') : isAdmin ? `En ${reporteActivo.pruebaTitulo}` : (reporteActivo.totalAlumnosRendidos === 0 ? 'Inicio de ciclo de evaluación' : 'Avance de entrega')}
           icon={<Award className="w-5 h-5" />}
           iconBgColor="bg-sky-500/10 text-sky-600 dark:text-sky-400"
         />
@@ -368,26 +380,77 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                     </div>
 
                     <div className="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-xs">
+                      {/* Cursos Dinámicos por Colegio */}
                       <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                         <div className="text-slate-400 text-[10px] uppercase font-bold">Cursos</div>
-                        <div className="text-sm font-black text-white mt-0.5" title={col.rbd === '1234' ? '4° Básico, 6° Básico, 8° Básico' : col.rbd === '31030' ? '2° Medio' : ''}>
+                        <div className="text-sm font-black text-white mt-0.5 truncate" title={(() => {
+                          const colCursos = (cursos || []).filter(c =>
+                            (c.rbd && c.rbd === col.rbd) ||
+                            (c.establecimiento && c.establecimiento.toLowerCase().includes(col.nombre.toLowerCase())) ||
+                            (col.rbd === '31030' && (!c.rbd || c.establecimiento?.toLowerCase().includes('premilitar')))
+                          );
+                          return colCursos.map(c => c.nombre).join(', ') || 'Sin cursos';
+                        })()}>
                           {(() => {
-                            if (col.rbd === '31030') return '1 (2° Medio)';
-                            if (col.rbd === '1234') return '3 (4° Básico, 6° Básico, 8° Básico)';
-                            const colCursos = (cursos || []).filter(c => c.establecimiento?.toLowerCase().includes(col.nombre.toLowerCase()));
-                            return colCursos.length > 0 ? `${colCursos.length} Curso${colCursos.length !== 1 ? 's' : ''}` : '0 Cursos';
+                            const colCursos = (cursos || []).filter(c =>
+                              (c.rbd && c.rbd === col.rbd) ||
+                              (c.establecimiento && c.establecimiento.toLowerCase().includes(col.nombre.toLowerCase())) ||
+                              (col.rbd === '31030' && (!c.rbd || c.establecimiento?.toLowerCase().includes('premilitar')))
+                            );
+                            if (colCursos.length > 0) {
+                              return `${colCursos.length} (${colCursos.map(c => c.nombre).join(', ')})`;
+                            }
+                            if (col.rbd === '31030' && cursos.length > 0) {
+                              return `${cursos.length} (${cursos.map(c => c.nombre).join(', ')})`;
+                            }
+                            return '0 Cursos';
                           })()}
                         </div>
                       </div>
+
+                      {/* Evaluaciones Dinámicas por Colegio */}
                       <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                         <div className="text-slate-400 text-[10px] uppercase font-bold">Evaluaciones</div>
                         <div className="text-sm font-black text-indigo-400 mt-0.5">
-                          {col.rbd === '31030' ? `${pruebas.filter(p => p.cursoNombre?.includes('2°') || p.id.includes('len2m')).length || 3} Activas` : col.rbd === '1234' ? '1 Activa' : '0 Activas'}
+                          {(() => {
+                            const colCursos = (cursos || []).filter(c =>
+                              (c.rbd && c.rbd === col.rbd) ||
+                              (c.establecimiento && c.establecimiento.toLowerCase().includes(col.nombre.toLowerCase())) ||
+                              (col.rbd === '31030')
+                            );
+                            const evalsMatch = pruebas.filter(p =>
+                              colCursos.some(c => c.nombre === p.cursoNombre || c.id === p.cursoId) ||
+                              (col.rbd === '31030' && (p.cursoNombre?.includes('2°') || p.id.includes('2m') || p.id.includes('simce')))
+                            );
+                            const total = evalsMatch.length > 0 ? evalsMatch.length : pruebas.length;
+                            return `${total} Activa${total !== 1 ? 's' : ''}`;
+                          })()}
                         </div>
                       </div>
+
+                      {/* Nómina de Alumnos Dinámica por Colegio */}
                       <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                         <div className="text-slate-400 text-[10px] uppercase font-bold">Nómina Alumnos</div>
-                        <div className="text-sm font-black text-amber-400 mt-0.5">0 (En proceso)</div>
+                        <div className="text-sm font-black text-amber-400 mt-0.5">
+                          {(() => {
+                            const colCursos = (cursos || []).filter(c =>
+                              (c.rbd && c.rbd === col.rbd) ||
+                              (c.establecimiento && c.establecimiento.toLowerCase().includes(col.nombre.toLowerCase())) ||
+                              (col.rbd === '31030')
+                            );
+                            const colAlumnos = (alumnos || []).filter(a => {
+                              const aAny = a as unknown as Record<string, unknown>;
+                              if (aAny.rbd && aAny.rbd === col.rbd) return true;
+                              if (aAny.establecimiento && typeof aAny.establecimiento === 'string' && aAny.establecimiento.toLowerCase().includes(col.nombre.toLowerCase())) return true;
+                              if (colCursos.some(c => c.id === a.cursoId || c.nombre === a.cursoNombre)) return true;
+                              return col.rbd === '31030';
+                            });
+                            if (colAlumnos.length > 0) {
+                              return `${colAlumnos.length} Alumnos`;
+                            }
+                            return '0 (En proceso)';
+                          })()}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -425,25 +488,49 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
             {/* 2. Línea Base Oficial SIMCE — Agencia de Calidad */}
             <SimceHistoricoPremilSection />
 
-            {/* 3. Resumen de la Evaluación Oficial Cargada */}
+            {/* 3. Resumen de la Evaluación Oficial Cargada con Paginación */}
             <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
                 <div>
                   <h3 className="text-base font-bold text-white flex items-center gap-2">
                     <FileText className="w-5 h-5 text-indigo-400" />
                     Evaluaciones Oficiales en Producción
                   </h3>
                   <p className="text-xs text-slate-400 mt-0.5">
-                    Instrumentos de evaluación estandarizada cargados en la base de datos.
+                    Instrumentos de evaluación estandarizada cargados en la base de datos ({pruebas.length} en total).
                   </p>
+                </div>
+
+                {/* Selector rápido de items por página */}
+                <div className="flex items-center gap-2 self-start sm:self-auto">
+                  <span className="text-xs text-slate-400 font-medium">Ver por página:</span>
+                  <div className="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-0.5">
+                    {[10, 20, 30, 40].map((num) => (
+                      <button
+                        key={num}
+                        onClick={() => {
+                          setItemsPorPaginaEvals(num);
+                          setPaginaActualEvals(1);
+                        }}
+                        className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                          itemsPorPaginaEvals === num
+                            ? 'bg-indigo-600 text-white shadow-sm'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {num}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
+              {/* Lista Paginada de Evaluaciones */}
               <div className="space-y-3">
-                {pruebas.map((p: Prueba) => (
-                  <div key={p.id} className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                {evalsPaginadas.map((p: Prueba) => (
+                  <div key={p.id} className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-mono text-[11px] font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
                           {p.codigoPublico || 'SIMCE-LEN-2M'}
                         </span>
@@ -457,7 +544,7 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                     <div className="flex items-center gap-2 shrink-0">
                       <button
                         onClick={() => onNavigateToEvaluaciones && onNavigateToEvaluaciones()}
-                        className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-all border border-slate-700"
+                        className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-all border border-slate-700 shadow-sm"
                       >
                         Centro de Impresión / PDF
                       </button>
@@ -465,6 +552,57 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                   </div>
                 ))}
               </div>
+
+              {/* Barra de Paginación y Selector de Hojas */}
+              {totalPaginasEvals > 1 && (
+                <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="text-xs text-slate-400">
+                    Mostrando{' '}
+                    <span className="font-bold text-white">
+                      {(paginaActualEvals - 1) * itemsPorPaginaEvals + 1}
+                    </span>{' '}
+                    a{' '}
+                    <span className="font-bold text-white">
+                      {Math.min(paginaActualEvals * itemsPorPaginaEvals, pruebas.length)}
+                    </span>{' '}
+                    de <span className="font-bold text-white">{pruebas.length}</span> evaluaciones
+                  </div>
+
+                  <div className="flex items-center gap-1.5 self-center sm:self-auto flex-wrap">
+                    <button
+                      onClick={() => setPaginaActualEvals(p => Math.max(1, p - 1))}
+                      disabled={paginaActualEvals === 1}
+                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                      title="Página Anterior"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+
+                    {Array.from({ length: totalPaginasEvals }, (_, i) => i + 1).map((hoja) => (
+                      <button
+                        key={hoja}
+                        onClick={() => setPaginaActualEvals(hoja)}
+                        className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                          paginaActualEvals === hoja
+                            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                            : 'bg-slate-800/80 text-slate-400 hover:text-white hover:bg-slate-800'
+                        }`}
+                      >
+                        {hoja}
+                      </button>
+                    ))}
+
+                    <button
+                      onClick={() => setPaginaActualEvals(p => Math.min(totalPaginasEvals, p + 1))}
+                      disabled={paginaActualEvals === totalPaginasEvals}
+                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                      title="Página Siguiente"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ) : (

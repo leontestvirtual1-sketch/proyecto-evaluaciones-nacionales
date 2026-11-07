@@ -36,18 +36,25 @@ interface ConfiguracionPageProps {
 }
 
 const asignaturasSugeridasMINEDUC = [
-  { codigo: 'HIS', nombre: 'Historia, Geografía y Ciencias Sociales', icono: '🏛️' },
-  { codigo: 'FIS', nombre: 'Física',                                   icono: '⚛️' },
-  { codigo: 'QUI', nombre: 'Química',                                  icono: '🧪' },
-  { codigo: 'BIO', nombre: 'Biología',                                 icono: '🧬' },
-  { codigo: 'ING', nombre: 'Idioma Extranjero: Inglés',                icono: '🇬🇧' },
-  { codigo: 'EF',  nombre: 'Educación Física y Salud',                 icono: '🏃' },
-  { codigo: 'FIL', nombre: 'Filosofía',                                icono: '📖' },
-  { codigo: 'EC',  nombre: 'Educación Ciudadana',                      icono: '🏛' },
-  { codigo: 'M2',  nombre: 'Competencia Matemática 2 (M2)',            icono: '📐' },
-  { codigo: 'CTP', nombre: 'Ciencias Técnico-Profesional (TP)',        icono: '🏭' },
-  { codigo: 'ART', nombre: 'Artes Visuales / Música',                  icono: '🎨' },
-  { codigo: 'TEC', nombre: 'Tecnología e Informática',                 icono: '💻' },
+  { codigo: 'LEN', nombre: 'Lenguaje y Comunicación (SIMCE Básica)',    icono: '📖' },
+  { codigo: 'LIT', nombre: 'Lengua y Literatura (SIMCE Media)',          icono: '📚' },
+  { codigo: 'MAT', nombre: 'Matemática (SIMCE General)',                 icono: '🔢' },
+  { codigo: 'CN',  nombre: 'Ciencias Naturales (SIMCE Básica)',          icono: '🌱' },
+  { codigo: 'HIS', nombre: 'Historia, Geografía y Ciencias Sociales',   icono: '🏛️' },
+  { codigo: 'FIS', nombre: 'Ciencias — Física',                         icono: '⚛️' },
+  { codigo: 'QUI', nombre: 'Ciencias — Química',                        icono: '🧪' },
+  { codigo: 'BIO', nombre: 'Ciencias — Biología',                       icono: '🧬' },
+  { codigo: 'ING', nombre: 'Idioma Extranjero: Inglés',                 icono: '🇬🇧' },
+  { codigo: 'EF',  nombre: 'Educación Física y Salud',                  icono: '🏃' },
+  { codigo: 'FIL', nombre: 'Filosofía',                                 icono: '🧠' },
+  { codigo: 'EC',  nombre: 'Educación Ciudadana',                       icono: '🏛' },
+  { codigo: 'M2',  nombre: 'Competencia Matemática 2 (M2)',             icono: '📐' },
+  { codigo: 'CTP', nombre: 'Ciencias Técnico-Profesional (TP)',         icono: '🏭' },
+  { codigo: 'ART', nombre: 'Artes Visuales',                            icono: '🎨' },
+  { codigo: 'MUS', nombre: 'Música',                                    icono: '🎵' },
+  { codigo: 'TEC', nombre: 'Tecnología e Informática',                  icono: '💻' },
+  { codigo: 'ORI', nombre: 'Orientación',                               icono: '🧭' },
+  { codigo: 'REL', nombre: 'Religión',                                  icono: '🕊️' },
 ];
 
 export const ConfiguracionPage: React.FC<ConfiguracionPageProps> = ({

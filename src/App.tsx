@@ -791,7 +791,6 @@ function MainAppContent({
         {/* Footer */}
         <footer className="border-t border-slate-200 dark:border-slate-800/80 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
           <p><strong>Sysget Saber</strong> — Plataforma de Evaluaciones y Ensayos Académicos © 2026 — Chile</p>
-          <p className="text-[11px] text-slate-400 mt-1">Diseñado con React, Vite, Tailwind CSS y Supabase</p>
         </footer>
       </div>
 

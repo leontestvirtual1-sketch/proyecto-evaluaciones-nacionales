@@ -15,7 +15,10 @@ import {
   AlertCircle,
   Download,
   Copy,
-  Check
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Loader2
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { APP_CONFIG } from '../config/appConfig';
@@ -413,7 +416,7 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     if (isSandboxMode) return getInitialDemoAlumnos();
     return [];
   });
-  const [_isLoadingProd, setIsLoadingProd] = useState<boolean>(!isSandboxMode);
+  const [isLoadingProd, setIsLoadingProd] = useState<boolean>(!isSandboxMode);
   const [search, setSearch] = useState('');
   const [cursoFilter, setCursoFilter] = useState('');
   const [formModalOpen, setFormModalOpen] = useState(false);
@@ -520,6 +523,20 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
     const matchesCurso = cursoFilter === '' || a.cursoId === cursoFilter;
     return matchesSearch && matchesCurso;
   });
+
+  // Paginación para Alumnos (10, 20, 30, 50)
+  const [itemsPorPagina, setItemsPorPagina] = useState<number>(10);
+  const [paginaActual, setPaginaActual] = useState<number>(1);
+
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [search, cursoFilter]);
+
+  const totalPaginas = Math.ceil(filtered.length / itemsPorPagina) || 1;
+  const alumnosPaginados = useMemo(() => {
+    const start = (paginaActual - 1) * itemsPorPagina;
+    return filtered.slice(start, start + itemsPorPagina);
+  }, [filtered, paginaActual, itemsPorPagina]);
 
   const handleSaveAlumno = async (a: AlumnoConCurso) => {
     if (!isSandboxMode && currentUser) {
@@ -796,8 +813,13 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
         </select>
       </div>
 
-      {/* Alumnos Table */}
-      {filtered.length === 0 ? (
+      {/* Alumnos Table or Loading */}
+      {isLoadingProd ? (
+        <div className="glass-card p-12 text-center space-y-4 animate-fade-in">
+          <div className="w-10 h-10 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mx-auto" />
+          <p className="text-xs text-slate-400 font-semibold">Cargando nómina oficial de alumnos desde la base de datos...</p>
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="glass-card p-12 text-center space-y-4">
           <div className="w-12 h-12 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto">
             <Users className="w-6 h-6" />
@@ -828,10 +850,42 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
           )}
         </div>
       ) : (
-        <div className="glass-card overflow-hidden">
-          <div className="overflow-x-auto">
+        <div className="glass-card space-y-0">
+          {/* Barra superior de control y selector de ítems */}
+          <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="text-xs text-slate-500 dark:text-slate-400">
+              Mostrando <strong className="text-slate-900 dark:text-white">{(paginaActual - 1) * itemsPorPagina + 1}</strong> a{' '}
+              <strong className="text-slate-900 dark:text-white">{Math.min(paginaActual * itemsPorPagina, filtered.length)}</strong> de{' '}
+              <strong className="text-slate-900 dark:text-white">{filtered.length}</strong> estudiantes
+            </div>
+
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <span className="text-[11px] text-slate-400 font-medium">Por página:</span>
+              <div className="flex items-center bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-0.5">
+                {[10, 20, 30, 50].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => {
+                      setItemsPorPagina(num);
+                      setPaginaActual(1);
+                    }}
+                    className={`px-2.5 py-0.5 text-xs font-bold rounded transition-all ${
+                      itemsPorPagina === num
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Tabla con scroll y padding inferior suficiente para desplegar menú */}
+          <div className="overflow-x-auto max-h-[580px] overflow-y-auto pb-28">
             <table className="w-full text-xs text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 font-bold uppercase tracking-wider">
+              <thead className="bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 font-bold uppercase tracking-wider sticky top-0 z-10">
                 <tr>
                   <th className="px-5 py-3">Estudiante</th>
                   <th className="px-5 py-3">RUT</th>
@@ -842,60 +896,113 @@ export const AlumnosPage: React.FC<AlumnosPageProps> = ({ currentUser, isSandbox
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
-                {filtered.map(alumno => (
-                  <tr key={alumno.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
-                    <td className="px-5 py-3.5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold flex items-center justify-center text-xs shadow-sm">
-                          {alumno.nombre[0]}{alumno.apellido[0]}
-                        </div>
-                        <div>
-                          <p className="font-bold text-slate-900 dark:text-white">{alumno.nombre} {alumno.apellido}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-5 py-3.5 font-mono text-slate-600 dark:text-slate-300">{alumno.rut}</td>
-                    <td className="px-5 py-3.5 text-slate-500 dark:text-slate-400">{alumno.email}</td>
-                    <td className="px-5 py-3.5 font-medium text-slate-700 dark:text-slate-300">
-                      {alumno.cursoNombre || '2° Medio A'}
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                        <CheckCircle2 className="w-3 h-3" /> Activo
-                      </span>
-                    </td>
-                    <td className="px-5 py-3.5 text-right">
-                      <div className="relative inline-block">
-                        <button
-                          onClick={() => setActiveMenuId(activeMenuId === alumno.id ? null : alumno.id)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                        >
-                          <MoreVertical className="w-4 h-4" />
-                        </button>
-                        {activeMenuId === alumno.id && (
-                          <div className="absolute right-0 top-8 z-20 w-36 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl py-1 animate-fade-in text-left">
-                            <button
-                              onClick={() => { setEditingAlumno(alumno); setFormModalOpen(true); setActiveMenuId(null); }}
-                              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                            >
-                              <Edit2 className="w-3.5 h-3.5 text-emerald-500" /> Editar
-                            </button>
-                            <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
-                            <button
-                              onClick={() => handleDelete(alumno.id)}
-                              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" /> Eliminar
-                            </button>
+                {alumnosPaginados.map((alumno, index) => {
+                  const isNearBottom = index >= alumnosPaginados.length - 2 && alumnosPaginados.length > 2;
+
+                  return (
+                    <tr key={alumno.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                      <td className="px-5 py-3.5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold flex items-center justify-center text-xs shadow-sm shrink-0">
+                            {alumno.nombre[0]}{alumno.apellido[0]}
                           </div>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          <div>
+                            <p className="font-bold text-slate-900 dark:text-white">{alumno.nombre} {alumno.apellido}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-5 py-3.5 font-mono text-slate-600 dark:text-slate-300">{alumno.rut}</td>
+                      <td className="px-5 py-3.5 text-slate-500 dark:text-slate-400">{alumno.email}</td>
+                      <td className="px-5 py-3.5 font-medium text-slate-700 dark:text-slate-300">
+                        {alumno.cursoNombre || '2° Medio A'}
+                      </td>
+                      <td className="px-5 py-3.5">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                          <CheckCircle2 className="w-3 h-3" /> Activo
+                        </span>
+                      </td>
+                      <td className="px-5 py-3.5 text-right">
+                        <div className="relative inline-block">
+                          <button
+                            onClick={() => setActiveMenuId(activeMenuId === alumno.id ? null : alumno.id)}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            aria-label="Acciones de alumno"
+                          >
+                            <MoreVertical className="w-4 h-4" />
+                          </button>
+                          {activeMenuId === alumno.id && (
+                            <div
+                              className={`absolute right-0 z-30 w-36 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl py-1 animate-fade-in text-left ${
+                                isNearBottom ? 'bottom-8' : 'top-8'
+                              }`}
+                            >
+                              <button
+                                onClick={() => { setEditingAlumno(alumno); setFormModalOpen(true); setActiveMenuId(null); }}
+                                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              >
+                                <Edit2 className="w-3.5 h-3.5 text-emerald-500" /> Editar
+                              </button>
+                              <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
+                              <button
+                                onClick={() => handleDelete(alumno.id)}
+                                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" /> Eliminar
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
+
+          {/* Barra inferior de paginación con selector de hojas */}
+          {totalPaginas > 1 && (
+            <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="text-xs text-slate-500 dark:text-slate-400">
+                Página <strong className="text-slate-900 dark:text-white">{paginaActual}</strong> de{' '}
+                <strong className="text-slate-900 dark:text-white">{totalPaginas}</strong>
+              </div>
+
+              <div className="flex items-center gap-1.5 self-center sm:self-auto flex-wrap">
+                <button
+                  onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
+                  disabled={paginaActual === 1}
+                  className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  title="Página Anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((hoja) => (
+                  <button
+                    key={hoja}
+                    onClick={() => setPaginaActual(hoja)}
+                    className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                      paginaActual === hoja
+                        ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30'
+                        : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    }`}
+                  >
+                    {hoja}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
+                  disabled={paginaActual === totalPaginas}
+                  className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  title="Página Siguiente"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

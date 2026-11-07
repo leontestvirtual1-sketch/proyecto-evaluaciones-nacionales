@@ -26,7 +26,9 @@ import {
   GraduationCap,
   Lock,
   AlertCircle,
-  Loader2
+  Loader2,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 interface BancoPreguntasPageProps {
@@ -361,6 +363,15 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       });
   }, [basePreguntas]);
 
+  // Paginación para Instrumentos / Pruebas Oficiales del Banco (10, 20, 30, 50)
+  const [itemsPorPaginaFuentes, setItemsPorPaginaFuentes] = useState<number>(10);
+  const [paginaActualFuentes, setPaginaActualFuentes] = useState<number>(1);
+  const totalPaginasFuentes = Math.ceil(fuentesDisponibles.length / itemsPorPaginaFuentes) || 1;
+  const fuentesPaginadas = useMemo(() => {
+    const start = (paginaActualFuentes - 1) * itemsPorPaginaFuentes;
+    return fuentesDisponibles.slice(start, start + itemsPorPaginaFuentes);
+  }, [fuentesDisponibles, paginaActualFuentes, itemsPorPaginaFuentes]);
+
   // Preguntas filtradas por los criterios secundarios (búsqueda, fuente, eje, habilidad, dificultad, tipo)
   const filtered = useMemo(() => {
     const list = basePreguntas.filter(p => {
@@ -386,6 +397,16 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
     // Ordenar naturalmente por ID para que las preguntas queden en su orden estricto (1 a 65)
     return list.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
   }, [basePreguntas, search, fuenteFilter, ejeFilter, habilidadFilter, dificultadFilter, tipoFilter]);
+
+  // Paginación para Lista de Preguntas (10, 20, 30, 50)
+  const [itemsPorPaginaPreguntas, setItemsPorPaginaPreguntas] = useState<number>(20);
+  const [paginaActualPreguntas, setPaginaActualPreguntas] = useState<number>(1);
+
+  const totalPaginasPreguntas = Math.ceil(filtered.length / itemsPorPaginaPreguntas) || 1;
+  const preguntasPaginadas = useMemo(() => {
+    const start = (paginaActualPreguntas - 1) * itemsPorPaginaPreguntas;
+    return filtered.slice(start, start + itemsPorPaginaPreguntas);
+  }, [filtered, paginaActualPreguntas, itemsPorPaginaPreguntas]);
 
   const handleDuplicate = async (p: Pregunta) => {
     const duplicada: Pregunta = {
@@ -743,87 +764,154 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           </select>
         </div>
 
-        {/* Fila de Filtro Rápido por Instrumento / Prueba Oficial y Año */}
+        {/* Fila de Filtro Rápido por Instrumento / Prueba Oficial y Año (Ventana con Scroll y Paginación) */}
         {fuentesDisponibles.length > 0 && (
-          <div className="pt-2.5 border-t border-slate-200 dark:border-slate-800/80 space-y-2">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+          <div className="pt-2.5 border-t border-slate-200 dark:border-slate-800/80 space-y-2.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
               <span className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                 <span>📑</span>
-                <span>Filtrar por Instrumento Oficial / Año (para comparar con Facsímil PDF):</span>
+                <span>Instrumentos Oficiales & Evaluaciones PAES/SIMCE ({fuentesDisponibles.length}):</span>
               </span>
               {fuenteFilter && (
                 <button
                   onClick={() => setFuenteFilter('')}
-                  className="text-xs text-indigo-500 hover:text-indigo-400 underline font-semibold self-start sm:self-auto"
+                  className="text-xs text-indigo-500 hover:text-indigo-400 underline font-semibold self-start sm:self-auto cursor-pointer"
                 >
                   ✕ Quitar filtro de prueba (ver todas)
                 </button>
               )}
             </div>
 
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <button
-                onClick={() => setFuenteFilter('')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
-                  !fuenteFilter
-                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-800 shadow-sm'
-                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-400'
-                }`}
-              >
-                Todas las Fuentes ({formatMiles(basePreguntas.length)})
-              </button>
+            {/* Ventana con Scroll y Contenedor Delimitado */}
+            <div className="p-3 rounded-2xl bg-slate-50/70 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 max-h-48 overflow-y-auto space-y-2">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <button
+                  onClick={() => setFuenteFilter('')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border shrink-0 ${
+                    !fuenteFilter
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-800 shadow-sm'
+                      : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-400'
+                  }`}
+                >
+                  Todas las Fuentes ({formatMiles(basePreguntas.length)})
+                </button>
 
-              {fuentesDisponibles.map(({ fuente, count }) => {
-                const isSelected = fuenteFilter === fuente;
-                const isPaes = fuente.toLowerCase().includes('paes');
-                const is2023 = fuente.includes('2023');
+                {fuentesPaginadas.map(({ fuente, count }) => {
+                  const isSelected = fuenteFilter === fuente;
+                  const isPaes = fuente.toLowerCase().includes('paes');
+                  const is2023 = fuente.includes('2023');
 
-                return (
-                  <button
-                    key={fuente}
-                    onClick={() => {
-                      if (isSelected) {
-                        setFuenteFilter('');
-                      } else {
-                        setFuenteFilter(fuente);
-                        // Auto-seleccionar 4° Medio si es prueba PAES y estamos en otro nivel
-                        if (isPaes && nivelFilter !== '4° medio' && nivelFilter !== '') {
-                          setNivelFilter('4° medio');
+                  return (
+                    <button
+                      key={fuente}
+                      onClick={() => {
+                        if (isSelected) {
+                          setFuenteFilter('');
+                        } else {
+                          setFuenteFilter(fuente);
+                          // Auto-seleccionar 4° Medio si es prueba PAES y estamos en otro nivel
+                          if (isPaes && nivelFilter !== '4° medio' && nivelFilter !== '') {
+                            setNivelFilter('4° medio');
+                          }
                         }
-                      }
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
-                      isSelected
-                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20 scale-[1.02]'
-                        : is2023
-                        ? 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/20'
-                        : isPaes
-                        ? 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30 hover:bg-purple-500/20'
-                        : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
-                    }`}
+                      }}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 shrink-0 ${
+                        isSelected
+                          ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20 scale-[1.02]'
+                          : is2023
+                          ? 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/20'
+                          : isPaes
+                          ? 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30 hover:bg-purple-500/20'
+                          : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                      }`}
+                    >
+                      <span>{isPaes ? '🎓' : '📄'}</span>
+                      <span className="truncate max-w-[280px]">{fuente}</span>
+                      <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-black ${
+                        isSelected
+                          ? 'bg-white/20 text-white'
+                          : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                      }`}>
+                        {formatMiles(count)}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Barra de Control y Paginación de Fuentes (Selector de ítems a la izquierda, Hojas a la derecha) */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-medium">Ítems por ventana:</span>
+                <div className="flex items-center bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-0.5">
+                  {[10, 20, 30, 50].map((num) => (
+                    <button
+                      key={num}
+                      onClick={() => {
+                        setItemsPorPaginaFuentes(num);
+                        setPaginaActualFuentes(1);
+                      }}
+                      className={`px-2 py-0.5 text-[11px] font-bold rounded transition-all ${
+                        itemsPorPaginaFuentes === num
+                          ? 'bg-indigo-600 text-white shadow-sm'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
+                <span className="text-[11px] hidden md:inline">
+                  (Pág. {paginaActualFuentes} de {totalPaginasFuentes})
+                </span>
+              </div>
+
+              {totalPaginasFuentes > 1 && (
+                <div className="flex items-center gap-1 self-start sm:self-auto flex-wrap">
+                  <button
+                    onClick={() => setPaginaActualFuentes(p => Math.max(1, p - 1))}
+                    disabled={paginaActualFuentes === 1}
+                    className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                    title="Página Anterior"
                   >
-                    <span>{isPaes ? '🎓' : '📄'}</span>
-                    <span>{fuente}</span>
-                    <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-black ${
-                      isSelected
-                        ? 'bg-white/20 text-white'
-                        : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
-                    }`}>
-                      {formatMiles(count)}
-                    </span>
+                    <ChevronLeft className="w-3.5 h-3.5" />
                   </button>
-                );
-              })}
+
+                  {Array.from({ length: totalPaginasFuentes }, (_, i) => i + 1).map((hoja) => (
+                    <button
+                      key={hoja}
+                      onClick={() => setPaginaActualFuentes(hoja)}
+                      className={`w-6 h-6 rounded-md text-[11px] font-bold transition-all ${
+                        paginaActualFuentes === hoja
+                          ? 'bg-indigo-600 text-white shadow-sm'
+                          : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                    >
+                      {hoja}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => setPaginaActualFuentes(p => Math.min(totalPaginasFuentes, p + 1))}
+                    disabled={paginaActualFuentes === totalPaginasFuentes}
+                    className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                    title="Página Siguiente"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
 
-      {/* Questions List Header */}
-      <div className="flex items-center justify-between px-1 text-xs text-slate-500 dark:text-slate-400 font-medium">
+      {/* Questions List Header with Pagination Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1 text-xs text-slate-500 dark:text-slate-400 font-medium">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-bold text-slate-900 dark:text-white">
-            Mostrando {filtered.length} {filtered.length === 1 ? 'pregunta' : 'preguntas'}
+            Mostrando {(paginaActualPreguntas - 1) * itemsPorPaginaPreguntas + 1} a {Math.min(paginaActualPreguntas * itemsPorPaginaPreguntas, filtered.length)} de {filtered.length} preguntas
           </span>
           {nivelFilter && (
             <span className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded-md text-[11px] font-bold border border-indigo-500/20 uppercase">
@@ -835,6 +923,28 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
               (filtradas de {basePreguntas.length} del nivel)
             </span>
           )}
+        </div>
+
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <span className="text-[11px] text-slate-400 font-medium">Preguntas por página:</span>
+          <div className="flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-0.5">
+            {[10, 20, 30, 50].map((num) => (
+              <button
+                key={num}
+                onClick={() => {
+                  setItemsPorPaginaPreguntas(num);
+                  setPaginaActualPreguntas(1);
+                }}
+                className={`px-2 py-0.5 text-xs font-bold rounded transition-all ${
+                  itemsPorPaginaPreguntas === num
+                    ? 'bg-indigo-600 text-white shadow-sm'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                {num}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -849,7 +959,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <p className="text-xs text-slate-400 mt-1">Crea una nueva pregunta o selecciona otro curso en las pestañas superiores</p>
           </div>
         ) : (
-          filtered.map((pregunta, index) => {
+          preguntasPaginadas.map((pregunta, index) => {
             const eje = ejes.find(e => e.id === pregunta.ejeTematicoId);
             const hab = habilidades.find(h => h.id === pregunta.habilidadId);
             const asig = asignaturas.find(a => a.id === pregunta.asignaturaId);
@@ -1029,6 +1139,50 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
           })
         )}
       </div>
+
+      {/* Barra Inferior de Paginación de Preguntas con Selector de Hojas */}
+      {totalPaginasPreguntas > 1 && (
+        <div className="glass-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="text-xs text-slate-500 dark:text-slate-400">
+            Página <strong className="text-slate-900 dark:text-white">{paginaActualPreguntas}</strong> de{' '}
+            <strong className="text-slate-900 dark:text-white">{totalPaginasPreguntas}</strong> ({filtered.length} preguntas)
+          </div>
+
+          <div className="flex items-center gap-1.5 self-center sm:self-auto flex-wrap">
+            <button
+              onClick={() => setPaginaActualPreguntas(p => Math.max(1, p - 1))}
+              disabled={paginaActualPreguntas === 1}
+              className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              title="Página Anterior"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {Array.from({ length: totalPaginasPreguntas }, (_, i) => i + 1).map((hoja) => (
+              <button
+                key={hoja}
+                onClick={() => setPaginaActualPreguntas(hoja)}
+                className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                  paginaActualPreguntas === hoja
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                {hoja}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setPaginaActualPreguntas(p => Math.min(totalPaginasPreguntas, p + 1))}
+              disabled={paginaActualPreguntas === totalPaginasPreguntas}
+              className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              title="Página Siguiente"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Modal Editar Pregunta enriquecido con gestor de imágenes y vista previa en vivo */}
       {editingPregunta && (

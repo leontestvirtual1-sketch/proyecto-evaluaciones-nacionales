@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import {
   GraduationCap,
@@ -13,7 +13,9 @@ import {
   Eye,
   EyeOff,
   Check,
-  X
+  X,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { UserProfile, Asignatura } from '../types';
 import { asignaturasMock, demoProfesoresMock } from '../data/mockData';
@@ -496,6 +498,20 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
     return matchQuery && matchAsig;
   });
 
+  // Paginación para Equipo Docente (10, 20, 30, 50)
+  const [itemsPorPagina, setItemsPorPagina] = useState<number>(10);
+  const [paginaActual, setPaginaActual] = useState<number>(1);
+
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [search, filterAsignatura]);
+
+  const totalPaginas = Math.ceil(filtered.length / itemsPorPagina) || 1;
+  const profesoresPaginados = useMemo(() => {
+    const start = (paginaActual - 1) * itemsPorPagina;
+    return filtered.slice(start, start + itemsPorPagina);
+  }, [filtered, paginaActual, itemsPorPagina]);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
@@ -653,12 +669,43 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
         </div>
       </div>
 
-      {/* Table */}
-      <div className="glass-card overflow-hidden">
-        <div className="overflow-x-auto">
+      {/* Table Card */}
+      <div className="glass-card space-y-0">
+        {/* Barra superior de control y selector de ítems */}
+        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="text-xs text-slate-500 dark:text-slate-400">
+            Mostrando <strong className="text-slate-900 dark:text-white">{(paginaActual - 1) * itemsPorPagina + 1}</strong> a{' '}
+            <strong className="text-slate-900 dark:text-white">{Math.min(paginaActual * itemsPorPagina, filtered.length)}</strong> de{' '}
+            <strong className="text-slate-900 dark:text-white">{filtered.length}</strong> docentes
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <span className="text-[11px] text-slate-400 font-medium">Por página:</span>
+            <div className="flex items-center bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-0.5">
+              {[10, 20, 30, 50].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => {
+                    setItemsPorPagina(num);
+                    setPaginaActual(1);
+                  }}
+                  className={`px-2.5 py-0.5 text-xs font-bold rounded transition-all ${
+                    itemsPorPagina === num
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto max-h-[580px] overflow-y-auto pb-28">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-slate-50/80 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+              <tr className="bg-slate-50/80 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
                 <th className="py-3.5 px-5 text-slate-500 uppercase tracking-wider font-semibold">Docente</th>
                 <th className="py-3.5 px-5 text-slate-500 uppercase tracking-wider font-semibold">Especialidad</th>
                 <th className="py-3.5 px-5 text-slate-500 uppercase tracking-wider font-semibold hidden sm:table-cell">RUT</th>
@@ -676,7 +723,8 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
                     <p className="text-xs text-slate-400 mt-1">Ajusta los filtros o agrega un nuevo docente</p>
                   </td>
                 </tr>
-              ) : filtered.map(prof => {
+              ) : profesoresPaginados.map((prof: UserProfile, index: number) => {
+                const isNearBottom = index >= profesoresPaginados.length - 2 && profesoresPaginados.length > 2;
                 const asigName = prof.asignaturaNombre || (prof.asignaturaId === 'asig-1' ? 'Competencia Matemática 1 (M1)' : prof.asignaturaId === 'asig-2' ? 'Competencia Lectora' : 'Ciencias');
                 let asigBadgeColor = 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20';
                 let asigIcon = '📐';
@@ -746,7 +794,11 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
                       </div>
 
                       {activeMenuId === prof.id && (
-                        <div className="absolute right-4 top-10 z-20 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl py-1 animate-fade-in">
+                        <div
+                          className={`absolute right-4 z-30 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl py-1 animate-fade-in ${
+                            isNearBottom ? 'bottom-8' : 'top-10'
+                          }`}
+                        >
                           <button
                             onClick={() => { setEditingProfesor(prof); setModalOpen(true); setActiveMenuId(null); }}
                             className="w-full flex items-center gap-2 px-4 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
@@ -777,6 +829,50 @@ export const ProfesoresPage: React.FC<ProfesoresPageProps> = ({
             </tbody>
           </table>
         </div>
+
+        {/* Barra inferior de paginación */}
+        {totalPaginas > 1 && (
+          <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="text-xs text-slate-500 dark:text-slate-400">
+              Página <strong className="text-slate-900 dark:text-white">{paginaActual}</strong> de{' '}
+              <strong className="text-slate-900 dark:text-white">{totalPaginas}</strong>
+            </div>
+
+            <div className="flex items-center gap-1.5 self-center sm:self-auto flex-wrap">
+              <button
+                onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
+                disabled={paginaActual === 1}
+                className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                title="Página Anterior"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((hoja) => (
+                <button
+                  key={hoja}
+                  onClick={() => setPaginaActual(hoja)}
+                  className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                    paginaActual === hoja
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                      : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  {hoja}
+                </button>
+              ))}
+
+              <button
+                onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
+                disabled={paginaActual === totalPaginas}
+                className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                title="Página Siguiente"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Edit / Add Modal */}
