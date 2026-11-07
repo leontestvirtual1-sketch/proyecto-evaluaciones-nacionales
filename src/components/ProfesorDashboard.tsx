@@ -501,34 +501,72 @@ export const ProfesorDashboard: React.FC<ProfesorDashboardProps> = ({
                   </p>
                 </div>
 
-                {/* Selector rápido de items por página */}
-                <div className="flex items-center gap-2 self-start sm:self-auto">
-                  <span className="text-xs text-slate-400 font-medium">Ver por página:</span>
-                  <div className="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-0.5">
-                    {[10, 20, 30, 40].map((num) => (
-                      <button
-                        key={num}
-                        onClick={() => {
-                          setItemsPorPaginaEvals(num);
-                          setPaginaActualEvals(1);
-                        }}
-                        className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
-                          itemsPorPaginaEvals === num
-                            ? 'bg-indigo-600 text-white shadow-sm'
-                            : 'text-slate-400 hover:text-white'
-                        }`}
-                      >
-                        {num}
-                      </button>
-                    ))}
+                {/* Selector rápido de items por página y navegación superior */}
+                <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-slate-400 font-medium">Ver por página:</span>
+                    <div className="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-0.5">
+                      {[10, 20, 30, 40].map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => {
+                            setItemsPorPaginaEvals(num);
+                            setPaginaActualEvals(1);
+                          }}
+                          className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                            itemsPorPaginaEvals === num
+                              ? 'bg-indigo-600 text-white shadow-sm'
+                              : 'text-slate-400 hover:text-white'
+                          }`}
+                        >
+                          {num}
+                        </button>
+                      ))}
+                    </div>
                   </div>
+
+                  {totalPaginasEvals > 1 && (
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => setPaginaActualEvals(p => Math.max(1, p - 1))}
+                        disabled={paginaActualEvals === 1}
+                        className="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                        title="Página anterior"
+                      >
+                        <ChevronLeft className="w-3.5 h-3.5" />
+                      </button>
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: totalPaginasEvals }, (_, i) => i + 1).map((hoja) => (
+                          <button
+                            key={hoja}
+                            onClick={() => setPaginaActualEvals(hoja)}
+                            className={`w-6 h-6 rounded-md text-xs font-bold transition-all ${
+                              paginaActualEvals === hoja
+                                ? 'bg-indigo-600 text-white'
+                                : 'bg-slate-800/80 text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {hoja}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => setPaginaActualEvals(p => Math.min(totalPaginasEvals, p + 1))}
+                        disabled={paginaActualEvals === totalPaginasEvals}
+                        className="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                        title="Página siguiente"
+                      >
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* Lista Paginada de Evaluaciones */}
-              <div className="space-y-3">
+              {/* Lista Paginada de Evaluaciones — Ventana con altura para 10 ítems y Scroll Interno */}
+              <div className="space-y-2.5 max-h-[580px] overflow-y-auto pr-1.5 focus:outline-none">
                 {evalsPaginadas.map((p: Prueba) => (
-                  <div key={p.id} className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div key={p.id} className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-mono text-[11px] font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
