@@ -36,13 +36,18 @@ $$p \cdot 1{,}25 \cdot 1{,}25 \cdot 0{,}75 \cdot 0{,}75$$
 WHERE id = 'preg-paes-mat1-23reg-02';
 
 -- Pregunta Oficial N° 3 (Página 4 PDF):
--- Limpieza de PUA U+F02B (+) en la expresión x + y
+-- Limpieza de PUA U+F02B (+) en la expresión x + y / p + q = f (Clave oficial C)
 UPDATE public.preguntas
 SET
-  enunciado = 'En la figura adjunta se cumple que la suma de los valores de los casilleros contiguos de una fila es igual al valor inmediatamente superior.
+  enunciado = 'En la figura adjunta se cumple que la suma de los valores de los casilleros contiguos de una fila es igual al valor inmediatamente superior a ellos (por ejemplo $p + q = f$).
 
-¿Cuál es el valor de x + y?',
-  respuesta_correcta = 'A',
+| 25 |   |
+|----|---|
+| f  |   |
+| p  | q | 4 |
+
+Si la suma de los tres valores de la última fila es 17, ¿cuál es el valor de $p + f$?',
+  respuesta_correcta = 'C',
   updated_at = NOW()
 WHERE id = 'preg-paes-mat1-23reg-03';
 
