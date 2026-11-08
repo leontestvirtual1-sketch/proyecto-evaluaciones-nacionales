@@ -2,6 +2,33 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-07] Plan de Corrección de Contenido Matemático: Normalización Total de 14 Formas PAES M1 & M2 en Producción
+
+- **Problema / Requerimiento**:
+  1. Extensión del Plan de Corrección a todo el catálogo de Matemática 1 y Matemática 2 (procesos 2023 a 2026, Invierno y Regular).
+  2. Barrido exhaustivo sobre los 766 ítems de matemática en la base de datos de producción para erradicar:
+     - 276 preguntas afectadas por caracteres PUA (`U+F020` a `U+F0FF`).
+     - 47 preguntas con decimales fragmentados por saltos de columna (ej. `,0 75`, `,1 20`).
+     - 24 preguntas con coordenadas planas partidas (ej. `(,x y)`, `(,0 0)`).
+  3. Criterio de aceptación estricto: cero alteración de claves oficiales (`respuesta_correcta`), puntuación, ponderaciones o IDs de evaluación.
+
+- **Archivos y Solución Técnica**:
+  - [`scripts/audit_m1_m2_all.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/audit_m1_m2_all.mjs): Auditoría automatizada de los 766 ítems en Supabase, generando mapeo de caracteres PUA y detecciones de anomalías.
+  - [`scripts/dry_run_normalize_all_m1_m2.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/dry_run_normalize_all_m1_m2.mjs): Simulación sin efectos colaterales de las 304 preguntas afectadas (101 solo enunciado, 121 solo alternativas, 82 ambos).
+  - [`supabase/migrations/063_normalize_all_paes_math_content.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/063_normalize_all_paes_math_content.sql): Migración idempotente generada que normaliza exclusivamente `enunciado` y `alternativas` con `WHERE id = ...`.
+  - [`scripts/apply_migration_063.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/apply_migration_063.mjs): Aplicación por lotes en Supabase vía cliente seguro con Service Role Key.
+
+- **Verificación / Despliegue**:
+  - **Auditoría Post-Aplicación**:
+    - Preguntas con PUA: **0** (de 276 iniciales).
+    - Preguntas con decimales partidos: **0** (de 47 iniciales).
+    - Preguntas con coordenadas partidas: **0** (de 24 iniciales).
+    - Total anomalías restantes: **0 / 766**.
+  - `npx tsx tests/math-content-normalization.test.ts`: **5/5 PASS**.
+  - `npx tsc --noEmit`: **0 errores TypeScript**.
+  - `npm run build`: **✓ built exitoso en 28.36s (2275 módulos)**.
+  - Integridad académica: 100% de las respuestas oficiales DEMRE inalteradas.
+
 ### [2026-11-07] Fase Piloto: Corrección PUA M1/M2 — Normalización de Símbolos Matemáticos, Decimales y Coordenadas
 
 - **Problema / Requerimiento**:
