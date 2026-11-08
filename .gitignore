@@ -73,4 +73,23 @@ supabase/.temp/
 eslint_report.json
 .testsprite/
 
+# Scripts y reportes de auditoría / diagnóstico local ad-hoc
+scripts/inspect_*.mjs
+scripts/patch_*.mjs
+scripts/extract_*.py
+scripts/read_*.py
+scripts/find_*.py
+scripts/check_*.mjs
+scripts/breakdown_*.mjs
+scripts/apply_migration_*.mjs
+scripts/dry_run_*.mjs
+scripts/dry_run_*.json
+scripts/audit_*report*.json
+scripts/audit_pilot_*.py
+scripts/audit_all_evals.py
+scripts/audit_m1_m2_all.mjs
+scripts/fix_p3.mjs
+scripts/data/extracted_*.txt
+
+
 
