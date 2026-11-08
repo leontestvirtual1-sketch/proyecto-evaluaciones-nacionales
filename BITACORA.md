@@ -2,6 +2,31 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-07] Auditoría Exhaustiva de Calidad PAES y Normalización de Decimales en Ciencias (Migración 066)
+
+- **Problema / Requerimiento**:
+  1. Auditoría profunda e integral sobre el total de las 49 evaluaciones PAES y 2.700 preguntas reales en base de datos de producción para garantizar cero caracteres raros, integridad de estructura y claves de respuesta.
+  2. Detección y normalización de 36 preguntas de Ciencias (Física y Química) con decimales fragmentados por saltos de columna en extracción PDF (ej. `,3 00` → `3,00`, `,0 95` → `0,95`, `,0 12` → `0,12`).
+  3. Criterio de aceptación estricto: cero alteración de claves oficiales (`respuesta_correcta`), cero caracteres PUA, cero mojibake UTF-8, cero caracteres de control.
+
+- **Archivos y Solución Técnica**:
+  - [`scripts/audit_deep_all_paes.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/audit_deep_all_paes.mjs): Auditoría automatizada multicriterio sobre 49 evaluaciones y 2.700 preguntas.
+  - [`scripts/fix_ciencias_decimals.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/fix_ciencias_decimals.mjs): Normalizador de decimales partidos con garantía de inmutabilidad de claves y puntajes.
+  - [`supabase/migrations/066_normalize_ciencias_decimals.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/066_normalize_ciencias_decimals.sql): Migración idempotente generada para versionamiento formal del esquema.
+
+- **Verificación / Despliegue**:
+  - **Auditoría Post-Normalización en Supabase**:
+    - Caracteres PUA (`\uE000-\uF8FF`): **0**.
+    - Caracteres de control no imprimibles: **0**.
+    - Glifos de reemplazo inválido (`\uFFFD`): **0**.
+    - Mojibake UTF-8 (`Ã¡`, etc.): **0**.
+    - Coordenadas rotas: **0**.
+    - Decimales partidos: **0** reales (36 preguntas normalizadas con éxito).
+    - M1 y M2 (766 preguntas): **100% impecables**.
+  - `npx tsx tests/math-content-normalization.test.ts`: **5/5 PASS**.
+  - `npx tsc --noEmit`: **0 errores**.
+  - `npm run build`: **✓ built exitoso en 21.77s**.
+
 ### [2026-11-07] Plan de Corrección de Contenido PAES: Símbolos Científicos en Ciencias/Historia y Reparación Segmentación Historia 2023 Regular
 
 - **Problema / Requerimiento**:
