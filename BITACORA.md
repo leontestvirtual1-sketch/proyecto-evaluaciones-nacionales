@@ -2,6 +2,29 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-07] Corrección Crítica de Normalizador Decimal en EnunciadoRenderer, PUA U+F0B4, Guiones Silábicos y Migración 067
+
+- **Problema / Requerimiento**:
+  1. **Bug Crítico en Normalizador Decimal (`EnunciadoRenderer.tsx`)**: La expresión regular `,\s*([0-9])\s+([0-9]{2,})\b` cruzaba saltos de línea (`\n`), provocando que filas adyacentes de tablas numéricas se fusionaran en números corruptos (ej. Química 2024 Invierno P7: `50,0\n12,5` se transformaba en `500,12,5` y `130,0\n36,0` en `1300,36,0`).
+  2. **Caracter PUA U+F0B4 (Multiplicación)**: Detectado en bancos científicos para notación científica (ej. $6 \times 10^{14}$ Hz) no cubierto en `cleanSymbolFont`.
+  3. **Guiones silábicos cortados al final de línea**: La unión de líneas con espacio producía separaciones espurias como `Perú- Boliviana` o `campo- ciudad`.
+  4. **Pérdida de letras y tildes en Historia 2023 Regular (P19 y P22)**: Letras capitulares y tildes dañadas en el stream de texto (`urante`, `Rep blica`, `naci n`, coma indebida).
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx):
+    - Regla decimal estricta: `/(^|[\s(·*+–-])[,][ \t]*([0-9])[ \t]+([0-9]{2,})\b/g` $\rightarrow$ `$1$2,$3`. Exige delimitador previo y espacios horizontales `[ \t]` exclusivos, imposibilitando cruzar saltos de línea o distorsionar tablas numéricas.
+    - Soporte de `\uF0B4` agregado a operadores de multiplicación (`·`) en `cleanSymbolFont`.
+    - Lógica de recomposición de líneas con guion (`if (buffer.endsWith('-')) buffer += l`), uniendo palabras compuestas sin espacio espurio (`Perú-Boliviana`).
+  - [`tests/math-content-normalization.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/math-content-normalization.test.ts):
+    - 6/6 tests pasando, incluyendo assertion específica verificando que `50,0\n12,5` y `130,0\n36,0` jamás se unan o distorsionen.
+  - [`supabase/migrations/067_fix_editorial_his2023_p19_p22.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/067_fix_editorial_his2023_p19_p22.sql) & [`scripts/fix_editorial_his19_his22.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/fix_editorial_his19_his22.mjs):
+    - Restauración ortográfica y editorial de `preg-paes-his-23reg-19` y `preg-paes-his-23reg-22` en base de datos de producción según documento oficial DEMRE.
+
+- **Verificación / Despliegue**:
+  - `npx tsx tests/math-content-normalization.test.ts`: **6/6 PASS**.
+  - `npx tsc --noEmit`: **0 errores**.
+  - `npm run build`: **✓ built exitoso en 27.41s**.
+
 ### [2026-11-07] Auditoría Exhaustiva de Calidad PAES y Normalización de Decimales en Ciencias (Migración 066)
 
 - **Problema / Requerimiento**:

@@ -15,7 +15,7 @@ function cleanSymbolFont(text: string): string {
     // Operadores básicos y multiplicaciones
     .replace(/\uF02B/g, '+')
     .replace(/[\uF02D\u2013\u2014]/g, '-')
-    .replace(/[\uF0B7\uF0D7]/g, '·')
+    .replace(/[\uF0B7\uF0D7\uF0B4]/g, '·')
     .replace(/\uF0B8/g, '÷')
     .replace(/\uF03D/g, '=')
     .replace(/\uF0B9/g, '≠')
@@ -65,8 +65,9 @@ function cleanSymbolFont(text: string): string {
 
 function normalizeMathText(raw: string): string {
   let text = cleanSymbolFont(raw);
-  // Decimales partidos: ,0 75 → 0,75
-  text = text.replace(/,\s*([0-9])\s+([0-9]{2,})\b/g, '$1,$2');
+  // Decimales partidos: exige delimitador previo y espacios horizontales estrictos [ \t]
+  // NUNCA cruza saltos de línea \n ni distorsiona tablas
+  text = text.replace(/(^|[\s(·*+–-])[,][ \t]*([0-9])[ \t]+([0-9]{2,})\b/g, '$1$2,$3');
   // Coordenadas rotas: (,x y) → (x, y) — genérico primero, cubre todos los casos
   text = text.replace(/\(\s*,\s*([a-zA-Z0-9_-]+)\s+([a-zA-Z0-9_-]+)\s*\)/g, '($1, $2)');
   // Palabras clave sin espacio antes del paréntesis ya corregido: puntos(x, y) → puntos (x, y)
@@ -76,9 +77,9 @@ function normalizeMathText(raw: string): string {
 
 test('--- Suite de Normalización de Contenido Matemático y Científico PAES ---', async (t) => {
   await t.test('Normaliza correctamente caracteres PUA de Symbol Font a símbolos legibles (M1, M2 y Ciencias)', () => {
-    // Caso de operaciones básicas y multiplicaciones
-    const input = '3\uF0D7p \uF02B 5\uF03D8 \uF02D 2';
-    assert.strictEqual(cleanSymbolFont(input), '3·p + 5=8 - 2');
+    // Caso de operaciones básicas y multiplicaciones incluyendo U+F0B4
+    const input = '3\uF0D7p \uF02B 5\uF03D8 \uF02D 2 \uF0B4 10';
+    assert.strictEqual(cleanSymbolFont(input), '3·p + 5=8 - 2 · 10');
 
     // Desigualdades y conjuntos
     const ineq = 'x \uF0A3 10 \uF0C7 y \uF0B3 0, \uF070 \uF0CE \uF0A5';
@@ -89,15 +90,15 @@ test('--- Suite de Normalización de Contenido Matemático y Científico PAES --
     assert.strictEqual(cleanSymbolFont(greek), 'α + β = 90°');
 
     // Símbolos científicos específicos (Física y Química)
-    const science = 'λ=\uF06C, Δ=\uF044, R=30\uF057, F\uF0AE, A\uF0DFB, m=\uF0B15\uF06D';
-    assert.strictEqual(cleanSymbolFont(science), 'λ=λ, Δ=Δ, R=30Ω, F→, A↔B, m=±5μ');
+    const science = 'λ=\uF06C, Δ=\uF044, R=30\uF057, F\uF0AE, A\uF0DFB, m=\uF0B15\uF06D, δ=\uF064';
+    assert.strictEqual(cleanSymbolFont(science), 'λ=λ, Δ=Δ, R=30Ω, F→, A↔B, m=±5μ, δ=δ');
 
     // Símbolos de viñetas y marcas en folletos DEMRE
     const markers = '\uF0D8 Caso A, plumavit\uF0E2';
     assert.strictEqual(cleanSymbolFont(markers), '► Caso A, plumavit®');
   });
 
-  await t.test('Resuelve decimales partidos verticalmente por la extracción (,0 75 -> 0,75 y ,1 25 -> 1,25)', () => {
+  await t.test('Resuelve decimales partidos horizontalmente (,0 75 -> 0,75 y ,1 25 -> 1,25)', () => {
     // Caso M1 2023 Pregunta 2
     const rawFormula = 'p  ,1 25  ,1 25  ,0 75  ,0 75';
     const cleaned = normalizeMathText(rawFormula);
@@ -109,6 +110,15 @@ test('--- Suite de Normalización de Contenido Matemático y Científico PAES --
     // En alternativas
     const altC = 'Que hubo dos aumentos de ,0 25 y luego, dos disminuciones de ,0 75.';
     assert.strictEqual(normalizeMathText(altC), 'Que hubo dos aumentos de 0,25 y luego, dos disminuciones de 0,75.');
+  });
+
+  await t.test('CRÍTICO: No fusiona ni altera filas adyacentes de tablas numéricas con saltos de línea', () => {
+    // Caso Química 2024 Invierno P7 reportado en auditoría
+    const tableData1 = '50,0\n12,5';
+    assert.strictEqual(normalizeMathText(tableData1), '50,0\n12,5');
+
+    const tableData2 = '130,0\n36,0';
+    assert.strictEqual(normalizeMathText(tableData2), '130,0\n36,0');
   });
 
   await t.test('No altera comas de listas legítimas ni años separados por coma', () => {
@@ -128,11 +138,10 @@ test('--- Suite de Normalización de Contenido Matemático y Científico PAES --
     const p38 = 'el punto(,0 0) es el centro de homotecia';
     assert.ok(normalizeMathText(p38).includes('el punto (0, 0)'));
 
-    // Alternativas con coordenadas (forma genérica — el espacio sólo se agrega con palabras clave)
+    // Alternativas con coordenadas
     const altCoords = 'Para los puntos de la forma(,x 0).';
-    // step1: (,x 0) → (x, 0); step2: 'forma' no es palabra clave, no agrega espacio
     assert.ok(normalizeMathText(altCoords).includes('(x, 0)'));
-    // Pero sí con palabra clave explícita
+
     const altPuntos = 'Para los puntos(,x 0).';
     assert.strictEqual(normalizeMathText(altPuntos), 'Para los puntos (x, 0).');
   });

@@ -53,7 +53,7 @@ function cleanSymbolFont(text: string): string {
     // Operadores básicos y multiplicaciones
     .replace(/\uF02B/g, '+')
     .replace(/[\uF02D\u2013\u2014]/g, '-')
-    .replace(/[\uF0B7\uF0D7]/g, '·')
+    .replace(/[\uF0B7\uF0D7\uF0B4]/g, '·')
     .replace(/\uF0B8/g, '÷')
     .replace(/\uF03D/g, '=')
     .replace(/\uF0B9/g, '≠')
@@ -120,7 +120,8 @@ function normalizeText(raw: string): string {
   let text = cleanSymbolFont(raw);
 
   // 2. Normalización de decimales partidos por saltos de extracción: ",0 75" -> "0,75", ",1 25" -> "1,25"
-  text = text.replace(/,\s*([0-9])\s+([0-9]{2,})\b/g, '$1,$2');
+  // Exige delimitador previo y espacios horizontales estrictos [ \t]; NUNCA cruza saltos de línea ni filas de tablas
+  text = text.replace(/(^|[\s(·*+–-])[,][ \t]*([0-9])[ \t]+([0-9]{2,})\b/g, '$1$2,$3');
 
   // 3. Normalización de coordenadas partidas e invertidas: (,x y) → (x, y), (,0 0) → (0, 0)
   //    Paso 1: regex genérico que convierte cualquier (,a b) → (a, b)
@@ -175,7 +176,11 @@ function normalizeText(raw: string): string {
         result.push(buffer);
         buffer = l;
       } else {
+        if (buffer.endsWith('-')) {
+        buffer += l; // Une palabras compuestas o cortadas por salto de línea sin espacio espurio (ej. "Perú-Boliviana")
+      } else {
         buffer += ' ' + l;
+      }
       }
     }
   }
