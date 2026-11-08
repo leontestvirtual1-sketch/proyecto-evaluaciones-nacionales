@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-// Test the math normalization rules directly
+// Test the math and science normalization rules directly
 function cleanSymbolFont(text: string): string {
   if (!text) return text;
   return text
@@ -33,17 +33,34 @@ function cleanSymbolFont(text: string): string {
     .replace(/\uF0CE/g, '∈')
     .replace(/\uF07E/g, '~')
     .replace(/\uF05E/g, '^')
-    // Letras griegas matemáticas
+    // Letras griegas y constantes científicas (Física, Química, Matemática)
     .replace(/\uF061/g, 'α')
     .replace(/\uF062/g, 'β')
     .replace(/\uF071/g, 'θ')
     .replace(/\uF072/g, 'ρ')
     .replace(/\uF073/g, 'σ')
     .replace(/\uF044/g, 'Δ')
-    // Íconos auxiliares de folletos DEMRE
+    .replace(/\uF064/g, 'δ')
+    .replace(/\uF06C/g, 'λ')   // lambda (longitud de onda)
+    .replace(/\uF067/g, 'γ')   // gamma
+    .replace(/\uF077/g, 'ω')   // omega
+    .replace(/\uF057/g, 'Ω')   // Omega mayúscula (Ohm)
+    .replace(/[\uF06D\uF0B5]/g, 'μ') // mu / micro
+    .replace(/\uF065/g, 'ε')   // épsilon
+    .replace(/\uF066/g, 'φ')   // phi
+    .replace(/\uF06E/g, 'η')   // eta
+    // Operadores y flechas de reacciones y vectores
+    .replace(/\uF0AE/g, '→')   // flecha derecha (reacción, vector)
+    .replace(/\uF0AC/g, '←')   // flecha izquierda
+    .replace(/\uF0DF/g, '↔')   // equilibrio químico
+    .replace(/\uF0B1/g, '±')   // más o menos
+    .replace(/\uF02F/g, '/')
+    .replace(/\uF020/g, ' ')   // slash
+    // Íconos auxiliares, viñetas y marcas registradas de folletos DEMRE
     .replace(/\uF0FC/g, '✓')
-    .replace(/\uF0E3/g, '©')
-    .replace(/\uF138/g, '►');
+    .replace(/[\uF0E3\uF8E9]/g, '©')
+    .replace(/\uF0E2/g, '®')   // Marca registrada
+    .replace(/[\uF138\uF0D8]/g, '►');
 }
 
 function normalizeMathText(raw: string): string {
@@ -57,8 +74,8 @@ function normalizeMathText(raw: string): string {
   return text;
 }
 
-test('--- Suite de Normalización de Contenido Matemático PAES (Fase Piloto M1 & M2) ---', async (t) => {
-  await t.test('Normaliza correctamente caracteres PUA de Symbol Font a símbolos legibles', () => {
+test('--- Suite de Normalización de Contenido Matemático y Científico PAES ---', async (t) => {
+  await t.test('Normaliza correctamente caracteres PUA de Symbol Font a símbolos legibles (M1, M2 y Ciencias)', () => {
     // Caso de operaciones básicas y multiplicaciones
     const input = '3\uF0D7p \uF02B 5\uF03D8 \uF02D 2';
     assert.strictEqual(cleanSymbolFont(input), '3·p + 5=8 - 2');
@@ -70,6 +87,14 @@ test('--- Suite de Normalización de Contenido Matemático PAES (Fase Piloto M1 
     // Letras griegas
     const greek = '\uF061 \uF02B \uF062 \uF03D 90\uF0B0';
     assert.strictEqual(cleanSymbolFont(greek), 'α + β = 90°');
+
+    // Símbolos científicos específicos (Física y Química)
+    const science = 'λ=\uF06C, Δ=\uF044, R=30\uF057, F\uF0AE, A\uF0DFB, m=\uF0B15\uF06D';
+    assert.strictEqual(cleanSymbolFont(science), 'λ=λ, Δ=Δ, R=30Ω, F→, A↔B, m=±5μ');
+
+    // Símbolos de viñetas y marcas en folletos DEMRE
+    const markers = '\uF0D8 Caso A, plumavit\uF0E2';
+    assert.strictEqual(cleanSymbolFont(markers), '► Caso A, plumavit®');
   });
 
   await t.test('Resuelve decimales partidos verticalmente por la extracción (,0 75 -> 0,75 y ,1 25 -> 1,25)', () => {

@@ -71,17 +71,34 @@ function cleanSymbolFont(text: string): string {
     .replace(/\uF0CE/g, '∈')
     .replace(/\uF07E/g, '~')
     .replace(/\uF05E/g, '^')
-    // Letras griegas matemáticas
+    // Letras griegas y constantes científicas (Física, Química, Matemática)
     .replace(/\uF061/g, 'α')
     .replace(/\uF062/g, 'β')
     .replace(/\uF071/g, 'θ')
     .replace(/\uF072/g, 'ρ')
     .replace(/\uF073/g, 'σ')
     .replace(/\uF044/g, 'Δ')
-    // Íconos auxiliares de folletos DEMRE
+    .replace(/\uF064/g, 'δ')
+    .replace(/\uF06C/g, 'λ')   // lambda (longitud de onda)
+    .replace(/\uF067/g, 'γ')   // gamma
+    .replace(/\uF077/g, 'ω')   // omega
+    .replace(/\uF057/g, 'Ω')   // Omega mayúscula (Ohm)
+    .replace(/[\uF06D\uF0B5]/g, 'μ') // mu / micro
+    .replace(/\uF065/g, 'ε')   // épsilon
+    .replace(/\uF066/g, 'φ')   // phi
+    .replace(/\uF06E/g, 'η')   // eta
+    // Operadores y flechas de reacciones y vectores
+    .replace(/\uF0AE/g, '→')   // flecha derecha (reacción, vector)
+    .replace(/\uF0AC/g, '←')   // flecha izquierda
+    .replace(/\uF0DF/g, '↔')   // equilibrio químico
+    .replace(/\uF0B1/g, '±')   // más o menos
+    .replace(/\uF02F/g, '/')
+    .replace(/\uF020/g, ' ')   // slash
+    // Íconos auxiliares, viñetas y marcas registradas de folletos DEMRE
     .replace(/\uF0FC/g, '✓')
-    .replace(/\uF0E3/g, '©')
-    .replace(/\uF138/g, '►');
+    .replace(/[\uF0E3\uF8E9]/g, '©')
+    .replace(/\uF0E2/g, '®')   // Marca registrada
+    .replace(/[\uF138\uF0D8]/g, '►');
 }
 
 /**

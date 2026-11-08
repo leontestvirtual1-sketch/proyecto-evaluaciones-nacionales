@@ -2,6 +2,33 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-07] Plan de Corrección de Contenido PAES: Símbolos Científicos en Ciencias/Historia y Reparación Segmentación Historia 2023 Regular
+
+- **Problema / Requerimiento**:
+  1. **Símbolos Científicos y Viñetas PUA**: Auditoría exhaustiva en base de datos detectó caracteres PUA en asignaturas de Ciencias (Física y Química), Historia y Lectora (`λ` U+F06C, `δ` U+F064, `Δ` U+F044, `Ω` U+F057, `→` U+F0AE, `↔` U+F0DF, `±` U+F0B1, `®` U+F0E2, `©` U+F8E9, `►` U+F0D8, espacio Symbol U+F020).
+  2. **Error Crítico de Segmentación en Historia 2023 Regular (`eval-paes-his-2023-reg-f103`)**: Preguntas P4 a P11 contenían textos administrativos de folleto ("Seleccione la alternativa correcta según el análisis y comprensión...") y P12 agrupaba 49 alternativas correspondientes al bloque de cédula de identidad y hoja de respuestas.
+  3. Criterio de aceptación estricto: cero caracteres PUA restantes en base de datos, cero preguntas con texto de instrucciones administrativas como ítem evaluativo, preservación estricta de las claves DEMRE oficiales.
+
+- **Archivos y Solución Técnica**:
+  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx):
+    - Ampliación de `cleanSymbolFont` con símbolos científicos (`λ`, `γ`, `ω`, `Ω`, `μ`, `ε`, `φ`, `η`, `δ`, `Δ`), operadores de reacciones/vectores (`→`, `←`, `↔`, `±`, `/`, espacio Symbol) y glifos de folleto (`®`, `©`, `►`).
+  - [`tests/math-content-normalization.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/math-content-normalization.test.ts):
+    - Actualización de la suite de pruebas unitarias cubriendo símbolos científicos (`λ`, `Δ`, `Ω`, `→`, `↔`, `±`, `μ`, `®`, `►`).
+  - [`supabase/migrations/064_normalize_ciencias_historia_pua.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/064_normalize_ciencias_historia_pua.sql) & [`scripts/normalize_ciencias_historia_pua.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/normalize_ciencias_historia_pua.mjs):
+    - Normalización paginada exhaustiva sobre los 3159 registros de `preguntas` en Supabase.
+  - [`supabase/migrations/065_fix_historia_2023_p4_p12.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/065_fix_historia_2023_p4_p12.sql) & [`scripts/fix_historia_2023_p4_p12.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/fix_historia_2023_p4_p12.mjs):
+    - Reconstrucción fiel desde el PDF oficial DEMRE (`evaluaciones_fuente/paes_historia/paes-oficial-historia-p2023.pdf`) de las preguntas 4 a 12 con sus enunciados reales y alternativas exactas (4 opciones y 5 opciones en P6), vinculadas a sus claves oficiales (`A`, `C`, `C`, `B`, `C`, `D`, `C`, `B`, `A`).
+
+- **Verificación / Despliegue**:
+  - **Auditoría Post-Aplicación en Producción**:
+    - Preguntas con caracteres PUA restantes en Supabase: **0 / 3260** (`asig-6`: 0, `asig-7`: 0, `asig-4`: 0, `asig-2`: 0).
+    - Historia 2023 Regular P4–P12 verificadas en BD: enunciados completos, 4 o 5 alternativas según folleto, 0 texto administrativo.
+    - Física 2023 Regular P1–P15 verificado en producción: 100% de preguntas reales con enunciados y alternativas originales.
+  - `npx tsx tests/math-content-normalization.test.ts`: **5/5 PASS**.
+  - `npx tsc --noEmit`: **0 errores TypeScript**.
+  - `npm run build`: **✓ built exitoso en 21.77s (2275 módulos)**.
+  - Claves oficiales DEMRE: 100% inalteradas.
+
 ### [2026-11-07] Plan de Corrección de Contenido Matemático: Normalización Total de 14 Formas PAES M1 & M2 en Producción
 
 - **Problema / Requerimiento**:
