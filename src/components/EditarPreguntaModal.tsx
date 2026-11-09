@@ -124,10 +124,13 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
     setAlternativas((prev) => prev.slice(0, -1));
   };
 
-  // Subir imagen a Supabase Storage
+  // Subir o reemplazar imagen en Supabase Storage
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // Resetear valor del input para permitir seleccionar el mismo archivo si es necesario
+    e.target.value = '';
 
     // Validar tipo de archivo
     if (!file.type.startsWith('image/')) {
@@ -144,10 +147,10 @@ export const EditarPreguntaModal: React.FC<EditarPreguntaModalProps> = ({
     setIsUploadingImg(false);
     if (res.success && res.url) {
       setImagenUrl(res.url);
-      setSuccessMsg('Imagen subida correctamente.');
-      setTimeout(() => setSuccessMsg(null), 3000);
+      setSuccessMsg('Imagen subida y lista. Recuerda hacer clic en "Guardar Cambios".');
+      setTimeout(() => setSuccessMsg(null), 4000);
     } else {
-      setErrorMsg(res.error || 'Error al subir la imagen a Supabase Storage.');
+      setErrorMsg(res.error || 'Error al subir la imagen.');
     }
   };
 
