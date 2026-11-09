@@ -378,12 +378,16 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
       const qNumMatch = p.id.match(/\d+$/);
       const qNumStr = qNumMatch ? parseInt(qNumMatch[0], 10).toString() : '';
 
+      // Sin filtro de instrumento activo: buscar solo por fuente/id para evitar
+      // contaminación cruzada (ej: Q36 de PAES 2026 que menciona "2023" en su enunciado).
+      // Con filtro de instrumento activo: habilitar búsqueda completa en enunciado.
+      const searchLower = search.toLowerCase().trim();
       const matchSearch =
-        !search.trim() ||
-        p.enunciado.toLowerCase().includes(search.toLowerCase()) ||
-        p.fuente.toLowerCase().includes(search.toLowerCase()) ||
-        p.id.toLowerCase().includes(search.toLowerCase()) ||
-        (search.trim().length <= 2 && qNumStr === search.trim());
+        !searchLower ||
+        p.fuente.toLowerCase().includes(searchLower) ||
+        p.id.toLowerCase().includes(searchLower) ||
+        (searchLower.length <= 2 && qNumStr === searchLower) ||
+        (!!fuenteFilter && p.enunciado.toLowerCase().includes(searchLower));
 
       const matchFuente = !fuenteFilter || p.fuente === fuenteFilter;
       const matchEje = !ejeFilter || p.ejeTematicoId === ejeFilter;
@@ -632,8 +636,8 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <input
               type="text"
               value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Buscar en enunciado o fuente..."
+              onChange={e => { setSearch(e.target.value); setPaginaActualPreguntas(1); }}
+              placeholder="Buscar por fuente, ID o número..."
               className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20"
             />
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
