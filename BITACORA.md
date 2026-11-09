@@ -2,6 +2,33 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-09] Ingesta y Disponibilización Completa de PAES Ciencias — Biología (7 Formas Oficiales, 560 Preguntas)
+
+- **Problema / Requerimiento**:
+  - Las evaluaciones oficiales de PAES Ciencias — Biología figuraban vacías en el sistema (0 preguntas), imposibilitando su rendición, consulta docente y asignación a estudiantes.
+  - Se requería extraer desde los servidores oficiales del DEMRE todas las pruebas y clavijeros históricos (2023 a 2026), procesar reactivos y figuras, estructurar su mapeo curricular oficial MINEDUC (ejes y habilidades) y sincronizarlas de forma persistente con Supabase.
+
+- **Archivos y Solución Técnica**:
+  - [`scripts/ingest_paes_biologia.py`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/ingest_paes_biologia.py):
+    - Descarga automática de los 14 documentos PDF oficiales (7 facsímiles y 7 clavijeros) correspondientes a 2023 Regular, 2024 Invierno, 2024 Regular, 2025 Invierno, 2025 Regular, 2026 Invierno y 2026 Regular.
+    - Parseo de clavijeros: extracción de 80 respuestas correctas por forma, identificación de las 5 preguntas piloto de calibración y tablas oficiales de conversión de puntaje bruto a escala PAES (100 a 1000 pts).
+    - Extracción de preguntas con segmentación espacial y recorte de figuras/gráficos guardados en `public/preguntas/{eval_id}/` y sincronizados en Supabase Storage (`evaluaciones-media`).
+    - Clasificación curricular automática por palabras clave según estándares MINEDUC:
+      - 4 Ejes: Organización Celular (`eje-bio-1`), Procesos Biológicos (`eje-bio-2`), Herencia y Evolución (`eje-bio-3`), Organismo y Ambiente (`eje-bio-4`).
+      - 4 Habilidades Científicas: Observar y Preguntar (`hab-bio-1`), Planificar e Investigar (`hab-bio-2`), Analizar Evidencia (`hab-bio-3`), Evaluar y Comunicar (`hab-bio-4`).
+    - Carga en lotes de 560 preguntas en `public.preguntas` y actualización de las 7 evaluaciones en `public.evaluaciones` con `pregunta_ids`, `total_preguntas = 80`, `estado = "activa"`, `es_catalogo = true`.
+  - [`scripts/data/claves_oficiales/`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/data/claves_oficiales/):
+    - Generación de los 7 manifiestos JSON versionados (`paes-bio-2023-reg-f113.json` hasta `paes-bio-2026-reg-f113.json`).
+  - [`src/data/mockData.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/data/mockData.ts):
+    - Definición de los ejes temáticos `eje-bio-1` a `eje-bio-4` y habilidades científicas `hab-bio-1` a `hab-bio-4` para `asig-5`.
+  - [`api/evaluaciones-catalogo.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/evaluaciones-catalogo.ts):
+    - Inclusión de prefijos de contingencia para Biología en `EVAL_PREGUNTA_PREFIX`.
+
+- **Verificación / Despliegue**:
+  - `node scripts/verify_biologia_ingestion.mjs`: **560 preguntas verificadas en base de datos Supabase, 7 evaluaciones con 80 ítems activos**.
+  - `npm test`: **11 suites ejecutadas, 100% PASS** (53 tests unitarios/seguridad + 37 de integridad).
+  - `npm run build`: **✓ built exitoso en 35.22s (2277 módulos compilados con 0 errores TypeScript)**.
+
 ### [2026-11-09] Sanitización de Enunciados Negrita PAES (Resolución de Doble Asterisco `**` Huérfano)
 
 - **Problema / Requerimiento**:

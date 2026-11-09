@@ -290,6 +290,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           'eval-simce-mat-2m-e3': 'preg-mat2m-e3-%',
           'eval-simce-lect-2m-ensayo6': 'preg-len2m-e6-%',
           'eval-simce-len-2m-e6': 'preg-len2m-e6-%',
+          // PAES Ciencias — Biología
+          'eval-paes-bio-2023-reg-f113': 'preg-paes-bio-23reg-%',
+          'eval-paes-bio-2024-inv-f111': 'preg-paes-bio-24inv-%',
+          'eval-paes-bio-2024-reg-f113': 'preg-paes-bio-24reg-%',
+          'eval-paes-bio-2025-inv-f111': 'preg-paes-bio-25inv-%',
+          'eval-paes-bio-2025-reg-f113': 'preg-paes-bio-25reg-%',
+          'eval-paes-bio-2026-inv-f111': 'preg-paes-bio-26inv-%',
+          'eval-paes-bio-2026-reg-f113': 'preg-paes-bio-26reg-%',
         };
 
         const prefix = EVAL_PREGUNTA_PREFIX[evaluacion_id as string];

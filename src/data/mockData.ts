@@ -460,6 +460,12 @@ export const ejesTematicosMock: EjeTematico[] = [
   { id: 'eje-his-2', codigo: 'HIS-CIU', nombre: 'Formación Ciudadana y Democracia', asignaturaId: 'asig-4' },
   { id: 'eje-his-3', codigo: 'HIS-ECO', nombre: 'Economía y Sociedad', asignaturaId: 'asig-4' },
 
+  // Ejes Oficiales DEMRE — Biología
+  { id: 'eje-bio-1', codigo: 'BIO-CEL', nombre: 'Organización, Estructura y Actividad Celular', asignaturaId: 'asig-5' },
+  { id: 'eje-bio-2', codigo: 'BIO-PRO', nombre: 'Procesos y Funciones Biológicas', asignaturaId: 'asig-5' },
+  { id: 'eje-bio-3', codigo: 'BIO-HER', nombre: 'Herencia y Evolución', asignaturaId: 'asig-5' },
+  { id: 'eje-bio-4', codigo: 'BIO-AMB', nombre: 'Organismo y Ambiente', asignaturaId: 'asig-5' },
+
   // Ejes Oficiales DEMRE — Física
   { id: 'eje-fis-1', codigo: 'FIS-OND', nombre: 'Ondas, Sonido y Luz', asignaturaId: 'asig-6' },
   { id: 'eje-fis-2', codigo: 'FIS-MEC', nombre: 'Mecánica, Cinemática y Dinámica', asignaturaId: 'asig-6' },
@@ -506,6 +512,12 @@ export const habilidadesMock: Habilidad[] = [
   { id: 'hab-his-1', codigo: 'HIS-TEMP', nombre: 'Pensamiento Temporal y Espacial', asignaturaId: 'asig-4' },
   { id: 'hab-his-2', codigo: 'HIS-FUE',  nombre: 'Análisis de Fuentes Históricas', asignaturaId: 'asig-4' },
   { id: 'hab-his-3', codigo: 'HIS-CRI',  nombre: 'Pensamiento Crítico y Multicausalidad', asignaturaId: 'asig-4' },
+
+  // Habilidades Científicas Oficiales DEMRE — Biología
+  { id: 'hab-bio-1', codigo: 'BIO-OBS', nombre: 'Observar y plantear preguntas', asignaturaId: 'asig-5' },
+  { id: 'hab-bio-2', codigo: 'BIO-INV', nombre: 'Planificar y conducir una investigación', asignaturaId: 'asig-5' },
+  { id: 'hab-bio-3', codigo: 'BIO-ANA', nombre: 'Procesar y analizar la evidencia', asignaturaId: 'asig-5' },
+  { id: 'hab-bio-4', codigo: 'BIO-EVA', nombre: 'Evaluar y comunicar', asignaturaId: 'asig-5' },
 
   // Habilidades Científicas Oficiales DEMRE — Física
   { id: 'hab-fis-1', codigo: 'FIS-OBS', nombre: 'Observar y plantear preguntas', asignaturaId: 'asig-6' },
