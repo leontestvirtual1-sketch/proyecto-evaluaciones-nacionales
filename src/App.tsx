@@ -27,6 +27,8 @@ import { GestionUsuariosPage } from './pages/GestionUsuariosPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { LandingPage } from './pages/LandingPage';
+import { AccesoEvaluacionEstudiante } from './components/AccesoEvaluacionEstudiante';
+import { UserProfile } from './types';
 import {
   asignaturasMock,
   ejesTematicosMock,
@@ -61,7 +63,8 @@ function MainAppContent({
   const { user, isAuthenticated, isLoading, switchRole, approveUserByToken, logout, docentesReales } = useAuth();
   // ── DATA LAYER: consume from AcademicDataContext (single source of truth) ──
   const academicData = useAcademicData();
-  const [authView, setAuthView] = useState<'login' | 'register'>('login');
+  const [authView, setAuthView] = useState<'login' | 'register' | 'student_eval'>('login');
+  const [directStudent, setDirectStudent] = useState<UserProfile | null>(null);
   // Restaurar la página activa desde localStorage (persiste al refrescar)
   const [activePage, setActivePage] = useState<PageId>(() => {
     try {
@@ -104,12 +107,26 @@ function MainAppContent({
 
     // Capturar código de evaluación asignada para alumnos (?codigo=... o ?code=...)
     const code = params.get('codigo') || params.get('code');
+    const paramEmail = params.get('email') || params.get('alumno_email');
+    const paramNombre = params.get('nombre') || params.get('alumno_nombre');
+
+    if (paramEmail) sessionStorage.setItem('pending_eval_email', paramEmail.trim());
+    if (paramNombre) sessionStorage.setItem('pending_eval_nombre', paramNombre.trim());
+
     if (code) {
       sessionStorage.setItem('pending_eval_code', code.trim());
       setShowLanding(false);
-      setAuthView('login');
+      setAuthView('student_eval');
     }
   }, [approveUserByToken]);
+
+  // Si se monta sin parámetros en URL pero ya existe un código pendiente en sessionStorage
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('pending_eval_code') && !isAuthenticated) {
+      setShowLanding(false);
+      setAuthView('student_eval');
+    }
+  }, [isAuthenticated]);
 
   // Persistir página activa en localStorage cada vez que cambia
   React.useEffect(() => {
@@ -258,7 +275,7 @@ function MainAppContent({
   }
 
 
-  // If user is not authenticated, show Login or Register page
+  // If user is not authenticated, show Login or Register page, or Direct Student Exam
   if (!isAuthenticated || !user) {
     if (authView === 'register') {
       return (
@@ -268,10 +285,61 @@ function MainAppContent({
         />
       );
     }
+
+    const pendingCode = typeof window !== 'undefined' ? sessionStorage.getItem('pending_eval_code') : null;
+    if (authView === 'student_eval' || (pendingCode && authView !== 'login' && authView !== 'register')) {
+      const emailParam = typeof window !== 'undefined' ? (sessionStorage.getItem('pending_eval_email') || '') : '';
+      const nombreParam = typeof window !== 'undefined' ? (sessionStorage.getItem('pending_eval_nombre') || '') : '';
+
+      const cleanCode = (pendingCode || '').toLowerCase().trim();
+      const foundPrueba = pruebas.find(
+        p => (p.codigoPublico || '').toLowerCase().trim() === cleanCode || p.id.toLowerCase().trim() === cleanCode
+      ) || null;
+
+      // Si el alumno ya comenzó la evaluación y tiene las preguntas listas
+      if (activePruebaForRunner && activePruebaPreguntas && directStudent) {
+        return (
+          <div className="min-h-screen bg-slate-950 text-slate-100 p-2 sm:p-4">
+            <AlumnoEvaluationView
+              prueba={activePruebaForRunner}
+              preguntas={activePruebaPreguntas}
+              alumno={directStudent}
+              onFinish={(nuevaRendicion) => {
+                setRendiciones([nuevaRendicion, ...rendiciones]);
+              }}
+              onCancel={() => {
+                setActivePruebaForRunner(null);
+                setActivePruebaPreguntas(null);
+                setDirectStudent(null);
+              }}
+            />
+          </div>
+        );
+      }
+
+      return (
+        <AccesoEvaluacionEstudiante
+          codigo={pendingCode || ''}
+          prueba={foundPrueba}
+          emailInicial={emailParam}
+          nombreInicial={nombreParam}
+          onComenzar={async (p, perfil) => {
+            setDirectStudent(perfil);
+            await handleStartEvaluation(p);
+          }}
+          onGoToLoginDocente={() => {
+            sessionStorage.removeItem('pending_eval_code');
+            setAuthView('login');
+          }}
+        />
+      );
+    }
+
     return (
       <LoginPage
         onGoToRegister={() => setAuthView('register')}
         onGoToLanding={() => setShowLanding(true)}
+        onGoToStudentEval={pendingCode ? () => setAuthView('student_eval') : undefined}
       />
     );
   }

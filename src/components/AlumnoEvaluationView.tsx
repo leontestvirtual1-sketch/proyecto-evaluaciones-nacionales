@@ -41,6 +41,9 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
       }
+      if (prueba.codigoPublico) {
+        headers['x-evaluacion-codigo'] = prueba.codigoPublico;
+      }
 
       // 2. Calificar en el servidor seguro (service_role)
       const res = await fetch('/api/grade-evaluation', {
@@ -48,9 +51,11 @@ export const AlumnoEvaluationView: React.FC<AlumnoEvaluationViewProps> = ({
         headers,
         body: JSON.stringify({
           pruebaId: prueba.id,
+          codigoAcceso: prueba.codigoPublico,
           alumnoId: alumno.id,
           alumnoNombre: `${alumno.nombre} ${alumno.apellido}`.trim(),
           alumnoRut: alumno.rut,
+          alumnoEmail: alumno.email,
           respuestas
         })
       });

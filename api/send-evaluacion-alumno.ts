@@ -186,7 +186,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const safeCodigo          = escapeHtml(evaluacion.codigo_acceso || pruebaCodigoAcceso || '—');
   const safeDuracion        = Number(evaluacion.tiempo_limite || pruebaDuracionMinutos || 60);
   const safeDocenteNombre   = escapeHtml(docenteNombre || 'Tu docente');
-  const linkDirecto         = `${APP_URL}?codigo=${encodeURIComponent(evaluacion.codigo_acceso || '')}`;
+  const linkDirecto         = `${APP_URL}?codigo=${encodeURIComponent(evaluacion.codigo_acceso || '')}&email=${encodeURIComponent(alumnoEmail)}&nombre=${encodeURIComponent(alumnoNombre)}`;
 
   // 7. Construir email HTML para el alumno
   const htmlAlumno = `
@@ -274,10 +274,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </p>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 ${[
-                  ['1', 'Entra a la plataforma', `Haz clic en el botón azul o visita <a href="${APP_URL}" style="color:#818cf8;">${APP_URL}</a>`],
-                  ['2', 'Inicia sesión', 'Usa tu correo y contraseña habituales'],
-                  ['3', 'Ingresa el código', `En el Portal del Alumno, escribe <strong style="color:#818cf8;font-family:monospace;">${safeCodigo}</strong> en el campo "Código de Acceso"`],
-                  ['4', '¡A rendir!', `Tienes <strong>${safeDuracion} minutos</strong>. Responde con calma y repasa antes de enviar.`],
+                  ['1', 'Acceso directo', `Haz clic en el botón azul "Ir a la Evaluación" o visita <a href="${linkDirecto}" style="color:#818cf8;">${APP_URL}</a>`],
+                  ['2', 'Sin contraseña', 'Ingresas directamente con tu nombre asignado. No necesitas crear cuenta ni recordar claves.'],
+                  ['3', 'Rinde tu prueba', `Cuentas con <strong>${safeDuracion} minutos</strong> y temporizador en pantalla.`],
+                  ['4', 'Resultados inmediatos', 'Al finalizar, presiona "Entregar Evaluación". Tu docente recibirá tus respuestas de inmediato.'],
                 ].map(([num, title, desc]) => `
                 <tr>
                   <td style="padding:8px 0;vertical-align:top;">

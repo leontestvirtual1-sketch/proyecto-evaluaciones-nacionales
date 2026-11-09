@@ -78,101 +78,172 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     // 4. Autenticación y derivación segura del estudiante (F-01: Token obligatorio, derivación estricta)
+    // Soportamos también acceso directo de alumno mediante código de evaluación oficial (sin contraseña requerida)
     const authHeader = req.headers?.authorization || '';
     const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
-
-    if (!token) {
-      return res.status(401).json({ error: 'Se requiere iniciar sesión para registrar una rendición.' });
-    }
-
-    const { data: { user }, error: authErr } = await sbAdmin.auth.getUser(token);
-    if (authErr || !user) {
-      return res.status(401).json({ error: 'Token de sesión inválido o expirado.' });
-    }
-
-    const { data: actorPerfil } = await sbAdmin
-      .from('perfiles')
-      .select('id, rol, rbd, es_super_admin, nombre, apellido, rut')
-      .eq('id', user.id)
-      .maybeSingle();
-
-    if (!actorPerfil) {
-      return res.status(403).json({ error: 'Perfil de usuario no encontrado en la plataforma.' });
-    }
+    const evalCodigoDirecto = req.headers?.['x-evaluacion-codigo'] || req.body?.codigoAcceso;
 
     let finalAlumnoId: string;
     let finalAlumnoNombre = '';
     let finalAlumnoRut = '';
     let targetAlumnoRbd: string | null = null;
+    let isDirectStudentMode = false;
+    let actorPerfil: any = null;
+    let user: any = null;
 
-    if (actorPerfil.rol === 'alumno') {
-      // Estudiante rindiendo: identidad fija e inmutable derivada del token de Auth (cero IDOR)
-      finalAlumnoId = user.id;
-      finalAlumnoNombre = `${actorPerfil.nombre || ''} ${actorPerfil.apellido || ''}`.trim() || user.email || 'Estudiante';
-      finalAlumnoRut = actorPerfil.rut || '';
-      targetAlumnoRbd = actorPerfil.rbd || null;
-    } else if (actorPerfil.rol === 'profesor' || actorPerfil.rol === 'admin') {
-      // Digitación docente / OMR: profesor o admin califica para un alumno específico
-      if (!alumnoId || typeof alumnoId !== 'string' || !alumnoId.trim()) {
-        return res.status(400).json({ error: 'Para digitación docente u OMR se requiere especificar el alumnoId del estudiante.' });
+    if (!token) {
+      if (!evalCodigoDirecto) {
+        return res.status(401).json({ error: 'Se requiere iniciar sesión para registrar una rendición.' });
       }
-      finalAlumnoId = alumnoId.trim();
+      isDirectStudentMode = true;
+    }
 
-      const { data: targetAlumno } = await sbAdmin
-        .from('perfiles')
-        .select('id, rbd, nombre, apellido, rut')
-        .eq('id', finalAlumnoId)
+    let evaluacion: any = null;
+
+    if (isDirectStudentMode) {
+      // ── MODO ALUMNO DIRECTO SIN CONTRASEÑA ──
+      // 1. Obtener la evaluación por ID o código de acceso
+      const { data: evalDirecta, error: evalDirectaErr } = await sbAdmin
+        .from('evaluaciones')
+        .select('*')
+        .or(`id.eq.${pruebaId},codigo_acceso.eq.${evalCodigoDirecto}`)
         .maybeSingle();
 
-      if (!targetAlumno) {
-        return res.status(404).json({ error: 'El estudiante especificado no existe en el sistema.' });
+      if (evalDirectaErr || !evalDirecta) {
+        return res.status(404).json({ error: 'Evaluación no encontrada en el sistema.' });
+      }
+      if (evalDirecta.estado && evalDirecta.estado !== 'activa') {
+        return res.status(403).json({ error: 'Esta evaluación no se encuentra activa para su rendición.' });
+      }
+      evaluacion = evalDirecta;
+
+      // 2. Resolver identidad del alumno (por email o rut si existe en perfiles)
+      const inputEmail = sanitizeText(req.body?.alumnoEmail || '', 100).toLowerCase().trim();
+      const inputRut = sanitizeText(req.body?.alumnoRut || '', 20).trim();
+      const inputNombre = sanitizeText(req.body?.alumnoNombre || '', 100).trim();
+
+      if (inputEmail || inputRut) {
+        let perfilQuery = sbAdmin.from('perfiles').select('id, rbd, nombre, apellido, rut, email');
+        if (inputEmail && inputRut) {
+          perfilQuery = perfilQuery.or(`email.eq.${inputEmail},rut.eq.${inputRut}`);
+        } else if (inputEmail) {
+          perfilQuery = perfilQuery.eq('email', inputEmail);
+        } else {
+          perfilQuery = perfilQuery.eq('rut', inputRut);
+        }
+
+        const { data: perfilEncontrado } = await perfilQuery.maybeSingle();
+        if (perfilEncontrado) {
+          finalAlumnoId = perfilEncontrado.id;
+          finalAlumnoNombre = `${perfilEncontrado.nombre || ''} ${perfilEncontrado.apellido || ''}`.trim() || inputNombre || 'Estudiante';
+          finalAlumnoRut = perfilEncontrado.rut || inputRut;
+          targetAlumnoRbd = perfilEncontrado.rbd || evaluacion.rbd || null;
+        } else {
+          finalAlumnoId = req.body?.alumnoId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(req.body.alumnoId)
+            ? req.body.alumnoId
+            : crypto.randomUUID();
+          finalAlumnoNombre = inputNombre || 'Estudiante';
+          finalAlumnoRut = inputRut;
+          targetAlumnoRbd = evaluacion.rbd || null;
+        }
+      } else {
+        finalAlumnoId = req.body?.alumnoId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(req.body.alumnoId)
+          ? req.body.alumnoId
+          : crypto.randomUUID();
+        finalAlumnoNombre = inputNombre || 'Estudiante';
+        finalAlumnoRut = inputRut;
+        targetAlumnoRbd = evaluacion.rbd || null;
       }
 
-      targetAlumnoRbd = targetAlumno.rbd || null;
-
-      // Verificación de tenant FAIL-CLOSED para administradores y docentes
-      if (!actorPerfil.es_super_admin) {
-        if (!actorPerfil.rbd || !targetAlumno.rbd) {
-          return res.status(403).json({ error: 'Acceso denegado: tanto el evaluador como el estudiante deben tener un establecimiento escolar asignado.' });
-        }
-        if (targetAlumno.rbd !== actorPerfil.rbd) {
-          return res.status(403).json({ error: 'Acceso denegado: el estudiante pertenece a otro establecimiento escolar.' });
-        }
-      }
-
-      finalAlumnoNombre = `${targetAlumno.nombre || ''} ${targetAlumno.apellido || ''}`.trim() || 'Estudiante';
-      finalAlumnoRut = targetAlumno.rut || '';
     } else {
-      return res.status(403).json({ error: 'Rol no autorizado para calificar o registrar rendiciones.' });
-    }
+      // ── MODO AUTENTICADO (DOCENTE O ALUMNO CON CUENTA) ──
+      const authRes = await sbAdmin.auth.getUser(token);
+      if (authRes.error || !authRes.data?.user) {
+        return res.status(401).json({ error: 'Token de sesión inválido o expirado.' });
+      }
+      user = authRes.data.user;
 
-    // 5. Obtener la evaluación desde Supabase
-    const { data: evaluacion, error: evalErr } = await sbAdmin
-      .from('evaluaciones')
-      .select('*')
-      .eq('id', pruebaId)
-      .maybeSingle();
+      const perfilRes = await sbAdmin
+        .from('perfiles')
+        .select('id, rol, rbd, es_super_admin, nombre, apellido, rut')
+        .eq('id', user.id)
+        .maybeSingle();
 
-    if (evalErr || !evaluacion) {
-      return res.status(404).json({ error: 'Evaluación no encontrada en el sistema.' });
-    }
+      actorPerfil = perfilRes.data;
+      if (!actorPerfil) {
+        return res.status(403).json({ error: 'Perfil de usuario no encontrado en la plataforma.' });
+      }
 
-    // Validar estado de la evaluación: no permitir rendir pruebas en borrador o inactivas
-    if (evaluacion.estado && evaluacion.estado !== 'activa') {
-      return res.status(403).json({ error: 'Esta evaluación no se encuentra activa para su rendición.' });
-    }
+      if (actorPerfil.rol === 'alumno') {
+        // Estudiante rindiendo con sesión: identidad fija e inmutable derivada del token de Auth
+        finalAlumnoId = user.id;
+        finalAlumnoNombre = `${actorPerfil.nombre || ''} ${actorPerfil.apellido || ''}`.trim() || user.email || 'Estudiante';
+        finalAlumnoRut = actorPerfil.rut || '';
+        targetAlumnoRbd = actorPerfil.rbd || null;
+      } else if (actorPerfil.rol === 'profesor' || actorPerfil.rol === 'admin') {
+        // Digitación docente / OMR: profesor o admin califica para un alumno específico
+        if (!alumnoId || typeof alumnoId !== 'string' || !alumnoId.trim()) {
+          return res.status(400).json({ error: 'Para digitación docente u OMR se requiere especificar el alumnoId del estudiante.' });
+        }
+        finalAlumnoId = alumnoId.trim();
 
-    // Validar aislamiento multi-tenant para estudiantes (F-01)
-    if (actorPerfil.rol === 'alumno' && !actorPerfil.es_super_admin) {
-      if (!evaluacion.es_catalogo) {
-        if (!actorPerfil.rbd || !evaluacion.rbd || actorPerfil.rbd !== evaluacion.rbd) {
-          return res.status(403).json({ error: 'Acceso denegado: esta evaluación no pertenece a tu establecimiento escolar.' });
+        const { data: targetAlumno } = await sbAdmin
+          .from('perfiles')
+          .select('id, rbd, nombre, apellido, rut')
+          .eq('id', finalAlumnoId)
+          .maybeSingle();
+
+        if (!targetAlumno) {
+          return res.status(404).json({ error: 'El estudiante especificado no existe en el sistema.' });
+        }
+
+        targetAlumnoRbd = targetAlumno.rbd || null;
+
+        // Verificación de tenant FAIL-CLOSED para administradores y docentes
+        if (!actorPerfil.es_super_admin) {
+          if (!actorPerfil.rbd || !targetAlumno.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: tanto el evaluador como el estudiante deben tener un establecimiento escolar asignado.' });
+          }
+          if (targetAlumno.rbd !== actorPerfil.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: el estudiante pertenece a otro establecimiento escolar.' });
+          }
+        }
+
+        finalAlumnoNombre = `${targetAlumno.nombre || ''} ${targetAlumno.apellido || ''}`.trim() || 'Estudiante';
+        finalAlumnoRut = targetAlumno.rut || '';
+      } else {
+        return res.status(403).json({ error: 'Rol no autorizado para calificar o registrar rendiciones.' });
+      }
+
+      // Obtener la evaluación desde Supabase
+      const { data: evalRow, error: evalErr } = await sbAdmin
+        .from('evaluaciones')
+        .select('*')
+        .eq('id', pruebaId)
+        .maybeSingle();
+
+      if (evalErr || !evalRow) {
+        return res.status(404).json({ error: 'Evaluación no encontrada en el sistema.' });
+      }
+
+      if (evalRow.estado && evalRow.estado !== 'activa') {
+        return res.status(403).json({ error: 'Esta evaluación no se encuentra activa para su rendición.' });
+      }
+
+      // Validar aislamiento multi-tenant para estudiantes autenticados
+      if (actorPerfil.rol === 'alumno' && !actorPerfil.es_super_admin) {
+        if (!evalRow.es_catalogo) {
+          if (!actorPerfil.rbd || !evalRow.rbd || actorPerfil.rbd !== evalRow.rbd) {
+            return res.status(403).json({ error: 'Acceso denegado: esta evaluación no pertenece a tu establecimiento escolar.' });
+          }
         }
       }
+
+      evaluacion = evalRow;
     }
 
     // Validar relación docente/admin con la evaluación para digitación OMR (F-01)
-    if (actorPerfil.rol === 'profesor' || (actorPerfil.rol === 'admin' && !actorPerfil.es_super_admin)) {
+    if (actorPerfil && (actorPerfil.rol === 'profesor' || (actorPerfil.rol === 'admin' && !actorPerfil.es_super_admin))) {
       const esCatalogo = Boolean(evaluacion.es_catalogo);
 
       if (!esCatalogo) {
@@ -393,7 +464,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               pruebaTitulo: evaluacion.titulo || 'Evaluación',
               alumnoNombre: nombreLimpio,
               alumnoRut: rutLimpio,
-              alumnoEmail: user.email || '',
+              alumnoEmail: user?.email || req.body?.alumnoEmail || '',
               docenteEmail: profesorEmail,
               docenteNombre: profesorNombre,
               puntajeObtenido,

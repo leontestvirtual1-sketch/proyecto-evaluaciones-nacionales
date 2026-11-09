@@ -21,6 +21,7 @@ import {
 interface LoginPageProps {
   onGoToRegister: () => void;
   onGoToLanding?: () => void;
+  onGoToStudentEval?: () => void;
 }
 
 const PILARES_EVALUACIONES = [
@@ -50,7 +51,7 @@ const PILARES_EVALUACIONES = [
   }
 ];
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLanding }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLanding, onGoToStudentEval }) => {
   const { login } = useAuth();
   const pendingEvalCode = typeof window !== "undefined" ? sessionStorage.getItem("pending_eval_code") : null;
 
@@ -123,17 +124,26 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
           {/* Login Card */}
           <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-5">
             {pendingEvalCode && (
-              <div className="p-3.5 bg-indigo-950/70 border border-indigo-500/40 rounded-xl space-y-1">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-300">
-                  <span>🎯</span>
-                  <span>Evaluación Asignada</span>
-                  <span className="ml-auto font-mono bg-indigo-900/80 px-2 py-0.5 rounded text-[11px] text-indigo-200 border border-indigo-700/50">
+              <div className="p-3.5 bg-indigo-500/15 border border-indigo-500/30 rounded-2xl space-y-2 animate-fade-in text-left">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-bold text-indigo-300 text-xs">Evaluación Asignada</span>
+                  <span className="font-mono bg-indigo-600 px-2 py-0.5 rounded text-[11px] text-white font-bold">
                     {pendingEvalCode}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-300 leading-tight">
-                  Ingresa con tu correo y contraseña para acceder directamente a tu evaluación.
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                  ¿Eres alumno? No necesitas contraseña para responder tu evaluación.
                 </p>
+                {onGoToStudentEval && (
+                  <button
+                    type="button"
+                    onClick={onGoToStudentEval}
+                    className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                  >
+                    <span>🚀 Rendir Evaluación Sin Contraseña</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             )}
             <div>

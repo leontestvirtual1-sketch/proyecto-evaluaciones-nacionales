@@ -3249,4 +3249,32 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - Verificación TypeScript: `npx tsc --noEmit` completado con 0 errores (código 0).
   - Build de Producción: `npm run build` completado exitosamente en 23.99s.
 
+---
+
+### [2026-11-08] Arquitectura de Acceso Directo a Evaluaciones para Alumnos (Sin Contraseña)
+
+- **Problema / Requerimiento**:
+  - Los alumnos que reciben un correo con el enlace de una evaluación (como Florencia o Ignacia) no deben ser usuarios con contraseña ni tener que crear una cuenta en la aplicación. Su único rol es abrir el enlace asignado por el docente, responder el ensayo y que el resultado se envíe automáticamente al profesor para que este realice el seguimiento pedagógico.
+  - Al hacer clic en el enlace del correo, la aplicación los enviaba a la pantalla de inicio de sesión de profesores/colegios (`LoginPage`), pidiéndoles correo y contraseña institucional ("Solicita 30 días de prueba gratis").
+- **Archivos y Solución Técnica**:
+  - [`src/components/AccesoEvaluacionEstudiante.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AccesoEvaluacionEstudiante.tsx): [NUEVO] Componente dedicado de bienvenida y acceso directo para el estudiante:
+    - Identifica la prueba asignada (duración, número de preguntas y tipo PAES/SIMCE).
+    - Prellena el nombre y correo del estudiante si vienen en el enlace.
+    - CERO campo de contraseña. Botón principal: "🚀 Comenzar Evaluación Ahora".
+    - Enlace inferior discreto para acceso de docentes/directivos institucionales.
+  - [`src/App.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/App.tsx): [MODIFICADO]
+    - Detección de parámetro de evaluación (`?codigo=...`, `&email=...`, `&nombre=...`): conmuta automáticamente a la vista `student_eval`.
+    - Al presionar "Comenzar", inicializa el runner (`AlumnoEvaluationView`) con las preguntas de la prueba sin pedir login ni credenciales.
+  - [`src/components/AlumnoEvaluationView.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AlumnoEvaluationView.tsx): [MODIFICADO] Envío de cabecera `x-evaluacion-codigo` y datos de estudiante al calificar.
+  - [`api/send-evaluacion-alumno.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/send-evaluacion-alumno.ts): [MODIFICADO]
+    - Generación de enlace directo con parámetros: `${APP_URL}?codigo=${codigo}&email=${alumnoEmail}&nombre=${alumnoNombre}`.
+    - Actualización de las instrucciones del correo para indicar explícitamente que no se requiere contraseña ni registro previo.
+  - [`api/grade-evaluation.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/grade-evaluation.ts): [MODIFICADO]
+    - Soporte seguro de calificación directa: si la petición incluye un código de evaluación activa válido (`x-evaluacion-codigo`), se califica en el servidor (service_role) protegiendo las claves de respuesta, se vincula el UUID del estudiante si existe en `perfiles`, se guarda en `rendiciones` y se notifica al docente vía email.
+  - [`src/pages/LoginPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LoginPage.tsx): [MODIFICADO] Si un alumno aterriza en el login institucional teniendo un código asignado, se le presenta un botón destacado: "🚀 Rendir Evaluación Sin Contraseña".
+- **Verificación / Despliegue**:
+  - Verificación TypeScript: `npx tsc --noEmit` completado con 0 errores (código 0).
+  - Verificación de Tests Automatizados: `npm test` ejecutó las 9 suites con 100% aprobado (37/37 integridad, 8/8 email security, 7/7 cors, 8/8 grade-evaluation, 5/5 csp).
+  - Build de Producción: `npm run build` completado exitosamente en 19.77s.
+
 
