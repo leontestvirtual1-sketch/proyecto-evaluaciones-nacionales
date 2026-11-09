@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-08] Extracción Módulo Unificado Normalizador Matemático, Reparación M2 Invierno 2024 Q27 (Migr. 072) e Higiene de Repositorio
+
+- **Problema / Requerimiento**:
+  1. **Módulo Único de Normalización (A5 Auditoría)**: `EnunciadoRenderer.tsx` y la suite de pruebas `tests/math-content-normalization.test.ts` duplicaban la lógica de sanitización y limpieza (`cleanSymbolFont`, `sanitizeEnunciadoLine`, `normalizeText`), con riesgo de desincronización ante cambios de producción.
+  2. **M2 Invierno 2024 Pregunta 27 (A2 Auditoría)**: En el cuadernillo oficial DEMRE (página 22), la pregunta 27 presenta 5 alternativas A–E (con clave oficial B), pero en el banco local la alternativa B estaba truncada o desfasada.
+  3. **Higiene de Archivos y Scripts Ad-hoc**: En el working tree existían scripts locales de diagnóstico (`fix_*.mjs`, `inspect_*.py`, etc.) que aparecían como untracked ("en rojo"), requiriendo su exclusión formal en `.gitignore`.
+
+- **Archivos y Solución Técnica**:
+  - [`src/utils/mathContentNormalizer.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/utils/mathContentNormalizer.ts):
+    - Extracción de funciones puras de sanitización (`cleanSymbolFont`, `sanitizeEnunciadoLine`, `normalizeText`), convirtiéndolas en fuente única de verdad para la aplicación y los tests.
+  - [`src/components/common/EnunciadoRenderer.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/common/EnunciadoRenderer.tsx) & [`tests/math-content-normalization.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/math-content-normalization.test.ts):
+    - Refactorizado para importar desde `mathContentNormalizer.ts`. Suite de tests ampliada a 7 tests unitarios automatizados que verifican directamente el código de producción.
+  - [`supabase/migrations/072_fix_m2_2024_invierno_q27.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/072_fix_m2_2024_invierno_q27.sql):
+    - Reconstrucción de la pregunta 27 de M2 Invierno 2024 con sus 5 alternativas completas A–E, clave B oficial DEMRE y notación matemática KaTeX. Sincronizado también en `scripts/data/paes_m2_2024_invierno_parsed.json`.
+  - [`.gitignore`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/.gitignore):
+    - Exclusión estricta de scripts locales de apoyo y diagnóstico ad-hoc.
+
+- **Verificación / Despliegue**:
+  - `npx tsx tests/math-content-normalization.test.ts`: **7/7 PASS**.
+  - `npx tsc --noEmit`: **0 errores TypeScript**.
+  - `npm run build`: **✓ built exitoso en 36.45s (2276 módulos)**.
+
 ### [2026-11-08] Resolución Integral de Contenido PAES: Reconstrucción Historia (Migr. 068), Selección Regular 45 Ítems (Migr. 069), Restauración Alternativa E (Migr. 070) y Formateo Tablas Ciencias (Migr. 071)
 
 - **Problema / Requerimiento**:

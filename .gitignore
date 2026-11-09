@@ -75,6 +75,7 @@ eslint_report.json
 
 # Scripts y reportes de auditoría / diagnóstico local ad-hoc
 scripts/inspect_*.mjs
+scripts/inspect_*.py
 scripts/patch_*.mjs
 scripts/extract_*.py
 scripts/read_*.py
@@ -89,6 +90,8 @@ scripts/audit_pilot_*.py
 scripts/audit_all_evals.py
 scripts/audit_m1_m2_all.mjs
 scripts/fix_p3.mjs
+scripts/fix_m2_24inv_q27.mjs
+scripts/sync_specific_local_json_fixes.mjs
 scripts/data/extracted_*.txt
 
 

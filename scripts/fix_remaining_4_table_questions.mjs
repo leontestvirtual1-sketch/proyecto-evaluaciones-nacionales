@@ -140,3 +140,4 @@ WHERE id = '${item.id}';`);
 }
 
 applyTableFixes();
+

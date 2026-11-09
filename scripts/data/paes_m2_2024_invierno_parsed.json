@@ -625,23 +625,27 @@
     },
     {
       "numero": 27,
-      "enunciado": "Si las raíces (o soluciones) de la ecuación \nk\nkx\nx\n\n\n\n son \nx y \nx ,                   \ncon \nk \n, ¿cuál de las siguientes expresiones es igual a \n\n1\nx\nx\n\n\n?",
+      "enunciado": "Si las raíces (o soluciones) de la ecuación $2x^2 + kx - k = 0$ son $x_1$ y $x_2$, con $k \\ne 0$, ¿cuál de las siguientes expresiones es igual a $(x_1 + 1)(x_2 + 1)$?",
       "alternativas": [
         {
           "letra": "A",
-          "texto": "B) \nk\n1 "
+          "texto": "1"
+        },
+        {
+          "letra": "B",
+          "texto": "1 - k"
         },
         {
           "letra": "C",
-          "texto": "k\n1 "
+          "texto": "1 + k"
         },
         {
           "letra": "D",
-          "texto": "k\n1 "
+          "texto": "1 - k^2"
         },
         {
           "letra": "E",
-          "texto": "k"
+          "texto": "k^2"
         }
       ]
     },

@@ -601,32 +601,45 @@
     },
     {
       "numero": 29,
-      "enunciado": "",
-      "alternativas": []
+      "enunciado": "Se coloca un cuadro en una pared, tal como se representa a continuación:\n¿Cuál es el valor de x?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "30"
+        },
+        {
+          "letra": "B",
+          "texto": "60"
+        },
+        {
+          "letra": "C",
+          "texto": "120"
+        },
+        {
+          "letra": "D",
+          "texto": "150"
+        }
+      ]
     },
     {
       "numero": 30,
-      "enunciado": "minutos",
+      "enunciado": "La fórmula de Euler establece que para cierto tipo de poliedros se cumple la relación C + V = A + 2, tal que C es la cantidad de caras, A es la cantidad de aristas y V es la cantidad de vértices del poliedro.\n\nSi un poliedro con 8 vértices y 18 aristas cumple con la fórmula de Euler, ¿cuántas caras tiene?",
       "alternativas": [
         {
+          "letra": "A",
+          "texto": "12"
+        },
+        {
+          "letra": "B",
+          "texto": "14"
+        },
+        {
+          "letra": "C",
+          "texto": "24"
+        },
+        {
           "letra": "D",
-          "texto": "50 minutos \n \n \n \n \n \n \n29. Se coloca un cuadro en una pared, tal como se representa a continuación: \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n¿Cuál es el valor de x ?"
-        },
-        {
-          "letra": "A",
-          "texto": "B)"
-        },
-        {
-          "letra": "C",
-          "texto": "D) \n \n \n \n \n \n30. La fórmula de Euler establece que para cierto tipo de poliedros se cumple la \nrelación \nA\nV\nC\n\n\n\n, tal que C es la cantidad de caras, A es la cantidad de \naristas y V es la cantidad de vértices del poliedro. \n \nSi un poliedro con 8 vértices y 18 aristas cumple con la fórmula de Euler, \n¿cuántas caras tiene?"
-        },
-        {
-          "letra": "A",
-          "texto": "B)"
-        },
-        {
-          "letra": "C",
-          "texto": "D)"
+          "texto": "28"
         }
       ]
     },
