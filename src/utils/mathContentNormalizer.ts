@@ -77,19 +77,28 @@ export function cleanSymbolFont(text: string): string {
  */
 export function sanitizeEnunciadoLine(line: string): string {
   if (!line) return line;
-  let cleaned = line;
+  let cleaned = line.trim();
 
   // Caso 1: la línea completa está en negrita "**N. ¿Pregunta...?**" → "**¿Pregunta...?**"
-  if (/^\s*\*\*\s*[0-9]{1,3}[.)\-]+\s*/.test(cleaned) && cleaned.trim().endsWith('**')) {
-    cleaned = cleaned.replace(/^\s*\*\*\s*[0-9]{1,3}[.)\-]+\s*/, '**');
-  } else {
-    // Caso 2: "6. ¿...", "**6.** ¿..."
+  // Patrón: comienza con ** seguido de número, termina con **
+  if (/^\*\*\s*\d{1,3}[.)\-]+\s*/.test(cleaned) && cleaned.endsWith('**')) {
+    cleaned = cleaned.replace(/^\*\*\s*\d{1,3}[.)\-]+\s*/, '**');
+  }
+  // Caso 1b: "**N.** ¿Pregunta...?**" — número en negrita pero pregunta sin abrir negrita
+  // → quitar número en negrita y el ** huérfano al final
+  else if (/^\*\*\s*\d{1,3}[.)\-]+\s*\*\*\s*/.test(cleaned) && cleaned.endsWith('**')) {
+    cleaned = cleaned
+      .replace(/^\*\*\s*\d{1,3}[.)\-]+\s*\*\*\s*/, '')
+      .replace(/\*\*\s*$/, '');
+  }
+  // Caso 2: "6. ¿...", "**6.** ¿..." sin ** al final (pregunta sin formato bold completo)
+  else {
     cleaned = cleaned.replace(/^(\s*(?:\*\*)?[0-9]{1,3}[.)\-]+(?:\*\*)?\s*)([¿A-ZÁÉÍÓÚÑa-z])/g, '$2');
   }
 
-  // Caso 3: limpiar "**" huérfano al final si el conteo de pares es impar
+  // Caso 3 (seguridad): limpiar "**" huérfano al final si el conteo de pares es impar
   const starsCount = (cleaned.match(/\*\*/g) || []).length;
-  if (starsCount % 2 !== 0 && cleaned.trim().endsWith('**')) {
+  if (starsCount % 2 !== 0 && cleaned.endsWith('**')) {
     cleaned = cleaned.replace(/\*\*\s*$/, '');
   }
 

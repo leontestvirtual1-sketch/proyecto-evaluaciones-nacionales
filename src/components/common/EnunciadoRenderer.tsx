@@ -148,7 +148,9 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
 
     const renderNonMathSegment = (segment: string, segKey: string): React.ReactNode => {
       // Negrita **...**
-      const boldParts = segment.split(/(\*\*.*?\*\*)/g);
+      // Usamos [\s\S]+? en vez de .*? para capturar texto que pueda contener
+      // saltos de línea o caracteres Unicode especiales (acentos, signos de puntuación).
+      const boldParts = segment.split(/(\*\*[\s\S]+?\*\*)/g);
       return (
         <span key={segKey}>
           {boldParts.map((part, pIdx) => {
