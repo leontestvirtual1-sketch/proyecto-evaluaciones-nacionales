@@ -3232,4 +3232,21 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - Verificación de suite de pruebas: `npm test` ejecutó las 9 suites (Tenant Isolation, Catalogo API, Grade Evaluation, Pedagogical Scoring, Content Integrity, Student Runner, Email Security, CORS Security, CSP & Rendering) con 100% de tests aprobados (37/37 integridad, 8/8 email security, 7/7 cors, 5/5 csp).
   - Compilación de producción: `npm run build` completada con éxito en 26.18s sin errores de TypeScript ni empaquetado.
 
+---
+
+### [2026-11-08] Saneamiento de Dominio en Pantalla de Login: Eliminación de Contenido Cruzado de Gestión de Matrícula
+
+- **Problema / Requerimiento**:
+  - En la pantalla de inicio de sesión (`src/pages/LoginPage.tsx`), el panel lateral derecho mostraba información técnica perteneciente a otro proyecto (SysGet Gestión de Matrícula / Libro de Clases), incluyendo "Actas de Calificaciones Finales y Promoción Escolar (Decreto 67)", "Informes de Sábana", "Notas parciales 1 a 8" y "Evaluaciones Pendientes con Marca P para promedio general".
+  - Se requería eliminar completamente esas menciones fuera de dominio y sustituirlas por los pilares y especificaciones técnicas oficiales de **Sysget Saber (Evaluaciones Nacionales SIMCE / PAES)**.
+- **Archivos y Solución Técnica**:
+  - [`src/pages/LoginPage.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/pages/LoginPage.tsx): [MODIFICADO]
+    - Reemplazado `DOCUMENTOS_OFICIALES` por `PILARES_EVALUACIONES` enfocado 100% en la Suite Nacional de Evaluaciones: Banco Oficial SIMCE/PAES 2026, Ensayos Digitales con Temporizador Oficial, Generador de Cuadernillos e Impresión OMR, y Analítica Psicométrica & Matriz Curricular.
+    - Actualizado el panel lateral de novedades con el estándar psicométrico oficial (conversión automática a escalas oficiales PAES 100-1000 pts y SIMCE 150-350 pts, y niveles de logro MINEDUC Adecuado, Elemental, Insuficiente).
+    - Actualizado el modal de Especificación Técnica (`showDocModal`) para desplegar los detalles de los 4 módulos de evaluaciones nacionales.
+- **Verificación / Despliegue**:
+  - Verificación SMTP de entrega a Ignacia: Se ejecutó envío directo hacia `ignaciaandrealeonpizarro@gmail.com` comprobando aceptación con código `250 2.0.0 OK` en servidores de Google.
+  - Verificación TypeScript: `npx tsc --noEmit` completado con 0 errores (código 0).
+  - Build de Producción: `npm run build` completado exitosamente en 23.99s.
+
 

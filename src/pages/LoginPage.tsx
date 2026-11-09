@@ -23,30 +23,30 @@ interface LoginPageProps {
   onGoToLanding?: () => void;
 }
 
-const DOCUMENTOS_OFICIALES = [
+const PILARES_EVALUACIONES = [
   {
     num: 1,
-    titulo: 'Acta de Calificaciones Finales y Promoción Escolar',
-    orientacion: 'Horizontal (Landscape)',
-    proposito: 'Formato oficial MINEDUC (Decreto 67). Lista alfabética de alumnos con RUN, Sexo, Fecha de Nacimiento, notas finales por asignatura en vertical, Promedio General, Religión, % Asistencia y Situación Final (Promovido / Reprobado / Y Retirado) con firmas de Director y Docentes.'
+    titulo: 'Banco Oficial SIMCE y PAES 2026',
+    orientacion: 'M1, M2, Lectura, Ciencias, Historia',
+    proposito: 'Catálogo exhaustivo de reactivos estandarizados DEMRE y MINEDUC con fórmulas matemáticas KaTeX, tablas curriculares y diagramas vectoriales de alta precisión.'
   },
   {
     num: 2,
-    titulo: 'Informe del Curso - Resumen del Periodo',
-    orientacion: 'Horizontal (Landscape)',
-    proposito: 'Sábana oficial del curso por periodo (1° Semestre / 2° Semestre / Anual). Desglose por asignatura, Promedio a 1 decimal y a 3 decimales (6.861), % Asistencia, Inasistencias y Atrasos.'
+    titulo: 'Ensayos Digitales con Temporizador Oficial',
+    orientacion: 'Portal del Alumno en Vivo',
+    proposito: 'Experiencia inmersiva para el estudiante: cronómetro en vivo, navegación fluida, guardado automático progresivo de respuestas y retroalimentación pedagógica instantánea.'
   },
   {
     num: 3,
-    titulo: 'Informe Promedios Asignaturas',
-    orientacion: 'Horizontal (Landscape)',
-    proposito: 'Sábana comparativa con desglose de promedios parciales y finales: P1, P2 y PF por cada asignatura y por cada alumno, más fila resumen de promedios de curso.'
+    titulo: 'Generador de Cuadernillos e Impresión OMR',
+    orientacion: 'Formato Impreso & Pautas',
+    proposito: 'Generación directa de cuadernillos facsímil tamaño oficio/carta, pautas docentes paso a paso y hojas de respuestas ópticas OMR con membrete institucional dinámico.'
   },
   {
     num: 4,
-    titulo: 'Informe de la Asignatura & Analítica UTP',
-    orientacion: 'Vertical (Portrait)',
-    proposito: 'Página 1: Libro de clases por asignatura con notas parciales (1 a 8) de 1° y 2° semestre, promedio general G y nota final P.\nPágina 2: Executive Pedagogy Dashboard: Tarjetas KPI (Promedio, Aprobación, Brecha Min-Max, Dispersión σ), Matriz Decreto 67 con semáforo pedagógico, Curva de Dificultad Evaluativa por columna y Matriz de Alerta Temprana UTP.'
+    titulo: 'Analítica Psicométrica & Matriz Curricular',
+    orientacion: 'Escala Oficial & Logro',
+    proposito: 'Conversión directa a puntaje PAES (100–1.000 pts) y SIMCE (150–350 pts). Desglose por Ejes Temáticos, Habilidades Cognitivas y Niveles de Logro MINEDUC (Adecuado, Elemental, Insuficiente).'
   }
 ];
 
@@ -232,7 +232,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
           </div>
         </div>
 
-        {/* Columna Derecha: Panel de Novedades & Últimas Actualizaciones (7 columnas) */}
+        {/* Columna Derecha: Panel de Novedades & Capacidades Sysget Saber (7 columnas) */}
         <div className="lg:col-span-7 space-y-5">
           <div className="bg-slate-900/70 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
             
@@ -244,10 +244,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-white flex items-center gap-2">
-                    Últimas Actualizaciones & Novedades
+                    Sysget Saber · Suite Nacional de Evaluaciones
                   </h3>
                   <p className="text-xs text-slate-400">
-                    Mejoras en el motor pedagógico y suite de documentos oficiales 2026
+                    Ecosistema de diagnóstico, medición y analítica curricular SIMCE & PAES Chile
                   </p>
                 </div>
               </div>
@@ -256,29 +256,28 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
               </span>
             </div>
 
-            {/* Novedad 1: Aclaración para Profesores sobre Evaluaciones Pendientes "P" */}
+            {/* Novedad 1: Motor Pedagógico y Escalas Oficiales */}
             <div className="p-4 rounded-2xl bg-indigo-950/30 border border-indigo-500/30 space-y-2 hover:border-indigo-500/50 transition-all">
               <div className="flex items-center gap-2 text-indigo-300 text-xs font-bold">
                 <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-mono text-xs font-black shadow-sm">
-                  P
+                  ⚡
                 </span>
-                <span>Aviso Docente: Evaluaciones Pendientes con Marca "P"</span>
+                <span>Motor de Medición Pedagógica Oficial</span>
                 <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  Sin impacto en promedio
+                  Estándar MINEDUC & DEMRE
                 </span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed pl-8">
-                Las evaluaciones que aún no son rendidas o están en espera de ingreso se identifican con la letra <strong>"P" (Pendiente)</strong>. 
-                <span className="text-amber-300 font-medium"> Este estado no afecta ni altera el cálculo del promedio general</span> de calificaciones de los estudiantes, garantizando rigurosidad estadística conforme a la normativa MINEDUC.
+                Calificación instantánea con conversión a <strong>escala oficial PAES (100 a 1.000 pts)</strong> y <strong>SIMCE (150 a 350 pts)</strong>. Diagnóstico psicométrico inmediato por habilidad cognitiva y niveles de logro (Adecuado, Elemental, Insuficiente) con retroalimentación formativa inmediata para cada alumno.
               </p>
             </div>
 
-            {/* Novedad 2: 4 Documentos Oficiales Implementados (Decreto 67 & UTP) */}
+            {/* Novedad 2: 4 Pilares de Evaluaciones Nacionales */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
                   <FileText className="w-4 h-4 text-emerald-400" />
-                  Nuevos Informes y Documentos Oficiales Disponibles
+                  Módulos y Capacidades de la Suite
                 </h4>
                 <button
                   onClick={() => setShowDocModal(true)}
@@ -290,7 +289,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {DOCUMENTOS_OFICIALES.map((doc) => (
+                {PILARES_EVALUACIONES.map((doc) => (
                   <div
                     key={doc.num}
                     className="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 transition-all space-y-1.5"
@@ -314,11 +313,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
               </div>
             </div>
 
-            {/* Tip Directivo */}
+            {/* Tip Sysget Saber */}
             <div className="p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/80 flex items-center gap-3 text-xs text-slate-400">
               <Info className="w-4 h-4 text-indigo-400 shrink-0" />
               <span>
-                Para generar estos informes de sábana y actas de promoción, accede al módulo de Evaluaciones o Reportes UTP una vez iniciada la sesión.
+                Para asignar ensayos por correo a tus alumnos, generar cuadernillos impresos o consultar la analítica curricular, inicia sesión con tu cuenta institucional.
               </span>
             </div>
 
@@ -327,7 +326,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
 
       </div>
 
-      {/* Modal Resumen de los 4 Documentos Oficiales */}
+      {/* Modal Resumen de la Suite de Evaluaciones */}
       {showDocModal && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in text-left overflow-y-auto"
@@ -343,10 +342,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">
-                    Resumen de los 4 Documentos Oficiales Implementados
+                    Especificación Técnica: Suite de Evaluaciones Nacionales
                   </h3>
                   <p className="text-xs text-slate-400">
-                    Estándar oficial MINEDUC (Decreto 67) & Analítica Pedagógica UTP
+                    Estándares curriculares MINEDUC, DEMRE y analítica pedagógica institucional
                   </p>
                 </div>
               </div>
@@ -359,7 +358,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
             </div>
 
             <div className="space-y-4">
-              {DOCUMENTOS_OFICIALES.map((doc) => (
+              {PILARES_EVALUACIONES.map((doc) => (
                 <div key={doc.num} className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <h4 className="text-sm font-bold text-white flex items-center gap-2">
@@ -369,7 +368,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onGoToRegister, onGoToLand
                       {doc.titulo}
                     </h4>
                     <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-slate-800 text-indigo-300 border border-slate-700 self-start sm:self-auto">
-                      Orientación: {doc.orientacion}
+                      Enfoque: {doc.orientacion}
                     </span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line pl-8">
