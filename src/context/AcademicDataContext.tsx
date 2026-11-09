@@ -146,6 +146,7 @@ export const AcademicDataProvider: React.FC<AcademicDataProviderProps> = ({
             rut: p.rut || '',
             nombre: p.nombre || '',
             apellido: p.apellido || '',
+            email: p.email || '',
             cursoId: 'curso-prem-2m',
             cursoNombre: p.establecimiento || 'Escuela Premilitar Héroes de la Concepción',
             numeroDeLista: idx + 1,

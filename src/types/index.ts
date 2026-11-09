@@ -54,6 +54,7 @@ export interface AlumnoBasico {
   rut: string;
   nombre: string;
   apellido: string;
+  email?: string;
   cursoId: string;
   cursoNombre: string;
   numeroDeLista?: number;

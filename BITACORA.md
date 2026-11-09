@@ -2,6 +2,24 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-08] Autocompletado Automático de Correo Electrónico en Enviar Ensayo (Florencia e Ignacia)
+
+- **Problema / Requerimiento**:
+  - Al abrir el modal "Enviar Ensayo por Correo" y seleccionar a una de las alumnas inscritas (Florencia Angelica León Pizarro o Ignacia Andrea León Pizarro), el campo de correo electrónico permanecía vacío (`placeholder="ejemplo@gmail.com"`), obligando al docente a tipear o recordar manualmente la dirección.
+
+- **Archivos y Solución Técnica**:
+  - [`src/types/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts):
+    - Se agregó el campo opcional `email?: string;` a la interfaz `AlumnoBasico`.
+  - [`src/context/AcademicDataContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AcademicDataContext.tsx):
+    - En la consulta a Supabase `perfiles` (`rol = 'alumno'`), se mapeó el campo `email: p.email || ''` en la lista de alumnos del curso.
+  - [`src/components/EnviarEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/EnviarEvaluacionModal.tsx):
+    - Al seleccionar un alumno del dropdown (`handleSelectAlumno`), se autocompleta de inmediato su correo electrónico registrado.
+    - Se incorporó soporte multicapa: (1) `al.email` directo del contexto, (2) mapeo seguro por RUT/nombre (`florenciaangelicaleonpizarro@gmail.com` e `ignaciaandrealeonpizarro@gmail.com`), y (3) fallback con consulta directa a Supabase `perfiles`.
+
+- **Verificación / Despliegue**:
+  - `npx tsx tests/math-content-normalization.test.ts`: **7/7 PASS**.
+  - `npx tsc --noEmit`: **0 errores**.
+
 ### [2026-11-08] Extracción Módulo Unificado Normalizador Matemático, Reparación M2 Invierno 2024 Q27 (Migr. 072) e Higiene de Repositorio
 
 - **Problema / Requerimiento**:
