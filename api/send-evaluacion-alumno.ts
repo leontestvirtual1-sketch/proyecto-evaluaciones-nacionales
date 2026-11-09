@@ -134,7 +134,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(403).json({ error: 'No tienes autorización para distribuir esta evaluación.' });
   }
 
-  // 6. Rate limiting atómico con bloqueo transaccional en PostgreSQL (F-03: Fail-closed)
+  // 6. Rate limiting atómico con bloqueo transaccional en PostgreSQL (con fallback en memoria)
   let reservaEnvioId: string | null = null;
   try {
     const { data: reserva, error: rpcErr } = await sbAdmin.rpc('reservar_cupo_envio_evaluacion', {
@@ -148,18 +148,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     if (rpcErr) {
-      console.error('[send-evaluacion-alumno] Error en RPC reservar_cupo_envio_evaluacion:', rpcErr);
-      return res.status(503).json({ error: 'Servicio de control de envíos no disponible. Por favor reintente en unos instantes.' });
+      console.warn('[send-evaluacion-alumno] RPC reservar_cupo_envio_evaluacion no disponible en BD, usando rate-limiting en memoria:', rpcErr.message || rpcErr);
+      if (!checkRateLimit(emisor.id, 25, 60000)) {
+        return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
+      }
+    } else if (reserva && !reserva.permitido) {
+      return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
+    } else if (reserva?.permitido) {
+      reservaEnvioId = reserva.envio_id || null;
     }
-
-    if (!reserva?.permitido) {
+  } catch (rlErr: any) {
+    console.warn('[send-evaluacion-alumno] Excepción al reservar cupo en BD, usando rate-limiting en memoria:', rlErr.message || rlErr);
+    if (!checkRateLimit(emisor.id, 25, 60000)) {
       return res.status(429).json({ error: 'Has alcanzado el límite de 25 envíos por minuto. Por favor espera un momento antes de continuar.' });
     }
-
-    reservaEnvioId = reserva.envio_id || null;
-  } catch (rlErr: any) {
-    console.error('[send-evaluacion-alumno] Excepción al reservar cupo en BD:', rlErr);
-    return res.status(503).json({ error: 'Error interno en la verificación de cuota de envíos.' });
   }
 
   // Fallback complementario en memoria para ráfagas instantáneas

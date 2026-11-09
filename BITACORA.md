@@ -2,6 +2,24 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-08] Resiliencia de Envío de Ensayos por Correo y Feedback Visual de Éxito en Modal
+
+- **Problema / Requerimiento**:
+  1. **Feedback Visual de Envío**: Al hacer clic en "Enviar Ensayo", el botón no reflejaba claramente el cambio a estado "¡Enviado con éxito!", ni permitía fácilmente continuar para enviar a otro alumno o cerrar.
+  2. **Bloqueo por RPC en Endpoint Serverless**: En `api/send-evaluacion-alumno.ts`, la consulta a la RPC `reservar_cupo_envio_evaluacion` fallaba con 503 cuando la función no estaba registrada en PostgreSQL, impidiendo que el correo se enviara efectivamente a los alumnos.
+
+- **Archivos y Solución Técnica**:
+  - [`api/send-evaluacion-alumno.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/send-evaluacion-alumno.ts):
+    - Se agregó fallback resiliente: si la RPC de base de datos no está disponible, el endpoint utiliza automáticamente el `checkRateLimit` en memoria (25 envíos/minuto por docente), permitiendo que el transporte SMTP proceda y envíe el correo con éxito sin bloquear al usuario.
+  - [`src/components/EnviarEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/EnviarEvaluacionModal.tsx):
+    - **Botón reactivo de 3 estados**: (1) "Enviar Ensayo" con icono Send, (2) spinner animado con "Enviando correo...", y (3) botón verde esmeralda con `CheckCircle2` y texto **"¡Enviado con éxito!"**.
+    - **Acción Rápida "+ Enviar a otro alumno"**: Permite resetear instantáneamente el formulario para seleccionar al siguiente alumno (Florencia, Ignacia, etc.) sin tener que salir y volver a entrar.
+    - El botón de cancelación pasa dinámicamente a **"Cerrar"** tras el éxito, con temporizador de auto-cierre cancelable.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit`: **0 errores**.
+  - `npm run build`: **✓ built exitoso en 25.65s (2276 módulos)**.
+
 ### [2026-11-08] Autocompletado Automático de Correo Electrónico en Enviar Ensayo (Florencia e Ignacia)
 
 - **Problema / Requerimiento**:

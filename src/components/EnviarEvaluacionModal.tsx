@@ -27,6 +27,25 @@ export const EnviarEvaluacionModal: React.FC<EnviarEvaluacionModalProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const closeTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
+  }, []);
+
+  const resetParaOtroAlumno = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setSuccessMsg(null);
+    setErrorMsg(null);
+    setSelectedAlumnoId('manual');
+    setEmailInput('');
+    setNombreInput('');
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -145,9 +164,9 @@ export const EnviarEvaluacionModal: React.FC<EnviarEvaluacionModalProps> = ({
       if (onSuccess) {
         onSuccess(emailTrimmed);
       }
-      setTimeout(() => {
+      closeTimeoutRef.current = setTimeout(() => {
         onClose();
-      }, 2500);
+      }, 3500);
     } catch (err: unknown) {
       const error = err as Error;
       setErrorMsg(error.message || 'Error de conexión con el servidor.');
@@ -290,32 +309,57 @@ export const EnviarEvaluacionModal: React.FC<EnviarEvaluacionModalProps> = ({
           )}
 
           {/* Footer buttons */}
-          <div className="pt-2 flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={isLoading}
-              className="px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={isLoading || Boolean(successMsg)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-indigo-600/30 text-xs transition-all disabled:opacity-50"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Enviando correo...</span>
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  <span>Enviar Ensayo</span>
-                </>
-              )}
-            </button>
+          <div className="pt-2 flex items-center justify-between gap-3">
+            {successMsg ? (
+              <button
+                type="button"
+                onClick={resetParaOtroAlumno}
+                className="text-xs text-indigo-600 dark:text-indigo-400 font-bold hover:underline flex items-center gap-1 transition-colors"
+              >
+                <span>+ Enviar a otro alumno</span>
+              </button>
+            ) : (
+              <span className="text-[11px] text-slate-400">
+                {isLoading ? 'Conectando con servidor de correo...' : ''}
+              </span>
+            )}
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={isLoading}
+                className="px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all"
+              >
+                {successMsg ? 'Cerrar' : 'Cancelar'}
+              </button>
+              <button
+                type="submit"
+                disabled={isLoading || Boolean(successMsg)}
+                className={`flex items-center gap-2 font-bold px-5 py-2.5 rounded-xl shadow-lg text-xs transition-all disabled:opacity-90 ${
+                  successMsg
+                    ? 'bg-emerald-600 text-white shadow-emerald-600/30'
+                    : 'bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white shadow-indigo-600/30'
+                }`}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Enviando correo...</span>
+                  </>
+                ) : successMsg ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>¡Enviado con éxito!</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>Enviar Ensayo</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </form>
       </div>
