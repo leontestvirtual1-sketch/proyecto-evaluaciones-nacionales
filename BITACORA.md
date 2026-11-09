@@ -2,6 +2,46 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-08] Resolución Integral de Contenido PAES: Reconstrucción Historia (Migr. 068), Selección Regular 45 Ítems (Migr. 069), Restauración Alternativa E (Migr. 070) y Formateo Tablas Ciencias (Migr. 071)
+
+- **Problema / Requerimiento**:
+  1. **56 Preguntas con Instrucciones Administrativas**:
+     - 16 preguntas reales de Historia (2024 Invierno P7–P12, 2024 Regular P7–P12, 2025 Invierno P9–P12) contenían textos de folleto ("anota tu cédula...", "declaración...") o estaban reemplazadas por dummies tras ser absorbidas por la carátula DEMRE. En particular, `preg-paes-his-24inv-12` concentraba 48 alternativas anómalas.
+     - 40 preguntas correspondientes a ítems no liberados por DEMRE en Historia Regular 2025 y 2026 (DEMRE publica oficialmente una "Selección de 45 preguntas liberadas" para estos procesos), que fueron indebidamente rellenadas con dummies artificiales ("Seleccione la alternativa correcta...").
+  2. **17 Preguntas con Clave Oficial E pero solo Alternativas A–D**:
+     - En Física, Química e Historia (procesos 2023 a 2025), la ingesta automática truncó la alternativa E en 17 ítems cuya clave oficial DEMRE era precisamente 'E'.
+  3. **4 Tablas Scrambled con Falso Positivo Decimal en Ciencias**:
+     - Las preguntas de Ciencias (`preg-paes-fis-26inv-46`, `preg-paes-fis-26inv-65`, `preg-paes-qui-24reg-77`, `preg-paes-qui-26inv-10`) tenían tablas de datos aplanadas sin formato Markdown (`50 1,7 04,60...`, `0,0 00,10,0 40,20...`) y alternativas con texto genérico ("Opción A (ver figura)").
+  4. Criterio de aceptación estricto: 0 preguntas con instrucciones administrativas, 0 preguntas con alternativas anómalas, 0 claves ausentes en alternativas, 0 decimales partidos, 0 caracteres PUA, claves oficiales 100% preservadas.
+
+- **Archivos y Solución Técnica**:
+  - [`supabase/migrations/068_fix_historia_16_real_questions.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/068_fix_historia_16_real_questions.sql) & [`scripts/fix_historia_16_real_questions.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/fix_historia_16_real_questions.mjs):
+    - Extracción y reconstrucción integral desde los cuadernillos oficiales DEMRE (`evaluaciones_fuente/paes_historia/`) de las 16 preguntas reales con sus textos, citas bibliográficas y alternativas completas.
+  - [`supabase/migrations/069_align_historia_regular_selections.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/069_align_historia_regular_selections.sql) & [`scripts/align_historia_regular_selections.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/align_historia_regular_selections.mjs):
+    - Alineación de `eval-paes-his-2025-reg-f103` y `eval-paes-his-2026-reg-f103` con el estándar de Selección Oficial DEMRE de 45 preguntas (igual que Matemática M1/M2 y Ciencias), eliminando las 40 preguntas artificiales placeholder.
+  - [`supabase/migrations/070_fix_17_missing_e_questions.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/070_fix_17_missing_e_questions.sql) & [`scripts/fix_17_missing_e_questions.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/fix_17_missing_e_questions.mjs):
+    - Cotejo contra PDF oficial y restauración de la alternativa E (con `es_correcta: true`) en las 17 preguntas de Física, Química e Historia.
+  - [`supabase/migrations/071_fix_table_questions_and_decimals.sql`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/supabase/migrations/071_fix_table_questions_and_decimals.sql) & [`scripts/fix_remaining_4_table_questions.mjs`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/scripts/fix_remaining_4_table_questions.mjs):
+    - Reestructuración de 4 enunciados con tablas Markdown legibles y alternativas de texto reales desde folletos oficiales DEMRE.
+
+- **Verificación / Despliegue**:
+  - **Auditoría Profunda Multicriterio (`scripts/audit_deep_all_paes.mjs`)**:
+    - Caracteres PUA (U+E000–U+F8FF): **0**.
+    - Caracteres de control no imprimibles: **0**.
+    - Glifos de reemplazo (U+FFFD): **0**.
+    - Secuencias Mojibake UTF-8: **0**.
+    - Decimales partidos: **0**.
+    - Coordenadas rotas: **0**.
+    - Preguntas sin enunciado / vacías: **0**.
+    - Preguntas con instrucciones administrativas: **0** (de 56 iniciales).
+    - Conteo anómalo de alternativas: **0** (de 1 inicial, P12 con 48 alts reparada).
+    - Preguntas con clave inválida: **0**.
+    - Preguntas cuya clave no existe en las alternativas: **0** (de 17 iniciales).
+    - Discrepancias de conteo en evaluaciones: **0**.
+  - `npx tsx tests/math-content-normalization.test.ts`: **6/6 PASS**.
+  - `npx tsc --noEmit`: **0 errores TypeScript**.
+  - `npm run build`: **✓ built exitoso en 30.84s (2275 módulos)**.
+
 ### [2026-11-07] Corrección Crítica de Normalizador Decimal en EnunciadoRenderer, PUA U+F0B4, Guiones Silábicos y Migración 067
 
 - **Problema / Requerimiento**:
