@@ -72,9 +72,28 @@ export function cleanSymbolFont(text: string): string {
 /**
  * Sanitiza números de ítem redundantes al inicio de líneas (ej. "23. ¿Qué...", "5. ¿Cuál...", "**23.** ")
  * para que no colisionen con los números secuenciales asignados dinámicamente por la interfaz.
+ * Caso especial: si toda la línea está envuelta en negrita "**N. pregunta?**", conserva el formato
+ * bold convirtiendo a "**pregunta?**" en lugar de dejar un "**" huérfano al final.
  */
 export function sanitizeEnunciadoLine(line: string): string {
-  return line.replace(/^(\s*(?:\*\*)?[0-9]{1,3}[.)\-]+(?:\*\*)?\s*)([¿A-ZÁÉÍÓÚÑa-z])/g, '$2');
+  if (!line) return line;
+  let cleaned = line;
+
+  // Caso 1: la línea completa está en negrita "**N. ¿Pregunta...?**" → "**¿Pregunta...?**"
+  if (/^\s*\*\*\s*[0-9]{1,3}[.)\-]+\s*/.test(cleaned) && cleaned.trim().endsWith('**')) {
+    cleaned = cleaned.replace(/^\s*\*\*\s*[0-9]{1,3}[.)\-]+\s*/, '**');
+  } else {
+    // Caso 2: "6. ¿...", "**6.** ¿..."
+    cleaned = cleaned.replace(/^(\s*(?:\*\*)?[0-9]{1,3}[.)\-]+(?:\*\*)?\s*)([¿A-ZÁÉÍÓÚÑa-z])/g, '$2');
+  }
+
+  // Caso 3: limpiar "**" huérfano al final si el conteo de pares es impar
+  const starsCount = (cleaned.match(/\*\*/g) || []).length;
+  if (starsCount % 2 !== 0 && cleaned.trim().endsWith('**')) {
+    cleaned = cleaned.replace(/\*\*\s*$/, '');
+  }
+
+  return cleaned;
 }
 
 /**

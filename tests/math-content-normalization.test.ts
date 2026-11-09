@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanSymbolFont, normalizeText } from '../src/utils/mathContentNormalizer.ts';
+import { cleanSymbolFont, normalizeText, sanitizeEnunciadoLine } from '../src/utils/mathContentNormalizer.ts';
 
 test('--- Suite de Normalización de Contenido Matemático y Científico PAES (Módulo Compartido) ---', async (t) => {
   await t.test('Normaliza correctamente caracteres PUA de Symbol Font a símbolos legibles (M1, M2 y Ciencias)', () => {
@@ -81,5 +81,44 @@ test('--- Suite de Normalización de Contenido Matemático y Científico PAES (M
     const hyphenated = 'Durante la Confederación Perú-\nBoliviana en el siglo XIX';
     const res = normalizeText(hyphenated);
     assert.ok(res.includes('Perú-Boliviana'));
+  });
+
+  await t.test('Sanitiza números de enunciado iniciales preservando negrita y sin asteriscos huérfanos', () => {
+    // Caso reporte usuario: enunciado envuelto en **N. pregunta?**
+    const pMinsal = '**6. ¿Qué estrategia del MINSAL es reconocida como símbolo de vida sana y alimentación saludable?**';
+    assert.strictEqual(
+      sanitizeEnunciadoLine(pMinsal),
+      '**¿Qué estrategia del MINSAL es reconocida como símbolo de vida sana y alimentación saludable?**'
+    );
+
+    const pCredibilidad = '**7. ¿Qué elemento de este texto otorga credibilidad a la información?**';
+    assert.strictEqual(
+      sanitizeEnunciadoLine(pCredibilidad),
+      '**¿Qué elemento de este texto otorga credibilidad a la información?**'
+    );
+
+    // Formato estándar sin asteriscos
+    assert.strictEqual(
+      sanitizeEnunciadoLine('23. ¿Cuál es el valor de x en la ecuación?'),
+      '¿Cuál es el valor de x en la ecuación?'
+    );
+
+    // Formato con sólo el número en negrita
+    assert.strictEqual(
+      sanitizeEnunciadoLine('**23.** ¿Cuál es el valor de x?'),
+      '¿Cuál es el valor de x?'
+    );
+
+    // Limpieza de asterisco huérfano terminal en caso de split desbalanceado
+    assert.strictEqual(
+      sanitizeEnunciadoLine('¿Qué estrategia del MINSAL es reconocida?**'),
+      '¿Qué estrategia del MINSAL es reconocida?'
+    );
+
+    // Negrita interna legítima no debe alterarse
+    assert.strictEqual(
+      sanitizeEnunciadoLine('14. ¿Cuál de las siguientes afirmaciones es **verdadera**?'),
+      '¿Cuál de las siguientes afirmaciones es **verdadera**?'
+    );
   });
 });

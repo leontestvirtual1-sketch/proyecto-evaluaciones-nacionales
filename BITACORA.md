@@ -2,6 +2,28 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-09] Sanitización de Enunciados Negrita PAES (Resolución de Doble Asterisco `**` Huérfano)
+
+- **Problema / Requerimiento**:
+  - En el visualizador de facsímiles oficiales y banco de preguntas, los enunciados provenientes del formato DEMRE estructurados como `**N. ¿Pregunta...?**` (ej. `**6. ¿Qué estrategia del MINSAL...?**`) mostraban un doble asterisco huérfano al final: `¿Qué estrategia del MINSAL...?**`.
+  - La función `sanitizeEnunciadoLine` eliminaba el número de ítem inicial y los primeros `**`, pero dejaba el `**` de cierre sin emparejar, ocasionando que el motor de renderizado lo mostrara como texto literal con artefactos visuales.
+
+- **Archivos y Solución Técnica**:
+  - [`src/utils/mathContentNormalizer.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/utils/mathContentNormalizer.ts):
+    - Refactorización de `sanitizeEnunciadoLine` con manejo de 3 casos:
+      1. Si la línea completa está envuelta en negrita `**N. ¿Pregunta...?**`, se elimina el prefijo numérico pero se conserva el delimitador de apertura `**`, resultando en `**¿Pregunta...?**` para que el componente `EnunciadoRenderer` renderice el texto completo en negrita limpia.
+      2. Si el número no está en negrita completa (`6. ¿...` o `**6.** ¿...`), se limpia el número y se conserva el texto sin afectar formato.
+      3. Limpieza de seguridad para cualquier `**` terminal huérfano cuando el conteo de pares de asteriscos en la línea sea impar.
+  - [`tests/math-content-normalization.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/math-content-normalization.test.ts):
+    - Integración de pruebas específicas para `sanitizeEnunciadoLine` validando casos con `**N. Pregunta**`, formatos estándar, y descarte de asteriscos huérfanos.
+  - [`package.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/package.json):
+    - Inclusión permanente de `math-content-normalization.test.ts` en el script principal de pruebas (`npm test`).
+
+- **Verificación / Despliegue**:
+  - `npx tsx tests/math-content-normalization.test.ts`: **8/8 PASS**.
+  - `npm test`: **11 suites ejecutadas, 100% PASS** (53 tests unitarios/seguridad + 37 de integridad).
+  - `npm run build`: **✓ built exitoso en 28.56s (2277 módulos compilados con 0 errores TypeScript)**.
+
 ### [2026-11-09] Nivel 1: Validación de RUT Oficial para Estudiantes (Cero Contraseñas e Integridad de Rendición)
 
 - **Problema / Requerimiento**:
