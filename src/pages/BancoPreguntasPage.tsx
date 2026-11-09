@@ -774,7 +774,10 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
               </span>
               {fuenteFilter && (
                 <button
-                  onClick={() => setFuenteFilter('')}
+                  onClick={() => {
+                    setFuenteFilter('');
+                    setPaginaActualPreguntas(1);
+                  }}
                   className="text-xs text-indigo-500 hover:text-indigo-400 underline font-semibold self-start sm:self-auto cursor-pointer"
                 >
                   ✕ Quitar filtro de prueba (ver todas)
@@ -786,7 +789,10 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
             <div className="p-3 rounded-2xl bg-slate-50/70 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 max-h-48 overflow-y-auto space-y-2">
               <div className="flex items-center gap-1.5 flex-wrap">
                 <button
-                  onClick={() => setFuenteFilter('')}
+                  onClick={() => {
+                    setFuenteFilter('');
+                    setPaginaActualPreguntas(1);
+                  }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border shrink-0 ${
                     !fuenteFilter
                       ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-800 shadow-sm'
@@ -809,6 +815,7 @@ export const BancoPreguntasPage: React.FC<BancoPreguntasPageProps> = ({
                           setFuenteFilter('');
                         } else {
                           setFuenteFilter(fuente);
+                          setPaginaActualPreguntas(1); // Reiniciar paginación al cambiar de instrumento
                           // Auto-seleccionar 4° Medio si es prueba PAES y estamos en otro nivel
                           if (isPaes && nivelFilter !== '4° medio' && nivelFilter !== '') {
                             setNivelFilter('4° medio');
