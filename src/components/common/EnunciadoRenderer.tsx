@@ -230,10 +230,15 @@ export const EnunciadoRenderer: React.FC<EnunciadoRendererProps> = ({
       continue;
     }
 
-    // Separador horizontal
+    // Separador horizontal (--- o ***)
     if (trimmed === '---' || trimmed === '***') {
       blocks.push(
-        <hr key={`hr-${i}`} className={`my-3 ${forceLightMode ? 'border-slate-300' : 'border-slate-200 dark:border-slate-800'}`} />
+        <div key={`hr-wrapper-${i}`} className="my-4">
+          <hr className={`border-t-2 ${forceLightMode ? 'border-indigo-300' : 'border-indigo-500/40'} my-2`} />
+          <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-indigo-400">
+            <span>Pregunta Asociada a la Lectura:</span>
+          </div>
+        </div>
       );
       i++;
       continue;
