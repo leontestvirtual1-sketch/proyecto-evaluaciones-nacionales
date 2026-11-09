@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src/ tests/",
-    "test": "npx tsx --env-file=.env.local tests/tenant-isolation.test.ts && npx tsx --env-file=.env.local tests/evaluaciones-catalogo.test.ts && npx tsx --env-file=.env.local tests/grade-evaluation.test.ts && npx tsx tests/pedagogical-scoring.test.ts && npx tsx tests/content-integrity.test.ts && npx tsx tests/student-runner-security.test.ts && npx tsx --env-file=.env.local tests/email-security.test.ts && npx tsx tests/cors-security.test.ts && npx tsx tests/csp-and-rendering.test.ts",
+    "test": "npx tsx --env-file=.env.local tests/tenant-isolation.test.ts && npx tsx --env-file=.env.local tests/evaluaciones-catalogo.test.ts && npx tsx --env-file=.env.local tests/grade-evaluation.test.ts && npx tsx tests/pedagogical-scoring.test.ts && npx tsx tests/content-integrity.test.ts && npx tsx tests/student-runner-security.test.ts && npx tsx --env-file=.env.local tests/email-security.test.ts && npx tsx tests/cors-security.test.ts && npx tsx tests/csp-and-rendering.test.ts && npx tsx --env-file=.env.local tests/verify-student-access.test.ts",
     "test:tenant-auth": "npx tsx --env-file=.env.test.local tests/tenant-isolation.authenticated.test.ts",
     "verify:content": "node --env-file=.env.local scripts/verify_evaluations_integrity.mjs",
     "preview": "vite preview",

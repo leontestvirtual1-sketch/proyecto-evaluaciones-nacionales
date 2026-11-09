@@ -2,6 +2,34 @@
 
 Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyecto.
 
+### [2026-11-09] Nivel 1: Validación de RUT Oficial para Estudiantes (Cero Contraseñas e Integridad de Rendición)
+
+- **Problema / Requerimiento**:
+  - Evitar que al compartir el enlace de una evaluación asignada a un amigo o tercero, cualquier persona no autorizada pueda rendir la prueba o falsear el puntaje del estudiante.
+  - Diseñar un esquema de seguridad de **Nivel 1 (Validación de RUT Oficial)** que no requiera contraseñas complejas ni registro previo, pero verifique que quien rinde la evaluación conoce su identidad institucional y figura en la nómina del curso.
+
+- **Archivos y Solución Técnica**:
+  - [`api/verify-student-access.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/verify-student-access.ts):
+    - Nuevo endpoint seguro (`POST /api/verify-student-access`) que consulta `sbAdmin` con privilegios `service_role` (evitando bloqueos de RLS anónimos) sobre la nómina en `perfiles`.
+    - Sanitización y normalización de RUT (`cleanRut` / `formatRut`), verificando coincidencia con la nómina oficial del establecimiento.
+    - Mitigación de suplantación: si la evaluación fue invitada a un correo determinado (ej. Florencia), comprueba que el RUT ingresado pertenezca a esa misma estudiante, rechazando accesos con datos cruzados.
+  - [`src/components/AccesoEvaluacionEstudiante.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/AccesoEvaluacionEstudiante.tsx):
+    - Rediseño de la pantalla de bienvenida con saludo personalizado: *"👋 Hola, [Nombre Alumno]"*.
+    - Campo prioritario de **RUT Oficial del Estudiante** con formateador automático de puntos y guion (`23.386.193-6`).
+    - Flujo reactivo con botón de estado dinámico (*"Verificando en Nómina Oficial..."* -> *"¡Identidad Confirmada!"* -> Apertura inmediata del ensayo).
+    - Feedback amigable con mensajes claros si el RUT no coincide con la nómina.
+  - [`api/send-evaluacion-alumno.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/send-evaluacion-alumno.ts):
+    - Actualización de las instrucciones del correo enviado al estudiante, informando que solo necesitará validar su RUT institucional al hacer clic en el enlace.
+  - [`tests/verify-student-access.test.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/tests/verify-student-access.test.ts):
+    - Suite de 8 pruebas unitarias e integración que valida normalización de RUT, formatos con/sin puntos, rechazo de RUTs ajenos, y mitigación de suplantación entre cuentas.
+  - [`package.json`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/package.json):
+    - Integración de `verify-student-access.test.ts` en el script `npm test`.
+
+- **Verificación / Despliegue**:
+  - `npx tsc --noEmit`: **0 errores**.
+  - `npm test`: **10 suites, 100% PASS** (45 tests + 37 integridad).
+  - `npm run build`: **✓ built exitoso en 25.61s (2277 módulos)**.
+
 ### [2026-11-08] Resiliencia de Envío de Ensayos por Correo y Feedback Visual de Éxito en Modal
 
 - **Problema / Requerimiento**:

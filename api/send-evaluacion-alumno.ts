@@ -275,7 +275,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 ${[
                   ['1', 'Acceso directo', `Haz clic en el botón azul "Ir a la Evaluación" o visita <a href="${linkDirecto}" style="color:#818cf8;">${APP_URL}</a>`],
-                  ['2', 'Sin contraseña', 'Ingresas directamente con tu nombre asignado. No necesitas crear cuenta ni recordar claves.'],
+                  ['2', 'Validación con RUT (Cero claves)', 'Ingresa tu RUT chileno oficial para confirmar tu identidad en la nómina. No necesitas contraseñas ni registros.'],
                   ['3', 'Rinde tu prueba', `Cuentas con <strong>${safeDuracion} minutos</strong> y temporizador en pantalla.`],
                   ['4', 'Resultados inmediatos', 'Al finalizar, presiona "Entregar Evaluación". Tu docente recibirá tus respuestas de inmediato.'],
                 ].map(([num, title, desc]) => `
