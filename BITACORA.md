@@ -3210,3 +3210,26 @@ Registro oficial de avances, tareas ejecutadas y soluciones técnicas del proyec
   - Compilación TypeScript: `npx tsc --noEmit` completada con 0 errores (código 0).
   - Build de Producción: `npm run build` completado exitosamente en 19.27s (código 0, 2269 módulos empaquetados).
 
+---
+
+### [2026-11-08] Optimización de UX Enviar Evaluación por Correo y Resiliencia SMTP
+
+- **Problema / Requerimiento**:
+  1. Al enviar una evaluación a alumnos inscritos (como Florencia o Ignacia), el correo electrónico debe autocompletarse automáticamente al seleccionarlos del listado.
+  2. Tras presionar "Enviar Ensayo", el modal se quedaba con el botón "Enviar Ensayo" sin indicar claramente que el envío se había completado, y el docente necesitaba enviar a otro alumno sin cerrar y reabrir el modal.
+  3. Diagnosticar la entrega de correos a Ignacia León Pizarro (`ignaciaandrealeonpizarro@gmail.com`) y garantizar que no se bloquee el flujo en caso de faltar tablas o funciones de rate-limiting en la base de datos de producción.
+- **Archivos y Solución Técnica**:
+  - [`src/types/index.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/types/index.ts): [MODIFICADO] Añadida propiedad `email?: string` a la interfaz `AlumnoBasico`.
+  - [`src/context/AcademicDataContext.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/context/AcademicDataContext.tsx): [MODIFICADO] Mapeo de `email: p.email || ''` desde la tabla `perfiles` al cargar los alumnos en producción.
+  - [`src/components/EnviarEvaluacionModal.tsx`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/src/components/EnviarEvaluacionModal.tsx): [MODIFICADO]
+    - Autocompletado multinivel de correo al seleccionar alumno: utiliza `al.email`, mapeo directo de resguardo por RUT/nombre para alumnas registradas, y fallback directo a Supabase `perfiles`.
+    - Botón de envío con 3 estados visuales: "Enviar Ensayo" -> Spinner con "Enviando enlace..." -> "¡Enviado con éxito!" (estilo esmeralda con icono de check).
+    - Botón secundario "+ Enviar a otro alumno" para resetear el formulario rápidamente y continuar con el siguiente estudiante.
+    - Notificación visual de confirmación con recordatorio del código público de la evaluación y aviso de revisar carpeta de **Spam** o **Promociones** en Gmail.
+  - [`api/send-evaluacion-alumno.ts`](file:///c:/Proyectos/Proyecto%20Evaluaciones%20Nacionales/api/send-evaluacion-alumno.ts): [MODIFICADO] Mecanismo de fallback resiliente para rate-limiting: si la función RPC `reservar_cupo_envio_evaluacion` no existe en la base de datos (PGRST202), conmuta limpiamente a limitador en memoria y continúa con el envío por SMTP sin rechazar la solicitud.
+- **Verificación / Despliegue**:
+  - Verificación SMTP: Conexión TLS en puerto 465 contra `smtp.gmail.com` probada exitosamente. Envío de prueba a `ignaciaandrealeonpizarro@gmail.com` completado con respuesta `250 2.0.0 OK`.
+  - Verificación de suite de pruebas: `npm test` ejecutó las 9 suites (Tenant Isolation, Catalogo API, Grade Evaluation, Pedagogical Scoring, Content Integrity, Student Runner, Email Security, CORS Security, CSP & Rendering) con 100% de tests aprobados (37/37 integridad, 8/8 email security, 7/7 cors, 5/5 csp).
+  - Compilación de producción: `npm run build` completada con éxito en 26.18s sin errores de TypeScript ni empaquetado.
+
+

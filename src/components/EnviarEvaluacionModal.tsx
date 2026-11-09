@@ -302,9 +302,14 @@ export const EnviarEvaluacionModal: React.FC<EnviarEvaluacionModalProps> = ({
           )}
 
           {successMsg && (
-            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-xs font-bold animate-fade-in">
-              <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-              <span>{successMsg}</span>
+            <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl space-y-2 animate-fade-in">
+              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                <span>{successMsg}</span>
+              </div>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                💡 Si el alumno no lo ve en su bandeja principal de Gmail, indícale revisar la carpeta de <strong>Spam</strong> o <strong>Promociones</strong>. También puede ingresar a la app directamente con su cuenta o escribiendo el código <strong className="font-mono text-indigo-600 dark:text-indigo-400">{prueba.codigoPublico}</strong>.
+              </p>
             </div>
           )}
 
