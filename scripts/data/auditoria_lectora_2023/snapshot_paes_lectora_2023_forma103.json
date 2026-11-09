@@ -1,0 +1,2418 @@
+{
+  "metadata": {
+    "fecha_export": "2026-11-09T16:40:39.987Z",
+    "evaluacion_id": "eval-paes-lect-2023-f103",
+    "evaluacion_titulo": "PAES Oficial Competencia Lectora — Proceso 2023 (Forma 103)",
+    "total_preguntas_evaluacion": 65,
+    "pregunta_ids_count": 65,
+    "preguntas_encontradas": 65,
+    "missing_count": 0
+  },
+  "preguntas": [
+    {
+      "posicion_evaluacion": 1,
+      "id": "preg-paes-lec-23-01",
+      "numero": 1,
+      "enunciado": "### LECTURA 1 (Preguntas 1 a 7)\n\nDocumento publicado por el Ministerio de Salud de Chile (MINSAL). Consultado en marzo \nde 2021. \n \nNutrición \nPolíticas Públicas en Alimentación y Nutrición \n \nEn Chile, las políticas en alimentación y nutrición están enfocadas a la promoción de la alimentación saludable en el contexto de una vida sana, y a la prevención de la obesidad y otras enfermedades no transmisibles vinculadas a la dieta. Lo anterior en respuesta a la alta prevalencia de malnutrición por exceso en nuestra población y a que esta enfermedad se asocia a las principales causas de morbilidad, mortalidad y discapacidad precoz, tales como diabetes, hipertensión, infartos cardíacos, ataques cerebrales y algunos tipos de cáncer. La malnutrición por exceso afecta a hombres y mujeres, pero con mayor intensidad a las mujeres; afecta también a los niños y niñas desde muy pequeños \nincidiendo en su crecimiento y desarrollo; y afecta a todos los grupos socioeconómicos, pero principalmente a los grupos socioeconómicos más vulnerables. Esta realidad hace de la obesidad el problema de salud pública más \nimportante en la actualidad por lo que constituye una responsabilidad ineludible del Estado.  Desde el Ministerio de Salud, el enfoque que se plantea para abordar la prevención y control de la malnutrición por exceso considera \nlos determinantes sociales de la salud, apuntando a las causas que influyen en las conductas de las personas y, en ese sentido, es por lo tanto un enfoque intersectorial, mediante políticas estructurales basadas en la evidencia, que contribuyen a modificar los entornos que rodean a las personas y que inciden en la toma de decisiones, tales como, mejorar la oferta y disponibilidad de alimentos saludables, aumentar la información respecto de los alimentos mediante \nun etiquetado nutricional claro y fácil de comprender, el uso regulado de mensajes nutricionales y el control de la publicidad asociada a los alimentos, especialmente aquella dirigida a la población infantil. Así también, este enfoque considera políticas individuales tales como la educación en salud y nutrición, la consejería en alimentación y programas dirigidos a tratar a las personas con obesidad y sobrepeso.\n   \nEntre las políticas y estrategias más destacadas, se encuentran: \n\n\nLEYES, NORMAS Y REGULACIONES: \n\nTales como la Ley 20.606 sobre la Composición nutricional de los alimentos y su publicidad, que obliga a los alimentos que sobrepasen los límites determinados de energía, azúcares, sodio y grasas saturadas, a rotular “ALTO EN”, que prohíbe la venta de estos alimentos en establecimientos educacionales de pre básica, básica y media y que prohíbe la publicidad de estos alimentos dirigida a menores de 14 años. En este ámbito, existen además normas y guías \npara la evaluación nutricional, de alimentación y de manejo de malnutrición. \n\nACUERDOS VOLUNTARIOS DE REDUCCIÓN DE NUTRIENTES CRÍTICOS: \n\nEn este ámbito, el ejemplo más exitoso es el acuerdo con FECHIPAN y ASACH para reducir el contenido de sodio en el pan. \n\nPROGRAMAS DE VIGILANCIA Y FISCALIZACIÓN DE ALIMENTOS: \n\nQue incluyen aspectos de inocuidad, etiquetado y composición nutricional de los alimentos con foco en nutrientes críticos y de fortificación. \n\nPROGRAMA DE INTERVENCIÓN EN OBESIDAD: \nProgramas integrales de atención de personas con malnutrición por exceso en atención primaria de salud “Programa Vida Sana” para menores desde los 2 años de edad, escolares y adolescentes y adultos hasta los 60 años. \n\nPROGRAMA NACIONAL DE ALIMENTACIÓN COMPLEMENTARIA: \n\nPNAC y PACAM, que contribuyen a la seguridad alimentaria y nutricional de los grupos más vulnerables de nuestro país, entregando gratuitamente alimentos de alta calidad nutricional y alta especificidad, vinculada a otras intervenciones de salud como el control sano y las vacunas. \n\nPLANES DE PROMOCIÓN DE SALUD: \n\nTrabajo intersectorial coordinado desde el nivel central, y que se expresa a nivel regional y comunal en distintas intervenciones tales como las comunas saludables, las escuelas y universidades saludables y los lugares de trabajo promotores de la salud. \n\nGUÍAS ALIMENTARIAS PARA LA POBLACIÓN: \n\nConjunto de mensajes educativos breves, claros y concretos, validados en nuestra población, dirigidos a personas sanas mayores de dos años, con el objetivo de promover la alimentación saludable y reducir el riesgo de enfermedades nutricionales. Estos mensajes se traducen además en un símbolo que la población reconoce como orientador del consumo saludable y de una vida sana. \n\nCAMPAÑAS DE MEDIOS MASIVOS: \n\nPara apoyar las estrategias en curso y promover el desarrollo de entornos alimentarios saludables que contribuyan a instalar hábitos de vida sana. \n\nDivisión de Políticas Públicas. (s.f.). Nutrición. Políticas Públicas en Alimentación y Nutrición. Ministerio \nde Salud de Chile. https://dipol.minsal.cl/departamentos-2/nutricion-y-alimentos/nutricion/\n\n---\n\n**1. ¿Qué se afirma en el texto sobre la hipertensión?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que es una consecuencia de las enfermedades no transmisibles asociadas a la dieta.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Que es un factor de riesgo para la población adulta de grupos socioeconómicos más vulnerables.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Que es una alerta del consumo indiscriminado de alimentos nocivos para la salud.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Que es un efecto de la obesidad que afecta a todos los grupos socioeconómicos.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": "https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p04_guias_alimentarias_minsal.png",
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 2,
+      "id": "preg-paes-lec-23-02",
+      "numero": 2,
+      "enunciado": "Lectura 1 (Continuación):\n\n**2. ¿Por qué se plantea un enfoque intersectorial para abordar la prevención y control de la malnutrición por exceso?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Porque la lucha contra la malnutrición por exceso proviene de sectores políticos y la publicidad.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Porque el entorno de las personas es determinante en su conducta y decisiones alimentarias.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Porque la disponibilidad de los alimentos debe ser independiente de la condición socioeconómica.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Porque el descubrimiento de la causa de la malnutrición por exceso todavía requiere más investigación.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 3,
+      "id": "preg-paes-lec-23-03",
+      "numero": 3,
+      "enunciado": "Lectura 1 (Continuación):\n\n**3. ¿A cuál de las siguientes políticas o estrategias corresponde la figura que aparece en el texto?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Planes de promoción de salud.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Programas de vigilancia y fiscalización de alimentos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Guías alimentarias para la población.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Programa nacional de alimentación complementaria.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": "https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p04_guias_alimentarias_minsal.png",
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 4,
+      "id": "preg-paes-lec-23-04",
+      "numero": 4,
+      "enunciado": "Lectura 1 (Continuación):\n\n**4. ¿Qué se dice en el texto sobre la asociación FECHIPAN?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Es una de las empresas que ayuda al MINSAL en la prevención y control de la malnutrición.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Es un ejemplo exitoso dentro de las estrategias planteadas por el MINSAL en la prevención y control de la malnutrición.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Es uno de los programas transversales del MINSAL, asociado también al control sano.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Es un programa encargado de la composición nutricional de los alimentos con foco en nutrientes críticos y de fortificación.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 5,
+      "id": "preg-paes-lec-23-05",
+      "numero": 5,
+      "enunciado": "Lectura 1 (Continuación):\n\n**5. ¿Cuál de las siguientes medidas se encarga de proveer de alimentos de alta calidad nutricional a personas vulnerables?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Planes de promoción de salud.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Guías alimentarias para la población.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Programas de vigilancia y fiscalización de alimentos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Programa nacional de alimentación complementaria.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 6,
+      "id": "preg-paes-lec-23-06",
+      "numero": 6,
+      "enunciado": "Lectura 1 (Continuación):\n\n**6. ¿Qué estrategia del MINSAL es reconocida como símbolo de vida sana y alimentación saludable?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Las guías educativas para la población.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "El etiquetado y composición nutricional de los alimentos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Los acuerdos voluntarios de reducción de nutrientes críticos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "La seguridad alimentaria y nutricional de los grupos más vulnerables.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 7,
+      "id": "preg-paes-lec-23-07",
+      "numero": 7,
+      "enunciado": "Lectura 1 (Continuación):\n\n**7. ¿Qué elemento de este texto otorga credibilidad a la información?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La regulación de los mensajes a través de los medios de comunicación.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "La explicación de las consecuencias de la malnutrición por exceso.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "La mención de distintas normativas y programas gubernamentales.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "La exposición del tema a partir de elementos gráficos alusivos a alimentos. 1951 Cámara de cine KODAK BROWNIE 1923 Película KODACOLOR",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 8,
+      "id": "preg-paes-lec-23-08",
+      "numero": 8,
+      "enunciado": "### LECTURA 2 (Preguntas 8 a 16)\n\nFragmento de *La guía esencial de referencia para cineastas* elaborada por la empresa Kodak. Sin fecha de publicación.\n\n## UNA CRÓNICA DE LA INDUSTRIA CINEMATOGRÁFICA\n\n### INTRODUCCIÓN\n\nSi ha tomado alguna vez una fotografía instantánea, ya conoce los fundamentos del rodaje de una imagen cinematográfica. La mayor diferencia entre las dos está en que la cámara de cine toma habitualmente veinticuatro imágenes cada segundo.\n\nBien entrado el pasado siglo diecinueve, la mayoría de las imágenes se capturaban sobre placas de cristal, metal o papel grueso. Poco después de la invención de la fotografía, ya se realizaron intentos de capturar y reproducir una imagen en movimiento. Generalmente un conjunto de cámaras individuales disparadas en sucesión rápida, capturaban una serie de exposiciones únicas en placas de cristal. Estos experimentos se basaban en el concepto de la persistencia de la visión, la combinación ojo-cerebro es capaz de fusionar una serie de imágenes secuenciales en una película. Había que crear un sistema fotográfico aún más práctico.\n\nFue el invento de George Eastman de la cámara KODAK y la película flexible que exponía lo que hizo posible la existencia de la cámara de cine.\n\n![1951 Cámara de cine KODAK BROWNIE](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p08_camara_brownie.png)\n\n### HISTORIA DE LA CINEMATOGRAFÍA\n\nLa fascinación humana por el concepto de comunicarse con luces y sombras tiene sus raíces en la Antigüedad. Aristóteles nos proporcionó la referencia más antigua de la cámara oscura: la luz del sol, al atravesar un pequeño orificio, proyectaba una imagen invertida sobre la pared de una habitación oscurecida.\n\nArtistas del Renacimiento calcaron esa imagen proyectada para crear dibujos de gran precisión. Gemma Frisius publicó un dibujo de una cámara oscura en 1545. Trece años más tarde Giovanni Battista della Porta escribió *Magia naturalis*, un libro que describía el uso de la cámara oscura con lentes y espejos cóncavos para proyectar un cuadro en una habitación a oscuras. Podían también haber estado dibujando imágenes sobre la arena, porque las imágenes eran efímeras.\n\n![1923 Película KODACOLOR](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p08_kodacolor.png)\n\nEste fenómeno finalmente condujo al desarrollo de la primera cámara fotográfica: una sencilla caja en la que la luz incidía contra una solución sensible aplicada sobre un soporte de cristal, metal o papel. Los orígenes de la fotografía se remontan a 1816, cuando Nicéphore Niépce, un litógrafo francés, grabó imágenes sobre placas metálicas recubiertas de un material sensible. En 1827, grabó una imagen sobre una placa de peltre recubierta con una emulsión química sensible a la luz.\n\nPosteriormente, Niépce colaboró con Louis Jacques Mandé Daguerre en el desarrollo del primer sistema fotográfico práctico del mundo. Registraron imágenes claras y nítidas sobre placas de cobre plateadas en el estudio de Daguerre en 1837. Niépce donó su invento al gobierno francés, que lo declaró de dominio público.\n\nWilliam Henry Fox Talbot inventó el primer proceso para realizar copias positivas de una imagen negativa durante la década de 1830. Richard Leach Maddox descubrió que el cristal de haluro de plata es un depósito increíblemente eficiente para capturar luz. Su descubrimiento de 1871 fue un componente básico fundamental para la fotografía moderna.\n\nEadweard Muybridge, un fotógrafo itinerante que emigró a California, realizó el intento más antiguo documentado de fotografía cinematográfica. En 1872, el gobernador de California, Leland Stanford, contrató a Muybridge para que le ayudase a ganar una apuesta para demostrar que había veces en la carrera de un caballo en que las cuatro patas del animal no tocaban el suelo. Cinco años después, Muybridge preparó 24 cámaras en fila a lo largo de la pista de carreras. Sujetó un cordón al obturador de cada cámara y tendió las cuerdas a través de la pista. Muybridge escribió con tiza líneas y números en una pizarra detrás de la pista para medir el progreso. Mientras el caballo de Stanford corría por la pista, tropezó con los cables y grabó 24 fotografías que demostraron que las cuatro patas del caballo no tocaron el suelo al mismo tiempo.\n\n![1877 Experimento de Muybridge](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p09_experimento_muybridge.png)\n\nStanford ganó la apuesta y Muybridge continuó experimentando. Durante la primera década de 1880, viajó a París para demostrar su sistema de múltiples cámaras a otros fotógrafos y científicos. Uno de esos hombres fue Étienne Jules Marey, que estaba experimentando el uso de una única cámara para capturar imágenes en movimiento.\n\nLa cámara disponía de un largo cilindro que servía de objetivo y un compartimiento circular que contenía una única placa fotográfica de cristal. Marey también un segundo aparato para proyectar esas imágenes. Simultáneamente, Thomas Edison inventó un sistema que grababa y reproducía música usando un cilindro de cera. Después de que su invento se hizo popular, Edison tuvo la idea de construir y vender un dispositivo para consumidores que mostrasen imágenes en movimiento para acompañar a la música. En 1885 en su laboratorio de Menlo Park, New Jersey, asignó a W. K. L. Dickson la tarea de encontrar una forma de registrar imágenes en movimiento en los bordes de las grabaciones.\n\nEl futuro fundador de Kodak, George Eastman, se interesó en la fotografía fija en 1877, cuando era un empleado de banco de 25 años de edad en Rochester, Nueva York. La fotografía era un proceso incómodo, el fotógrafo tenía que extender una emulsión química sobre una placa de cristal en un lugar muy oscuro y después capturar la imagen antes de que la emulsión se secase.\n\nEn 1880, Eastman fabricó placas secas que mantenían su sensibilidad a la luz. EASTMAN Dry Plates (Placas secas EASTMAN) desempeñó un papel importante para popularizar la fotografía, pero el antiguo empleado de banco estaba decidido a hacerlo aún más fácil.\n\nEn Inglaterra en 1887, el reverendo Hannibal Goodwin inventó y patentó un método para aplicar una emulsión fotográfica fotosensible sobre un soporte de nitrato de celulosa. El soporte era lo suficientemente resistente, transparente y delgado para perfeccionar un proceso para fabricar película sobre un soporte flexible.\n\nEastman compró el derecho para utilizar la patente en 1888 e introdujo la cámara KODAK BROWNIE el año siguiente. La cámara venía cargada previamente con suficiente película para tomar 100 fotografías. La campaña publicitaria promocionó la fotografía como una afición para todos, hombres, mujeres y niños; su lema: «Usted aprieta el botón y nosotros hacemos todo lo demás». La cámara se enviaba por correo a Kodak después de tomar todas las fotografías. Kodak revelaba y copiaba la película, después devolvía las copias al fotógrafo junto con la cámara recargada.\n\n![1898 Cámara KODAK plegable de bolsillo](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p10_camara_kodak_1898.png)\n\nDickson vio la cámara BROWNIE en un club de fotógrafos aficionados en New Jersey. Viajó a Rochester para conocer a Eastman, que aceptó suministrar la película necesaria para una cámara cinematográfica experimental. Dickson desarrolló la cámara Kinetógrafo y el proyector Kinetoscopio, que Edison patentó en Estados Unidos en 1891. Dickson escribió a Edison afirmando, «¡Eureka, esto es!». Edison respondió «¡Ahora, trabaja como un diablo!».\n\nEl 20 de mayo de 1891, Edison demostró por primera vez su proyector cuando las delegadas de la Federación Nacional de Clubes de Mujeres visitaban el laboratorio de investigación de la compañía. Un periodista del *The New York Sun* escribió, «Las mujeres vieron una pequeña caja de pino con una mirilla de una pulgada de diámetro. Una por una miraron a través de la mirilla y vieron imágenes en movimiento de un hombre sonriendo, saludando con la mano, quitándose el sombrero e inclinándose con naturalidad y elegancia».\n\nEn 1892, Edison inauguró un rudimentario estudio cinematográfico en Orange, New Jersey, y dijo a Dickson que empezase a producir allí películas cinematográficas para una gran presentación en la Exposición de Chicago de 1894. Edison le llamó Estudio Black Maria, debido a su forma parecida a los carros tirados por caballos de la policía así llamados. El techo se podía retirar para permitir entrar la luz del día y el estudio estaba construido sobre una plataforma giratoria que giraba para seguir el sol. Dickson instaló una vía de vagonetas en el estudio que le permitía mover la cámara acercándose y alejándose de sus sujetos para obtener planos más interesantes, un primer paso intuitivo para hacer de la cinematografía un arte interpretativo.\n\n![1895 Kinetógrafo y película de 35 mm](https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p11_kinetografo_35mm.png)\n\nEl Kinetoscopio fue la sensación de la Exposición. Ese mismo año, Edison hizo un acuerdo comercial con Norman Charles Raff, que organizó la Kinetoscope Company y vendió derechos territoriales a empresarios que querían explotar salones de peepshow. Pronto, funcionaron más de 1.000 salones en Estados Unidos y Canadá.\n\n*Grabación de un estornudo*, rodada por Dickson, es la película más antigua que consta en la Biblioteca del Congreso de Estados Unidos. El título de la película de 1893 es literal; muestra a Fred Ott, un mecánico que trabajaba para Edison, estornudando.\n\nAunque las películas de Kinetoscopio duraban únicamente 20 segundos, se vendieron más de 1.000 Kinetoscopios entre 1894 y 1895 en Norteamérica y Europa. Se dice que Edison no vio ninguna aplicación de las películas salvo estos peepshows.\n\n*Eastman Kodak Company. (s.f.). La guía esencial de referencia para cineastas. (pp. 5-8). KODAK Educational Products.*\n\n---\n\n**8. Lee el siguiente segmento obtenido desde Wikipedia y relaciona su contenido con lo que leíste en el fragmento de *Una crónica de la industria cinematográfica*.**\n\n«El 2 de mayo de 1887, [Hannibal Goodwin], coincidiendo con la jubilación en su cargo sacerdotal hizo la presentación de su invento en una reunión al efecto, sin embargo, al solicitar su patente entró en conflicto con Eastman Kodak que había comenzado la producción de la misma. Los pleitos duraron diez años hasta que el 13 de septiembre de 1898 se la concedieron con el número 610861 y posteriormente en 1914 sus propietarios obtuvieron una indemnización de cinco millones de dólares».\n\nhttps://es.wikipedia.org/wiki/Hannibal_Goodwin\n\nA partir del segmento anterior de Wikipedia, ¿qué se puede afirmar acerca de la información del fragmento *Una crónica de la industria cinematográfica*?",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que entrega información falsa respecto del aporte del invento de Goodwin, comprado más tarde por Eastman.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Que omite el conflicto entre Eastman y Goodwin, resaltando los aportes de Eastman en la historia cinematográfica.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Que se enfoca en los aspectos técnicos de la historia de la industria cinematográfica más que en el invento de Eastman.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Que destaca la capacidad empresarial de Eastman, quien logra comprar los derechos de la patente para comercializar su cámara.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 9,
+      "id": "preg-paes-lec-23-09",
+      "numero": 9,
+      "enunciado": "Lectura 2 (Continuación):\n\n**9. ¿Cuál es el antecedente más antiguo de las películas de cine?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La cámara KODAK de Eastman.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Las fotografías de Muybridge.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "La cámara oscura de Frisius.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "El Kinetoscopio de Dickson.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 10,
+      "id": "preg-paes-lec-23-10",
+      "numero": 10,
+      "enunciado": "Lectura 2 (Continuación):\n\n**10. ¿A cuál de los siguientes inventores se le atribuye el origen de la fotografía?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Gemma Frisius.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "George Eastman.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Giovanni Battista.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Nicephore Niepce.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 11,
+      "id": "preg-paes-lec-23-11",
+      "numero": 11,
+      "enunciado": "Lectura 2 (Continuación):\n\n**11. ¿Cuál de los siguientes inventores mejoró la luminosidad de las fotografías?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Nicephore Niepce.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Richard Leach Maddox.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Giovanni Battista della Porta.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Louis Jacques Mande Daguerre.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 12,
+      "id": "preg-paes-lec-23-12",
+      "numero": 12,
+      "enunciado": "Lectura 2 (Continuación):\n\n**12. ¿Qué representa la siguiente figura dentro del fragmento leído?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La nitidez de la imagen al utilizar cristal de haluro de plata.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "El primer registro documentado de una fotografía cinematográfica.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "La importancia de la película flexible en la emulación del movimiento.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "El resultado de una cámara única para grabar imágenes en movimiento.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": "https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/paes_lectora_2023_forma103/figura_p13_q12_cinematografia_movimiento.png",
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 13,
+      "id": "preg-paes-lec-23-13",
+      "numero": 13,
+      "enunciado": "Lectura 2 (Continuación):\n\n**13. ¿Qué logró Eastman una vez que obtuvo los derechos sobre el método inventado por el reverendo Goodwin?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Simplificar y masificar el proceso fotográfico.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Mejorar la calidad y la nitidez de las fotografías.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Crear, junto a Dickson, una cámara para aficionados.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Perfeccionar un método para capturar el movimiento.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 14,
+      "id": "preg-paes-lec-23-14",
+      "numero": 14,
+      "enunciado": "Lectura 2 (Continuación):\n\n**14. ¿Cuál de las siguientes propiedades de la cámara KODAK BROWNIE se desprende del lema de su campaña publicitaria?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Comodidad, porque no requería de esfuerzo por parte de quien la usara.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Eficiencia, porque posee la capacidad de tomar 100 fotografías por cada película.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Conveniencia, porque la compañía garantizaba la copia de la película y el revelado.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Funcionalidad, porque podía adaptarse para ser utilizada por hombres, mujeres y niños.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 15,
+      "id": "preg-paes-lec-23-15",
+      "numero": 15,
+      "enunciado": "Lectura 2 (Continuación):\n\n**15. A partir de la lectura del fragmento, ¿cómo se puede definir la cinematografía?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Proceso para realizar copias positivas de una imagen negativa.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Captura de una secuencia de imágenes únicas para representar la realidad.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Trabajo artístico centrado en la creación de imágenes simulando movimiento.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Creación de secuencias de imágenes que en su conjunto simulan movimiento.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 16,
+      "id": "preg-paes-lec-23-16",
+      "numero": 16,
+      "enunciado": "Lectura 2 (Continuación):\n\n**16. Respecto a la participación de los inventores en el desarrollo de la industria cinematográfica, ¿con qué intención se nombra constantemente a George Eastman?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Para equiparar los aportes de George Eastman con los de Edison en la historia del cine.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Para instalar la idea de que George Eastman fue el creador de la industria cinematográfica.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Para destacar el papel que el creador de la marca KODAK tuvo en la historia del cine.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Para disminuir la importancia de Edison en el desarrollo de la industria cinematográfica.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 17,
+      "id": "preg-paes-lec-23-17",
+      "numero": 17,
+      "enunciado": "### LECTURA 3 (Preguntas 17 a 23)\n\nFragmento del libro Moleskine: Apuntes y reflexiones, escrito por Luis Sepúlveda. \nPublicado el 2004. \n \nLa primera vez que grité “¡Acción!” \n \nEl 11 de marzo me fui a la cama muy temprano, y antes de cerrar los ojos consulté el \nboletín meteorológico del día siguiente. Todo auguraba sol, mucho sol en el norte \nargentino, y era sol precisamente lo que necesitábamos para empezar a filmar \nNowhere1; pero a las cuatro, todavía de noche, desperté sobresaltado por el rugir de \nun relámpago y de inmediato empezó a llover torrencialmente sobre la ciudad de \nSalta. \n \nA las seis de la mañana, con las primeras luces, seguía lloviendo y mientras \nbebíamos el primer café del día, hicimos una reunión de urgencia con Beppe, director \nde fotografía, Roberta, camarógrafa, Aitor, sonidista, Diego y Martín, mis ayudantes \nde dirección y Roberto, el productor ejecutivo. Hablando el idioma franco que \nempleamos en toda la película, mezcla de italiano, español e inglés, decidimos que \npese a la lluvia que no daba muestras de parar empezaríamos a filmar a la hora \nacordada, solo que con un ligero cambio, filmaríamos interiores de un tren en \nmarcha, ¡y qué tren! \n \nEl viejo Tren de las Nubes trepa lentamente hasta los casi cuatro mil metros de altura \nimpulsado por dos locomotoras diésel. En algunos tramos las subidas son tan \nempinadas que los ingenieros que construyeron el ferrocarril destinado a unir  \nArgentina y Chile trazaron unos curiosos zigzags en las laderas de las montañas, lo \nque permite al tren recular, tomar impulso y seguir el rumbo. \n \nNosotros teníamos una sola locomotora, un antiguo vagón de pasajeros con \nreminiscencias de Orient Express2 que nos servía de camerino, sala de maquillaje, \nvestuario, cafetería, bodega de materiales, y otros dos vagones que Coca y Cristina, \nlas directoras de arte, habían transformado en celdas rodantes. \n \nA las siete de la mañana, más que llover, caía un verdadero diluvio sobre la estación \nCampo Quijano, el último pueblo al pie de los empinados Andes. ¿Este es el clima del \ndesierto?, preguntó el actor cubano Jorge Perugorría. Daniel Fanego, argentino, le \nrespondió que esa lluvia era un regalo de los dioses andinos, palabras a las que el \nresto del equipo contestó con espontáneos y amables insultos. \n \nLeo Sbaraglia, también argentino, empezó a repartir unos impermeables de hule \namarillos que nos transformaron en un ejército de duendes, mientras mi hermano \nCarlos cuidaba de que la lluvia no despintara los rostros de sus “comandos”, todos \n                                                 \n1 En ningún lugar. \n2 El Orient Express fue el nombre del servicio de tren de larga distancia que, en su mayor trayecto, \ncubría la ruta París-Estambul. \n\nactores de teatro y estudiantes de Salta, que en dos semanas de instrucción \ntransformó en temibles guerreros. \n \nAndrés Prodan, italiano, anunció que Marcelino, el hombre más popular de la \nfilmación, jefe de electricistas, iluminador, mano derecha del director de fotografía y \namante pasional del cine, había preparado su insuperable café para todos. Así que en \nel andén de la estación el café nos calentó el cuerpo, las arias cantadas por Luigi \nBuruano nos calentaron el alma, y mantuvimos el buen humor alentados por las \ninsuperables historias narradas por Martín Seefeld, Antonio Hugo, Ariel Casas y \nÓscar Castro.  \n \nLlovía sin pausas. Daniel, el foto fija, llevaba varios cientos de fotos hechas cuando \nrecibimos la orden de partir, pero antes de poner el tren en marcha recibí una botella \nde champán francés que debía servir para iniciar oficialmente el rodaje de Nowhere. \nLuigi Buruano se apresuró a repartir vasitos de plástico y yo descorché lentamente la \nbotella. Entonces, algo inexplicable me recordó que yo era de ahí, que estaba por \nempezar a rodar una película –mi primera película– latinoamericana en suelo \nlatinoamericano, así que vacié la botella sobre la tierra ofrendándola a la Paccha \nMama3, la madre tierra de los indios andinos. Creo que Luigi Buruano jamás me lo \nperdonó, pero el sacrificio tuvo su recompensa porque a los pocos minutos las nubes \nse abrieron y empezó a brillar el intenso, enceguecedor, sol andino. La Paccha Mama \nse ponía de nuestra parte. \n \nEl tren empezó a ascender, cruzó puentes de vértigo, llanos en los que crecen cactus \nde tres metros, quebradas y arroyos que pasaban sobre las vías. En el interior se \nterminaban de poner filtros a los focos, los actores se transformaron en sufridos \nprisioneros, con las manos atadas y los ojos vendados. Sí, eran los personajes tal \ncomo los había visto en las largas y solitarias noches de escritura. Ellos creaban la \natmósfera de inseguridad y temor de la que habíamos hablado en los ensayos. \nDejaban de ser mis amigos y eran parte de mi propia historia, de la historia de \ntantos. El reino del horror se instaló en el vagón cárcel. \n \nBeppe Lanci realizó la última medición con el fotómetro y me hizo una señal de \nasentimiento. Fina, mi script4 y consejera en las horas más duras me dio un golpecito \nen el brazo. \n \nHabía llegado el momento. Miré a Lucas, el técnico de video y dije “video”. \n“Grabando”, respondió Lucas. Miré a Aitor, el sonidista y dije “sonido”. “Grabando”, \nrespondió Aitor. Miré a Roberta, mi camarógrafa, y dije “cámara”. Ella, sin despegar el \nojo de la cámara me hizo una seña levantando el dedo pulgar y musitó el buona5 que \nme acompañaría durante ocho semanas. Entonces, un torbellino de fotoramas, tal vez \na la velocidad de la luz, cruzó mi mente. Apuntaban hacia algo en lo que creo y se \nllama responsabilidad ética del artista, y juré que contaría una buena historia. Luego \ndije “¡Acción!” y empezó la magia del cine.  \n                                                 \n3 Traducido como “Madre Tierra”, es una diosa venerada por los pueblos de los Andes. \n4 Del inglés scriptwriter, guionista. \n5 Buena suerte. \n\n \nMás tarde a la troupe6 se unieron Harvey Keitel, Ángela Molina, Manuel Bandera, mi \nhijo León Sepúlveda, Caterina Murino, Patricio Contreras, y así tomó forma definitiva \nNowhere, la primera película de un hombre que le gusta contar historias. \n \nSepúlveda, L. (2004). Moleskine: Apuntes y reflexiones. Ediciones B.\n\n---\n\n**17. ¿Qué consecuencia tuvo la lluvia para la filmación de la película?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Se modificó la hora de filmación.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Se adaptó el maquillaje de los actores.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Se incorporó en la trama de la película.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Se eligió otro escenario para la grabación.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 18,
+      "id": "preg-paes-lec-23-18",
+      "numero": 18,
+      "enunciado": "Lectura 3 (Continuación):\n\n**18. Según lo presentado en el fragmento leído, ¿cuál es el nombre del miembro más popular del equipo?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Luigi.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Beppe.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Andrés.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Marcelino.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 19,
+      "id": "preg-paes-lec-23-19",
+      "numero": 19,
+      "enunciado": "Lectura 3 (Continuación):\n\n**19. Según lo planteado en el fragmento leído, ¿para qué el director vació la botella de champán sobre la tierra?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Para festejar que salió el sol.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Para molestar a Luigi Buruano.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Para garantizar el éxito de la filmación.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Para hacer una ofrenda a la Paccha Mama. 6 Grupo, pandilla.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 20,
+      "id": "preg-paes-lec-23-20",
+      "numero": 20,
+      "enunciado": "Lectura 3 (Continuación):\n\n**20. A partir del fragmento leído, ¿qué opción presenta una dificultad para la grabación de la película Nowhere?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El cambio repentino en el tiempo atmosférico.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "El vínculo familiar y amistoso entre el personal.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Las condiciones que ofrecía el viejo tren.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "La obligación de hablar tres idiomas.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 21,
+      "id": "preg-paes-lec-23-21",
+      "numero": 21,
+      "enunciado": "Lectura 3 (Continuación):\n\n**21. ¿Qué opción presenta información que se puede desprender del fragmento leído?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El total de los actores provenía de Argentina.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "El primer día de filmación fue un 12 de marzo.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "El equipo de dirección tenía la misma nacionalidad.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "El filme debía considerar la visión religiosa ancestral.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 22,
+      "id": "preg-paes-lec-23-22",
+      "numero": 22,
+      "enunciado": "Lectura 3 (Continuación):\n\n**22. Según el autor, ¿qué efecto tuvo la ofrenda a la Paccha Mama?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El cambio favorable en el tiempo meteorológico.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "La validación de las creencias de los pueblos andinos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "La transformación de la atmósfera de la película que se iba a filmar.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "El fortalecimiento del compañerismo expresado durante la grabación.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 23,
+      "id": "preg-paes-lec-23-23",
+      "numero": 23,
+      "enunciado": "Lectura 3 (Continuación):\n\n**23. A partir del contenido del fragmento leído, ¿quién podría ser el lector más idóneo?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Una persona que necesite saber de qué trata el filme Nowhere.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Una persona que busque información sobre el director de Nowhere.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Una persona que se interese en conocer el detrás de cámaras de Nowhere.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Una persona que quiera profundizar en el libro que dio origen a la película Nowhere.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 24,
+      "id": "preg-paes-lec-23-24",
+      "numero": 24,
+      "enunciado": "### LECTURA 4 (Preguntas 24 a 32)\n\nFragmento del libro Psicología Educativa, escrito por Anita Woolfolk. Publicado el 2010. \n \n¿QUÉ ES UNA BUENA ENSEÑANZA? \n \nExisten cientos de respuestas para esta pregunta, la cual ha sido objeto de estudio para \neducadores, psicólogos, filósofos, novelistas, periodistas, productores de cine, matemáticos, \ncientíficos, historiadores, políticos y padres de familia, solo por mencionar algunos grupos. La \nbuena enseñanza no está limitada a los salones de clases, ya que se presenta en hogares y \nhospitales, museos y juntas de ventas, consultorios de terapeutas y campamentos de verano. \nEn este libro nos interesa principalmente la enseñanza que se imparte en los salones de \nclases, aunque mucho de lo que usted aprenderá aquí también se aplica a otros contextos. \n \nDentro de cuatro salones de clases \n \nPara iniciar nuestro análisis de la buena enseñanza, entremos en los salones de clases de \nvarios profesores destacados. Las cuatro situaciones son reales. Los primeros dos trabajaron \ncon mis alumnos de psicología educativa en escuelas primarias locales, y fueron estudiados \npor mi colega Carol Weinstein (Weinstein y Mignano, 2007). El tercer profesor se convirtió en \nun experto en ayudar a los alumnos que presentan dificultades para el aprendizaje con la guía \nde un asesor. El último ejemplo es de un profesor de secundaria que fue el centro de un \nestudio de caso. \n \nUn primer grado bilingüe. La clase de Viviana tiene 25 alumnos. La mayoría acaba de \nemigrar de la República Dominicana; el resto proviene de Nicaragua, México, Puerto Rico y \nHonduras. A pesar de que los niños no hablan inglés o lo hablaban muy poco al iniciar la \nescuela, cuando salen en junio, ya dominan el currículo normal de primer grado de su distrito \ngracias a la ayuda de Viviana. Lo logra al enseñar en español al inicio del año para favorecer \nla comprensión; después, introduce de manera gradual el inglés. Viviana no desea que a sus \nalumnos se les excluya o se les señale como niños con carencias. Ella los anima a sentirse \norgullosos de su herencia cultural hispana y, al mismo tiempo, utiliza cualquier oportunidad \npara reforzar su desarrollo en el dominio del idioma inglés. \n \nViviana tiene altas expectativas para sus alumnos y muestra un gran compromiso. “Con un \nnivel de energía poco común, motiva, estimula, instruye, modela, elogia y cautiva a los \nestudiantes. El ritmo es enérgico y evidentemente Viviana tiene un don para las artes \ndramáticas; utiliza música, accesorios, gestos, expresiones faciales y cambios en el tono de la \nvoz para comunicar el material” (Weinstein y Mignano, 2007, p. 21). Para ella, la enseñanza \nno es solo un trabajo, sino una forma de vida. \n \nUn quinto grado suburbano. Ken es profesor de quinto grado en una escuela primaria \nsuburbana en el centro de Nueva Jersey. Los estudiantes de su clase tienen diversos orígenes \nraciales y étnicos, con diferentes ingresos familiares y distintas lenguas maternas. Él siempre \nhace hincapié en el “desarrollo de habilidades de redacción”. Sus alumnos realizan \nborradores, los analizan con otros miembros del grupo, los revisan, los corrigen y al final \n“publican” su trabajo. Los alumnos también llevan diarios y a menudo los utilizan para \ncompartir asuntos personales con Ken. Le hablan de problemas familiares, disgustos y \n\ntemores; él siempre se toma el tiempo para responderles por escrito. Ken también utiliza la \ntecnología para relacionar las lecciones con la vida real. Los estudiantes aprenden acerca de \nlos ecosistemas oceánicos utilizando un software llamado A Field Trip to the Sea7 (Sunburst, \n1999). Para la materia de ciencias sociales, el grupo participa en dos juegos de simulación \nque se enfocan en la historia. Uno trata sobre el surgimiento de las culturas nativas \nestadounidenses; y el otro, sobre la colonización del Continente Americano. \n \nDurante el año, Ken se interesa mucho por el desarrollo social y emocional de sus alumnos, \npues desea que aprendan ciencias naturales y sociales, pero también a ser responsables y \njustos. Esta preocupación es evidente en la forma en que él establece las reglas para su grupo \nal inicio del año. En lugar de especificar lo que se debe o lo que no se debe hacer, Ken y sus \nalumnos diseñan una “carta de derechos” para el grupo, donde se describen los derechos de \nlos estudiantes. Esos derechos contemplan la mayoría de las situaciones en que se podría \nnecesitar de una “regla”. \n \nUna clase incluyente. Eliot era inteligente y desenvuelto. Cuando era niño memorizaba \nhistorias con facilidad, pero no era capaz de leer solo. Su situación se debía a que presentaba \ndificultades para el aprendizaje que le impedían integrar la información auditiva y visual con la \nmemoria visual de largo plazo. Cuando trataba de escribir, todo resultaba confuso. La doctora \nNancy White trabajó con Mia Russell, la profesora de Eliot, planeando una tutoría intensiva \npersonalizada, enfocada específicamente en sus patrones de aprendizaje y en sus errores. \nCon la ayuda de su profesora, los años siguientes, Eliot se volvió un experto en su propio \naprendizaje y un aprendiz independiente; sabía qué estrategias debía utilizar y cuándo \nhacerlo. En palabras de Eliot, “No es divertido aprender esas cosas, ¡pero funciona!” (Hallahan \ny Kauffman, pp. 184-185). \n \nUna clase de matemáticas avanzadas. Hilda Borko y Carol Livingston (1989) describen la \nmanera en que Randy, un profesor de secundaria experto en matemáticas, trabajó con la \nconfusión de sus alumnos para construir una lección de repaso acerca de las estrategias para \nresolver las integrales. Cuando un estudiante manifestó que una sección específica en el libro \nle parecía “desordenada”, guio al grupo por un proceso de organización del material. Les \nsolicitó aseveraciones generales acerca de las estrategias útiles para resolver las integrales. \nConsideró las sugerencias, profundizó en algunas de ellas y ayudó a que los estudiantes \nmejoraran otras. Les pidió, además, que vincularan sus ideas con partes del libro. Aun cuando \naceptaba todas las sugerencias razonables, en la pizarra elaboró una lista que incluía \núnicamente las estrategias clave. Al final del periodo, los estudiantes habían transformado el \nmaterial desorganizado del libro en un boceto ordenado y útil para guiar su aprendizaje. \nTambién sabían más sobre cómo leer y entender el material difícil. \n \n¿Qué observa usted en estos cuatro salones de clases? Los profesores están comprometidos \ncon sus alumnos, y deben enfrentarse con una amplia variedad de habilidades y desafíos de \nlos estudiantes: idiomas, vidas familiares y necesidades diferentes. Estos profesores deben \nadaptar la enseñanza y la evaluación a las necesidades de los alumnos; deben lograr que los \nconceptos más abstractos, como las integrales, se vuelvan concretos y comprensibles para \nsus alumnos en particular. Todo el tiempo que estos expertos ocupan navegando a través del \nmaterial de estudio, también están cuidando las necesidades emocionales de sus alumnos, \n                                                 \n7 Una salida a terreno al mar. Software utilizado para enseñar a los niños y niñas sobre los animales y \notras formas de vida del océano. \n\nReflexivo. Pensativo e \ninventivo. Los profesores \nreflexivos recuerdan las \nsituaciones y después \nanalizan lo que hicieron y por \nqué lo hicieron; además, \nconsideran cómo podrían \nayudar a mejorar el \naprendizaje de sus alumnos. \nLOS MENTORES SON IMPORTANTES La enseñanza es una de \nlas pocas profesiones en las que un profesor nuevo debe asumir \ntodas las responsabilidades de un “profesional” experimentado \ndurante las primeras semanas de trabajo. Los profesores \nveteranos pueden ser una excelente fuente de información y \napoyo durante esas primeras semanas. \napoyan autoestimas débiles y fomentan la responsabilidad. Si realizáramos un seguimiento de \nestos individuos desde el primer día de clases, veríamos que planean y enseñan \ncuidadosamente los procedimientos básicos para vivir y aprender en sus cursos. Ellos son \neficientes para reunir y corregir las tareas, reagrupar a los estudiantes, dar indicaciones, \ndistribuir los materiales y manejar las interrupciones, y lograr todo esto mientras toman notas \nmentales para descubrir por qué uno de sus estudiantes está cansado. Por último, estos \nprofesores son reflexivos: constantemente recuerdan las situaciones para analizar qué \nhicieron y por qué lo hicieron, y consideran cómo podrían ayudar a sus alumnos a mejorar su \naprendizaje. \n \n¿Qué \nes \nuna \nbuena \nenseñanza? \n¿Una \nbuena \nenseñanza es una ciencia o un \narte? ¿La aplicación de teorías \nbasadas en investigaciones o la \ninvención creativa de prácticas \nespecíficas? ¿Un buen profesor \nes un experto en explicar (“un \nsabio en la tribuna”) o un buen \nentrenador \n(“un \nguía \ncompañero”)? Tales debates se \nhan presentado durante muchos años. En sus demás cursos sobre educación quizás usted \nencontrará críticas a las posturas basadas en la teoría y centradas en el profesor. Se le \nanimará a ser un guía inventivo y centrado en el estudiante. Sin embargo, tenga cuidado de \nlas opciones maximalistas o excluyentes. Los profesores deben tener conocimientos e \ninventiva; deben ser capaces de utilizar una amplia gama de estrategias y de crear otras \nnuevas. Deben contar con ciertas rutinas básicas basadas en las investigaciones para \nmanejar sus clases, pero también deben estar dispuestos y ser capaces de salir de la rutina \ncuando la situación requiera de un cambio. Necesitan conocer las investigaciones sobre el \ndesarrollo de los estudiantes, así como “los patrones comunes a edades, culturas, clases \nsociales, geografía y géneros específicos” (Ball, 1997, p. 773); además, necesitan conocer a \nsus propios alumnos, los cuales son una combinación única de cultura, género y geografía. De \nmanera personal, espero que todos ustedes se conviertan en profesores que sean al mismo \ntiempo “sabios” y “guías”, sin importar dónde estén. \n \n \n\n \nViviana, Ken, Mia y Randy son ejemplos de profesores expertos, pero han ejercido la docencia \ndurante mucho tiempo. ¿Y usted? ¿Toda esta plática sobre experiencia, ciencia y arte lo \nhicieron sentir un poco nervioso? \n \nWoolfolk, A. (2010). Psicología Educativa. (pp. 7-9). Pearson.\n\n---\n\n**24. ¿De qué forma la profesora Viviana logra enseñar inglés a sus estudiantes?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Animándolos a sentirse orgullosos de su herencia hispana.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Demostrándoles altas expectativas de logro y un gran compromiso.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Incentivando el interés por el idioma mediante las artes musicales y dramáticas.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Favoreciendo el aprendizaje progresivo del idioma inglés a partir de su lengua materna.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": "https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/evaluaciones/1794239217873_eoyrqqs.jpg",
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 25,
+      "id": "preg-paes-lec-23-25",
+      "numero": 25,
+      "enunciado": "Lectura 4 (Continuación):\n\n**25. ¿Qué estrategia usa Ken para establecer las reglas en sus clases?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Utiliza la tecnología para relacionar las lecciones con la vida real.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Participa con sus estudiantes en juegos de simulación.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Diseña una “carta de derechos” junto con sus alumnos.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Especifica lo que se debe y no se debe hacer.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 26,
+      "id": "preg-paes-lec-23-26",
+      "numero": 26,
+      "enunciado": "Lectura 4 (Continuación):\n\n**26. ¿Cuál de los siguientes profesores utiliza la tecnología como recurso de enseñanza?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Viviana.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Randy.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Mia.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Ken.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 27,
+      "id": "preg-paes-lec-23-27",
+      "numero": 27,
+      "enunciado": "Lectura 4 (Continuación):\n\n**27. ¿Cuál de los profesores es un experto en ayudar a los alumnos con dificultades para el aprendizaje?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Ken.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Mia.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Eliot.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Nancy.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 28,
+      "id": "preg-paes-lec-23-28",
+      "numero": 28,
+      "enunciado": "Lectura 4 (Continuación):\n\n**28. ¿Cómo se podría caracterizar la enseñanza de Randy de acuerdo al método utilizado con sus estudiantes?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Creativa, pues los estudiantes pueden formular nuevas estrategias para organizar el contenido según su utilidad.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Desafiante, porque los estudiantes deben comprender por sí mismos materias complejas como las integrales.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Permisiva, porque el profesor tiene un papel pasivo respecto a qué contenido abordar y cómo abordarlo.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Autónoma, pues el profesor solo se limita a sintetizar las principales conclusiones de la investigación.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 29,
+      "id": "preg-paes-lec-23-29",
+      "numero": 29,
+      "enunciado": "Lectura 4 (Continuación):\n\n**29. ¿Cuál de los siguientes objetivos de los docentes se encuentra presente en los cuatro salones de clases?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Favorecer el desarrollo socioemocional de los estudiantes.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Estimular la colaboración entre los estudiantes de la clase.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Potenciar el dominio de la lengua materna de los estudiantes.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Fomentar la adquisición de habilidades tecnológicas en los estudiantes.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 30,
+      "id": "preg-paes-lec-23-30",
+      "numero": 30,
+      "enunciado": "Lectura 4 (Continuación):\n\n**30. ¿Con qué propósito se muestran las experiencias de los cuatro profesores?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Para valorar a un grupo de profesionales expertos que han sido destacados en su área.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Para mostrar que una buena enseñanza también se presenta fuera de las salas de clases.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Para demostrar que la enseñanza puede ser el objeto de estudio de muchas disciplinas.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Para ejemplificar el compromiso y la adaptación de la enseñanza a las necesidades de los alumnos.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 31,
+      "id": "preg-paes-lec-23-31",
+      "numero": 31,
+      "enunciado": "Lectura 4 (Continuación):\n\n**31. Si un docente necesita incorporar nuevas herramientas tecnológicas para la enseñanza de su asignatura, ¿a qué profesor de los que se mencionan en la lectura debería recurrir?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A Viviana.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "A Ken.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "A Eliot.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "A Randy.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 32,
+      "id": "preg-paes-lec-23-32",
+      "numero": 32,
+      "enunciado": "Lectura 4 (Continuación):\n\n**32. ¿A quién está dirigido el fragmento leído?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A padres de familia.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "A profesores expertos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "A estudiantes de pedagogía.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "A estudiantes con dificultades de aprendizaje.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 33,
+      "id": "preg-paes-lec-23-33",
+      "numero": 33,
+      "enunciado": "### LECTURA 5 (Preguntas 33 a 40)\n\nFragmento de un listado de medicamentos herbarios tradicionales, elaborado por el \nMinisterio de Salud de Chile. Sin fecha de publicación. \n \nAjenjo \nArtemisia absinthium L. \n \nNombres vernáculos: ajenjo, ajenko (mapudungun).  \n \nDescripción: planta aromática y arbustiva de \nraíces permanentes, de las que brotan tallos \nfirmes, foliosos y lignificados en la base. Hojas de \n7,5 cm de largo por 3,8 cm de ancho, haz y envés \ndensamente cubiertos por un vello blanquecino. \nLas \ncabezuelas \nflorales, \npequeñas \ny \nsemiglobosas, se disponen en una espiga erecta \ny foliosa, de un color verdoso-amarillo. El fruto es \nun aquenio muy pequeño.  \nFarmacodinamia: el célebre médico griego \nDioscórides (siglo I d.C.) refiere varias de las \npropiedades medicinales del ajenjo apreciadas \nincluso hoy en día. La actividad terapéutica de \nesta planta reside principalmente en su aceite \nesencial, \nel \nque \nposee \nacción \ncolerética, \nantihelmíntica, \nantibacteriana, \nademás \nde \nemenagogo, vermífugo y favorecedor de las \nfunciones digestivas. En medicina popular se \nemplea la infusión de las hojas y sumidades \nfloridas frescas o desecadas del ajenjo en \nmalestares \nestomacales \ny \nhepáticos, \npara \neliminar parásitos intestinales, regular el ciclo menstrual (emenagogo) y como tratamiento del \nresfrío con tos. Por su sabor amargo, esta planta entra en la composición de varias bebidas \nalcohólicas, como aperitivos, de libre venta en el comercio.  \nContraindicaciones: no es aconsejable su uso durante los periodos del embarazo y lactancia. \nTambién las personas que presentan diagnóstico de epilepsia deben abstenerse del consumo \nde ajenjo en cualquiera de sus formas, por una posible interacción con los medicamentos \nindicados para personas que están en esta condición. \nPresentación comercial: existe en el comercio un Té de Ajenjo Compuesto, mezcla de \nmanzanilla, menta, paico, quinchamalí y ajenjo, indicado en trastornos digestivos, flatulencia y \nacidez estomacal. \nInterés agronómico: el ajenjo es una planta rústica y nativa del Viejo Mundo, bastante \nresistente al frío y a las condiciones de sequía, poco exigente en suelos y que prospera bien \nen climas templados. Se multiplica por semillas, estacas o división de matas. En el primer \ncaso, las semillas se siembran en almácigos, bien cubiertas con una capa ligera de mantillo o \ntierra arenosa; se recomienda sembrar entre fines de invierno y comienzo de primavera. Es \n\nconveniente regar el almácigo diariamente. Si se \ndesea propagar el ajenjo por estacas, se eligen \nramas de un año de edad y se cortan de un \ntamaño entre 15 a 20 cm; se le quitan las hojas y \nluego se entierran en macetas dejando dos o tres \nyemas al exterior. Conviene realizar esta labor a \ncomienzos de invierno para trasplantar las estacas \ndurante los meses de primavera. La propagación \npor división de matas requiere de la elección inicial \nde una planta madre adulta de la que se separa el \nmayor número de hijuelos vigorosos, y se los \nplanta habiendo podado previamente sus raíces y \nhojas. La mejor época para este tipo de \npropagación es a partir de mediados de invierno \nhasta finales de la misma estación. La cosecha se \nrealiza antes de la floración cuando el contenido \nen aceite esencial es el más alto. \nLos tallos se cortan a pocos centímetros del suelo, \ny después del primer año ya es posible realizar \ndos cosechas, una en primavera o principios de \nverano, y la segunda a comienzos de invierno, \naunque con menor rendimiento. \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nMinisterio de Salud de Chile. (s.f.). MHT. Medicamentos herbarios tradicionales. 103 especies vegetales. \nGobierno de Chile.  \nAJENJO (Artemisia absinthium), \ntallo-hojas-flores. \n \nPROPIEDADES \nUsos tradicionales: malestares estomacales y hepáticos; parásitos intestinales; ciclo \nmenstrual irregular; resfrío con tos. \nLa infusión se prepara con 1 cucharada del vegetal para 1 litro de agua recién hervida: beber \nuna taza 3 veces al día. \nEfectos: antiespasmódico1, carminativo2, emenagogo3, vermífugo4. \nPrecauciones: no es aconsejable su uso en embarazo y lactancia, ni administrar a niños \npequeños o a personas que presentan diagnóstico de epilepsia. No consumir por periodos \nlargos. Evitar su uso en inflamaciones digestivas crónicas. \nEstos productos tienen el carácter de auxiliares sintomáticos y no reemplazan lo indicado por \nel médico en el tratamiento de una enfermedad. Al consultar al médico, infórmele que está \nusando esta hierba medicinal. Evite su preparación en utensilios de aluminio. \nOtros antecedentes: sus efectos tienen alguna evidencia científica. \n----------------------------- \n1 Calma los retortijones intestinales. \n2 Previene y favorece la expulsión de gases en estómago e intestinos. \n3 Estimula o favorece el flujo menstrual. \n4 Elimina las lombrices intestinales. \nHábitat natural\n\n---\n\n**33. ¿Qué opción presenta otro título adecuado al contenido global de la lectura?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "“El ajenjo: la comercialización de una planta tradicional”",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "“El ajenjo: una larga historia de su uso en occidente”",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "“El ajenjo: propiedades y riesgos de su consumo”",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "“El ajenjo: una planta medicinal fácil de cultivar”",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": "https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/evaluaciones/1794239363488_5dkdobt.jpg",
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 34,
+      "id": "preg-paes-lec-23-34",
+      "numero": 34,
+      "enunciado": "Lectura 5 (Continuación):\n\n**34. En relación con el ajenjo, ¿qué necesidad de lectura satisface la sección “Farmacodinamia”?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La evolución histórica del ajenjo.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Las contraindicaciones del consumo del ajenjo.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Las propiedades terapéuticas atribuidas al ajenjo.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Los tipos de formatos en que se comercializa el ajenjo.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": "https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/evaluaciones/1794239409409_dv0y9xv.jpg",
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 35,
+      "id": "preg-paes-lec-23-35",
+      "numero": 35,
+      "enunciado": "Lectura 5 (Continuación):\n\n**35. Según la sección “Interés agronómico”, ¿cuál es el primer paso que debe realizar una persona para multiplicar el ajenjo por estacas?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Enterrar dejando 2 o 3 yemas al exterior.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Cortar las ramas de 15 a 20 cm.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Elegir ramas de un año de edad.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Regar la planta diariamente.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 36,
+      "id": "preg-paes-lec-23-36",
+      "numero": 36,
+      "enunciado": "Lectura 5 (Continuación):\n\n**36. ¿Qué opción presenta otro título adecuado al contenido de la sección “Interés agronómico”?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "“Formas de reproducir el ajenjo”",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "“Características de la planta ajenjo”",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "“Propiedades alimenticias del ajenjo”",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "“Instrucciones para cosechar el ajenjo”",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 37,
+      "id": "preg-paes-lec-23-37",
+      "numero": 37,
+      "enunciado": "Lectura 5 (Continuación):\n\n**37. ¿Cuál de las siguientes personas puede consumir ajenjo sin problemas?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Una mujer que se encuentra con un embarazo avanzado.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Un hombre que experimenta un cuadro de resfrío con tos.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Una mujer que sufre de inflamaciones digestivas crónicas.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Un hombre que ingiere medicamentos para tratar la epilepsia.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 38,
+      "id": "preg-paes-lec-23-38",
+      "numero": 38,
+      "enunciado": "Lectura 5 (Continuación):\n\n**38. Con relación al ajenjo, ¿qué función cumple principalmente la sección ubicada al final de la lectura?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Entrega indicaciones acerca del consumo.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Advierte sobre posibles efectos secundarios.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Especifica las múltiples posibilidades de uso.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Expone sus cualidades medicinales.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 39,
+      "id": "preg-paes-lec-23-39",
+      "numero": 39,
+      "enunciado": "Lectura 5 (Continuación):\n\n**39. Si una persona pretende propagar el ajenjo por estacas, ¿cuándo debe trasplantar dichas estacas?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Al inicio del verano.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Durante la primavera.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Después del primer año.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "A comienzos del invierno.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 40,
+      "id": "preg-paes-lec-23-40",
+      "numero": 40,
+      "enunciado": "Lectura 5 (Continuación):\n\n**40. Una persona intentó propagar el ajenjo por división de matas, sin embargo, su intento no fructificó. ¿Qué error pudo haber cometido?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Se adelantó al cosechar antes de la floración.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Dejó la tarea para mediados y final del invierno.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Optó por usar una planta madre de edad adulta.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Se olvidó de podar previamente las raíces y hojas.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 41,
+      "id": "preg-paes-lec-23-41",
+      "numero": 41,
+      "enunciado": "### LECTURA 6 (Preguntas 41 a 49)\n\nArtículo de divulgación escrito por Sarah Romero. Publicado el 2021. \n \nManeras en que la tecnología nos ayuda a luchar contra el \ncambio climático \n \nLa inteligencia artificial y las nuevas tecnologías son aliadas muy poderosas de cara a \nfrenar la emergencia climática. Te mostramos algunos ejemplos. \n \nLos avances tecnológicos, en particular el descubrimiento y uso de combustibles \nfósiles, han contribuido al cambio climático, eso ya lo sabemos todos, pero también \nes cierto que han permitido a la humanidad tomar conciencia del impacto del ser \nhumano en el planeta y desarrollar técnicas para abordar el calentamiento global. \n \nHoy te hablamos de algunas innovaciones tecnológicas que podrían ayudar a la \nhumanidad a evitar el daño catastrófico que podría causar un aumento continuo de \nlas temperaturas globales, pues los gases contaminantes hacen que las temperaturas \nse incrementen cada vez más y que el clima cambie, lo que, a su vez, redunda en \nsequías y aumenta el riesgo de incendios a lo que se sumaría la deforestación y la \ndesertificación \nde \nnuestro \nplaneta, \ncada \ndía \nmás \nasfixiado \npor \nnuestro \ncomportamiento. \n \nLa quema de combustibles fósiles para satisfacer la creciente demanda de energía ha \nelevado las emisiones de dióxido de carbono a un nivel récord y parece que la \ninnovación puede servirnos de salvavidas para luchar contra esta emergencia \nclimática en la que nos encontramos. \n \nHe aquí unos ejemplos en los que la tecnología está jugando su parte en la reducción \ndel aumento del nivel del mar y el calentamiento de las temperaturas. Después de \ntodo, los gigantes tecnológicos influyen en las decisiones de miles de millones de \nconsumidores todos los días. \n \nLos científicos del clima dicen que las emisiones globales deben reducirse muchísimo \nde aquí a 2030 para evitar las peores consecuencias del calentamiento. \n \nReducir las emisiones de CO2 \n \nLos científicos atribuyen principalmente el aumento de la temperatura media de la \nTierra a las emisiones de gases de efecto invernadero provocadas por el hombre. \nEntre los gases de efecto invernadero más importantes se encuentra el dióxido de \ncarbono (CO2), cuyas concentraciones han aumentado casi un 50 % desde que \ncomenzó la revolución industrial. ¿Cómo se emplea la tecnología para reducir las \nemisiones de CO2? Con tecnologías de captura, utilización y almacenamiento de \ncarbono, como el desarrollado en un proyecto […] de Reino Unido que explora la \ncaptura y almacenamiento de carbono del Reino Unido a partir de energía \n\nproveniente de residuos. El proyecto planea capturar hasta 10 millones de toneladas \nde emisiones de dióxido de carbono (CO2), el equivalente al uso anual de energía de \nmás de 3 millones de hogares en el Reino Unido […]. \n \nBiomasa oceánica \n \nSi bien la biomasa (un tipo de energía) se puede usar para energía renovable con \ncarbono negativo, siempre será un recurso limitado debido a las limitaciones del uso \nde la tierra. Pero en el espacio oceánico podríamos cosechar de manera sostenible. \nPero, ¿qué exactamente? Algas, por supuesto. O, más bien, macroalgas. Las \nmacroalgas crecen rápidamente: pueden crecer dos centímetros y medio al día. \nTambién extraen el CO2 del agua de mar y si podemos recogerlas y mantener el \ncarbono y aislarlo para que no vuelva a entrar a la atmósfera o al océano, ahí \ntenemos la solución. Los proyectos para la recolección de algas a gran escala se están \ndesarrollando en una organización de investigación noruega […], donde hablan de \ncontar con dos o tres cosechas al año de estas macroalgas. Pero antes de que las \nalgas puedan cultivarse y cosecharse a gran escala, sería necesario realizar una \ninvestigación para ver cómo afectaría esto a los ecosistemas submarinos […]. \n \nBaterías para vehículos eléctricos \n \nLas baterías son cada vez más livianas y más pequeñas que las baterías recargables \nanteriores. Se pueden cargar más rápido y con más frecuencia. A medida que su peso \ny precio continúan cayendo, están desempeñando un papel cada vez más \nfundamental en la descarbonización del sector del transporte al hacer que los \nvehículos eléctricos sean más baratos, algo que permitirá la integración de más y más \ntecnología renovable […]. \n \nHerramientas de Inteligencia Artificial \n \nLa ciencia es una herramienta eficaz para redefinir la realidad. La próxima generación \nde motores de búsqueda debe apoyar los objetivos sociales. Las nuevas herramientas \nde inteligencia artificial que están desarrollando empresas emergentes pueden ayudar \na este propósito. Pero, ¿quién elige la fuente de información? Ahí es donde debe \nentrar la ciencia para poner consenso en la comunicación. \n \n¿Reparar el clima? \n \nEl Centro de Reparación del Clima de la Universidad de Cambridge (Inglaterra) está \ninvestigando una serie de ideas que repararían el daño causado por la contaminación \nque causa el hombre. Entre sus postulados se encuentra la posibilidad de volver a \ncongelar los polos. ¿De qué forma? Iluminando las nubes sobre ellos, esencialmente \nrociando pequeñas gotas de sal en el cielo para ayudar a las nubes a reflejar la \nradiación de regreso al espacio. Otra de las soluciones propuestas reside en \n\"reverdecer\" los océanos, esencialmente fertilizándolos para estimular el crecimiento \nde materia vegetal y algas que podrían absorber más CO2. Sin embargo, este último \naspecto no cuenta con la aprobación de los climatólogos y biólogos que opinan que \nlas consecuencias de llevar esta empresa a cabo acabarían con una enorme \n\ninterrupción en los ecosistemas de los océanos y tampoco capturaría el suficiente CO2 \npara compensar las emisiones de gases de efecto invernadero humanas […]. \n \n¿Qué podemos hacer nosotros como consumidores de tecnología? \n \nPor nuestra parte, podemos educarnos sobre lo que implica la tecnología que \ncompramos, cuáles son los impactos climáticos y cuánto tiempo puede durar un \nproducto o dispositivo concreto. También podemos pensar en qué es lo que vamos a \ncomprar primero, antes de preguntárnoslo después. Pues la compra, el envío, la \nentrega y la devolución del material también contribuyen al calentamiento global. \nPodemos ayudar haciendo que nuestros productos o dispositivos existentes duren \nmás, reemplazando su batería o componentes, haciendo una reparación del mismo o \nincluso comprando productos de segunda mano. \n \nRomero, S. (3 de marzo de 2021). Maneras en que la tecnología nos ayuda a luchar contra el cambio \nclimático. Muy interesante. https://www.muyinteresante.es/tecnologia/fotos/maneras-en-que-la-tecnologia-\nnos-ayuda-a-luchar-contra-el-cambio-climatico-191614713036/8\n\n---\n\n**41. ¿Cuál es el propósito del texto leído?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Demostrar los daños causados por el aumento del CO2.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Explicar los efectos del uso de combustibles contaminantes.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Motivar el interés sobre los avances en el ámbito tecnológico.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Presentar innovaciones tecnológicas para revertir el cambio climático.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 42,
+      "id": "preg-paes-lec-23-42",
+      "numero": 42,
+      "enunciado": "Lectura 6 (Continuación):\n\n**42. ¿Qué recurso utilizado en el texto permite generar cercanía con el lector?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La inclusión de referencias temporales como “de aquí a 2030”.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "La utilización de subtítulos para tratar las diferentes propuestas.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "La mención de elementos cotidianos como “vehículos eléctricos”.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "La utilización de expresiones en primera persona plural como “eso ya lo sabemos todos”.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 43,
+      "id": "preg-paes-lec-23-43",
+      "numero": 43,
+      "enunciado": "Lectura 6 (Continuación):\n\n**43. A partir del párrafo inicial, ¿cómo se puede calificar el aporte de los avances tecnológicos en la lucha de la humanidad contra el cambio climático?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Complejo, pues involucra una serie de consideraciones éticas.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Peligroso, pues genera un impacto que es ignorado por la ciencia.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Paradójico, pues presenta tanto aspectos positivos como negativos.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Contraproducente, pues proporciona más problemas que soluciones.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 44,
+      "id": "preg-paes-lec-23-44",
+      "numero": 44,
+      "enunciado": "Lectura 6 (Continuación):\n\n**44. ¿Qué característica tienen en común las innovaciones mencionadas en el texto?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La inclusión de energía renovable.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "La utilización de recursos naturales.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "La aplicación de inteligencia artificial.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "La incorporación de avances tecnológicos.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 45,
+      "id": "preg-paes-lec-23-45",
+      "numero": 45,
+      "enunciado": "Lectura 6 (Continuación):\n\n**45. ¿Qué advertencia plantea la autora acerca del cultivo de algas?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Que tiene que realizarse a gran escala.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Que debe ser objeto de un estudio previo.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Que utiliza un recurso ilimitado en el océano.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Que es un problema para el ecosistema marino.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 46,
+      "id": "preg-paes-lec-23-46",
+      "numero": 46,
+      "enunciado": "Lectura 6 (Continuación):\n\n**46. Según el texto, ¿qué característica de las baterías de los vehículos eléctricos facilitará la integración de más tecnología renovable?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El precio.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "El tamaño.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "La estructura.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "La velocidad de carga.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 47,
+      "id": "preg-paes-lec-23-47",
+      "numero": 47,
+      "enunciado": "Lectura 6 (Continuación):\n\n**47. ¿Cuál de las innovaciones descritas en el texto es objetada por la comunidad científica?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "El congelamiento de los polos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "El almacenamiento del carbono.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "El empleo de inteligencia artificial.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "El reverdecimiento de los océanos.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 48,
+      "id": "preg-paes-lec-23-48",
+      "numero": 48,
+      "enunciado": "Lectura 6 (Continuación):\n\n**48. En el último párrafo, ¿a quiénes critica indirectamente la autora del texto?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A quienes compran tecnología sin informarse.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "A quienes fabrican aparatos tecnológicos desechables.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "A quienes promueven el uso excesivo de la tecnología.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "A quienes distribuyen artículos tecnológicos a bajo costo.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 49,
+      "id": "preg-paes-lec-23-49",
+      "numero": 49,
+      "enunciado": "Lectura 6 (Continuación):\n\n**49. ¿Qué función cumplen las preguntas incluidas en el texto?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Plantean una invitación al lector para que reflexione en torno a las consecuencias del cambio climático.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Destacan las reflexiones de la autora respecto del rol de la tecnología en la lucha contra el cambio climático.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Introducen explicaciones de la autora sobre los proyectos de innovación para enfrentar el cambio climático.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Representan las dudas de los lectores acerca de los alcances que tiene el cambio climático.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 50,
+      "id": "preg-paes-lec-23-50",
+      "numero": 50,
+      "enunciado": "### LECTURA 7 (Preguntas 50 a 58)\n\nArtículo escrito por Lorenzo Díaz, publicado en la revista Arquine el 2021. \n \nLa maqueta, de la simulación al engaño \n \nCuando llegaba el momento de aventurarse y realizar una obra pictórica de gran \nenvergadura, los artistas del renacimiento italiano hacían una prueba preliminar de \nlos pigmentos aplicando una muestra, una pequeña mancha, una macchietta o \nmanchita, con el fin de probar y corroborar que el resultado era el deseado antes de \nproceder a usarlo en una gran superficie. Esta “maqueta” no buscaba vender, ni \nconvencer al posible mecenas sobre la ejecución de la obra, era simplemente un \nmétodo de trabajo, una herramienta. \n \nUna maqueta puede revelar secretos, fórmulas efectivas de ejecución. Probablemente \nesa es la razón por la que Filippo Brunelleschi se negó a presentar un modelo a \nescala de su propuesta para la cúpula de la Catedral de Florencia, por más que el \nprestigiado panel calificador se lo pidió. Existe una leyenda urbana que cuenta que el \nmaestro Brunelleschi procedió a explicar la geometría de su cúpula usando una \ncáscara de huevo para demostrar su resistencia y ligereza. Está claro que el notable \narquitecto entendía perfectamente el enorme valor del trabajo con modelos a escala. \nSe preserva aún en el Museo de la Ópera del Duomo, en Florencia, un modelo en \nmadera de la cúpula y se han rescatado vestigios de un modelo en mampostería al pie \nde la construcción. Descubierta apenas hace unos años, esta pequeña cúpula se \nencontraba enterrada precisamente debajo de donde se encuentra el Museo de la \nÓpera y su estudio permitió descifrar varios de los secretos constructivos de la mítica \ncúpula. Este modelo, la «cupulita» como le llaman los arqueólogos que la \ndescubrieron, deja en claro el uso recurrente de modelos como herramienta de \nprueba y sistema didáctico para la posterior construcción del “milagro de la \narquitectura” (1). \n \nLa extraordinaria ejecución de la estructura de mampostería más grande del planeta \nimplicó no solo dibujarla, o hacer una o varias maquetas: fue necesario idear el \nmétodo constructivo. Brunelleschi diseñó la maquinaria, los andamios, el sistema \nentero para su construcción dejando claro que no bastaba con trazar la geometría \nperfecta, había que saber cómo modelarla. \n \nPara Dennis Dollens “Las maquetas son un modo primario de comunicación. Sin ser \nlenguaje, constituyen un juego de formas, símbolos y materiales comunicativos que \nesculpen el espacio y transmiten ideas y emociones; son mundos seductores en \nminiatura: psíquicamente, nos conmueven” (2). En su libro De lo digital a lo \nanalógico, Dollens salta de la maqueta física, espacial y sensorial, a lo digital y \nvirtual. Compara lo sensorial con ese mundo de imaginación de los niños donde un \nfuerte de sábanas, una casa de muñecas, permiten construir mundos a escala, \nimaginarios pero reales y tangibles. Las maquetas son herramientas físicas y \npalpables que materializan lo imaginado, permitiendo comprobar situaciones, \nfuncionamientos, recorridos, sombras y contrastes de manera tangible. \n \n\n \nLa reciente incursión de las herramientas computacionales en el modelaje de la \narquitectura crea nuevos horizontes. La verificación de ideas y conceptos toma toda \nuna nueva dimensión, una que permite transportar ya, después de 40 años de \nevolución, el quehacer del diseño arquitectónico casi en su totalidad al mundo \nvirtual. Un salto escabroso que ha permitido imaginar nuevas dimensiones pero que, \na mi forma de ver, corre el enorme riesgo de ahuyentar el verdadero sentido de \nproporción, aquel que parte de dividir en dos una determinada distancia sin la \nnecesidad de lo digital, usando la geometría básica y pura. \n \nPara Otl Aicher, fundador de la mítica escuela de ULM ‒escuela de diseño que surgió \na mediados de los años 50 y que desapareció en 1968‒, “la comunicación analógica8 \nproduce comprensión porque está acoplada a la percepción sensorial, ante todo con \nel ver. Su dimensión científica es la geometría, la matemática de las posiciones en \ncontraposición a la matemática de las magnitudes. Hay un estrecho acoplamiento \nentre percepción visual y pensar, precisamente la visión analógica” (3). Como es de \npensarse, Aicher privilegiaba un reloj analógico sobre uno digital, simplemente le \nparecía que en lugar de decirle la hora le ayudaba a comprender el tiempo. \n \nLas maquetas no deberían buscar simular la realidad final, deberían de ayudar a \ncomprender la experiencia que la arquitectura causará. Modelar no la construcción \nsino el espacio. La capacidad de procesamiento de datos de los equipos de cómputo \nnos ha llevado a la creación de imágenes “foto realistas” (el entrecomillado es \nintencional) que, al igual que el reloj digital, nos da la hora con precisión \nastronómica, pero dificulta la comprensión del tiempo. El “render”, o “representación” \nen español, busca más que explorar, engañar: pasamos de la simulación a la mentira. \n \nFrei Otto hizo del modelo físico, la maqueta, su herramienta de pensamiento. Su \narquitectura nace de la inspiración del juego entre un filamento y unas pompas de \njabón, emulando geometrías que, en sus tiempos, eran imposibles de computar en \nmodelos digitales. Otto encontró en la creación de modelos, de todas dimensiones y \ncomplejidades, la fuente de verificación para espacios nunca antes imaginados. \n \n“En toda su poética fragilidad, los modelos de Otto cuentan historias de una estética \noperativa que oscila entre la precisión de instrumentos científicos y la imaginación de \nartefactos artísticos. El debate es entonces sobre nada menos que la reformulación de \nla historia de la maqueta arquitectónica. En otras palabras, si uno busca mapear la \nhistoria de la arquitectura ‒tradicionalmente vista como la historia de los edificios y \nlos estilos‒ como una historia de los procesos, las prácticas, y las operaciones de \ndiseño, si uno se dispone a entender el cambio del énfasis de “producto del \nsignificado” a la “producción del significado” como una equivalente lectura de la \narquitectura con un acento fundamentalmente diferente, entonces los modelos \nexperimentales de Frei Otto ofrecen un fascinante punto de partida para tal \nempresa” (4). \n \n \n                                                 \n8 La comunicación analógica es aquella que se basa en los gestos, las posturas, los símbolos, etc., es \ndecir, en el lenguaje corporal.  \n\n \nLa arquitectura limita el aprendizaje usando la prueba y error como práctica \ndefinitiva. Si se han de cometer errores estos deberán de hacerse antes de la \nconstrucción final. Todo error posterior puede resultar caro, si no es que fatal. La \nsimulación de posibles escenarios resulta, entonces, fundamental a la praxis. \nImaginar y probar es la única manera de engendrar.  \n \nRenzo Piano estudió sus primeros dos años en la escuela de arquitectura de \nFlorencia, encontrando en el más famoso de sus arquitectos, Brunelleschi, \ninspiración para una carrera en la que usaría los modelos siempre. La maqueta de la \nlinternilla de la cúpula, que Brunelleschi dejó a su muerte, y que inspiraría a Piano, \npermitió a los constructores concluirla póstumamente.  \n \nFue así como Piano se ciñó a “un principio fundamental: el arquitecto no solo debe \npreocuparse por el objeto final, debe también inventar las herramientas, inventar el \nequipo que permita que se construya” (5). \n \n \nNotas \n1. Lucía Magi “Hallado el „boceto‟ de Brunelleschi”. El País, 14 de diciembre de 2012. \n2. Dennis Dollens, De lo digital a lo analógico, editorial Gustavo Gili, 2002, p. 11. \n3. Otl Aicher, Analógico y Digital, editorial Gustavo Gili, 1991 (versión en castellano \n2001), p. 76. \n4. Georg Vrachliotis, «Thinking in Modeles», Thinking by Modeling, Spector Books, \n2016, p. 30. \n5. Lorenzo Ciccarelli citando a Renzo Piano, Renzo Piano before Renzo Piano, \nFondazione Renzo Piano, 2017, p. 34. \n \n \n \nDíaz, L. (15 de febrero de 2021). La maqueta: de la simulación al engaño. Arquine. \nhttps://www.arquine.com/la-maqueta-de-la-simulacion-al-engano\n\n---\n\n**50. Según el texto, ¿cuál era el propósito original de hacer maquetas?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Verificar la implementación de los procesos involucrados en las operaciones de diseño.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Demostrar al patrocinador de una obra la factibilidad de una propuesta arquitectónica.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Corroborar que el resultado de la obra arquitectónica cumpliera con lo esperado.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Probar las herramientas que serían utilizadas en la construcción de una obra final.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 51,
+      "id": "preg-paes-lec-23-51",
+      "numero": 51,
+      "enunciado": "Lectura 7 (Continuación):\n\n**51. Según el texto, ¿qué permitió el estudio de la “cupulita”?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Descifrar algunos enigmas relacionados con la construcción de la cúpula.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Demostrar la autenticidad de uno de los mayores milagros de la arquitectura.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Reposicionar el valor de la geometría básica y pura de los modelos a escala.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Reconstruir algunos rasgos de la estructura de mampostería más grande del planeta.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 52,
+      "id": "preg-paes-lec-23-52",
+      "numero": 52,
+      "enunciado": "Lectura 7 (Continuación):\n\n**52. ¿Cómo se puede calificar la conducta de Brunelleschi al negarse a presentar su modelo de la cúpula de la Catedral de Florencia?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Ambiciosa, porque él suponía que un modelo de su proyecto tenía una alta retribución económica.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Estratégica, porque él conocía el gran valor del trabajo que involucraba la creación de un modelo.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Oportunista, porque él aprovecharía este modelo para perpetuar su legado como maestro de la arquitectura.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Interesada, porque él esperaba que su modelo le garantizara la aprobación de la construcción de su obra final.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 53,
+      "id": "preg-paes-lec-23-53",
+      "numero": 53,
+      "enunciado": "Lectura 7 (Continuación):\n\n**53. Según el autor, ¿qué riesgo implica el uso de recursos computacionales en el modelaje de la arquitectura?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Alejar el verdadero sentido de la proporción.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Llevar las imágenes a nuevas dimensiones.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Desvirtuar el quehacer del diseño arquitectónico.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Desestimar el valor de la geometría como ciencia pura.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 54,
+      "id": "preg-paes-lec-23-54",
+      "numero": 54,
+      "enunciado": "Lectura 7 (Continuación):\n\n**54. ¿Qué tienen en común Dennis Dollens y Otl Aicher?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Ambos crearon herramientas computacionales.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Ambos privilegiaron lo sensorial sobre lo digital.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "Ambos participaron en la escuela de arquitectura de Florencia.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Ambos influyeron en la perspectiva arquitectónica de Frei Otto.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 55,
+      "id": "preg-paes-lec-23-55",
+      "numero": 55,
+      "enunciado": "Lectura 7 (Continuación):\n\n**55. ¿A qué se refiere el autor en el siguiente enunciado? «El “render”, o “representación” en español, busca más que explorar, engañar: pasamos de la simulación a la mentira».**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "A que las maquetas encubren errores de los mecanismos de construcción.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "A que las maquetas esconden diferentes secretos constructivos de ejecución.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "A que las maquetas inducen a imaginar creaciones imposibles de materializar.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "A que las maquetas constituyen una representación artificiosa de la obra final.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 56,
+      "id": "preg-paes-lec-23-56",
+      "numero": 56,
+      "enunciado": "Lectura 7 (Continuación):\n\n**56. ¿Qué conceptos se relacionan con el reloj digital y el reloj analógico, respectivamente?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Precisión – Comprensión.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Simulación – Verificación.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Imaginación ‒ Materialización.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Representación – Exploración.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 57,
+      "id": "preg-paes-lec-23-57",
+      "numero": 57,
+      "enunciado": "Lectura 7 (Continuación):\n\n**57. Según el autor del texto, ¿qué acciones permiten la creación de una obra?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Materializar y corroborar.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Comunicar y demostrar.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Imaginar y probar.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Trazar y modelar.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 58,
+      "id": "preg-paes-lec-23-58",
+      "numero": 58,
+      "enunciado": "Lectura 7 (Continuación):\n\n**58. ¿Quién inspiró la carrera arquitectónica de Renzo Piano?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Frei Otto.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Otl Aicher.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Dennis Dollens.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Filippo Brunelleschi.",
+          "es_correcta": true
+        }
+      ],
+      "respuesta_correcta": "D",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-2",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 59,
+      "id": "preg-paes-lec-23-59",
+      "numero": 59,
+      "enunciado": "### LECTURA 8 (Preguntas 59 a 65)\n\nFragmento de un reportaje publicado en el sitio web del Servicio Nacional del Patrimonio \nCultural el 2021. \n \nUNESCO incluye asentamientos y momificación artificial de la \ncultura chinchorro en la Lista del Patrimonio Mundial \n \nEl Comité del Patrimonio Mundial de UNESCO, reunido hoy en Fuzhou, China y de manera \ntelemática con los Estados Parte para la 44ª sesión anual, decidió incluir en la Lista del \nPatrimonio Mundial los asentamientos (sitios) y momificación artificial de la cultura chinchorro \nen la Región de Arica y Parinacota nominado por Chile en un proceso liderado por el \nMinisterio de las Culturas, las Artes y el Patrimonio, el Ministerio de Relaciones Exteriores y \nque es fruto de un trabajo junto a la Universidad de Tarapacá y diversas instituciones locales. \n \nLo anterior en virtud de su Valor Universal Excepcional al corresponder a un ejemplo \nsobresaliente de la interacción de un grupo de cazadores-recolectores marinos con uno de los \nambientes más secos del mundo y ser un testimonio único de la compleja espiritualidad de \nuna tradición cultural ya desaparecida –la cultura chinchorro– expresada a través de los \ncementerios en los que se encuentran cuerpos momificados natural y artificialmente. \n \nEl Ministerio de las Culturas, las Artes y el Patrimonio celebró este importante hito: “Esta es \nuna gran noticia para Chile, es un reconocimiento al esfuerzo sostenido del Estado, de la \nUniversidad de Tarapacá y de muchos actores locales, y constituye también un aliciente para \ncontinuar trabajando para la proyección de este patrimonio cultural milenario y magnífico. Esta \ndeclaratoria aporta una tipología poco representada en la Lista del Patrimonio Mundial, \ncorrespondiente a culturas de cazadores recolectores tempranos que dan cuenta de la \nexcepcional adaptación de los seres humanos a medioambientes extremos, a la par que \nexponen la compleja cosmovisión de estas culturas y su relación con la muerte”. \n \n \n\n \nPor su parte, el rector de la Universidad de Tarapacá, Emilio Rodríguez, sostuvo: “La \nUniversidad de Tarapacá destaca este gran logro para el país y para nuestra Región. En \nefecto, incluir los sitios de la cultura chinchorro en la Lista de Patrimonio Mundial de UNESCO \nes la resultante de un trabajo de décadas. Reconocemos el esfuerzo de nuestros \ninvestigadores y de sus equipos, así como el esfuerzo de las instituciones regionales y \nnacionales, que han apostado por potenciar a la cultura chinchorro. En esta magnífica ocasión \nreiteramos nuestro total compromiso con el rescate, conservación y puesta en valor \npermanente de nuestra milenaria cultura, que hoy saluda a la humanidad toda”. \n \nDe esta forma, Chile consigue el séptimo reconocimiento de parte de UNESCO como parte de \nla Lista de Patrimonio Mundial, el máximo grado de protección patrimonial debido a su “valor \nuniversal excepcional”, sumándose así a los sitios Oficinas salitreras Humberstone y Santa \nLaura; el Parque Nacional Rapa Nui; las Iglesias de Chiloé; Campamento Sewell; Área \nhistórica de la ciudad-puerto de Valparaíso; y a Qhapaq Ñan-Sistema Vial Andino. \n \nLos asentamientos de la cultura chinchorro nominados como Sitio de Patrimonio Mundial son \ntres: Faldeos del Morro (1) y el Museo Colón 10 (2), los que se encuentran en el entorno  \nurbano de Arica y destacan por ser los cementerios más importantes y representativos de la \ntradición funeraria chinchorro, y se suma la desembocadura del río Camarones (3), ubicado en \nla zona rural de la comuna de Camarones, donde es posible encontrar distintos vestigios de \nesta cultura, tantos funerarios como habitacionales, los que se conservan en un ambiente y \npaisaje similar a la época que lo habitaron. \n \nUn largo camino \n \nEsta postulación acumula más de 20 años de trabajo y tiene su inicio formal en 1998, cuando \neste milenario patrimonio fue incluido por Chile en la Lista Tentativa de Patrimonio Mundial. \nUna década más tarde la Universidad de Tarapacá (UTA) inició las investigaciones para \nelaborar el expediente de postulación, el que contó con el apoyo del Ministerio de las Culturas, \nel Gobierno Regional y distintas instituciones locales y nacionales y fue enviado a UNESCO \nen 2020 tras la firma de la Ministra de las Culturas, las Artes y el Patrimonio. En su versión \nfinal, cuenta con casi 400 páginas de texto de postulación y 900 de anexos. \n \nJunto a la elaboración del expediente, Chile fue avanzando en otros pasos clave para la \nprotección del bien y la nominación ante UNESCO y que fueron enviados y considerados por \nel Comité de Patrimonio Mundial para su decisión. Es así como en 2019 se conformó la \nCorporación Chinchorro Marka, que agrupa a la UTA y a las corporaciones culturales de los \nmunicipios de Arica y Camarones, contando con el apoyo del Ministerio de las Culturas. \n \nDicha corporación estará a cargo de administrar la gestión de los sitios arqueológicos de la \ncultura chinchorro y ya redactó un Plan de Manejo para protegerlos y preservarlos. \n \n \n\n \nEntre diciembre de 2020 y febrero de 2021 se llevaron a cabo diferentes instancias de \nevaluación por parte de UNESCO, entre las que se contó una misión del Consejo Internacional \nde Monumentos y Sitios de UNESCO (ICOMOS) para conocer en terreno las condiciones de \nautenticidad, integridad y gestión de estos vestigios arqueológicos. \n \nAsimismo, parte de los bienes postulados son propiedad del Estado de Chile y ya cuentan con \nla máxima protección patrimonial que otorga el país en la categoría Monumento Arqueológico \nreconocida en la Ley 17.288 de Monumentos Nacionales. Para efectos de la nominación, a \nesa protección existente se suma la de Monumento Histórico y Santuario de la Naturaleza, \nesta última en proceso de tramitación. Por lo anterior, estos sitios quedan definidos como \náreas protegidas para efectos de la ley de bases del medio ambiente chilena y cuentan con \ntodo el procedimiento de evaluación de impacto ambiental asociado […]. \n \nCultura chinchorro \n \nLa cultura chinchorro se desarrolló hace más de 7 mil años por cazadores recolectores \nmarinos que se establecieron y habitaron en la costa del desierto de Atacama, el más árido del \nmundo, aprovechando los abundantes recursos marinos que proporciona la corriente de \nHumboldt. Esta profusión de materias primas les permitió generar asentamientos \nsemipermanentes en las desembocaduras de los escasos ríos y quebradas de la zona, con \nuna tecnología marítima especializada, cuyas frágiles evidencias se han podido preservar \ngracias a las excepcionales condiciones climáticas del norte de Chile. \n \nEl subsecretario del Patrimonio Cultural, Emilio De la Cerda, –quien actúa como punto focal \nante UNESCO en estas materias– destacó en su intervención durante la sesión del Comité \nque estos tres componentes incluyen la evidencia arqueológica conocida más antigua del \nmundo de momificación artificial de cuerpos. En los cementerios chinchorro hay cuerpos \nmomificados debido al medio ambiente y a la momificación humana artificial. Esto último es \nnotable debido a la antigüedad y la técnica, pues los chinchorro fueron innovadores en cuanto \na la momificación artificial. Con el tiempo perfeccionaron prácticas mortuorias complejas, para \ncrear momias “artificiales” que poseían cualidades materiales, escultóricas y estéticas que \npresumiblemente reflejaban el papel fundamental de los muertos en su sociedad. \n \nPor las evidencias del lugar de entierro, a pocos centímetros de la superficie, y cerca o en los \nlugares en que vivían, y por el desgaste y reparaciones que presentan, los especialistas \nplantean que estas momias seguían formando parte de la vida comunitaria o familiar de los \nchinchorro, en que eran desenterradas para ciertas ocasiones y posteriormente vueltas a \nsepultar. Este proceso de momificación es más antiguo que el de las momias egipcias. \n \n \nServicio Nacional del Patrimonio Cultural. (27 de julio de 2021). UNESCO incluye Asentamientos y \nMomificación Artificial de la Cultura Chinchorro en la Lista de Patrimonio Mundial. \nhttps://www.patrimoniocultural.gob.cl/noticias/unesco-incluye-asentamientos-y-momificacion-artificial-de-la-\ncultura-chinchorro-en-la\n\n---\n\n**59. De acuerdo con la lectura, ¿cómo se puede calificar el proceso de postulación de la cultura chinchorro al reconocimiento de la UNESCO?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Colaborativo, pues contó con la participación de varias instituciones regionales y nacionales.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Costoso, pues requirió del financiamiento de fondos públicos y privados para la investigación.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Gradual, pues se incorporó paulatinamente cada uno de los tres sitios de Patrimonio Mundial.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Polémico, pues se tuvo que demostrar la autenticidad e integridad de los vestigios arqueológicos.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": "https://khtdzgfqjggycrcbrytw.supabase.co/storage/v1/object/public/evaluaciones-media/evaluaciones/1794239889604_m0am94j.jpg",
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 60,
+      "id": "preg-paes-lec-23-60",
+      "numero": 60,
+      "enunciado": "Lectura 8 (Continuación):\n\n**60. ¿Cuál es la función del siguiente segmento dentro del fragmento leído? «Lo anterior en virtud de su Valor Universal Excepcional al corresponder a un ejemplo sobresaliente de la interacción de un grupo de cazadores-recolectores marinos con uno de los ambientes más secos del mundo y ser un testimonio único de la compleja espiritualidad de una tradición cultural ya desaparecida –la cultura chinchorro– expresada a través de los cementerios en los que se encuentran cuerpos momificados natural y artificialmente».**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Destacar las condiciones climáticas adversas que debió enfrentar la cultura chinchorro.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "Presentar la visión de mundo de la cultura chinchorro expresada en sus actividades cotidianas.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Exponer los motivos por los que la cultura chinchorro fue reconocida como Patrimonio Mundial.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "Ejemplificar con la cultura chinchorro los criterios para que una cultura sea reconocida universalmente.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-3",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 61,
+      "id": "preg-paes-lec-23-61",
+      "numero": 61,
+      "enunciado": "Lectura 8 (Continuación):\n\n**61. ¿Qué aspecto social de la cultura chinchorro destaca el Ministerio de las Culturas, las Artes y el Patrimonio?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La distribución del trabajo que desarrolló su sociedad.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "La adaptación de sus habitantes a los lugares inhóspitos.",
+          "es_correcta": true
+        },
+        {
+          "letra": "C",
+          "texto": "La interacción entre sus recursos naturales y la religiosidad.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "La implementación de tecnologías innovadoras para la momificación.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "B",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 62,
+      "id": "preg-paes-lec-23-62",
+      "numero": 62,
+      "enunciado": "Lectura 8 (Continuación):\n\n**62. ¿Cuál es el rol de la Universidad de Tarapacá en la obtención del reconocimiento de la UNESCO a la cultura chinchorro?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Apoyar la postulación a través de la producción de un completo expediente de investigación.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Financiar la postulación a través de becas de investigación para cubrir los gastos administrativos.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Patrocinar la postulación a través de la firma de académicos para respaldar los datos del proyecto.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Validar la postulación a través del análisis de las condiciones de autenticidad, integridad y gestión de los vestigios arqueológicos.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 63,
+      "id": "preg-paes-lec-23-63",
+      "numero": 63,
+      "enunciado": "Lectura 8 (Continuación):\n\n**63. De acuerdo con la lectura, ¿qué institución estará a cargo de administrar la gestión de los sitios arqueológicos de la cultura chinchorro?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "Corporación Chinchorro Marka.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Comité de Patrimonio Mundial.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Ministerio de las Culturas, las Artes y el Patrimonio.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "Consejo Internacional de Monumentos y Sitios de UNESCO.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "alta",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 64,
+      "id": "preg-paes-lec-23-64",
+      "numero": 64,
+      "enunciado": "Lectura 8 (Continuación):\n\n**64. ¿Cuál es una evidencia de que las momias eran parte de la vida cotidiana de la cultura chinchorro?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La vestimenta con que preparaban a las momias.",
+          "es_correcta": false
+        },
+        {
+          "letra": "B",
+          "texto": "La técnica innovadora de momificación que desarrollaron.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "Las restauraciones que poseían las momias enterradas superficialmente.",
+          "es_correcta": true
+        },
+        {
+          "letra": "D",
+          "texto": "La sequedad del clima y su relación con la momificación natural y artificial.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "C",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-2",
+      "dificultad": "media",
+      "nivel": "4° Medio"
+    },
+    {
+      "posicion_evaluacion": 65,
+      "id": "preg-paes-lec-23-65",
+      "numero": 65,
+      "enunciado": "Lectura 8 (Continuación):\n\n**65. Según el fragmento leído, ¿qué fenómeno permite profundizar en el valor de la cultura chinchorro?**",
+      "alternativas": [
+        {
+          "letra": "A",
+          "texto": "La explicación del proceso de momificación artificial.",
+          "es_correcta": true
+        },
+        {
+          "letra": "B",
+          "texto": "Los aspectos espirituales de las culturas originarias.",
+          "es_correcta": false
+        },
+        {
+          "letra": "C",
+          "texto": "La opinión de los habitantes de Arica sobre la UNESCO.",
+          "es_correcta": false
+        },
+        {
+          "letra": "D",
+          "texto": "La ubicación geográfica de los otros sitios patrimoniales.",
+          "es_correcta": false
+        }
+      ],
+      "respuesta_correcta": "A",
+      "imagen_url": null,
+      "puntaje": 1,
+      "fuente": "PAES Oficial Competencia Lectora 2023 (Forma 103)",
+      "tipo": "seleccion_multiple",
+      "eje_tematico_id": "eje-lec-1",
+      "habilidad_id": "hab-lec-1",
+      "dificultad": "baja",
+      "nivel": "4° Medio"
+    }
+  ]
+}
